@@ -26,11 +26,11 @@ import java.net.InetAddress;
         Boot.class
 })
 @SpringBootApplication
-public class AegisFinance {
-    private static final Logger log = LoggerFactory.getLogger(AegisFinance.class);
+public class AegisFinanceAdmin {
+    private static final Logger log = LoggerFactory.getLogger(AegisFinanceAdmin.class);
 
     public static void main(String[] args) throws ClassNotFoundException, IOException {
-        SpringApplication app = new SpringApplication(AegisFinance.class);
+        SpringApplication app = new SpringApplication(AegisFinanceAdmin.class);
         app.setShowBanner(true);
         Environment env = app.run(args).getEnvironment();
         log.info("Access URLs:\n----------------------------------------------------------\n\t" +
