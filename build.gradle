@@ -16,6 +16,21 @@ buildscript {
     }
 }
 
+plugins {
+    id "org.flywaydb.flyway" version "4.0.1"
+}
+
+flyway {
+    user = 'mysql'
+    password = 'mysql'
+//    schemas = ['financedb']
+//    placeholders = [
+//            'keyABC': 'valueXYZ',
+//            'otherplaceholder': 'value123'
+//    ]
+    url = 'jdbc:mysql://127.0.0.1:3306/financedb'
+}
+
 group 'aegis.finance.admin'
 version '1.0-SNAPSHOT'
 
