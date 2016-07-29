@@ -1,0 +1,150 @@
+buildscript {
+    ext {
+        springBootVersion = '1.3.6.RELEASE'
+    }
+    repositories {
+        mavenLocal()
+        maven {
+//            url "http://maven.yimei180.com"
+            url 'http://maven.yimei180.com/content/groups/public'
+        }
+        mavenCentral()
+    }
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
+        classpath 'org.springframework:springloaded:1.2.3.RELEASE'
+    }
+}
+
+group 'aegis.finance.admin'
+version '1.0-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'eclipse'
+apply plugin: 'idea'
+apply plugin: 'application'
+apply plugin: 'spring-boot'
+sourceCompatibility = 1.8
+targetCompatibility = 1.8
+
+repositories {
+    flatDir{
+        dirs './libs'
+    }
+    mavenLocal()
+    maven {
+        url 'http://maven.yimei180.com/content/groups/public'
+    }
+    mavenCentral()
+}
+
+
+dependencies {
+    // springBoot
+    compile("org.springframework.boot:spring-boot-starter-web") {
+        exclude module: "spring-boot-starter-tomcat"
+    }
+    compile("org.springframework.boot:spring-boot-starter-jetty")
+//        compile("org.springframework.boot:spring-boot-starter-mobile:${springBootVersion}")
+    compile("org.springframework.boot:spring-boot-starter-freemarker")
+    compile("org.springframework.boot:spring-boot-starter-aop")
+    compile("org.springframework.boot:spring-boot-starter-redis")
+    testCompile("org.springframework.boot:spring-boot-starter-test")
+
+    //数据库迁移
+    compile("org.flywaydb:flyway-core")
+
+    // spring
+//      compile("org.springframework:spring-jdbc:4.0.0.RELEASE")
+    compile("org.springframework:spring-context-support:4.0.7.RELEASE")
+    compile("org.springframework.session:spring-session-data-redis:1.0.0.RELEASE")
+    compile("org.redisson:redisson:1.3.0") //基于redis分布式事务支持
+
+
+    // spring
+    compile("org.springframework:spring-jdbc:4.0.0.RELEASE")
+
+    compile("org.mybatis:mybatis:3.3.0-SNAPSHOT")
+
+
+    compile("org.mybatis:mybatis-spring:1.2.2")
+    compile("com.github.pagehelper:pagehelper:4.1.1")
+
+    // freemarker
+    compile("org.freemarker:freemarker:2.3.23")
+
+
+    // 工具
+    compile("org.apache.httpcomponents:httpcomponents-client:4.3.6")
+    compile("commons-codec:commons-codec:1.9");
+    compile('org.apache.commons:commons-lang3:3.3.2')
+    compile('com.google.guava:guava:18.0')
+
+    compile("com.googlecode.log4jdbc:log4jdbc:1.2")
+
+    compile("me.chanjar:weixin-java-mp:1.1.6") //微信支持
+    compile('com.google.zxing:core:3.2.1')     //二维码生成器
+
+
+    compile('mysql:mysql-connector-java:5.1.33')
+    compile('com.zaxxer:HikariCP:2.4.1')
+
+
+    compile('org.apache.poi:poi:3.12')
+    compile('org.apache.poi:poi-ooxml:3.11')
+    compile('org.pegdown:pegdown:1.6.0')
+    compile('org.xhtmlrenderer:flying-saucer-core:9.0.7')
+    compile('org.xhtmlrenderer:flying-saucer-pdf-itext5:9.0.7')
+    compile('org.apache.tika:tika-core:1.7')
+    compile('com.belerweb:pinyin4j:2.5.0')         //汉字转拼音 lxj 2015-01-21
+    compile('javax.mail:javax.mail-api:1.5.2')
+    compile('com.sun.mail:javax.mail:1.5.2')
+
+
+    compile('org.slf4j:slf4j-api:1.7.19')
+    compile('ch.qos.logback:logback-core:1.1.3')
+    compile('ch.qos.logback:logback-classic:1.1.3')
+
+    //dozer
+    compile('net.sf.dozer:dozer:5.4.0') {
+
+
+        exclude group: 'org.slf4j', module: 'slf4j-log4j12'
+
+        //   exclude 'log4j:log4j','org.slf4j:jcl-over-slf4j','org.slf4j:slf4j-api','org.slf4j-log4j12'
+    }
+}
+
+idea {
+    module {
+        inheritOutputDirs = false
+        outputDir = file("$buildDir/classes/main/")
+    }
+}
+
+repositories {
+    flatDir {
+        dirs 'libs'
+    }
+}
+
+bootRepackage {
+    mainClass = 'com.yimei.Application'
+}
+
+eclipse {
+    classpath {
+        containers.remove('org.eclipse.jdt.launching.JRE_CONTAINER')
+        containers 'org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-1.7'
+    }
+}
+
+jar {
+    baseName = 'aegis-finance-admin'
+}
+
+task fatJar(type: Jar) {
+    baseName = project.name + '-all'
+    from { configurations.compile.collect { it.isDirectory() ? it : zipTree(it) } }
+    with jar
+}
