@@ -1,8 +1,8 @@
 package com.yimei.boot.ext.mvc.support;
 
 
+import com.yimei.api.common.exception.UnauthorizedException;
 import com.yimei.boot.ext.mvc.annotations.CurrentUser;
-import com.yimei.domain.common.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.MethodParameter;
 import org.springframework.stereotype.Service;

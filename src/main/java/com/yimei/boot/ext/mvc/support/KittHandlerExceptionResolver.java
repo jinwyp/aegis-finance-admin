@@ -6,7 +6,7 @@ import com.yimei.boot.services.ExceptionReporter;
 import com.yimei.boot.utils.WithLogger;
 import com.yimei.domain.common.exception.BusinessException;
 import com.yimei.domain.common.exception.NotFoundException;
-import com.yimei.domain.common.exception.UnauthorizedException;
+import com.yimei.api.common.exception.UnauthorizedException;
 import org.apache.http.HttpStatus;
 import org.eclipse.jetty.io.EofException;
 import org.springframework.beans.TypeMismatchException;

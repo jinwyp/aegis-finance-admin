@@ -11,3 +11,5 @@ sh initdatabase.sh
 3,更新数据库,
   在aegis-finance-admin 目录下执行
   flywayMigrate
+
+4,目前本项目只能在本地运行, docker还没配置好

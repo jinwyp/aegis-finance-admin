@@ -1,4 +1,4 @@
-package com.yimei.domain.common.exception;
+package com.yimei.api.common.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

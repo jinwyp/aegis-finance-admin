@@ -1,13 +1,18 @@
 package com.yimei.service.tpl.impl;
 
+import com.yimei.api.common.util.DozerUtils;
+import com.yimei.api.tpl.TplService;
+import com.yimei.api.tpl.representations.Tpl;
+import com.yimei.service.tpl.domain.TplObject;
 import com.yimei.service.tpl.mapper.TplObjectMapper;
-import com.yimei.domain.tpl.TplObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 
 @Service
-public class TplServiceImpl {
+public class TplServiceImpl implements TplService {
 
     @Autowired
     TplObjectMapper tplObjectMapper;
@@ -15,8 +20,8 @@ public class TplServiceImpl {
 
     public String index() {
         TplObject tplObject = new TplObject();
-        tplObject.setName("key");
-        tplObject.setValue("value");
+        tplObject.setId(1);
+        tplObject.setName("易煤网");
         tplObjectMapper.addTplObject(tplObject);
 
        /* // page test
@@ -27,6 +32,12 @@ public class TplServiceImpl {
         }*/
 
         return "this TplServiceImpl response";
+    }
+
+
+    @Override
+    public List<Tpl> test() {
+        return DozerUtils.map(tplObjectMapper.test(), Tpl.class);
     }
 
 
