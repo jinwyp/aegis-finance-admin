@@ -20,11 +20,12 @@ public class IndexController {
      */
     @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
-        if(session.getUser() != null) {
-            return "index";
-        } else {
-            return "redirect:/login";
-        }
+//        if(session.getUser() != null) {
+//            return "index";
+//        } else {
+//            return "redirect:/login";
+//        }
+        return "index";
     }
 
 

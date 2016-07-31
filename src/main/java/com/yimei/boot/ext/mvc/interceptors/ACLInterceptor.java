@@ -1,6 +1,5 @@
 package com.yimei.boot.ext.mvc.interceptors;
 
-import com.yimei.api.common.exception.UnauthorizedException;
 import com.yimei.boot.ext.mvc.support.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +17,9 @@ public class ACLInterceptor extends HandlerInterceptorAdapter {
     protected Session session;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-        if(!session.isLogined()){
-            throw new UnauthorizedException();
-        }
+//        if(!session.isLogined()){
+//            throw new UnauthorizedException();
+//        }
         return super.preHandle(request, response, handler);
     }
 
