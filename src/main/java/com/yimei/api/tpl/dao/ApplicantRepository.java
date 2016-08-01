@@ -1,4 +1,4 @@
-package com.yimei.boot.activiti;
+package com.yimei.api.tpl.dao;
 
 import com.yimei.api.tpl.representations.Applicant;
 import org.springframework.data.jpa.repository.JpaRepository;

@@ -14,5 +14,10 @@ public interface AdminService {
      */
     Result login(String userName, String password);
 
+    /**
+     * 加密密码
+     */
+    String securePassword(String userName, String password);
+
 
 }

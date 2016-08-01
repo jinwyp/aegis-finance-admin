@@ -1,4 +1,4 @@
-package com.yimei.boot.activiti;
+package com.yimei.boot.config;
 
 import org.springframework.stereotype.Component;
 
