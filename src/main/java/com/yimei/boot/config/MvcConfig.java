@@ -8,7 +8,11 @@ import com.yimei.boot.ext.mvc.support.CurrentUserMethodArgumentHandler;
 import com.yimei.boot.ext.mvc.support.JsonResultMethodArgumentResolver;
 import com.yimei.boot.ext.mvc.support.KittHandlerExceptionResolver;
 import com.yimei.boot.jackson.Java8TimeModule;
+import org.activiti.engine.RepositoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
 import org.springframework.boot.context.embedded.ErrorPage;
@@ -27,7 +31,9 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import javax.annotation.PostConstruct;
 import javax.validation.Validator;
 import java.nio.charset.Charset;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by hary on 16/3/14.
@@ -111,4 +117,5 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     private void jacksonConfig() {
         objectMapper.registerModule(new Java8TimeModule());
     }
+
 }
