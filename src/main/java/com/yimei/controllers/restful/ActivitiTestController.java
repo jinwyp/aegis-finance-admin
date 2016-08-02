@@ -1,6 +1,17 @@
 package com.yimei.controllers.restful;
 
+import com.yimei.api.tpl.dao.ApplicantRepository;
+import com.yimei.api.tpl.representations.Applicant;
+import org.activiti.engine.RuntimeService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by liuxinjie on 16/8/1.
@@ -8,24 +19,24 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class ActivitiTestController {
 
-//    @Autowired
-//    private RuntimeService runtimeService;
+    @Autowired
+    private RuntimeService runtimeService;
 //    @Autowired
 //    private AdminService adminService;
 //
-//    @Autowired
-//    private ApplicantRepository applicantRepository;
-//
-//    @RequestMapping(value = "/start-hire-process", method= RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
-//    public void startHireProcess(@RequestBody Map<String, String> data) {
-//
-//        Applicant applicant = new Applicant(data.get("name"), data.get("email"), data.get("phoneNumber"));
-//        applicantRepository.save(applicant);
-//
-//        Map<String, Object> variables = new HashMap<String, Object>();
-//        variables.put("applicant", applicant);
-//        runtimeService.startProcessInstanceByKey("hireProcessWithJpa", variables);
-//    }
+    @Autowired
+    private ApplicantRepository applicantRepository;
+
+    @RequestMapping(value = "/start-hire-process", method= RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    public void startHireProcess(@RequestBody Map<String, String> data) {
+
+        Applicant applicant = new Applicant(data.get("name"), data.get("email"), data.get("phoneNumber"));
+        applicantRepository.save(applicant);
+
+        Map<String, Object> variables = new HashMap<String, Object>();
+        variables.put("applicant", applicant);
+        runtimeService.startProcessInstanceByKey("hireProcessWithJpa", variables);
+    }
 
 
     //    @Bean
