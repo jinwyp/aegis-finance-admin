@@ -16,10 +16,8 @@ import org.springframework.session.data.redis.config.annotation.web.http.EnableR
  * Created by hary on 16/3/15.
  */
 @Configuration
-//@PropertySource("classpath:/redis.properties")
 @EnableRedisHttpSession(maxInactiveIntervalInSeconds = 3600*24*7)//site模块session默认两小时
 public class ExtRedisConfig {
-    // RedisSessionConfig
     private
     @Value("${redis.hostname}")
     String redisHostName;

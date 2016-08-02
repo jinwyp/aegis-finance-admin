@@ -1,8 +1,8 @@
 package com.yimei.controllers.restful;
 
 import com.yimei.api.admin.AdminService;
-import com.yimei.api.tpl.representations.Applicant;
 import com.yimei.api.tpl.dao.ApplicantRepository;
+import com.yimei.api.tpl.representations.Applicant;
 import org.activiti.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -28,7 +28,7 @@ public class ActivitiTestController {
     @Autowired
     private ApplicantRepository applicantRepository;
 
-    @RequestMapping(value="/start-hire-process", method= RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/start-hire-process", method= RequestMethod.POST, produces= MediaType.APPLICATION_JSON_VALUE)
     public void startHireProcess(@RequestBody Map<String, String> data) {
 
         Applicant applicant = new Applicant(data.get("name"), data.get("email"), data.get("phoneNumber"));
