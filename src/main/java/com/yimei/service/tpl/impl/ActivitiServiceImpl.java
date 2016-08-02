@@ -1,5 +1,6 @@
 package com.yimei.service.tpl.impl;
 
+import com.yimei.api.tpl.ActivitiService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
@@ -16,7 +17,7 @@ import java.util.Map;
  */
 @Service
 @Transactional
-public class ActivitiServiceImpl {
+public class ActivitiServiceImpl implements ActivitiService {
 
     /**
      * 注入我们自动配置好的服务
@@ -29,6 +30,7 @@ public class ActivitiServiceImpl {
     /**
      * 开始流程, 传入申请的 id 以及公司的 id
      */
+    @Override
     public void startProcess(Long personId, Long compId) {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("personId", personId);
@@ -39,6 +41,7 @@ public class ActivitiServiceImpl {
     /**
      * 获得某个人的任务列表
      */
+    @Override
     public List<Task> getTasks(String assignee) {
         return taskService.createTaskQuery().taskCandidateUser(assignee).list();
     }
@@ -46,6 +49,7 @@ public class ActivitiServiceImpl {
     /**
      * 完成任务
      */
+    @Override
     public void completeTask(Boolean joinApproved, String taskId) {
         Map<String, Object> taskVariables = new HashMap<String, Object>();
         taskVariables.put("joinApproved", joinApproved);

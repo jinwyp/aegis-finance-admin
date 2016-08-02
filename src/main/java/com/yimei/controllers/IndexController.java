@@ -1,4 +1,4 @@
-package com.yimei.controllers.index;
+package com.yimei.controllers;
 
 import com.yimei.boot.ext.mvc.support.Session;
 import org.springframework.beans.factory.annotation.Autowired;

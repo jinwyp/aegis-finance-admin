@@ -1,5 +1,6 @@
 package com.yimei.service.tpl.impl;
 
+import com.yimei.api.tpl.JoinService;
 import com.yimei.api.tpl.dao.CompRepository;
 import com.yimei.api.tpl.dao.PersonRepository;
 import com.yimei.api.tpl.representations.Comp;
@@ -15,7 +16,7 @@ import java.util.List;
  * Created by liuxinjie on 16/8/1.
  */
 @Service
-public class JoinServiceImpl {
+public class JoinServiceImpl implements JoinService {
     @Autowired
     PersonRepository personRepository;
     @Autowired
@@ -24,6 +25,7 @@ public class JoinServiceImpl {
     /**
      * 加入公司操作, 可以从DelegateExecution获取流程中的变量
      */
+    @Override
     public void joinGroup(DelegateExecution execution) {
         Boolean bool = (Boolean) execution.getVariable("joinApproved");
 
@@ -43,6 +45,7 @@ public class JoinServiceImpl {
     /**
      * 获取符合条件的审批人，演示这里写死，使用应用使用实际代码
      */
+    @Override
     public List<String> findUsers(DelegateExecution execution) {
         return Arrays.asList("admin", "wtr");
     }

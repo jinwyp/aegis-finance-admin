@@ -1,7 +1,7 @@
 package com.yimei.controllers.restful;
 
+import com.yimei.api.tpl.ActivitiService;
 import com.yimei.api.tpl.representations.TaskRepresentation;
-import com.yimei.service.tpl.impl.ActivitiServiceImpl;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 public class MyRestController {
     @Autowired
-    private ActivitiServiceImpl activitiService;
+    private ActivitiService activitiService;
 
     /**
      * 开启流程实例
