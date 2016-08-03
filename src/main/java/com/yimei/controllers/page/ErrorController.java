@@ -12,20 +12,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 登陆相关接口
  */
 @Controller
-public class LoginController {
+public class ErrorController {
     @Autowired
     private Session session;
     @Autowired
     private AdminService adminService;
 
-    /**
-     * 登录页面
-     */
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
-    public String loginPage() {
-        return "login";
+    @RequestMapping(value = "/404", method = RequestMethod.GET)
+    public String Page404() {
+        return "http/404";
     }
-
 
 }
