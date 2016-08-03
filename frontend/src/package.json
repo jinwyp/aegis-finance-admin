@@ -3,7 +3,6 @@
   "version": "1.0.0",
   "scripts": {
     "start": "tsc && npm run tscw ",
-    "postinstall": "typings install",
     "tsc": "tsc",
     "tscw": "tsc -w",
     "typings": "typings"
