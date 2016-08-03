@@ -1,9 +1,10 @@
-package kitt.admin.config;
+package com.yimei.boot.config;
 
 import freemarker.cache.FileTemplateLoader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.freemarker.FreeMarkerAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
@@ -15,6 +16,7 @@ import java.io.IOException;
  * Created by joe on 3/11/15.
  */
 @Configuration
+@AutoConfigureAfter({FreeMarkerAutoConfiguration.class})
 public class AngularJSConfigurer {
 
     @Configuration
