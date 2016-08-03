@@ -18,7 +18,6 @@ gradle
 gradlew
 gradlew.bat
 *.ipr
-.DS_Store
 /logs
 /files
 *.rdb
@@ -36,13 +35,13 @@ workbench.xmi
 # css sprite
 
 _auto_sprite.scss
+.sass-cache
 
-backend/dist
-backend/src/node_modules
+
+src/main/resources/templates/dist
 
 
 frontend/dist
-frontend/src/node_modules
 frontend/src/css/stylesheets
 
 
@@ -54,13 +53,7 @@ files
 
 
 # ignore all config except basic!!!!
-backend/config/
-!backend/config/dev.js
-!backend/config/local.js
-!backend/config/staging.js
-!backend/config/prod.js
-!backend/config/default.js
-!backend/config/testing.js
+backend/config/self.js
 
 
 
@@ -70,14 +63,12 @@ backend/config/
 
 # Ignore Windows desktop setting file
 desktop.ini
-*.iml
 
 
 
 
 
 # Logs
-logs
 *.log
 npm-debug.log*
 
