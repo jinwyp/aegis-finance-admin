@@ -1,4 +1,4 @@
-package com.yimei.domain.common.exception;
+package com.yimei.api.common.exception;
 
 import org.apache.commons.lang3.StringUtils;
 
