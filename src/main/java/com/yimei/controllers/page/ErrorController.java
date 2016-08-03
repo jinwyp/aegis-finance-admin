@@ -9,8 +9,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by liuxinjie on 07/30/16.
- * 登陆相关接口
+ * 错误相关页面 例如 404 页面
  */
+
+
 @Controller
 public class ErrorController {
     @Autowired

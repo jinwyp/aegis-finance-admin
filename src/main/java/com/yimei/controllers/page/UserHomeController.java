@@ -8,8 +8,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by liuxinjie on 07/30/16.
- * 初始化
+ * 管理员登录后页面
  */
+
+
 @Controller
 public class UserHomeController {
     @Autowired
