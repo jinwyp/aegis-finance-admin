@@ -11,22 +11,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 初始化
  */
 @Controller
-public class IndexController {
+public class UserHomeController {
     @Autowired
     private Session session;
 
     /**
-     * 初始化页面
+     * 首页 页面
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/wang", method = RequestMethod.GET)
     public String index() {
 //        if(session.getUser() != null) {
-//            return "index";
+//            return "home";
 //        } else {
 //            return "redirect:/login";
 //        }
-        return "index";
+        return "home";
     }
-
-
 }

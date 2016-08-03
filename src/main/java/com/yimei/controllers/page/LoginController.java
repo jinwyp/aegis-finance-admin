@@ -21,29 +21,12 @@ public class LoginController {
     private AdminService adminService;
 
     /**
-     * 跳转到登录页面
+     * 登录页面
      */
+
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
         return "login";
     }
 
-    /**
-     * 登陆方法
-     */
-    @RequestMapping(value = "/login", method = RequestMethod.POST)
-    @ResponseBody
-    public Object doLogin(@RequestParam(value = "userName", required = true)String userName,
-                          @RequestParam(value = "password", required = true)String password) {
-        return adminService.login(userName, password);
-    }
-
-    /**
-     * 退出登陆
-     */
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout() {
-        session.logout();
-        return "redirect:/login";
-    }
 }
