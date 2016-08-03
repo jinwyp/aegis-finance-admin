@@ -13,3 +13,4 @@
 ## 前端环境
 
 
+- 进入frontend/src 下运行 ``` npm install --registry=https://registry.npm.taobao.org --phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs ```
