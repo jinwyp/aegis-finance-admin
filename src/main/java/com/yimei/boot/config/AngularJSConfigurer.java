@@ -24,7 +24,7 @@ public class AngularJSConfigurer {
         protected freemarker.template.Configuration configuration;
         @PostConstruct
         public void setFreemarker() throws IOException {
-            configuration.setTemplateLoader(new FileTemplateLoader(new File("./front/main/resources/templates")));
+            configuration.setTemplateLoader(new FileTemplateLoader(new File("./front/main/resources/templates/src")));
         }
     }
 
@@ -35,7 +35,7 @@ public class AngularJSConfigurer {
         protected freemarker.template.Configuration configuration;
         @PostConstruct
         public void setFreemarker() throws IOException {
-
+            configuration.setTemplateLoader(new FileTemplateLoader(new File("./front/main/resources/templates/src")));
         }
     }
 
