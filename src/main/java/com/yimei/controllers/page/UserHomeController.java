@@ -25,13 +25,6 @@ public class UserHomeController {
 //        } else {
 //            return "redirect:/login";
 //        }
-        System.out.println(" -------------------------------- ");
-        System.out.println(" -------------------------------- ");
-        System.out.println(" -------------------------------- ");
-        System.out.println(" -------------------------------- ");
-        System.out.println(" -------------------------------- ");
-        System.out.println(" -------------------------------- ");
-        System.out.println(" -------------------------------- ");
         return "home";
     }
 }
