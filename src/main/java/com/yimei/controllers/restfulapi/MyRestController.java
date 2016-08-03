@@ -1,4 +1,4 @@
-package com.yimei.controllers.restfullapi;
+package com.yimei.controllers.restfulapi;
 
 import com.yimei.api.tpl.ActivitiService;
 import com.yimei.api.tpl.representations.TaskRepresentation;

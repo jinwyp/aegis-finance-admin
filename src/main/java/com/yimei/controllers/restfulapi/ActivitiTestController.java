@@ -1,4 +1,4 @@
-package com.yimei.controllers.restfullapi;
+package com.yimei.controllers.restfulapi;
 
 import com.yimei.api.tpl.dao.ApplicantRepository;
 import com.yimei.api.tpl.representations.Applicant;
