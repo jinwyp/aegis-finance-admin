@@ -27,6 +27,14 @@ public class LoginController {
         return "login";
     }
 
+    /**
+     * 退出登陆
+     */
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout() {
+        session.logout();
+        return "redirect:/login";
+    }
 
     @RequestMapping(value = "/404", method = RequestMethod.GET)
     public String Page404() {
