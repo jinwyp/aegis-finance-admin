@@ -9,8 +9,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Created by liuxinjie on 07/30/16.
- * 登陆相关接口
+ * 登陆页面
  */
+
 @Controller
 public class LoginController {
     @Autowired
