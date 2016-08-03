@@ -1,4 +1,4 @@
-package com.yimei.controllers.index;
+package com.yimei.controllers.page;
 
 import com.yimei.api.admin.AdminService;
 import com.yimei.boot.ext.mvc.support.Session;

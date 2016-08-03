@@ -1,4 +1,4 @@
-package com.yimei.controllers.index;
+package com.yimei.controllers.page;
 
 import com.yimei.boot.ext.mvc.support.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +18,7 @@ public class UserHomeController {
     /**
      * 首页 页面
      */
-    @RequestMapping(value = "/wang", method = RequestMethod.GET)
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     public String index() {
 //        if(session.getUser() != null) {
 //            return "home";
