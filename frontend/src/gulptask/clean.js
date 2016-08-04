@@ -10,10 +10,11 @@ var distPath = {
     'all'  : '../dist/**/*',
     'html' : '../../src/main/resources/templates/dist/**/*',
     'stylesheets' : './css/stylesheets/**/*',
-    'autoSprite' : './css/images/sprite/auto-sprite.*'
+    'autoSprite' : './css/images/sprite/auto-sprite.*',
+    'tsCompileJs' : './jsoutput/**/*'
 };
 
 gulp.task('clean', function() {
-    del.sync([distPath.all, distPath.html, distPath.stylesheets, distPath.autoSprite], {force:true});
+    del.sync([distPath.all, distPath.html, distPath.stylesheets, distPath.autoSprite, distPath.tsCompileJs], {force:true});
 });
 

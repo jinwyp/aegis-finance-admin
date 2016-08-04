@@ -5,7 +5,8 @@
 
 var gulp   = require('gulp');
 var eslint = require('gulp-eslint');
-var jspm   = require('gulp-jspm');
+var ts     = require("gulp-typescript");
+var tsConfig = ts.createProject("tsconfig.json");
 var rev    = require('gulp-rev');
 
 
@@ -32,6 +33,14 @@ gulp.task('esLint', function() {
         .pipe(eslint.format())
         .pipe(eslint.failOnError())
 });
+
+
+gulp.task("ts", function () {
+    return tsConfig.src()
+        .pipe(ts(tsConfig))
+        .js.pipe(gulp.dest("dist321"));
+});
+
 
 
 gulp.task('components', function() {
