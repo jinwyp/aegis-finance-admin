@@ -30,7 +30,7 @@
     <!-- 2. Configure SystemJS -->
     <script src="static/js/systemjs.config.js"></script>
     <script>
-      System.import('app').catch(function(err){ console.error(err); });
+      System.import('jsoutput/page/login.js').catch(function(err){ console.error(err); });
     </script>
 
 </body>
