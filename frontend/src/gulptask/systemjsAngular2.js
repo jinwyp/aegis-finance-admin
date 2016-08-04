@@ -5,50 +5,70 @@
 
 var gulp   = require('gulp');
 var eslint = require('gulp-eslint');
-var ts     = require("gulp-typescript");
-var tsConfig = ts.createProject("tsconfig.json");
+var shell  = require('gulp-shell');
 var rev    = require('gulp-rev');
 
 
 var sourcePath = {
-    'js'            : 'js/**/*',
-    'jsConfig'      : 'js/config.js',
-    'jsPage'        : 'js/page/**/*',
+    'ts'            : './js/**/*.ts',
+    'jsConfig'      : 'js/systemjs.config.js',
     'components'    : 'jspm_packages/**/*'
 };
 
 var distPath = {
-    'js'                               : '../dist/js/',
-    'jsPage'                           : '../dist/js/page/',
-    'tsOutput'                         : './jsoutput/',
-    'components'                       : '../dist/jspm_packages/',
-    "manifest"                         : "../dist/rev/"
+    'js'         : '../dist/jsoutput/',
+    'jsConfig'   : '../dist/jsoutput/',
+    'tsOutput'   : './jsoutput/',
+    'components' : '../dist/jspm_packages/',
+    "manifest"   : "../dist/rev/"
 };
 
 
 
 // Lint JavaScript
 gulp.task('esLint', function() {
-    gulp.src(sourcePath.js)
-        .pipe(eslint())
+    return gulp.src(sourcePath.ts)
+    // eslint() attaches the lint output to the "eslint" property
+    // of the file object so it can be used by other modules.
+        .pipe(eslint({
+            "env": {
+                "browser": true,
+                "es6": true
+            },
+            "parserOptions": {
+                "ecmaVersion": 7,
+                "sourceType": "module",
+                "ecmaFeatures": {
+                    "experimentalObjectRestSpread": true
+                }
+            },
+            "extends": "eslint:recommended",
+            "rules": {
+                "no-console":0,
+                "indent"          : ["error", 4],
+                "linebreak-style" : ["error", "unix"],
+                "quotes"          : ["error", "single"],
+                "semi"            : ["error", "always"],
+                "comma-dangle"    : ["error", "never"]
+            }
+        }))
+        // eslint.format() outputs the lint results to the console.
+        // Alternatively use eslint.formatEach() (see Docs).
         .pipe(eslint.format())
-        .pipe(eslint.failOnError())
+        // To have the process exit with an error code (1) on
+        // lint error, return the stream and pipe to failAfterError last.
+        .pipe(eslint.failAfterError());
 });
 
 
-gulp.task("ts", function () {
-    return tsConfig.src()
-        .pipe(ts(tsConfig))
-        .js.pipe(gulp.dest(distPath.tsOutput));
-});
-
+gulp.task("ts", shell.task(['tsc']));
 
 
 gulp.task('components', function() {
     gulp.src(sourcePath.components)
         .pipe(gulp.dest(distPath.components));
     gulp.src(sourcePath.jsConfig)
-        .pipe(gulp.dest(distPath.js));
+        .pipe(gulp.dest(distPath.jsConfig));
 });
 
 
@@ -69,7 +89,7 @@ gulp.task('js-release', ['components'], function(){
 
 
 gulp.task('watchJs', function() {
-    gulp.watch(sourcePath.js, ['esLint']);
+    gulp.watch(sourcePath.ts, ['esLint', 'ts']);
 });
 
 

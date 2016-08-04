@@ -12,6 +12,11 @@
     "rootDir": "./js"
   },
   "exclude": [
-    "node_modules"
+    ".git",
+    "node_modules",
+    "typings/browser.d.ts",
+    "typings/browser",
+    "typings/main.d.ts",
+    "typings/main"
   ]
 }
