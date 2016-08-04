@@ -3,13 +3,13 @@
  */
 
 
-var gulp = require('gulp');
-var spritesmith = require('gulp.spritesmith');
-var sass = require( 'gulp-sass');
-var autoprefixer = require( 'gulp-autoprefixer');
-var cleanCss = require('gulp-clean-css');
-
-var rev = require('gulp-rev');
+var gulp         = require('gulp');
+var runSequence  = require('run-sequence');
+var spritesmith  = require('gulp.spritesmith');
+var sass         = require('gulp-sass');
+var autoprefixer = require('gulp-autoprefixer');
+var cleanCss     = require('gulp-clean-css');
+var rev          = require('gulp-rev');
 
 
 
@@ -81,22 +81,27 @@ gulp.task('sass', ['sprite'], function() {
 
 
 
-gulp.task('sass-release', ['sprite', 'images', 'htmlTemplate'], function() {
-    return gulp.src(sourcePath.scss)
-        .pipe(sass({
-            precision       : 10,
-            outputStyle     : 'compressed',
-            errLogToConsole : true
-        }).on('error', sass.logError))
-        //.pipe(autoprefixer({
-        //    browsers: ['> 1%', 'Last 2 versions', 'IE 8'],
-        //    cascade: false
-        //}))
-        //.pipe(cleanCss({compatibility: 'ie8'}))
-        .pipe(rev())
-        .pipe(gulp.dest(distPath.css))
-        .pipe(rev.manifest('rev-manifest-css.json'))
-        .pipe(gulp.dest(distPath.manifest) );
+gulp.task('sass-release', ['htmlTemplate', 'sprite'], function(done) {
+
+    runSequence('images', function() {
+        gulp.src(sourcePath.scss)
+            .pipe(sass({
+                precision       : 10,
+                outputStyle     : 'compressed',
+                errLogToConsole : true
+            }).on('error', sass.logError))
+            //.pipe(autoprefixer({
+            //    browsers: ['> 1%', 'Last 2 versions', 'IE 8'],
+            //    cascade: false
+            //}))
+            //.pipe(cleanCss({compatibility: 'ie8'}))
+            .pipe(rev())
+            .pipe(gulp.dest(distPath.css))
+            .pipe(rev.manifest('rev-manifest-css.json'))
+            .pipe(gulp.dest(distPath.manifest) );
+        done();
+    });
+
 });
 
 
