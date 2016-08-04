@@ -35,6 +35,7 @@ gulp.task('esLint', function() {
                 "browser": true,
                 "es6": true
             },
+            "parser": "typescript-eslint-parser",
             "parserOptions": {
                 "ecmaVersion": 7,
                 "sourceType": "module",
