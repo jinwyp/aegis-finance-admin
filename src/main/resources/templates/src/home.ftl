@@ -17,7 +17,7 @@
 </head>
 <body>
 
-    <my-app>Loading...</my-app>
+    <page-admin>Loading1...</page-admin>
 
 
     <!-- 1. Load libraries -->
