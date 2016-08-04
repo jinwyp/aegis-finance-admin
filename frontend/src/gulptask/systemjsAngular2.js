@@ -10,16 +10,16 @@ var rev    = require('gulp-rev');
 
 
 var sourcePath = {
-    'ts'            : './js/**/*.ts',
+    'ts'            : 'js/**/*.ts',
+    'tsOutput'      : 'jsoutput/**/*.js',
     'jsConfig'      : 'js/systemjs.config.js',
-    'components'    : 'jspm_packages/**/*'
+    'components'    : 'node_modules/**/*'
 };
 
 var distPath = {
     'js'         : '../dist/jsoutput/',
-    'jsConfig'   : '../dist/jsoutput/',
-    'tsOutput'   : './jsoutput/',
-    'components' : '../dist/jspm_packages/',
+    'jsConfig'   : '../dist/js/',
+    'components' : '../dist/node_modules/',
     "manifest"   : "../dist/rev/"
 };
 
@@ -74,14 +74,10 @@ gulp.task('components', function() {
 
 
 
-gulp.task('js-release', ['components'], function(){
-    return gulp.src(sourcePath.jsPage)
-        .pipe(jspm({
-            //inject : true,
-            minify : true
-        }))
+gulp.task('js-release', ['ts'], function(){
+    return gulp.src(sourcePath.tsOutput)
         .pipe(rev())
-        .pipe(gulp.dest(distPath.jsPage))
+        .pipe(gulp.dest(distPath.js))
         .pipe(rev.manifest('rev-manifest-js.json'))
         .pipe(gulp.dest(distPath.manifest) );
 });

@@ -2,7 +2,7 @@
   "name": "angular2-quickstart",
   "version": "1.0.0",
   "scripts": {
-    "start": "tsc && npm run tscw ",
+    "start": "gulp dev",
     "tsc": "tsc",
     "tscw": "tsc -w",
     "typings": "typings"

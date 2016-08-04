@@ -19,7 +19,7 @@
     <script src="static/node_modules/systemjs/dist/system.src.js"></script>
 
     <!-- 2. Configure SystemJS -->
-    <script src="static/systemjs.config.js"></script>
+    <script src="static/js/systemjs.config.js"></script>
     <script>
       System.import('app').catch(function(err){ console.error(err); });
     </script>
