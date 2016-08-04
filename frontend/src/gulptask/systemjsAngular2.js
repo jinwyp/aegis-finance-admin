@@ -20,6 +20,7 @@ var sourcePath = {
 var distPath = {
     'js'                               : '../dist/js/',
     'jsPage'                           : '../dist/js/page/',
+    'tsOutput'                         : './jsoutput/',
     'components'                       : '../dist/jspm_packages/',
     "manifest"                         : "../dist/rev/"
 };
@@ -38,7 +39,7 @@ gulp.task('esLint', function() {
 gulp.task("ts", function () {
     return tsConfig.src()
         .pipe(ts(tsConfig))
-        .js.pipe(gulp.dest("dist321"));
+        .js.pipe(gulp.dest(distPath.tsOutput));
 });
 
 
