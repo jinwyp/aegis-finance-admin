@@ -1,7 +1,6 @@
 * -sw?
 .#*
-*#
-*~
+
 .classpath
 .project
 .settings
@@ -18,7 +17,6 @@ gradle
 gradlew
 gradlew.bat
 *.ipr
-/logs
 /files
 *.rdb
 workbench.xmi
@@ -43,7 +41,7 @@ src/main/resources/templates/dist
 
 frontend/dist
 frontend/src/css/stylesheets
-
+*auto-sprite*
 
 .tmp/
 files
@@ -63,13 +61,14 @@ backend/config/self.js
 
 # Ignore Windows desktop setting file
 desktop.ini
+*.iml
 
 
 
 
 
 # Logs
-*.log
+logs
 npm-debug.log*
 
 # Runtime data

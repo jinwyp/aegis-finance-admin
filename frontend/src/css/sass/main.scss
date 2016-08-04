@@ -1,2 +1,12 @@
-/*公用scss*/
+
+@import './helpers/_variables.scss';
+@import './base/_reset.scss';
+
+@import './helpers/_auto_sprite.scss';
+
+@import './layout/_container.scss';
+@import './layout/_header.scss';
+@import './layout/_footer.scss';
+
+
 

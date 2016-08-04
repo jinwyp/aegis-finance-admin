@@ -30,7 +30,7 @@ public class AngularJSConfigurer {
     }
 
     @Configuration
-    @Profile("prod")
+    @Profile({"staging","prod"})
     public static class ProductionConfig{
         @Autowired
         protected freemarker.template.Configuration configuration;

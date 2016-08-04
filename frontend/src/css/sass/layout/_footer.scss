@@ -1,0 +1,49 @@
+//底部样式开始 更新与2016-5-17
+#paymentFooter {
+  .footerInfo {
+    background: #292929;
+    color: #999;
+    padding-top: 25px;
+    padding-bottom: 18px;
+
+    .footerInfo-fl {
+      max-width: 1200px;
+      margin-left: auto;
+      margin-right: auto;
+      position: relative;
+      text-align: center;
+    }
+    li {
+      display: inline-block;
+      padding: 0 10px;
+      text-align: center;
+      background: url("#{$assetPath}/images/footer/indexBorder1.png") no-repeat right center;
+
+      a {
+        color: #999;
+        text-decoration: none;
+      }
+      &.noborder {
+        background: none;
+      }
+      &:hover a {
+        color: $hoverColor
+      }
+    }
+
+    p {
+      font-size: 12px;
+      text-align: center;
+      margin-top: 10px;
+    }
+    p.szfw-wrap {
+      margin-top: 20px;
+    }
+  }
+}
+.bottomAbsolute{
+  position: absolute;
+  bottom:0px;
+  width:100%;
+}
+//底部样式结束
