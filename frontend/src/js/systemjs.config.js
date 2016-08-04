@@ -8,16 +8,16 @@
 (function(global) {
     // map tells the System loader where to look for things
     var map = {
-        'app':                        'static/js', // 'dist',
+        'app':                        'static/jsoutput', // 'dist',
         '@angular':                   'static/node_modules/@angular',
         'angular2-in-memory-web-api': 'static/node_modules/angular2-in-memory-web-api',
         'rxjs':                       'static/node_modules/rxjs'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
-        'app':                        { main: 'main.js',  defaultExtension: 'js' },
+        'app':                        { main: 'page/login.js',  defaultExtension: 'js' },
         'rxjs':                       { defaultExtension: 'js' },
-        'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' },
+        'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' }
     };
     var ngPackageNames = [
         'common',
@@ -29,7 +29,7 @@
         'platform-browser-dynamic',
         'router',
         'router-deprecated',
-        'upgrade',
+        'upgrade'
     ];
     // Individual files (~300 requests):
     function packIndex(pkgName) {

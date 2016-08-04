@@ -74,7 +74,7 @@ gulp.task('components', function() {
 
 
 
-gulp.task('js-release', ['ts'], function(){
+gulp.task('js-release', ['ts', 'components'], function(){
     return gulp.src(sourcePath.tsOutput)
         .pipe(rev())
         .pipe(gulp.dest(distPath.js))
