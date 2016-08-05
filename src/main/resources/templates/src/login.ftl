@@ -1,42 +1,37 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE html >
+<html lang="zh-cmn-Hans">
 <head>
-    <title>Base Layout</title>
-    <link rel="stylesheet" type="text/css" href="/styles/main.css"/>
+
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" /> <!-- 优先使用 IE 最新版本和 Chrome -->
+    <meta name="renderer" content="webkit"> <!--360浏览器就会在读取到这个标签后，立即切换对应的内核。并将这个行为应用于这个二级域名下所有网址。-->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Cache-Control" content="no-siteapp" />
+
+    <title>供应链金融管理平台 - 登录</title>
+
+    <link rel="stylesheet" href="static/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="static/css/stylesheets/main.css"/>
+    <link rel="stylesheet" type="text/css" href="static/css/stylesheets/page/adminHome.css"/>
+
 </head>
 <body>
 <div>
-    <div ng-controller="Login" class="container" style="margin-top: 100px;">
-        <span id="errorInfo" style=""></span>
-        <form class="form-horizontal" role="form">
-            <h2 style="margin-left:4%">网站后台用户登录</h2>
-            <hr>
-            <!-- <div class="alert alert-danger" ng-show="errors.user.username[0]">{{errors.user.username[0]}}</div> -->
-            <div class="form-group">
-                <label for="input-username" class="col-sm-2 control-label">用户名</label>
-                <div class="col-sm-4">
-                    <input type="text" class="form-control" id="input-username" ng-model="admin.username" errors/>
-                </div>
-            </div>
-            <div class="form-group">
-                <label for="input-password" class="col-sm-2 control-label">密码</label>
-                <div class="col-sm-4">
-                    <input type="password" class="form-control" id="input-password" ng-model="admin.password"
-                           placeholder="Password">
-                </div>
-            </div>
-            <div class="form-group">
-                <div class="col-sm-offset-2 col-sm-4">
-                    <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="Login()">登录</button>
-                </div>
-            </div>
-        </form>
-    </div>
-</div>
+    <page-login>加载中...</page-login>
 
-<script type="text/javascript" src="${static('/bower_components/uri.js/src/URI.min.js')}"></script>
-<script type="text/javascript" src="${static('/bower_components/requirejs/require.js')}"></script>
-<script type="text/javascript" src="${static('/scripts/config.js')}"></script>
-<script type="text/javascript" src="${static('/scripts/rlogin.js')}"></script>
+
+    <!-- 1. Load libraries -->
+    <!-- Polyfill(s) for older browsers -->
+    <script src="static/node_modules/core-js/client/shim.min.js"></script>
+    <script src="static/node_modules/zone.js/dist/zone.js"></script>
+    <script src="static/node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="static/node_modules/systemjs/dist/system.src.js"></script>
+
+    <!-- 2. Configure SystemJS -->
+    <script src="static/js/systemjs.config.js"></script>
+    <script>
+      System.import('jsoutput/page/login.js').catch(function(err){ console.error(err); });
+    </script>
+
 </body>
 </html>

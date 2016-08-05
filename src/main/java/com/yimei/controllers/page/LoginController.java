@@ -1,7 +1,5 @@
 package com.yimei.controllers.page;
 
-import com.yimei.api.admin.AdminService;
-import com.yimei.boot.ext.mvc.support.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,10 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class LoginController {
-    @Autowired
-    private Session session;
-    @Autowired
-    private AdminService adminService;
+
 
     /**
      * 登录页面
@@ -28,13 +23,6 @@ public class LoginController {
         return "login";
     }
 
-    /**
-     * 退出登陆
-     */
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout() {
-        session.logout();
-        return "redirect:/login";
-    }
+
 
 }

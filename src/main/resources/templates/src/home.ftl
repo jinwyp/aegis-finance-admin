@@ -8,16 +8,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <title>供应链金融管理平台</title>
+    <title>供应链金融管理平台 - 管理首页</title>
 
     <link rel="stylesheet" href="static/node_modules/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="static/css/stylesheets/main.css"/>
     <link rel="stylesheet" type="text/css" href="static/css/stylesheets/page/adminHome.css"/>
 
 </head>
+
 <body>
 
-    <page-admin>Loading1...</page-admin>
+    <page-admin>加载中...</page-admin>
 
 
     <!-- 1. Load libraries -->
@@ -30,7 +31,7 @@
     <!-- 2. Configure SystemJS -->
     <script src="static/js/systemjs.config.js"></script>
     <script>
-      System.import('jsoutput/page/login.js').catch(function(err){ console.error(err); });
+      System.import('jsoutput/page/home.js').catch(function(err){ console.error(err); });
     </script>
 
 </body>
