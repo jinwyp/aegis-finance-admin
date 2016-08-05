@@ -15,3 +15,6 @@
 - 运行 gulp dev 进行ts编译,并监视 ts 文件修改自动编译成 js
 - 调试 angular2的chrome 工具 [Augury](https://augury.angular.io/)  
 
+
+
+### API 规范 请看DOCS 目录

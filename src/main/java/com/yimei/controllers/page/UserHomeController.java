@@ -20,7 +20,7 @@ public class UserHomeController {
     /**
      * 首页 页面
      */
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
     public String index() {
 //        if(session.getUser() != null) {
 //            return "home";

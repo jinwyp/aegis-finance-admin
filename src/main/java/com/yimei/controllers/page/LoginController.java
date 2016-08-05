@@ -13,13 +13,24 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LoginController {
 
+    /**
+     * 登录页面
+     */
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public String indexPage() {
+        return "redirect:/admin/login";
+    }
+
+
 
     /**
      * 登录页面
      */
 
-    @RequestMapping(value = "/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/login", method = RequestMethod.GET)
     public String loginPage() {
+
         return "login";
     }
 
