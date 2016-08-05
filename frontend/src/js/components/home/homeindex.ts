@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 
 
 
-export class AppComponent {
+export class HomeComponent {
 
     title = 'Tour of Heroes';
     hero = 'Windstorm';

@@ -8,7 +8,6 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Map;
 
 /**
  * Created by liuxinjie on 07/30/16.
@@ -25,26 +24,41 @@ public class AuthLoginController {
     private AdminService adminService;
 
 
+
+
     /**
      * 登陆方法
      */
-    @RequestMapping(value = "api/admin/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
-    public Object authLoginWithPassword(
-        @RequestParam(value = "userName", required = true)String userName,
-        @RequestParam(value = "password", required = true)String password
-    ) {
-//        return adminService.login(userName, password);
-        return new ResponseEntity<String>("{}", HttpStatus.OK);
+    @RequestMapping(value = "/api/admin/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    public Object authLoginWithPassword(String username, String password) {
+//        return adminService.login(username, password);
+        return new ResponseEntity<String>("{\n" +
+                "    \"success\" : true,\n" +
+                "    \"error\" : null,\n" +
+                "    \"meta\" : null,\n" +
+                "    \"data\" : {\n" +
+                "        \"id\" : 11,\n" +
+                "        \"orderNo\" : 1001\n" +
+                "    }\n" +
+                "}", HttpStatus.OK);
     }
 
 
     /**
      * 退出登陆
      */
-    @RequestMapping(value = "api/admin/logout", method = RequestMethod.GET)
-    public String logout() {
+    @RequestMapping(value = "/api/admin/logout", method = RequestMethod.GET)
+    public Object logout() {
         session.logout();
-        return "redirect:/login";
+        return new ResponseEntity<String>("{\n" +
+                "    \"success\" : true,\n" +
+                "    \"error\" : null,\n" +
+                "    \"meta\" : null,\n" +
+                "    \"data\" : {\n" +
+                "        \"id\" : 11,\n" +
+                "        \"orderNo\" : 1001\n" +
+                "    }\n" +
+                "}", HttpStatus.OK);
     }
 
 }

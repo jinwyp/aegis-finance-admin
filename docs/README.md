@@ -16,7 +16,7 @@
 
 使用RESTfull 风格 [RESTfull参考文章](http://mherman.org/blog/2016/03/13/designing-a-restful-api-with-node-and-postgres)
 
-POST /api/admin/login 登录
+POST /api/admin/login
 
 
 ### 接口返回格式
@@ -85,12 +85,12 @@ POST /api/admin/login 登录
 
 ```
 {
-    success : true,
-    error : null,
-    meta : null,
-    data : {
-        id : 11,
-        orderNo : 1001
+    "success" : true,
+    "error" : null,
+    "meta" : null,
+    "data" : {
+        "id" : 11,
+        "orderNo" : 1001
     }
 }
 ```

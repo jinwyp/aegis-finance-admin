@@ -84,6 +84,7 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
             }
 
         } else {
+            logger().error("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             logger().error("500", ex);
             if(!(ex instanceof EofException)){
                 handler500(request, ex);

@@ -1,6 +1,5 @@
 import { bootstrap }    from '@angular/platform-browser-dynamic';
-import { AppComponent } from '../components/home/homeindex';
+import { LoginComponent } from '../components/login/loginindex';
 
-console.log('1111111233');
-bootstrap(AppComponent);
+bootstrap(LoginComponent);
 

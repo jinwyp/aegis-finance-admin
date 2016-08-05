@@ -85,7 +85,7 @@ gulp.task('js-release', ['ts', 'components'], function(){
 
 
 
-gulp.task('watchJs', function() {
+gulp.task('watchJs', ['ts'], function() {
     gulp.watch(sourcePath.ts, ['esLint', 'ts']);
 });
 
