@@ -7,6 +7,8 @@
 
 管理后台网站的页面,由于使用Angular2, 页面路由只有两个
 
+/ 首页跳转到 /admin/login
+
 /admin/login 登录页面
 
 /admin/home  登录后管理员首页, 需要java端验证是否登录, 没有登录跳转到 登录页面
@@ -17,6 +19,7 @@
 使用RESTfull 风格 [RESTfull参考文章](http://mherman.org/blog/2016/03/13/designing-a-restful-api-with-node-and-postgres)
 
 POST /api/admin/login
+GET /api/admin/logout
 
 
 ### 接口返回格式
