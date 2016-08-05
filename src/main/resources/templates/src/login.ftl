@@ -17,7 +17,22 @@
 </head>
 <body>
 <div>
-    <page-login>加载中...</page-login>
+
+
+    <div class="container-fluid">
+
+        <div class="row">
+            <div class="col-sm-12">
+                <page-login>加载中...</page-login>
+            </div>
+        </div>
+
+
+    </div><!-- /.container -->
+
+
+
+
 
 
     <!-- 1. Load libraries -->

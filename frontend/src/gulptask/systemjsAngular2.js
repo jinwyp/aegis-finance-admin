@@ -10,17 +10,19 @@ var rev    = require('gulp-rev');
 
 
 var sourcePath = {
-    'ts'            : 'js/**/*.ts',
-    'tsOutput'      : 'jsoutput/**/*.js',
-    'jsConfig'      : 'js/systemjs.config.js',
-    'components'    : 'node_modules/**/*'
+    'ts'                 : 'js/**/*.ts',
+    'tsOutput'           : 'jsoutput/**/*.js',
+    'jsConfig'           : 'js/systemjs.config.js',
+    'componentsTemplate' : 'js/components/**/*.html',
+    'libs'         : 'node_modules/**/*'
 };
 
 var distPath = {
-    'js'         : '../dist/jsoutput/',
-    'jsConfig'   : '../dist/js/',
-    'components' : '../dist/node_modules/',
-    "manifest"   : "../dist/rev/"
+    'js'                 : '../dist/jsoutput/',
+    'jsConfig'           : '../dist/js/',
+    'componentsTemplate' : 'jsoutput/components/',
+    'libs'               : '../dist/node_modules/',
+    "manifest"           : "../dist/rev/"
 };
 
 
@@ -65,17 +67,20 @@ gulp.task('esLint', function() {
 gulp.task("ts", shell.task(['tsc']));
 
 
-gulp.task('components', function() {
-    gulp.src(sourcePath.components)
-        .pipe(gulp.dest(distPath.components));
+gulp.task('libs', function() {
+    gulp.src(sourcePath.libs)
+        .pipe(gulp.dest(distPath.libs));
     gulp.src(sourcePath.jsConfig)
         .pipe(gulp.dest(distPath.jsConfig));
 });
 
+gulp.task('componentsTemplate', function() {
+    gulp.src(sourcePath.componentsTemplate)
+        .pipe(gulp.dest(distPath.componentsTemplate));
+});
 
 
-
-gulp.task('js-release', ['ts', 'components'], function(){
+gulp.task('js-release', ['componentsTemplate', 'ts', 'libs'], function(){
     return gulp.src(sourcePath.tsOutput)
         .pipe(rev())
         .pipe(gulp.dest(distPath.js))
@@ -85,8 +90,8 @@ gulp.task('js-release', ['ts', 'components'], function(){
 
 
 
-gulp.task('watchJs', ['ts'], function() {
-    gulp.watch(sourcePath.ts, ['esLint', 'ts']);
+gulp.task('watchJs', ['ts', 'componentsTemplate'], function() {
+    gulp.watch(sourcePath.ts, ['esLint', 'ts', 'componentsTemplate']);
 });
 
 

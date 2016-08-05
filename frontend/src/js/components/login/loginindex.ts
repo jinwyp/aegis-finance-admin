@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
 import { User } from '../../model/user';
 
+declare var __moduleName: string;
+
 @Component({
     selector: 'page-login',
-    template: '<h1>管理登录</h1> <h1>{{title}}</h1> <h2>My favorite hero is: {{myHero.name}}</h2>  <p *ngIf="heroes.length > 3">There are many heroes!</p>' +
-                ' <ul> <li *ngFor="let hero of heroes">  {{ hero.username }} </li> </ul> ' +
-        '<button (click)="onClickMe()">Click me!</button> {{clickMessage}}' +
-        '<input #box (keyup)="onKey(box.value)"> <p>{{values}}</p>'
+    moduleId: __moduleName || module.id,
+    templateUrl: 'loginindex.html'
 })
 
 
