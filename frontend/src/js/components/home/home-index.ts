@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { Order } from '../../model/order';
-import { OrderDetailComponent } from '../../components/order/order-detail';
+import { ROUTER_DIRECTIVES } from '@angular/router';
+import { NavComponent } from '../navbar/navbar';
 import { OrderService } from '../../service/order';
 
 
@@ -12,33 +12,15 @@ declare var __moduleName: string;
     selector: 'page-admin',
     moduleId: __moduleName || module.id,
     templateUrl: 'home-index.html',
-    directives  : [OrderDetailComponent],
+    directives  : [ROUTER_DIRECTIVES, NavComponent],
     providers   : [OrderService]
 })
 
 
 
 export class HomeComponent {
-    constructor(
-        private orderService: OrderService
-    ) {}
 
-
-    title = 'Tour of Heroes';
-    heroes: Order[];
-    selectedHero: Order;
-
-    ngOnInit() {
-        this.getHeroes();
-    }
-
-    onSelect(hero: Order) {
-        this.selectedHero = hero;
-    }
-
-    getHeroes() {
-        this.orderService.getOrderList().then(heroes => this.heroes = heroes);
-    }
+    title = '管理员首页11';
 
 }
 
