@@ -16,7 +16,7 @@ import java.io.IOException;
  */
 @Configuration
 @AutoConfigureAfter({FreeMarkerAutoConfiguration.class})
-public class AngularJSConfigurer {
+public class FreemarkerConfigurer {
 
     @Configuration
     @Profile("dev")
