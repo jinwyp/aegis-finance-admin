@@ -6,9 +6,10 @@ import com.yimei.boot.exception.BusinessException;
 import com.yimei.boot.exception.NotFoundException;
 import com.yimei.boot.exception.UnauthorizedException;
 import com.yimei.boot.services.ExceptionReporter;
-import com.yimei.boot.utils.WithLogger;
 import org.apache.http.HttpStatus;
 import org.eclipse.jetty.io.EofException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
@@ -35,7 +36,9 @@ import java.util.Scanner;
  * Created by joe on 1/15/15.
  */
 @Service
-public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolver implements WithLogger {
+public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolver {
+    private static final Logger log = LoggerFactory.getLogger(KittHandlerExceptionResolver.class);
+
     @Autowired
     ExceptionReporter reporter;
     @Autowired
@@ -63,11 +66,11 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
                 || ex instanceof TypeMismatchException
                 || ex instanceof MissingServletRequestParameterException
                 || ex instanceof MethodArgumentNotValidException) {
-            logger().warn("400", request.getRequestURL().toString(),ex);
+            log.warn("400", request.getRequestURL().toString(), ex);
             modelAndView.setViewName("/http/400");
             response.setStatus(HttpStatus.SC_BAD_REQUEST);
         } else if (ex instanceof BusinessException) {
-                logger().warn("409", ex);
+                log.warn("409", ex);
             if(isAjaxRequest(request)){
                 try {
                     response.setHeader("content-type", "application/json;charset=UTF-8");
@@ -84,8 +87,8 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
             }
 
         } else {
-            logger().error("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
-            logger().error("500", ex);
+            log.error("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+            log.error("500", ex);
             if(!(ex instanceof EofException)){
                 handler500(request, ex);
             }
@@ -97,7 +100,7 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
 
     @Async
     private void handler500(HttpServletRequest request, Exception ex) {
-        logger().warn("开始发送邮件");
+        log.warn("开始发送邮件");
         try {
             if("application/json".equals(request.getContentType())){
                 reporter.handle(ex, request.getRequestURL().toString(), om.writeValueAsString(extractPostRequestBody(request)), getHeadersInfo(request), session.getUser());
@@ -105,9 +108,9 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
                 reporter.handle(ex, request.getRequestURL().toString(), om.writeValueAsString(request.getParameterMap()), getHeadersInfo(request), session.getUser());
             }
         } catch (Exception e) {
-            logger().warn("邮件发送失败", e);
+            log.warn("邮件发送失败", e);
         }
-        logger().warn("邮件发送结束");
+        log.warn("邮件发送结束");
     }
 
 
