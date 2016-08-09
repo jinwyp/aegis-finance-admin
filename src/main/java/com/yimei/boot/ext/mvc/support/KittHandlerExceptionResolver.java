@@ -2,11 +2,11 @@ package com.yimei.boot.ext.mvc.support;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yimei.boot.exception.BusinessException;
+import com.yimei.boot.exception.NotFoundException;
+import com.yimei.boot.exception.UnauthorizedException;
 import com.yimei.boot.services.ExceptionReporter;
 import com.yimei.boot.utils.WithLogger;
-import com.yimei.api.common.exception.BusinessException;
-import com.yimei.api.common.exception.NotFoundException;
-import com.yimei.api.common.exception.UnauthorizedException;
 import org.apache.http.HttpStatus;
 import org.eclipse.jetty.io.EofException;
 import org.springframework.beans.TypeMismatchException;

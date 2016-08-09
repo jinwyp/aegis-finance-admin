@@ -1,21 +1,17 @@
 package com.yimei.entity.admin;
 
-import org.hibernate.mapping.IdGenerator;
 import org.springframework.format.annotation.DateTimeFormat;
 
-import javax.persistence.Entity;
-import javax.persistence.PrimaryKeyJoinColumn;
-import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
 /**
  * Created by joe on 11/4/14.
  */
-@Entity
-@Table(name = "finance_admins")
-@PrimaryKeyJoinColumn(name = "id")
-public class Admin extends IdGenerator implements Serializable {
+//@Entity
+//@Table(name = "finance_admins")
+//@PrimaryKeyJoinColumn(name = "id")
+public class Admin implements Serializable {
     private int id;                         //id
     private String userName;                //账号
     private String password;                //密码
