@@ -1,20 +1,16 @@
 package com.yimei.boot.services;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.yimei.boot.utils.WithLogger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.time.ZonedDateTime;
 
 /**
  * Created by joe on 2/26/15.
  */
 @Service
-public class ExceptionReporter implements WithLogger {
+public class ExceptionReporter {
     @Value("${mail.to}")
     private String to;
 
