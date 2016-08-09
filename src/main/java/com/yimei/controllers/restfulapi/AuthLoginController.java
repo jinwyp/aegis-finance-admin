@@ -21,9 +21,6 @@ public class AuthLoginController {
     @Autowired
     private Session session;
 
-
-
-
     /**
      * 登陆方法
      */

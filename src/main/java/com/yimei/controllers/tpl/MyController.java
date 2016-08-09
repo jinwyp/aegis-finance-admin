@@ -46,7 +46,7 @@ public class MyController {
     private ProcessEngine processEngine;
 
 
-    @RequestMapping("/")
+    @RequestMapping("")
     public String index() {
         return "tpl/apply";
 
