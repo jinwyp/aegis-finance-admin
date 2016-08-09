@@ -1,13 +1,12 @@
 package com.yimei.entity.tpl;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 
 /**
@@ -16,12 +15,13 @@ import java.io.Serializable;
 @Data
 @Entity
 @Table(name = "test")
-@NoArgsConstructor
-@AllArgsConstructor
+@NoArgsConstructor(staticName = "static")
+@AllArgsConstructor(access = AccessLevel.PROTECTED)
 public class Tpl implements Serializable {
     @Id
     @GeneratedValue
     private int id;
+    @NotNull
     private String name;
 
     public Tpl(String name) {
