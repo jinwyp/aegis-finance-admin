@@ -559,6 +559,17 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
+          <root url="jar:///Users/liuxinjie/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.16.10/7bd6fc5b3fb7a77c710226ffaa785b404b620ba0/lombok-1.16.10.jar!/"/>
+        </CLASSES>
+        <JAVADOC/>
+        <SOURCES>
+          <root url="jar:///Users/liuxinjie/.gradle/caches/modules-2/files-2.1/org.projectlombok/lombok/1.16.10/85e9acd5d746afed0a985e2c9328b8766cdca971/lombok-1.16.10-sources.jar!/"/>
+        </SOURCES>
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
           <root url="jar:///Users/liuxinjie/.gradle/caches/modules-2/files-2.1/net.sf.dozer/dozer/5.4.0/cb6d3d030b8d7336af78c8d4933907f706dd5b50/dozer-5.4.0.jar!/"/>
         </CLASSES>
         <JAVADOC/>

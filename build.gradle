@@ -106,6 +106,7 @@ dependencies {
 //    compile('org.activiti:spring-boot-starter-rest-api:5.17.0')
     compile('org.springframework.boot:spring-boot-starter-actuator:1.4.0.RELEASE')
     compile('org.springframework.boot:spring-boot-starter-data-jpa:1.4.0.RELEASE')
+    compile('org.projectlombok:lombok:1.16.10')
 
     //dozer
     compile('net.sf.dozer:dozer:5.4.0') {
