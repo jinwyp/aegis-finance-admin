@@ -1,5 +1,0 @@
-CREATE TABLE comp(
-   `comp_id` INT(11) unsigned NOT NULL AUTO_INCREMENT,
-   `comp_name` VARCHAR(30) NOT NULL COMMENT '名称',
-   PRIMARY KEY (`comp_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT 'comp表';
