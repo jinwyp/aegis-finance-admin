@@ -1,6 +1,6 @@
 package com.yimei.boot.ext.mvc.support;
 
-import com.yimei.api.admin.representations.Admin;
+import com.yimei.entity.admin.Admin;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;

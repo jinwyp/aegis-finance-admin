@@ -2,9 +2,6 @@ package com.yimei.boot.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.boot.ext.mvc.interceptors.ACLInterceptor;
-import com.yimei.boot.ext.mvc.interceptors.SecureTokenInterceptor;
-import com.yimei.boot.ext.mvc.support.ClientInfoMethodArgumentHandler;
-import com.yimei.boot.ext.mvc.support.CurrentUserMethodArgumentHandler;
 import com.yimei.boot.ext.mvc.support.JsonResultMethodArgumentResolver;
 import com.yimei.boot.ext.mvc.support.KittHandlerExceptionResolver;
 import com.yimei.boot.jackson.Java8TimeModule;
@@ -44,15 +41,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Autowired
     protected ACLInterceptor aclInterceptor;
     @Autowired
-    protected CurrentUserMethodArgumentHandler currentUserMethodArgumentHandler;
-    @Autowired
     protected JsonResultMethodArgumentResolver jsonResultMethodArgumentResolver;
-
-    @Autowired
-    protected SecureTokenInterceptor secureTokenInterceptor;
-    @Autowired
-    protected ClientInfoMethodArgumentHandler clientInfoMethodArgumentHandler;
-
     @Autowired
     protected KittHandlerExceptionResolver kittHandlerExceptionResolver;
     @Autowired
@@ -63,14 +52,11 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(aclInterceptor).addPathPatterns("/**");
-        registry.addInterceptor(secureTokenInterceptor).addPathPatterns("/**");
     }
 
     //添加自定义方法参数解析器
     public void addArgumentResolvers(List<HandlerMethodArgumentResolver> argumentResolvers) {
-        argumentResolvers.add(currentUserMethodArgumentHandler);                                        //方法参数直接拿当前用户对象
         argumentResolvers.add(jsonResultMethodArgumentResolver);
-        argumentResolvers.add(clientInfoMethodArgumentHandler);                                         //获取客户端信息
     }
 
     @Override
