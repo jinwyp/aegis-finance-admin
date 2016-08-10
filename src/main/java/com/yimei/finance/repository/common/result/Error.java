@@ -16,6 +16,11 @@ public class Error {
     private String message;
     private String field;
 
+    public Integer getCode() {
+        if (code == null) return 1000;
+        return code;
+    }
+
     public String getField() {
         if (field == null) return "unknown";
         return field;

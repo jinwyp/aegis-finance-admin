@@ -16,7 +16,7 @@ import java.lang.*;
 //@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Result implements Serializable {
     private boolean success;
-    private java.lang.Error error;
+    private Error error;
     private Page meta;
     private Object data;
 
@@ -25,7 +25,7 @@ public class Result implements Serializable {
         return this;
     }
 
-    public Result setError(java.lang.Error error) {
+    public Result setError(Error error) {
         this.error = error;
         return this;
     }
@@ -44,7 +44,7 @@ public class Result implements Serializable {
         return new  Result().setSuccess(true);
     }
 
-    public static Result error(java.lang.Error error){
+    public static Result error(Error error){
         return new  Result().setSuccess(false).setError(error);
     }
 }
