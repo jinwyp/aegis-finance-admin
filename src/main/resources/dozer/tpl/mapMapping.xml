@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mappings xmlns="http://dozer.sourceforge.net"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://dozer.sourceforge.net
+          http://dozer.sourceforge.net/schema/beanmapping.xsd">
+
+
+<!--<mapping map-id="myTestMapping">
+    <class-a>com.zeus.object.SourceObject</class-a>
+    <class-b>java.util.Map</class-b>
+    <field>
+        <a set-method="setAlive">alive</a>
+        <b key="hahah">this</b>
+    </field>
+    <field-exclude>
+        <a>gender</a>
+        <b>this</b>
+    </field-exclude>
+
+</mapping>-->
+
+</mappings>
