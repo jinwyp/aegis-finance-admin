@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1470833260490" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
-  <process id="myProcess" isClosed="false" isExecutable="true" name="My process" processType="None">
+  <process id="FinanceMainProcess" isClosed="false" isExecutable="true" name="FinanceMainProcess" processType="None">
     <startEvent id="startFinanceWorkFlow" name="客户申请金融服务"/>
     <userTask activiti:exclusive="true" id="assignOnlineTrader" name="分配线上交易员"/>
     <sequenceFlow id="flow1" sourceRef="startFinanceWorkFlow" targetRef="assignOnlineTrader"/>
@@ -103,7 +103,7 @@
     <sequenceFlow id="flow40" sourceRef="riskManagerAuditSuccess" targetRef="completeFinanceWorkFlow"/>
   </process>
   <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=2;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
-    <bpmndi:BPMNPlane bpmnElement="myProcess">
+    <bpmndi:BPMNPlane bpmnElement="FinanceMainProcess">
       <bpmndi:BPMNShape bpmnElement="startFinanceWorkFlow" id="Shape-startFinanceWorkFlow">
         <omgdc:Bounds height="32.0" width="32.0" x="60.0" y="20.0"/>
         <bpmndi:BPMNLabel>
