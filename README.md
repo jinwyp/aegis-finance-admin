@@ -18,3 +18,7 @@
 
 
 ### API 规范 请看DOCS 目录
+
+
+###Swagger文档查看
+http://localhost:8002/swagger-ui.html
