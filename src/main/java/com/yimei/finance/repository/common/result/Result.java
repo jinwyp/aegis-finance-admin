@@ -17,7 +17,7 @@ import java.lang.*;
 public class Result implements Serializable {
     private boolean success;
     private java.lang.Error error;
-    private PageUtils meta;
+    private Page meta;
     private Object data;
 
     public Result setSuccess(boolean success) {
@@ -30,7 +30,7 @@ public class Result implements Serializable {
         return this;
     }
 
-    public Result setMeta(PageUtils meta) {
+    public Result setMeta(Page meta) {
         this.meta = meta;
         return this;
     }
