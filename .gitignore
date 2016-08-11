@@ -25,6 +25,7 @@ workbench.xmi
 *.gz
 *.tar
 target
+/.metadata
 
 
 
