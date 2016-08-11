@@ -6,6 +6,7 @@ import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -21,7 +22,7 @@ public class UserController {
      * @param user                   user 对象
      */
     @RequestMapping(value = "/api/user", method = RequestMethod.POST)
-    public Result userAddMethod(User user) {
+    public Result addUserMethod(User user) {
         String userId = String.valueOf(identityService.createUserQuery().count() + 1);
         user.setId(userId);
         identityService.saveUser(user);
@@ -32,5 +33,11 @@ public class UserController {
      * 删除用户
      * @param id                     user id
      */
+    @RequestMapping(value = "/api/user", method = RequestMethod.DELETE)
+    public Result deleteUserMethod(@RequestParam(value = "id", required = true)String id) {
+        User user = identityService.createUserQuery().userId(id).singleResult();
+
+        return Result.success().setData(user);
+    }
 
 }
