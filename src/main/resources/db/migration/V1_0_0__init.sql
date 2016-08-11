@@ -24,6 +24,7 @@ CREATE TABLE `T_finance_apply_info` (
   `applyUserName` varchar(45) DEFAULT NULL COMMENT '申请人姓名',
   `applyCompanyName` varchar(45) DEFAULT NULL COMMENT '申请公司名称',
   `workFlowInstanceId` varchar(45) DEFAULT NULL COMMENT '工作流实例id',
+  `currentNode` varchar(45) DEFAULT NULL COMMENT '当前所在的工作流节点',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '申请信息表';
 
@@ -31,6 +32,7 @@ CREATE TABLE `T_finance_apply_info_bills` (
   `id` int(11) NOT NULL,
   `T_finance_apply_info_id` int(11) DEFAULT NULL,
   `path` varchar(100) DEFAULT NULL COMMENT '路径',
+  `billtype` varchar(50) DEFAULT NULL COMMENT '类别',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '申请信息账单表';
 
