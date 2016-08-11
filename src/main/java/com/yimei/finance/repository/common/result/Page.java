@@ -14,25 +14,25 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Page implements Serializable {
     private int page = 1;
-    private int pagesize = 10;
+    private int count = 10;
     //开始检索的地方
-    private int indexNum;
-    private int count;                 //总条数
+    private Long offset;
+    private Long total;                 //总条数
 
     public int getPage() {
         //如果page 太大，超过了 maxPage(最大页数),
-        //如果pagesize > 10， 设置page 为最大页， 如果pagesize <= 10, 设置page 为第一页
-        if (count % pagesize == 0 && page > (count / pagesize)) {
-            this.page = count / pagesize;
-        } else if (page > (count / pagesize + 1)) {
-            this.page = count / pagesize + 1;
+        //如果count > 10， 设置page 为最大页， 如果count <= 10, 设置page 为第一页
+        if (total % count == 0 && page > (total / count)) {
+            this.page = (int) (total / count);
+        } else if (page > (total / count + 1)) {
+            this.page = (int) (total / count + 1);
         }
         if (page == 0) page = 1;
         return this.page;
     }
 
-    public int getIndexNum() {
-        return (getPage() - 1) * getPagesize();
+    public int getOffset() {
+        return (getPage() - 1) * getCount();
     }
 
     public void setPage(int page) {

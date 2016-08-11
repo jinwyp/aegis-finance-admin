@@ -44,6 +44,14 @@ public class Result implements Serializable {
         return new  Result().setSuccess(true);
     }
 
+    public static Result error(String error){
+        return new  Result().setSuccess(false).setError(new Error(1000, error, null));
+    }
+
+    public static Result error(Integer code, String error){
+        return new  Result().setSuccess(false).setError(new Error(code, error, null));
+    }
+
     public static Result error(Error error){
         return new  Result().setSuccess(false).setError(error);
     }

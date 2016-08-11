@@ -7,7 +7,6 @@ import com.yimei.finance.repository.common.result.Result;
 import com.yimei.finance.service.tpl.TplServiceImpl;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.User;
-import org.activiti.engine.impl.persistence.entity.GroupEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -26,9 +25,16 @@ public class TestController {
     @RequestMapping("/api/test/1")
     public Object test1(Page page) {
         tplService.save(new Tpl("jack"));
-        GroupEntity groupEntity = new GroupEntity();
-        User user = identityService.createUserQuery().orderByUserId().desc().list().get(0);
-        System.out.println(" -------------------------- " + user.getId() + " --- " + user.getFirstName() + " --- " + user.getLastName() + " --- " + user.getEmail());
+//        User user = identityService.createUserQuery().orderByUserId().desc().list().get(0);
+//        System.out.println(" -------------------------- " + user.getId() + " --- " + user.getFirstName() + " --- " + user.getLastName() + " --- " + user.getEmail());
+        User user = identityService.newUser("");
+        user.setId(null);
+        user.setFirstName("jack");
+        user.setLastName("liu");
+        identityService.saveUser(user);
+        System.out.println(" ------------------ " + user.getId());
+        System.out.println(" ------------------ " + user.getLastName());
+
         return Result.success().setData("hello").setMeta(page);
     }
 
