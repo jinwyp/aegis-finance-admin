@@ -20,6 +20,7 @@ export class LoginComponent {
         private userHttp: UserService
     ) {}
 
+    active = true;
     submitted = false;
     currentUser: User = new User();
 
@@ -34,6 +35,12 @@ export class LoginComponent {
         // this.orderService.getOrderList().then(heroes => this.heroes = heroes);
     }
 
+    newUser() {
+
+        this.currentUser = new User();
+        this.active = false;
+        setTimeout(() => this.active = true, 0);
+    }
 
     get diagnostic() { return JSON.stringify(this.currentUser); }
 }
