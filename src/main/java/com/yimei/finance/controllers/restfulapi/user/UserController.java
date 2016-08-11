@@ -20,12 +20,17 @@ public class UserController {
      * 添加用户
      * @param user                   user 对象
      */
-    @RequestMapping(value = "/user", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/user", method = RequestMethod.POST)
     public Result userAddMethod(User user) {
         String userId = String.valueOf(identityService.createUserQuery().count() + 1);
         user.setId(userId);
         identityService.saveUser(user);
         return Result.success().setData(user);
     }
+
+    /**
+     * 删除用户
+     * @param id                     user id
+     */
 
 }
