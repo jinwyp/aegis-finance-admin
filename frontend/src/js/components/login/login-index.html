@@ -1,17 +1,58 @@
-<h1>管理登录</h1>
-
-
-<h1>{{title}}</h1>
 
 
 
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>管理登录</h1>
+            <h1>{{diagnostic}}</h1>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <form class="form-horizontal">
+                <div class="form-group has-feedback" [class.has-success]="true" [class.has-error]="false">
+                    <label for="inputUsername" class="col-sm-2 control-label">用户名</label>
+                    <div class="col-sm-4">
+                        <input type="text" class="form-control" id="inputUsername" name="username" [(ngModel)]="currentUser.username" required>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </div>
+
+                <div class="form-group has-feedback" [class.has-success]="false" [class.has-error]="true">
+                    <label for="inputPassword" class="col-sm-2 control-label">密码</label>
+                    <div class="col-sm-4">
+                        <input type="password" class="form-control" id="inputPassword" name="password" [(ngModel)]="currentUser.password" required>
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                    </div>
+                </div>
 
 
-<h2>My Heroes</h2>
-<ul class="heroes">
-    <li *ngFor="let hero of heroes" [class.selected]="hero === selectedHero" (click)="onSelect(hero)">
-        <span class="badge">{{hero.id}}</span> {{hero.name}}
-    </li>
-</ul>
+                <div class="form-group">
+                    <label for="power" class="col-sm-2 control-label">选择:</label>
+                    <div class="col-sm-4">
+                        <select class="form-control" id="power" required>
+                            <option *ngFor="let p of powers" [value]="p">{{p}}</option>
+                        </select>
+                    </div>
 
-<order-detail [hero]="selectedHero"></order-detail>
+                </div>
+
+
+                <div class="form-group">
+                    <div class="col-sm-offset-2 col-sm-10">
+                        <button type="submit" class="btn btn-default">登录</button>
+                    </div>
+                </div>
+            </form>
+
+
+        </div>
+    </div>
+
+
+</div><!-- /.container -->
+
+

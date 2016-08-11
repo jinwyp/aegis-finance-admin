@@ -97,7 +97,7 @@ gulp.task('js-release', ['componentsTemplate', 'ts', 'libs'], function(){
 
 
 gulp.task('watchJs', ['ts', 'componentsTemplate'], function() {
-    gulp.watch([sourcePath.ts, sourcePath.componentsTemplate], ['esLint', 'ts', 'componentsTemplate']);
+    gulp.watch([sourcePath.ts, sourcePath.componentsTemplate], ['ts', 'componentsTemplate']);
 });
 
 

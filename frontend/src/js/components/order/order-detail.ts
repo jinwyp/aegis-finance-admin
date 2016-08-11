@@ -6,8 +6,7 @@
 import { Component, EventEmitter, Input, OnInit, OnDestroy, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Order } from '../../model/order';
-import { OrderService } from '../../service/order';
+import { Order, OrderService } from '../../service/order';
 
 
 declare var __moduleName: string;

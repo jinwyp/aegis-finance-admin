@@ -1,24 +1,29 @@
 /**
- * Created by JinWYP on 8/8/16.
+ * Created by JinWYP on 8/11/16.
  */
-
 
 import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
+class User {
 
+    id :number;
+    username : string;
+    password : string;
 
-class Order {
-    id: number;
-    name: string;
+    constructor() {
+        this.id  = 0;
+        this.username  = '';
+        this.password  = '';
+    }
 }
 
 
 
 @Injectable()
-class OrderService {
+class UserService {
 
     private ApiUrlOrder = 'app2/heroes';  // URL to web api
 
@@ -34,16 +39,16 @@ class OrderService {
 
     getOrderList() {
         return this.http.get(this.ApiUrlOrder).toPromise()
-            .then(response => response.json().data as Order[])
+            .then(response => response.json().data as User[])
             .catch(this.handleError);
     }
 
-    getOrderById(id: number) {
+    getUserById(id: number) {
         return this.getOrderList().then(heroes => heroes.find(hero => hero.id === id));
     }
 
     // Add new Hero
-    private post(hero: Order): Promise<Order> {
+    private post(hero: User): Promise<User> {
         let headers = new Headers({'Content-Type': 'application/json'});
 
         return this.http.post(this.ApiUrlOrder, JSON.stringify(hero), {headers: headers}).toPromise()
@@ -52,7 +57,7 @@ class OrderService {
     }
 
     // Update existing Hero
-    private put(hero: Order) {
+    private put(hero: User) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
@@ -63,7 +68,7 @@ class OrderService {
             .catch(this.handleError);
     }
 
-    delete(hero: Order) {
+    delete(hero: User) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
@@ -74,7 +79,7 @@ class OrderService {
     }
 
 
-    save(hero: Order): Promise<Order>  {
+    save(hero: User): Promise<User>  {
         if (hero.id) {
             return this.put(hero);
         }
@@ -84,5 +89,4 @@ class OrderService {
 }
 
 
-
-export {Order, OrderService}
+export {User, UserService}
