@@ -5,7 +5,6 @@
 .project
 .settings
 build
-target
 dependency-reduced-pom.xml
 *.sublime-*
 /scratch
@@ -25,7 +24,8 @@ workbench.xmi
 *.tgz
 *.gz
 *.tar
-
+target
+/.metadata
 
 
 

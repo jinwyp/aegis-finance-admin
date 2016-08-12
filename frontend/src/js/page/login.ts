@@ -1,6 +1,9 @@
 
-import { bootstrap }    from '@angular/platform-browser-dynamic';
-import { LoginComponent } from '../components/login/login-index';
 
-bootstrap(LoginComponent);
+import { platformBrowserDynamic }    from '@angular/platform-browser-dynamic';
+import { LoginModule } from './login.module';
+
+
+
+platformBrowserDynamic().bootstrapModule(LoginModule);
 

@@ -1,17 +1,84 @@
-<h1>管理登录</h1>
-
-
-<h1>{{title}}</h1>
 
 
 
+<div class="container-fluid">
+
+    <div class="row">
+        <div class="col-sm-12">
+            <h1>管理登录</h1>
+            <h2>{{diagnostic}}</h2>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-12">
+            <div [hidden]="submitted">
+                <form class="form-horizontal" *ngIf="active" (ngSubmit)="login()" #loginForm="ngForm">
+                    <div class="form-group has-feedback" [class.has-success]="username.valid && username.dirty" [class.has-error]="username.invalid && username.dirty">
+                        <label for="inputUsername" class="col-sm-2 control-label">用户名</label>
+                        <div class="col-sm-4">
+                            <input type="text" class="form-control" id="inputUsername" name="username" [(ngModel)]="currentUser.username" #username="ngModel" required >
+                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" [class.hidden]="username.invalid ||  username.pristine"></span>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" [class.hidden]="username.valid || username.pristine"></span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="help-block" [class.hidden]="username.valid || username.pristine">请填写用户名!</span>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group has-feedback" [class.has-success]="password.valid && password.dirty" [class.has-error]="password.invalid && password.dirty">
+                        <label for="inputPassword" class="col-sm-2 control-label">密码</label>
+                        <div class="col-sm-4">
+                            <input type="password" class="form-control" id="inputPassword" name="password" [(ngModel)]="currentUser.password" #password="ngModel" required>
+                            <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true" [class.hidden]="password.invalid ||  password.pristine"></span>
+                            <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true" [class.hidden]="password.valid || password.pristine"></span>
+                        </div>
+                        <div class="col-sm-4">
+                            <span class="help-block" [class.hidden]="password.valid || password.pristine">请填写密码!</span>
+                        </div>
+                    </div>
 
 
-<h2>My Heroes</h2>
-<ul class="heroes">
-    <li *ngFor="let hero of heroes" [class.selected]="hero === selectedHero" (click)="onSelect(hero)">
-        <span class="badge">{{hero.id}}</span> {{hero.name}}
-    </li>
-</ul>
+                    <div class="form-group">
+                        <label for="power" class="col-sm-2 control-label">选择:</label>
+                        <div class="col-sm-4">
+                            <select class="form-control" id="power" required>
+                                <option *ngFor="let p of powers" [value]="p">{{p}}</option>
+                            </select>
+                        </div>
 
-<order-detail [hero]="selectedHero"></order-detail>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default" [disabled]="!loginForm.form.valid">登录</button>
+                            <button type="button" class="btn btn-default" (click)="clearInput()">清空</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div [hidden]="!submitted">
+                <h2>你提交的信息:</h2>
+                <div class="row">
+                    <div class="col-sm-3">用户名</div>
+                    <div class="col-sm-9  pull-left">{{ currentUser.username }}</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-3">密码</div>
+                    <div class="col-sm-9 pull-left">{{ currentUser.password }}</div>
+                </div>
+
+                <br>
+                <button class="btn btn-default" (click)="showInfoAfterlogin()">返回</button>
+            </div>
+
+        </div>
+    </div>
+
+
+</div><!-- /.container -->
+
+

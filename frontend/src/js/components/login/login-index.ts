@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { Order } from '../../model/order';
-import { OrderDetailComponent } from '../../components/order/order-detail';
-import { OrderService } from '../../service/order';
+
+import { User, UserService } from '../../service/user';
 
 declare var __moduleName: string;
 
@@ -9,9 +8,7 @@ declare var __moduleName: string;
 @Component({
     selector    : 'page-login',
     moduleId    : __moduleName || module.id,
-    templateUrl : 'login-index.html',
-    directives  : [OrderDetailComponent],
-    providers   : [OrderService]
+    templateUrl : 'login-index.html'
 })
 
 
@@ -19,24 +16,34 @@ declare var __moduleName: string;
 export class LoginComponent {
 
     constructor(
-        private orderService: OrderService
+        private userHttp: UserService
     ) {}
 
+    active = true;
+    submitted = false;
+    currentUser: User = new User();
 
-    title = 'Tour of Heroes';
-    heroes: Order[];
-    selectedHero: Order;
+    powers = ['Really Smart', 'Super Flexible', 'Super Hot', 'Weather Changer'];
 
     ngOnInit() {
-        this.getHeroes();
     }
 
-    onSelect(hero: Order) {
-        this.selectedHero = hero;
+
+    login() {
+        this.submitted = true;
+        // this.orderService.getOrderList().then(heroes => this.heroes = heroes);
     }
 
-    getHeroes() {
-        this.orderService.getOrderList().then(heroes => this.heroes = heroes);
+    showInfoAfterlogin() {
+        this.submitted = false;
     }
+
+    clearInput() {
+
+        this.currentUser = new User();
+        this.active = false;
+        setTimeout(() => this.active = true, 0);
+    }
+
+    get diagnostic() { return JSON.stringify(this.currentUser); }
 }
-

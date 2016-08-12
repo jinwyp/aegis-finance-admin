@@ -5,7 +5,7 @@
 
 var gulp   = require('gulp');
 var eslint = require('gulp-eslint');
-var shell  = require('gulp-shell');
+var exec   = require('child_process').exec;
 var rev    = require('gulp-rev');
 
 
@@ -64,7 +64,13 @@ gulp.task('esLint', function() {
 });
 
 
-gulp.task("ts", shell.task(['tsc']));
+gulp.task("ts", function (cb) {
+    exec('tsc', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+});
 
 
 gulp.task('libs', function() {
@@ -91,7 +97,7 @@ gulp.task('js-release', ['componentsTemplate', 'ts', 'libs'], function(){
 
 
 gulp.task('watchJs', ['ts', 'componentsTemplate'], function() {
-    gulp.watch([sourcePath.ts, sourcePath.componentsTemplate], ['esLint', 'ts', 'componentsTemplate']);
+    gulp.watch([sourcePath.ts, sourcePath.componentsTemplate], ['ts', 'componentsTemplate']);
 });
 
 

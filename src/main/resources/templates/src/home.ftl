@@ -16,11 +16,9 @@
 
     <base href="/admin/home">
 </head>
-
 <body>
 
 <page-admin>加载中...</page-admin>
-
 
 
     <!-- 1. Load libraries -->

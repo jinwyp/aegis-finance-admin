@@ -8,12 +8,17 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { ORDERS } from '../mock/mock-orders';
-import { Order } from '../model/order';
+
+
+class Order {
+    id: number;
+    name: string;
+}
+
 
 
 @Injectable()
-export class OrderService {
+class OrderService {
 
     private ApiUrlOrder = 'app2/heroes';  // URL to web api
 
@@ -77,3 +82,7 @@ export class OrderService {
     }
 
 }
+
+
+
+export {Order, OrderService}
