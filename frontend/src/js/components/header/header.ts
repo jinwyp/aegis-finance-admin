@@ -1,21 +1,19 @@
+/**
+ * Created by JinWYP on 8/8/16.
+ */
 import { Component } from '@angular/core';
-
 
 
 
 declare var __moduleName: string;
 
+
 @Component({
-    selector: 'page-admin',
+    selector: 'header',
     moduleId: __moduleName || module.id,
-    templateUrl: 'home-index.html'
+    templateUrl: 'header.html'
 })
+export class headerComponent {
 
-
-
-export class HomeComponent {
-
-    title = '管理员首页11';
 
 }
-

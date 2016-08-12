@@ -3,7 +3,6 @@
  */
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { OrderDetailComponent } from '../../components/order/order-detail';
 import { Order, OrderService } from '../../service/order';
 
 
@@ -14,8 +13,7 @@ declare var __moduleName: string;
 @Component({
     selector: 'order-list',
     moduleId: __moduleName || module.id,
-    templateUrl: 'order-list.html',
-    directives  : [OrderDetailComponent]
+    templateUrl: 'order-list.html'
 })
 
 

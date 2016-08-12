@@ -2,18 +2,16 @@
  * Created by JinWYP on 8/8/16.
  */
 import { Component } from '@angular/core';
-import { ROUTER_DIRECTIVES } from '@angular/router';
 
 declare var __moduleName: string;
 
 
 @Component({
-    selector: 'nav-bar',
+    selector: 'left-menu',
     moduleId: __moduleName || module.id,
-    templateUrl: 'navbar.html',
-    directives  : [ROUTER_DIRECTIVES],
+    templateUrl: 'left-menu.html'
 })
-export class NavComponent {
+export class LeftMenuComponent {
 
 
 }

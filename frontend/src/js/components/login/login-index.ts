@@ -8,8 +8,7 @@ declare var __moduleName: string;
 @Component({
     selector    : 'page-login',
     moduleId    : __moduleName || module.id,
-    templateUrl : 'login-index.html',
-    directives  : []
+    templateUrl : 'login-index.html'
 })
 
 
