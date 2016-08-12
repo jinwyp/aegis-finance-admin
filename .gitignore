@@ -16,6 +16,7 @@ gradle
 gradlew
 gradlew.bat
 *.ipr
+*.iml
 /files
 *.rdb
 workbench.xmi
