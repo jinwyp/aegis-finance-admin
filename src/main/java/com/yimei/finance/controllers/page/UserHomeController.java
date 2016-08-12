@@ -18,7 +18,7 @@ public class UserHomeController {
     private Session session;
 
     /**
-     * 首页 页面
+     * 管理首页 页面
      */
     @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
     public String index() {
@@ -28,5 +28,18 @@ public class UserHomeController {
 //            return "redirect:/login";
 //        }
         return "home";
+    }
+
+    /**
+     * 管理页面 为了前端路由需要重定向
+     */
+    @RequestMapping(value = "/admin/home/**", method = RequestMethod.GET)
+    public String adminHome() {
+//        if(session.getUser() != null) {
+//            return "home";
+//        } else {
+//            return "redirect:/login";
+//        }
+        return "forward:/admin/home";
     }
 }
