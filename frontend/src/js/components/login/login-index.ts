@@ -35,7 +35,11 @@ export class LoginComponent {
         // this.orderService.getOrderList().then(heroes => this.heroes = heroes);
     }
 
-    newUser() {
+    showInfoAfterlogin() {
+        this.submitted = false;
+    }
+
+    clearInput() {
 
         this.currentUser = new User();
         this.active = false;
