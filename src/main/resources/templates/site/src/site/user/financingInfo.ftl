@@ -359,13 +359,6 @@
             <!--友情链接开始-->
             <ul class="footerInfo-fl">
                 <li>友情链接：</li>
-                <#list FriendlyLinkList as fl>
-                    <#if fl_index lt 20>
-                        <li><a href="${fl.url}" target="_blank">${fl.companyname}</a></li>
-                        <#else>
-                            <#break>
-                    </#if>
-                </#list>
                 <li><a href="/teach/friendlylink" target="_new">更多...</a></li>
             </ul>
             <!--友情链接结束-->
