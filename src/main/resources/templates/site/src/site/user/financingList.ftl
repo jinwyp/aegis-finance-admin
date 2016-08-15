@@ -154,12 +154,92 @@
 
 
         <!--右侧主内容开始-->
+        <!--<div class="financeCon ms-controller" ms-controller="test">-->
+            <!--<input ms-duplex="@name">-->
+            <!--<p>Hello,{{@name}}!</p>-->
+            <!--<ul>-->
+                <!--<li ms-for="($index,el) in @array">{{$index}}--{{el}}</li>-->
+            <!--</ul>-->
+        <!--</div>-->
         <div class="financeCon ms-controller" ms-controller="test">
-            <input ms-duplex="@name">
-            <p>Hello,{{@name}}!</p>
-            <ul>
-                <li ms-for="($index,el) in @array">{{$index}}--{{el}}</li>
-            </ul>
+            <div class="application ">
+                <div class="borderB clearfix">
+                    <h4><span></span>融资详情</h4>
+                    <div class="floatR">
+                        <span><em></em>了解业务类型</span>
+                        <a href="#">我要融资</a>
+                    </div>
+                </div>
+                <form action="">
+                    <label for="startDay">申请时间:</label>
+                    <input type="text" id="startDay">
+                    <label for="endDay">到</label>
+                    <input type="text" id="endDay">
+                    <label for="status">审核状态:</label>
+                    <select name="" id="status">
+                        <option value="">全部</option>
+                        <option value="">待审核</option>
+                        <option value="">补充材料</option>
+                        <option value="">审核通过</option>
+                        <option value="">审核不通过</option>
+                    </select>
+                    <br/>
+                    <label for="number">业务编号:</label>
+                    <input type="text" id="number">
+                    <label for="type">业务类型:</label>
+                    <select name="" id="type">
+                        <option value="">全部</option>
+                        <option value="">煤易融</option>
+                        <option value="">煤易贷</option>
+                        <option value="">煤易购</option>
+                    </select>
+                    <label for="user"></label>
+                    <input type="text" id="user" value="请输入申请人姓名">
+                    <input type="button" value="查询">
+                    <input type="button" value="导出Excel" id="excel" class="excel">
+                </form>
+                <table>
+                    <tr class="border">
+                        <th>序号</th>
+                        <th>业务编号</th>
+                        <th>业务类型</th>
+                        <th>申请时间</th>
+                        <th>申请人</th>
+                        <th>拟融资总额状态<br/>(万元)</th>
+                        <th>使用时间<br/>(天)</th>
+                        <th>审核状态</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr class="borderB">
+                        <td>序号</td>
+                        <td>业务编号</td>
+                        <td>业务类型</td>
+                        <td>申请时间</td>
+                        <td>申请人</td>
+                        <td class="bold">2000000000</td>
+                        <td class="bold">232</td>
+                        <td class="green">待审核</td>
+                        <td class="blueA"><a href="#">查看详情</a></td>
+                    </tr>
+                    <tr class="borderB">
+                        <td>序号</td>
+                        <td>业务编号</td>
+                        <td>业务类型</td>
+                        <td>申请时间</td>
+                        <td>申请人</td>
+                        <td class="bold">2000000000</td>
+                        <td class="bold">232</td>
+                        <td class="green">待审核</td>
+                        <td class="blueA"><a href="#">查看详情</a></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!--<input ms-duplex="@name">-->
+            <!--<p>Hello,{{@name}}!</p>-->
+            <!--<ul>-->
+            <!--<li ms-for="($index,el) in @array">{{$index}}&#45;&#45;{{el}}</li>-->
+            <!--</ul>-->
         </div>
         <!--右侧主内容结束-->
     </div>
