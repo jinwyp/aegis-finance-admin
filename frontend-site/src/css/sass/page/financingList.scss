@@ -1,5 +1,6 @@
 
 @import '../helpers/_variables.scss';
+@import "../components/_datePicker.scss";
 
 $borderColor:#e4e4e4;
 .financeManageWrap{
@@ -114,24 +115,49 @@ $borderColor:#e4e4e4;
           font-size: 14px;
           label{
 
+          }
+          .time{
+            display: inline-block;
+            position: relative;
+            margin:0 10px;
+            input[type='text']{
+              width: 168px;
+              height: 32px;
+              border:1px solid $borderColor;
+              margin-bottom: 22px;
+              padding-left: 10px;
+              font-size: 14px;
+              outline: none;
+              &:focus{
+                border-color: #00b7ec;
+              }
+            }
+            .startDate,.endDate{
+              background: url("#{$assetPath}/css/images/datepicker/icon_calendar_gray.png") no-repeat 143px center;
+              &:focus{
+                background: url("#{$assetPath}/css/images/datepicker/icon_calendar_color.png") no-repeat 143px center;
+              }
+            }
 
           }
-          input[type='text']{
+          .margin-l{
+            margin:0 10px;
             width: 168px;
             height: 32px;
-            margin:0 10px;
             border:1px solid $borderColor;
             margin-bottom: 22px;
             padding-left: 10px;
             font-size: 14px;
+            outline: none;
           }
-          input[type='button']{
+          input[type='button'],input[type='submit']{
             width: 110px;
             height: 32px;
             margin-left: 20px;
             background-color: #f9f9f9;
             font-size: 14px;
             border:1px solid $borderColor;
+            outline: none;
           }
           input::-webkit-input-placeholder{
             color: #cccccc;
@@ -157,9 +183,10 @@ $borderColor:#e4e4e4;
             border-radius: 0;
             margin:0 10px;
             background: none;
+            outline: none;
           }
         }
-        table{
+        table.list{
           width: 100%;
           font-size: 14px;
           tr.border{
