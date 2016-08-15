@@ -1,0 +1,385 @@
+//头部css 更新与2016-5-17
+$hoverColor: #00b7ec;
+$headerBgColor: #292929;
+$color_border: #e4e4e4;
+
+//黑色头部开始
+#paymentHeader {
+  .headWrap {
+    height: 35px;
+    background: $headerBgColor;
+    font-size: 12px;
+    color: #fff;
+    font-family: "microsoft yahei";
+    position: relative;
+    z-index: 100;
+
+    .wrap1200 {
+      width: 1200px;
+      margin: 0 auto;
+
+      .menuList {
+        float: left;
+
+        li > span {
+          vertical-align: middle;
+        }
+        .red{
+          color: #fe6e27;
+          font-size: 14px;
+          font-family: "Arial";
+        }
+        li {
+          float: left;
+          position: relative;
+          background: url("#{$assetPath}/css/images/header/indexBorder.png") no-repeat right  center;
+          line-height: 35px;
+          a {
+            color: #fff;
+            display: inline-block;
+            &:hover {
+              color: $hoverColor;
+              text-decoration: none;
+            }
+            &.blue{color:$hoverColor;}
+          }
+          &.noborder {
+            background: none;
+          }
+        }
+        .hoverDiv:hover .hideMenu {
+          display: block
+        }
+      }
+      .leftMenuList{
+        li{
+          padding: 0px 5px;
+        }
+      }
+      .rightMenuList {
+        float: right;
+        li{
+          padding: 0px 18px;
+          position: relative;
+          .Nav{
+            width: 485px!important;
+            height: 208px;
+            background-color: white;
+            position: absolute;
+            top:35px;
+            right: 0;
+            z-index: 99;
+            border-right:1px solid $color_border;
+            border-bottom:1px solid $color_border;
+            border-left:1px solid $color_border;
+            padding: 25px;
+            display: none;
+            div{
+              h2{
+                font-size: 14px;
+                color: #333333;
+                font-weight: bold;
+                .headBg{
+                  width:4px;
+                  height: 16px;
+                  display: inline-block;
+                  background-color: $hoverColor;
+                  margin-right: 8px;
+                  vertical-align: middle;
+                }
+              }
+              table{
+                margin:10px 0 0 12px;
+                border-right:1px solid $color_border;
+                td{
+                  padding-right:36px ;
+                  a{
+                    color: #666;
+                    font-size: 14px;
+                    &:hover{
+                      color: $hoverColor;
+                    }
+                  }
+                }
+              }
+              .noborder{
+                border: none;
+              }
+            }
+            .floatR{
+              float: right;
+            }
+            .floatL{
+              float: left;
+            }
+          }
+          .phoneHelper{
+            width: 385px!important;
+            height: 210px;
+            background-color: white;
+            position: absolute;
+            top:35px;
+            right: 0;
+            z-index: 99;
+            border-right:1px solid $color_border;
+            border-bottom:1px solid $color_border;
+            border-left:1px solid $color_border;
+            padding: 9px 30px 0 30px;
+            display: none;
+            div{
+              width: 160px;
+              h2{
+                font-size: 14px;
+                color: #333333;
+                font-weight: bold;
+                text-align: center;
+              }
+            }
+            .floatR{
+              float: right;
+            }
+            .floatL{
+              float: left;
+            }
+          }
+        }
+        li.hoverDiv:hover{
+          background-color: white;
+          a.hoverTitle{
+            color:$hoverColor ;
+          }
+        }
+        .paddingRight0{
+          padding-right: 0;
+        }
+      }
+    }
+  }
+}
+//黑色头部结束
+
+//导航样式开始
+.g-nav{
+  float:right;
+  line-height: 40px;
+  ul,li{
+    list-style: none;
+    padding: 0;
+    margin:0;
+  }
+  li{
+    float: left;
+    position: relative;
+    border-top:2px solid #ffffff;
+    border-left:2px solid #ffffff;
+    border-right:2px solid #ffffff;
+    a{text-decoration:none;}
+    &:hover{
+      transition:all 0.5s;
+      .ico_down{
+        transform:rotate(360deg);
+        transition:all 0.5s;
+        background-image: url("#{$assetPath}/css/images/header/ico_up.png");
+      }
+      .navFist{
+        color:$hoverColor!important;
+      }
+    }
+    a.navFist{
+      font-size: 16px;
+      font-family: "Microsoft Yahei";
+      outline: none;
+      color:#333333!important;
+      padding:0 4px 34px 4px;
+      transition:all 0.5s;
+      &:hover{
+        transition:all 0.5s;
+        color:$hoverColor!important;
+      }
+    }
+    .ico_hot{
+      width:10px;
+      height:12px;
+      background-image: url("#{$assetPath}/css/images/header/hot.png");
+      position:absolute;
+      top:32px;
+      right:0;
+
+    }
+    .ico_down{
+      width:9px;
+      height:7px;
+      background-image: url("#{$assetPath}/css/images/header/ico_down.png");
+      position:absolute;
+      top:42px;
+      right:19px;
+    }
+    &.slideDl:hover{
+      border-top:2px solid #e4e4e4;
+      border-left:2px solid #e4e4e4;
+      border-right:2px solid #e4e4e4;
+      background-color:#f4f6f8;
+      transition:all 0.3s;
+
+    }
+    &:hover{
+      transition:all 0.3s;
+      .slide{
+        transition:all 0.3s;
+        display:block;
+      }
+      a.navFist{
+        transition:all 0.3s;
+        border-bottom: 3px solid $hoverColor;
+      }
+    }
+  }
+  .normalLi{
+    padding:24px 20px 0 20px !important;
+  }
+  .slideDl-left{
+    padding:24px 10px 0 20px !important;
+  }
+  .slideDl-right{
+    padding:24px 20px 0 10px !important;
+  }
+  .slideDl{
+    padding:24px 30px 0 30px !important;
+    width: 110px!important;
+  }
+  .lastLi{
+    padding-right:0!important;
+  }
+  .active{
+    a.navFist{
+      border-bottom: 3px solid $hoverColor;
+      color:$hoverColor!important;
+      .ico_down{
+        background-image:url("#{$assetPath}/css/images/header/ico_up.png");
+      }
+    }
+  }
+  .slide{
+    display:none;
+    position:absolute;
+    left:-2px;
+    z-index:9999;
+    width:110px;
+    text-align: center;
+    background:#f4f6f8;
+    border-bottom:2px solid #e4e4e4;
+    border-left:2px solid #e4e4e4;
+    border-right:2px solid #e4e4e4;
+    padding:10px 10px 15px 10px;
+    box-shadow: 0 1px rgba(0, 0, 0, 0);
+    dd{
+      border-bottom: 1px solid #e4e4e4;
+      a{
+        color:#333333;
+        line-height:36px;
+        font-size:16px;
+        transition:all 0.3s;
+        text-decoration:none;
+        &:hover{
+          color:$hoverColor;
+          padding-left:2px;
+          .block{
+            background:$hoverColor;
+          }
+        }
+        .block{
+          display:inline-block;
+          width:3px;
+          height:3px;
+          vertical-align:middle;
+          margin-right:5px;
+        }
+      }
+    }
+    dd.noborder{border-bottom:0;}
+  }
+}
+
+.g-logo-bar-wrap{border-bottom:1px solid #e4e4e4;}
+.g-logo-bar {
+  height: 92px;
+  width: 1200px;
+  margin: 0 auto;
+  position: relative;
+
+  ul, li {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+  .g-logo {
+    float: left;
+    width: 270px;
+    height: 40px;
+    margin-top: 24px;
+  }
+}
+//导航样式结束
+
+//subheader开始
+#subHeader{
+  .subHeaderWrap{
+    height: 85px;
+    background: #fff;
+    box-shadow: 0px 2px 3px #ddd;
+    -ms-box-shadow: 0px 2px 3px #ddd;
+    border-bottom: 2px solid #f8f8f8\9;
+    margin-bottom: 2px;
+    .subHeader1000{
+      width: 1200px;
+      padding-top: 17px;
+      margin: 0 auto;
+      .logo-title{
+        float: left;
+        a{
+          width: 100px;
+          height: 51px;
+          display: inline-block;
+          background-image:url("#{$assetPath}/css/images/header/log-title.png");
+        }
+        .subHeaderTit{
+          margin-left: 10px;
+          font-size: 18px;
+          color:#666;
+          line-height: 50px;
+          display: inline-block;
+          vertical-align: bottom;
+        }
+      }
+
+    }
+    .subNavList{
+      float: right;
+      ul{
+        padding-top: 5px;
+        li{
+          list-style: none;
+          float: left;
+          padding: 0 32px;
+          line-height: 42px;
+          a{
+            font-size: 17px;
+            text-decoration: none;
+            color: #000000;
+            &:hover{color:#00b7ec;}
+          }
+        }
+        .lastLi{
+          padding: 0 0 0 32px;
+        }
+        .active{
+          a{
+            color:#00b7ec;
+          }
+        }
+      }
+
+    }
+  }
+}
+//subheader结束

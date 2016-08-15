@@ -7,24 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <title><%= pageTitle %></title>
+    <title>${title}</title>
 
-    <link rel="stylesheet" href="<%= staticPath %>/jspm_packages/github/twbs/bootstrap@3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<%= staticPath %>/css/stylesheets/main.css">
+    <link rel="stylesheet" href="${staticPath}/jspm_packages/github/twbs/bootstrap@3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${staticPath}/css/stylesheets/main.css">
 
 
 
     <!-- HTMLshiv for IE -->
     <!--[if lte IE 9]>
-    <script src="<%= staticPath %>/jspm_packages/html5shiv/dist/html5shiv.min.js"></script>
+    <script src="${staticPath}/jspm_packages/html5shiv/dist/html5shiv.min.js"></script>
     <![endif]-->
 
-    <link type="image/x-icon" rel="shortcut icon" href="<%= staticPath %>/css/images/favicon.ico" />
+    <link type="image/x-icon" rel="shortcut icon" href="${staticPath}/css/images/favicon.ico" />
 
     <meta name="keywords" content="易煤网">
     <meta name="description" content="易煤网">
 
-    <link rel="stylesheet" href="<%= staticPath %>/css/stylesheets/page/financingInfo.css">
+    <link rel="stylesheet" href="${staticPath}/css/stylesheets/page/financingInfo.css">
 </head>
 <body>
 <!-- header start -->
@@ -93,11 +93,11 @@
                     <div class="phoneHelper hideMenu">
                         <div class="floatL">
                             <h2>易煤助手</h2>
-                            <img src="<%= staticPath %>/css/images/header/yimei_helper.png" alt="易煤助手">
+                            <img src="${staticPath}/css/images/header/yimei_helper.png" alt="易煤助手">
                         </div>
                         <div class="floatR">
                             <h2>易煤资讯</h2>
-                            <img src="<%= staticPath %>/css/images/header/yimei_news.png" alt="易煤资讯">
+                            <img src="${staticPath}/css/images/header/yimei_news.png" alt="易煤资讯">
                         </div>
                     </div>
                 </li>
@@ -347,11 +347,11 @@
                 </li>
                 <li class="maintit weixin">
                     <p>易煤助手</p>
-                    <img src="<%= staticPath %>/css/images/header/yimei_helper.png" alt="易煤助手" title="扫一扫易煤助手" width="99" height="99">
+                    <img src="${staticPath}/css/images/header/yimei_helper.png" alt="易煤助手" title="扫一扫易煤助手" width="99" height="99">
                 </li>
                 <li class="maintit weixin weixin2">
                     <p>易煤资讯</p>
-                    <img src="<%= staticPath %>/css/images/header/yimei_news.png" alt="易煤资讯" title="扫一扫易煤资讯"  width="99" height="99">
+                    <img src="${staticPath}/css/images/header/yimei_news.png" alt="易煤资讯" title="扫一扫易煤资讯"  width="99" height="99">
                 </li>
             </ul>
         </div>
@@ -359,13 +359,6 @@
             <!--友情链接开始-->
             <ul class="footerInfo-fl">
                 <li>友情链接：</li>
-                <#list FriendlyLinkList as fl>
-                    <#if fl_index lt 20>
-                        <li><a href="${fl.url}" target="_blank">${fl.companyname}</a></li>
-                        <#else>
-                            <#break>
-                    </#if>
-                </#list>
                 <li><a href="/teach/friendlylink" target="_new">更多...</a></li>
             </ul>
             <!--友情链接结束-->
@@ -376,11 +369,11 @@
             <p>© 2015 易煤网 All rights reserved   |   和略电子商务(上海)有限公司 ｜ 沪ICP备14052754号</p>
             <p class="szfw-wrap">
                 <a href="https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9yn01mg1nbic8l4vjp1q8m" target="_blank" rel="nofollow">
-                    <img src="<%= staticPath %>/css/images/footer/shgs.png" height="31"  width="90" />
+                    <img src="${staticPath}/css/images/footer/shgs.png" height="31"  width="90" />
                 </a>
                 &nbsp;
                 <a id="___szfw_logo___" href="https://credit.szfw.org/CX20150831011158100383.html" target="_blank" rel="nofollow">
-                    <img src="<%= staticPath %>/css/images/footer/cxwz.png" height="31"  width="90" />
+                    <img src="${staticPath}/css/images/footer/cxwz.png" height="31"  width="90" />
                 </a>
             </p>
         </div>
@@ -456,25 +449,25 @@
 
 
 
-<script src="<%= staticPath %>/jspm_packages/system.js"></script>
-<script src="<%= staticPath %>/js/config.js"></script>
+<script src="${staticPath}/jspm_packages/system.js"></script>
+<script src="${staticPath}/js/config.js"></script>
 
 
 
-<% if (env === 'staging' || env === 'prod') { %>
+<#if env == 'staging' || env == 'prod' >
 <!-- Remove this statement if you want to run the on the fly transpiler -->
 <!-- 生产环境使用 bundle.js 文件 -->
-<script src="<%= staticPath %>/js/page/userCenter.bundle.js"></script>
-<% } %>
+<script src="${staticPath}/js/page/userCenter.bundle.js"></script>
+</#if>
 
 <script>
-    System.import('<%= staticPath %>/js/page/userCenter.js')
+    System.import('${staticPath}/js/page/userCenter.js')
 </script>
 
 <!--<script>-->
-<!--System.import('<%= staticPath %>/js/page/application.js')-->
+<!--System.import('${staticPath}/js/page/application.js')-->
 <!--</script>-->
-<!--<script src="<%= staticPath %>/js/page/jquery.SuperSlide.2.1.1.js"></script>-->
+<!--<script src="${staticPath}/js/page/jquery.SuperSlide.2.1.1.js"></script>-->
 
 </body>
 </html>

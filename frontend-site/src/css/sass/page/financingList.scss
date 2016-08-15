@@ -1,0 +1,267 @@
+
+@import '../helpers/_variables.scss';
+@import "../components/_datePicker.scss";
+
+$borderColor:#e4e4e4;
+.financeManageWrap{
+  padding: 12px 0 50px 0;
+  background: #f6f6f6;
+  min-height: 600px;
+  .financeManage{
+    width: 1200px;
+    margin: 0 auto;
+    //侧边栏样式开始
+    .finance_sideBar{
+      width: 130px;
+      background: #ffffff;
+      padding: 26px 0 0 26px;
+      min-height: 400px;
+      float: left;
+      h3{
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 25px;
+      }
+      ul{
+        li{
+          margin-bottom: 25px;
+          &:hover{
+            a{
+              color: #00b7ec;
+            }
+            span{
+              background-position: 0px center;
+            }
+          }
+          a{
+            color: #333333;
+            text-decoration: none;
+          }
+          span{
+            width: 8px;
+            height: 10px;
+            display: inline-block;
+            margin-left: 10px;
+            background: url("#{$assetPath}/css/images/finance/sideBar-trigle.png") no-repeat -8px center;
+          }
+        }
+        .active{
+          a{
+            color: #00b7ec;
+            text-decoration: none;
+          }
+          span{
+            background-position: 0px center;
+          }
+        }
+      }
+    }
+    //侧边栏样式结束
+
+    //我的申请右侧内容样式开始
+    .financeCon{
+      background: #ffffff;
+      width: 1060px;
+      float: right;
+      .application{
+        padding: 20px;
+        .borderB{
+          border-bottom: 1px solid $borderColor;
+          h4{
+            font-size: 16px;
+            font-weight: bold;
+            padding-bottom: 10px;
+
+            float: left;
+            span{
+              width: 2px;
+              height: 14px;
+              display: inline-block;
+              background-color: #1fb8ea;
+              margin-right: 12px;
+            }
+          }
+          .floatR{
+            float: right;
+            font-size: 12px;
+            padding-bottom: 7px;
+            span{
+              color: #0f7191;
+              em{
+                width: 14px;
+                height: 14px;
+                display: inline-block;
+                background: url("#{$assetPath}/css/images/finance/question-ico.png") no-repeat center;
+                vertical-align: sub;
+                margin-right: 5px;
+              }
+            }
+            a{
+              width: 70px;
+              height: 24px;
+              display: inline-block;
+              background: #fd6e35;
+              color: #ffffff;
+              border-radius: 2px;
+              line-height: 24px;
+              text-align: center;
+              margin-left: 20px;
+              text-decoration: none;
+            }
+          }
+        }
+        form{
+          padding: 22px 0 0 0;
+          font-size: 14px;
+          label{
+
+          }
+          .time{
+            display: inline-block;
+            position: relative;
+            margin:0 10px;
+            input[type='text']{
+              width: 168px;
+              height: 32px;
+              border:1px solid $borderColor;
+              margin-bottom: 22px;
+              padding-left: 10px;
+              font-size: 14px;
+              outline: none;
+              &:focus{
+                border-color: #00b7ec;
+              }
+            }
+            .startDate,.endDate{
+              background: url("#{$assetPath}/css/images/datepicker/icon_calendar_gray.png") no-repeat 143px center;
+              &:focus{
+                background: url("#{$assetPath}/css/images/datepicker/icon_calendar_color.png") no-repeat 143px center;
+              }
+            }
+
+          }
+          .margin-l{
+            margin:0 10px;
+            width: 168px;
+            height: 32px;
+            border:1px solid $borderColor;
+            margin-bottom: 22px;
+            padding-left: 10px;
+            font-size: 14px;
+            outline: none;
+          }
+          input[type='button'],input[type='submit']{
+            width: 110px;
+            height: 32px;
+            margin-left: 20px;
+            background-color: #f9f9f9;
+            font-size: 14px;
+            border:1px solid $borderColor;
+            outline: none;
+          }
+          input::-webkit-input-placeholder{
+            color: #cccccc;
+          }
+          input:-moz-placeholder{
+            color: #cccccc;
+          }
+          input::-moz-placeholder{
+            color: #cccccc;
+          }
+          input:-ms-input-placeholder{
+            color: #cccccc;
+          }
+          .excel{
+            background-image: url("#{$assetPath}/css/images/finance/excel.png");
+            background-repeat: no-repeat;
+            padding-left: 28px;
+          }
+          select{
+            width: 168px;
+            height: 32px;
+            border:1px solid $borderColor;
+            border-radius: 0;
+            margin:0 10px;
+            background: none;
+            outline: none;
+          }
+        }
+        table.list{
+          width: 100%;
+          font-size: 14px;
+          tr.border{
+            border:1px dotted $borderColor;
+          }
+          tr.borderB{
+            border-bottom:1px dotted $borderColor;
+          }
+          tr{
+            th{
+              background: #f5f5f5;
+              padding: 8px 0;
+              vertical-align: middle;
+              text-align: center;
+              line-height: 18px;
+            }
+            td{
+              height: 80px;
+              vertical-align: middle;
+              text-align: center;
+              line-height: 18px;
+            }
+            .green{
+              color: #18aa6b;
+              font-weight: bold;
+            }
+            .gray{
+              color: #999999;
+              font-weight: bold;
+            }
+            .bold{
+              color: #000000;
+              font-weight: bold;
+              font-family: 'Arial';
+            }
+            .orangeA{
+              a{
+                width: 75px;
+                height: 27px;
+                display: inline-block;
+                border:1px solid #fd6e35;
+                color: #fd6e35;
+                border-radius: 2px;
+                text-decoration: none;
+                line-height: 27px;
+                transition: all 0.3s;
+                &:hover{
+                  background: #fd6e35;
+                  color: #ffffff;
+                  border-color: #fd6e35;
+                }
+              }
+            }
+            .blueA{
+              a{
+                width: 75px;
+                height: 27px;
+                display: inline-block;
+                border:1px solid #007193;
+                color: #007193;
+                border-radius: 2px;
+                text-decoration: none;
+                line-height: 27px;
+                transition: all 0.3s;
+                &:hover{
+                  background: #1fb8ea;
+                  color: #ffffff;
+                  border-color: #1fb8ea;
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+    //我的申请右侧内容样式结束
+  }
+}

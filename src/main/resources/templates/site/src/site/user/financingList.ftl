@@ -7,24 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <title><%= pageTitle %></title>
+    <title>${title}</title>
 
-    <link rel="stylesheet" href="<%= staticPath %>/jspm_packages/github/twbs/bootstrap@3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<%= staticPath %>/css/stylesheets/main.css">
+    <link rel="stylesheet" href="${staticPath}/jspm_packages/github/twbs/bootstrap@3.3.7/css/bootstrap.min.css">
+    <link rel="stylesheet" href="${staticPath}/css/stylesheets/main.css">
 
 
 
     <!-- HTMLshiv for IE -->
     <!--[if lte IE 9]>
-    <script src="<%= staticPath %>/jspm_packages/html5shiv/dist/html5shiv.min.js"></script>
+    <script src="${staticPath}/jspm_packages/html5shiv/dist/html5shiv.min.js"></script>
     <![endif]-->
 
-    <link type="image/x-icon" rel="shortcut icon" href="<%= staticPath %>/css/images/favicon.ico" />
+    <link type="image/x-icon" rel="shortcut icon" href="${staticPath}/css/images/favicon.ico" />
 
     <meta name="keywords" content="易煤网">
     <meta name="description" content="易煤网">
 
-    <link rel="stylesheet" href="<%= staticPath %>/css/stylesheets/page/financingList.css">
+    <link rel="stylesheet" href="${staticPath}/css/stylesheets/page/financingList.css">
 </head>
 <body>
 <!-- header start -->
@@ -93,11 +93,11 @@
                     <div class="phoneHelper hideMenu">
                         <div class="floatL">
                             <h2>易煤助手</h2>
-                            <img src="<%= staticPath %>/css/images/header/yimei_helper.png" alt="易煤助手">
+                            <img src="${staticPath}/css/images/header/yimei_helper.png" alt="易煤助手">
                         </div>
                         <div class="floatR">
                             <h2>易煤资讯</h2>
-                            <img src="<%= staticPath %>/css/images/header/yimei_news.png" alt="易煤资讯">
+                            <img src="${staticPath}/css/images/header/yimei_news.png" alt="易煤资讯">
                         </div>
                     </div>
                 </li>
@@ -154,12 +154,92 @@
 
 
         <!--右侧主内容开始-->
+        <!--<div class="financeCon ms-controller" ms-controller="test">-->
+            <!--<input ms-duplex="@name">-->
+            <!--<p>Hello,{{@name}}!</p>-->
+            <!--<ul>-->
+                <!--<li ms-for="($index,el) in @array">{{$index}}--{{el}}</li>-->
+            <!--</ul>-->
+        <!--</div>-->
         <div class="financeCon ms-controller" ms-controller="test">
-            <input ms-duplex="@name">
-            <p>Hello,{{@name}}!</p>
-            <ul>
-                <li ms-for="($index,el) in @array">{{$index}}--{{el}}</li>
-            </ul>
+            <div class="application ">
+                <div class="borderB clearfix">
+                    <h4><span></span>融资详情</h4>
+                    <div class="floatR">
+                        <span><em></em>了解业务类型</span>
+                        <a href="javascript:void(0);" id="finance">我要融资</a>
+                    </div>
+                </div>
+                <form action="">
+                    <label for="startDate">申请时间:</label>
+                    <div class="time"><input type="text" id="startDate" class="iIpt iIpt_sm startDate" placeholder="yyyy-mm-dd" /></div>
+                    <label for="endDate">到</label>
+                    <div class="time"><input type="text" id="endDate" class="iIpt iIpt_sm endDate" placeholder="yyyy-mm-dd" /></div>
+                    <label for="status">审核状态:</label>
+                    <select name="" id="status">
+                        <option value="">全部</option>
+                        <option value="">待审核</option>
+                        <option value="">补充材料</option>
+                        <option value="">审核通过</option>
+                        <option value="">审核不通过</option>
+                    </select>
+                    <br/>
+                    <label for="number">业务编号:</label>
+                    <input type="text" id="number" class="margin-l">
+                    <label for="type">业务类型:</label>
+                    <select name="" id="type">
+                        <option value="">全部</option>
+                        <option value="">煤易融</option>
+                        <option value="">煤易贷</option>
+                        <option value="">煤易购</option>
+                    </select>
+                    <label for="user"></label>
+                    <input type="text" id="user" placeholder="请输入申请人姓名" class="margin-l">
+                    <input type="submit" value="查询">
+                    <input type="button" value="导出Excel" id="excel" class="excel">
+                </form>
+                <table class="list">
+                    <tr class="border">
+                        <th>序号</th>
+                        <th>业务编号</th>
+                        <th>业务类型</th>
+                        <th>申请时间</th>
+                        <th>申请人</th>
+                        <th>拟融资总额状态<br/>(万元)</th>
+                        <th>使用时间<br/>(天)</th>
+                        <th>审核状态</th>
+                        <th>操作</th>
+                    </tr>
+                    <tr class="borderB">
+                        <td>序号</td>
+                        <td>业务编号</td>
+                        <td>业务类型</td>
+                        <td>申请时间</td>
+                        <td>申请人</td>
+                        <td class="bold">2000000000</td>
+                        <td class="bold">232</td>
+                        <td class="green">待审核</td>
+                        <td class="blueA"><a href="#">查看详情</a></td>
+                    </tr>
+                    <tr class="borderB">
+                        <td>序号</td>
+                        <td>业务编号</td>
+                        <td>业务类型</td>
+                        <td>申请时间</td>
+                        <td>申请人</td>
+                        <td class="bold">2000000000</td>
+                        <td class="bold">232</td>
+                        <td class="green">待审核</td>
+                        <td class="blueA"><a href="#">查看详情</a></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!--<input ms-duplex="@name">-->
+            <!--<p>Hello,{{@name}}!</p>-->
+            <!--<ul>-->
+            <!--<li ms-for="($index,el) in @array">{{$index}}&#45;&#45;{{el}}</li>-->
+            <!--</ul>-->
         </div>
         <!--右侧主内容结束-->
     </div>
@@ -231,11 +311,11 @@
                 </li>
                 <li class="maintit weixin">
                     <p>易煤助手</p>
-                    <img src="<%= staticPath %>/css/images/header/yimei_helper.png" alt="易煤助手" title="扫一扫易煤助手" width="99" height="99">
+                    <img src="${staticPath}/css/images/header/yimei_helper.png" alt="易煤助手" title="扫一扫易煤助手" width="99" height="99">
                 </li>
                 <li class="maintit weixin weixin2">
                     <p>易煤资讯</p>
-                    <img src="<%= staticPath %>/css/images/header/yimei_news.png" alt="易煤资讯" title="扫一扫易煤资讯"  width="99" height="99">
+                    <img src="${staticPath}/css/images/header/yimei_news.png" alt="易煤资讯" title="扫一扫易煤资讯"  width="99" height="99">
                 </li>
             </ul>
         </div>
@@ -243,13 +323,6 @@
             <!--友情链接开始-->
             <ul class="footerInfo-fl">
                 <li>友情链接：</li>
-                <#list FriendlyLinkList as fl>
-                    <#if fl_index lt 20>
-                        <li><a href="${fl.url}" target="_blank">${fl.companyname}</a></li>
-                        <#else>
-                            <#break>
-                    </#if>
-                </#list>
                 <li><a href="/teach/friendlylink" target="_new">更多...</a></li>
             </ul>
             <!--友情链接结束-->
@@ -260,11 +333,11 @@
             <p>© 2015 易煤网 All rights reserved   |   和略电子商务(上海)有限公司 ｜ 沪ICP备14052754号</p>
             <p class="szfw-wrap">
                 <a href="https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9yn01mg1nbic8l4vjp1q8m" target="_blank" rel="nofollow">
-                    <img src="<%= staticPath %>/css/images/footer/shgs.png" height="31"  width="90" />
+                    <img src="${staticPath}/css/images/footer/shgs.png" height="31"  width="90" />
                 </a>
                 &nbsp;
                 <a id="___szfw_logo___" href="https://credit.szfw.org/CX20150831011158100383.html" target="_blank" rel="nofollow">
-                    <img src="<%= staticPath %>/css/images/footer/cxwz.png" height="31"  width="90" />
+                    <img src="${staticPath}/css/images/footer/cxwz.png" height="31"  width="90" />
                 </a>
             </p>
         </div>
@@ -340,22 +413,24 @@
 
 
 
-<script src="<%= staticPath %>/jspm_packages/system.js"></script>
-<script src="<%= staticPath %>/js/config.js"></script>
+<script src="${staticPath}/jspm_packages/system.js"></script>
+<script src="${staticPath}/js/config.js"></script>
 
 
 
 
-<% if (env === 'staging' || env === 'prod') { %>
+<#if env == 'staging' || env == 'prod' >
 <!-- Remove this statement if you want to run the on the fly transpiler -->
 <!-- 生产环境使用 bundle.js 文件 -->
-<script src="<%= staticPath %>/js/page/userCenter.bundle.js"></script>
-<% } %>
+<script src="${staticPath}/js/page/userCenter.bundle.js"></script>
+</#if>
 
 <script>
-    System.import('<%= staticPath %>/js/page/userCenter.js')
+    System.import('${staticPath}/js/page/userCenter.js')
 </script>
-
+<script>
+    System.import('${staticPath}/js/page/financeList.js')
+</script>
 
 </body>
 </html>

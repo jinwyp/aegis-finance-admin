@@ -35,21 +35,26 @@ target
 
 _auto_sprite.scss
 .sass-cache
+*auto-sprite*
+
+
+
 
 
 src/main/resources/templates/dist
-src/main/resources/templates/admin/dist
-
-
 frontend/dist
-
 frontend/src/jsoutput
 frontend/src/css/stylesheets
 
+src/main/resources/templates/site/dist
+frontend-site/dist
+frontend-site/src/css/stylesheets
+
+src/main/resources/templates/admin/dist
 frontend-admin/dist
 frontend-admin/src/jsoutput
 frontend-admin/src/css/stylesheets
-*auto-sprite*
+
 
 .tmp/
 files

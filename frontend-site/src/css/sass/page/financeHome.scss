@@ -1,0 +1,311 @@
+
+//banner样式开始
+$assetPath : "/static/site";
+.banner_finance{
+  height:700px;
+  background: url("#{$assetPath}/css/images/finance/banner-finance.jpg") no-repeat center;
+  position:relative;
+  .banner_link{
+    width:176px;
+    height:176px;
+    display:inline-block;
+    position:absolute;
+    bottom:250px;
+    left:50%;
+    margin-left:-88px;
+    &:hover{
+      .link_light{
+        animation:rotate 4s infinite linear;
+        -webkit-animation:rotate 4s infinite linear;
+      }
+
+      .link_trigle{
+        animation:change 1.5s infinite linear;
+        -webkit-animation:change 1.5s infinite linear;
+      }
+    }
+    .link_light{
+      width:176px;
+      height:176px;
+      display:inline-block;
+      background: url("#{$assetPath}/css/images/finance/btn-light.png") no-repeat center;
+    }
+    .link_circle{
+      width:176px;
+      height:176px;
+      display:inline-block;
+      background: url("#{$assetPath}/css/images/finance/banner-btn.png") no-repeat center;
+      position:absolute;
+      top:0;
+      left:0;
+    }
+    .link_trigle{
+      width:26px;
+      height:20px;
+      display:inline-block;
+      background: url("#{$assetPath}/css/images/finance/btn-trigle.png") no-repeat center;
+      position:absolute;
+      bottom:36px;
+      left:50%;
+      margin-left:-13px;
+    }
+  }
+}
+//旋转
+@keyframes rotate
+
+{
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
+
+}
+@-webkit-keyframes rotate
+
+{
+  from {transform:rotate(0deg);}
+  to {transform:rotate(360deg);}
+
+}
+//渐变
+@keyframes change
+
+{
+  0% {opacity: 1;}
+  50% {opacity: 0.2;}
+  100% {opacity: 1;}
+
+}
+@-webkit-keyframes change
+
+
+{
+  0% {opacity: 1;}
+  50% {opacity: 0.2;}
+  100% {opacity: 1;}
+
+}
+//banner样式结束
+
+//申请流程图样式开始
+.flow-chart{
+  height:410px;
+  .steps{
+    width:1200px;
+    height:100%;
+    margin:0 auto;
+    .step1,.step2,.step3{
+      width:250px;
+      height:330px;
+      text-align:center;
+//      background:lightblue;
+      padding-top:46px;
+      .step1-img{
+        width:156px;
+        height:156px;
+        display:inline-block;
+        margin-bottom:15px;
+        transition:all 0.5s;
+      }
+      h3{
+        font-size:22px;
+        color:#6e7f82;
+        line-height:55px;
+      }
+      p{
+        font-size:14px;
+        color:#666666;
+      }
+    }
+    .step-trigle{
+      width:225px;
+      height:330px;
+      float:left;
+      background: url("#{$assetPath}/css/images/finance/step-trigle.png") no-repeat center 105px;
+    }
+    .step1{
+      float:left;
+      .img{
+        background: url("#{$assetPath}/css/images/finance/step1-gray.png") no-repeat center;
+        &:hover{
+          background: url("#{$assetPath}/css/images/finance/step1-hover.png") no-repeat center;
+
+        }
+      }
+    }
+    .step2{
+      float:left;
+      .img{
+        background: url("#{$assetPath}/css/images/finance/step2-gray.png") no-repeat center;
+        &:hover{
+          background: url("#{$assetPath}/css/images/finance/step2-hover.png") no-repeat center;
+        }
+      }
+    }
+    .step3{
+      float:right;
+      .img{
+        background: url("#{$assetPath}/css/images/finance/step3-gray.png") no-repeat center;
+        &:hover{
+          background: url("#{$assetPath}/css/images/finance/step3-hover.png") no-repeat center;
+        }
+      }
+    }
+  }
+}
+//申请流程图样式结束
+
+//融资类型开始
+.type-finance{
+  height:900px;
+  background-color:#f6f5f5;
+  .type{
+    width:1200px;
+    height:100%;
+    margin:0 auto;
+    text-align:center;
+    position:relative;
+    h2{
+      width:507px;
+      height:68px;
+      display:inline-block;
+      background: url("#{$assetPath}/css/images/finance/title-type.png") no-repeat center;
+      margin:78px 0 56px 0;
+    }
+    // .type-choose{
+    //   width:1096px;
+    //   height:557px;
+    //   padding-top:38px;
+    //   margin:0 auto;
+    //   overflow: hidden;
+    //   position:relative;
+    //   ul{
+    //     height:482px;
+    //     width: 5000px;
+    //     position: absolute;
+    //     left: -1158px;
+    //     top: 37px;
+    //     li{
+    //       width:386px;
+    //       height:482px;
+    //       float: left;
+    //       position:relative;
+    //       .mask{
+    //         width:386px;
+    //         height:482px;
+    //         position:absolute;
+    //         background:#000000;
+    //         top:0;
+    //         left:0;
+    //         opacity:0.3;
+    //         filter:alpha(opacity=30);
+    //       }
+    //       .link-goTo{
+    //         width:256px;
+    //         height:66px;
+    //         position:absolute;
+    //         bottom:28px;
+    //         left:50%;
+    //         margin-left:-128px;
+    //       }
+    //     }
+    //     .active{
+    //       width:450px;
+    //       height:556px;
+    //       margin:-37px 0 0 -63px;
+    //       z-index:9;
+    //       border:1px solid #ff9c50;
+    //       .mask{
+    //         display:none;
+    //       }
+    //     }
+    //     .li3{
+    //       margin-left:-63px;
+    //     }
+    //     .type-loan{
+    //       background: url("#{$assetPath}/css/images/finance/type-loan.jpg") no-repeat center;
+    //       background-size: cover;
+    //       -webkit-background-size: cover;
+    //       -moz-background-size: cover;
+    //       -o-background-size: cover;
+    //     }
+    //     .type-melt{
+    //       background: url("#{$assetPath}/css/images/finance/type-melt.jpg") no-repeat center;
+    //       background-size: cover;
+    //       -webkit-background-size: cover;
+    //       -moz-background-size: cover;
+    //       -o-background-size: cover;
+    //     }
+    //     .type-buy{
+    //       background: url("#{$assetPath}/css/images/finance/type-buy.jpg") no-repeat center;
+    //       background-size: cover;
+    //       -webkit-background-size: cover;
+    //       -moz-background-size: cover;
+    //       -o-background-size: cover;
+    //     }
+    //   }
+
+    // }
+    // .trigle{
+    //   width:28px;
+    //   height:50px;
+    //   display:inline-block;
+    //   position:absolute;
+    //   top:50%;
+    //   cursor: pointer;
+    // }
+    // .trigle-left{
+    //   left:0;
+    //   background: url("#{$assetPath}/css/images/finance/left-right-trigle.png") no-repeat -56px 0;
+    //   &:hover{
+    //     background: url("#{$assetPath}/css/images/finance/left-right-trigle.png") no-repeat -28px 0;
+    //   }
+    // }
+    // .trigle-right{
+    //   right:0px;
+    //   background: url("#{$assetPath}/css/images/finance/left-right-trigle.png") no-repeat -84px 0;
+    //   &:hover{
+    //     background: url("#{$assetPath}/css/images/finance/left-right-trigle.png") no-repeat 0 0;
+    //   }
+    // }
+  }
+}
+
+//轮播开始
+
+.posterTvGrid{position:relative;height:556px;}
+.posterTvGrid img{max-width:none;max-height:none;border:0 none;background:#888;}
+.posterTvGrid .contentHolder{position:relative;overflow:hidden;}
+.posterTvGrid .contentHolderUnit{cursor:pointer;position:absolute;
+  border:1px solid #ff9c50;
+  box-shadow: 0 5px 10px rgba(0,0,0,.1);
+}
+.posterTvGrid .contentHolderUnit a.elementLink{display:block;overflow:hidden;z-index:3;position:absolute;left:0;right:0;width:100%;height:100%;}
+.posterTvGrid .contentHolderUnit img{width:100%;height:100%;}
+.posterTvGrid .contentHolderUnit .elementOverlay{z-index:1;position:absolute;top:0;left:0;background:#000;width:100%;height:100%;opacity:0;filter:opacity=0;}
+.posterTvGrid .contentHolderUnit .leftShadow{position:absolute;top:23px;left:-174px;width:174px;height:224px;}
+.posterTvGrid .contentHolderUnit .rightShadow{position:absolute;top:23px;right:-174px;width:174px;height:224px;}
+.posterTvGrid .bannerControls{}
+.posterTvGrid .leftNav,.posterTvGrid .rightNav{cursor:pointer;z-index:10;position:absolute;top:50%;width:28px;height:50px;margin-top:-43px;}
+.posterTvGrid .leftNav{left:-52px;background: url("#{$assetPath}/css/images/finance/left-right-trigle.png") no-repeat -56px 0;_background:none;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="img/slide_prev_btn.png");
+  &:hover{
+    background: url("#{$assetPath}/css/images/finance/left-right-trigle.png") no-repeat -28px 0;
+  }
+}
+.posterTvGrid .rightNav{right:-52px;background: url("#{$assetPath}/css/images/finance/left-right-trigle.png") no-repeat -84px 0;_background:none;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="img/slide_next_btn.png");
+  &:hover{
+    background: url("#{$assetPath}/css/images/finance/left-right-trigle.png") no-repeat 0 0;
+  }
+}
+.posterTvGrid .bottomNav{z-index:140;position:absolute;width:100%;height:10px;margin-top:270px;padding:10px 0 0;text-align:center;}
+.posterTvGrid .bottomNavButtonOFF{cursor:pointer;overflow:hidden;display:inline-block;*display:inline;*zoom:1;width:10px;height:10px;margin:0 5px;vertical-align:top;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;background:#c3c3c3;}
+.posterTvGrid .bottomNavButtonOFF:hover{background:#aaa;}
+.posterTvGrid .bottomNavButtonON,
+.posterTvGrid .bottomNavButtonON:hover{background:#69aaec;}
+//轮播结束
+//融资类型结束
+
+
+
+
+
+
