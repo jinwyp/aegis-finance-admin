@@ -1,30 +1,48 @@
 package com.yimei.finance.controllers.restfulapi.user;
 
 import com.yimei.finance.repository.common.result.Page;
-import com.yimei.finance.repository.user.EnumUserError;
 import com.yimei.finance.repository.common.result.Result;
+import com.yimei.finance.repository.user.EnumUserError;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 /**
  * Created by liuxinjie on 16/8/10.
  */
 @RequestMapping("/api/user")
+@Api(value = "UserController", description = "用户相关的方法")
+@ApiModel(value="user", description = "用户对象", subTypes = User.class)
 @RestController
 public class UserController {
     @Autowired
     private IdentityService identityService;
 
     @ApiOperation(value="创建用户", notes="根据User对象创建用户")
-    @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "User")
+    @ApiImplicitParam(name = "user", value = "用户详细实体user\t{[firstName: 名]\t[lastName: 姓]\t[email: 邮箱]\t[password: 密码]}", required = true, dataType = "User")
     @RequestMapping(method = RequestMethod.POST)
+
     public Result addUserMethod(User user) {
-        user.setId(null);
+        System.out.println(" ----------------------------- " + user.getFirstName());
+        System.out.println(" ----------------------------- " + user.getFirstName());
+        System.out.println(" ----------------------------- " + user.getFirstName());
+        System.out.println(" ----------------------------- " + user.getFirstName());
+        System.out.println(" ----------------------------- " + user.getFirstName());
+        System.out.println(" ----------------------------- " + user.getFirstName());
+        System.out.println(" ----------------------------- " + user.getLastName());
+        System.out.println(" ----------------------------- " + user.getLastName());
+        System.out.println(" ----------------------------- " + user.getLastName());
+        System.out.println(" ----------------------------- " + user.getLastName());
+        System.out.println(" ----------------------------- " + user.getLastName());
         identityService.saveUser(user);
         return Result.success().setData(user);
     }
