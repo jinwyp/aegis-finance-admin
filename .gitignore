@@ -42,9 +42,12 @@ src/main/resources/templates/admin/dist
 
 
 frontend/dist
-frontend-admin/dist
+
 frontend/src/jsoutput
 frontend/src/css/stylesheets
+
+frontend-admin/dist
+frontend-admin/src/jsoutput
 frontend-admin/src/css/stylesheets
 *auto-sprite*
 
