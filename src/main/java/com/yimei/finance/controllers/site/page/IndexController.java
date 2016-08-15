@@ -43,7 +43,6 @@ public class IndexController {
     @RequestMapping(value = "/finance/user/financing", method = RequestMethod.GET)
     public String personCenterFinancingList(Model model) {
         model.addAttribute("env", env.getProperty("spring.profiles"));
-        model.addAttribute("title", env.getProperty("title"));
 
         return "site/user/financingList";
     }
@@ -55,7 +54,6 @@ public class IndexController {
     @RequestMapping(value = "/finance/user/financing/{id}", method = RequestMethod.GET)
     public String personCenterFinancingRequest(@PathVariable("id") int id, Model model) {
         model.addAttribute("env", env.getProperty("spring.profiles"));
-        model.addAttribute("title", env.getProperty("title"));
 
         return "site/user/financingInfo";
     }

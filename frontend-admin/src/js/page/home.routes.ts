@@ -6,6 +6,7 @@ import { provideRouter, RouterConfig }  from '@angular/router';
 import { OrderListComponent } from '../components/order/order-list';
 import { HomeDashboardComponent } from '../components/home/home-dashboard';
 import { OrderDetailComponent } from '../components/order/order-detail';
+import { UserInfoComponent } from '../components/user/user-info';
 
 const routes: RouterConfig = [
     {
@@ -24,6 +25,10 @@ const routes: RouterConfig = [
     {
         path: 'orders/:id',
         component: OrderDetailComponent
+    },
+    {
+        path: 'userinfo',
+        component: UserInfoComponent
     }
 ];
 
