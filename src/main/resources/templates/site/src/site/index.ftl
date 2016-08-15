@@ -295,13 +295,16 @@
     <!--友情链接开始-->
         <ul class="footerInfo-fl">
             <li>友情链接：</li>
-            <#list FriendlyLinkList as fl>
-                <#if fl_index lt 20>
-                    <li><a href="${fl.url}" target="_blank">${fl.companyname}</a></li>
-                    <#else>
-                        <#break>
-                </#if>
-            </#list>
+            <li><a href="http://www.chd.com.cn/#" target="_blank">中国华电集团公司</a></li>
+            <li><a href="http://www.cqcoal.com/" target="_blank">秦皇岛煤炭网</a></li>
+            <li><a href="http://www.cwestc.com/#" target="_blank">中国煤炭新闻网</a></li>
+            <li><a href="http://www.cctd.com.cn/#" target="_blank">中国煤炭市场网</a></li>
+            <li><a href="http://www.sxcoal.com/" target="_blank">中国煤炭资源网</a></li>
+            <li><a href="http://www.56kuaiche.com/#" target="_blank">56快车</a></li>
+            <li><a href="http://www.nhxh.cn/#" target="_blank">北部湾商品交易网</a></li>
+            <li><a href="http://www.snctc.cn/#" target="_blank">陕西煤炭交易中心</a></li>
+            <li><a href="http://www.imcec.cn/#" target="_blank">内蒙古煤炭交易中心</a></li>
+            <li><a href="http://www.sspp.co/" target="_blank">超级船东</a></li>
             <li><a href="/teach/friendlylink" target="_new">更多...</a></li>
         </ul>
     <!--友情链接结束-->
