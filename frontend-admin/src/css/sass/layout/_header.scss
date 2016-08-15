@@ -1,11 +1,15 @@
-.navbar.no-border-bottom{
-  border-bottom: none;
+@import '../helpers/_variables.scss';
+
+
+.navbar-fixed-top{
+  position: inherit;
 }
 .navbar.h-80{
   height:80px;
   line-height:80px;
 }
 .navbar{
+  margin-bottom: 0px;
   .header-bg{
     height:inherit;
     background-color: #47b3e4;
@@ -14,7 +18,7 @@
       width:100px;
       height:45px;
       vertical-align: middle;
-      background: url("/static/css/images/yimei_logo.png");
+      background: url("#{$assetPath}/css/images/yimei_logo.png");
     }
     .header-title{
       margin-left:20px;
@@ -28,6 +32,9 @@
     }
     .navbar-nav>li>a{
       color: #ffffff;
+      &:hover{
+        background-color: transparent;
+      }
     }
   }
 }

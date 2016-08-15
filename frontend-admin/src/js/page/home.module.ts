@@ -23,6 +23,7 @@ import { HomeComponent } from '../components/home/home-index';
 import { HomeDashboardComponent } from '../components/home/home-dashboard';
 import { OrderListComponent } from '../components/order/order-list';
 import { OrderDetailComponent } from '../components/order/order-detail';
+import { UserInfoComponent } from '../components/user/user-info';
 
 
 
@@ -31,7 +32,7 @@ import { OrderDetailComponent } from '../components/order/order-detail';
     declarations: [
         ROUTER_DIRECTIVES,
         headerComponent, LeftMenuComponent,
-        HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent
+        HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent, UserInfoComponent
     ],
     providers: [ OrderService,
         homePageRouterProviders,
