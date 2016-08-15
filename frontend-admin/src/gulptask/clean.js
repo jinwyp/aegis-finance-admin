@@ -8,7 +8,7 @@ var del = require( 'del');
 
 var distPath = {
     'all'  : '../dist/**/*',
-    'html' : '../../src/main/resources/templates/dist/**/*',
+    'html' : '../../src/main/resources/templates/admin/dist/**/*',
     'stylesheets' : './css/stylesheets/**/*',
     'autoSprite' : './css/images/sprite/auto-sprite.*',
     'tsCompileJs' : './jsoutput/**/*'

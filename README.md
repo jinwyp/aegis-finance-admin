@@ -4,7 +4,7 @@
 ## 后端环境
 
 1. 第一次运行本项目, 需要先创建数据库, 在aegis-finance-admin 目录下执行 ``` sh initdatabase.sh ```
-2. 运行项目 在aegis-finance-admin 目录下执行 ``` mvn spring-boot:run ``` 本地地址: http://127.0.0.1:8002/
+2. 运行项目 在aegis-finance-admin 目录下执行 ``` mvn spring-boot:run ``` 本地地址: http://127.0.0.1:8002/finance/admin
 3. 目前本项目只能在本地运行, docker还没配置好
 
 

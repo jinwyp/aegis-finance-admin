@@ -14,7 +14,7 @@ var rev          = require('gulp-rev');
 
 
 var sourcePath = {
-    'html'          : '../../src/main/resources/templates/src/**/*',
+    'html'          : '../../src/main/resources/templates/admin/src/**/*',
     'images'        : 'css/images/**/*',
     'imagesSprites' : 'css/images/sprite/icon/**/*',
     'scss'          : 'css/sass/**/*.scss',
@@ -22,7 +22,7 @@ var sourcePath = {
 };
 
 var distPath = {
-    'html'                             : '../../src/main/resources/templates/dist/',
+    'html'                             : '../../src/main/resources/templates/admin/dist/',
     'images'                           : '../dist/css/images/',
     'imagesSprites'                    : './css/images/sprite/auto-sprite.png',
     'imagesSpritesOutput'              : 'css/sass/helpers/_auto_sprite.scss',
