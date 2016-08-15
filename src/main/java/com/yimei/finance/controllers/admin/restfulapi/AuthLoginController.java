@@ -1,4 +1,4 @@
-package com.yimei.finance.controllers.restfulapi;
+package com.yimei.finance.controllers.admin.restfulapi;
 
 import com.yimei.finance.config.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,7 +24,7 @@ public class AuthLoginController {
     /**
      * 登陆方法
      */
-    @RequestMapping(value = "/api/admin/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/api/finance/admin/login", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public Object authLoginWithPassword(String username, String password) {
 //        return adminService.login(username, password);
         return new ResponseEntity<String>("{\n" +
@@ -42,7 +42,7 @@ public class AuthLoginController {
     /**
      * 退出登陆
      */
-    @RequestMapping(value = "/api/admin/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/api/finance/admin/logout", method = RequestMethod.GET)
     public Object logout() {
         session.logout();
         return new ResponseEntity<String>("{\n" +

@@ -1,4 +1,4 @@
-package com.yimei.finance.controllers.page;
+package com.yimei.finance.controllers.admin.page;
 
 import com.yimei.finance.entity.tpl.Tpl;
 import com.yimei.finance.repository.common.result.Error;

@@ -10,11 +10,11 @@
 
     <title>供应链金融管理平台 - 管理首页</title>
 
-    <link rel="stylesheet" href="/static/node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/css/stylesheets/main.css"/>
-    <link rel="stylesheet" type="text/css" href="/static/css/stylesheets/page/adminHome.css"/>
+    <link rel="stylesheet" href="/static/admin/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/main.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/page/adminHome.css"/>
 
-    <base href="/admin/home">
+    <base href="/finance/admin/home">
 </head>
 <body>
 
@@ -23,13 +23,13 @@
 
     <!-- 1. Load libraries -->
     <!-- Polyfill(s) for older browsers -->
-    <script src="/static/node_modules/core-js/client/shim.min.js"></script>
-    <script src="/static/node_modules/zone.js/dist/zone.js"></script>
-    <script src="/static/node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="/static/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="/static/admin/node_modules/core-js/client/shim.min.js"></script>
+    <script src="/static/admin/node_modules/zone.js/dist/zone.js"></script>
+    <script src="/static/admin/node_modules/reflect-metadata/Reflect.js"></script>
+    <script src="/static/admin/node_modules/systemjs/dist/system.src.js"></script>
 
     <!-- 2. Configure SystemJS -->
-    <script src="/static/js/systemjs.config.js"></script>
+    <script src="/static/admin/js/systemjs.config.js"></script>
     <script>
       System.import('jsoutput/page/home.js').catch(function(err){ console.error(err); });
     </script>

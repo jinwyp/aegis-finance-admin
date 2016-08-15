@@ -1,4 +1,4 @@
-package com.yimei.finance.controllers.tpl;
+package com.yimei.finance.controllers.admin.tpl;
 
 import com.yimei.finance.entity.tpl.User;
 import io.swagger.annotations.ApiImplicitParam;

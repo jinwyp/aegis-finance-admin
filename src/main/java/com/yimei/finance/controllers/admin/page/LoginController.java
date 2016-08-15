@@ -1,4 +1,4 @@
-package com.yimei.finance.controllers.page;
+package com.yimei.finance.controllers.admin.page;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -13,22 +13,20 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class LoginController {
 
     /**
-     * 登录页面
+     * 跳转到管理登录页面
      */
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/admin", method = RequestMethod.GET)
     public String indexPage() {
-        return "redirect:/admin/login";
+        return "redirect:/finance/admin/login";
     }
 
     /**
-     * 登录页面
+     * 管理登录页面
      */
-    @RequestMapping(value = "/admin/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/admin/login", method = RequestMethod.GET)
     public String loginPage() {
-        return "login";
+        return "admin/login";
     }
-
-
 
 }

@@ -1,4 +1,4 @@
-package com.yimei.finance.controllers.page;
+package com.yimei.finance.controllers.admin.page;
 
 import com.yimei.finance.config.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,7 +20,7 @@ public class ErrorController {
 
     @RequestMapping(value = "/404", method = RequestMethod.GET)
     public String Page404() {
-        return "http/404";
+        return "admin/http/404";
     }
 
 }

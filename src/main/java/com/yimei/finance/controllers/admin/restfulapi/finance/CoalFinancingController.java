@@ -1,4 +1,4 @@
-package com.yimei.finance.controllers.restfulapi.finance;
+package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import org.springframework.web.bind.annotation.RestController;
 

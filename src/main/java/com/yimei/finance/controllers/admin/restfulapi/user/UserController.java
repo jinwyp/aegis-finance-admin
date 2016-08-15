@@ -1,4 +1,4 @@
-package com.yimei.finance.controllers.restfulapi.user;
+package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.repository.common.result.Page;
 import com.yimei.finance.repository.user.EnumUserError;

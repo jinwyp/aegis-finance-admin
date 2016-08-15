@@ -1,4 +1,4 @@
-package com.yimei.finance.controllers.page;
+package com.yimei.finance.controllers.admin.page;
 
 import com.yimei.finance.config.Session;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,26 +20,26 @@ public class UserHomeController {
     /**
      * 管理首页 页面
      */
-    @RequestMapping(value = "/admin/home", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/admin/home", method = RequestMethod.GET)
     public String index() {
 //        if(session.getUser() != null) {
-//            return "home";
+//            return "admin/home";
 //        } else {
-//            return "redirect:/login";
+//            return "redirect:/finance/admin/login";
 //        }
-        return "home";
+        return "admin/home";
     }
 
     /**
      * 管理页面 为了前端路由需要重定向
      */
-    @RequestMapping(value = "/admin/home/**", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/admin/home/**", method = RequestMethod.GET)
     public String adminHome() {
 //        if(session.getUser() != null) {
-//            return "home";
+//            return "admin/home";
 //        } else {
-//            return "redirect:/login";
+//            return "redirect:/finance/admin/login";
 //        }
-        return "forward:/admin/home";
+        return "forward:/finance/admin/home";
     }
 }
