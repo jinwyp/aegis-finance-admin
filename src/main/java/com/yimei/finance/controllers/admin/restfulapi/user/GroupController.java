@@ -26,7 +26,7 @@ public class GroupController {
     public Result addGroupMethod(Group group) {
         group.setId(null);
         identityService.saveGroup(group);
-        return Result.success().setData(group);
+        return Result.success().setData(identityService.createGroupQuery().groupId(group.getId()).singleResult());
     }
 
     /**
@@ -38,7 +38,7 @@ public class GroupController {
         Group group = identityService.createGroupQuery().groupId(id).singleResult();
         if (group == null) return Result.error(EnumGroupError.此组不存在.toString());
         identityService.deleteGroup(id);
-        return Result.success().setData(group);
+        return Result.success().setData(identityService.createGroupQuery().groupId(id).singleResult());
     }
 
     /**
@@ -50,9 +50,8 @@ public class GroupController {
         if (group == null) return Result.error(EnumGroupError.组对象不能为空.toString());
         if (StringUtils.isEmpty(group.getId())) return Result.error(EnumGroupError.组id不能为空.toString());
         if (identityService.createGroupQuery().groupId(group.getId()) == null) return Result.error(EnumGroupError.此组不存在.toString());
-        identityService.deleteGroup(group.getId());
         identityService.saveGroup(group);
-        return Result.success().setData(group);
+        return Result.success().setData(identityService.createGroupQuery().groupId(group.getId()).singleResult());
     }
 
     /**
