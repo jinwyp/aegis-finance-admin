@@ -1,3 +1,5 @@
+@import '../helpers/_variables.scss';
+
 .homebox{
   .left-menu-box{
     background-color: #f2f2f2;
@@ -21,13 +23,13 @@
           cursor: pointer;
         }
         .verify-icon {
-          background: url("/static/css/images/verify_icon1.png") no-repeat;
+          background: url("#{$assetPath}/css/images/verify_icon1.png") no-repeat;
         }
         .info-icon {
-          background: url("/static/css/images/info_icon.png") no-repeat;
+          background: url("#{$assetPath}/css/images/info_icon.png") no-repeat;
         }
         .jurisdiction-icon {
-          background: url("/static/css/images/jurisdiction_icon.png") no-repeat;
+          background: url("#{$assetPath}/css/images/jurisdiction_icon.png") no-repeat;
         }
         .nav > li > a.item {
           font-size: 14px;
