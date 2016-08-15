@@ -1,11 +1,12 @@
-.navbar.no-border-bottom{
-  border-bottom: none;
+.navbar-fixed-top{
+  position: inherit;
 }
 .navbar.h-80{
   height:80px;
   line-height:80px;
 }
 .navbar{
+  margin-bottom: 0px;
   .header-bg{
     height:inherit;
     background-color: #47b3e4;
@@ -28,6 +29,9 @@
     }
     .navbar-nav>li>a{
       color: #ffffff;
+      &:hover{
+        background-color: transparent;
+      }
     }
   }
 }

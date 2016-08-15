@@ -1,31 +1,117 @@
-
-h1 {
-  color: #369;
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 250%;
-}
-body {
-  margin: 2em;
-}
-
-/*
- * See https://github.com/angular/angular.io/blob/master/public/docs/_examples/styles.css
- * for the full set of master styles used by the documentation samples
- */
-
-
-
-/*
- * Login Page
- *
- */
-
-.test{
-  font-size: 20px;
-}
 .homebox{
-  margin-top: 80px;
+  .left-menu-box{
+    background-color: #f2f2f2;
+    .left-menu{
+      
+      .menu-item {
+        padding-top: 20px;
+        padding-bottom:20px;
+        //border-top: 1px solid #e0e0e0;
+        border-right: 1px solid #e0e0e0;
+        //border-bottom: 1px solid #e0e0e0;
+        .icon {
+          margin-left: 8px;
+          display: inline-block;
+          height: 38px;
+          line-height: 38px;
+          padding-left: 44px;
+          font-size: 18px;
+          color: #a2acb5;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        .verify-icon {
+          background: url("/static/css/images/verify_icon1.png") no-repeat;
+        }
+        .info-icon {
+          background: url("/static/css/images/info_icon.png") no-repeat;
+        }
+        .jurisdiction-icon {
+          background: url("/static/css/images/jurisdiction_icon.png") no-repeat;
+        }
+        .nav > li > a.item {
+          font-size: 14px;
+          color: #a2acb5;
+          padding:15px 15px 15px 70px;
+          .notice{
+            color: #ffffff;
+            background-color: #a2acb5;
+            border-radius: 2px;
+            padding:2px 5px;
+            margin-left:10px;
+          }
+        }
+      }
+      .menu-selected{
+        background-color: #ffffff;
+        //border-top: 1px solid #e0e0e0;
+        border-bottom: 1px solid #e0e0e0;
+        border-right: none;
+      }
+    }
+  }
+  .right-main-box{
+    .mt-50{ margin-top:50px;}
+    .row.item{
+      margin:0 30px;
+    }
+    .row{
+      .breadcrumb{
+        font-size:14px;
+        background-color: transparent;
+        margin:10px 0 0;
+        padding:10px 0;
+        border-bottom: 1px solid #ececec;
+        border-radius: 0px;
+      }
+      .breadcrumb>li+li:before{
+        padding: 0;
+        content: '';
+      }
+      .info-item{
+        margin-left:80px;
+        margin-right:100px;
+        //background-color: #ececec;
+        font-size:16px;
+        input{
+          outline: none;
+          height: 40px;
+          line-height:40px;
+          width:300px;
+          border:1px solid #a2acb5;
+          padding:0 10px;
+        }
+        .info-label{
+          padding:30px 0;
+        }
+        .info-label-input{
+          padding:42px 0;
+        }
+        .info-val{
+          padding:30px 0;
+          border-bottom: 1px solid #ececec;
+          .btn-save{
+            width:200px;
+            background-color: #f66c54;
+            border-color: #f66c54;
+            color: #ffffff;
+          }
+        }
+        .role-info>li+li{
+          //border:1px solid red;
+          margin-top: 20px;
+        }
+        .role-info li a{
+          margin-left: 20px;
+          cursor: pointer;
+        }
+      }
+    }
+  }
 }
+
+
+
 
 .selected {
   background-color: #CFD8DC !important;
