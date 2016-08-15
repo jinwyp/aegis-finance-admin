@@ -1,0 +1,84 @@
+
+$assetPath : "/static";
+
+$borderColor:#e4e4e4;
+.financeManageWrap{
+  padding: 12px 0 50px 0;
+  background: #f6f6f6;
+  min-height: 600px;
+  .financeManage{
+    width: 1200px;
+    margin: 0 auto;
+    //侧边栏样式开始
+    .finance_sideBar{
+      width: 130px;
+      background: #ffffff;
+      padding: 26px 0 0 26px;
+      min-height: 400px;
+      float: left;
+      h3{
+        font-size: 18px;
+        font-weight: bold;
+        margin-bottom: 25px;
+      }
+      ul{
+        li{
+          margin-bottom: 25px;
+          &:hover{
+            a{
+              color: #00b7ec;
+            }
+            span{
+              background-position: 0px center;
+            }
+          }
+          a{
+            color: #333333;
+            text-decoration: none;
+          }
+          span{
+            width: 8px;
+            height: 10px;
+            display: inline-block;
+            margin-left: 10px;
+            background: url("#{$assetPath}/css/images/finance/sideBar-trigle.png") no-repeat -8px center;
+          }
+        }
+        .active{
+          a{
+            color: #00b7ec;
+          }
+          span{
+            background-position: 0px center;
+          }
+        }
+      }
+    }
+    //侧边栏样式结束
+
+    //我的申请右侧内容样式开始
+    .financeCon{
+      background: #ffffff;
+      width: 1060px;
+      float: right;
+      height: 300px;
+      .application{
+        padding: 20px;
+        h4{
+          font-size: 16px;
+          font-weight: bold;
+          padding-bottom: 10px;
+          border-bottom: 1px solid $borderColor;
+          span{
+            width: 2px;
+            height: 14px;
+            display: inline-block;
+            background-color: #1fb8ea;
+            margin-right: 12px;
+          }
+        }
+      }
+    }
+    //我的申请右侧内容样式结束
+  }
+}

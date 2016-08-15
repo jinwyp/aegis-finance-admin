@@ -1,0 +1,29 @@
+.financeManageWrap { padding: 12px 0 50px 0; background: #f6f6f6; min-height: 600px; }
+
+.financeManageWrap .financeManage { width: 1200px; margin: 0 auto; }
+
+.financeManageWrap .financeManage .finance_sideBar { width: 130px; background: #ffffff; padding: 26px 0 0 26px; min-height: 400px; float: left; }
+
+.financeManageWrap .financeManage .finance_sideBar h3 { font-size: 18px; font-weight: bold; margin-bottom: 25px; }
+
+.financeManageWrap .financeManage .finance_sideBar ul li { margin-bottom: 25px; }
+
+.financeManageWrap .financeManage .finance_sideBar ul li:hover a { color: #00b7ec; }
+
+.financeManageWrap .financeManage .finance_sideBar ul li:hover span { background-position: 0px center; }
+
+.financeManageWrap .financeManage .finance_sideBar ul li a { color: #333333; text-decoration: none; }
+
+.financeManageWrap .financeManage .finance_sideBar ul li span { width: 8px; height: 10px; display: inline-block; margin-left: 10px; background: url("/static/css/images/finance/sideBar-trigle.png") no-repeat -8px center; }
+
+.financeManageWrap .financeManage .finance_sideBar ul .active a { color: #00b7ec; }
+
+.financeManageWrap .financeManage .finance_sideBar ul .active span { background-position: 0px center; }
+
+.financeManageWrap .financeManage .financeCon { background: #ffffff; width: 1060px; float: right; height: 300px; }
+
+.financeManageWrap .financeManage .financeCon .application { padding: 20px; }
+
+.financeManageWrap .financeManage .financeCon .application h4 { font-size: 16px; font-weight: bold; padding-bottom: 10px; border-bottom: 1px solid #e4e4e4; }
+
+.financeManageWrap .financeManage .financeCon .application h4 span { width: 2px; height: 14px; display: inline-block; background-color: #1fb8ea; margin-right: 12px; }

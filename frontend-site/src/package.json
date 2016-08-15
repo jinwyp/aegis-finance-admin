@@ -1,0 +1,41 @@
+{
+  "name": "aegis-finance",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "ejs": "^2.5.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^3.1.0",
+    "gulp-clean-css": "^2.0.12",
+    "gulp-eslint": "^3.0.1",
+    "gulp-jspm": "^0.5.13",
+    "gulp-rev": "^7.1.0",
+    "gulp-rev-collector": "^1.0.5",
+    "gulp-sass": "^2.3.2",
+    "gulp.spritesmith": "^6.2.1",
+    "jspm": "^0.16.42",
+    "require-dir": "^0.3.0",
+    "run-sequence": "^1.2.2"
+  },
+  "jspm": {
+    "configFile": "js/config.js",
+    "dependencies": {
+      "avalon2": "npm:avalon2@^2.1.11",
+      "bootstrap": "github:twbs/bootstrap@^3.3.7",
+      "jquery": "npm:jquery@1.12.4"
+    },
+    "devDependencies": {
+      "babel": "npm:babel-core@^5.8.24",
+      "babel-runtime": "npm:babel-runtime@^5.8.24",
+      "core-js": "npm:core-js@^1.1.4"
+    }
+  }
+}

@@ -1,0 +1,139 @@
+#J_intergalFooter {
+  clear: both;
+  ul,li{
+    padding: 0;
+    margin: 0;
+    list-style: none;
+  }
+  .intergalFooter {
+    background: #333;
+    font-family: "HeitiSC", microsoft yahei, Serif;
+    overflow: hidden;
+    position: relative;
+    z-index: 11;
+    border-top: 1px solid #fff;
+  }
+  .intergalFooter .footWrapper {
+    width: 1200px;
+    margin: 0 auto;
+  }
+  .intergalFooter .footWrapper .mainmenu {
+    overflow: hidden;
+    height: 235px;
+    position: relative;
+    //    padding-left: 45px;
+  }
+  .mainmenu .maintit {
+    float: left;
+    color: #999;
+    font-size: 12px;
+    margin-top: 30px;
+    width: 197px;
+  }
+  .mainmenu .maintit div {
+    background: url('#{$assetPath}/css/images/footer/footerline.png') repeat-y right center;
+    background-size: 8px 15px;
+    padding-left: 25px;
+    height: 149px;
+  }
+  .mainmenu .maintit div.pd0 {
+    padding-left: 0px;
+  }
+  .mainmenu .maintit p {
+    font-size: 16px;
+    margin-bottom: 32px;
+    color:#fff;
+  }
+  .mainmenu .maintit-kf {
+    width: 180px;
+  }
+  .mainmenu .weixin {
+    //    margin-left: 40px;
+    position: absolute;
+    right: 120px;
+    width: 100px;
+  }
+  .mainmenu .weixin p {
+    margin-bottom: 12px;
+  }
+  .mainmenu .weixin2 {
+    right: 0px;
+  }
+  .maintit ul li a {
+    margin-bottom: 12px;
+    color: #999;
+    text-decoration: none;
+    display: inline-block;
+  }
+  .maintit ul li span {
+    display: block;
+    width: 15px;
+    height: 16px;
+    float: left;
+    margin-right: 13px;
+  }
+  .maintit ul li a.onlineService span {
+    background: url('#{$assetPath}/css/images/footer/footerPic.png') no-repeat -1px -2px;
+  }
+  .maintit ul .servicePhone {
+    margin-bottom: 10px;
+  }
+  .maintit ul .servicePhone span {
+    background: url('#{$assetPath}/css/images/footer/footerPic.png') no-repeat -18px -2px;
+  }
+  .maintit ul li i {
+    font-size: 18px;
+    font-weight: bold;
+    font-style:italic;
+  }
+  .serviceTel{
+    color: #00b7ec;
+  }
+  .intergalFooter .footerInfo {
+    background: #292929;
+    color: #999;
+    padding: 12px 0;
+  }
+  .intergalFooter .footerInfo .footerInfo-fl{
+    max-width: 1200px;
+    margin-left: auto;
+    margin-right: auto;
+    position: relative;
+    text-align: center;
+  }
+  .intergalFooter .footerInfo .footerInfo-fl-title{
+    position: absolute;
+    left: 0;
+    top: 0;
+  }
+  .intergalFooter .footerInfo li{
+    margin-bottom: 3px;
+  }
+  .intergalFooter .footerInfo p {
+    font-size: 12px;
+    text-align: center;
+    margin-top: 5px;
+  }
+  .intergalFooter .footerInfo ul {
+    text-align: center;
+    font-size: 12px;
+  }
+  .intergalFooter .footerInfo ul li {
+    display: inline-block;
+    margin-right: 10px;
+    text-align: center;
+  }
+  .intergalFooter .footerInfo ul li a {
+    color: #999;
+    text-decoration: none;
+  }
+  .footerInfo ul li a:hover {
+    color: #00a9f1;
+  }
+  .intergalFooter a:hover {
+    color: #00a9f1;
+  }
+  .szfw-wrap{
+    margin-top: 7px;
+  }
+}

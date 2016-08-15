@@ -20,7 +20,6 @@ public class IndexController {
 
     @Autowired
     public IndexController(Environment env) {
-
         this.env = env;
     }
 
@@ -43,9 +42,11 @@ public class IndexController {
     * 网站供应链金融 - 个人中心 - 我的申请
     */
     @RequestMapping(value = "/finance/user/financing", method = RequestMethod.GET)
-    public String personCenterFinancingList() {
+    public String personCenterFinancingList(Model model) {
+        model.addAttribute("env", env.getProperty("spring.profiles"));
+        model.addAttribute("title", env.getProperty("title"));
 
-        return "user/financingList";
+        return "site/user/financingList";
     }
 
 
@@ -53,9 +54,11 @@ public class IndexController {
      * 网站供应链金融 - 个人中心 - 我的申请 - 业务
      */
     @RequestMapping(value = "/finance/user/financing/{id}", method = RequestMethod.GET)
-    public String personCenterFinancingRequest(@PathVariable("id") int id) {
+    public String personCenterFinancingRequest(@PathVariable("id") int id, Model model) {
+        model.addAttribute("env", env.getProperty("spring.profiles"));
+        model.addAttribute("title", env.getProperty("title"));
 
-        return "user/financingInfo";
+        return "site/user/financingInfo";
     }
 
 }

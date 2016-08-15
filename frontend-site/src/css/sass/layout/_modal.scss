@@ -1,0 +1,128 @@
+.modalPublic {
+  .modal-dialog {
+    width: 420px;
+    margin:0 auto;
+    .modal-content {
+      margin-top: 190px;
+      .modal-header {
+        background: #f7f7f7;
+        height: 48px;
+        border-top: 2px solid #01b7ec;
+        padding: 12px 0 0 15px;
+        .modal-title {
+          //line-height: 1.5;
+          font-size: 18px;
+        }
+        .close{
+          font-size: 21px;
+          font-weight: bold;
+          line-height: 1;
+          color: #000;
+          text-shadow: 0 1px 0 #fff;
+          font-family: inherit;
+          margin-right: 10px;
+        }
+      }
+      .modal-body {
+        min-height: 230px;
+        text-align: center;
+        .modalInfo {
+          text-align: center;
+          font-size: 18px;
+        }
+        .tip{
+          padding: 10px 0 0 0px;
+          display: inline-block;
+          em{
+            font-style: normal;
+            color: #ff8233;
+            font-size: 12px;
+            text-align: left;
+            line-height: 20px;
+            display: block;
+          }
+        }
+        .bg_img {
+          width: 58px;
+          height: 58px;
+          display: inline-block;
+          margin: 15px 0 20px 0;
+        }
+        //          垃圾桶
+        .dustbin {
+          background: url("#{$assetPath}/css/images/modal/drop.png") no-repeat center;
+        }
+        //          感叹号
+        .attention {
+          background: url("#{$assetPath}/css/images/modal/attention.png") no-repeat center;
+        }
+        //          人×
+        .personNo {
+          background: url("#{$assetPath}/css/images/modal/personNo.png") no-repeat center;
+        }
+        //          人√
+        .personYes {
+          background: url("#{$assetPath}/css/images/modal/personYes.png") no-repeat center;
+        }
+        //          √号
+        .yes {
+          background: url("#{$assetPath}/css/images/modal/yes.png") no-repeat center;
+        }
+        .question{
+          background: url("#{$assetPath}/css/images/modal/question.png") no-repeat center;
+        }
+        .autoClose {
+          text-align: center;
+          padding-top: 20px;
+          font-size: 14px;
+          color: #999;
+          .color-red {
+            color: #fd6e35;
+          }
+        }
+        .sucClose {
+          text-align: center;
+          padding-top: 20px;
+          font-size: 14px;
+          color: #333;
+          a.color-blue {
+            color: #00b7ec;
+          }
+        }
+      }
+    }
+    .buttons {
+
+      padding-top: 30px;
+      text-align: center;
+      padding-bottom: 8px;
+      .btn{
+        outline:none;
+      }
+      .cancel {
+        width: 100px;
+        background: #c7c7c7;
+        color: #ffffff;
+        &:hover{
+          background-color: #dad8d8;
+        }
+      }
+      .confirm {
+        min-width: 100px;
+        background: #1fb8ea;
+        color: #ffffff;
+        margin-left: 15px;
+        &:hover{
+          background-color: #4cc6ee;
+        }
+      }
+      .ml0 {
+        margin-left: 0px;
+      }
+    }
+  }
+}
+
+.pad-t20 {
+  padding-top: 20px;
+}
