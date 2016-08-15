@@ -147,7 +147,7 @@
             <h3>融资管理</h3>
             <ul>
                 <li class="active"><a href="#">我的申请 </a><span class="trigle"></span></li>
-                <li><a href="#">我的申请</a><span class="trigle"></span></li>
+                <!--<li><a href="#">我的申请</a><span class="trigle"></span></li>-->
             </ul>
         </div>
         <!--侧边栏结束-->
@@ -166,7 +166,7 @@
                 <div class="borderB clearfix">
                     <h4><span></span>融资详情</h4>
                     <div class="floatR">
-                        <span><em></em>了解业务类型</span>
+                        <!--<span><em></em>了解业务类型</span>-->
                         <a href="javascript:void(0);" id="finance">我要融资</a>
                     </div>
                 </div>
