@@ -38,15 +38,17 @@ _auto_sprite.scss
 *auto-sprite*
 
 
-src/main/resources/templates/site/dist
-frontend-site/dist
-frontend-site/src/css/stylesheets
+
 
 
 src/main/resources/templates/dist
 frontend/dist
 frontend/src/jsoutput
 frontend/src/css/stylesheets
+
+src/main/resources/templates/site/dist
+frontend-site/dist
+frontend-site/src/css/stylesheets
 
 src/main/resources/templates/admin/dist
 frontend-admin/dist

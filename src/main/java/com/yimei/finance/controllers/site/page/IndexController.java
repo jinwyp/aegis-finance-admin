@@ -30,7 +30,6 @@ public class IndexController {
     @RequestMapping(value = "/finance", method = RequestMethod.GET)
     public String financeIndex(Model model) {
         model.addAttribute("env", env.getProperty("spring.profiles"));
-        model.addAttribute("title", env.getProperty("title"));
         model.addAttribute("items", Arrays.asList("iPhone 6", "iPhone 6 Plus", "iPhone 6S", "iPhone 6S Plus"));
         //System.out.println(" --------- " + tplService.test().toString());
         //System.out.println(" --------- " + tplService.test().toString());

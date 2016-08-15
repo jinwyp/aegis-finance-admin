@@ -26,7 +26,7 @@ var distPath = {
     'images'                           : '../dist/css/images/',
     'imagesSprites'                    : './css/images/sprite/auto-sprite.png',
     'imagesSpritesOutput'              : 'css/sass/helpers/_auto_sprite.scss',
-    'imagesSpritesOutputReferringPath' : '/static/css/images/sprite/auto-sprite.png',
+    'imagesSpritesOutputReferringPath' : '/static/admin/css/images/sprite/auto-sprite.png',
     'css'                              : '../dist/css/stylesheets/',
     'manifest'                         : '../dist/rev/'
 };
