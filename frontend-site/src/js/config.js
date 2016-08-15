@@ -22,6 +22,15 @@ System.config({
       "deps": [
         "jquery"
       ]
+    },
+    "js/jquery-plugin/jQuery.fn.datePicker.js": {
+      "format": "global",
+      "globals": {
+        "jQuery": "jquery"
+      },
+      "deps": [
+        "jquery"
+      ]
     }
   },
 

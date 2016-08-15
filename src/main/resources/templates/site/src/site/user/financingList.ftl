@@ -167,14 +167,14 @@
                     <h4><span></span>融资详情</h4>
                     <div class="floatR">
                         <span><em></em>了解业务类型</span>
-                        <a href="#">我要融资</a>
+                        <a href="javascript:void(0);" id="finance">我要融资</a>
                     </div>
                 </div>
                 <form action="">
-                    <label for="startDay">申请时间:</label>
-                    <input type="text" id="startDay">
-                    <label for="endDay">到</label>
-                    <input type="text" id="endDay">
+                    <label for="startDate">申请时间:</label>
+                    <div class="time"><input type="text" id="startDate" class="iIpt iIpt_sm startDate" placeholder="yyyy-mm-dd" /></div>
+                    <label for="endDate">到</label>
+                    <div class="time"><input type="text" id="endDate" class="iIpt iIpt_sm endDate" placeholder="yyyy-mm-dd" /></div>
                     <label for="status">审核状态:</label>
                     <select name="" id="status">
                         <option value="">全部</option>
@@ -185,7 +185,7 @@
                     </select>
                     <br/>
                     <label for="number">业务编号:</label>
-                    <input type="text" id="number">
+                    <input type="text" id="number" class="margin-l">
                     <label for="type">业务类型:</label>
                     <select name="" id="type">
                         <option value="">全部</option>
@@ -194,11 +194,11 @@
                         <option value="">煤易购</option>
                     </select>
                     <label for="user"></label>
-                    <input type="text" id="user" value="请输入申请人姓名">
-                    <input type="button" value="查询">
+                    <input type="text" id="user" placeholder="请输入申请人姓名" class="margin-l">
+                    <input type="submit" value="查询">
                     <input type="button" value="导出Excel" id="excel" class="excel">
                 </form>
-                <table>
+                <table class="list">
                     <tr class="border">
                         <th>序号</th>
                         <th>业务编号</th>
@@ -428,7 +428,9 @@
 <script>
     System.import('${staticPath}/js/page/userCenter.js')
 </script>
-
+<script>
+    System.import('${staticPath}/js/page/financeList.js')
+</script>
 
 </body>
 </html>
