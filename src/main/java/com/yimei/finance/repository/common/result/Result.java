@@ -5,7 +5,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.lang.*;
 
 /**
  * Created by liuxinjie on 16/8/9.
@@ -50,6 +49,10 @@ public class Result implements Serializable {
 
     public static Result error(Integer code, String error){
         return new  Result().setSuccess(false).setError(new Error(code, error, null));
+    }
+
+    public static Result error(Integer code, String error, String field) {
+        return new Result().setSuccess(false).setError(new Error(code, error, field));
     }
 
     public static Result error(Error error){

@@ -30,7 +30,6 @@ public class UserController {
     @ApiOperation(value="创建用户", notes="根据User对象创建用户")
     @ApiImplicitParam(name = "user", value = "用户详细实体user\t{[firstName: 名]\t[lastName: 姓]\t[email: 邮箱]\t[password: 密码]}", required = true, dataType = "User")
     @RequestMapping(method = RequestMethod.POST)
-
     public Result addUserMethod(User user) {
         System.out.println(" ----------------------------- " + user.getFirstName());
         System.out.println(" ----------------------------- " + user.getFirstName());
@@ -68,7 +67,6 @@ public class UserController {
         if (user == null) return Result.error(EnumUserError.用户对象不能为空.toString());
         if (StringUtils.isEmpty(user.getId())) return Result.error(EnumUserError.用户id不能为空.toString());
         if (identityService.createUserQuery().userId(user.getId()).singleResult() == null) return Result.error(EnumUserError.此用户不存在.toString());
-        identityService.deleteUser(user.getId());
         identityService.saveUser(user);
         return Result.success().setData(user);
     }
