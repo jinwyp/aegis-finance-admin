@@ -60,13 +60,15 @@ public class GroupController {
         return Result.success().setData(group);
     }
 
-    @RequestMapping(value = "/api/group", method = RequestMethod.GET)
-    public Result getAllGroupsMethod(Page meta) {
-        meta.setTotal(identityService.createGroupQuery().count());
-        return Result.success().setData(identityService.createGroupQuery().list()).setMeta(meta);
+    @RequestMapping(method = RequestMethod.GET)
+    @ApiOperation(value = "查询用户组", notes = "根据 Group Id 查询用户组")
+    @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body")
+    public Result getAllGroupsMethod(Page page) {
+        page.setTotal(identityService.createGroupQuery().count());
+        return Result.success().setData(identityService.createGroupQuery().list()).setMeta(page);
     }
 
-    @RequestMapping(value = "/api/group/users/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
     public Result getUsersByGroupIdMethod(@PathVariable(value = "id")String id, Page meta) {
         meta.setTotal(identityService.createUserQuery().memberOfGroup(id).count());
         return Result.success().setData(identityService.createUserQuery().memberOfGroup(id).list()).setMeta(meta);
