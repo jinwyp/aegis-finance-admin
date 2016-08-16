@@ -3,12 +3,14 @@ package com.yimei.finance.controllers.site.restfulapi;
 import com.yimei.finance.entity.admin.ApplyInfo;
 import com.yimei.finance.repository.common.result.Result;
 import com.yimei.finance.service.admin.ApplyInfoServicelmpl;
+import com.yimei.finance.utils.Utils;
 import lombok.Data;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,10 +32,11 @@ public class UserCenterController {
 
         System.out.println("Order Type:" + applyInfo.getApplyType());
         System.out.println("UserId:" + applyInfo.getUserId());
-
+        applyInfo.setSouceId(Utils.generateSourceId("JR"));
+        applyInfo.setApplyDateTime(LocalDateTime.now());
         applyInfoService.save(applyInfo);
 
-        return Result.success().setData(new HashMap() {{put("userId", 1); put("orderId", 2);}} );
+        return Result.success().setData(new HashMap() {{put("userId", applyInfo.getUserId()); put("orderId", applyInfo.getSouceId());}} );
     }
 
 
