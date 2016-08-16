@@ -9,7 +9,6 @@ import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 
 var financeHome = () => {
     // $('.test').html('jquery works');
-    console.log('es6 jquery works');
     //$('#type li').eq(1).addClass('active');
 
     // jQuery(".slideTxtBox").slide();

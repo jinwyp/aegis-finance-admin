@@ -5,7 +5,7 @@
 import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 import avalon from 'avalon2';
 
-var userCenter = ()=> {
+var financeInfo = ()=> {
 
     var vm = avalon.define({
         $id   : 'test',
@@ -18,7 +18,7 @@ var userCenter = ()=> {
 };
 
 
-userCenter();
+financeInfo();
 
-export default userCenter;
+export default financeInfo;
 
