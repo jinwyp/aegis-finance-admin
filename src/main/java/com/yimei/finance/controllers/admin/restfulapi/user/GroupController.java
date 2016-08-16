@@ -22,18 +22,16 @@ public class GroupController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "创建用户组", notes = "根据Group对象创建用户组")
-    @ApiImplicitParam(name = "group", value = "组详细实体group", required = true, dataType = "GroupEntity", paramType = "body")
+    @ApiImplicitParam(name = "group", value = "Group 对象", required = true, dataType = "GroupEntity", paramType = "body")
     public Result addGroupMethod(@RequestBody GroupEntity group) {
         group.setId(null);
         identityService.saveGroup(group);
         return Result.success().setData(identityService.createGroupQuery().groupId(group.getId()).singleResult());
     }
 
-    /**
-     * 删除组
-     * @param id                   组 id
-     */
-    @RequestMapping(value = "/api/group/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除用户组", notes = "根据Group Id 删除用户组")
+    @ApiImplicitParam(name = "id", value = "Group 对象Id", required = true, dataType = "String", paramType = "path")
     public Result deleteGroupMethod(@PathVariable("id")String id) {
         Group group = identityService.createGroupQuery().groupId(id).singleResult();
         if (group == null) return Result.error(EnumGroupError.此组不存在.toString());
@@ -41,24 +39,21 @@ public class GroupController {
         return Result.success().setData(identityService.createGroupQuery().groupId(id).singleResult());
     }
 
-    /**
-     * 修改组
-     * @param group                组 对象
-     */
-    @RequestMapping(value = "/api/group", method = RequestMethod.PUT)
-    public Result updateGroupMethod(Group group) {
+    @RequestMapping(method = RequestMethod.PUT)
+    @ApiOperation(value = "修改用户组", notes = "根据Group Id 修改用户组")
+    @ApiImplicitParam(name = "group", value = "Group 对象", required = true, dataType = "GroupEntity", paramType = "body")
+    public Result updateGroupMethod(@RequestBody GroupEntity group) {
         if (group == null) return Result.error(EnumGroupError.组对象不能为空.toString());
         if (StringUtils.isEmpty(group.getId())) return Result.error(EnumGroupError.组id不能为空.toString());
-        if (identityService.createGroupQuery().groupId(group.getId()) == null) return Result.error(EnumGroupError.此组不存在.toString());
+        if (identityService.createGroupQuery().groupId(group.getId()).singleResult() == null) return Result.error(EnumGroupError.此组不存在.toString());
+        identityService.deleteGroup(group.getId());
         identityService.saveGroup(group);
         return Result.success().setData(identityService.createGroupQuery().groupId(group.getId()).singleResult());
     }
 
-    /**
-     * 根据 id 查询组
-     *
-     */
-    @RequestMapping(value = "/api/group/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "查询用户组", notes = "根据 Group Id 查询用户组")
+    @ApiImplicitParam(name = "id", value = "Group 对象Id", required = true, dataType = "String", paramType = "path")
     public Result getGroupByIdMethod(@PathVariable("id")String id) {
         Group group = identityService.createGroupQuery().groupId(id).singleResult();
         if (group == null) return Result.error(EnumGroupError.此组不存在.toString());

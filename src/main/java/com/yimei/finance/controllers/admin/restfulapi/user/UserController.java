@@ -31,11 +31,11 @@ public class UserController {
         user.setId(null);
         user.setPassword(userService.securePassword(user.getPassword()));
         identityService.saveUser(user);
-        return Result.success().setData(user);
+        return Result.success().setData(identityService.createUserQuery().userId(user.getId()).singleResult());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    @ApiOperation(value = "删除用户", notes = "通过id删除用户")
+    @ApiOperation(value = "删除用户", notes = "通过 User id 删除用户")
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     public Result deleteUserMethod(@PathVariable("id") String id) {
         User user = identityService.createUserQuery().userId(id).singleResult();
@@ -45,7 +45,7 @@ public class UserController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    @ApiOperation(value = "创建用户", notes = "根据User对象创建用户")
+    @ApiOperation(value = "修改用户", notes = "根据 User Id修改用户")
     @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "UserEntity", paramType = "body")
     public Result updateUserMethod(@RequestBody UserEntity user) {
         if (user == null) return Result.error(EnumUserError.用户对象不能为空.toString());
@@ -55,7 +55,7 @@ public class UserController {
         user.setPassword(oldUser.getPassword());
         identityService.deleteUser(user.getId());
         identityService.saveUser(user);
-        return Result.success().setData(user);
+        return Result.success().setData(identityService.createUserQuery().userId(user.getId()).singleResult());
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
