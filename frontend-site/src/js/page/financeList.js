@@ -55,6 +55,11 @@ var financeList = () => {
         // $(this).parent().siblings('label').text($(this).text());
     });
 
+    //融资modal
+    $('#finance').click(() => {
+        $('.modal_1').modal();
+    })
+
 };
 
 
