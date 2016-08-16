@@ -1,0 +1,54 @@
+<div class="item-margin breadcrumb-box">
+    <ol class="breadcrumb">
+        <li>权限设置</li>
+        <li>&gt;</li>
+        <li class="active">角色管理</li>
+    </ol>
+</div>
+
+<div class="item-margin">
+    <div class="role-search">
+        <span>角色名称:</span>
+        <input type="text" value="fdsfsdfsdf">
+        <button class="btn btn-default" type="submit">查询</button>
+        <button type="button" class="btn btn-default btn-addrole" [routerLink]="['/addrole']">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加角色
+        </button>
+    </div>
+    <table class="table table-striped mt-20 role-table">
+        <tr class="head">
+            <th width="60">序号</th>
+            <th width="200">角色名称</th>
+            <th width="200">被分配人数(个)</th>
+            <th width="200">操作人</th>
+            <th width="200">操作</th>
+        </tr>
+        <tr>
+            <td>1</td>
+            <td>系统管理员</td>
+            <td>2</td>
+            <td>操作人</td>
+            <td>操作</td>
+        </tr>
+        <tr>
+            <td>2</td>
+            <td>系统管理员</td>
+            <td>4</td>
+            <td>操作人</td>
+            <td>
+                <span class="operate-forbid">无法操作</span>
+            </td>
+        </tr>
+        <tr>
+            <td>3</td>
+            <td>系统管理员</td>
+            <td>6</td>
+            <td>操作人</td>
+            <td class="operation">
+                <span class="right-border" [routerLink]="['/userrole']">查看</span>
+                <span class="right-border" [routerLink]="['/editrole']">编辑</span>
+                <span>删除</span>
+            </td>
+        </tr>
+    </table>
+</div>
