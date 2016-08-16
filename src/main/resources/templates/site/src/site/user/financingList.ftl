@@ -180,13 +180,13 @@
 
                     <label for="status">审核状态:</label>
                     <div class="positionR selectDiv">
-                        <input type="text" value="全部" name="status" id="status" class="margin-l">
+                        <input type="text" value="全部" name="status" id="status" class="margin-l" ms-duplex="@searchQuery.status" readonly="readonly" />
                         <ul class="select">
-                            <li>全部</li>
-                            <li>待审核</li>
-                            <li>补充材料</li>
-                            <li>审核通过</li>
-                            <li class="lastLi">审核不通过</li>
+                            <li ms-click="@clickStatus('全部')">全部</li>
+                            <li ms-click="@clickStatus('222')">待审核</li>
+                            <li ms-click="@clickStatus('333')">补充材料</li>
+                            <li ms-click="@clickStatus('全部')">审核通过</li>
+                            <li class="lastLi" ms-click="@clickStatus('全部')">审核不通过</li>
                         </ul>
                         <span class="trigger"></span>
                     </div>
@@ -198,17 +198,17 @@
 
                     <label for="type">业务类型:</label>
                     <div class="positionR selectDiv">
-                        <input type="text" value="全部" name="type" id="type" class="margin-l">
+                        <input type="text" value="全部" name="type" id="type" class="margin-l" readonly="readonly" ms-duplex="@searchQuery.type" />
                         <ul class="select">
-                            <li>全部</li>
-                            <li>煤易融</li>
-                            <li>煤易贷</li>
-                            <li class="lastLi">煤易购</li>
+                            <li ms-click="@clickType('全部')">全部</li>
+                            <li ms-click="@clickType('煤易融')">煤易融</li>
+                            <li ms-click="@clickType('煤易贷')">煤易贷</li>
+                            <li class="lastLi" ms-click="@clickType('煤易购')">煤易购</li>
                         </ul>
                         <span class="trigger"></span>
                     </div>
 
-                    <label for="user">申请人:</label>
+                    <label>申请人:</label>
                     <input type="text" placeholder="请输入申请人姓名" class="margin-l" ms-duplex="@searchQuery.requestUsername">
                     <input type="button" value="查询" ms-click="@searchFinanceOrder()">
                     <input type="button" value="导出Excel" id="excel" class="excel">
