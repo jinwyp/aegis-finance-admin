@@ -22,8 +22,7 @@ var financeList = () => {
         pickerEnd.pickadate('picker').set('min', pickerStart.pickadate('picker').get('select').obj);
     });
 
-    
-    //select
+
     // 模拟下拉菜单
     $(document.body).on('click', '.selectDiv input', function(){
         var $select=$(this).parent();
@@ -41,6 +40,10 @@ var financeList = () => {
         // $(this).parent().siblings('label').text($(this).text());
     });
 
+    //融资modal
+    $('#finance').click(() => {
+        $('.modal_1').modal();
+    })
 
 
     var getFinanceList = (query) => {

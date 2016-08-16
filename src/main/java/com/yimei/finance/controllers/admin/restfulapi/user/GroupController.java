@@ -3,27 +3,27 @@ package com.yimei.finance.controllers.admin.restfulapi.user;
 import com.yimei.finance.repository.common.result.Page;
 import com.yimei.finance.repository.common.result.Result;
 import com.yimei.finance.repository.user.EnumGroupError;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
+import org.activiti.engine.impl.persistence.entity.GroupEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * Created by liuxinjie on 16/8/11.
- */
+@RequestMapping("/api/financing/admin/group")
+@Api(value = "Group-Controller", description = "用户组相关方法")
 @RestController
 public class GroupController {
     @Autowired
     private IdentityService identityService;
 
-
-    /**
-     * 添加组
-     * @param group                组 对象
-     */
-    @RequestMapping(value = "/api/group", method = RequestMethod.POST)
-    public Result addGroupMethod(Group group) {
+    @RequestMapping(method = RequestMethod.POST)
+    @ApiOperation(value = "创建用户组", notes = "根据Group对象创建用户组")
+    @ApiImplicitParam(name = "group", value = "组详细实体group", required = true, dataType = "GroupEntity", paramType = "body")
+    public Result addGroupMethod(@RequestBody GroupEntity group) {
         group.setId(null);
         identityService.saveGroup(group);
         return Result.success().setData(identityService.createGroupQuery().groupId(group.getId()).singleResult());

@@ -1,5 +1,5 @@
 CREATE TABLE `T_finance_apply_info` (
-  `id` int(11) NOT NULL COMMENT '主键',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
   `userId` int(11) DEFAULT NULL COMMENT '用户id ',
   `applyType` varchar(45) DEFAULT NULL COMMENT '申请类型：\n煤易融：MYR\n煤易贷:   MYD\n煤易购:   MYG',
   `financingAmount` decimal(10,2) DEFAULT NULL COMMENT '拟融资金额（单位：万元）',
@@ -27,7 +27,7 @@ CREATE TABLE `T_finance_apply_info` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '申请信息表';
 
 CREATE TABLE `T_finance_apply_info_bills` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `T_finance_apply_info_id` int(11) DEFAULT NULL,
   `path` varchar(100) DEFAULT NULL COMMENT '路径',
   `billtype` varchar(50) DEFAULT NULL COMMENT '类别',
@@ -35,14 +35,14 @@ CREATE TABLE `T_finance_apply_info_bills` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '申请信息账单表';
 
 CREATE TABLE `T_finance_role` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(45) DEFAULT NULL COMMENT '角色名',
   `comment` varchar(45) DEFAULT NULL COMMENT '备份描述',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '角色表';
 
 CREATE TABLE `T_finance_users` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(20) DEFAULT NULL COMMENT '用户姓名',
   `phone` varchar(15) DEFAULT NULL COMMENT '联系电话',
   `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
@@ -53,7 +53,7 @@ CREATE TABLE `T_finance_users` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '用户表';
 
 CREATE TABLE `T_financing_review_result` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `workFlowInstanceId` varchar(45) DEFAULT NULL COMMENT '工作流实例id',
   `reviewResult` varchar(2000) DEFAULT NULL COMMENT '结果json内容',
   `isPassed` tinyint(1) DEFAULT NULL COMMENT '是否通过',
@@ -62,7 +62,7 @@ CREATE TABLE `T_financing_review_result` (
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '节点审核结果表';
 
 CREATE TABLE `T_finance_user_role` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `T_finance_users_id` int(11) DEFAULT NULL,
   `T_finance_role_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
