@@ -183,10 +183,10 @@
                         <input type="text" value="全部" name="status" id="status" class="margin-l" ms-duplex="@searchQuery.status" readonly="readonly" />
                         <ul class="select">
                             <li ms-click="@clickStatus('全部')">全部</li>
-                            <li ms-click="@clickStatus('222')">待审核</li>
-                            <li ms-click="@clickStatus('333')">补充材料</li>
-                            <li ms-click="@clickStatus('全部')">审核通过</li>
-                            <li class="lastLi" ms-click="@clickStatus('全部')">审核不通过</li>
+                            <li ms-click="@clickStatus('待审核')">待审核</li>
+                            <li ms-click="@clickStatus('补充材料')">补充材料</li>
+                            <li ms-click="@clickStatus('审核通过')">审核通过</li>
+                            <li class="lastLi" ms-click="@clickStatus('审核不通过')">审核不通过</li>
                         </ul>
                         <span class="trigger"></span>
                     </div>
