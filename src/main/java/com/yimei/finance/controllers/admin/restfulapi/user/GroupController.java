@@ -75,9 +75,10 @@ public class GroupController {
         @ApiImplicitParam(name = "id", value = "Group 对象Id", required = true, dataType = "String", paramType = "path"),
         @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body")
     })
-    public Result getUsersByGroupIdMethod(@PathVariable(value = "id")String id, Page meta) {
-        meta.setTotal(identityService.createUserQuery().memberOfGroup(id).count());
-        return Result.success().setData(identityService.createUserQuery().memberOfGroup(id).list()).setMeta(meta);
+    public Result getUsersByGroupIdMethod(@PathVariable(value = "id")String id, Page page) {
+        if (identityService.createGroupQuery().groupId(id).singleResult() == null) return Result.error(EnumGroupError.此组不存在.toString());
+        page.setTotal(identityService.createUserQuery().memberOfGroup(id).count());
+        return Result.success().setData(identityService.createUserQuery().memberOfGroup(id).list()).setMeta(page);
     }
 
 
