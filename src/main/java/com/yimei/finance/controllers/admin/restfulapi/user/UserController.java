@@ -3,6 +3,7 @@ package com.yimei.finance.controllers.admin.restfulapi.user;
 import com.yimei.finance.repository.common.result.Page;
 import com.yimei.finance.repository.common.result.Result;
 import com.yimei.finance.repository.user.EnumUserError;
+import com.yimei.finance.repository.user.UserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -20,12 +21,15 @@ import org.springframework.web.bind.annotation.*;
 public class UserController {
     @Autowired
     private IdentityService identityService;
+    @Autowired
+    private UserServiceImpl userService;
 
     @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户")
     @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "UserEntity", paramType = "body")
     public Result addUserMethod(@RequestBody UserEntity user) {
         user.setId(null);
+        user.setPassword(userService.securePassword(user.getPassword()));
         identityService.saveUser(user);
         return Result.success().setData(user);
     }
