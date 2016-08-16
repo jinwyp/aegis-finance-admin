@@ -1,5 +1,8 @@
 package com.yimei.finance.controllers.admin.page;
 
+import com.yimei.finance.config.AdminSession;
+import io.swagger.annotations.Api;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -9,9 +12,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * 登陆页面
  */
 
-@Controller
 @RequestMapping("/api/financing/admin")
-public class LoginController {
+@Api(value = "Admin-Login-Page-API", description = "登陆, 退出等页面")
+@Controller
+public class LoginPageController {
+    @Autowired
+    private AdminSession adminSession;
 
     /**
      * 跳转到管理登录页面
@@ -27,6 +33,15 @@ public class LoginController {
      */
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
+        return "admin/login";
+    }
+
+    /**
+     * 退出
+     */
+    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    public String logout() {
+        adminSession.logout();
         return "admin/login";
     }
 

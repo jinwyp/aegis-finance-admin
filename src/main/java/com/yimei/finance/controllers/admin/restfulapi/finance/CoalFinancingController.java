@@ -1,7 +1,7 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.AdminSession;
-import com.yimei.finance.entity.admin.user.EnumGroupId;
+import com.yimei.finance.repository.admin.user.EnumGroupId;
 import com.yimei.finance.repository.common.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
  * 处理煤易融相关逻辑
  */
 @RequestMapping("/api/finance/financing")
-@Api(value = "CoalFinancingApi", description = "煤易融相关接口")
+@Api(value = "Admin-Coal-Financing-API", description = "煤易融相关接口")
 @RestController
 public class CoalFinancingController {
     @Autowired

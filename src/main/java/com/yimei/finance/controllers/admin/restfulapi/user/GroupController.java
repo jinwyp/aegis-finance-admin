@@ -1,9 +1,9 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
+import com.yimei.finance.repository.admin.user.EnumAdminUserError;
+import com.yimei.finance.repository.admin.user.EnumGroupError;
 import com.yimei.finance.repository.common.result.Page;
 import com.yimei.finance.repository.common.result.Result;
-import com.yimei.finance.repository.user.EnumGroupError;
-import com.yimei.finance.repository.user.EnumUserError;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RequestMapping("/api/financing/admin/group")
-@Api(value = "Group-Controller", description = "用户组相关方法")
+@Api(value = "Admin-Group-API", description = "用户组相关接口")
 @RestController
 public class GroupController {
     @Autowired
@@ -35,7 +35,7 @@ public class GroupController {
     }
 
     @RequestMapping(method = RequestMethod.GET)
-    @ApiOperation(value = "查询用户组", notes = "根据 Group Id 查询用户组")
+    @ApiOperation(value = "查询所有的用户组", notes = "查询所有用户组")
     @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body")
     public Result getAllGroupsMethod(Page page) {
         page.setTotal(identityService.createGroupQuery().count());
@@ -58,6 +58,8 @@ public class GroupController {
     @ApiOperation(value = "创建用户组", notes = "根据Group对象创建用户组")
     @ApiImplicitParam(name = "group", value = "Group 对象", required = true, dataType = "GroupEntity", paramType = "body")
     public Result addGroupMethod(@RequestBody GroupEntity group) {
+        if (StringUtils.isEmpty(group.getName())) return Result.error(EnumGroupError.组名称不能为空.toString());
+        if (identityService.createGroupQuery().groupName(group.getName()).singleResult() != null) return Result.error(EnumGroupError.已经存在名称相同的组.toString());
         group.setId(null);
         identityService.saveGroup(group);
         return Result.success().setData(identityService.createGroupQuery().groupId(group.getId()).singleResult());
@@ -74,7 +76,7 @@ public class GroupController {
         Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
         if (group == null) return Result.error(EnumGroupError.此组不存在.toString());
         User user = identityService.createUserQuery().userId(userId).singleResult();
-        if (user == null) return Result.error(EnumUserError.此用户不存在.toString());
+        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
         for (Group g : groupList) {
             if (g.getId().equals(groupId)) return Result.error(EnumGroupError.该用户已经在此组中.toString());
@@ -95,7 +97,7 @@ public class GroupController {
         Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
         if (group == null) return Result.error(EnumGroupError.此组不存在.toString());
         User user = identityService.createUserQuery().userId(userId).singleResult();
-        if (user == null) return Result.error(EnumUserError.此用户不存在.toString());
+        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
         for (Group g : groupList) {
             if (g.getId().equals(groupId)) {
