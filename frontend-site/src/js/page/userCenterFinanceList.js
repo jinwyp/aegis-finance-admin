@@ -25,15 +25,12 @@ var financeList = () => {
 
     // 模拟下拉菜单
     $(document.body).on('click', '.selectDiv input', function(){
-        var $select=$(this).parent();
-
-        if(!$select.hasClass('select-open')){
+        var $select = $(this).parent();
+        if (!$select.hasClass('select-open')) {
             $select.addClass('select-open');
 
-            setTimeout(function(){
-                $(document.body).one('click', function(){
-                    $select.removeClass('select-open');
-                });
+            setTimeout( ()=>{
+                $(document.body).one('click', ()=>{ $select.removeClass('select-open') });
             });
         }
     });
@@ -42,7 +39,7 @@ var financeList = () => {
     //融资modal
     $('#finance').click(() => {
         $('.modal_1').modal();
-    })
+    });
 
 
     var getFinanceList = (query) => {
@@ -55,13 +52,11 @@ var financeList = () => {
             dataType : "json",
             data     : params,
             success  : (data)=> {
-                console.log(data);
                 if (data.success){
                     vm.financeList = data.data;
                 }else{
 
                 }
-
             }
         })
     };
@@ -94,6 +89,8 @@ var financeList = () => {
             })
         }
     });
+
+    getFinanceList();
 
 
 };

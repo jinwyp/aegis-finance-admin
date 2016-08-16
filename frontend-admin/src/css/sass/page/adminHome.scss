@@ -1,15 +1,17 @@
 @import '../helpers/_variables.scss';
 
 .homebox{
+  input{outline: none;}
+  .btn{outline: none;}
   .left-menu-box{
-    background-color: #f2f2f2;
+    background-color: $menu-bg-color;
     .left-menu{
       
       .menu-item {
         padding-top: 20px;
         padding-bottom:20px;
         //border-top: 1px solid #e0e0e0;
-        border-right: 1px solid #e0e0e0;
+        border-right: 1px solid $input-border-color;
         //border-bottom: 1px solid #e0e0e0;
         .icon {
           margin-left: 8px;
@@ -18,7 +20,7 @@
           line-height: 38px;
           padding-left: 44px;
           font-size: 18px;
-          color: #a2acb5;
+          color: $menu-text-color;
           text-decoration: none;
           cursor: pointer;
         }
@@ -33,11 +35,11 @@
         }
         .nav > li > a.item {
           font-size: 14px;
-          color: #a2acb5;
+          color: $menu-text-color;
           padding:15px 15px 15px 70px;
           .notice{
-            color: #ffffff;
-            background-color: #a2acb5;
+            color: $white;
+            background-color: $menu-text-color;
             border-radius: 2px;
             padding:2px 5px;
             margin-left:10px;
@@ -45,68 +47,173 @@
         }
       }
       .menu-selected{
-        background-color: #ffffff;
+        background-color: $white;
         //border-top: 1px solid #e0e0e0;
-        border-bottom: 1px solid #e0e0e0;
+        border-bottom: 1px solid $input-border-color;
         border-right: none;
       }
     }
   }
+
   .right-main-box{
     .mt-50{ margin-top:50px;}
-    .row.item{
-      margin:0 30px;
-    }
-    .row{
+    .mt-30{ margin-top:30px;}
+    .mt-20{ margin-top:20px;}
+    .mt-10{ margin-top:10px;}
+    .ml-20{ margin-left:20px;}
+    .ml-30{ margin-left:30px;}
+    .ml-50{ margin-left:50px;}
+    .ml-70{ margin-left:70px;}
+    .fs-16{ font-size:16px;}
+    .fs-14{ font-size:14px;}
+    .fs-12{ font-size:12px;}
+
+    .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td,
+    .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{border-top: none;padding: 0;}
+
+    .item-margin{ margin:0 30px;overflow: hidden; }
+    .breadcrumb-box{
       .breadcrumb{
         font-size:14px;
         background-color: transparent;
         margin:10px 0 0;
         padding:10px 0;
-        border-bottom: 1px solid #ececec;
+        border-bottom: 1px solid $border-color;
         border-radius: 0px;
+        .active{ color: $menu-text-color; }
       }
       .breadcrumb>li+li:before{
         padding: 0;
         content: '';
       }
-      .info-item{
-        margin-left:80px;
-        margin-right:100px;
-        //background-color: #ececec;
-        font-size:16px;
-        input{
-          outline: none;
-          height: 40px;
-          line-height:40px;
-          width:300px;
-          border:1px solid #a2acb5;
-          padding:0 10px;
+    }
+    .role-search{
+      padding: 20px 0;
+      border-bottom: 1px solid $border-color;
+      input{
+        height: 34px;
+        line-height:34px;
+        padding:0 10px;
+        margin-left:10px;
+        font-size:14px;
+        border:1px solid $input-border-color;
+      }
+      .btn{
+        margin-left:20px;
+        width:110px;
+        border:1px solid $btn-border-color;
+        border-radius: 2px;
+      }
+      .btn-addrole{
+        font-size:14px;
+        color: $white;
+        border-color: $err-color;
+        background-color: $err-color;
+        .glyphicon{
+          font-size:12px;
         }
-        .info-label{
-          padding:30px 0;
-        }
-        .info-label-input{
-          padding:42px 0;
-        }
-        .info-val{
-          padding:30px 0;
-          border-bottom: 1px solid #ececec;
-          .btn-save{
-            width:200px;
-            background-color: #f66c54;
-            border-color: #f66c54;
-            color: #ffffff;
+      }
+    }
+    .role-table{
+      text-align: center;
+      font-size:12px;
+      border-bottom:1px solid $input-border-color;
+      tr{
+        td{
+          height:50px;
+          line-height:50px;
+          .right-border{
+            border-right:2px solid $border-color;
+          }
+          .operate-forbid{
+            padding: 1px 0 1px 16px;
+            background: url("#{$assetPath}/css/images/stop_icon.png") no-repeat;
           }
         }
-        .role-info>li+li{
-          //border:1px solid red;
-          margin-top: 20px;
-        }
-        .role-info li a{
-          margin-left: 20px;
+        .operation>span{
+          padding:0 12px 0 10px;
+          color: #007193;
           cursor: pointer;
         }
+      }
+      tr.head{
+        background-color: #dadee1;
+        th{
+          height:60px;
+          line-height:60px;
+          text-align: center;
+        }
+      }
+    }
+    .info-item{
+      margin-left:60px;
+      margin-right:60px;
+      font-size:16px;
+      .info-label{
+        padding:30px 0;
+        color: $menu-text-color;
+      }
+      .info-label-input{
+        padding:42px 0;
+        color: $menu-text-color;
+      }
+      .info-val>input{
+        height: 40px;
+        line-height:40px;
+        width:300px;
+        border:1px solid $input-border-color;
+        padding:0 10px;
+      }
+      .info-val>textarea{
+        resize: none;
+        outline: none;
+        border-radius: 2px;
+        border:1px solid $input-border-color;
+      }
+      .info-val{
+        padding:30px 0;
+        border-bottom: 1px solid $border-color;
+        .jurisdicition-manage{
+          padding: 30px 0;
+          border:1px solid $input-border-color;
+        }
+        .btn-save{
+          width:200px;
+          background-color: $err-color;
+          border-color: $err-color;
+          border-radius: 3px;
+          color: $white;
+        }
+        .btn-return{
+          width:200px;
+          background-color: $menu-text-color;
+          border-color: $menu-text-color;
+          border-radius: 2px;
+          color: $white;
+        }
+        input.err-input{
+          &:focus{
+            border-color: $err-color;
+          }
+        }
+        .hint{  color: $menu-text-color; }
+        .orange{  color: $err-color;  }
+        span.err-info{
+          color: $err-color;
+        }
+        .role>label{ font-size:14px; }
+        .roles>label{ font-size:16px; }
+        .role>label>input,.roles>label>input{
+          font-size:16px;
+          margin-right:10px;
+        }
+      }
+      .role-info>li+li{
+        margin-top: 20px;
+      }
+      .role-info li a{
+        margin-left: 20px;
+        cursor: pointer;
       }
     }
   }

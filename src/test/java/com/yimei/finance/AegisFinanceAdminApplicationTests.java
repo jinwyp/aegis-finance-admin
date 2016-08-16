@@ -1,13 +1,12 @@
 package com.yimei.finance;
 
-import com.yimei.finance.entity.tpl.User;
+import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
 import com.yimei.finance.service.tpl.JpaRollbackDemo;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.SpringApplicationConfiguration;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
@@ -29,8 +28,8 @@ public class AegisFinanceAdminApplicationTests {
     @Test
     public void testRollback() {
         userRepository.deleteAll();
-        User rollback = new User("rollback",111l);
-        User unrollback = new User("norollback",222l);
+        UserTest rollback = new UserTest("rollback",111l);
+        UserTest unrollback = new UserTest("norollback",222l);
         try {
             jpaRollbackDemo.savePersonWithRollBack(rollback);
         } catch (Exception e) {
@@ -58,16 +57,16 @@ public class AegisFinanceAdminApplicationTests {
 
         userRepository.deleteAll();
 		// 创建10条记录
-		userRepository.save(new User("AAA", 10l));
-		userRepository.save(new User("BBB", 20l));
-		userRepository.save(new User("CCC", 30l));
-		userRepository.save(new User("DDD", 40l));
-		userRepository.save(new User("EEE", 50l));
-		userRepository.save(new User("FFF", 60l));
-		userRepository.save(new User("GGG", 70l));
-		userRepository.save(new User("HHH", 80l));
-		userRepository.save(new User("III", 90l));
-		userRepository.save(new User("JJJ", 100l));
+		userRepository.save(new UserTest("AAA", 10l));
+		userRepository.save(new UserTest("BBB", 20l));
+		userRepository.save(new UserTest("CCC", 30l));
+		userRepository.save(new UserTest("DDD", 40l));
+		userRepository.save(new UserTest("EEE", 50l));
+		userRepository.save(new UserTest("FFF", 60l));
+		userRepository.save(new UserTest("GGG", 70l));
+		userRepository.save(new UserTest("HHH", 80l));
+		userRepository.save(new UserTest("III", 90l));
+		userRepository.save(new UserTest("JJJ", 100l));
 
 		// 测试findAll, 查询所有记录
 		Assert.assertEquals(10, userRepository.findAll().size());

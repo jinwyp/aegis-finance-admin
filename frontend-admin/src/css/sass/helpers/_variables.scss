@@ -1,6 +1,12 @@
 $assetPath : "/static/admin";
 
-
+$white:#ffffff;
+$err-color:#f66c54;
+$border-color:#ececec;
+$input-border-color:#e0e0e0;
+$btn-border-color:#e4e4e4;
+$menu-text-color:#a2acb5;
+$menu-bg-color:#f2f2f2;
 
 @mixin border-radius($radius) {
   -webkit-border-radius: $radius;

@@ -24,6 +24,10 @@ import { HomeDashboardComponent } from '../components/home/home-dashboard';
 import { OrderListComponent } from '../components/order/order-list';
 import { OrderDetailComponent } from '../components/order/order-detail';
 import { UserInfoComponent } from '../components/user/user-info';
+import { UpdatePwdComponent } from '../components/user/update-pwd';
+import { UserRoleListComponent } from '../components/role/user-role-list';
+import { UserRoleComponent } from '../components/role/user-role';
+import { AddRoleComponent } from '../components/role/add-role';
 
 
 
@@ -32,7 +36,8 @@ import { UserInfoComponent } from '../components/user/user-info';
     declarations: [
         ROUTER_DIRECTIVES,
         headerComponent, LeftMenuComponent,
-        HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent, UserInfoComponent
+        HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent, UserInfoComponent,UpdatePwdComponent,
+        AddRoleComponent,UserRoleComponent,UserRoleListComponent
     ],
     providers: [ OrderService,
         homePageRouterProviders,

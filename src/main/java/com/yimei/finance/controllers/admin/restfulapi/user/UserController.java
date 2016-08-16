@@ -24,6 +24,36 @@ public class UserController {
     @Autowired
     private UserServiceImpl userService;
 
+
+    @RequestMapping(method = RequestMethod.GET)
+    @ApiOperation(value = "查询所有用户", notes = "查询所有用户")
+    @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body")
+    public Result getAllUsersMethod(Page page) {
+        page.setTotal(identityService.createUserQuery().count());
+        return Result.success().setData(identityService.createUserQuery().listPage(page.getOffset(), page.getCount())).setMeta(page);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "查询单个用户", notes = "根据id查询用户对象")
+    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
+    public Result getUserByIdMethod(@PathVariable("id") String id) {
+        User user = identityService.createUserQuery().userId(id).singleResult();
+        if (user == null) return Result.error(EnumUserError.此用户不存在.toString());
+        return Result.success().setData(user);
+    }
+
+    @RequestMapping(value = "/groups/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "查询一个用户所在的组", notes = "查询一个用户所在的组")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body"),
+            @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
+
+    })
+    public Result getUserGroupsMethod(@PathVariable("id") String id, Page page) {
+        page.setTotal(identityService.createGroupQuery().groupMember(id).count());
+        return Result.success().setData(identityService.createGroupQuery().groupMember(id).listPage(page.getOffset(), page.getCount())).setMeta(page);
+    }
+
     @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户")
     @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "UserEntity", paramType = "body")
@@ -57,34 +87,6 @@ public class UserController {
         identityService.saveUser(user);
         return Result.success().setData(identityService.createUserQuery().userId(user.getId()).singleResult());
     }
-
-    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ApiOperation(value = "查询单个用户", notes = "根据id查询用户对象")
-    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
-    public Result getUserByIdMethod(@PathVariable("id") String id) {
-        User user = identityService.createUserQuery().userId(id).singleResult();
-        if (user == null) return Result.error(EnumUserError.此用户不存在.toString());
-        return Result.success().setData(user);
-    }
-
-    @RequestMapping(method = RequestMethod.GET)
-    @ApiOperation(value = "查询所有用户", notes = "查询所有用户")
-    @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body")
-    public Result getAllUsersMethod(Page page) {
-        page.setTotal(identityService.createUserQuery().count());
-        return Result.success().setData(identityService.createUserQuery().listPage(page.getOffset(), page.getCount())).setMeta(page);
-    }
-
-    @RequestMapping(value = "/groups/{id}", method = RequestMethod.GET)
-    @ApiOperation(value = "查询一个用户所在的组", notes = "查询一个用户所在的组")
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body"),
-        @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
-
-    })
-    public Result getUserGroupsMethod(@PathVariable("id") String id, Page page) {
-        page.setTotal(identityService.createGroupQuery().groupMember(id).count());
-        return Result.success().setData(identityService.createGroupQuery().groupMember(id).listPage(page.getOffset(), page.getCount())).setMeta(page);
-    }
+    
 
 }

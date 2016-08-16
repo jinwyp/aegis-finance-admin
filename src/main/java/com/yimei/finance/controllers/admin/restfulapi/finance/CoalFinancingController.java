@@ -1,7 +1,7 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.AdminSession;
-import com.yimei.finance.entity.admin.EnumGroupId;
+import com.yimei.finance.entity.admin.user.EnumGroupId;
 import com.yimei.finance.repository.common.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
