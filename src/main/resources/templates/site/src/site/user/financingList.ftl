@@ -176,23 +176,31 @@
                     <label for="endDate">到</label>
                     <div class="time"><input type="text" id="endDate" class="iIpt iIpt_sm endDate" placeholder="yyyy-mm-dd" /></div>
                     <label for="status">审核状态:</label>
-                    <select name="" id="status">
-                        <option value="">全部</option>
-                        <option value="">待审核</option>
-                        <option value="">补充材料</option>
-                        <option value="">审核通过</option>
-                        <option value="">审核不通过</option>
-                    </select>
+                    <div class="positionR selectDiv">
+                        <input type="text" value="全部" name="status" id="status" class="margin-l">
+                        <ul class="select">
+                            <li>全部</li>
+                            <li>待审核</li>
+                            <li>补充材料</li>
+                            <li>审核通过</li>
+                            <li class="lastLi">审核不通过</li>
+                        </ul>
+                        <span class="trigger"></span>
+                    </div>
                     <br/>
                     <label for="number">业务编号:</label>
                     <input type="text" id="number" class="margin-l">
                     <label for="type">业务类型:</label>
-                    <select name="" id="type">
-                        <option value="">全部</option>
-                        <option value="">煤易融</option>
-                        <option value="">煤易贷</option>
-                        <option value="">煤易购</option>
-                    </select>
+                    <div class="positionR selectDiv">
+                        <input type="text" value="全部" name="type" id="type" class="margin-l">
+                        <ul class="select">
+                            <li>全部</li>
+                            <li>煤易融</li>
+                            <li>煤易贷</li>
+                            <li class="lastLi">煤易购</li>
+                        </ul>
+                        <span class="trigger"></span>
+                    </div>
                     <label for="user"></label>
                     <input type="text" id="user" placeholder="请输入申请人姓名" class="margin-l">
                     <input type="submit" value="查询">

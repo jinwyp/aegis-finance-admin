@@ -18,13 +18,11 @@ CREATE TABLE `T_finance_apply_info` (
   `coalSources` varchar(100) DEFAULT NULL COMMENT '煤炭来源',
   `marketPrice` decimal(10,2) DEFAULT NULL COMMENT '单吨市场报价（元／吨）',
   `approveState` varchar(30) DEFAULT NULL COMMENT '审批状态',
-  `approveComments` varchar(200) DEFAULT NULL COMMENT '审批说明',
-  `souceId` varchar(50) DEFAULT NULL COMMENT '流水号，编号',
+  `sourceId` varchar(50) DEFAULT NULL COMMENT '流水号，编号',
   `applyDateTime` datetime DEFAULT NULL COMMENT '申请时间',
   `applyUserName` varchar(45) DEFAULT NULL COMMENT '申请人姓名',
   `applyCompanyName` varchar(45) DEFAULT NULL COMMENT '申请公司名称',
   `workFlowInstanceId` varchar(45) DEFAULT NULL COMMENT '工作流实例id',
-  `currentNode` varchar(45) DEFAULT NULL COMMENT '当前所在的工作流节点',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '申请信息表';
 

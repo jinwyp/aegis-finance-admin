@@ -1,6 +1,6 @@
 package com.yimei.finance.controllers.admin.restfulapi;
 
-import com.yimei.finance.config.Session;
+import com.yimei.finance.config.AdminSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class AuthLoginController {
 
     @Autowired
-    private Session session;
+    private AdminSession adminSession;
 
     /**
      * 登陆方法
@@ -44,7 +44,7 @@ public class AuthLoginController {
      */
     @RequestMapping(value = "/api/financing/admin/logout", method = RequestMethod.GET)
     public Object logout() {
-        session.logout();
+        adminSession.logout();
         return new ResponseEntity<String>("{\n" +
                 "    \"success\" : true,\n" +
                 "    \"error\" : null,\n" +

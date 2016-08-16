@@ -1,6 +1,6 @@
 package com.yimei.finance.controllers.admin.page;
 
-import com.yimei.finance.config.Session;
+import com.yimei.finance.config.AdminSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ErrorController {
     @Autowired
-    private Session session;
+    private AdminSession adminSession;
 
 
     @RequestMapping(value = "/404", method = RequestMethod.GET)

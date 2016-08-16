@@ -1,9 +1,8 @@
 package com.yimei.finance.service.admin;
 
-import com.yimei.finance.config.Session;
+import com.yimei.finance.config.AdminSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.DigestUtils;
 
 /**
  * Created by liuxinjie on 16/7/30.
@@ -11,7 +10,7 @@ import org.springframework.util.DigestUtils;
 @Service
 public class AdminServiceImpl {
     @Autowired
-    private Session session;
+    private AdminSession adminSession;
 
 //    /**
 //     * 登陆方法
