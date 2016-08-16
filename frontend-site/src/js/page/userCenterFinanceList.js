@@ -25,25 +25,21 @@ var financeList = () => {
 
     // 模拟下拉菜单
     $(document.body).on('click', '.selectDiv input', function(){
-        var $select=$(this).parent();
-        if(!$select.hasClass('select-open')){
+        var $select = $(this).parent();
+        if (!$select.hasClass('select-open')) {
             $select.addClass('select-open');
-            setTimeout(function(){
-                $(document.body).one('click', function(){
-                    $select.removeClass('select-open');
-                });
+
+            setTimeout( ()=>{
+                $(document.body).one('click', ()=>{ $select.removeClass('select-open') });
             });
         }
     });
-    $(document.body).on('click', '.select li', function(){
-        $(this).parent().siblings('input').val($(this).text());
-        // $(this).parent().siblings('label').text($(this).text());
-    });
+
 
     //融资modal
     $('#finance').click(() => {
         $('.modal_1').modal();
-    })
+    });
 
 
     var getFinanceList = (query) => {
@@ -56,13 +52,11 @@ var financeList = () => {
             dataType : "json",
             data     : params,
             success  : (data)=> {
-                console.log(data);
                 if (data.success){
                     vm.financeList = data.data;
                 }else{
 
                 }
-
             }
         })
     };
@@ -70,15 +64,33 @@ var financeList = () => {
     var vm = avalon.define({
         $id   : 'financeList',
         financeList : [],
-        searchQuery : {
-            requestUsername : ''
+        css : {
+            status : false
         },
+        searchQuery : {
+            requestUsername : '',
+            status : '',
+            type : ''
+        },
+
+        clickStatus : (value)=>{
+            vm.searchQuery.status = value;
+        },
+
+        clickType : (value)=>{
+            vm.searchQuery.type = value;
+        },
+
         searchFinanceOrder : (event)=>{
             getFinanceList({
-                requestUsername : vm.searchQuery.requestUsername
+                requestUsername : vm.searchQuery.requestUsername,
+                status : vm.searchQuery.status,
+                type : vm.searchQuery.type
             })
         }
     });
+
+    getFinanceList();
 
 
 };

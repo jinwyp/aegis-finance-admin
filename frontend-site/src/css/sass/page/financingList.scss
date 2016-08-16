@@ -132,6 +132,7 @@ $borderColor:#e4e4e4;
                 border-color: #00b7ec;
               }
             }
+
             .startDate,.endDate{
               background: url("#{$assetPath}/css/images/datepicker/icon_calendar_gray.png") no-repeat 143px center;
               &:focus{
@@ -144,6 +145,7 @@ $borderColor:#e4e4e4;
             margin:0 10px;
             width: 168px;
             height: 32px;
+            display: inline-block;
             border:1px solid $borderColor;
             margin-bottom: 22px;
             padding-left: 10px;

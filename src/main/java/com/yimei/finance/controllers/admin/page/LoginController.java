@@ -10,13 +10,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @Controller
+@RequestMapping("/api/financing/admin")
 public class LoginController {
 
     /**
      * 跳转到管理登录页面
      */
 
-    @RequestMapping(value = "/finance/admin", method = RequestMethod.GET)
+    @RequestMapping(method = RequestMethod.GET)
     public String indexPage() {
         return "redirect:/finance/admin/login";
     }
@@ -24,7 +25,7 @@ public class LoginController {
     /**
      * 管理登录页面
      */
-    @RequestMapping(value = "/finance/admin/login", method = RequestMethod.GET)
+    @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage() {
         return "admin/login";
     }
