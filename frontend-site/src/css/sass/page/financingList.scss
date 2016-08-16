@@ -176,15 +176,59 @@ $borderColor:#e4e4e4;
             background-repeat: no-repeat;
             padding-left: 28px;
           }
-          select{
-            width: 168px;
-            height: 32px;
-            border:1px solid $borderColor;
-            border-radius: 0;
-            margin:0 10px;
-            background: none;
-            outline: none;
+          .selectDiv{
+            .select{
+              width: 168px;
+              background: #ffffff;
+              border:1px solid $borderColor;
+              position: absolute;
+              top:31px;
+              left: 10px;
+              display: none;
+              li{
+                width: 168px;
+                height: 32px;
+                line-height: 32px;
+                padding-left: 10px;
+                border-bottom:1px solid $borderColor;
+                cursor: pointer;
+              }
+              .lastLi{
+                border-bottom: none;
+              }
+
+            }
+            .trigger {
+              position: absolute;
+              right: 20px;
+              top: 16px;
+              width: 0px;
+              height: 0px;
+              border-left: 4px solid transparent;
+              border-right: 4px solid transparent;
+              border-top: 4px solid #999999;
+              transition: all 300ms ease-out;
+              -moz-transition: all 300ms ease-out;
+              -ms-transition: all 300ms ease-out;
+              -o-transition: all 300ms ease-out;
+            }
           }
+          .select-open{
+            .select{
+              display: block;
+            }
+            .trigger {
+              -webkit-transition: all .4s ease 0s;
+              transform: rotate(180deg);
+              animation-fill-mode: forwards;
+            }
+
+          }
+          .positionR{
+            display: inline-block;
+            position: relative;
+          }
+
         }
         table.list{
           width: 100%;
@@ -265,3 +309,4 @@ $borderColor:#e4e4e4;
     //我的申请右侧内容样式结束
   }
 }
+

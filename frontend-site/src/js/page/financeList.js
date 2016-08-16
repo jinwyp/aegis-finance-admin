@@ -36,6 +36,24 @@ var financeList = () => {
                 {from: [1970, 1, 1], to: new Date(new Date(startObj.val()).getTime() - day_1)}
             ]);
         });
+    
+    //select
+    // 模拟下拉菜单
+    $(document.body).on('click', '.selectDiv input', function(){
+        var $select=$(this).parent();
+        if(!$select.hasClass('select-open')){
+            $select.addClass('select-open');
+            setTimeout(function(){
+                $(document.body).one('click', function(){
+                    $select.removeClass('select-open');
+                });
+            });
+        }
+    });
+    $(document.body).on('click', '.select li', function(){
+        $(this).parent().siblings('input').val($(this).text());
+        // $(this).parent().siblings('label').text($(this).text());
+    });
 
 };
 
