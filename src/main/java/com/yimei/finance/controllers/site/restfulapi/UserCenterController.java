@@ -1,6 +1,7 @@
 package com.yimei.finance.controllers.site.restfulapi;
 
 import com.yimei.finance.entity.admin.user.ApplyInfo;
+import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.common.result.Result;
 import com.yimei.finance.service.admin.ApplyInfoServicelmpl;
 import com.yimei.finance.utils.Utils;
@@ -24,6 +25,7 @@ public class UserCenterController {
     /**
     * 供应链金融 - 发起融资申请
     */
+    @LoginRequired
     @RequestMapping(value = "/api/financing/orders", method = RequestMethod.POST)
     public Result requestFinancingOrder(@RequestBody ApplyInfo applyInfo) {
 
@@ -40,6 +42,7 @@ public class UserCenterController {
     /**
      * 供应链金融 - 用户中心 - 获取融资申请列表
      */
+    @LoginRequired
     @RequestMapping(value = "/api/financing/applyInfo", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(@RequestParam(value = "applyType", required = false ) String applyType) {
 
@@ -58,6 +61,7 @@ public class UserCenterController {
     /**
      * 供应链金融 - 用户中心 - 获取融资申请详细信息
      */
+    @LoginRequired
     @RequestMapping(value = "/api/financing/applyInfo/{sourceID}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable String sourceID) {
 
