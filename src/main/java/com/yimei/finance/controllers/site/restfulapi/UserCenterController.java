@@ -32,11 +32,11 @@ public class UserCenterController {
 
         System.out.println("Order Type:" + applyInfo.getApplyType());
         System.out.println("UserId:" + applyInfo.getUserId());
-        applyInfo.setSouceId(Utils.generateSourceId("JR"));
+        applyInfo.setSourceId(Utils.generateSourceId("JR"));
         applyInfo.setApplyDateTime(LocalDateTime.now());
         applyInfoService.save(applyInfo);
 
-        return Result.success().setData(new HashMap() {{put("userId", applyInfo.getUserId()); put("orderId", applyInfo.getSouceId());}} );
+        return Result.success().setData(new HashMap() {{put("userId", applyInfo.getUserId()); put("orderId", applyInfo.getSourceId());}} );
     }
 
 
