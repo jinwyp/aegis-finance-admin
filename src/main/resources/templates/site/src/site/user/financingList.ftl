@@ -201,7 +201,7 @@
                         </ul>
                         <span class="trigger"></span>
                     </div>
-                    <label for="user"></label>
+                    <label for="user">申请人:</label>
                     <input type="text" id="user" placeholder="请输入申请人姓名" class="margin-l">
                     <input type="submit" value="查询">
                     <input type="button" value="导出Excel" id="excel" class="excel">
@@ -328,15 +328,13 @@
             </ul>
         </div>
         <div class="footerInfo">
+
             <!--友情链接开始-->
             <ul class="footerInfo-fl">
                 <li>友情链接：</li>
                 <li><a href="/teach/friendlylink" target="_new">更多...</a></li>
             </ul>
             <!--友情链接结束-->
-
-
-
 
             <p>© 2015 易煤网 All rights reserved   |   和略电子商务(上海)有限公司 ｜ 沪ICP备14052754号</p>
             <p class="szfw-wrap">
