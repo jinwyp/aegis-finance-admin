@@ -1,6 +1,7 @@
 package com.yimei.finance.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yimei.finance.ext.intereceptors.AdminACLInterceptor;
 import com.yimei.finance.ext.intereceptors.SiteACLInterceptor;
 import com.yimei.finance.ext.jackson.Java8TimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,11 +43,14 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Autowired
     protected SiteACLInterceptor siteACLInterceptor;
     @Autowired
+    protected AdminACLInterceptor adminACLInterceptor;
+    @Autowired
     protected ObjectMapper objectMapper;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(siteACLInterceptor).addPathPatterns("/**");
+        registry.addInterceptor(adminACLInterceptor).addPathPatterns("/**").excludePathPatterns("/api/financing/admin/login").excludePathPatterns("/api/financing/admin");
     }
 
     @Override

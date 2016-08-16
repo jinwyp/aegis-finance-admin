@@ -26,13 +26,13 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     protected UserSession session;
 
-//    @Value("${ssourl.env}")
+    //    @Value("${ssourl.env}")
     private String SSOURL;
 
-//    @Value("${sso.protocol}")
+    //    @Value("${sso.protocol}")
     private String SSOPROTOCOL;
 
-//    @Value("${sso.memberaddress}")
+    //    @Value("${sso.memberaddress}")
     private String MEDBERADDRESS;
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SiteACLInterceptor.class);
@@ -42,28 +42,30 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         String passportCookieValue = searchCookieValue(passportCookieName, request);
-        String currentUrl=request.getRequestURL().toString();
-        if (currentUrl.endsWith("/login")) {
-            redirectLoginPage(request, response);
-            return false;
-        } else {
-            if (handler instanceof HandlerMethod) {
-                HandlerMethod method = (HandlerMethod) handler;
-                if (method.getMethodAnnotation(LoginRequired.class) != null || method.getBeanType().getDeclaredAnnotation(LoginRequired.class) != null) {
-                    if (!session.isLogined() && StringUtils.isBlank(passportCookieValue)) {
-                        redirectLoginPage(request, response);
-                        return false;
-                    } else if (!session.isLogined()) {
-                        String userData = HttpUtils.sendPostRequest("http://" + MEDBERADDRESS + "/auth?passport=" + passportCookieValue);
-                        User user;
-                        try {
-                            user = JsonUtils.toObject(userData, User.class);
-                        } catch (Exception e) {
-                            logger.error("auth fail");
+        String currentUrl = request.getRequestURL().toString();
+        if (request.getRequestURI().startsWith("/api/financing/site")) {
+            if (currentUrl.endsWith("/login")) {
+                redirectLoginPage(request, response);
+                return false;
+            } else {
+                if (handler instanceof HandlerMethod) {
+                    HandlerMethod method = (HandlerMethod) handler;
+                    if (method.getMethodAnnotation(LoginRequired.class) != null || method.getBeanType().getDeclaredAnnotation(LoginRequired.class) != null) {
+                        if (!session.isLogined() && StringUtils.isBlank(passportCookieValue)) {
                             redirectLoginPage(request, response);
                             return false;
+                        } else if (!session.isLogined()) {
+                            String userData = HttpUtils.sendPostRequest("http://" + MEDBERADDRESS + "/auth?passport=" + passportCookieValue);
+                            User user;
+                            try {
+                                user = JsonUtils.toObject(userData, User.class);
+                            } catch (Exception e) {
+                                logger.error("auth fail");
+                                redirectLoginPage(request, response);
+                                return false;
+                            }
+                            session.login(user);
                         }
-                        session.login(user);
                     }
                 }
             }
@@ -77,7 +79,7 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
             gotoURL = "/";
         }
         String setCookieURL = SSOPROTOCOL + "://" + request.getServerName() + "/setCookie";
-        String url = SSOPROTOCOL + "://" + SSOURL + "/login?gotoURL=" + URLEncoder.encode(gotoURL,"UTF-8") + "&from=site&setCookieUrl=" + setCookieURL;
+        String url = SSOPROTOCOL + "://" + SSOURL + "/login?gotoURL=" + URLEncoder.encode(gotoURL, "UTF-8") + "&from=site&setCookieUrl=" + setCookieURL;
         response.sendRedirect(url);
     }
 
@@ -92,7 +94,6 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
         }
         return null;
     }
-
 
 
 }
