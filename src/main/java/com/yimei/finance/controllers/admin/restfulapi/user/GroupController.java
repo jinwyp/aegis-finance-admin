@@ -3,12 +3,14 @@ package com.yimei.finance.controllers.admin.restfulapi.user;
 import com.yimei.finance.repository.common.result.Page;
 import com.yimei.finance.repository.common.result.Result;
 import com.yimei.finance.repository.user.EnumGroupError;
+import com.yimei.finance.repository.user.EnumUserError;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
+import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.persistence.entity.GroupEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -79,6 +81,47 @@ public class GroupController {
         if (identityService.createGroupQuery().groupId(id).singleResult() == null) return Result.error(EnumGroupError.此组不存在.toString());
         page.setTotal(identityService.createUserQuery().memberOfGroup(id).count());
         return Result.success().setData(identityService.createUserQuery().memberOfGroup(id).list()).setMeta(page);
+    }
+
+    @RequestMapping(value = "/user/{groupId}/{userId}", method = RequestMethod.POST)
+    @ApiOperation(value = "将一个用户添加到指定的组", notes = "将一个用户添加到指定的组")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "groupId", value = "Group 对象Id", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "userId", value = "User 对象Id", required = true, dataType = "String", paramType = "path")
+    })
+    public Result addUserToGroupMethod(@PathVariable("groupId")String groupId,
+                                       @PathVariable("userId")String userId) {
+        Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
+        if (group == null) return Result.error(EnumGroupError.此组不存在.toString());
+        User user = identityService.createUserQuery().userId(userId).singleResult();
+        if (user == null) return Result.error(EnumUserError.此用户不存在.toString());
+        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
+        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
+        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
+        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
+        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
+        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
+        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
+        if (identityService.createGroupQuery().groupMember(userId).list().indexOf(group) != -1) return Result.error(EnumGroupError.该用户已经在此组中.toString());
+        identityService.createMembership(userId, groupId);
+        return Result.success().setData(user);
+    }
+
+    @RequestMapping(value = "/user/{groupId}/{userId}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "将一个用户从指定的组移出", notes = "将一个用户从指定的组移出")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "groupId", value = "Group 对象Id", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "userId", value = "User 对象Id", required = true, dataType = "String", paramType = "path")
+    })
+    public Result deleteUserFromGroupMethod(@PathVariable("groupId")String groupId,
+                                            @PathVariable("userId")String userId) {
+        Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
+        if (group == null) return Result.error(EnumGroupError.此组不存在.toString());
+        User user = identityService.createUserQuery().userId(userId).singleResult();
+        if (user == null) return Result.error(EnumUserError.此用户不存在.toString());
+        if (!identityService.createGroupQuery().groupMember(userId).list().contains(group)) return Result.error(EnumGroupError.该用户并不在此组中.toString());
+        identityService.deleteMembership(userId, groupId);
+        return Result.success().setData(user);
     }
 
 

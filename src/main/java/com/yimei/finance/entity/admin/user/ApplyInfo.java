@@ -1,4 +1,4 @@
-package com.yimei.finance.entity.admin;
+package com.yimei.finance.entity.admin.user;
 
 import lombok.Data;
 import org.springframework.format.annotation.DateTimeFormat;

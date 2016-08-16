@@ -78,13 +78,15 @@ public class UserController {
     @RequestMapping(value = "/groups/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "查询一个用户所在的组", notes = "查询一个用户所在的组")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body"),
-        @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
+        @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path"),
+        @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body")
 
     })
     public Result getUserGroupsMethod(@PathVariable("id") String id, Page page) {
         page.setTotal(identityService.createGroupQuery().groupMember(id).count());
         return Result.success().setData(identityService.createGroupQuery().groupMember(id).listPage(page.getOffset(), page.getCount())).setMeta(page);
     }
+
+
 
 }

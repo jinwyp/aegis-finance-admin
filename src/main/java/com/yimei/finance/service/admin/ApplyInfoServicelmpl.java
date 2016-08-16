@@ -1,6 +1,6 @@
 package com.yimei.finance.service.admin;
 
-import com.yimei.finance.entity.admin.ApplyInfo;
+import com.yimei.finance.entity.admin.user.ApplyInfo;
 import com.yimei.finance.repository.applyinfo.ApplyInfoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

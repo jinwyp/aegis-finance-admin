@@ -1,6 +1,6 @@
 package com.yimei.finance.service.tpl;
 
-import com.yimei.finance.entity.tpl.User;
+import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,8 +15,8 @@ public class JpaRollbackDemo {
     JpaRepositoryDemo jpaRepositoryDemo;
 
     @Transactional(rollbackFor = {IllegalArgumentException.class})
-    public User savePersonWithRollBack(User person) {
-        User p = jpaRepositoryDemo.save(person);
+    public UserTest savePersonWithRollBack(UserTest person) {
+        UserTest p = jpaRepositoryDemo.save(person);
 
         if (person.getName().equals("rollback")) {
             throw new IllegalArgumentException("rollback不能插入数据库,数据库将回滚");
@@ -25,8 +25,8 @@ public class JpaRollbackDemo {
     }
 
     @Transactional(noRollbackFor ={IllegalArgumentException.class})
-    public User savePersonWithoutRollBack(User person) {
-        User p = jpaRepositoryDemo.save(person);
+    public UserTest savePersonWithoutRollBack(UserTest person) {
+        UserTest p = jpaRepositoryDemo.save(person);
 
         if (person.getName().equals("norollback")) {
             throw new IllegalArgumentException("norollback虽然抛出异常,但是我并不会滚");
