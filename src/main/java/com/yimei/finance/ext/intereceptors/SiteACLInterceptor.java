@@ -56,9 +56,6 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
                         return false;
                     } else if (!session.isLogined()) {
                         String userData = HttpUtils.sendPostRequest("http://" + MEDBERADDRESS + "/auth?passport=" + passportCookieValue);
-                       /* if (!userData.endsWith("}")) {
-                            userData = userData.concat("}");
-                        }*/
                         User user;
                         try {
                             user = JsonUtils.toObject(userData, User.class);
