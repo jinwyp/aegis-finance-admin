@@ -284,66 +284,23 @@
           <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1" sourceElement="startFinanceWorkFlow" targetElement="assignOnlineTrader">
-        <omgdi:waypoint x="76.0" y="52.0"/>
-        <omgdi:waypoint x="76.0" y="80.0"/>
+      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12" sourceElement="assignInvestigator" targetElement="investigatorAudit">
+        <omgdi:waypoint x="313.0" y="427.5"/>
+        <omgdi:waypoint x="350.0" y="427.5"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2" sourceElement="assignOnlineTrader" targetElement="onlineTraderAddMaterial">
-        <omgdi:waypoint x="77.5" y="135.0"/>
-        <omgdi:waypoint x="77.5" y="160.0"/>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11" sourceElement="assignSupervisor" targetElement="supervisorAudit">
+        <omgdi:waypoint x="313.0" y="267.5"/>
+        <omgdi:waypoint x="350.0" y="267.5"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3" sourceElement="onlineTraderAddMaterial" targetElement="assignSalesman">
-        <omgdi:waypoint x="77.5" y="215.0"/>
-        <omgdi:waypoint x="77.5" y="240.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4" sourceElement="assignSalesman" targetElement="salesmanAudit">
-        <omgdi:waypoint x="77.5" y="295.0"/>
-        <omgdi:waypoint x="77.5" y="320.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5" sourceElement="exclusivegateway1" targetElement="EndBySalesman">
-        <omgdi:waypoint x="187.5" y="328.5"/>
-        <omgdi:waypoint x="187.5" y="191.92953232207398"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="160.0" y="210.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6" sourceElement="salesmanAudit" targetElement="exclusivegateway1">
-        <omgdi:waypoint x="130.0" y="347.5"/>
-        <omgdi:waypoint x="170.0" y="343.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7" sourceElement="exclusivegateway1" targetElement="parallelgateway1">
-        <omgdi:waypoint x="202.0" y="343.0"/>
-        <omgdi:waypoint x="240.0" y="343.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="199.0" y="326.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8" sourceElement="exclusivegateway1" targetElement="assignInvestigator">
-        <omgdi:waypoint x="190.0" y="355.0"/>
-        <omgdi:waypoint x="190.0" y="427.0"/>
-        <omgdi:waypoint x="208.0" y="427.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="170.0" y="379.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9" sourceElement="parallelgateway1" targetElement="assignInvestigator">
-        <omgdi:waypoint x="256.0" y="359.0"/>
-        <omgdi:waypoint x="256.0" y="400.0"/>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10" sourceElement="parallelgateway1" targetElement="assignSupervisor">
+        <omgdi:waypoint x="256.0" y="327.0"/>
+        <omgdi:waypoint x="256.0" y="295.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
@@ -355,12 +312,83 @@
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow35" id="BPMNEdge_flow35" sourceElement="parallelgateway3" targetElement="supervisorSupplyMaterial">
-        <omgdi:waypoint x="949.0" y="436.0"/>
-        <omgdi:waypoint x="949.0" y="507.0"/>
-        <omgdi:waypoint x="842.5" y="375.0"/>
+      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19" sourceElement="exclusivegateway2" targetElement="exclusivegateway4">
+        <omgdi:waypoint x="522.0" y="423.0"/>
+        <omgdi:waypoint x="560.0" y="423.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="48.0" width="100.0" x="902.0" y="455.0"/>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17" sourceElement="exclusivegateway2" targetElement="salesmanSupplyInvestigationMaterial">
+        <omgdi:waypoint x="510.0" y="411.0"/>
+        <omgdi:waypoint x="510.0" y="347.0"/>
+        <omgdi:waypoint x="455.0" y="347.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="461.0" y="376.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18" sourceElement="salesmanSupplyInvestigationMaterial" targetElement="investigatorAudit">
+        <omgdi:waypoint x="402.5" y="375.0"/>
+        <omgdi:waypoint x="402.5" y="400.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15" sourceElement="exclusivegateway3" targetElement="salesmanSupplySupervisionMaterial">
+        <omgdi:waypoint x="509.0" y="250.0"/>
+        <omgdi:waypoint x="509.0" y="190.0"/>
+        <omgdi:waypoint x="455.0" y="190.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="462.0" y="210.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16" sourceElement="salesmanSupplySupervisionMaterial" targetElement="supervisorAudit">
+        <omgdi:waypoint x="402.5" y="215.0"/>
+        <omgdi:waypoint x="402.5" y="240.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13" sourceElement="supervisorAudit" targetElement="exclusivegateway3">
+        <omgdi:waypoint x="455.0" y="267.5"/>
+        <omgdi:waypoint x="490.0" y="263.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14" sourceElement="investigatorAudit" targetElement="exclusivegateway2">
+        <omgdi:waypoint x="455.0" y="427.5"/>
+        <omgdi:waypoint x="490.0" y="423.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21" sourceElement="exclusivegateway4" targetElement="assignRiskManager">
+        <omgdi:waypoint x="592.0" y="423.0"/>
+        <omgdi:waypoint x="639.0" y="427.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="610.0" y="427.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20" sourceElement="exclusivegateway4" targetElement="EndByInvestigator">
+        <omgdi:waypoint x="577.5" y="437.5"/>
+        <omgdi:waypoint x="577.5" y="490.070467677926"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="550.0" y="459.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23" sourceElement="exclusivegateway3" targetElement="exclusivegateway5">
+        <omgdi:waypoint x="522.0" y="263.0"/>
+        <omgdi:waypoint x="560.0" y="263.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow22" id="BPMNEdge_flow22" sourceElement="exclusivegateway4" targetElement="parallelgateway2">
+        <omgdi:waypoint x="576.0" y="407.0"/>
+        <omgdi:waypoint x="576.0" y="352.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="560.0" y="381.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow36" id="BPMNEdge_flow36" sourceElement="supervisorSupplyMaterial" targetElement="riskManagerAudit">
@@ -370,16 +398,24 @@
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow37" id="BPMNEdge_flow37" sourceElement="parallelgateway3" targetElement="exclusivegateway7">
+      <bpmndi:BPMNEdge bpmnElement="flow35" id="BPMNEdge_flow35" sourceElement="parallelgateway3" targetElement="supervisorSupplyMaterial">
         <omgdi:waypoint x="962.0" y="423.0"/>
-        <omgdi:waypoint x="1020.0" y="423.0"/>
+        <omgdi:waypoint x="1010.0" y="213.0"/>
+        <omgdi:waypoint x="895.0" y="347.5"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+          <omgdc:Bounds height="48.0" width="100.0" x="902.0" y="455.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow38" id="BPMNEdge_flow38" sourceElement="exclusivegateway7" targetElement="riskManagerAuditSuccess">
         <omgdi:waypoint x="1052.0" y="423.0"/>
         <omgdi:waypoint x="1110.0" y="427.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow37" id="BPMNEdge_flow37" sourceElement="parallelgateway3" targetElement="exclusivegateway7">
+        <omgdi:waypoint x="962.0" y="423.0"/>
+        <omgdi:waypoint x="1020.0" y="423.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
@@ -442,104 +478,68 @@
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20" sourceElement="exclusivegateway4" targetElement="EndByInvestigator">
-        <omgdi:waypoint x="577.5" y="437.5"/>
-        <omgdi:waypoint x="577.5" y="490.070467677926"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="550.0" y="459.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21" sourceElement="exclusivegateway4" targetElement="assignRiskManager">
-        <omgdi:waypoint x="592.0" y="423.0"/>
-        <omgdi:waypoint x="639.0" y="427.5"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="610.0" y="427.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow22" id="BPMNEdge_flow22" sourceElement="exclusivegateway4" targetElement="parallelgateway2">
-        <omgdi:waypoint x="576.0" y="407.0"/>
-        <omgdi:waypoint x="576.0" y="352.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="560.0" y="381.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23" sourceElement="exclusivegateway3" targetElement="exclusivegateway5">
-        <omgdi:waypoint x="522.0" y="263.0"/>
-        <omgdi:waypoint x="560.0" y="263.0"/>
+      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3" sourceElement="onlineTraderAddMaterial" targetElement="assignSalesman">
+        <omgdi:waypoint x="77.5" y="215.0"/>
+        <omgdi:waypoint x="77.5" y="240.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow17" id="BPMNEdge_flow17" sourceElement="exclusivegateway2" targetElement="salesmanSupplyInvestigationMaterial">
-        <omgdi:waypoint x="510.0" y="411.0"/>
-        <omgdi:waypoint x="510.0" y="347.0"/>
-        <omgdi:waypoint x="455.0" y="347.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="461.0" y="376.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18" sourceElement="salesmanSupplyInvestigationMaterial" targetElement="investigatorAudit">
-        <omgdi:waypoint x="402.5" y="375.0"/>
-        <omgdi:waypoint x="402.5" y="400.0"/>
+      <bpmndi:BPMNEdge bpmnElement="flow2" id="BPMNEdge_flow2" sourceElement="assignOnlineTrader" targetElement="onlineTraderAddMaterial">
+        <omgdi:waypoint x="77.5" y="135.0"/>
+        <omgdi:waypoint x="77.5" y="160.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19" sourceElement="exclusivegateway2" targetElement="exclusivegateway4">
-        <omgdi:waypoint x="522.0" y="423.0"/>
-        <omgdi:waypoint x="560.0" y="423.0"/>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5" sourceElement="exclusivegateway1" targetElement="EndBySalesman">
+        <omgdi:waypoint x="187.5" y="328.5"/>
+        <omgdi:waypoint x="187.5" y="191.92953232207398"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="160.0" y="210.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4" sourceElement="assignSalesman" targetElement="salesmanAudit">
+        <omgdi:waypoint x="77.5" y="295.0"/>
+        <omgdi:waypoint x="77.5" y="320.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow13" id="BPMNEdge_flow13" sourceElement="supervisorAudit" targetElement="exclusivegateway3">
-        <omgdi:waypoint x="455.0" y="267.5"/>
-        <omgdi:waypoint x="490.0" y="263.0"/>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1" sourceElement="startFinanceWorkFlow" targetElement="assignOnlineTrader">
+        <omgdi:waypoint x="76.0" y="52.0"/>
+        <omgdi:waypoint x="76.0" y="80.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow14" id="BPMNEdge_flow14" sourceElement="investigatorAudit" targetElement="exclusivegateway2">
-        <omgdi:waypoint x="455.0" y="427.5"/>
-        <omgdi:waypoint x="490.0" y="423.0"/>
+      <bpmndi:BPMNEdge bpmnElement="flow7" id="BPMNEdge_flow7" sourceElement="exclusivegateway1" targetElement="parallelgateway1">
+        <omgdi:waypoint x="202.0" y="343.0"/>
+        <omgdi:waypoint x="240.0" y="343.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="199.0" y="326.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6" sourceElement="salesmanAudit" targetElement="exclusivegateway1">
+        <omgdi:waypoint x="130.0" y="347.5"/>
+        <omgdi:waypoint x="170.0" y="343.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15" sourceElement="exclusivegateway3" targetElement="salesmanSupplySupervisionMaterial">
-        <omgdi:waypoint x="509.0" y="250.0"/>
-        <omgdi:waypoint x="509.0" y="190.0"/>
-        <omgdi:waypoint x="455.0" y="190.0"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="462.0" y="210.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16" sourceElement="salesmanSupplySupervisionMaterial" targetElement="supervisorAudit">
-        <omgdi:waypoint x="402.5" y="215.0"/>
-        <omgdi:waypoint x="402.5" y="240.0"/>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9" sourceElement="parallelgateway1" targetElement="assignInvestigator">
+        <omgdi:waypoint x="256.0" y="359.0"/>
+        <omgdi:waypoint x="256.0" y="400.0"/>
         <bpmndi:BPMNLabel>
           <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10" sourceElement="parallelgateway1" targetElement="assignSupervisor">
-        <omgdi:waypoint x="256.0" y="327.0"/>
-        <omgdi:waypoint x="256.0" y="295.0"/>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8" sourceElement="exclusivegateway1" targetElement="assignInvestigator">
+        <omgdi:waypoint x="190.0" y="355.0"/>
+        <omgdi:waypoint x="190.0" y="427.0"/>
+        <omgdi:waypoint x="208.0" y="427.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11" sourceElement="assignSupervisor" targetElement="supervisorAudit">
-        <omgdi:waypoint x="313.0" y="267.5"/>
-        <omgdi:waypoint x="350.0" y="267.5"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
-        </bpmndi:BPMNLabel>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow12" id="BPMNEdge_flow12" sourceElement="assignInvestigator" targetElement="investigatorAudit">
-        <omgdi:waypoint x="313.0" y="427.5"/>
-        <omgdi:waypoint x="350.0" y="427.5"/>
-        <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+          <omgdc:Bounds height="16.0" width="100.0" x="170.0" y="379.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

@@ -1,5 +1,6 @@
 
 @import '../helpers/_variables.scss';
+@import "../components/_datePicker.scss";
 
 $borderColor:#e4e4e4;
 .financeManageWrap{
@@ -114,24 +115,49 @@ $borderColor:#e4e4e4;
           font-size: 14px;
           label{
 
+          }
+          .time{
+            display: inline-block;
+            position: relative;
+            margin:0 10px;
+            input[type='text']{
+              width: 168px;
+              height: 32px;
+              border:1px solid $borderColor;
+              margin-bottom: 22px;
+              padding-left: 10px;
+              font-size: 14px;
+              outline: none;
+              &:focus{
+                border-color: #00b7ec;
+              }
+            }
+            .startDate,.endDate{
+              background: url("#{$assetPath}/css/images/datepicker/icon_calendar_gray.png") no-repeat 143px center;
+              &:focus{
+                background: url("#{$assetPath}/css/images/datepicker/icon_calendar_color.png") no-repeat 143px center;
+              }
+            }
 
           }
-          input[type='text']{
+          .margin-l{
+            margin:0 10px;
             width: 168px;
             height: 32px;
-            margin:0 10px;
             border:1px solid $borderColor;
             margin-bottom: 22px;
             padding-left: 10px;
             font-size: 14px;
+            outline: none;
           }
-          input[type='button']{
+          input[type='button'],input[type='submit']{
             width: 110px;
             height: 32px;
             margin-left: 20px;
             background-color: #f9f9f9;
             font-size: 14px;
             border:1px solid $borderColor;
+            outline: none;
           }
           input::-webkit-input-placeholder{
             color: #cccccc;
@@ -150,16 +176,61 @@ $borderColor:#e4e4e4;
             background-repeat: no-repeat;
             padding-left: 28px;
           }
-          select{
-            width: 168px;
-            height: 32px;
-            border:1px solid $borderColor;
-            border-radius: 0;
-            margin:0 10px;
-            background: none;
+          .selectDiv{
+            .select{
+              width: 168px;
+              background: #ffffff;
+              border:1px solid $borderColor;
+              position: absolute;
+              top:31px;
+              left: 10px;
+              display: none;
+              li{
+                width: 168px;
+                height: 32px;
+                line-height: 32px;
+                padding-left: 10px;
+                border-bottom:1px solid $borderColor;
+                cursor: pointer;
+              }
+              .lastLi{
+                border-bottom: none;
+              }
+
+            }
+            .trigger {
+              position: absolute;
+              right: 20px;
+              top: 16px;
+              width: 0px;
+              height: 0px;
+              border-left: 4px solid transparent;
+              border-right: 4px solid transparent;
+              border-top: 4px solid #999999;
+              transition: all 300ms ease-out;
+              -moz-transition: all 300ms ease-out;
+              -ms-transition: all 300ms ease-out;
+              -o-transition: all 300ms ease-out;
+            }
           }
+          .select-open{
+            .select{
+              display: block;
+            }
+            .trigger {
+              -webkit-transition: all .4s ease 0s;
+              transform: rotate(180deg);
+              animation-fill-mode: forwards;
+            }
+
+          }
+          .positionR{
+            display: inline-block;
+            position: relative;
+          }
+
         }
-        table{
+        table.list{
           width: 100%;
           font-size: 14px;
           tr.border{
@@ -238,3 +309,4 @@ $borderColor:#e4e4e4;
     //我的申请右侧内容样式结束
   }
 }
+

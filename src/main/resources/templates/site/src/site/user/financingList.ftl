@@ -147,7 +147,7 @@
             <h3>融资管理</h3>
             <ul>
                 <li class="active"><a href="#">我的申请 </a><span class="trigle"></span></li>
-                <li><a href="#">我的申请</a><span class="trigle"></span></li>
+                <!--<li><a href="#">我的申请</a><span class="trigle"></span></li>-->
             </ul>
         </div>
         <!--侧边栏结束-->
@@ -161,44 +161,62 @@
                 <!--<li ms-for="($index,el) in @array">{{$index}}--{{el}}</li>-->
             <!--</ul>-->
         <!--</div>-->
-        <div class="financeCon ms-controller" ms-controller="test">
+        <div class="financeCon ms-controller" ms-controller="financeList">
             <div class="application ">
                 <div class="borderB clearfix">
                     <h4><span></span>融资详情</h4>
                     <div class="floatR">
-                        <span><em></em>了解业务类型</span>
-                        <a href="#">我要融资</a>
+                        <!--<span><em></em>了解业务类型</span>-->
+                        <a href="javascript:void(0);" id="finance">我要融资</a>
                     </div>
                 </div>
-                <form action="">
-                    <label for="startDay">申请时间:</label>
-                    <input type="text" id="startDay">
-                    <label for="endDay">到</label>
-                    <input type="text" id="endDay">
+
+                <form>
+                    <label for="startDate">申请时间:</label>
+                    <div class="time"><input type="text" id="startDate" class="iIpt iIpt_sm startDate"placeholder="yyyy-mm-dd"/></div>
+
+                    <label for="endDate">到</label>
+                    <div class="time"><input type="text" id="endDate" class="iIpt iIpt_sm endDate" placeholder="yyyy-mm-dd"/></div>
+
                     <label for="status">审核状态:</label>
-                    <select name="" id="status">
-                        <option value="">全部</option>
-                        <option value="">待审核</option>
-                        <option value="">补充材料</option>
-                        <option value="">审核通过</option>
-                        <option value="">审核不通过</option>
-                    </select>
+                    <div class="positionR selectDiv">
+                        <input type="text" value="全部" name="status" id="status" class="margin-l">
+                        <ul class="select">
+                            <li>全部</li>
+                            <li>待审核</li>
+                            <li>补充材料</li>
+                            <li>审核通过</li>
+                            <li class="lastLi">审核不通过</li>
+                        </ul>
+                        <span class="trigger"></span>
+                    </div>
+
                     <br/>
+
                     <label for="number">业务编号:</label>
-                    <input type="text" id="number">
+                    <input type="text" id="number" class="margin-l">
+
                     <label for="type">业务类型:</label>
-                    <select name="" id="type">
-                        <option value="">全部</option>
-                        <option value="">煤易融</option>
-                        <option value="">煤易贷</option>
-                        <option value="">煤易购</option>
-                    </select>
-                    <label for="user"></label>
-                    <input type="text" id="user" value="请输入申请人姓名">
-                    <input type="button" value="查询">
+                    <div class="positionR selectDiv">
+                        <input type="text" value="全部" name="type" id="type" class="margin-l">
+                        <ul class="select">
+                            <li>全部</li>
+                            <li>煤易融</li>
+                            <li>煤易贷</li>
+                            <li class="lastLi">煤易购</li>
+                        </ul>
+                        <span class="trigger"></span>
+                    </div>
+
+                    <label for="user">申请人:</label>
+                    <input type="text" placeholder="请输入申请人姓名" class="margin-l" ms-duplex="@searchQuery.requestUsername">
+                    <input type="button" value="查询" ms-click="@searchFinanceOrder()">
                     <input type="button" value="导出Excel" id="excel" class="excel">
                 </form>
-                <table>
+
+
+
+                <table class="list">
                     <tr class="border">
                         <th>序号</th>
                         <th>业务编号</th>
@@ -210,9 +228,9 @@
                         <th>审核状态</th>
                         <th>操作</th>
                     </tr>
-                    <tr class="borderB">
+                    <tr class="borderB" ms-for="(key, order) in @financeList">
                         <td>序号</td>
-                        <td>业务编号</td>
+                        <td>{{order.sourceID}}</td>
                         <td>业务类型</td>
                         <td>申请时间</td>
                         <td>申请人</td>
@@ -221,17 +239,7 @@
                         <td class="green">待审核</td>
                         <td class="blueA"><a href="#">查看详情</a></td>
                     </tr>
-                    <tr class="borderB">
-                        <td>序号</td>
-                        <td>业务编号</td>
-                        <td>业务类型</td>
-                        <td>申请时间</td>
-                        <td>申请人</td>
-                        <td class="bold">2000000000</td>
-                        <td class="bold">232</td>
-                        <td class="green">待审核</td>
-                        <td class="blueA"><a href="#">查看详情</a></td>
-                    </tr>
+
                 </table>
             </div>
 
@@ -320,15 +328,13 @@
             </ul>
         </div>
         <div class="footerInfo">
+
             <!--友情链接开始-->
             <ul class="footerInfo-fl">
                 <li>友情链接：</li>
                 <li><a href="/teach/friendlylink" target="_new">更多...</a></li>
             </ul>
             <!--友情链接结束-->
-
-
-
 
             <p>© 2015 易煤网 All rights reserved   |   和略电子商务(上海)有限公司 ｜ 沪ICP备14052754号</p>
             <p class="szfw-wrap">
@@ -422,11 +428,11 @@
 <#if env == 'staging' || env == 'prod' >
 <!-- Remove this statement if you want to run the on the fly transpiler -->
 <!-- 生产环境使用 bundle.js 文件 -->
-<script src="${staticPath}/js/page/userCenter.bundle.js"></script>
+<script src="${staticPath}/js/page/userCenterFinanceList.bundle.js"></script>
 </#if>
 
 <script>
-    System.import('${staticPath}/js/page/userCenter.js')
+    System.import('${staticPath}/js/page/userCenterFinanceList.js')
 </script>
 
 

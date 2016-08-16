@@ -147,7 +147,7 @@
             <h3>融资管理</h3>
             <ul>
                 <li class="active"><a href="#">我的申请 </a><span class="trigle"></span></li>
-                <li><a href="#">我的申请</a><span class="trigle"></span></li>
+                <!--<li><a href="#">我的申请</a><span class="trigle"></span></li>-->
             </ul>
         </div>
         <!--侧边栏结束-->
@@ -457,17 +457,13 @@
 <#if env == 'staging' || env == 'prod' >
 <!-- Remove this statement if you want to run the on the fly transpiler -->
 <!-- 生产环境使用 bundle.js 文件 -->
-<script src="${staticPath}/js/page/userCenter.bundle.js"></script>
+<script src="${staticPath}/js/page/userCenterFinanceInfo.bundle.js"></script>
 </#if>
 
 <script>
-    System.import('${staticPath}/js/page/userCenter.js')
+    System.import('${staticPath}/js/page/userCenterFinanceInfo.js')
 </script>
 
-<!--<script>-->
-<!--System.import('${staticPath}/js/page/application.js')-->
-<!--</script>-->
-<!--<script src="${staticPath}/js/page/jquery.SuperSlide.2.1.1.js"></script>-->
 
 </body>
 </html>

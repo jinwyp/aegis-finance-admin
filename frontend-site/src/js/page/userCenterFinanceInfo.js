@@ -5,18 +5,20 @@
 import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 import avalon from 'avalon2';
 
-var userCenter = ()=> {
+var financeInfo = ()=> {
 
     var vm = avalon.define({
         $id   : 'test',
-        name  : '司徒正美',
-        array : [11, 22, 33]
+        // name  : '司徒正美',
+        array : [
+            {}
+            ]
     });
 
 };
 
 
-userCenter();
+financeInfo();
 
-export default userCenter;
+export default financeInfo;
 

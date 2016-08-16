@@ -41,7 +41,7 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
     @Autowired
     private ObjectMapper om;
     @Autowired
-    private Session session;
+    private AdminSession adminSession;
 
     @Override
     protected ModelAndView doResolveException(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) {
@@ -98,9 +98,9 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
         log.warn("开始发送邮件");
         try {
             if("application/json".equals(request.getContentType())){
-                reporter.handle(ex, request.getRequestURL().toString(), om.writeValueAsString(extractPostRequestBody(request)), getHeadersInfo(request), session.getUser());
+                reporter.handle(ex, request.getRequestURL().toString(), om.writeValueAsString(extractPostRequestBody(request)), getHeadersInfo(request), adminSession.getUser());
             }else{
-                reporter.handle(ex, request.getRequestURL().toString(), om.writeValueAsString(request.getParameterMap()), getHeadersInfo(request), session.getUser());
+                reporter.handle(ex, request.getRequestURL().toString(), om.writeValueAsString(request.getParameterMap()), getHeadersInfo(request), adminSession.getUser());
             }
         } catch (Exception e) {
             log.warn("邮件发送失败", e);
