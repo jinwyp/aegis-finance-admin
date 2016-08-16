@@ -1,7 +1,10 @@
 package com.yimei.finance.controllers.site.restfulapi;
 
+import com.yimei.finance.entity.admin.ApplyInfo;
 import com.yimei.finance.repository.common.result.Result;
+import com.yimei.finance.service.admin.ApplyInfoServicelmpl;
 import lombok.Data;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,28 +19,19 @@ import java.util.HashMap;
 @RestController
 public class UserCenterController {
 
+    @Autowired
+    ApplyInfoServicelmpl applyInfoService;
 
     /**
     * 供应链金融 - 发起融资申请
     */
     @RequestMapping(value = "/api/financing/orders", method = RequestMethod.POST)
-    public Result requestFinancingOrder(@RequestBody TempFinanceOrder order) {
+    public Result requestFinancingOrder(@RequestBody ApplyInfo applyInfo) {
 
-        System.out.println("Order Type:" + order.applyType);
-        System.out.println("UserId:" + order.userId);
-        //    return new ResponseEntity<String>("{\n" +
-//            "    \"success\" : true,\n" +
-//            "    \"error\" : null,\n" +
-//            "    \"meta\" : null,\n" +
-//            "    \"data\" : {\n" +
-//            "        \"id\" : 11,\n" +
-//            "        \"orderNo\" : 1001\n" +
-//            "    }\n" +
-//            "}", HttpStatus.OK);
-//    }
-//        return Result.error("cccccccc");
-//        return Result.error(1003, "cccc");
-//        return Result.error(1000, "cccc", "field");
+        System.out.println("Order Type:" + applyInfo.getApplyType());
+        System.out.println("UserId:" + applyInfo.getUserId());
+
+        applyInfoService.save(applyInfo);
 
         return Result.success().setData(new HashMap() {{put("userId", 1); put("orderId", 2);}} );
     }
@@ -51,10 +45,10 @@ public class UserCenterController {
 
         return Result.success().setData(new ArrayList()
         {{
-            add(new TempFinanceOrder());
-            add(new TempFinanceOrder());
-            add(new TempFinanceOrder());
-            add(new TempFinanceOrder());
+            add(new ApplyInfo());
+            add(new ApplyInfo());
+            add(new ApplyInfo());
+            add(new ApplyInfo());
         }}
         );
     }
@@ -80,18 +74,4 @@ public class UserCenterController {
 }
 
 
-
-
-// 临时使用
-@Data
-class TempFinanceOrder {
-    String applyType = "12222";
-    String userId = "2";
-    String sourceID = "2";
-    String approveState = "2";
-    int financingAmount = 20000;
-    int expectedDate = 22;
-
-    // + getters, setters
-}
 
