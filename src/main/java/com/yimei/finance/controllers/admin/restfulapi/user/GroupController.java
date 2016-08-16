@@ -5,6 +5,7 @@ import com.yimei.finance.repository.common.result.Result;
 import com.yimei.finance.repository.user.EnumGroupError;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
@@ -69,6 +70,11 @@ public class GroupController {
     }
 
     @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+    @ApiOperation(value = "查询用户组下的用户", notes = "根据 Group Id 查询用户组下的用户")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "id", value = "Group 对象Id", required = true, dataType = "String", paramType = "path"),
+        @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body")
+    })
     public Result getUsersByGroupIdMethod(@PathVariable(value = "id")String id, Page meta) {
         meta.setTotal(identityService.createUserQuery().memberOfGroup(id).count());
         return Result.success().setData(identityService.createUserQuery().memberOfGroup(id).list()).setMeta(meta);
