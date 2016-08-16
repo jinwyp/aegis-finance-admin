@@ -1,14 +1,13 @@
 package com.yimei.finance.repository.common.result;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-/**
- * Created by liuxinjie on 16/8/10.
- */
+@ApiModel
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
