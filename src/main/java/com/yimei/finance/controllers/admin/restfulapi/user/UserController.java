@@ -56,7 +56,10 @@ public class UserController {
     public Result updateUserMethod(@RequestBody UserEntity user) {
         if (user == null) return Result.error(EnumUserError.用户对象不能为空.toString());
         if (StringUtils.isEmpty(user.getId())) return Result.error(EnumUserError.用户id不能为空.toString());
-        if (identityService.createUserQuery().userId(user.getId()).singleResult() == null) return Result.error(EnumUserError.此用户不存在.toString());
+        User oldUser = identityService.createUserQuery().userId(user.getId()).singleResult();
+        if (oldUser == null) return Result.error(EnumUserError.此用户不存在.toString());
+        user.setPassword(oldUser.getPassword());
+        identityService.deleteUser(user.getId());
         identityService.saveUser(user);
         return Result.success().setData(user);
     }
