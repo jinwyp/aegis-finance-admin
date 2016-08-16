@@ -87,6 +87,6 @@ public class UserController {
         identityService.saveUser(user);
         return Result.success().setData(identityService.createUserQuery().userId(user.getId()).singleResult());
     }
-    
+
 
 }

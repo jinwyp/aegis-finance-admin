@@ -16,6 +16,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RequestMapping("/api/financing/admin/group")
 @Api(value = "Group-Controller", description = "用户组相关方法")
 @RestController
@@ -68,7 +70,7 @@ public class GroupController {
     @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body")
     public Result getAllGroupsMethod(Page page) {
         page.setTotal(identityService.createGroupQuery().count());
-        return Result.success().setData(identityService.createGroupQuery().list()).setMeta(page);
+        return Result.success().setData(identityService.createGroupQuery().orderByGroupId().desc().list()).setMeta(page);
     }
 
     @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
@@ -80,7 +82,7 @@ public class GroupController {
     public Result getUsersByGroupIdMethod(@PathVariable(value = "id")String id, Page page) {
         if (identityService.createGroupQuery().groupId(id).singleResult() == null) return Result.error(EnumGroupError.此组不存在.toString());
         page.setTotal(identityService.createUserQuery().memberOfGroup(id).count());
-        return Result.success().setData(identityService.createUserQuery().memberOfGroup(id).list()).setMeta(page);
+        return Result.success().setData(identityService.createUserQuery().memberOfGroup(id).orderByUserId().desc().list()).setMeta(page);
     }
 
     @RequestMapping(value = "/user/{groupId}/{userId}", method = RequestMethod.POST)
@@ -95,14 +97,11 @@ public class GroupController {
         if (group == null) return Result.error(EnumGroupError.此组不存在.toString());
         User user = identityService.createUserQuery().userId(userId).singleResult();
         if (user == null) return Result.error(EnumUserError.此用户不存在.toString());
-        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
-        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
-        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
-        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
-        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
-        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
-        System.out.println(" ------------------------------------- " + identityService.createGroupQuery().groupMember(userId).list().indexOf(group));
-        if (identityService.createGroupQuery().groupMember(userId).list().indexOf(group) != -1) return Result.error(EnumGroupError.该用户已经在此组中.toString());
+        List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
+        for (Group g : groupList) {
+            if (g.getId().equals(groupId)) return Result.error(EnumGroupError.该用户已经在此组中.toString());
+        }
+        if (identityService.createGroupQuery().groupMember(userId).list().indexOf(group) != -1)
         identityService.createMembership(userId, groupId);
         return Result.success().setData(user);
     }
@@ -119,9 +118,15 @@ public class GroupController {
         if (group == null) return Result.error(EnumGroupError.此组不存在.toString());
         User user = identityService.createUserQuery().userId(userId).singleResult();
         if (user == null) return Result.error(EnumUserError.此用户不存在.toString());
-        if (!identityService.createGroupQuery().groupMember(userId).list().contains(group)) return Result.error(EnumGroupError.该用户并不在此组中.toString());
-        identityService.deleteMembership(userId, groupId);
-        return Result.success().setData(user);
+        List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
+        for (Group g : groupList) {
+            if (g.getId().equals(groupId)) {
+                identityService.deleteMembership(userId, groupId);
+                return Result.success().setData(user);
+            }
+        }
+        return Result.error(EnumGroupError.该用户并不在此组中.toString());
+
     }
 
 
