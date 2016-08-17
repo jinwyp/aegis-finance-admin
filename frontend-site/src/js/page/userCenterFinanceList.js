@@ -41,7 +41,7 @@ var financeList = () => {
         $('.modal_1').modal();
     });
 
-
+    //查询
     var getFinanceList = (query) => {
         console.log(query);
         var params = $.extend({}, query);
@@ -70,7 +70,10 @@ var financeList = () => {
         searchQuery : {
             requestUsername : '',
             status : '',
-            type : ''
+            type : '',
+            businessId : '',
+            startDate : '',
+            endDate : ''
         },
 
         clickStatus : (value)=>{
@@ -85,7 +88,10 @@ var financeList = () => {
             getFinanceList({
                 requestUsername : vm.searchQuery.requestUsername,
                 status : vm.searchQuery.status,
-                type : vm.searchQuery.type
+                type : vm.searchQuery.type,
+                businessId : vm.searchQuery.businessId,
+                startDate : vm.searchQuery.startDate,
+                endDate : vm.searchQuery.endDate
             })
         }
     });
