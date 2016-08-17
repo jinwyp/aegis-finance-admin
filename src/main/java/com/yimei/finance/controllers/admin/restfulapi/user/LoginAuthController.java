@@ -1,5 +1,6 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
+import com.yimei.finance.config.AdminSession;
 import com.yimei.finance.repository.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import io.swagger.annotations.Api;
@@ -13,10 +14,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+
+
+
 @RequestMapping("/api/financing/admin")
 @Api(value = "Admin-Login-Auth-API", description = "用户登陆验证接口")
 @RestController
 public class LoginAuthController {
+
+    @Autowired
+    private AdminSession adminSession;
 
     @Autowired
     private AdminUserServiceImpl adminService;
@@ -35,5 +42,14 @@ public class LoginAuthController {
         return adminService.login(userName, password);
     }
 
+
+    /**
+     * 管理登录退出
+     */
+    @RequestMapping(value = "/finance/admin/logout", method = RequestMethod.GET)
+    public String logout() {
+        adminSession.logout();
+        return "admin/login";
+    }
 
 }
