@@ -1,6 +1,6 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
-import com.yimei.finance.config.AdminSession;
+import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.repository.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import io.swagger.annotations.Api;
