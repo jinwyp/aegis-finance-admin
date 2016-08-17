@@ -44,7 +44,7 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         String passportCookieValue = searchCookieValue(passportCookieName, request);
         String currentUrl = request.getRequestURL().toString();
-        if (request.getRequestURI().startsWith("/api/financing/site")) {
+        if (!request.getRequestURI().contains("admin")) {
             if (currentUrl.endsWith("/login")) {
                 redirectLoginPage(request, response);
                 return false;

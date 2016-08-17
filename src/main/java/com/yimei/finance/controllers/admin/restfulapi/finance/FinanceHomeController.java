@@ -24,8 +24,10 @@ import java.util.List;
 /**
  * Created by liuxinjie on 16/8/15.
  */
+
+
+@Api(tags = {"admin-api-flow"}, description = "金融公用接口")
 @RequestMapping("/api/financing/admin")
-@Api(value = "Admin-Finance-Home-API", description = "金融公用接口")
 @RestController
 public class FinanceHomeController {
     @Autowired

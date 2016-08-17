@@ -152,7 +152,7 @@
         </div>
         <!--侧边栏结束-->
         <!--右侧主内容开始-->
-        <div class="financeCon">
+        <div class="financeCon ms-controller" ms-controller="financeInfo">
             <div class="application">
                 <!--面包屑开始-->
                 <div>
@@ -165,7 +165,7 @@
                 </div>
                 <!--面包屑结束-->
                 <h4><span></span>融资详情</h4>
-                <div class="table">
+                <div class="table" >
                     <div class="table-title">
                         <em></em>申请信息:
                     </div>
@@ -173,15 +173,17 @@
                         <table>
                             <tr>
                                 <th>融资类型:</th>
-                                <td>融资类型融资类型</td>
+                                <td ms-visible="@financeList.applyType==='MYR'">煤易融</td>
+                                <td ms-visible="@financeList.applyType==='MYD'">煤易贷</td>
+                                <td ms-visible="@financeList.applyType==='MYG'">煤易购</td>
                                 <th>业务编号:</th>
-                                <td>融资类型融资类型</td>
+                                <td>{{@financeList.sourceID}}</td>
                             </tr>
                             <tr>
                                 <th>申请人:</th>
-                                <td>融资类型融资类型</td>
+                                <td>{{@financeList.applyUserName}}</td>
                                 <th>申请时间:</th>
-                                <td>融资类型融资类型</td>
+                                <td>{{@financeList.applyDateTime}}</td>
                             </tr>
                         </table>
                     </div>
@@ -189,40 +191,72 @@
                         <table>
                             <tr>
                                 <th>拟使用资金时间:</th>
-                                <td>360天</td>
+                                <td>{{@financeList.expectedDate}}天</td>
                                 <th colspan="2">预期此笔业务量:</th>
-                                <td>20万吨</td>
+                                <td>{{@financeList.businessAmount}}万吨</td>
                             </tr>
                             <tr>
                                 <th>拟融资金额:</th>
-                                <td colspan="2"><span class="red">18000000</span>元</td>
+                                <td colspan="2"><span class="red">{{@financeList.financingAmount}}</span>万元</td>
                             </tr>
                         </table>
                     </div>
                     <div class="paddingTable">
-                        <table>
+                        <!--融--2-->
+                        <table ms-visible="@financeList.applyType==='MYR'">
                             <tr>
                                 <th>签约单位全称:</th>
-                                <td>融资类型融资类型</td>
+                                <td>{{@financeList.contractors}}</td>
                                 <th>下游签约单位全称:</th>
-                                <td>融资类型融资类型</td>
+                                <td>{{@financeList.downstreamContractors}}</td>
                             </tr>
                             <tr>
                                 <th>用煤终端:</th>
-                                <td>融资类型融资类型</td>
+                                <td>{{@financeList.terminalServer}}</td>
                                 <th>运输方式:</th>
-                                <td>融资类型融资类型</td>
+                                <td>{{@financeList.transportMode}}</td>
                             </tr>
                             <tr>
                                 <th>预计单吨销售价:</th>
-                                <td colspan="2">15000元/吨</td>
+                                <td colspan="2">{{@financeList.sellingPrice}}元/吨</td>
+                            </tr>
+                        </table>
+                        <!--购-->
+                        <table ms-visible="@financeList.applyType==='MYG'">
+                            <tr>
+                                <th>上游资源方全称:</th>
+                                <td>{{@financeList.upstreamResource}}</td>
+                                <th>中转港口/地全称:</th>
+                                <td>{{@financeList.transferPort}}</td>
+                            </tr>
+                            <tr>
+                                <th>运输方式:</th>
+                                <td>{{@financeList.transportMode}}</td>
+                                <th>单吨采购价:</th>
+                                <td>{{@financeList.procurementPrice}}元/吨</td>
+                            </tr>
+                        </table>
+                        <!--贷-->
+                        <table ms-visible="@financeList.applyType==='MYD'">
+                            <tr>
+                                <th>煤炭仓储地:</th>
+                                <td>{{@financeList.storageLocation}}</td>
+                                <th>煤炭来源:</th>
+                                <td>{{@financeList.coalSources}}</td>
+                            </tr>
+                            <tr>
+                                <th>主要煤质指标:</th>
+                                <!--------------------------------------------字段无------------------------->
+                                <td>{{@financeList.transportMode}}</td>
+                                <th>单吨市场报价:</th>
+                                <td>{{@financeList.marketPrice}}元/吨</td>
                             </tr>
                         </table>
                     </div>
                     <div class="paddingTable">
                         <table>
                             <tr>
-                                <th>签约单位全称:</th>
+                                <th>已上传单据:</th>
                                 <td colspan="3">
                                     <ul>
                                         <li class="paddingL0">
@@ -253,7 +287,7 @@
                             <tr>
                                 <th>备注说明:</th>
                                 <td colspan="3">
-
+                                    {{@financeList.comments}}
                                 </td>
                             </tr>
                         </table>
@@ -265,11 +299,12 @@
                         <table>
                             <tr>
                                 <th>审批状态:</th>
-                                <td><span class="red"><em></em>补充材料</span></td>
+                                <td><span class="red"><em></em>{{@financeList.approveState}}</span></td>
+                                <!--<td><span class="green"><em></em>{{@financeList.approveState}}</span></td>-->
                             </tr>
                             <tr>
                                 <th>备注说明:</th>
-                                <td></td>
+                                <td>{{@financeList.comments}}</td>
                             </tr>
                         </table>
                     </div>
