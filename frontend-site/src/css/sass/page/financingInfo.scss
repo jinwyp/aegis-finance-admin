@@ -172,6 +172,17 @@ $borderColor:#e4e4e4;
                       margin: -4px 10px;
                     }
                   }
+                  .green{
+                    color: #18aa6b;
+                    em{
+                      width: 20px;
+                      height: 20px;
+                      display: inline-block;
+                      background: url("#{$assetPath}/css/images/finance/waiting.png") no-repeat ;
+                      background-size: contain;
+                      margin: -4px 10px;
+                    }
+                  }
                 }
               }
             }

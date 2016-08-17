@@ -298,6 +298,7 @@
                             <tr>
                                 <th>审批状态:</th>
                                 <td><span class="red"><em></em>{{@financeList.approveState}}</span></td>
+                                <!--<td><span class="green"><em></em>{{@financeList.approveState}}</span></td>-->
                             </tr>
                             <tr>
                                 <th>备注说明:</th>
