@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @Api(tags = {"admin-api-flow"}, description = "处理煤易融相关逻辑")
 @RequestMapping("/api/financing/admin/myr")
 @RestController
-public class CoalFinancingController {
+public class MYRFinancingController {
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
