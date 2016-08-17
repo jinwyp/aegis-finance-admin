@@ -1,5 +1,6 @@
 package com.yimei.finance.controllers.site.restfulapi;
 
+import com.yimei.finance.config.UserSession;
 import com.yimei.finance.entity.admin.user.ApplyInfo;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.common.result.Result;
@@ -26,21 +27,24 @@ public class UserCenterController {
     @Autowired
     ApplyInfoServiceImpl applyInfoService;
 
+    @Autowired
+    UserSession userSession;
+
     /**
     * 供应链金融 - 发起融资申请
     */
-    @ApiOperation(value = "供应链金融 - 发起融资申请 API", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = ApplyInfo.class)
+    @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = ApplyInfo.class)
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "applyType", value = "融资类型", required = false, dataType = "int", paramType = "form"),
-        @ApiImplicitParam(name = "userId", value = "每页显示数量", required = false, dataType = "String", paramType = "form")
+        @ApiImplicitParam(name = "applyType", value = "融资类型", required = false, dataType = "int", paramType = "form")
     })
     @LoginRequired
     @RequestMapping(value = "/api/financing/applyInfo", method = RequestMethod.POST)
     public Result requestFinancingOrder(@RequestBody ApplyInfo applyInfo) {
 
         System.out.println("Order Type:" + applyInfo.getApplyType());
-        System.out.println("UserId:" + applyInfo.getUserId());
+
         applyInfo.setSourceId(Utils.generateSourceId("JR"));
+        applyInfo.setUserId(userSession.getUser().getId());
         applyInfo.setApplyDateTime(LocalDateTime.now());
         applyInfoService.save(applyInfo);
 

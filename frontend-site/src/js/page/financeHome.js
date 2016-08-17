@@ -36,9 +36,34 @@ var financeHome = () => {
         ]
     );
 
+    // 这里要换成表单提交 不要用ajax,否则无法跳转页面
+    var requestApplyInfo = (query) => {
+
+        var params = $.extend({}, query);
+
+        $.ajax({
+            url      : '/api/financing/applyInfo',
+            method   : "POST",
+            dataType : "json",
+            data     : params,
+            success  : (data)=> {
+                if (data.success){
+
+                }else{
+
+                }
+            }
+        })
+    };
+
     //modal
     $('.banner_link').click(function () {
         $('.modal_1').modal();
+
+        requestApplyInfo({
+            applyType : "MYR"
+        });
+
     });
 
 
