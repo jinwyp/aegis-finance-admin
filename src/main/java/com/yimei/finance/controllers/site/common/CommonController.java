@@ -76,7 +76,7 @@ public class CommonController {
 
 
 
-    @RequestMapping(value = "/removeSSOCookie",method = RequestMethod.GET)
+    @RequestMapping(value = "/removeSSOCookie", method = RequestMethod.GET)
     public void removeSSOCookie(HttpServletRequest request,HttpServletResponse response) throws IOException {
         userSession.logout();
         Cookie passportCookie = null;
@@ -93,7 +93,7 @@ public class CommonController {
 
     }
 
-    @RequestMapping(value = "/check")
+    @RequestMapping(value = "/check" , method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<String> Check() {
         return new ResponseEntity<String>("ok", HttpStatus.OK);

@@ -14,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,24 +50,23 @@ public class MyController {
     private ProcessEngine processEngine;
 
 
-    @RequestMapping("")
+    @RequestMapping(value = "", method = RequestMethod.GET)
     public String index() {
         return "tpl/apply";
 
     }
 
-    @RequestMapping("/start")
+    @RequestMapping(value = "/start", method = RequestMethod.GET)
     public String startInterview(@RequestParam("username") String username, Map<String, Object> mode) {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("username", username);
         runtimeService.startProcessInstanceByKey("firstprocess", variables);
         return "tpl/index";
-
     }
 
 
 
-    @RequestMapping("/hary")
+    @RequestMapping(value = "/hary", method = RequestMethod.GET)
     public String assign(Model model) {
         Map<String, Object> variables = new HashMap<String, Object>();
         variables.put("username", "hary");
@@ -100,7 +100,7 @@ public class MyController {
 
     }
 
-    @RequestMapping("/haryassign")
+    @RequestMapping(value = "/haryassign", method = RequestMethod.GET)
     public String haryAssign(String name, String taskId){
         System.out.println(name+"  !!!!!!!!!!!!!!  "+taskId);
         taskService.setVariable(taskId, "todoUser", name);
@@ -110,7 +110,7 @@ public class MyController {
 
 
 
-    @RequestMapping("/process")
+    @RequestMapping(value = "/process", method = RequestMethod.GET)
     public String managerInterview(@RequestParam("role") String username,Map<String, Object> mode) {
         List<Task> tasksAssignee = taskService.createTaskQuery().taskAssignee(username).list();
         List<Task> tasksCandidateUser = taskService.createTaskQuery().taskCandidateUser(username).list();
@@ -163,7 +163,7 @@ public class MyController {
         return "tpl/success";
     }
 
-    @RequestMapping("/apply/{id}/{exeid}")
+    @RequestMapping(value = "/apply/{id}/{exeid}", method = RequestMethod.GET)
     public String apply(@PathVariable("id") String id, @PathVariable("exeid") String exeid, Map<String, Object> mode) {
         //public String apply(@RequestParam("task") Task task,Map<String, Object> mode) {
         Execution exe = runtimeService.createExecutionQuery().executionId(exeid).singleResult();
@@ -172,7 +172,7 @@ public class MyController {
         return "tpl/ok";
     }
 
-    @RequestMapping("/claim/{id}/{exeid}")
+    @RequestMapping(value = "/claim/{id}/{exeid}", method = RequestMethod.GET)
     public String claimApply(@PathVariable("id") String id,@PathVariable("exeid") String exeid,Map<String, Object> mode) {
         //public String apply(@RequestParam("task") Task task,Map<String, Object> mode) {
         Execution exe = runtimeService.createExecutionQuery().executionId(exeid).singleResult();
@@ -181,7 +181,7 @@ public class MyController {
         return "tpl/ok";
     }
 
-    @RequestMapping("/image/{processId}")
+    @RequestMapping(value = "/image/{processId}", method = RequestMethod.GET)
     public void gene(HttpServletRequest request, HttpServletResponse response, @PathVariable("processId") String processId){
         FileInputStream fis = null;
         response.setContentType("image/gif");

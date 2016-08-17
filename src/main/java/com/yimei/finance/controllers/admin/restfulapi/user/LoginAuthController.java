@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 
 
-@Api(tags = {"admin-api-group"}, description = "用户登陆验证接口")
+@Api(tags = {"admin-api-user"}, description = "用户登陆验证接口")
 @RequestMapping("/api/financing/admin")
 @RestController
 public class LoginAuthController {
