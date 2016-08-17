@@ -37,7 +37,6 @@ public class GroupController {
         return Result.success().setData(identityService.createGroupQuery().orderByGroupId().desc().list()).setMeta(page);
     }
 
-
     @ApiOperation(value = "查询用户组", notes = "根据 GroupId 查询该用户组信息", response = GroupEntity.class)
     @ApiImplicitParam(name = "id", value = "用户组 Group Id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
@@ -46,8 +45,6 @@ public class GroupController {
         if (group == null) return Result.error(EnumGroupError.此组不存在.toString());
         return Result.success().setData(group);
     }
-
-
 
     @ApiOperation(value = "查询用户组下的用户", notes = "根据 GroupId 查询该用户组下的用户", response = UserEntity.class, responseContainer = "List")
     @ApiImplicitParams({
@@ -61,8 +58,6 @@ public class GroupController {
         return Result.success().setData(identityService.createUserQuery().memberOfGroup(id).orderByUserId().desc().list()).setMeta(page);
     }
 
-
-
     @ApiOperation(value = "创建用户组", notes = "根据Group对象创建用户组", response = GroupEntity.class)
     @ApiImplicitParam(name = "name", value = "Group 用户组名称", required = true, dataType = "String", paramType = "form")
     @RequestMapping(method = RequestMethod.POST)
@@ -73,8 +68,6 @@ public class GroupController {
         identityService.saveGroup(group);
         return Result.success().setData(identityService.createGroupQuery().groupId(group.getId()).singleResult());
     }
-
-
 
     @ApiOperation(value = "将一个用户添加到指定的组", notes = "将一个用户添加到指定的组", response = UserEntity.class)
     @ApiImplicitParams({
@@ -96,8 +89,6 @@ public class GroupController {
             identityService.createMembership(userId, groupId);
         return Result.success().setData(user);
     }
-
-
 
     @ApiOperation(value = "将一个用户从指定的组移出", notes = "将一个用户从指定的组移出", response = UserEntity.class)
     @ApiImplicitParams({
@@ -122,20 +113,18 @@ public class GroupController {
 
     }
 
-
-
     @ApiOperation(value = "修改用户组", notes = "根据Group Id 修改用户组", response = GroupEntity.class)
     @ApiImplicitParam(name = "name", value = "Group 用户组名称", required = true, dataType = "String", paramType = "form")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateGroupMethod(@PathVariable("id")String id, @RequestBody GroupEntity group) {
+        if (StringUtils.isEmpty(id)) return Result.error(EnumGroupError.组id不能为空.toString());
         if (group == null) return Result.error(EnumGroupError.组对象不能为空.toString());
-        if (StringUtils.isEmpty(group.getId())) return Result.error(EnumGroupError.组id不能为空.toString());
-        if (identityService.createGroupQuery().groupId(group.getId()).singleResult() == null) return Result.error(EnumGroupError.此组不存在.toString());
-        identityService.deleteGroup(group.getId());
+        if (identityService.createGroupQuery().groupId(id).singleResult() == null) return Result.error(EnumGroupError.此组不存在.toString());
+        group.setId(id);
+        identityService.deleteGroup(id);
         identityService.saveGroup(group);
         return Result.success().setData(identityService.createGroupQuery().groupId(group.getId()).singleResult());
     }
-
 
     @ApiOperation(value = "删除用户组", notes = "根据Group Id 删除用户组", response = GroupEntity.class)
     @ApiImplicitParam(name = "id", value = "Group 用户组Id", required = true, dataType = "String", paramType = "path")

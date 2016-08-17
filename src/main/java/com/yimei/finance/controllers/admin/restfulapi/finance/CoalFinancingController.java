@@ -71,10 +71,17 @@ public class CoalFinancingController {
         return Result.success();
     }
 
-    @RequestMapping(value = "/salesman/audit/pass", method = RequestMethod.POST)
+    @RequestMapping(value = "/salesman/audit/pass/{financeId}", method = RequestMethod.POST)
     @ApiOperation(value = "业务员填写材料并审核通过", notes = "业务员填写材料并审核通过")
     @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result myrSalesmanAddMaterialAndAuditPass() {
+    public Result myrSalesmanAddMaterialAndAuditPassMethod(@PathVariable("financeId")int financeId) {
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/salesman/audit/notpass/{financeId}", method = RequestMethod.POST)
+    @ApiOperation(value = "业务员填写材料并审核不通过", notes = "业务员填写材料并审核不通过")
+    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
+    public Result myrSalesmanAddMaterialAndAuditNotPassMethod(@PathVariable("financeId")int financeId) {
         return Result.success();
     }
 
@@ -91,7 +98,81 @@ public class CoalFinancingController {
         return Result.success();
     }
 
+    @RequestMapping(value = "/investigator/need/material/{financeId}", method = RequestMethod.PUT)
+    @ApiOperation(value = "尽调员确认需要补充材料", notes = "尽调员确认需要业务员补充材料")
+    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
+    public Result myrInvestigatorConfirmNeedSupplyMaterialMethod(@PathVariable("financeId")int financeId) {
+        return Result.success();
+    }
 
+    @RequestMapping(value = "/salesman/supply/investigation/material/{financeId}", method = RequestMethod.PUT)
+    @ApiOperation(value = "业务员补充材料", notes = "业务员补充材料")
+    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
+    public Result myrSalesmanSupplyInvestigationMaterialMethod(@PathVariable("financeId")int financeId) {
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/investigator/audit/pass/{financeId}", method = RequestMethod.PUT)
+    @ApiOperation(value = "尽调员审核通过", notes = "尽调员审核通过")
+    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
+    public Result myrInvestigatorAuditPassMethod(@PathVariable("financeId")int financeId) {
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/investigator/audit/notpass/{financeId}", method = RequestMethod.PUT)
+    @ApiOperation(value = "尽调员审核不通过", notes = "尽调员审核不通过")
+    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
+    public Result myrInvestigatorAuditNotPassMethod(@PathVariable("financeId")int financeId) {
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/{financeId}/assignRiskManager/{riskManagerId}", method = RequestMethod.PUT)
+    @ApiOperation(value = "分配风控人员操作", notes = "分配风控人员操作")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path"),
+            @ApiImplicitParam(name = "riskManagerId", value = "风控人员Id", required = true, dataType = "Integer", paramType = "path")
+    })
+    public Result assignMYRRiskManagerMethod(@PathVariable(value = "financeId") int financeId,
+                                             @PathVariable(value = "riskManagerId") int riskManagerId) {
+        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
+        taskService.setAssignee(task.getId(), String.valueOf(riskManagerId));
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/riskmanager/need/investigation/material/{financeId}", method = RequestMethod.PUT)
+    @ApiOperation(value = "风控人员确认需要补充尽调材料", notes = "风控人员确认需要补充尽调材料")
+    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
+    public Result myrRiskManagerConfirmNeedSupplyInvestigationMaterialMethod(@PathVariable("financeId")int financeId) {
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/investigator/supply/riskmanager/material/{financeId}", method = RequestMethod.PUT)
+    @ApiOperation(value = "监管员补充材料", notes = "监管员补充风控人员要求的材料")
+    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
+    public Result myrInvestigatorSupplyRiskManagerMaterialMethod(@PathVariable("financeId")int financeId) {
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/riskmanager/audit/pass/{financeId}", method = RequestMethod.PUT)
+    @ApiOperation(value = "风控人员审核通过", notes = "风控人员审核通过")
+    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
+    public Result myrRiskManagerAuditPassMethod(@PathVariable("financeId")int financeId) {
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/riskmanager/audit/notpass/{financeId}", method = RequestMethod.PUT)
+    @ApiOperation(value = "风控人员审核不通过", notes = "风控人员审核不通过, 流程结束.")
+    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
+    public Result myrRiskManagerAuditNotPassMethod(@PathVariable("financeId")int financeId) {
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/riskmanager/contract/{financeId}", method = RequestMethod.POST)
+    @ApiOperation(value = "风控人员上传合同", notes = "风控人员上传合同,流程完成")
+    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
+    public Result myrRiskManagerUploadContractMethod(@PathVariable("financeId")int financeId) {
+        return Result.success();
+    }
 
 
 }

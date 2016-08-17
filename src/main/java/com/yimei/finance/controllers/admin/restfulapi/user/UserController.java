@@ -1,8 +1,8 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
+import com.yimei.finance.repository.admin.user.EnumAdminUserError;
 import com.yimei.finance.repository.common.result.Page;
 import com.yimei.finance.repository.common.result.Result;
-import com.yimei.finance.repository.admin.user.EnumAdminUserError;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -94,11 +94,12 @@ public class UserController {
     })
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateUserMethod(@PathVariable("id") String id, @RequestBody UserEntity user) {
+        if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());
         if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());
-        if (StringUtils.isEmpty(user.getId())) return Result.error(EnumAdminUserError.用户id不能为空.toString());
         User oldUser = identityService.createUserQuery().userId(user.getId()).singleResult();
         if (oldUser == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         user.setPassword(oldUser.getPassword());
+        user.setId(id);
         identityService.deleteUser(user.getId());
         identityService.saveUser(user);
         return Result.success().setData(identityService.createUserQuery().userId(user.getId()).singleResult());
