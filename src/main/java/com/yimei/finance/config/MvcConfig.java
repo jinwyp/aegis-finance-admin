@@ -1,5 +1,6 @@
 package com.yimei.finance.config;
 
+import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.finance.ext.intereceptors.AdminACLInterceptor;
 import com.yimei.finance.ext.intereceptors.SiteACLInterceptor;
@@ -87,5 +88,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @PostConstruct
     private void jacksonConfig() {
         objectMapper.registerModule(new Java8TimeModule());
+        objectMapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
     }
 }
