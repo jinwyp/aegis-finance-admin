@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
-@Api(tags = {"adminpage"}, description = "管理后台首页")
+@Api(tags = {"admin-page"}, description = "管理后台首页")
 @Controller
 public class HomePageController {
     @Autowired

@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
-@Api(tags = {"sitepage"}, description = "错误页面")
+@Api(tags = {"site-page"}, description = "错误页面")
 @Controller
 public class ErrorPageController {
 

@@ -20,7 +20,7 @@ import java.util.HashMap;
 /**
  * Created by JinWYP on 8/15/16.
  */
-@Api(tags = {"siteapi"})
+@Api(tags = {"site-api"})
 @RestController
 public class UserCenterController {
 

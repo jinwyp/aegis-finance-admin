@@ -16,7 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 
 
-@Api(tags = {"adminpage"}, description = "管理后台登陆, 退出等页面")
+@Api(tags = {"admin-page"}, description = "管理后台登陆, 退出等页面")
 @Controller
 public class LoginPageController {
 
