@@ -19,7 +19,6 @@ public class LogindemoController {
     @RequestMapping("/api/financing/site/demo/logindemo")
     @LoginRequired
     private Object login() {
-        System.out.println("here");
         return userSession.getUser();
     }
 
