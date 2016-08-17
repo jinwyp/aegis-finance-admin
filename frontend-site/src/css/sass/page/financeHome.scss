@@ -13,6 +13,9 @@ $assetPath : "/static/site";
     bottom:250px;
     left:50%;
     margin-left:-88px;
+    border:none;
+    background: none;
+    outline: none;
     &:hover{
       .link_light{
         animation:rotate 4s infinite linear;
@@ -36,8 +39,8 @@ $assetPath : "/static/site";
       display:inline-block;
       background: url("#{$assetPath}/css/images/finance/banner-btn.png") no-repeat center;
       position:absolute;
-      top:0;
-      left:0;
+      top:2px;
+      left:4px;
     }
     .link_trigle{
       width:26px;
@@ -50,6 +53,7 @@ $assetPath : "/static/site";
       margin-left:-13px;
     }
   }
+
 }
 //旋转
 @keyframes rotate
