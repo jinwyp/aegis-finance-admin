@@ -11,9 +11,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-/**
- * Created by liuxinjie on 16/8/17.
- */
 @RequestMapping("/api/financing/admin")
 @Api(value = "Common-PersonList-API", description = "获取相关人员列表接口")
 @RestController

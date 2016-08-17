@@ -8,8 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-
-
 @Api(tags = {"admin-page"}, description = "管理后台首页")
 @Controller
 public class HomePageController {

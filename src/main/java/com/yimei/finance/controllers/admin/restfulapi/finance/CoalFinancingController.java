@@ -15,11 +15,7 @@ import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-/**
- * 处理煤易融相关逻辑
- */
-
-@Api(tags = {"admin-api-flow"})
+@Api(tags = {"admin-api-flow"}, description = "处理煤易融相关逻辑")
 @RequestMapping("/api/financing/admin/myr")
 @RestController
 public class CoalFinancingController {

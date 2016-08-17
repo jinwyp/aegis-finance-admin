@@ -8,14 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Created by liuxinjie on 07/30/16.
- * 登陆页面
- */
-
-
-
-
 @Api(tags = {"admin-page"}, description = "管理后台登陆, 退出等页面")
 @Controller
 public class LoginPageController {

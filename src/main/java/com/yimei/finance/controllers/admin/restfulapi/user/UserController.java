@@ -15,7 +15,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-
 @Api(tags = {"admin-api-user"})
 @RequestMapping("/api/financing/admin/users")
 @RestController

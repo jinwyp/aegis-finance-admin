@@ -14,8 +14,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-
-
 @Api(tags = {"admin-api-user"}, description = "用户登陆验证接口")
 @RequestMapping("/api/financing/admin")
 @RestController
