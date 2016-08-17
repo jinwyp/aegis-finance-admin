@@ -1,6 +1,8 @@
 package com.yimei.finance.entity.admin.user;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -10,13 +12,15 @@ import java.time.LocalDateTime;
 /**
  * Created by zhangbolun on 16/8/16.
  */
-@Entity
+@Entity(name = "T_finance_apply_info")
 @Table(name = "T_finance_apply_info")
 @Data
+@NoArgsConstructor
+@AllArgsConstructor
 public class ApplyInfo implements Serializable {
     @Id
     @GeneratedValue
-    private int id ; //主键
+    private Integer id ; //主键
     @Column(name="userId")
     private int userId ; //用户id
     @Column(name="applyType")
