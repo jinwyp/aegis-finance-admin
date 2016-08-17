@@ -8,6 +8,7 @@ import com.yimei.finance.utils.JsonUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -26,13 +27,13 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     protected UserSession session;
 
-    //    @Value("${ssourl.env}")
+    @Value("${ssourl.env}")
     private String SSOURL;
 
-    //    @Value("${sso.protocol}")
+    @Value("${sso.protocol}")
     private String SSOPROTOCOL;
 
-    //    @Value("${sso.memberaddress}")
+    @Value("${sso.memberaddress}")
     private String MEDBERADDRESS;
 
     private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SiteACLInterceptor.class);
@@ -55,7 +56,7 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
                             redirectLoginPage(request, response);
                             return false;
                         } else if (!session.isLogined()) {
-                            String userData = HttpUtils.sendPostRequest("http://" + MEDBERADDRESS + "/auth?passport=" + passportCookieValue);
+                            String userData = HttpUtils.sendPostRequest("http://" + MEDBERADDRESS + "/auth?passport=" + passportCookieValue+"gotoURL="+currentUrl);
                             User user;
                             try {
                                 user = JsonUtils.toObject(userData, User.class);

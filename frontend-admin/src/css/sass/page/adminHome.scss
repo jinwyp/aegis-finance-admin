@@ -87,9 +87,10 @@
         content: '';
       }
     }
-    .role-search{
+    .row-search{
       padding: 20px 0;
       border-bottom: 1px solid $border-color;
+      font-size:14px;
       input{
         height: 34px;
         line-height:34px;
@@ -114,27 +115,25 @@
         }
       }
     }
-    .role-table{
+    .info-table{
       text-align: center;
       font-size:12px;
       border-bottom:1px solid $input-border-color;
-      tr{
-        td{
-          height:50px;
-          line-height:50px;
-          .right-border{
-            border-right:2px solid $border-color;
-          }
-          .operate-forbid{
-            padding: 1px 0 1px 16px;
-            background: url("#{$assetPath}/css/images/stop_icon.png") no-repeat;
-          }
+      tr.item>td{
+        height:50px;
+        vertical-align: middle;
+        .right-border {
+          border-right: 2px solid $border-color;
         }
-        .operation>span{
-          padding:0 12px 0 10px;
-          color: #007193;
-          cursor: pointer;
+        .operate-forbid {
+          padding: 1px 0 1px 16px;
+          background: url("#{$assetPath}/css/images/stop_icon.png") no-repeat;
         }
+      }
+      .operation > span {
+        padding: 0 12px 0 10px;
+        color: #007193;
+        cursor: pointer;
       }
       tr.head{
         background-color: #dadee1;
@@ -149,6 +148,7 @@
       margin-left:60px;
       margin-right:60px;
       font-size:16px;
+      .orange{  color: $err-color;  }
       .info-label{
         padding:30px 0;
         color: $menu-text-color;
@@ -163,6 +163,7 @@
         width:300px;
         border:1px solid $input-border-color;
         padding:0 10px;
+        vertical-align: middle;
       }
       .info-val>textarea{
         resize: none;
@@ -177,7 +178,7 @@
           padding: 30px 0;
           border:1px solid $input-border-color;
         }
-        .btn-save{
+        .btn-sure{
           width:200px;
           background-color: $err-color;
           border-color: $err-color;
@@ -191,17 +192,21 @@
           border-radius: 2px;
           color: $white;
         }
+        .btn-reset-pwd{
+          width:100px;
+          padding:9px 12px;
+        }
         input.err-input{
           &:focus{
             border-color: $err-color;
           }
         }
         .hint{  color: $menu-text-color; }
-        .orange{  color: $err-color;  }
         span.err-info{
           color: $err-color;
         }
-        .role>label{ font-size:14px; }
+        .user{  width:400px;  line-height:30px;}
+        .role>label{ font-size:14px;  margin-right:20px;}
         .roles>label{ font-size:16px; }
         .role>label>input,.roles>label>input{
           font-size:16px;

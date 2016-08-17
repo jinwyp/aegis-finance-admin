@@ -25,9 +25,11 @@ import { OrderListComponent } from '../components/order/order-list';
 import { OrderDetailComponent } from '../components/order/order-detail';
 import { UserInfoComponent } from '../components/user/user-info';
 import { UpdatePwdComponent } from '../components/user/update-pwd';
-import { UserRoleListComponent } from '../components/role/user-role-list';
-import { UserRoleComponent } from '../components/role/user-role';
+import { RoleListComponent } from '../components/role/role-list';
+import { RoleInfoComponent } from '../components/role/role-info';
 import { AddRoleComponent } from '../components/role/add-role';
+import { UserListComponent } from '../components/role/user-list';
+import { AddUserComponent } from '../components/role/add-user';
 
 
 
@@ -37,7 +39,7 @@ import { AddRoleComponent } from '../components/role/add-role';
         ROUTER_DIRECTIVES,
         headerComponent, LeftMenuComponent,
         HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent, UserInfoComponent,UpdatePwdComponent,
-        AddRoleComponent,UserRoleComponent,UserRoleListComponent
+        RoleListComponent,AddRoleComponent,RoleInfoComponent,UserListComponent,AddUserComponent
     ],
     providers: [ OrderService,
         homePageRouterProviders,
