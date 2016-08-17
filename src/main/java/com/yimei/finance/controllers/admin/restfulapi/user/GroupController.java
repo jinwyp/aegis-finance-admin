@@ -4,10 +4,7 @@ import com.yimei.finance.repository.admin.user.EnumAdminUserError;
 import com.yimei.finance.repository.admin.user.EnumGroupError;
 import com.yimei.finance.repository.common.result.Page;
 import com.yimei.finance.repository.common.result.Result;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
@@ -22,22 +19,23 @@ import java.util.List;
 @RequestMapping("/api/financing/admin/group")
 @RestController
 public class GroupController {
+
     @Autowired
     private IdentityService identityService;
 
-
-    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有的用户组", notes = "查询所有用户组列表", response = GroupEntity.class, responseContainer = "List")
     @ApiImplicitParams({
-        @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "number", paramType = "query"),
-        @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "number", paramType = "query"),
-        @ApiImplicitParam(name = "offset", value = "偏移数", required = false, dataType = "number", paramType = "query"),
-        @ApiImplicitParam(name = "total", value = "结果总数量", required = false, dataType = "number", paramType = "query")
+            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "offset", value = "偏移数", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "total", value = "结果总数量", required = false, dataType = "int", paramType = "query")
     })
-    public Result getAllGroupsMethod(Page page) {
+    @RequestMapping(method = RequestMethod.GET)
+    public Result getAllGroupsMethod( Page page) {
         page.setTotal(identityService.createGroupQuery().count());
         return Result.success().setData(identityService.createGroupQuery().orderByGroupId().desc().list()).setMeta(page);
     }
+
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "查询用户组", notes = "根据 Group Id 查询用户组信息", response = GroupEntity.class)
@@ -47,6 +45,7 @@ public class GroupController {
         if (group == null) return Result.error(EnumGroupError.此组不存在.toString());
         return Result.success().setData(group);
     }
+
 
     @RequestMapping(value = "{id}/users", method = RequestMethod.GET)
     @ApiOperation(value = "查询用户组下的用户", notes = "根据 Group Id 查询用户组下的用户")
@@ -60,6 +59,7 @@ public class GroupController {
         return Result.success().setData(identityService.createUserQuery().memberOfGroup(id).orderByUserId().desc().list()).setMeta(page);
     }
 
+
     @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "创建用户组", notes = "根据Group对象创建用户组")
     @ApiImplicitParam(name = "group", value = "Group 对象", required = true, dataType = "GroupEntity", paramType = "body")
@@ -70,6 +70,7 @@ public class GroupController {
         identityService.saveGroup(group);
         return Result.success().setData(identityService.createGroupQuery().groupId(group.getId()).singleResult());
     }
+
 
     @RequestMapping(value = "{groupId}/user/{userId}", method = RequestMethod.POST)
     @ApiOperation(value = "将一个用户添加到指定的组", notes = "将一个用户添加到指定的组")
@@ -91,6 +92,7 @@ public class GroupController {
             identityService.createMembership(userId, groupId);
         return Result.success().setData(user);
     }
+
 
     @RequestMapping(value = "/user/{groupId}/{userId}", method = RequestMethod.DELETE)
     @ApiOperation(value = "将一个用户从指定的组移出", notes = "将一个用户从指定的组移出")
@@ -115,6 +117,7 @@ public class GroupController {
 
     }
 
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除用户组", notes = "根据Group Id 删除用户组")
     @ApiImplicitParam(name = "id", value = "Group 对象Id", required = true, dataType = "String", paramType = "path")
@@ -124,6 +127,7 @@ public class GroupController {
         identityService.deleteGroup(id);
         return Result.success().setData(identityService.createGroupQuery().groupId(id).singleResult());
     }
+
 
     @RequestMapping(method = RequestMethod.PUT)
     @ApiOperation(value = "修改用户组", notes = "根据Group Id 修改用户组")

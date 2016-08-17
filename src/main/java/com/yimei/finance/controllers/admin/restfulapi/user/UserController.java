@@ -34,6 +34,7 @@ public class UserController {
         return Result.success().setData(identityService.createUserQuery().listPage(page.getOffset(), page.getCount())).setMeta(page);
     }
 
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "查询单个用户", notes = "根据id查询用户对象")
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
@@ -42,6 +43,7 @@ public class UserController {
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         return Result.success().setData(user);
     }
+
 
     @RequestMapping(value = "/groups/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "查询一个用户所在的组", notes = "查询一个用户所在的组")
@@ -55,6 +57,7 @@ public class UserController {
         return Result.success().setData(identityService.createGroupQuery().groupMember(id).listPage(page.getOffset(), page.getCount())).setMeta(page);
     }
 
+
     @RequestMapping(method = RequestMethod.POST)
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户")
     @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "UserEntity", paramType = "body")
@@ -65,6 +68,7 @@ public class UserController {
         return Result.success().setData(identityService.createUserQuery().userId(user.getId()).singleResult());
     }
 
+
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除用户", notes = "通过 User id 删除用户")
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
@@ -74,6 +78,7 @@ public class UserController {
         identityService.deleteUser(id);
         return Result.success().setData(user);
     }
+
 
     @RequestMapping(method = RequestMethod.PUT)
     @ApiOperation(value = "修改用户", notes = "根据 User Id修改用户")
