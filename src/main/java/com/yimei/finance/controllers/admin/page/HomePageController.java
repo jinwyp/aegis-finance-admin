@@ -1,19 +1,16 @@
 package com.yimei.finance.controllers.admin.page;
 
 import com.yimei.finance.config.AdminSession;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-/**
- * Created by liuxinjie on 07/30/16.
- * 管理员登录后页面
- */
-
-
+@RequestMapping("/api/financing/admin")
+@Api(value = "Admin-Home-Page-API", description = "admin 模块主页")
 @Controller
-public class UserHomeController {
+public class HomePageController {
     @Autowired
     private AdminSession adminSession;
 

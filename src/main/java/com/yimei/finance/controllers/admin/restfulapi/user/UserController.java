@@ -2,8 +2,8 @@ package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.repository.common.result.Page;
 import com.yimei.finance.repository.common.result.Result;
-import com.yimei.finance.repository.user.EnumUserError;
-import com.yimei.finance.repository.user.UserServiceImpl;
+import com.yimei.finance.repository.admin.user.EnumAdminUserError;
+import com.yimei.finance.service.admin.AdminUserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -16,13 +16,13 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/financing/admin/user")
-@Api(tags = {"adminapi"}, description = "用户相关的方法222")
+@Api(tags = {"adminapi"})
 @RestController
 public class UserController {
     @Autowired
     private IdentityService identityService;
     @Autowired
-    private UserServiceImpl userService;
+    private AdminUserServiceImpl userService;
 
 
     @RequestMapping(method = RequestMethod.GET)
@@ -38,7 +38,7 @@ public class UserController {
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     public Result getUserByIdMethod(@PathVariable("id") String id) {
         User user = identityService.createUserQuery().userId(id).singleResult();
-        if (user == null) return Result.error(EnumUserError.此用户不存在.toString());
+        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         return Result.success().setData(user);
     }
 
@@ -64,30 +64,29 @@ public class UserController {
         return Result.success().setData(identityService.createUserQuery().userId(user.getId()).singleResult());
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
-    @ApiOperation(value = "修改用户", notes = "根据 User Id修改用户")
-    @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "UserEntity", paramType = "body")
-    public Result updateUserMethod(@RequestBody UserEntity user) {
-        if (user == null) return Result.error(EnumUserError.用户对象不能为空.toString());
-        if (StringUtils.isEmpty(user.getId())) return Result.error(EnumUserError.用户id不能为空.toString());
-        User oldUser = identityService.createUserQuery().userId(user.getId()).singleResult();
-        if (oldUser == null) return Result.error(EnumUserError.此用户不存在.toString());
-        user.setPassword(oldUser.getPassword());
-        identityService.deleteUser(user.getId());
-        identityService.saveUser(user);
-        return Result.success().setData(identityService.createUserQuery().userId(user.getId()).singleResult());
-    }
-
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除用户", notes = "通过 User id 删除用户")
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     public Result deleteUserMethod(@PathVariable("id") String id) {
         User user = identityService.createUserQuery().userId(id).singleResult();
-        if (user == null) return Result.error(EnumUserError.此用户不存在.toString());
+        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         identityService.deleteUser(id);
         return Result.success().setData(user);
     }
 
+    @RequestMapping(method = RequestMethod.PUT)
+    @ApiOperation(value = "修改用户", notes = "根据 User Id修改用户")
+    @ApiImplicitParam(name = "user", value = "用户详细实体user", required = true, dataType = "UserEntity", paramType = "body")
+    public Result updateUserMethod(@RequestBody UserEntity user) {
+        if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());
+        if (StringUtils.isEmpty(user.getId())) return Result.error(EnumAdminUserError.用户id不能为空.toString());
+        User oldUser = identityService.createUserQuery().userId(user.getId()).singleResult();
+        if (oldUser == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
+        user.setPassword(oldUser.getPassword());
+        identityService.deleteUser(user.getId());
+        identityService.saveUser(user);
+        return Result.success().setData(identityService.createUserQuery().userId(user.getId()).singleResult());
+    }
 
 
 }

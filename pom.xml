@@ -22,6 +22,15 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
+
+		<!--<property name="eclipselink.logging.level" value="INFO" />-->
+		<!--<property name="eclipselink.target-database" value="DERBY" />-->
+		<!--<property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver" />-->
+		<!--<property name="javax.persistence.jdbc.url" value="jdbc:derby:memory:java8DateTimeTest;create=true" />-->
+		<!--<property name="javax.persistence.jdbc.user" value="" />-->
+		<!--<property name="javax.persistence.jdbc.password" value="" />-->
+		<!--<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>-->
+
 	</properties>
 	
 	<pluginRepositories>

@@ -1,6 +1,9 @@
 package com.yimei.finance.config;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yimei.finance.ext.intereceptors.AdminACLInterceptor;
+import com.yimei.finance.ext.intereceptors.SiteACLInterceptor;
+import com.yimei.finance.ext.jackson.Java8TimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
@@ -12,9 +15,11 @@ import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.StringHttpMessageConverter;
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 import org.springframework.web.servlet.HandlerExceptionResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import javax.annotation.PostConstruct;
 import javax.validation.Validator;
 import java.nio.charset.Charset;
 import java.util.List;
@@ -36,8 +41,17 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Autowired
     protected KittHandlerExceptionResolver kittHandlerExceptionResolver;
     @Autowired
+    protected SiteACLInterceptor siteACLInterceptor;
+    @Autowired
+    protected AdminACLInterceptor adminACLInterceptor;
+    @Autowired
     protected ObjectMapper objectMapper;
 
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(siteACLInterceptor).addPathPatterns("/**");
+        registry.addInterceptor(adminACLInterceptor).addPathPatterns("/**").excludePathPatterns("/api/financing/admin/login").excludePathPatterns("/api/financing/admin");
+    }
 
     @Override
     public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
@@ -70,4 +84,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     }
 
 
+    @PostConstruct
+    private void jacksonConfig() {
+        objectMapper.registerModule(new Java8TimeModule());
+    }
 }

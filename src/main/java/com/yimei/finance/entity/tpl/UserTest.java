@@ -13,7 +13,7 @@ import javax.persistence.Id;
 @Data
 @Entity
 @NoArgsConstructor
-public class User {
+public class UserTest {
     @Id
     @GeneratedValue
     private Long id;
@@ -24,7 +24,7 @@ public class User {
     @Column(nullable = false)
     private Long age;
 
-    public User(String name,Long age) {
+    public UserTest(String name, Long age) {
         this.name = name;
         this.age = age;
     }

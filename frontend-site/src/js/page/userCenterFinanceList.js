@@ -64,12 +64,28 @@ var financeList = () => {
     var vm = avalon.define({
         $id   : 'financeList',
         financeList : [],
-        searchQuery : {
-            requestUsername : ''
+        css : {
+            status : false
         },
+        searchQuery : {
+            requestUsername : '',
+            status : '',
+            type : ''
+        },
+
+        clickStatus : (value)=>{
+            vm.searchQuery.status = value;
+        },
+
+        clickType : (value)=>{
+            vm.searchQuery.type = value;
+        },
+
         searchFinanceOrder : (event)=>{
             getFinanceList({
-                requestUsername : vm.searchQuery.requestUsername
+                requestUsername : vm.searchQuery.requestUsername,
+                status : vm.searchQuery.status,
+                type : vm.searchQuery.type
             })
         }
     });
