@@ -17,7 +17,7 @@ import java.io.Serializable;
 public class Tpl implements Serializable {
     @Id
     @GeneratedValue
-    private int id;
+    private Long id;
     @NonNull
     private String name;
 

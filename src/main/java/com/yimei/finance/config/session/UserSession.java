@@ -1,4 +1,4 @@
-package com.yimei.finance.config;
+package com.yimei.finance.config.session;
 
 import com.yimei.finance.entity.site.user.User;
 import org.springframework.context.annotation.Scope;

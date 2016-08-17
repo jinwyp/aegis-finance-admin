@@ -1,6 +1,6 @@
 package com.yimei.finance.ext.intereceptors;
 
-import com.yimei.finance.config.UserSession;
+import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.entity.site.user.User;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.utils.HttpUtils;

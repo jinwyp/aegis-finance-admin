@@ -1,4 +1,4 @@
-package com.yimei.finance.utils;
+package com.yimei.finance.ext.jackson;
 
 import javax.persistence.AttributeConverter;
 import javax.persistence.Converter;

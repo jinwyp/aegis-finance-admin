@@ -1,4 +1,4 @@
-package com.yimei.finance.config;
+package com.yimei.finance.config.session;
 
 import org.activiti.engine.identity.User;
 import org.springframework.stereotype.Component;

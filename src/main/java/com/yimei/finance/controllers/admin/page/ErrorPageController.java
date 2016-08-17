@@ -1,6 +1,6 @@
 package com.yimei.finance.controllers.admin.page;
 
-import com.yimei.finance.config.AdminSession;
+import com.yimei.finance.config.session.AdminSession;
 import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
