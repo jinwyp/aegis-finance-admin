@@ -9,16 +9,16 @@ import { Component } from '@angular/core';
 declare var __moduleName: string;
 
 @Component({
-    selector: 'user-role-list',
+    selector: 'add-user',
     moduleId: __moduleName || module.id,
-    templateUrl: 'user-role-list.html'
+    templateUrl: 'add-user.html'
 })
 
 
 
-export class UserRoleListComponent {
+export class AddUserComponent {
 
-    title = '角色管理';
+    title = '修改密码';
 
 }
 

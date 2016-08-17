@@ -8,9 +8,11 @@ import { HomeDashboardComponent } from '../components/home/home-dashboard';
 import { OrderDetailComponent } from '../components/order/order-detail';
 import { UserInfoComponent } from '../components/user/user-info';
 import { UpdatePwdComponent } from '../components/user/update-pwd';
-import { UserRoleComponent } from '../components/role/user-role';
+import { RoleListComponent } from '../components/role/role-list';
+import { RoleInfoComponent } from '../components/role/role-info';
 import { AddRoleComponent } from '../components/role/add-role';
-import { UserRoleListComponent } from '../components/role/user-role-list';
+import { UserListComponent } from '../components/role/user-list';
+import { AddUserComponent } from '../components/role/add-user';
 
 const routes: RouterConfig = [
     {
@@ -39,8 +41,12 @@ const routes: RouterConfig = [
         component: UpdatePwdComponent
     },
     {
+        path: 'rolelist',
+        component: RoleListComponent
+    },
+    {
         path: 'userrole',
-        component: UserRoleComponent
+        component: RoleInfoComponent
     },
     {
         path: 'addrole',
@@ -51,8 +57,16 @@ const routes: RouterConfig = [
         component: AddRoleComponent
     },
     {
-        path: 'rolelist',
-        component: UserRoleListComponent
+        path: 'userlist',
+        component: UserListComponent
+    },
+    {
+        path: 'adduser',
+        component: AddUserComponent
+    },
+    {
+        path: 'edituser',
+        component: AddUserComponent
     }
 ];
 

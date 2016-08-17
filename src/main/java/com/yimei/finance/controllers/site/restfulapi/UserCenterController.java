@@ -5,6 +5,9 @@ import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.common.result.Result;
 import com.yimei.finance.service.admin.finance.ApplyInfoServiceImpl;
 import com.yimei.finance.utils.Utils;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +18,7 @@ import java.util.HashMap;
 /**
  * Created by JinWYP on 8/15/16.
  */
-
+@Api(tags = {"siteapi"})
 @RestController
 public class UserCenterController {
 
@@ -25,6 +28,8 @@ public class UserCenterController {
     /**
     * 供应链金融 - 发起融资申请
     */
+    @ApiOperation(value = "供应链金融 - 发起融资申请 API", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息")
+    @ApiImplicitParam(name = "group", value = "Group 对象", required = true, dataType = "GroupEntity", paramType = "body")
     @LoginRequired
     @RequestMapping(value = "/api/financing/orders", method = RequestMethod.POST)
     public Result requestFinancingOrder(@RequestBody ApplyInfo applyInfo) {

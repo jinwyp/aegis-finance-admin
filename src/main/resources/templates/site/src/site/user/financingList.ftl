@@ -173,10 +173,10 @@
 
                 <form>
                     <label for="startDate">申请时间:</label>
-                    <div class="time"><input type="text" id="startDate" class="iIpt iIpt_sm startDate"placeholder="yyyy-mm-dd"/></div>
+                    <div class="time"><input type="text" id="startDate" class="iIpt iIpt_sm startDate"placeholder="yyyy-mm-dd" ms-duplex="@searchQuery.startDate"/></div>
 
                     <label for="endDate">到</label>
-                    <div class="time"><input type="text" id="endDate" class="iIpt iIpt_sm endDate" placeholder="yyyy-mm-dd"/></div>
+                    <div class="time"><input type="text" id="endDate" class="iIpt iIpt_sm endDate" placeholder="yyyy-mm-dd" ms-duplex="@searchQuery.endDate"/></div>
 
                     <label for="status">审核状态:</label>
                     <div class="positionR selectDiv">
@@ -194,7 +194,7 @@
                     <br/>
 
                     <label for="number">业务编号:</label>
-                    <input type="text" id="number" class="margin-l">
+                    <input type="text" id="number" class="margin-l" ms-duplex="@searchQuery.businessId">
 
                     <label for="type">业务类型:</label>
                     <div class="positionR selectDiv">

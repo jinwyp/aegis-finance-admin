@@ -16,7 +16,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/financing/admin/user")
-@Api(value = "Admin-User-API", description = "用户相关接口")
+@Api(tags = {"adminapi"})
 @RestController
 public class UserController {
     @Autowired
