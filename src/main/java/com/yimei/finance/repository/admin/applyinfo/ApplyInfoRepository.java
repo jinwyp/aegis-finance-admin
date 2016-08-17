@@ -1,4 +1,4 @@
-package com.yimei.finance.repository.applyinfo;
+package com.yimei.finance.repository.admin.applyinfo;
 
 import com.yimei.finance.entity.admin.user.ApplyInfo;
 import org.springframework.data.jpa.repository.JpaRepository;

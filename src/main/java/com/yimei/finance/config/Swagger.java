@@ -6,8 +6,10 @@ import springfox.documentation.builders.ApiInfoBuilder;
 import springfox.documentation.builders.PathSelectors;
 import springfox.documentation.builders.RequestHandlerSelectors;
 import springfox.documentation.service.ApiInfo;
+import springfox.documentation.service.Tag;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
+import springfox.documentation.swagger.web.UiConfiguration;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 /**
@@ -19,11 +21,26 @@ public class Swagger {
     @Bean
     public Docket createRestApi() {
         return new Docket(DocumentationType.SWAGGER_2)
-                .apiInfo(apiInfo())
+                .groupName("restful-api")
                 .select()
                 .apis(RequestHandlerSelectors.basePackage("com.yimei.finance.controllers"))
                 .paths(PathSelectors.any())
-                .build();
+                .build()
+                .pathMapping("/")
+                .apiInfo(apiInfo())
+                .tags(
+                    new Tag("sitepage", "网站页面"),
+                    new Tag("siteapi", "网站 RESTful API"),
+                    new Tag("adminpage", "管理后台页面"),
+                    new Tag("adminapi", "管理后台 RESTful API"),
+                    new Tag("adminapiuser", "管理后台 RESTful API 用户与用户组"),
+                    new Tag("adminapipermission", "管理后台 RESTful API权限")
+                );
+    }
+
+    @Bean
+    public UiConfiguration uiConfig() {
+        return UiConfiguration.DEFAULT;
     }
 
     private ApiInfo apiInfo() {

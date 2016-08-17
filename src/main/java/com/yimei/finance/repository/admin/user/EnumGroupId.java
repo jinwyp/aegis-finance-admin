@@ -1,4 +1,4 @@
-package com.yimei.finance.entity.admin.user;
+package com.yimei.finance.repository.admin.user;
 
 /**
  * Created by liuxinjie on 16/8/15.

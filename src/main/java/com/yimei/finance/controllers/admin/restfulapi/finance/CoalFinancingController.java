@@ -1,10 +1,11 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.AdminSession;
-import com.yimei.finance.entity.admin.user.EnumGroupId;
+import com.yimei.finance.repository.admin.user.EnumGroupId;
 import com.yimei.finance.repository.common.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
@@ -20,8 +21,8 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 处理煤易融相关逻辑
  */
-@RequestMapping("/api/finance/financing")
-@Api(value = "CoalFinancingApi", description = "煤易融相关接口")
+@RequestMapping("/api/financing/admin/myr")
+@Api(value = "Admin-Coal-Financing-API", description = "煤易融相关接口")
 @RestController
 public class CoalFinancingController {
     @Autowired
@@ -35,16 +36,20 @@ public class CoalFinancingController {
 
     @RequestMapping(value = "/start", method = RequestMethod.POST)
     @ApiOperation(value = "发起流程", notes = "发起流程")
-    @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "String", paramType = "query")
-    public Result startFinancingWorkFlow(@RequestParam(value = "id", required = true) String id) {
-        runtimeService.startProcessInstanceByKey("financingWorkFlow", id);
-        Task task =taskService.createTaskQuery().processInstanceBusinessKey(id).singleResult();
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "applyType", value = "金融申请单类型", required = true, dataType = "String", paramType = "query")
+    })
+    public Result startFinancingWorkFlow(@RequestParam(value = "id", required = true) int id,
+                                         @RequestParam(value = "applyType", required = true)String applyType) {
+        runtimeService.startProcessInstanceByKey("financingWorkFlow", String.valueOf(id));
+        Task task =taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(id)).singleResult();
         taskService.addGroupIdentityLink(task.getId(), EnumGroupId.ManageTraderGroup.id, IdentityLinkType.CANDIDATE);
         return Result.success();
     }
 
-    @RequestMapping(value = "/assignTrader", method = RequestMethod.GET)
-    @ApiOperation(value = "分配线上交易员页面", notes = "分配线上交易员页面")
+    @RequestMapping(value = "/trader", method = RequestMethod.GET)
+    @ApiOperation(value = "显示交易员列表", notes = "显示交易员列表数据")
     public Result assignFinancingOnlineTraderPage() {
         return Result.success().setData(identityService.createUserQuery().memberOfGroup(EnumGroupId.TraderGroup.id));
     }

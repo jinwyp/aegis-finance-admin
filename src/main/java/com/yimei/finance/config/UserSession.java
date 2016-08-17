@@ -1,6 +1,6 @@
 package com.yimei.finance.config;
 
-import org.activiti.engine.identity.User;
+import com.yimei.finance.entity.site.user.User;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
