@@ -5,11 +5,15 @@
 ### 页面路由
 
 1. 网站金融首页 /finance
-2. 用户中心金融首页 /finance/user/financing
-
+2. 用户中心 - 金融首页 /finance/user/financing
+3. 用户中心 - 金融融资详情 /finance/user/financing/222
 
 
 ### API 路由
+
+请使用 Swagger文档 查看 http://localhost:8002/swagger-ui.html
+
+
 
 
 
@@ -20,19 +24,19 @@
 
 管理后台网站的页面,由于使用Angular2, 页面路由只有两个
 
-/ 首页跳转到 /admin/login
+1. 输入 / 首页跳转到 /admin/login
 
-/admin/login 登录页面
+2. /admin/login 登录页面
 
-/admin/home  登录后管理员首页, 需要java端验证是否登录, 没有登录跳转到 登录页面
+3. /admin/home  登录后管理员首页, 需要java端验证是否登录, 没有登录跳转到 登录页面
 
 
 ### API 路由
 
 使用RESTfull 风格 [RESTfull参考文章](http://mherman.org/blog/2016/03/13/designing-a-restful-api-with-node-and-postgres)
 
-POST /api/admin/login
-GET /api/admin/logout
+请使用 Swagger文档 查看 http://localhost:8002/swagger-ui.html
+
 
 
 ### 接口返回格式
