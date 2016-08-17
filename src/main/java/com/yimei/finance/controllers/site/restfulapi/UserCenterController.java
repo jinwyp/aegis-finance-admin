@@ -7,6 +7,7 @@ import com.yimei.finance.service.admin.finance.ApplyInfoServiceImpl;
 import com.yimei.finance.utils.Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -28,10 +29,13 @@ public class UserCenterController {
     /**
     * 供应链金融 - 发起融资申请
     */
-    @ApiOperation(value = "供应链金融 - 发起融资申请 API", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息")
-    @ApiImplicitParam(name = "group", value = "Group 对象", required = true, dataType = "GroupEntity", paramType = "body")
+    @ApiOperation(value = "供应链金融 - 发起融资申请 API", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = ApplyInfo.class)
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "applyType", value = "融资类型", required = false, dataType = "int", paramType = "form"),
+        @ApiImplicitParam(name = "userId", value = "每页显示数量", required = false, dataType = "String", paramType = "form")
+    })
     @LoginRequired
-    @RequestMapping(value = "/api/financing/orders", method = RequestMethod.POST)
+    @RequestMapping(value = "/api/financing/applyInfo", method = RequestMethod.POST)
     public Result requestFinancingOrder(@RequestBody ApplyInfo applyInfo) {
 
         System.out.println("Order Type:" + applyInfo.getApplyType());
@@ -67,12 +71,12 @@ public class UserCenterController {
      * 供应链金融 - 用户中心 - 获取融资申请详细信息
      */
     @LoginRequired
-    @RequestMapping(value = "/api/financing/applyInfo/{sourceID}", method = RequestMethod.GET)
-    public Result getFinancingApplyInfo(@PathVariable String sourceID) {
+    @RequestMapping(value = "/api/financing/applyInfo/{sourceId}", method = RequestMethod.GET)
+    public Result getFinancingApplyInfo(@PathVariable String sourceId) {
 
         return Result.success().setData(new HashMap()
             {{
-                put("sourceID", 12222);
+                put("sourceId", 12222);
                 put("applyType", 2);
                 put("approveState", 2);
                 put("financingAmount", 2100000);

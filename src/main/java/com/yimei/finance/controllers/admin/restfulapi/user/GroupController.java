@@ -18,31 +18,37 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+@Api(tags = {"adminapiuser"})
 @RequestMapping("/api/financing/admin/group")
-@Api(tags = {"adminapi"})
 @RestController
 public class GroupController {
     @Autowired
     private IdentityService identityService;
 
+
+    @RequestMapping(method = RequestMethod.GET)
+    @ApiOperation(value = "查询所有的用户组", notes = "查询所有用户组列表", response = GroupEntity.class, responseContainer = "List")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "number", paramType = "query"),
+        @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "number", paramType = "query"),
+        @ApiImplicitParam(name = "offset", value = "偏移数", required = false, dataType = "number", paramType = "query"),
+        @ApiImplicitParam(name = "total", value = "结果总数量", required = false, dataType = "number", paramType = "query")
+    })
+    public Result getAllGroupsMethod(Page page) {
+        page.setTotal(identityService.createGroupQuery().count());
+        return Result.success().setData(identityService.createGroupQuery().orderByGroupId().desc().list()).setMeta(page);
+    }
+
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    @ApiOperation(value = "查询用户组", notes = "根据 Group Id 查询用户组")
-    @ApiImplicitParam(name = "id", value = "Group 对象Id", required = true, dataType = "String", paramType = "path")
+    @ApiOperation(value = "查询用户组", notes = "根据 Group Id 查询用户组信息", response = GroupEntity.class)
+    @ApiImplicitParam(name = "id", value = "用户组 Group Id", required = true, dataType = "number", paramType = "path")
     public Result getGroupByIdMethod(@PathVariable("id")String id) {
         Group group = identityService.createGroupQuery().groupId(id).singleResult();
         if (group == null) return Result.error(EnumGroupError.此组不存在.toString());
         return Result.success().setData(group);
     }
 
-    @RequestMapping(method = RequestMethod.GET)
-    @ApiOperation(value = "查询所有的用户组", notes = "查询所有用户组")
-    @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body")
-    public Result getAllGroupsMethod(Page page) {
-        page.setTotal(identityService.createGroupQuery().count());
-        return Result.success().setData(identityService.createGroupQuery().orderByGroupId().desc().list()).setMeta(page);
-    }
-
-    @RequestMapping(value = "/users/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "{id}/users", method = RequestMethod.GET)
     @ApiOperation(value = "查询用户组下的用户", notes = "根据 Group Id 查询用户组下的用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "Group 对象Id", required = true, dataType = "String", paramType = "path"),
@@ -65,7 +71,7 @@ public class GroupController {
         return Result.success().setData(identityService.createGroupQuery().groupId(group.getId()).singleResult());
     }
 
-    @RequestMapping(value = "/user/{groupId}/{userId}", method = RequestMethod.POST)
+    @RequestMapping(value = "{groupId}/user/{userId}", method = RequestMethod.POST)
     @ApiOperation(value = "将一个用户添加到指定的组", notes = "将一个用户添加到指定的组")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "groupId", value = "Group 对象Id", required = true, dataType = "String", paramType = "path"),

@@ -15,8 +15,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+
+@Api(tags = {"adminapiuser"})
 @RequestMapping("/api/financing/admin/user")
-@Api(tags = {"adminapi"})
 @RestController
 public class UserController {
     @Autowired
@@ -26,7 +27,7 @@ public class UserController {
 
 
     @RequestMapping(method = RequestMethod.GET)
-    @ApiOperation(value = "查询所有用户", notes = "查询所有用户")
+    @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表")
     @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "Page", paramType = "body")
     public Result getAllUsersMethod(Page page) {
         page.setTotal(identityService.createUserQuery().count());

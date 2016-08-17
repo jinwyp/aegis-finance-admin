@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@ApiModel
+@ApiModel(value="page", description="分页参数")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

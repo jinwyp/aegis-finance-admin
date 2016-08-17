@@ -44,7 +44,7 @@ public class IndexController {
     /**
     * 网站供应链金融 - 个人中心 - 我的申请
     */
-    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的申请", notes = "供应链金融我的融资申请列表")
+    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的申请", notes = "供应链金融 我的融资 申请列表")
     @RequestMapping(value = "/finance/user/financing", method = RequestMethod.GET)
     public String personCenterFinancingList(Model model) {
         model.addAttribute("env", env.getProperty("spring.profiles"));
@@ -56,7 +56,7 @@ public class IndexController {
     /**
      * 网站供应链金融 - 个人中心 - 我的申请 - 业务详情
      */
-    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的申请 - 业务详情", notes = "供应链金融我的融资申请详情页面")
+    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的申请 - 业务详情", notes = "供应链金融 我的融资 申请详情页面")
     @RequestMapping(value = "/finance/user/financing/{id}", method = RequestMethod.GET)
     public String personCenterFinancingRequest(@PathVariable("id") int id, Model model) {
         model.addAttribute("env", env.getProperty("spring.profiles"));
