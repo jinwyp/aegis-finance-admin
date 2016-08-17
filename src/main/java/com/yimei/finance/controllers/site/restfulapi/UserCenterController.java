@@ -57,7 +57,7 @@ public class UserCenterController {
     /**
      * 供应链金融 - 用户中心 - 获取融资申请列表
      */
-    @ApiOperation(value = "用户融资申请列表", notes = "查询融资申请列表", response = ApplyInfo.class, responseContainer = "List")
+    @ApiOperation(value = "融资申请列表", notes = "用户查询融资申请列表", response = ApplyInfo.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "int", paramType = "query"),
@@ -83,6 +83,8 @@ public class UserCenterController {
     /**
      * 供应链金融 - 用户中心 - 获取融资申请详细信息
      */
+    @ApiOperation(value = "融资申请详细信息", notes = "用户获取融资申请详细信息", response = ApplyInfo.class)
+    @ApiImplicitParam(name = "sourceId", value = "融资申请ID", required = true, dataType = "String", paramType = "path")
     @LoginRequired
     @RequestMapping(value = "/api/financing/applyInfo/{sourceId}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable String sourceId) {
@@ -90,7 +92,7 @@ public class UserCenterController {
         return Result.success().setData(new HashMap()
             {{
                 put("sourceId", 12222);
-                put("applyType", 2);
+                put("applyType", "MYR");
                 put("approveState", 2);
                 put("financingAmount", 2100000);
                 put("expectedDate", 2100000);
