@@ -15,7 +15,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 @RequestMapping("/api/financing/admin/group")
-@Api(value = "Group-Controller", description = "用户组相关方法")
+@Api(tags = {"adminapi"}, description = "用户组相关方法xxxxx")
 @RestController
 public class GroupController {
     @Autowired
