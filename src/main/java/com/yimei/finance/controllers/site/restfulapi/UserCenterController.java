@@ -3,7 +3,7 @@ package com.yimei.finance.controllers.site.restfulapi;
 import com.yimei.finance.entity.admin.user.ApplyInfo;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.common.result.Result;
-import com.yimei.finance.service.admin.ApplyInfoServicelmpl;
+import com.yimei.finance.service.admin.finance.ApplyInfoServiceImpl;
 import com.yimei.finance.utils.Utils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -23,7 +23,7 @@ import java.util.HashMap;
 public class UserCenterController {
 
     @Autowired
-    ApplyInfoServicelmpl applyInfoService;
+    ApplyInfoServiceImpl applyInfoService;
 
     /**
     * 供应链金融 - 发起融资申请
