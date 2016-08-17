@@ -152,7 +152,7 @@
         </div>
         <!--侧边栏结束-->
         <!--右侧主内容开始-->
-        <div class="financeCon" ms-controller="financeInfo">
+        <div class="financeCon ms-controller" ms-controller="financeInfo">
             <div class="application">
                 <!--面包屑开始-->
                 <div>
@@ -173,7 +173,9 @@
                         <table>
                             <tr>
                                 <th>融资类型:</th>
-                                <td>{{@financeList.applyType}}</td>
+                                <td ms-visible="@financeList.applyType==='MYR'">煤易融</td>
+                                <td ms-visible="@financeList.applyType==='MYD'">煤易贷</td>
+                                <td ms-visible="@financeList.applyType==='MYG'">煤易购</td>
                                 <th>业务编号:</th>
                                 <td>{{@financeList.sourceID}}</td>
                             </tr>
@@ -201,7 +203,7 @@
                     </div>
                     <div class="paddingTable">
                         <!--融--2-->
-                        <table ms-visible="@financeList.applyType===2">
+                        <table ms-visible="@financeList.applyType==='MYR'">
                             <tr>
                                 <th>签约单位全称:</th>
                                 <td>{{@financeList.contractors}}</td>
@@ -220,7 +222,7 @@
                             </tr>
                         </table>
                         <!--购-->
-                        <table ms-visible="@financeList.applyType===1">
+                        <table ms-visible="@financeList.applyType==='MYG'">
                             <tr>
                                 <th>上游资源方全称:</th>
                                 <td>{{@financeList.upstreamResource}}</td>
@@ -235,7 +237,7 @@
                             </tr>
                         </table>
                         <!--贷-->
-                        <table ms-visible="@financeList.applyType===3">
+                        <table ms-visible="@financeList.applyType==='MYD'">
                             <tr>
                                 <th>煤炭仓储地:</th>
                                 <td>{{@financeList.storageLocation}}</td>

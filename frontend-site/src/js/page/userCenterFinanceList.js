@@ -10,8 +10,8 @@ import avalon from 'avalon2';
 
 
 var financeList = () => {
-    //datePicker
 
+    //datePicker
     var pickerStart = $('.startDate').pickadate({format:'yyyy-mm-dd', max:true, clear: '清空'});
     var pickerEnd = $('.endDate').pickadate({max:true, clear: '清空'});
 
@@ -21,7 +21,9 @@ var financeList = () => {
             pickerEnd.pickadate('picker').clear();
         }
         pickerEnd.pickadate('picker').set('min', pickerStart.pickadate('picker').get('select').obj);
+        // $('#startDate').val($('#inner-editor').html());
     });
+
 
 
     // 模拟下拉菜单
