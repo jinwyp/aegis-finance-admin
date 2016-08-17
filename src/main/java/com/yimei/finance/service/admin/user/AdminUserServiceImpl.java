@@ -1,4 +1,4 @@
-package com.yimei.finance.service.admin;
+package com.yimei.finance.service.admin.user;
 
 import com.yimei.finance.config.AdminSession;
 import com.yimei.finance.repository.admin.user.EnumAdminUserError;

@@ -5,7 +5,6 @@ import com.yimei.finance.repository.admin.user.EnumGroupId;
 import com.yimei.finance.repository.common.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
@@ -36,12 +35,8 @@ public class CoalFinancingController {
 
     @RequestMapping(value = "/start", method = RequestMethod.POST)
     @ApiOperation(value = "发起流程", notes = "发起流程")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = "applyType", value = "金融申请单类型", required = true, dataType = "String", paramType = "query")
-    })
-    public Result startFinancingWorkFlow(@RequestParam(value = "id", required = true) int id,
-                                         @RequestParam(value = "applyType", required = true)String applyType) {
+    @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Integer", paramType = "query")
+    public Result startFinancingWorkFlow(@RequestParam(value = "id", required = true) int id) {
         runtimeService.startProcessInstanceByKey("financingWorkFlow", String.valueOf(id));
         Task task =taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(id)).singleResult();
         taskService.addGroupIdentityLink(task.getId(), EnumGroupId.ManageTraderGroup.id, IdentityLinkType.CANDIDATE);

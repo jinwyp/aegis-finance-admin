@@ -1,0 +1,62 @@
+<div class="item-margin breadcrumb-box">
+    <ol class="breadcrumb">
+        <li>权限设置</li>
+        <li>&gt;</li>
+        <li class="active">用户管理</li>
+    </ol>
+</div>
+
+<div class="item-margin">
+    <div class="row-search">
+        <span>用户账号:</span><input type="text" value="fdsfsdfsdf">
+        <span>用户姓名:</span><input type="text" value="fdsfsdfsdf">
+        <span>角色名称:</span><input type="text" value="fdsfsdfsdf">
+        <button class="btn btn-default" type="submit">查询</button>
+        <button type="button" class="btn btn-default btn-addrole" [routerLink]="['/adduser']">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加用户
+        </button>
+    </div>
+    <table class="table table-striped mt-20 info-table">
+        <tr class="head">
+            <th width="60">序号</th>
+            <th width="150">用户账号</th>
+            <th width="150">用户姓名</th>
+            <th width="200">角色名称</th>
+            <th width="200">最后一次登录</th>
+            <th width="250">操作</th>
+        </tr>
+        <tr class="item">
+            <td>1</td>
+            <td>admin</td>
+            <td>admin</td>
+            <td>系统管理员-系统管理员-系统管理员-系统管理员</td>
+            <td>2016-12-01 23:22:00</td>
+            <td>
+                <span class="operate-forbid">无法操作</span>
+            </td>
+        </tr>
+        <tr class="item">
+            <td>1</td>
+            <td>admin</td>
+            <td>admin</td>
+            <td>系统管理员</td>
+            <td>2016-12-01 23:22:00</td>
+            <td>
+                <span class="operate-forbid">无法操作</span>
+            </td>
+        </tr>
+        <tr class="item">
+            <td>1</td>
+            <td>admin</td>
+            <td>admin</td>
+            <td>系统管理员</td>
+            <td>2016-12-01 23:22:00</td>
+            <td class="operation">
+                <span class="right-border">重置密码</span>
+                <span class="right-border" [routerLink]="['/userrole']">查看</span>
+                <span class="right-border" [routerLink]="['/edituser']">编辑</span>
+                <span>删除</span>
+            </td>
+        </tr>
+    </table>
+</div>
