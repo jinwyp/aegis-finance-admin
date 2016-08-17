@@ -1,6 +1,7 @@
 package com.yimei.finance.controllers.admin.tpl;
 
 import com.yimei.finance.entity.tpl.TaskMess;
+import io.swagger.annotations.Api;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.*;
 import org.activiti.engine.impl.RepositoryServiceImpl;
@@ -26,6 +27,8 @@ import java.util.Map;
 /**
  * Created by wangqi on 16/8/9.
  */
+
+@Api(tags = {"example"})
 @Controller
 @RequestMapping("/tpl")
 public class MyController {

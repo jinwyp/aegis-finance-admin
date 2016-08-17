@@ -4,6 +4,7 @@ import com.yimei.finance.config.UserSession;
 import com.yimei.finance.entity.site.user.User;
 import com.yimei.finance.utils.HttpUtils;
 import com.yimei.finance.utils.JsonUtils;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,8 @@ import java.io.PrintWriter;
 /**
  * Created by wangqi on 16/8/17.
  */
+
+@Api(tags = {"example"})
 @Controller
 public class CommonController {
     public static final String passportCookieName = "passport";
