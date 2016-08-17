@@ -62,6 +62,7 @@ public class IndexController {
     @LoginRequired
     @RequestMapping(value = "/finance/user/financing/{id}", method = RequestMethod.GET)
     public String personCenterFinancingRequest(@PathVariable("id") int id, Model model) {
+
         model.addAttribute("env", env.getProperty("spring.profiles"));
 
         return "site/user/financingInfo";
