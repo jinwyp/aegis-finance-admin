@@ -8,6 +8,13 @@
 3. 目前本项目只能在本地运行, docker还没配置好
 4. 全部的URL和API, 请看docs目录下的 readme
 
+还要启动 aegis-member 项目,切换到 finance-admin 分支 运行make local
+还要启动 aegis-service 项目 运行 gradle clean bootRun     
+
+把域名 finance-local.yimei180.com 加入到hosts里面 127.0.0.1      finance-local.yimei180.com
+
+
+
 
 ## 管理后台 admin 前端环境
 

@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 
 
 
-
 declare var __moduleName: string;
 
 @Component({
@@ -16,6 +15,7 @@ declare var __moduleName: string;
 export class HomeComponent {
 
     title = '管理员首页11';
+
 
 }
 

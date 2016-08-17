@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @RequestMapping("/api/financing/admin")
-@Api(value = "Admin-Home-Page-API", description = "admin 模块主页")
+@Api(tags = {"adminpage"}, description = "admin 模块主页")
 @Controller
 public class HomePageController {
     @Autowired

@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RestController;
  * Created by wangqi on 16/8/17.
  */
 @RestController
-public class LogindemoController {
+public class LoginDemoController {
 
     @Autowired
     UserSession userSession;

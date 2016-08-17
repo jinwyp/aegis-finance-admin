@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @RequestMapping("/api/financing/admin")
-@Api(value = "Admin-Login-Page-API", description = "登陆, 退出等页面")
+@Api(tags = {"adminpage"}, description = "登陆, 退出等页面")
 @Controller
 public class LoginPageController {
     @Autowired

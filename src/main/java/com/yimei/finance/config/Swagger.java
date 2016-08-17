@@ -34,7 +34,8 @@ public class Swagger {
                     new Tag("adminpage", "管理后台页面"),
                     new Tag("adminapi", "管理后台 RESTful API"),
                     new Tag("adminapiuser", "管理后台 RESTful API 用户与用户组"),
-                    new Tag("adminapipermission", "管理后台 RESTful API权限")
+                    new Tag("adminapipermission", "管理后台 RESTful API 权限"),
+                    new Tag("adminapigroup", "管理后台 RESTful API 用户组")
                 );
     }
 

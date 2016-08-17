@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 
 @RequestMapping("/api/financing/admin")
-@Api(value = "Admin-Error-Page-API", description = "错误页面处理接口")
+@Api(tags = {"adminpage"}, description = "错误页面处理接口")
 @Controller
 public class ErrorPageController {
     @Autowired
