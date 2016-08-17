@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.RestController;
 /**
  * 处理煤易融相关逻辑
  */
+
+@Api(tags = {"admin-api-flow"})
 @RequestMapping("/api/financing/admin/myr")
-@Api(value = "Admin-Coal-Financing-API", description = "煤易融相关接口")
 @RestController
 public class CoalFinancingController {
     @Autowired
@@ -33,9 +34,12 @@ public class CoalFinancingController {
     @Autowired
     private AdminSession adminSession;
 
-    @RequestMapping(value = "/start", method = RequestMethod.POST)
+
+
+
     @ApiOperation(value = "发起流程", notes = "发起流程")
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Integer", paramType = "query")
+    @RequestMapping(value = "/start", method = RequestMethod.POST)
     public Result startFinancingWorkFlow(@RequestParam(value = "id", required = true) int id) {
         runtimeService.startProcessInstanceByKey("financingWorkFlow", String.valueOf(id));
         Task task =taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(id)).singleResult();
@@ -43,8 +47,10 @@ public class CoalFinancingController {
         return Result.success();
     }
 
-    @RequestMapping(value = "/trader", method = RequestMethod.GET)
+
+
     @ApiOperation(value = "显示交易员列表", notes = "显示交易员列表数据")
+    @RequestMapping(value = "/trader", method = RequestMethod.GET)
     public Result assignFinancingOnlineTraderPage() {
         return Result.success().setData(identityService.createUserQuery().memberOfGroup(EnumGroupId.TraderGroup.id));
     }
