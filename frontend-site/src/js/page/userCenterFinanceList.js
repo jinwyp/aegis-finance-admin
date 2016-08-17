@@ -4,6 +4,7 @@
 
 
 import 'js/jquery-plugin/jQuery.fn.datePicker';
+// import 'js/jquery-plugin/pagination';
 import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 import avalon from 'avalon2';
 
