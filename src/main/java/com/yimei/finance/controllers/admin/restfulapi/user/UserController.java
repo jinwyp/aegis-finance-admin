@@ -4,10 +4,7 @@ import com.yimei.finance.repository.admin.user.EnumAdminUserError;
 import com.yimei.finance.repository.common.result.Page;
 import com.yimei.finance.repository.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.persistence.entity.UserEntity;
@@ -62,12 +59,10 @@ public class UserController {
 
 
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserEntity.class)
-    @ApiImplicitParams({
-        @ApiImplicitParam(name = "email", value = "用户邮箱", required = true, dataType = "String", paramType = "form"),
-        @ApiImplicitParam(name = "password", value = "用户密码", required = true, dataType = "String", paramType = "form")
-    })
     @RequestMapping(method = RequestMethod.POST)
-    public Result addUserMethod(@RequestBody UserEntity user) {
+    public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserEntity user) {
+        if (StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
+        if (identityService.createUserQuery().userEmail(user.getEmail()).singleResult() !=null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
         user.setId(null);
         user.setPassword(userService.securePassword(user.getPassword()));
         identityService.saveUser(user);
