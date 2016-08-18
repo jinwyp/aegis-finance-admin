@@ -50,8 +50,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(siteACLInterceptor).addPathPatterns("/**");
-        registry.addInterceptor(adminACLInterceptor).addPathPatterns("/**").excludePathPatterns("/api/financing/admin/login").excludePathPatterns("/api/financing/admin");
+        registry.addInterceptor(siteACLInterceptor).addPathPatterns("/finance/**", "/api/financing/applyInfo/**").excludePathPatterns("/finance/admin/**", "/api/financing/admin/**");
+        registry.addInterceptor(adminACLInterceptor).addPathPatterns("/finance/admin/**", "/api/financing/admin/**").excludePathPatterns("/api/financing/admin/login", "/api/financing/admin");
     }
 
     @Override

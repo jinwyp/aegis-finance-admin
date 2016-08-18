@@ -1,10 +1,13 @@
 package com.yimei.finance.ext.intereceptors;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.entity.site.user.User;
 import com.yimei.finance.ext.annotations.LoginRequired;
+import com.yimei.finance.repository.common.result.Result;
 import com.yimei.finance.utils.HttpUtils;
 import com.yimei.finance.utils.JsonUtils;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,12 +20,14 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URLEncoder;
 
 /**
  * Created by joe on 1/15/15.
  */
 @Service
+@Slf4j
 public class SiteACLInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     protected UserSession session;
@@ -36,7 +41,8 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
     @Value("${sso.memberaddress}")
     private String MEDBERADDRESS;
 
-    private static final org.slf4j.Logger logger = LoggerFactory.getLogger(SiteACLInterceptor.class);
+    @Autowired
+    private ObjectMapper objectMapper;
 
     public static final String passportCookieName = "passport";
 
@@ -44,44 +50,62 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws IOException {
         String passportCookieValue = searchCookieValue(passportCookieName, request);
         String currentUrl = request.getRequestURL().toString();
-        if (!request.getRequestURI().contains("admin")) {
-            if (currentUrl.endsWith("/login")) {
-                redirectLoginPage(request, response);
-                return false;
-            } else {
-                if (handler instanceof HandlerMethod) {
-                    HandlerMethod method = (HandlerMethod) handler;
-                    if (method.getMethodAnnotation(LoginRequired.class) != null || method.getBeanType().getDeclaredAnnotation(LoginRequired.class) != null) {
-                        if (!session.isLogined() && StringUtils.isBlank(passportCookieValue)) {
+
+
+        if (currentUrl.endsWith("/login")) {
+            redirectLoginPage(request, response);
+            return false;
+        } else {
+
+            if (handler instanceof HandlerMethod) {
+
+                HandlerMethod method = (HandlerMethod) handler;
+
+                if (method.getMethodAnnotation(LoginRequired.class) != null || method.getBeanType().getDeclaredAnnotation(LoginRequired.class) != null) {
+
+                    if (!session.isLogined() && StringUtils.isBlank(passportCookieValue)) {
+                        redirectLoginPage(request, response);
+                        return false;
+
+                    } else if (!session.isLogined()) {
+                        String userData = HttpUtils.sendPostRequest("http://" + MEDBERADDRESS + "/auth?passport=" + passportCookieValue+"gotoURL="+currentUrl);
+                        User user;
+
+                        try {
+                            user = JsonUtils.toObject(userData, User.class);
+                        } catch (Exception e) {
+                            log.error("auth fail");
                             redirectLoginPage(request, response);
                             return false;
-                        } else if (!session.isLogined()) {
-                            String userData = HttpUtils.sendPostRequest("http://" + MEDBERADDRESS + "/auth?passport=" + passportCookieValue+"gotoURL="+currentUrl);
-                            User user;
-                            try {
-                                user = JsonUtils.toObject(userData, User.class);
-                            } catch (Exception e) {
-                                logger.error("auth fail");
-                                redirectLoginPage(request, response);
-                                return false;
-                            }
-                            session.login(user);
                         }
+                        session.login(user);
                     }
                 }
             }
         }
+
         return true;
     }
 
     private void redirectLoginPage(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        String userAgent = request.getHeader("user-agent");
+        String AJAX = request.getHeader("X-Requested-With");
+
         String gotoURL = request.getHeader("Referer");
         if (gotoURL == null) {
             gotoURL = "/";
         }
         String setCookieURL = SSOPROTOCOL + "://" + request.getServerName() + "/setCookie";
         String url = SSOPROTOCOL + "://" + SSOURL + "/login?gotoURL=" + URLEncoder.encode(gotoURL, "UTF-8") + "&from=site&setCookieUrl=" + setCookieURL;
-        response.sendRedirect(url);
+
+        if (AJAX.equals("XMLHttpRequest")) {
+            OutputStream out = response.getOutputStream();
+            out.write(objectMapper.writeValueAsBytes(Result.error(401, url)));
+        }else{
+            response.sendRedirect(url);
+        }
+
+        return;
     }
 
     private String searchCookieValue(String cookieName, HttpServletRequest request) {

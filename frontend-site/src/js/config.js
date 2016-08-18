@@ -31,16 +31,7 @@ System.config({
       "deps": [
         "jquery"
       ]
-    },
-  "js/jquery-plugin/pagination.js": {
-    "format": "global",
-        "globals": {
-      "jQuery": "jquery"
-    },
-    "deps": [
-      "jquery"
-    ]
-  }
+    }
   },
 
   map: {

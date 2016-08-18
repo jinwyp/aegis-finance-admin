@@ -173,10 +173,10 @@
 
                 <form>
                     <label for="startDate">申请时间:</label>
-                    <div class="time"><input type="text" id="startDate" class="iIpt iIpt_sm startDate"placeholder="yyyy-mm-dd" ms-duplex="@searchQuery.startDate"/></div>
+                    <div class="time"><input type="text" id="startDate" class="iIpt iIpt_sm startDate"placeholder="yyyy-mm-dd" ms-duplex="@searchQuery.startDate" /></div>
 
                     <label for="endDate">到</label>
-                    <div class="time"><input type="text" id="endDate" class="iIpt iIpt_sm endDate" placeholder="yyyy-mm-dd" ms-duplex="@searchQuery.endDate"/></div>
+                    <div class="time"><input type="text" id="endDate" class="iIpt iIpt_sm endDate" placeholder="yyyy-mm-dd" ms-duplex="@searchQuery.endDate" /></div>
 
                     <label for="status">审核状态:</label>
                     <div class="positionR selectDiv">
@@ -229,18 +229,28 @@
                         <th>操作</th>
                     </tr>
                     <tr class="borderB" ms-for="(key, order) in @financeList">
-                        <td>序号</td>
+                        <td>{{key+1}}</td>
                         <td>{{order.sourceID}}</td>
-                        <td>业务类型</td>
-                        <td>申请时间</td>
-                        <td>申请人</td>
-                        <td class="bold">2000000000</td>
-                        <td class="bold">232</td>
-                        <td class="green">待审核</td>
-                        <td class="blueA"><a href="#">查看详情</a></td>
+                        <td>{{order.applyType}}</td>
+                        <td>{{order.applyDateTime}}</td>
+                        <td>{{order.applyUserName}}</td>
+                        <td class="bold">{{order.financingAmount}}</td>
+                        <td class="bold">{{order.expectedDate}}</td>
+                        <!--审核不通过-->
+                        <!--<td class="gray" ms-visible="@order.approveState==='审核不通过'">{{order.approveState}}</td>-->
+                        <!--待审核-->
+                        <!--<td class="green" ms-visible="@order.approveState==='待审核'">{{order.approveState}}</td>-->
+                        <!--审核通过-->
+                        <!--<td class="bold" ms-visible="@order.approveState==='审核通过'">{{order.approveState}}</td>-->
+
+                        <td class="bold">{{order.approveState}}</td>
+
+                        <td class="blueA"><a href="#" >查看详情</a></td>
                     </tr>
 
                 </table>
+
+                <xmp ms-widget="[{is:'ms-pagination', $id:'pagination'}, @configPagination]"></xmp>
             </div>
 
             <!--<input ms-duplex="@name">-->
