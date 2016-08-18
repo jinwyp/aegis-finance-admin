@@ -141,7 +141,7 @@
 
 <!--融资管理开始-->
 <div class="financeManageWrap">
-    <div class="financeManage">
+    <div class="financeManage clearfix">
         <!--侧边栏开始-->
         <div class="finance_sideBar">
             <h3>融资管理</h3>
