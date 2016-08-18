@@ -49,6 +49,17 @@ var financeHome = () => {
             data     : JSON.stringify(params),
             success  : (data)=> {
                 if (data.success){
+                    $('.modal_1').modal('hide');
+
+                    setTimeout(()=>{
+                        $('.modal_2').modal();
+                        $('#modalImg_2').removeClass('attention').addClass('yes');
+                        $('#modalInfo_2').html('申请成功!');
+                        $('#md_ok_2').val('确定').modal('hide');
+                        $('#md_ok_2').click(()=>{
+                            $('.modal_2').modal('hide');
+                        })
+                    },500);
 
                 }else{
                     window.location.href = data.error.message;
