@@ -30,81 +30,81 @@
 <!-- header start -->
 <div id="paymentHeader">
     <div class="headWrap">
-            <div class="wrap1200">
-                <ul class="menuList leftMenuList">
-                    <li class="noborder">24小时贵宾热线</li>
-                    <li  class="noborder red">400-960-1180</li>
-                </ul>
+        <div class="wrap1200">
+            <ul class="menuList leftMenuList">
+                <li class="noborder">24小时贵宾热线</li>
+                <li  class="noborder red">400-960-1180</li>
+            </ul>
 
-                <ul class="menuList rightMenuList">
-                    
-                    <li>您好!<a href="" class="blue">请登录</a></li>
-                    <li><a href="">免费注册</a></li>
-                    <li><a href="">我的易煤网</a></li>
-                    <li class="hoverDiv">
-                        <a href="javascript:void(0);" class="hoverTitle">网站导航</a>
-                        <div class="Nav hideMenu">
-                            <div class="floatL">
-                                <h2><span class="headBg"></span>交易服务</h2>
-                                <table>
-                                    <tr>
-                                        <td><a href="">商城</a></td>
-                                        <td><a href="">供应专区</a></td>
-                                        <td><a href="">需求专区</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="">金融</a></td>
-                                        <td><a href="">阳光采购</a></td>
-                                        <td><a href="">煤矿专区</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="">资讯</a></td>
-                                        <td><a href="">物流</a></td>
-                                        <td><a href="">数据中心</a></td>
-                                    </tr>
-                                    <!--<tr>-->
-                                        <!--<td colspan="3"><a href="#">易煤指数</a></td>-->
+            <ul class="menuList rightMenuList">
 
-                                    <!--</tr> -->
-                                </table>
-                            </div>
+                <li>您好!<a href="" class="blue">请登录</a></li>
+                <li><a href="">免费注册</a></li>
+                <li><a href="">我的易煤网</a></li>
+                <li class="hoverDiv">
+                    <a href="javascript:void(0);" class="hoverTitle">网站导航</a>
+                    <div class="Nav hideMenu">
+                        <div class="floatL">
+                            <h2><span class="headBg"></span>交易服务</h2>
+                            <table>
+                                <tr>
+                                    <td><a href="">商城</a></td>
+                                    <td><a href="">供应专区</a></td>
+                                    <td><a href="">需求专区</a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">金融</a></td>
+                                    <td><a href="">阳光采购</a></td>
+                                    <td><a href="">煤矿专区</a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">资讯</a></td>
+                                    <td><a href="">物流</a></td>
+                                    <td><a href="">数据中心</a></td>
+                                </tr>
+                                <!--<tr>-->
+                                <!--<td colspan="3"><a href="#">易煤指数</a></td>-->
 
-                            <div class="floatR">
-                                <h2><span class="headBg"></span>我的易煤网</h2>
-                                <table  class="noborder">
-                                    <tr>
-                                        <td><a href="">业务管理中心</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="">财务管理中心</a></td>
-                                    </tr>
-                                    <tr>
-                                        <td><a href="">账户设置</a></td>
-                                    </tr>
-
-                                </table>
-                            </div>
-
+                                <!--</tr> -->
+                            </table>
                         </div>
 
-                    </li>
-                    <li  class="hoverDiv">
-                        <a href="javascript:void(0);" class="hoverTitle">手机助手</a>
-                        <div class="phoneHelper hideMenu">
-                            <div class="floatL">
-                                <h2>易煤助手</h2>
-                                <img src="${staticPath}/css/images/header/yimei_helper.png" alt="易煤助手">
-                            </div>
-                            <div class="floatR">
-                                <h2>易煤资讯</h2>
-                                <img src="${staticPath}/css/images/header/yimei_news.png" alt="易煤资讯">
-                            </div>
+                        <div class="floatR">
+                            <h2><span class="headBg"></span>我的易煤网</h2>
+                            <table  class="noborder">
+                                <tr>
+                                    <td><a href="">业务管理中心</a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">财务管理中心</a></td>
+                                </tr>
+                                <tr>
+                                    <td><a href="">账户设置</a></td>
+                                </tr>
+
+                            </table>
                         </div>
-                    </li>
-                    <li class="noborder paddingRight0"><a href="">关于我们</a></li>
-                </ul>
-            </div>
+
+                    </div>
+
+                </li>
+                <li  class="hoverDiv">
+                    <a href="javascript:void(0);" class="hoverTitle">手机助手</a>
+                    <div class="phoneHelper hideMenu">
+                        <div class="floatL">
+                            <h2>易煤助手</h2>
+                            <img src="${staticPath}/css/images/header/yimei_helper.png" alt="易煤助手">
+                        </div>
+                        <div class="floatR">
+                            <h2>易煤资讯</h2>
+                            <img src="${staticPath}/css/images/header/yimei_news.png" alt="易煤资讯">
+                        </div>
+                    </div>
+                </li>
+                <li class="noborder paddingRight0"><a href="">关于我们</a></li>
+            </ul>
         </div>
+    </div>
 </div>
 <!-- header stop -->
 
@@ -297,71 +297,7 @@
 </div>
 <!--footer stop-->
 
-<!--modal start-->
-<!--两个按钮取消、确认 modal-->
-<div class="container modalPublic">
-    <div class="row clearfix">
-        <div class="modal_1 modal fade" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button"  class="close close_modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title" id="modal_title_1">融资申请提示</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <div class="bg_img question" id="modalImg_1"></div>
-                            <div class="modalInfo">
-                                <span id="modalInfo_1" >确定提交该融资申请？</span>
-                            </div>
-                            <div class="tip">
-                                <em>
-                                    *申请完成后,我们的服务人员将会与您联系,并帮您完成<br>&nbsp;&nbsp;申请材料的填写.
-                                </em>
-                                <!--企业信息不完善!  img-attention-->
-                                <!--您需要先完善企业信息后才能做融资申请哦～-->
-                                <!--按钮 取消 马上去完善-->
-                            </div>
-                            <div class="buttons">
-                                <input type="button" data-dismiss="modal" class="btn cancel" value="取消" id="md_cancel_1">
-                                <input type="button" class="btn confirm" value="确认" id="md_ok_1">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!--一个按钮确认 modal-->
-<div class="container modalPublic">
-    <div class="row clearfix">
-        <div class="modal_2 modal fade" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button"  class="close close_modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title" id="modal_title_2">融资申请提示</h4>
-                    </div>
-                    <div class="modal-body">
-                        <div>
-                            <div class="bg_img attention" id="modalImg_2"></div>
-                            <div class="modalInfo">
-                                <span id="modalInfo_2" >您当天的申请已超过限定次数!</span>
-                            </div>
-                            <div class="buttons">
-                                <!--<input type="button" data-dismiss="modal" class="btn cancel" value="取消" id="md_cancel_1">-->
-                                <input type="button" class="btn confirm ml0" value="我知道了" id="md_ok_2">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!--modal stop-->
+<#include "common/modal.ftl" >
 
 
 

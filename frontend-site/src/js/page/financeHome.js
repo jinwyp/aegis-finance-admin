@@ -50,7 +50,6 @@ var financeHome = () => {
             success  : (data)=> {
                 if (data.success){
                     $('.modal_1').modal('hide');
-
                     setTimeout(()=>{
                         $('.modal_2').modal();
                         $('#modalImg_2').removeClass('attention').addClass('yes');
