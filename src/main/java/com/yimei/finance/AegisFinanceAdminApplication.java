@@ -48,7 +48,6 @@ public class AegisFinanceAdminApplication {
 				adminSession.login(identityService.createUserQuery().userId("7501").singleResult());
             }
         };
-
     }
 
 }

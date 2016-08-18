@@ -14,7 +14,7 @@ public enum EnumSpecialGroup {
     ManageSupervisorGroup("GROUP00007", "监管员管理群"),
     SupervisorGroup("GROUP00008", "监管员群"),
     ManageRiskGroup("GROUP00009", "风控管理群"),
-    RiskGroup("GROUP00010", "风控群");
+    RiskGroup("GROUP00010", "风控员群");
 
     public String id;
     public String name;
