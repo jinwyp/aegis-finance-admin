@@ -182,36 +182,6 @@
 <div class="type-finance">
     <div class="type">
         <h2></h2>
-        <!--<div class="type-choose slider">-->
-            <!--<div class="bd">-->
-                <!--<div class="tempWrap">-->
-                    <!--<ul id="type">-->
-                        <!--&lt;!&ndash;<li class="type-loan"><span class="mask"></span></li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<li class="type-melt"><span class="mask"></span></li>&ndash;&gt;-->
-                        <!--&lt;!&ndash;<li class="type-buy"><span class="mask"></span></li>&ndash;&gt;-->
-                        <!--<li  class="type-loan">-->
-                            <!--<span class="mask"></span>-->
-                            <!--<a href="#" class="link-goTo"></a>-->
-                        <!--</li>-->
-                        <!--<li  class="type-melt">-->
-                            <!--<span class="mask"></span>-->
-                            <!--<a href="#" class="link-goTo"></a>-->
-                        <!--</li>-->
-                        <!--<li  class="type-buy">-->
-                            <!--<span class="mask"></span>-->
-                            <!--<a href="#" class="link-goTo"></a>-->
-                        <!--</li>-->
-                    <!--</ul>-->
-                <!--</div>-->
-            <!--</div>-->
-
-        <!--</div>-->
-        <!--<div class="pnBtn prev">-->
-            <!--<span class="trigle trigle-left "></span>-->
-        <!--</div>-->
-        <!--<div class="pnBtn next">-->
-            <!--<span class="trigle trigle-right"></span>-->
-        <!--</div>-->
 
         <div id="posterTvGrid86804" style="margin:40px auto 0 auto;"></div>
     </div>
@@ -371,7 +341,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button"  class="close close_modal" data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button"  class="close close_modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                         <h4 class="modal-title" id="modal_title_2">融资申请提示</h4>
                     </div>
                     <div class="modal-body">

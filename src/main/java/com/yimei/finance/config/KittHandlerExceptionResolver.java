@@ -3,6 +3,7 @@ package com.yimei.finance.config;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.exception.UnauthorizedException;
@@ -52,7 +53,7 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
                 || ex instanceof NoHandlerFoundException
                 || ex instanceof HttpRequestMethodNotSupportedException
                 || ex instanceof org.springframework.web.multipart.MultipartException) {
-            modelAndView.setViewName("/http/404");
+            modelAndView.setViewName("/site/http/404");
             response.setStatus(HttpStatus.NOT_FOUND.value());
             modelAndView.addObject("errorInfo", ex.getMessage());
         } else if (ex instanceof UnauthorizedException) {
@@ -64,7 +65,7 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
                 || ex instanceof MissingServletRequestParameterException
                 || ex instanceof MethodArgumentNotValidException) {
             log.warn("400", request.getRequestURL().toString(),ex);
-            modelAndView.setViewName("/http/400");
+            modelAndView.setViewName("/site/http/400");
             response.setStatus(HttpStatus.BAD_REQUEST.value());
         } else if (ex instanceof BusinessException) {
                 log.warn("409", ex);
@@ -78,7 +79,7 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
                     e.printStackTrace();
                 }
             }else{
-                modelAndView.setViewName("/http/409");
+                modelAndView.setViewName("/site/http/409");
                 modelAndView.addObject("msg",ex.getMessage());
                 response.setStatus(HttpStatus.BAD_REQUEST.value());
             }
@@ -87,7 +88,7 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
             log.error("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             log.error("500", ex);
             handler500(request, ex);
-            modelAndView.setViewName( "/http/500");
+            modelAndView.setViewName( "/site/http/500");
             response.setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value());
         }
         return modelAndView;

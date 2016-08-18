@@ -36,8 +36,8 @@ $assetPath : "/static/site";
       display:inline-block;
       background: url("#{$assetPath}/css/images/finance/banner-btn.png") no-repeat center;
       position:absolute;
-      top:0;
-      left:0;
+      top:0px;
+      left:0px;
     }
     .link_trigle{
       width:26px;
@@ -50,6 +50,7 @@ $assetPath : "/static/site";
       margin-left:-13px;
     }
   }
+
 }
 //旋转
 @keyframes rotate

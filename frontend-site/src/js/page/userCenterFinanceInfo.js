@@ -5,14 +5,30 @@
 import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 import avalon from 'avalon2';
 
-var financeInfo = ()=> {
+var financeInfo = (query)=> {
 
+    var params = $.extend({}, query);
+
+    $.ajax({
+        url      : '/api/financing/applyInfo/11',
+        method   : "GET",
+        dataType : "json",
+        data     : params,
+        success  : (data)=> {
+            if (data.success){
+                vm.financeList = data.data;
+            }else{
+
+            }
+        }
+    })
     var vm = avalon.define({
-        $id   : 'test',
-        // name  : '司徒正美',
-        array : [
-            {}
-            ]
+        $id   : 'financeInfo',
+        financeList : [],
+        // css : {
+        //     status : false
+        // },
+
     });
 
 };

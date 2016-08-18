@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-@ApiModel
+@ApiModel(value="page", description="分页参数")
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -15,16 +15,21 @@ public class Page implements Serializable {
     private int page = 1;
     private int count = 10;
     //开始检索的地方
-    private Long offset;
-    private Long total;                 //总条数
+    private Long offset = 0L;
+    private Long total = 0L;                 //总条数
+
+    public int getCount() {
+        if (count == 0) return 10;
+        return this.count;
+    }
 
     public int getPage() {
         //如果page 太大，超过了 maxPage(最大页数),
         //如果count > 10， 设置page 为最大页， 如果count <= 10, 设置page 为第一页
-        if (total % count == 0 && page > (total / count)) {
-            this.page = (int) (total / count);
-        } else if (page > (total / count + 1)) {
-            this.page = (int) (total / count + 1);
+        if (total % getCount() == 0 && page > (total / getCount())) {
+            this.page = (int) (total / getCount());
+        } else if (page > (total / getCount() + 1)) {
+            this.page = (int) (total / getCount() + 1);
         }
         if (page == 0) page = 1;
         return this.page;

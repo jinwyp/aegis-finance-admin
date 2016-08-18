@@ -1,6 +1,6 @@
-package com.yimei.finance.service.admin;
+package com.yimei.finance.service.admin.user;
 
-import com.yimei.finance.config.AdminSession;
+import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.repository.admin.user.EnumAdminUserError;
 import com.yimei.finance.repository.common.result.Result;
 import org.activiti.engine.IdentityService;
