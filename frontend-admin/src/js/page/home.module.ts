@@ -21,26 +21,41 @@ import { LeftMenuComponent } from '../components/left-menu/left-menu';
 
 import { HomeComponent } from '../components/home/home-index';
 import { HomeDashboardComponent } from '../components/home/home-dashboard';
+
 import { OrderListComponent } from '../components/order/order-list';
 import { OrderDetailComponent } from '../components/order/order-detail';
-import { UserInfoComponent } from '../components/user/user-info';
+
+import { UserDetailComponent } from '../components/user/user-detail';
 import { UpdatePwdComponent } from '../components/user/update-pwd';
+
 import { RoleListComponent } from '../components/role/role-list';
 import { RoleInfoComponent } from '../components/role/role-info';
 import { AddRoleComponent } from '../components/role/add-role';
 import { UserListComponent } from '../components/role/user-list';
 import { AddUserComponent } from '../components/role/add-user';
+import { UserInfoComponent } from '../components/role/user-info';
+import { WaitDealListComponent } from '../components/audit/wait-deal-list';
+import { DistributionPageComponent } from '../components/audit/distribution-page';
+import { ProcessTabComponent } from '../components/audit/common/process-tab';
+import { DistributionPersonComponent } from '../components/audit/common/distribution-person';
+import { FinanceApplyComponent } from '../components/audit/finance-apply';
+import { FinanceTableComponent } from '../components/audit/common/finance-table';
 
 
-
+import {AlertComponent} from 'ng2-bootstrap/ng2-bootstrap';
 
 @NgModule({
     imports: [ BrowserModule, FormsModule, HttpModule],
     declarations: [
         ROUTER_DIRECTIVES,
+        AlertComponent,
         headerComponent, LeftMenuComponent,
-        HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent, UserInfoComponent,UpdatePwdComponent,
-        RoleListComponent,AddRoleComponent,RoleInfoComponent,UserListComponent,AddUserComponent
+        HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent,
+        UserDetailComponent, UpdatePwdComponent,
+        RoleListComponent, AddRoleComponent, RoleInfoComponent,
+        UserListComponent, AddUserComponent, UserInfoComponent,
+        WaitDealListComponent,
+        DistributionPageComponent,ProcessTabComponent,DistributionPersonComponent,FinanceApplyComponent,FinanceTableComponent,DistributionPersonComponent
     ],
     providers: [ OrderService,
         homePageRouterProviders,

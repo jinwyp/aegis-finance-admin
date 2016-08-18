@@ -27,6 +27,7 @@
     <script src="/static/admin/node_modules/zone.js/dist/zone.js"></script>
     <script src="/static/admin/node_modules/reflect-metadata/Reflect.js"></script>
     <script src="/static/admin/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="/static/admin/node_modules/ng2-bootstrap/bundles/ng2-bootstrap.min.js"></script>
 
     <!-- 2. Configure SystemJS -->
     <script src="/static/admin/js/systemjs.config.js"></script>

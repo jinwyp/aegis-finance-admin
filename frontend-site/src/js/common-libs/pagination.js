@@ -2,8 +2,7 @@
 import avalon from 'avalon2';
 
 function heredoc(fn) {
-    return fn.toString().replace(/^[^\/]+\/\*!?\s?/, '').
-    replace(/\*\/[^\/]+$/, '').trim().replace(/>\s*</g, '><')
+    return fn.toString().replace(/^[^\/]+\/\*!?\s?/, '').replace(/\*\/[^\/]+$/, '').trim().replace(/>\s*</g, '><');
 }
 
 var paginationTemplate = heredoc(function() {
@@ -63,9 +62,9 @@ avalon.component('ms-pagination', {
             //console.log('init', this.totalPages);
             this.$watch('totalPages', function(){
                 setTimeout(function(){
-                    vm._showPaginations()
-                },2)
-            })
+                    vm._showPaginations();
+                },2);
+            });
         },
 
         onReady : function(){
@@ -90,13 +89,13 @@ avalon.component('ms-pagination', {
             var tempNo = Number(pageNo);
 
             if (tempNo < 1){
-                tempNo = 1
+                tempNo = 1 ;
             }else if (tempNo > this.totalPages){
-                tempNo = this.totalPages
+                tempNo = this.totalPages;
             }
             this.currentPage = tempNo;
             this.changePageNo(tempNo);
-            this._showPaginations()
+            this._showPaginations();
         },
 
         _showPaginations : function (totalPages) {
@@ -110,9 +109,9 @@ avalon.component('ms-pagination', {
             console.log('Pagination updated, isShow:', vm._isShow, '. Total Page:', this.totalPages, '. Current Page:', this.currentPage);
 
             if (vm.currentPage < 1){
-                vm.currentPage = 1
+                vm.currentPage = 1;
             }else if (vm.currentPage > vm.totalPages){
-                vm.currentPage = vm.totalPages
+                vm.currentPage = vm.totalPages;
             }
 
             vm._pageArrayLeft = [];
@@ -137,10 +136,10 @@ avalon.component('ms-pagination', {
                 }else{
 
                     //创建左部分的分页 例如 1,2
-                    if ( i <= paginationLeftShowNumber ){ vm._pageArrayLeft.push({value:i}); }
+                    if ( i <= paginationLeftShowNumber ){ vm._pageArrayLeft.push({value:i}) }
 
                     //创建右部分的分页 例如 99,100
-                    if ( i >= vm.totalPages - (paginationRightShowNumber - 1) ){ vm._pageArrayRight.push({value:i}); }
+                    if ( i >= vm.totalPages - (paginationRightShowNumber - 1) ){ vm._pageArrayRight.push({value:i}) }
 
                     //创建中间部分的分页 例如 49,50,51
                     if (i > paginationLeftShowNumber  && i < vm.totalPages - (paginationRightShowNumber - 1) ) {
@@ -169,8 +168,7 @@ avalon.component('ms-pagination', {
         }
     }
 
-
 });
 
 
-export {avalon}
+export {avalon};

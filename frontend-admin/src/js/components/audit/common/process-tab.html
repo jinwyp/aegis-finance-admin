@@ -1,0 +1,48 @@
+<div class="item-margin process-box">
+    <ul class="nav nav-tabs">
+        <li role="presentation" [class.active]="tabObj.index===1" (click)="changeTab(1)"><a class="left">审核流程</a></li>
+        <li role="presentation" [class.active]="tabObj.index===2" (click)="changeTab(2)"><a class="right">步骤详情</a></li>
+    </ul>
+    <div class="process-info process-img" *ngIf="tabObj.index===1">
+
+    </div>
+
+    <table class="table info-table process-table" *ngIf="tabObj.index===2">
+        <tr class="head">
+            <th width="60"></th>
+            <th width="100">步骤详情</th>
+            <th>操作时间</th>
+            <th>当前处理人</th>
+            <th>所属部门</th>
+        </tr>
+        <tr class="item">
+            <td><span class="icon processed"></span></td>
+            <td>步骤详情</td>
+            <td>操作时间</td>
+            <td>当前处理人</td>
+            <td>所属部门</td>
+        </tr>
+        <tr class="item">
+            <td><span class="icon processing">1</span></td>
+            <td>步骤详情</td>
+            <td>操作时间</td>
+            <td>当前处理人</td>
+            <td>所属部门</td>
+        </tr>
+        <tr class="item">
+            <td><span class="icon process">2</span></td>
+            <td>步骤详情</td>
+            <td>操作时间</td>
+            <td>当前处理人</td>
+            <td>所属部门</td>
+        </tr>
+        <tr class="item">
+            <td><span class="icon process">3</span></td>
+            <td>步骤详情</td>
+            <td>操作时间</td>
+            <td>当前处理人</td>
+            <td>所属部门</td>
+        </tr>
+
+    </table>
+</div>
