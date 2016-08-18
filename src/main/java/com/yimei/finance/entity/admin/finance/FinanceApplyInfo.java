@@ -1,4 +1,4 @@
-package com.yimei.finance.entity.admin.user;
+package com.yimei.finance.entity.admin.finance;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -17,7 +17,7 @@ import java.time.LocalDateTime;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class ApplyInfo implements Serializable {
+public class FinanceApplyInfo implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue

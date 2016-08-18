@@ -1,4 +1,4 @@
-package com.yimei.finance.repository.common.result;
+package com.yimei.finance.entity.common.result;
 
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;

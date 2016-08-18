@@ -1,4 +1,4 @@
-package com.yimei.finance.repository.admin.user;
+package com.yimei.finance.entity.admin.user;
 
 /**
  * Created by liuxinjie on 16/8/11.
@@ -11,5 +11,6 @@ public enum EnumAdminUserError {
     用户名或者密码错误,
     用户登录名不能为空,
     此登录名已经存在,
+    你没有权限领取此任务,
     ;
 }

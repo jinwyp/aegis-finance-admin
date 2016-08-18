@@ -1,4 +1,4 @@
-package com.yimei.finance.repository.common.file;
+package com.yimei.finance.entity.common.file;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
