@@ -34,7 +34,7 @@
             this.nextLeft = this.options.width-386;
             this.preNLeft = -386;
             this.nextNLeft = this.options.width;
-            this.pageNowLeft = (this.options.width-450)/2
+            this.pageNowLeft = (this.options.width-450)/2;
             this.drawContent();
         },
         drawContent: function(){
@@ -62,7 +62,7 @@
                 unitItem += '</a>';
                 unitItem += '<img src="'+this.data[item].img+'" alt="'+this.data[item].title+'"/>';
                 unitItem += '<span class="elementOverlay"></span>';
-                 contentHolderUnit.innerHTML = unitItem;
+                contentHolderUnit.innerHTML = unitItem;
                 this.contentHolder.appendChild(contentHolderUnit);
             }
             this.content.appendChild(this.contentHolder);
@@ -73,25 +73,25 @@
             this.start();
         },
         initContent: function(){
-            contentHolderUnit = this.parent.find(".contentHolderUnit");
+            contentHolderUnit = this.parent.find('.contentHolderUnit');
             contentHolderUnit.css({width:'0px',height:'0px', opacity: 0, left:this.options.width/2+'px', zIndex:0, marginTop: '135px'});
-            this.parent.find(".contentHolderUnit:nth-child("+this.pageNow+")").css({width:'450px',height:'556px', borderColor:'#ff9c50', opacity: 1, left: this.pageNowLeft+'px', zIndex: 3, marginTop: 0,});
-            this.parent.find(".contentHolderUnit:nth-child("+this.pageNow+") .elementOverlay").css({opacity:0});
+            this.parent.find('.contentHolderUnit:nth-child('+this.pageNow+')').css({width:'450px',height:'556px', borderColor:'#ff9c50', opacity: 1, left: this.pageNowLeft+'px', zIndex: 3, marginTop: 0});
+            this.parent.find('.contentHolderUnit:nth-child('+this.pageNow+') .elementOverlay').css({opacity:0});
 
             var pre = this.pageNow > 1 ? this.pageNow -1: this.total;
             var next = this.pageNow == this.total ? 1 : this.pageNow + 1;
-            this.parent.find(".contentHolderUnit:nth-child("+pre+")").css({opacity: 1, left: this.preLeft+'px',height: '482px', width: '386px', zIndex: 0, marginTop: '37px'});
-            this.parent.find(".contentHolderUnit:nth-child("+pre+") .elementOverlay").css({opacity:0.4});
+            this.parent.find('.contentHolderUnit:nth-child('+pre+')').css({opacity: 1, left: this.preLeft+'px',height: '482px', width: '386px', zIndex: 0, marginTop: '37px'});
+            this.parent.find('.contentHolderUnit:nth-child('+pre+') .elementOverlay').css({opacity:0.4});
 
-            this.parent.find(".contentHolderUnit:nth-child("+next+")").css({opacity: 1, left: this.nextLeft+'px',height: '482px', width: '386px', zIndex: 0, marginTop: '37px'});
-            this.parent.find(".contentHolderUnit:nth-child("+next+") .elementOverlay").css({opacity:0.4});
+            this.parent.find('.contentHolderUnit:nth-child('+next+')').css({opacity: 1, left: this.nextLeft+'px',height: '482px', width: '386px', zIndex: 0, marginTop: '37px'});
+            this.parent.find('.contentHolderUnit:nth-child('+next+') .elementOverlay').css({opacity:0.4});
 
         },
         bind: function(){
-            this.leftNav = this.parent.find(".leftNav");
-            this.rightNav = this.parent.find(".rightNav");
-            this.bottonNav = this.parent.find(".bottomNavButtonOFF");
-            this.lists = this.parent.find(".contentHolderUnit");
+            this.leftNav = this.parent.find('.leftNav');
+            this.rightNav = this.parent.find('.rightNav');
+            this.bottonNav = this.parent.find('.bottomNavButtonOFF');
+            this.lists = this.parent.find('.contentHolderUnit');
             var _this = this;
             this.parent.mouseover(function(){
                 _this.stop();
@@ -101,13 +101,13 @@
             });
 
             _this.leftNav.click(function(){
-                _this.turn("right");
+                _this.turn('right');
             });
             _this.rightNav.click(function(){
-                _this.turn("left");
+                _this.turn('left');
             });
             _this.bottonNav.click(function(){
-                var ref = parseInt(this.getAttribute("ref"));
+                var ref = parseInt(this.getAttribute('ref'));
                 if(_this.pageNow == ref) return false;
 
                 if(_this.pageNow < ref){
@@ -118,9 +118,9 @@
                     var leftAbs = _this.pageNow - ref;
                 }
                 if(leftAbs < rightAbs){
-                    dir = "right";
+                    dir = 'right';
                 }else{
-                    dir = "left";
+                    dir = 'left';
                 }
 
                 _this.turnpage(ref, dir);
@@ -128,7 +128,7 @@
             });
 
             _this.lists.click(function(e){
-                var ref = parseInt(this.getAttribute("ref"));
+                var ref = parseInt(this.getAttribute('ref'));
                 if(_this.pageNow == ref) {
                     return true;
                 }else{
@@ -142,26 +142,26 @@
                     var leftAbs = _this.pageNow - ref;
                 }
                 if(leftAbs < rightAbs){
-                    dir = "right";
+                    dir = 'right';
                 }else{
-                    dir = "left";
+                    dir = 'left';
                 }
                 _this.turnpage(ref, dir);
 
             });
         },
         // initBottomNav: function(){
-        // 		this.parent.find(".bottomNavButtonOFF").removeClass("bottomNavButtonON");
-        // 		this.parent.find(".bottomNavButtonOFF:nth-child("+this.pageNow+")").addClass("bottomNavButtonON");
+        // 		this.parent.find('.bottomNavButtonOFF').removeClass('bottomNavButtonON');
+        // 		this.parent.find('.bottomNavButtonOFF:nth-child('+this.pageNow+')').addClass('bottomNavButtonON');
         // },
         start: function(){
             var _this = this;
             if(_this.timerId) _this.stop();
             _this.timerId = setInterval(function(){
-                if(_this.options.direct == "left"){
-                    _this.turn("left");
+                if(_this.options.direct == 'left'){
+                    _this.turn('left');
                 }else{
-                    _this.turn("right");
+                    _this.turn('right');
                 }
             }, _this.options.delay);
         },
@@ -171,7 +171,7 @@
         turn: function(dir){
             var _this = this;
 
-            if(dir == "right"){
+            if(dir == 'right'){
                 var page = _this.pageNow -1;
                 if(page <= 0) page = _this.total;
             }else{
@@ -194,46 +194,46 @@
                 if(pre != _this.pageNow && next != _this.pageNow){
                     var nowpre = _this.pageNow > 1 ? _this.pageNow -1: _this.total;
                     var nownext = _this.pageNow == _this.total ? 1 : _this.pageNow + 1;
-                    _this.parent.find(".contentHolderUnit:nth-child("+nowpre+")").animate({width:'0px',height:'0px', opacity: 0, left:_this.options.width/2+'px', zIndex:0, marginTop: '135px'}, t);
-                    _this.parent.find(".contentHolderUnit:nth-child("+_this.pageNow+")").animate({width:'0px',height:'0px', opacity: 0, left:_this.options.width/2+'px', zIndex:0, marginTop: '135px'}, t);
-                    _this.parent.find(".contentHolderUnit:nth-child("+nownext+")").animate({width:'0px',height:'0px', opacity: 0, left:_this.options.width/2+'px', zIndex:0, marginTop: '135px'}, t);
+                    _this.parent.find('.contentHolderUnit:nth-child('+nowpre+')').animate({width:'0px',height:'0px', opacity: 0, left:_this.options.width/2+'px', zIndex:0, marginTop: '135px'}, t);
+                    _this.parent.find('.contentHolderUnit:nth-child('+_this.pageNow+')').animate({width:'0px',height:'0px', opacity: 0, left:_this.options.width/2+'px', zIndex:0, marginTop: '135px'}, t);
+                    _this.parent.find('.contentHolderUnit:nth-child('+nownext+')').animate({width:'0px',height:'0px', opacity: 0, left:_this.options.width/2+'px', zIndex:0, marginTop: '135px'}, t);
                 }
                 if(dir == 'left'){
-                    _this.parent.find(".contentHolderUnit:nth-child("+_this.pageNow+")").css({zIndex: 0});
+                    _this.parent.find('.contentHolderUnit:nth-child('+_this.pageNow+')').css({zIndex: 0});
 
 
-                    _this.parent.find(".contentHolderUnit:nth-child("+pre+") .elementOverlay").css({opacity:0.4});
-                    _this.parent.find(".contentHolderUnit:nth-child("+pre+")").animate({opacity: 1, left: _this.preLeft+'px', height: '482px', width: '386px', zIndex: 2, marginTop: '37px'}, t);
+                    _this.parent.find('.contentHolderUnit:nth-child('+pre+') .elementOverlay').css({opacity:0.4});
+                    _this.parent.find('.contentHolderUnit:nth-child('+pre+')').animate({opacity: 1, left: _this.preLeft+'px', height: '482px', width: '386px', zIndex: 2, marginTop: '37px'}, t);
 
-                    _this.parent.find(".contentHolderUnit:nth-child("+page+")").css({zIndex: 3});
-                    _this.parent.find(".contentHolderUnit:nth-child("+page+")").animate({opacity: 1, left: _this.pageNowLeft+'px', height: '556px', width: '450px', zIndex: 3, marginTop: '0'}, t);
-                    _this.parent.find(".contentHolderUnit:nth-child("+page+") .elementOverlay").css({opacity:0});
+                    _this.parent.find('.contentHolderUnit:nth-child('+page+')').css({zIndex: 3});
+                    _this.parent.find('.contentHolderUnit:nth-child('+page+')').animate({opacity: 1, left: _this.pageNowLeft+'px', height: '556px', width: '450px', zIndex: 3, marginTop: '0'}, t);
+                    _this.parent.find('.contentHolderUnit:nth-child('+page+') .elementOverlay').css({opacity:0});
 
-                    _this.parent.find(".contentHolderUnit:nth-child("+next+")").css({opacity: 0, left: _this.nextNLeft+'px', height: '100px', width: '386px', zIndex: 2, marginTop: '85px'});
-                    _this.parent.find(".contentHolderUnit:nth-child("+next+")").animate({opacity: 1, left: _this.nextLeft+'px', height: '482px', width:"386px", zIndex: 2, marginTop: '37px'}, t);
-                    _this.parent.find(".contentHolderUnit:nth-child("+next+") .elementOverlay").css({opacity:0.4});
+                    _this.parent.find('.contentHolderUnit:nth-child('+next+')').css({opacity: 0, left: _this.nextNLeft+'px', height: '100px', width: '386px', zIndex: 2, marginTop: '85px'});
+                    _this.parent.find('.contentHolderUnit:nth-child('+next+')').animate({opacity: 1, left: _this.nextLeft+'px', height: '482px', width:'386px', zIndex: 2, marginTop: '37px'}, t);
+                    _this.parent.find('.contentHolderUnit:nth-child('+next+') .elementOverlay').css({opacity:0.4});
 
-                    _this.parent.find(".contentHolderUnit:nth-child("+preP+")").css({zIndex:0});
-                    _this.parent.find(".contentHolderUnit:nth-child("+preP+")").animate({width:'386px',height:'100px', opacity: 0, left:_this.preNLeft+'px', zIndex:0, marginTop: '85px'},t, "", function(){_this.locked=false;});
+                    _this.parent.find('.contentHolderUnit:nth-child('+preP+')').css({zIndex:0});
+                    _this.parent.find('.contentHolderUnit:nth-child('+preP+')').animate({width:'386px',height:'100px', opacity: 0, left:_this.preNLeft+'px', zIndex:0, marginTop: '85px'},t, '', function(){_this.locked=false});
 
 
                 }else{
-                    _this.parent.find(".contentHolderUnit:nth-child("+_this.pageNow+")").css({zIndex: 0});
+                    _this.parent.find('.contentHolderUnit:nth-child('+_this.pageNow+')').css({zIndex: 0});
 
-                    _this.parent.find(".contentHolderUnit:nth-child("+next+")").css({zIndex:2});
-                    _this.parent.find(".contentHolderUnit:nth-child("+next+")").animate({opacity: 1, left: _this.nextLeft+'px', height: '482px', width: '386px', zIndex: 2, marginTop: '37px'}, t);
-                    _this.parent.find(".contentHolderUnit:nth-child("+next+") .elementOverlay").css({opacity:0.4});
+                    _this.parent.find('.contentHolderUnit:nth-child('+next+')').css({zIndex:2});
+                    _this.parent.find('.contentHolderUnit:nth-child('+next+')').animate({opacity: 1, left: _this.nextLeft+'px', height: '482px', width: '386px', zIndex: 2, marginTop: '37px'}, t);
+                    _this.parent.find('.contentHolderUnit:nth-child('+next+') .elementOverlay').css({opacity:0.4});
 
-                    _this.parent.find(".contentHolderUnit:nth-child("+page+")").css({zIndex: 3}, t);
-                    _this.parent.find(".contentHolderUnit:nth-child("+page+")").animate({opacity: 1, left: _this.pageNowLeft+'px', height: '556px', width: '450px', zIndex: 3, marginTop: '0px'}, t);
-                    _this.parent.find(".contentHolderUnit:nth-child("+page+") .elementOverlay").css({opacity:0});
+                    _this.parent.find('.contentHolderUnit:nth-child('+page+')').css({zIndex: 3}, t);
+                    _this.parent.find('.contentHolderUnit:nth-child('+page+')').animate({opacity: 1, left: _this.pageNowLeft+'px', height: '556px', width: '450px', zIndex: 3, marginTop: '0px'}, t);
+                    _this.parent.find('.contentHolderUnit:nth-child('+page+') .elementOverlay').css({opacity:0});
 
-                    _this.parent.find(".contentHolderUnit:nth-child("+pre+")").css({opacity: 0, left: _this.preNLeft+'px', height: '100px', width: '386px', zIndex: 2, marginTop: '85px'});
-                    _this.parent.find(".contentHolderUnit:nth-child("+pre+")").animate({opacity: 1, left: _this.preLeft+'px', height: '482px', width: '386px', zIndex: 2, marginTop: '37px'}, t);
-                    _this.parent.find(".contentHolderUnit:nth-child("+pre+") .elementOverlay").css({opacity:0.4});
+                    _this.parent.find('.contentHolderUnit:nth-child('+pre+')').css({opacity: 0, left: _this.preNLeft+'px', height: '100px', width: '386px', zIndex: 2, marginTop: '85px'});
+                    _this.parent.find('.contentHolderUnit:nth-child('+pre+')').animate({opacity: 1, left: _this.preLeft+'px', height: '482px', width: '386px', zIndex: 2, marginTop: '37px'}, t);
+                    _this.parent.find('.contentHolderUnit:nth-child('+pre+') .elementOverlay').css({opacity:0.4});
 
-                    _this.parent.find(".contentHolderUnit:nth-child("+nextN+")").css({zIndex:0});
-                    _this.parent.find(".contentHolderUnit:nth-child("+nextN+")").animate({width:'386px',height:'100px', opacity: 0, left:_this.nextNLeft+'px', zIndex:0, marginTop: '85px'}, t, "",function(){_this.locked=false;});
+                    _this.parent.find('.contentHolderUnit:nth-child('+nextN+')').css({zIndex:0});
+                    _this.parent.find('.contentHolderUnit:nth-child('+nextN+')').animate({width:'386px',height:'100px', opacity: 0, left:_this.nextNLeft+'px', zIndex:0, marginTop: '85px'}, t, '',function(){_this.locked=false});
                 }
 
                 _this.pageNow = page;
@@ -243,14 +243,13 @@
             run(page, dir,_this.options.speed);
 
         }
-
     };
 
     posterTvGrid.options = {
         offsetPages : 3,//默认可视最大条数
-        direct : "left",//滚动的方向
+        direct : 'left',//滚动的方向
         initPage : 1,//默认当前显示第几条
-        className : "posterTvGrid",//最外层样式
+        className : 'posterTvGrid',//最外层样式
         autoWidth : true,//默认不用设置宽
         delay : 5000,//滚动间隔（毫秒）
         speed : 500 //滚动速度毫秒
