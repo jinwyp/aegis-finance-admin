@@ -59,9 +59,8 @@ public class GroupController {
     }
 
     @ApiOperation(value = "创建用户组", notes = "根据Group对象创建用户组", response = GroupEntity.class)
-    @ApiImplicitParam(name = "name", value = "Group 用户组名称", required = true, dataType = "String", paramType = "form")
     @RequestMapping(method = RequestMethod.POST)
-    public Result addGroupMethod(@RequestBody GroupEntity group) {
+    public Result addGroupMethod(@ApiParam(value = "用户组对象") @RequestBody GroupEntity group) {
         if (StringUtils.isEmpty(group.getName())) return Result.error(EnumGroupError.组名称不能为空.toString());
         if (identityService.createGroupQuery().groupName(group.getName()).singleResult() != null) return Result.error(EnumGroupError.已经存在名称相同的组.toString());
         group.setId(null);
