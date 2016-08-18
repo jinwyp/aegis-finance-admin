@@ -18,7 +18,7 @@ declare var __moduleName: string;
 
 export class UserInfoComponent {
 
-    title = '基本信息';
+    title = '查看用户';
 
 }
 
