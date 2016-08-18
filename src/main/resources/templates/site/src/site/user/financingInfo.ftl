@@ -173,17 +173,17 @@
                         <table>
                             <tr>
                                 <th>融资类型:</th>
-                                <td ms-visible="@financeList.applyType==='MYR'">煤易融</td>
-                                <td ms-visible="@financeList.applyType==='MYD'">煤易贷</td>
-                                <td ms-visible="@financeList.applyType==='MYG'">煤易购</td>
+                                <td ms-visible="@financeInfo.applyType==='MYR'">煤易融</td>
+                                <td ms-visible="@financeInfo.applyType==='MYD'">煤易贷</td>
+                                <td ms-visible="@financeInfo.applyType==='MYG'">煤易购</td>
                                 <th>业务编号:</th>
-                                <td>{{@financeList.sourceID}}</td>
+                                <td>{{@financeInfo.sourceID}}</td>
                             </tr>
                             <tr>
                                 <th>申请人:</th>
-                                <td>{{@financeList.applyUserName}}</td>
+                                <td>{{@financeInfo.applyUserName}}</td>
                                 <th>申请时间:</th>
-                                <td>{{@financeList.applyDateTime}}</td>
+                                <td>{{@financeInfo.applyDateTime}}</td>
                             </tr>
                         </table>
                     </div>
@@ -191,65 +191,65 @@
                         <table>
                             <tr>
                                 <th>拟使用资金时间:</th>
-                                <td>{{@financeList.expectedDate}}天</td>
+                                <td>{{@financeInfo.expectedDate}}天</td>
                                 <th colspan="2">预期此笔业务量:</th>
-                                <td>{{@financeList.businessAmount}}万吨</td>
+                                <td>{{@financeInfo.businessAmount}}万吨</td>
                             </tr>
                             <tr>
                                 <th>拟融资金额:</th>
-                                <td colspan="2"><span class="red">{{@financeList.financingAmount}}</span>万元</td>
+                                <td colspan="2"><span class="red">{{@financeInfo.financingAmount}}</span>万元</td>
                             </tr>
                         </table>
                     </div>
                     <div class="paddingTable">
                         <!--融--2-->
-                        <table ms-visible="@financeList.applyType==='MYR'">
+                        <table ms-visible="@financeInfo.applyType==='MYR'">
                             <tr>
                                 <th>签约单位全称:</th>
-                                <td>{{@financeList.contractors}}</td>
+                                <td>{{@financeInfo.contractors}}</td>
                                 <th>下游签约单位全称:</th>
-                                <td>{{@financeList.downstreamContractors}}</td>
+                                <td>{{@financeInfo.downstreamContractors}}</td>
                             </tr>
                             <tr>
                                 <th>用煤终端:</th>
-                                <td>{{@financeList.terminalServer}}</td>
+                                <td>{{@financeInfo.terminalServer}}</td>
                                 <th>运输方式:</th>
-                                <td>{{@financeList.transportMode}}</td>
+                                <td>{{@financeInfo.transportMode}}</td>
                             </tr>
                             <tr>
                                 <th>预计单吨销售价:</th>
-                                <td colspan="2">{{@financeList.sellingPrice}}元/吨</td>
+                                <td colspan="2">{{@financeInfo.sellingPrice}}元/吨</td>
                             </tr>
                         </table>
                         <!--购-->
-                        <table ms-visible="@financeList.applyType==='MYG'">
+                        <table ms-visible="@financeInfo.applyType==='MYG'">
                             <tr>
                                 <th>上游资源方全称:</th>
-                                <td>{{@financeList.upstreamResource}}</td>
+                                <td>{{@financeInfo.upstreamResource}}</td>
                                 <th>中转港口/地全称:</th>
-                                <td>{{@financeList.transferPort}}</td>
+                                <td>{{@financeInfo.transferPort}}</td>
                             </tr>
                             <tr>
                                 <th>运输方式:</th>
-                                <td>{{@financeList.transportMode}}</td>
+                                <td>{{@financeInfo.transportMode}}</td>
                                 <th>单吨采购价:</th>
-                                <td>{{@financeList.procurementPrice}}元/吨</td>
+                                <td>{{@financeInfo.procurementPrice}}元/吨</td>
                             </tr>
                         </table>
                         <!--贷-->
-                        <table ms-visible="@financeList.applyType==='MYD'">
+                        <table ms-visible="@financeInfo.applyType==='MYD'">
                             <tr>
                                 <th>煤炭仓储地:</th>
-                                <td>{{@financeList.storageLocation}}</td>
+                                <td>{{@financeInfo.storageLocation}}</td>
                                 <th>煤炭来源:</th>
-                                <td>{{@financeList.coalSources}}</td>
+                                <td>{{@financeInfo.coalSources}}</td>
                             </tr>
                             <tr>
                                 <th>主要煤质指标:</th>
                                 <!--------------------------------------------字段无------------------------->
-                                <td>{{@financeList.transportMode}}</td>
+                                <td>{{@financeInfo.transportMode}}</td>
                                 <th>单吨市场报价:</th>
-                                <td>{{@financeList.marketPrice}}元/吨</td>
+                                <td>{{@financeInfo.marketPrice}}元/吨</td>
                             </tr>
                         </table>
                     </div>
@@ -287,7 +287,7 @@
                             <tr>
                                 <th>备注说明:</th>
                                 <td colspan="3">
-                                    {{@financeList.comments}}
+                                    {{@financeInfo.comments}}
                                 </td>
                             </tr>
                         </table>
@@ -299,12 +299,12 @@
                         <table>
                             <tr>
                                 <th>审批状态:</th>
-                                <td><span class="red"><em></em>{{@financeList.approveState}}</span></td>
-                                <!--<td><span class="green"><em></em>{{@financeList.approveState}}</span></td>-->
+                                <td><span class="red"><em></em>{{@financeInfo.approveState}}</span></td>
+                                <!--<td><span class="green"><em></em>{{@financeInfo.approveState}}</span></td>-->
                             </tr>
                             <tr>
                                 <th>备注说明:</th>
-                                <td>{{@financeList.comments}}</td>
+                                <td>{{@financeInfo.comments}}</td>
                             </tr>
                         </table>
                     </div>

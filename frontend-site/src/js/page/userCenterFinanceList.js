@@ -72,7 +72,7 @@ var financeList = () => {
 
     //查询
     var getFinanceList = (query) => {
-        console.log("查询参数:", query);
+        console.log('查询参数:', query);
         var params = $.extend({}, query);
 
         $.ajax({
@@ -83,6 +83,7 @@ var financeList = () => {
             success  : (data)=> {
                 if (data.success){
                     vm.financeList = data.data;
+                    vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
                 }else{
 
                 }
