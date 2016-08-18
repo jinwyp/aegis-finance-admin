@@ -28,9 +28,9 @@ public class MYRFinancingController {
     @Autowired
     private AdminSession adminSession;
 
+    @RequestMapping(value = "/start", method = RequestMethod.POST)
     @ApiOperation(value = "发起流程", notes = "发起流程")
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Integer", paramType = "query")
-    @RequestMapping(value = "/start", method = RequestMethod.POST)
     public Result startMYRWorkFlowMethod(@RequestParam(value = "id", required = true) int id) {
         runtimeService.startProcessInstanceByKey("financingWorkFlow", String.valueOf(id));
         Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(id)).singleResult();
@@ -38,7 +38,7 @@ public class MYRFinancingController {
         return Result.success();
     }
 
-    @RequestMapping(value = "/{financeId}/assignTrader/{traderId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{financeId}/assign/trader/{traderId}", method = RequestMethod.PUT)
     @ApiOperation(value = "分配线上交易员操作", notes = "分配线上交易员操作")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path"),
@@ -58,7 +58,7 @@ public class MYRFinancingController {
         return Result.success();
     }
 
-    @RequestMapping(value = "/{financeId}/assignSalesman/{salesmanId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{financeId}/assign/salesman/{salesmanId}", method = RequestMethod.PUT)
     @ApiOperation(value = "分配业务员操作", notes = "分配业务员操作")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path"),
@@ -85,7 +85,7 @@ public class MYRFinancingController {
         return Result.success();
     }
 
-    @RequestMapping(value = "/{financeId}/assignSalesman/{investigatorId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{financeId}/assign/investigator/{investigatorId}", method = RequestMethod.PUT)
     @ApiOperation(value = "分配尽调员操作", notes = "分配尽调员操作")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path"),
@@ -126,7 +126,7 @@ public class MYRFinancingController {
         return Result.success();
     }
 
-    @RequestMapping(value = "/{financeId}/assignRiskManager/{riskManagerId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{financeId}/assign/riskmanager/{riskManagerId}", method = RequestMethod.PUT)
     @ApiOperation(value = "分配风控人员操作", notes = "分配风控人员操作")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path"),
