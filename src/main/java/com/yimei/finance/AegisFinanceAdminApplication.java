@@ -48,9 +48,11 @@ public class AegisFinanceAdminApplication {
 				}
 				if (identityService.createUserQuery().userEmail("admin").singleResult() == null) {
 					User user = identityService.newUser("");
+					user.setId(null);
 					user.setEmail("admin");
 					user.setPassword("1f71bc155f2f42aba0c4e95464b5df02");
 					identityService.saveUser(user);
+					identityService.createMembership(user.getId(), EnumSpecialGroup.SuperAdminGroup.id);
 				}
 				adminSession.login(identityService.createUserQuery().userId("7501").singleResult());
             }
