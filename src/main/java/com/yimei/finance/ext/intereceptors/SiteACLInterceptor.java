@@ -98,10 +98,10 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
         String setCookieURL = SSOPROTOCOL + "://" + request.getServerName() + "/setCookie";
         String url = SSOPROTOCOL + "://" + SSOURL + "/login?gotoURL=" + URLEncoder.encode(gotoURL, "UTF-8") + "&from=site&setCookieUrl=" + setCookieURL;
 
-        if (AJAX.equals("XMLHttpRequest")) {
+        if (null != AJAX && AJAX.equals("XMLHttpRequest")) {
             OutputStream out = response.getOutputStream();
             out.write(objectMapper.writeValueAsBytes(Result.error(401, url)));
-        }else{
+        } else {
             response.sendRedirect(url);
         }
 
