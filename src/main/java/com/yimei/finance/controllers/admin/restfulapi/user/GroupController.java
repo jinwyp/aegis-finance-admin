@@ -51,7 +51,7 @@ public class GroupController {
             @ApiImplicitParam(name = "id", value = "GroupId", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "page", value = "分页类page", required = false, dataType = "String", paramType = "body")
     })
-    @RequestMapping(value = "{id}/users", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/users", method = RequestMethod.GET)
     public Result getUsersByGroupIdMethod(@PathVariable(value = "id")String id, Page page) {
         if (identityService.createGroupQuery().groupId(id).singleResult() == null) return Result.error(EnumGroupError.此组不存在.toString());
         page.setTotal(identityService.createUserQuery().memberOfGroup(id).count());
@@ -73,7 +73,7 @@ public class GroupController {
             @ApiImplicitParam(name = "groupId", value = "Group 用户组Id", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "userId", value = "User 用户Id", required = true, dataType = "String", paramType = "path")
     })
-    @RequestMapping(value = "{groupId}/users/{userId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{groupId}/users/{userId}", method = RequestMethod.POST)
     public Result addUserToGroupMethod(@PathVariable("groupId")String groupId,
                                        @PathVariable("userId")String userId) {
         Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
@@ -84,8 +84,7 @@ public class GroupController {
         for (Group g : groupList) {
             if (g.getId().equals(groupId)) return Result.error(EnumGroupError.该用户已经在此组中.toString());
         }
-        if (identityService.createGroupQuery().groupMember(userId).list().indexOf(group) != -1)
-            identityService.createMembership(userId, groupId);
+        identityService.createMembership(userId, groupId);
         return Result.success().setData(user);
     }
 
@@ -94,7 +93,7 @@ public class GroupController {
             @ApiImplicitParam(name = "groupId", value = "Group 用户组Id", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "userId", value = "User 用户Id", required = true, dataType = "String", paramType = "path")
     })
-    @RequestMapping(value = "{groupId}/users/{userId}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{groupId}/users/{userId}", method = RequestMethod.DELETE)
     public Result deleteUserFromGroupMethod(@PathVariable("groupId")String groupId,
                                             @PathVariable("userId")String userId) {
         Group group = identityService.createGroupQuery().groupId(groupId).singleResult();

@@ -50,7 +50,7 @@ public class UserController {
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     })
-    @RequestMapping(value = "{id}/groups", method = RequestMethod.GET)
+    @RequestMapping(value = "/{id}/groups", method = RequestMethod.GET)
     public Result getUserGroupsMethod(@PathVariable("id") String id, Page page) {
         page.setTotal(identityService.createGroupQuery().groupMember(id).count());
         return Result.success().setData(identityService.createGroupQuery().groupMember(id).listPage(page.getOffset(), page.getCount())).setMeta(page);
@@ -60,7 +60,7 @@ public class UserController {
 
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserEntity.class)
     @RequestMapping(method = RequestMethod.POST)
-    public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserEntity user) {
+    public Result addUserMethod(@RequestBody UserEntity user) {
         if (StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
         if (identityService.createUserQuery().userEmail(user.getEmail()).singleResult() !=null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
         user.setId(null);
@@ -84,8 +84,7 @@ public class UserController {
     @ApiOperation(value = "修改用户", notes = "根据 User Id修改用户")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path"),
-            @ApiImplicitParam(name = "email", value = "用户邮箱", required = true, dataType = "String", paramType = "form"),
-            @ApiImplicitParam(name = "password", value = "用户密码", required = true, dataType = "String", paramType = "form")
+            @ApiImplicitParam(name = "email", value = "用户邮箱", required = true, dataType = "String", paramType = "form")
     })
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateUserMethod(@PathVariable("id") String id, @RequestBody UserEntity user) {
