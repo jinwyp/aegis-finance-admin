@@ -1,8 +1,8 @@
 //电视剧大图滚动
 (function(jq){
     var posterTvGrid = function(o, options, data){
-        this.parent = jq("#"+ o);
-        this.body   = jq("body");
+        this.parent = jq('#'+ o);
+        this.body   = jq('body');
         if (this.parent.length <= 0) {
             return false;
         }
@@ -39,23 +39,23 @@
         },
         drawContent: function(){
             this.parent.empty();
-            this.parent.css({width:this.options.width+"px", height:this.options.height+"px", position: "relative"});
-            this.content = document.createElement("DIV");
+            this.parent.css({width:this.options.width+'px', height:this.options.height+'px', position: 'relative'});
+            this.content = document.createElement('DIV');
             this.content.className = this.options.className;
-            this.content.cssText = "width:"+this.options.width+"px;height:"+this.options.height+"px;cursor:move;position:absolute;";
+            this.content.cssText = 'width:'+this.options.width+'px;height:'+this.options.height+'px;cursor:move;position:absolute;';
 
             this.bannerControls = '<div class="bannerControls"> <div class="leftNav" style="display: block;"></div> <div class="rightNav" style="display: block;"></div> </div>';
             this.content.innerHTML += this.bannerControls;
 
-            this.contentHolder = document.createElement("DIV");
+            this.contentHolder = document.createElement('DIV');
             this.contentHolder.style.width = this.options.width + 'px';
             this.contentHolder.style.height = this.options.height + 'px';
 
             for(var item=0, i = 1, l= this.data.length ; item < l ; ++item, ++i){
-                var contentHolderUnit = document.createElement("DIV");
-                contentHolderUnit.className = "contentHolderUnit";
-                contentHolderUnit.setAttribute("ref", i);
-                contentHolderUnit.setAttribute("id", 'contentHolderUnit' + (i));
+                var contentHolderUnit = document.createElement('DIV');
+                contentHolderUnit.className = 'contentHolderUnit';
+                contentHolderUnit.setAttribute('ref', i);
+                contentHolderUnit.setAttribute('id', 'contentHolderUnit' + (i));
 
                 //----------------图片链接地址----------------
                 var unitItem = '<a href="'+this.data[item].url+'" target="_blank" class="elementLink">';
