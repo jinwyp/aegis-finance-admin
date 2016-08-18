@@ -17,9 +17,9 @@ public class AdminACLInterceptor extends HandlerInterceptorAdapter {
     protected AdminSession session;
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
-//        if(request.getRequestURI().startsWith("/api/financing/admin") && !session.isLogined()){
+        if(request.getRequestURI().startsWith("/api/financing/admin") && !session.isLogined()){
 //            throw new UnauthorizedException();
-//        }
+        }
         return super.preHandle(request, response, handler);
     }
 }
