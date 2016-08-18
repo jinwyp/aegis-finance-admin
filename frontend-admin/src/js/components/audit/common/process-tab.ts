@@ -4,7 +4,6 @@
 
 
 import { Component } from '@angular/core';
-import { jQuery as $ } from '../../../jquery-plugin/bootstrap.js';
 
 
 declare var __moduleName: string;

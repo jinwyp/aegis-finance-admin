@@ -9,16 +9,17 @@
     // map tells the System loader where to look for things
     var map = {
         'jsoutput'                   : '/static/admin/jsoutput', // 'dist',
-        'jquery'                     : '/static/admin/node_modules/jquery/dist/jquery.js',
         '@angular'                   : '/static/admin/node_modules/@angular',
         'angular2-in-memory-web-api' : '/static/admin/node_modules/angular2-in-memory-web-api',
-        'rxjs'                       : '/static/admin/node_modules/rxjs'
+        'rxjs'                       : '/static/admin/node_modules/rxjs',
+        'moment'                     : '/static/admin/node_modules/moment'
     };
     // packages tells the System loader how to load when no filename and/or no extension
     var packages = {
-        'jsoutput':                   { defaultExtension: 'js' },
-        'rxjs':                       { defaultExtension: 'js' },
-        'angular2-in-memory-web-api': { main: 'index.js', defaultExtension: 'js' }
+        'jsoutput'                   : {defaultExtension : 'js'},
+        'rxjs'                       : {defaultExtension : 'js'},
+        'angular2-in-memory-web-api' : {main : 'index.js', defaultExtension : 'js'},
+        'moment'                     : {main : 'moment.js', defaultExtension : 'js'}
     };
     var ngPackageNames = [
         'common',

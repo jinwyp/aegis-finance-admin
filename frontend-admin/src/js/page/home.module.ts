@@ -21,10 +21,13 @@ import { LeftMenuComponent } from '../components/left-menu/left-menu';
 
 import { HomeComponent } from '../components/home/home-index';
 import { HomeDashboardComponent } from '../components/home/home-dashboard';
+
 import { OrderListComponent } from '../components/order/order-list';
 import { OrderDetailComponent } from '../components/order/order-detail';
+
 import { UserDetailComponent } from '../components/user/user-detail';
 import { UpdatePwdComponent } from '../components/user/update-pwd';
+
 import { RoleListComponent } from '../components/role/role-list';
 import { RoleInfoComponent } from '../components/role/role-info';
 import { AddRoleComponent } from '../components/role/add-role';
@@ -39,15 +42,19 @@ import { FinanceApplyComponent } from '../components/audit/finance-apply';
 import { FinanceTableComponent } from '../components/audit/common/finance-table';
 
 
-
+import {AlertComponent} from 'ng2-bootstrap/ng2-bootstrap';
 
 @NgModule({
     imports: [ BrowserModule, FormsModule, HttpModule],
     declarations: [
         ROUTER_DIRECTIVES,
+        AlertComponent,
         headerComponent, LeftMenuComponent,
-        HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent, UserDetailComponent,UpdatePwdComponent,
-        RoleListComponent,AddRoleComponent,RoleInfoComponent,UserListComponent,AddUserComponent,UserInfoComponent,WaitDealListComponent,
+        HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent,
+        UserDetailComponent, UpdatePwdComponent,
+        RoleListComponent, AddRoleComponent, RoleInfoComponent,
+        UserListComponent, AddUserComponent, UserInfoComponent,
+        WaitDealListComponent,
         DistributionPageComponent,ProcessTabComponent,DistributionPersonComponent,FinanceApplyComponent,FinanceTableComponent,DistributionPersonComponent
     ],
     providers: [ OrderService,
