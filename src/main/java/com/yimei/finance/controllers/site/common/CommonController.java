@@ -1,9 +1,10 @@
 package com.yimei.finance.controllers.site.common;
 
-import com.yimei.finance.config.UserSession;
+import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.entity.site.user.User;
 import com.yimei.finance.utils.HttpUtils;
 import com.yimei.finance.utils.JsonUtils;
+import io.swagger.annotations.Api;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
@@ -23,6 +24,8 @@ import java.io.PrintWriter;
 /**
  * Created by wangqi on 16/8/17.
  */
+
+@Api(tags = {"example"})
 @Controller
 public class CommonController {
     public static final String passportCookieName = "passport";
@@ -73,7 +76,7 @@ public class CommonController {
 
 
 
-    @RequestMapping(value = "/removeSSOCookie",method = RequestMethod.GET)
+    @RequestMapping(value = "/removeSSOCookie", method = RequestMethod.GET)
     public void removeSSOCookie(HttpServletRequest request,HttpServletResponse response) throws IOException {
         userSession.logout();
         Cookie passportCookie = null;
@@ -90,7 +93,7 @@ public class CommonController {
 
     }
 
-    @RequestMapping(value = "/check")
+    @RequestMapping(value = "/check" , method = RequestMethod.GET)
     @ResponseBody
     public ResponseEntity<String> Check() {
         return new ResponseEntity<String>("ok", HttpStatus.OK);

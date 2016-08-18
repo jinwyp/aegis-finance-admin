@@ -44,13 +44,14 @@ var financeHome = () => {
         $.ajax({
             url      : '/api/financing/applyInfo',
             method   : "POST",
+            contentType: "application/json;charset=utf-8",
             dataType : "json",
-            data     : params,
+            data     : JSON.stringify(params),
             success  : (data)=> {
                 if (data.success){
 
                 }else{
-
+                    window.location.href = data.error.message;
                 }
             }
         })
@@ -59,11 +60,13 @@ var financeHome = () => {
     //modal
     $('.banner_link').click(function () {
         $('.modal_1').modal();
+    });
+
+    $('#md_ok_1').click(function () {
 
         requestApplyInfo({
-            applyType : "MYR"
+            applyType : ""
         });
-
     });
 
 

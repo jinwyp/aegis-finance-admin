@@ -1,6 +1,6 @@
 package com.yimei.finance.ext.intereceptors;
 
-import com.yimei.finance.config.AdminSession;
+import com.yimei.finance.config.session.AdminSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;

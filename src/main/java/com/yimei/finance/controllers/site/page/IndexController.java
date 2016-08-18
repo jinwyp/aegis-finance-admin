@@ -16,7 +16,7 @@ import java.util.Arrays;
 /**
  * Created by liuxinjie on 16/7/29.
  */
-@Api(tags = {"sitepage"})
+@Api(tags = {"site-page"})
 @Controller
 public class IndexController {
 

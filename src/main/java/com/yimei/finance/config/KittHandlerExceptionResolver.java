@@ -3,6 +3,7 @@ package com.yimei.finance.config;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.exception.UnauthorizedException;
