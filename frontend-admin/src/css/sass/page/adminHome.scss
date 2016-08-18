@@ -144,8 +144,13 @@
       overflow: hidden;
       border:1px solid $input-border-color;
       max-height:406px;
-      .nav-tabs>li{margin-top: -1px;}
-      .nav-tabs>li>a{  border-radius: 0px;  margin-right:0px;  }
+      .nav-tabs>li{margin-top: -1px;  cursor: pointer;}
+      .nav-tabs>li>a{  border-radius: 0px;  margin-right:0px;  color: #333; }
+      .nav-tabs>li>a:hover{  color: #f66c54; }
+
+      .nav-tabs>li.active>a,
+      .nav-tabs>li.active>a:focus,
+      .nav-tabs>li.active>a:hover{  color: #f66c54;  }
 
       .nav-tabs>li.active>a.left,
       .nav-tabs>li.active>a.left:focus,
@@ -182,6 +187,9 @@
         .process{
           background: url("#{$assetPath}/css/images/process_bg_icon.png");
         }
+      }
+      .process-img{
+
       }
 
     }

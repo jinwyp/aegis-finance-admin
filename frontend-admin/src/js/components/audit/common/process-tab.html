@@ -1,9 +1,13 @@
 <div class="item-margin process-box">
     <ul class="nav nav-tabs">
-        <li role="presentation" class=""><a class="left">审核流程</a></li>
-        <li role="presentation" class="active"><a class="right">步骤详情</a></li>
+        <li role="presentation" [class.active]="tabObj.index===1" (click)="changeTab(1)"><a class="left">审核流程</a></li>
+        <li role="presentation" [class.active]="tabObj.index===2" (click)="changeTab(2)"><a class="right">步骤详情</a></li>
     </ul>
-    <table class="table info-table process-table">
+    <div class="process-info process-img" *ngIf="tabObj.index===1">
+
+    </div>
+
+    <table class="table info-table process-table" *ngIf="tabObj.index===2">
         <tr class="head">
             <th width="60"></th>
             <th width="100">步骤详情</th>
@@ -39,5 +43,6 @@
             <td>当前处理人</td>
             <td>所属部门</td>
         </tr>
+
     </table>
 </div>

@@ -4,7 +4,7 @@
 
 
 import { Component } from '@angular/core';
-import { jQuery as $ } from '../../../../node_modules/bootstrap/dist/js/bootstrap.min.js';
+import { jQuery as $ } from '../../../jquery-plugin/bootstrap.js';
 
 
 declare var __moduleName: string;
@@ -18,8 +18,13 @@ declare var __moduleName: string;
 
 
 export class ProcessTabComponent {
-
     title = '流程导航';
+    tabObj = {
+        index : 1
+    }
 
+    changeTab = (currentTab)=>{
+        this.tabObj.index = currentTab;
+    }
 }
 
