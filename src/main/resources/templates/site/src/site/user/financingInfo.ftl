@@ -28,115 +28,11 @@
 </head>
 <body>
 <!-- header start -->
-<div id="paymentHeader">
-    <div class="headWrap">
-        <div class="wrap1200">
-            <ul class="menuList leftMenuList">
-                <li class="noborder">24小时贵宾热线</li>
-                <li  class="noborder red">400-960-1180</li>
-            </ul>
-
-            <ul class="menuList rightMenuList">
-
-                <li>您好!<a href="" class="blue">请登录</a></li>
-                <li><a href="">免费注册</a></li>
-                <li><a href="">我的易煤网</a></li>
-                <li class="hoverDiv">
-                    <a href="javascript:void(0);" class="hoverTitle">网站导航</a>
-                    <div class="Nav hideMenu">
-                        <div class="floatL">
-                            <h2><span class="headBg"></span>交易服务</h2>
-                            <table>
-                                <tr>
-                                    <td><a href="">商城</a></td>
-                                    <td><a href="">供应专区</a></td>
-                                    <td><a href="">需求专区</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">金融</a></td>
-                                    <td><a href="">阳光采购</a></td>
-                                    <td><a href="">煤矿专区</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">资讯</a></td>
-                                    <td><a href="">物流</a></td>
-                                    <td><a href="">数据中心</a></td>
-                                </tr>
-                                <!--<tr>-->
-                                <!--<td colspan="3"><a href="#">易煤指数</a></td>-->
-
-                                <!--</tr> -->
-                            </table>
-                        </div>
-
-                        <div class="floatR">
-                            <h2><span class="headBg"></span>我的易煤网</h2>
-                            <table  class="noborder">
-                                <tr>
-                                    <td><a href="">业务管理中心</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">财务管理中心</a></td>
-                                </tr>
-                                <tr>
-                                    <td><a href="">账户设置</a></td>
-                                </tr>
-
-                            </table>
-                        </div>
-
-                    </div>
-
-                </li>
-                <li  class="hoverDiv">
-                    <a href="javascript:void(0);" class="hoverTitle">手机助手</a>
-                    <div class="phoneHelper hideMenu">
-                        <div class="floatL">
-                            <h2>易煤助手</h2>
-                            <img src="${staticPath}/css/images/header/yimei_helper.png" alt="易煤助手">
-                        </div>
-                        <div class="floatR">
-                            <h2>易煤资讯</h2>
-                            <img src="${staticPath}/css/images/header/yimei_news.png" alt="易煤资讯">
-                        </div>
-                    </div>
-                </li>
-                <li class="noborder paddingRight0"><a href="">关于我们</a></li>
-            </ul>
-        </div>
-    </div>
-</div>
+<#include "../common/header.ftl" >
 <!-- header stop -->
 
-
 <!--供应链金融导航开始-->
-<div id="subHeader">
-    <div class="subHeaderWrap">
-        <div class="subHeader1000">
-            <div class="logo-title">
-                <a href="#"></a>
-                <span class="subHeaderTit">我的易煤网</span>
-            </div>
-            <div class="subNavList" id="subNavList">
-                <ul>
-                    <li class="active">
-                        <a href="#">供应链金融</a>
-                    </li>
-                    <li>
-                        <a href="#">业务管理</a>
-                    </li>
-                    <li>
-                        <a href="#">财务管理</a>
-                    </li>
-                    <li class="lastLi">
-                        <a href="#">账户设置</a>
-                    </li>
-                </ul>
-            </div>
-        </div>
-
-    </div>
-</div>
+<#include "../common/pagenav.ftl" >
 <!--供应链金融导航结束-->
 
 <!--融资管理开始-->
@@ -318,107 +214,12 @@
 <!--融资管理结束-->
 
 <!--footer start-->
-<div id="J_intergalFooter">
-    <div class="intergalFooter">
-        <div class="footWrapper">
-            <ul class="mainmenu">
-                <li class="maintit">
-                    <div class="pd0">
-                        <p>新手指导</p>
-                        <ul>
-                            <li><a href="/teach/register">免费注册认证</a></li>
-                            <li><a href="/teach/buy">如何买煤</a></li>
-                            <li><a href="/teach/sell">如何卖煤</a></li>
-                            <li><a href="/teach/logisticsLink">物流指导</a></li>
-                            <li><a href="/teach/questions">常见问题</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="maintit">
-                    <div>
-                        <p>行情资讯</p>
-                        <ul>
-                            <li><a href="/news/hyyw">行业要闻</a></li>
-                            <li><a href="/news/zczz">政策追踪</a></li>
-                            <li><a href="/news/djsd">独家视点</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="maintit">
-                    <div>
-                        <p>增值服务</p>
-                        <ul>
-                            <li><a href="/finance">金融服务</a></li>
-                            <li><a href="/group">易煤团购</a></li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="maintit">
-                    <div>
-                        <p>关于我们</p>
-                        <ul>
-                            <li><a href="/aboutUs/#advantage">易煤优势</a></li>
-                            <li><a href="/aboutUs/#guarantee">资金保证</a></li>
-                            <li><a href="/aboutUs/invite">招贤纳士</a></li>
-                        </ul>
-                    </div>
-                </li>
-
-                <li class="maintit maintit-kf">
-                    <div>
-                        <p>客户服务</p>
-                        <ul>
-                            <li>
-                                <a href="http://wpa.b.qq.com/cgi/wpa.php?ln=1&amp;key=XzkzODA0MTkwOV8yOTk2ODhfNDAwOTYwMTE4MF8yXw" target="_blank" class="onlineService" rel="nofollow">
-                                    <span></span>在线客服
-                                </a>
-                            </li>
-                            <li class="servicePhone"><span></span>免费热线</li>
-                            <li>
-                                <i class="serviceTel">400-960-1180</i>
-                            </li>
-                        </ul>
-                    </div>
-                </li>
-                <li class="maintit weixin">
-                    <p>易煤助手</p>
-                    <img src="${staticPath}/css/images/header/yimei_helper.png" alt="易煤助手" title="扫一扫易煤助手" width="99" height="99">
-                </li>
-                <li class="maintit weixin weixin2">
-                    <p>易煤资讯</p>
-                    <img src="${staticPath}/css/images/header/yimei_news.png" alt="易煤资讯" title="扫一扫易煤资讯"  width="99" height="99">
-                </li>
-            </ul>
-        </div>
-        <div class="footerInfo">
-            <!--友情链接开始-->
-            <ul class="footerInfo-fl">
-                <li>友情链接：</li>
-                <li><a href="/teach/friendlylink" target="_new">更多...</a></li>
-            </ul>
-            <!--友情链接结束-->
-
-
-
-
-            <p>© 2015 易煤网 All rights reserved   |   和略电子商务(上海)有限公司 ｜ 沪ICP备14052754号</p>
-            <p class="szfw-wrap">
-                <a href="https://www.sgs.gov.cn/lz/licenseLink.do?method=licenceView&entyId=1atr5hendjiu232trv8vb6qred7d9yn01mg1nbic8l4vjp1q8m" target="_blank" rel="nofollow">
-                    <img src="${staticPath}/css/images/footer/shgs.png" height="31"  width="90" />
-                </a>
-                &nbsp;
-                <a id="___szfw_logo___" href="https://credit.szfw.org/CX20150831011158100383.html" target="_blank" rel="nofollow">
-                    <img src="${staticPath}/css/images/footer/cxwz.png" height="31"  width="90" />
-                </a>
-            </p>
-        </div>
-    </div>
-</div>
+<#include "../common/footer.ftl" >
 <!--footer stop-->
 
+<!--modal start-->
 <#include "../common/modal.ftl" >
-
-
+<!--modal stop-->
 
 <script src="${staticPath}/jspm_packages/system.js"></script>
 <script src="${staticPath}/js/config.js"></script>
