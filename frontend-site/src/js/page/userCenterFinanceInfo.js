@@ -7,29 +7,32 @@ import avalon from 'avalon2';
 
 var financeInfo = (query)=> {
 
-    var params = $.extend({}, query);
-
-    $.ajax({
-        url      : '/api/financing/applyInfo/11',
-        method   : "GET",
-        dataType : "json",
-        data     : params,
-        success  : (data)=> {
-            if (data.success){
-                vm.financeList = data.data;
-            }else{
-
-            }
-        }
-    })
     var vm = avalon.define({
         $id   : 'financeInfo',
-        financeList : [],
-        // css : {
-        //     status : false
-        // },
+        financeInfo : {},
+        css : {
+            status : false
+        }
 
     });
+
+    var getFinanceInfo = (id) => {
+
+        $.ajax({
+            url      : '/api/financing/applyInfo/' + id,
+            method   : 'GET',
+            dataType : 'json',
+            success  : (data)=> {
+                if (data.success){
+                    vm.financeInfo = data.data;
+                }else{
+
+                }
+            }
+        });
+    };
+
+    getFinanceInfo(22);
 
 };
 

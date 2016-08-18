@@ -72,7 +72,7 @@ var financeList = () => {
 
     //查询
     var getFinanceList = (query) => {
-        console.log("查询参数:", query);
+        console.log('查询参数:', query);
         var params = $.extend({}, query);
 
         $.ajax({
@@ -83,6 +83,7 @@ var financeList = () => {
             success  : (data)=> {
                 if (data.success){
                     vm.financeList = data.data;
+                    vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
                 }else{
 
                 }
@@ -126,11 +127,47 @@ var financeList = () => {
     });
 
 
-    //融资modal
+    //我要融资
+    var requestApplyInfo = (query) => {
+
+        var params = $.extend({}, query);
+
+        $.ajax({
+            url      : '/api/financing/applyInfo',
+            method   : "POST",
+            contentType: "application/json;charset=utf-8",
+            dataType : "json",
+            data     : JSON.stringify(params),
+            success  : (data)=> {
+                if (data.success){
+                    $('.modal_1').modal('hide');
+                    setTimeout(()=>{
+                        $('.modal_2').modal();
+                        $('#modalImg_2').removeClass('attention').addClass('yes');
+                        $('#modalInfo_2').html('申请成功!');
+                        $('#md_ok_2').val('确定').modal('hide');
+                        $('#md_ok_2').click(()=>{
+                            $('.modal_2').modal('hide');
+                        })
+                    },500);
+
+                }else{
+                    window.location.href = data.error.message;
+                }
+            }
+        })
+    };
+
+    //modal
     $('#finance').click(() => {
         $('.modal_1').modal();
     });
+    $('#md_ok_1').click(function () {
 
+        requestApplyInfo({
+            applyType : ""
+        });
+    });
 
 
 
