@@ -3,15 +3,15 @@
     <div class="col-sm-12 menu-item">
         <a href="#" class="icon verify-icon dropdown-toggle" data-toggle="dropdown">审核管理<span class="caret"></span> </a>
         <ul class="nav nav-stacked">
-            <li role="presentation" class="active"><a class="item" href="#">我的待办<span class="notice">8</span></a></li>
-            <li role="presentation"><a class="item" href="#">我的审核<span class="notice">16</span></a></li>
+            <li role="presentation" class="active"><a class="item" [routerLink]="['/waitdeallist']">我的待办<span class="notice">8</span></a></li>
+            <li role="presentation"><a class="item" [routerLink]="['/']">我的审核<span class="notice">16</span></a></li>
         </ul>
     </div>
 
     <div class="col-sm-12 menu-item">
         <a href="#" class="icon info-icon dropdown-toggle"  data-toggle="dropdown">个人信息<span class="caret"></span> </a>
         <ul class="nav nav-stacked">
-            <li role="presentation" class="active"><a class="item" [routerLink]="['/userinfo']">基本信息</a></li>
+            <li role="presentation" class="active"><a class="item" [routerLink]="['/userdetail']">基本信息</a></li>
             <li role="presentation"><a class="item" [routerLink]="['/updatepwd']">修改密码</a></li>
         </ul>
     </div>

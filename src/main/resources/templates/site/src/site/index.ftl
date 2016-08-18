@@ -341,7 +341,7 @@
             <div class="modal-dialog">
                 <div class="modal-content">
                     <div class="modal-header">
-                        <button type="button"  class="close close_modal" data-dismiss="modal" aria-label="Close"></button>
+                        <button type="button"  class="close close_modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
                         <h4 class="modal-title" id="modal_title_2">融资申请提示</h4>
                     </div>
                     <div class="modal-body">
