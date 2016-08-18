@@ -14,16 +14,25 @@ var financeList = () => {
     //datePicker
     var pickerStart = $('.startDate').pickadate({format:'yyyy-mm-dd', max:true, clear: '清空'});
     var pickerEnd = $('.endDate').pickadate({max:true, clear: '清空'});
-
     pickerStart.on("change", function () {
         // http://amsul.ca/pickadate.js/api/#method-get-select
         if(pickerEnd.pickadate('picker').get('select') && pickerStart.pickadate('picker').get('select').pick > pickerEnd.pickadate('picker').get('select').pick ){
             pickerEnd.pickadate('picker').clear();
         }
         pickerEnd.pickadate('picker').set('min', pickerStart.pickadate('picker').get('select').obj);
-        // $('#startDate').val($('#inner-editor').html());
+
+        var startDate = $("#startDate").val();
+        console.log(startDate);
+        $("#startDate").attr('value',startDate);
+
     });
 
+    pickerEnd.on("change", function () {
+        // http://amsul.ca/pickadate.js/api/#method-get-select
+        var endDate = $("#endDate").val();
+        console.log(endDate);
+        $("#endDate").attr('value',endDate);
+    });
 
 
     // 模拟下拉菜单
@@ -75,16 +84,19 @@ var financeList = () => {
             status : '',
             type : '',
             businessId : '',
-            startDate : '',
-            endDate : ''
+            startDate : $("#startDate").val(),
+            endDate : $("#startDate").val()
         },
+
 
         clickStatus : (value)=>{
             vm.searchQuery.status = value;
+            console.log(value);
         },
 
         clickType : (value)=>{
             vm.searchQuery.type = value;
+            console.log(value)
         },
 
         searchFinanceOrder : (event)=>{
@@ -97,6 +109,7 @@ var financeList = () => {
                 endDate : vm.searchQuery.endDate
             })
         }
+
     });
 
     getFinanceList();

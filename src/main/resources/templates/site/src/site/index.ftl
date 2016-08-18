@@ -147,7 +147,7 @@
 
 <!--banner start-->
 <div class="banner_finance">
-    <form action="">
+    <form action="/api/financing/admin/login" method="post">
         <button class="banner_link">
             <span class="link_light"></span>
             <span class="link_circle"></span>
