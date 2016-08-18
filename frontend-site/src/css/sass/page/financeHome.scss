@@ -13,9 +13,6 @@ $assetPath : "/static/site";
     bottom:250px;
     left:50%;
     margin-left:-88px;
-    border:none;
-    background: none;
-    outline: none;
     &:hover{
       .link_light{
         animation:rotate 4s infinite linear;
