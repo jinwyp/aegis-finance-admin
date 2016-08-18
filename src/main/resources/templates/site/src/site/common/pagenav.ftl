@@ -3,7 +3,7 @@
     <div class="subHeaderWrap">
         <div class="subHeader1000">
             <div class="logo-title">
-                <a href="#"></a>
+                <a href="/finance"></a>
                 <span class="subHeaderTit">我的易煤网</span>
             </div>
             <div class="subNavList" id="subNavList">
