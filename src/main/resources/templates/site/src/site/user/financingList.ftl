@@ -249,6 +249,8 @@
                     </tr>
 
                 </table>
+
+                <xmp ms-widget="[{is:'ms-pagination', $id:'pagination'}, @configPagination]"></xmp>
             </div>
 
             <!--<input ms-duplex="@name">-->
