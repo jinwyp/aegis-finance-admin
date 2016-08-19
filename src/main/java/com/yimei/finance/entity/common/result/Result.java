@@ -1,4 +1,4 @@
-package com.yimei.finance.repository.common.result;
+package com.yimei.finance.entity.common.result;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import lombok.AllArgsConstructor;
@@ -15,11 +15,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 @JsonIgnoreProperties(ignoreUnknown = true)
 //@JsonInclude
-public class Result implements Serializable {
+public class Result<T> implements Serializable {
     private boolean success;
     private Error error;
     private Page meta;
-    private Object data;
+    private T data;
 
     public Result setSuccess(boolean success) {
         this.success = success;
@@ -36,7 +36,7 @@ public class Result implements Serializable {
         return this;
     }
 
-    public Result setData(Object data) {
+    public Result setData(T data) {
         this.data = data;
         return this;
     }

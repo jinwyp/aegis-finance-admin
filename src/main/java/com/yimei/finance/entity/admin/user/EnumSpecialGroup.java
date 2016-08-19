@@ -1,12 +1,12 @@
-package com.yimei.finance.repository.admin.user;
+package com.yimei.finance.entity.admin.user;
 
 /**
  * Created by liuxinjie on 16/8/15.
  */
 public enum EnumSpecialGroup {
-
+    SuperAdminGroup("GROUP00000", "超级管理员组"),
     ManageTraderGroup("GROUP00001", "线上交易员管理群"),
-    TraderGroup("GROUP00002", "线上交易员群"),
+    OnlineTraderGroup("GROUP00002", "线上交易员群"),
     ManageSalesmanGroup("GROUP00003", "业务员管理群"),
     SalesmanGroup("GROUP00004", "业务员群"),
     ManageInvestigatorGroup("GROUP00005", "尽调员管理群"),

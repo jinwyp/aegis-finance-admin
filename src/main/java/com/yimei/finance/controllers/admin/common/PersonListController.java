@@ -1,7 +1,7 @@
 package com.yimei.finance.controllers.admin.common;
 
-import com.yimei.finance.repository.admin.user.EnumSpecialGroup;
-import com.yimei.finance.repository.common.result.Result;
+import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
+import com.yimei.finance.entity.common.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.IdentityService;
@@ -21,7 +21,7 @@ public class PersonListController {
     @RequestMapping(value = "/trader", method = RequestMethod.GET)
     @ApiOperation(value = "获取交易员列表", notes = "获取交易员列表数据", response = UserEntity.class, responseContainer = "List")
     public Result getFinanceOnlineTraderListMethod() {
-        return Result.success().setData(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.TraderGroup.id).list());
+        return Result.success().setData(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.OnlineTraderGroup.id).list());
     }
 
     @RequestMapping(value = "/salesman", method = RequestMethod.GET)

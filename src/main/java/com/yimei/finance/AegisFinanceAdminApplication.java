@@ -1,10 +1,12 @@
 package com.yimei.finance;
 
-import com.yimei.finance.repository.admin.user.EnumSpecialGroup;
+import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -18,6 +20,8 @@ import java.net.UnknownHostException;
 @SpringBootApplication
 @Slf4j
 public class AegisFinanceAdminApplication {
+	@Autowired
+	private AdminSession adminSession;
 
 	public static void main(String[] args) throws UnknownHostException {
 		//SpringApplication.run(AegisFinanceAdminApplication.class, args);
@@ -44,10 +48,13 @@ public class AegisFinanceAdminApplication {
 				}
 				if (identityService.createUserQuery().userEmail("admin").singleResult() == null) {
 					User user = identityService.newUser("");
+					user.setId(null);
 					user.setEmail("admin");
 					user.setPassword("1f71bc155f2f42aba0c4e95464b5df02");
 					identityService.saveUser(user);
+					identityService.createMembership(user.getId(), EnumSpecialGroup.SuperAdminGroup.id);
 				}
+				adminSession.login(identityService.createUserQuery().userId("7501").singleResult());
             }
         };
     }

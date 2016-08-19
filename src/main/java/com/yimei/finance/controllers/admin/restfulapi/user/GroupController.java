@@ -1,9 +1,9 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
-import com.yimei.finance.repository.admin.user.EnumAdminUserError;
-import com.yimei.finance.repository.admin.user.EnumGroupError;
-import com.yimei.finance.repository.common.result.Page;
-import com.yimei.finance.repository.common.result.Result;
+import com.yimei.finance.entity.admin.user.EnumAdminUserError;
+import com.yimei.finance.entity.admin.user.EnumGroupError;
+import com.yimei.finance.entity.common.result.Page;
+import com.yimei.finance.entity.common.result.Result;
 import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
