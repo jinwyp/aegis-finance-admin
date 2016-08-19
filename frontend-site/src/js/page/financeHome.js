@@ -9,7 +9,6 @@ import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 var financeHome = () => {
 
 
-
     var postApplyInfo = (query) => {
 
         var params = $.extend({}, query);

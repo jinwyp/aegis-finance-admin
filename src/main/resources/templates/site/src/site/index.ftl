@@ -105,12 +105,13 @@
 <!--modal stop-->
 
 
-<script src="${staticPath}/js/jquery-plugin/jquery.min.js"></script>
-<script src="${staticPath}/js/jquery-plugin/slide.js"></script>
-<script src="${staticPath}/jspm_packages/github/es-shims/es5-shim@4.5.9/es5-shim.js"></script>
+<#--<script src="${staticPath}/js/jquery-plugin/jquery.min.js"></script>-->
+<#--<script src="${staticPath}/js/jquery-plugin/slide.js"></script>-->
+<#--<script src="${staticPath}/jspm_packages/github/es-shims/es5-shim@4.5.9/es5-shim.js"></script>-->
 <#--<script src="${staticPath}/jspm_packages/github/es-shims/es5-shim@4.5.9/es5-sham.js"></script>-->
 <#--<script src="${staticPath}/jspm_packages/system-csp-production.js"></script>-->
 
+<#--<script src="${staticPath}/jspm_packages/npm/core-js@1.2.7/client/shim.js"></script>-->
 <script src="${staticPath}/jspm_packages/system.js"></script>
 <script src="${staticPath}/js/config.js"></script>
 
@@ -124,7 +125,7 @@
 </#if>
 
 
-<#--<script src="${staticPath}/js/page2/financeHome-41ac9df87c.bundle.js"></script>-->
+<script src="${staticPath}/js/page2/financeHome.bundle.js"></script>
 <script>
     System["import"]("${staticPath}/js/page/financeHome.js")
 </script>
