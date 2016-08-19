@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = {"admin-api-group"}, description = "获取相关人员列表接口")
 @RequestMapping("/api/financing/admin")
-@RestController
+@RestController("adminPersonListController")
 public class PersonListController {
     @Autowired
     IdentityService identityService;

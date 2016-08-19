@@ -54,7 +54,7 @@ public class AegisFinanceAdminApplication {
 					identityService.saveUser(user);
 					identityService.createMembership(user.getId(), EnumSpecialGroup.SuperAdminGroup.id);
 				}
-				adminSession.login(identityService.createUserQuery().userId("7501").singleResult());
+				adminSession.login(identityService.createUserQuery().userId("12501").singleResult());
             }
         };
     }
