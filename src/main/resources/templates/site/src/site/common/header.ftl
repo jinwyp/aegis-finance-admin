@@ -19,19 +19,19 @@
                             <h2><span class="headBg"></span>交易服务</h2>
                             <table>
                                 <tr>
-                                    <td><a href="">商城</a></td>
-                                    <td><a href="">供应专区</a></td>
-                                    <td><a href="">需求专区</a></td>
+                                    <td><a href="${sitepage}/mall">商城</a></td>
+                                    <td><a href="${sitepage}/buy">供应专区</a></td>
+                                    <td><a href="${sitepage}/sell">需求专区</a></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="">金融</a></td>
-                                    <td><a href="">阳光采购</a></td>
-                                    <td><a href="">煤矿专区</a></td>
+                                    <td><a href="${sitepage}/finance">金融</a></td>
+                                    <td><a href="${sitepage}/tender">阳光采购</a></td>
+                                    <td><a href="${sitepage}/coalzone">煤矿专区</a></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="">资讯</a></td>
-                                    <td><a href="">物流</a></td>
-                                    <td><a href="">数据中心</a></td>
+                                    <td><a href="${sitepage}/news">资讯</a></td>
+                                    <td><a href="${sitepage}/logistics/toLogistics">物流</a></td>
+                                    <td><a href="${sitepage}/dataCenter">数据中心</a></td>
                                 </tr>
                                 <!--<tr>-->
                                 <!--<td colspan="3"><a href="#">易煤指数</a></td>-->
@@ -44,13 +44,13 @@
                             <h2><span class="headBg"></span>我的易煤网</h2>
                             <table  class="noborder">
                                 <tr>
-                                    <td><a href="">业务管理中心</a></td>
+                                    <td><a href="${sitepage}/account/order/buy">业务管理中心</a></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="">财务管理中心</a></td>
+                                    <td><a href="${payUrl}/">财务管理中心</a></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="">账户设置</a></td>
+                                    <td><a href="${ssoMemberUrl}/account/individualCenter">账户设置</a></td>
                                 </tr>
 
                             </table>
@@ -72,7 +72,7 @@
                         </div>
                     </div>
                 </li>
-                <li class="noborder paddingRight0"><a href="">关于我们</a></li>
+                <li class="noborder paddingRight0"><a href="${sitepage}/aboutUs">关于我们</a></li>
             </ul>
         </div>
     </div>
