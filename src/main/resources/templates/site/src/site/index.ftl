@@ -72,11 +72,29 @@
 <div class="type-finance">
     <div class="type">
         <h2></h2>
+        <div id="youku">
+            <div class="anniu">
+                <span class="leftNav"></span>
+                <span class="rightNav"></span>
+            </div>
+            <ul class="tuul">
+                <li class="no0"><a href="#"><img src="${staticPath}/css/images/finance/type-buy.jpg" /></a></li>
+                <li class="no1"><a href="#"><img src="${staticPath}/css/images/finance/type-melt.jpg" /></a></li>
+                <li class="no2"><a href="#"><img src="${staticPath}/css/images/finance/type-loan.jpg" /></a></li>
+                <li class="no3"><a href="#"><img src="${staticPath}/css/images/finance/type-buy.jpg" /></a></li>
 
-        <div id="posterTvGrid86804" style="margin:40px auto 0 auto;"></div>
+                <li class="no4"><a href="#"><img src="${staticPath}/css/images/finance/type-melt.jpg" /></a></li>
+
+                <li class="no5 waiting"><a href="#"><img src="${staticPath}/css/images/finance/type-loan.jpg" /></a></li>
+
+            </ul>
+
+        </div>
+        <!--<div id="posterTvGrid86804" style="margin:40px auto 0 auto;"></div>-->
     </div>
 </div>
-<!--融资类型结束-->
+
+    <!--融资类型结束-->
 
 <!--footer start-->
 <#include "common/footer.ftl" >
