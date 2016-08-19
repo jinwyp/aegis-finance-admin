@@ -1,9 +1,11 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.entity.admin.user.EnumAdminUserError;
+import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
+import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.User;
@@ -42,7 +44,8 @@ public class UserController {
     public Result getUserByIdMethod(@PathVariable("id") String id) {
         User user = identityService.createUserQuery().userId(id).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
-        return Result.success().setData(user);
+        UserObject userObject = DozerUtils.copy(user, UserObject.class);
+        return Result.success().setData(userObject);
     }
 
 
