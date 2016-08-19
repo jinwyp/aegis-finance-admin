@@ -14,15 +14,6 @@ System.config({
   },
 
   meta: {
-    "js/jquery-plugin/slide.js": {
-      "format": "global",
-      "globals": {
-        "jQuery": "jquery"
-      },
-      "deps": [
-        "jquery"
-      ]
-    },
     "js/jquery-plugin/jQuery.fn.datePicker.js": {
       "format": "global",
       "globals": {

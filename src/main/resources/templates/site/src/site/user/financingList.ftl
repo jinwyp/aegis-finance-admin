@@ -168,7 +168,6 @@
 <#include "../common/modal.ftl" >
 <!--modal stop-->
 
-<script src="${staticPath}/jspm_packages/github/es-shims/es5-shim@4.5.9/es5-shim.js"></script>
 <script src="${staticPath}/jspm_packages/system.js"></script>
 <script src="${staticPath}/js/config.js"></script>
 
@@ -181,6 +180,8 @@
 <script src="${staticPath}/js/page/userCenterFinanceList.bundle.js"></script>
 </#if>
 
+
+<script src="${staticPath}/js/page2/userCenterFinanceList.bundle.js"></script>
 <script>
     System['import']('${staticPath}/js/page/userCenterFinanceList.js')
 </script>

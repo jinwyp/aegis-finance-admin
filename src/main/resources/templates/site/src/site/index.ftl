@@ -72,11 +72,34 @@
 <div class="type-finance">
     <div class="type">
         <h2></h2>
+        <div id="slide">
 
-        <div id="posterTvGrid86804" style="margin:40px auto 0 auto;"></div>
+            <ul class="tuul">
+                <li class="no0"><a href="#"><img src="${staticPath}/css/images/finance/type-buy.jpg" /></a></li>
+                <li class="no1"><a href="#"><img src="${staticPath}/css/images/finance/type-melt.jpg" /></a></li>
+                <li class="no2"><a href="#"><img src="${staticPath}/css/images/finance/type-loan.jpg" /></a></li>
+                <li class="no3"><a href="#"><img src="${staticPath}/css/images/finance/type-buy.jpg" /></a></li>
+
+                <li class="no4"><a href="#"><img src="${staticPath}/css/images/finance/type-melt.jpg" /></a></li>
+
+                <li class="no5 waiting"><a href="#"><img src="${staticPath}/css/images/finance/type-loan.jpg" /></a></li>
+
+            </ul>
+            <div class="filter">
+                <span class="leftFilter"></span>
+                <span class="rightFilter"></span>
+            </div>
+        </div>
+        <div class="anniu">
+            <span class="leftNav"></span>
+            <span class="rightNav"></span>
+        </div>
+
+        <!--<div id="posterTvGrid86804" style="margin:40px auto 0 auto;"></div>-->
     </div>
 </div>
-<!--融资类型结束-->
+
+    <!--融资类型结束-->
 
 <!--footer start-->
 <#include "common/footer.ftl" >
@@ -87,10 +110,6 @@
 <!--modal stop-->
 
 
-<script src="${staticPath}/jspm_packages/github/es-shims/es5-shim@4.5.9/es5-shim.js"></script>
-<#--<script src="${staticPath}/jspm_packages/github/es-shims/es5-shim@4.5.9/es5-sham.js"></script>-->
-<#--<script src="${staticPath}/jspm_packages/system-csp-production.js"></script>-->
-
 <script src="${staticPath}/jspm_packages/system.js"></script>
 <script src="${staticPath}/js/config.js"></script>
 
@@ -100,9 +119,11 @@
 <!-- Remove this statement if you want to run the on the fly transpiler -->
 <!-- 生产环境使用 bundle.js 文件 -->
 <script src="${staticPath}/js/page/financeHome.bundle.js"></script>
+
 </#if>
 
 
+<!--<script src="${staticPath}/js/page2/financeHome.bundle.js"></script>-->
 <script>
     System["import"]("${staticPath}/js/page/financeHome.js")
 </script>
