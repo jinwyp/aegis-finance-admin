@@ -22,8 +22,10 @@ public class FinanceApplyInfo implements Serializable {
     @Column(name = "id")
     @GeneratedValue
     private Long id ; //主键
+
     @Column(name="user_id")
     private int userId ; //用户id
+
     @Column(name="apply_type")
     private String applyType; //申请类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
     @Column(name="financing_amount")
