@@ -2,11 +2,11 @@ package com.yimei.finance.controllers.site.restfulapi;
 
 import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.entity.admin.finance.FinanceApplyInfo;
-import com.yimei.finance.ext.annotations.LoginRequired;
-import com.yimei.finance.repository.admin.applyinfo.FinanceApplyInfoRepository;
-import com.yimei.finance.repository.admin.applyinfo.EnumAdminFinanceError;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.ext.annotations.LoginRequired;
+import com.yimei.finance.repository.admin.applyinfo.EnumAdminFinanceError;
+import com.yimei.finance.repository.admin.applyinfo.FinanceApplyInfoRepository;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
 import com.yimei.finance.repository.tpl.TplRepository;
 import com.yimei.finance.utils.Utils;
@@ -17,7 +17,6 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 /**
@@ -51,7 +50,7 @@ public class UserCenterController {
 
         financeApplyInfo.setSourceId(Utils.generateSourceId("JR"));
         financeApplyInfo.setUserId(userSession.getUser().getId());
-        financeApplyInfo.setApplyDateTime(LocalDateTime.now());
+//        financeApplyInfo.setApplyDateTime(LocalDateTime.now());
         financeApplyInfoRepository.save(financeApplyInfo);
         return Result.success().setData(financeApplyInfoRepository.findOne(financeApplyInfo.getId()));
     }
@@ -66,9 +65,6 @@ public class UserCenterController {
     @ApiOperation(value = "融资申请列表", notes = "用户查询融资申请列表", response = FinanceApplyInfo.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "offset", value = "偏移数", required = false, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "total", value = "结果总数量", required = false, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "applyType", value = "融资类型", required = false, dataType = "String", paramType = "query")
     })
     @LoginRequired

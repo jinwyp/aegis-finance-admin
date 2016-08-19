@@ -7,7 +7,6 @@ import com.yimei.finance.entity.admin.finance.FinanceApplyInfo;
 import com.yimei.finance.entity.admin.user.EnumAdminUserError;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
-import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.repository.admin.applyinfo.EnumAdminFinanceError;
 import com.yimei.finance.repository.admin.applyinfo.FinanceApplyInfoRepository;
@@ -16,7 +15,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.IdentityService;
-import org.activiti.engine.RepositoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.identity.Group;
@@ -34,86 +32,34 @@ import java.util.List;
 
 @Api(tags = {"admin-api-flow"}, description = "金融公用接口")
 @RequestMapping("/api/financing/admin")
-@RestController
-public class FinanceHomeController {
-    @Autowired
-    private TaskService taskService;
+@RestController("adminFinanceCommonController")
+public class FinanceCommonController {
     @Autowired
     private IdentityService identityService;
-    @Autowired
-    private FinanceApplyInfoRepository financeApplyInfoRepository;
     @Autowired
     private AdminSession adminSession;
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
-    private RepositoryService repositoryService;
-
-    @RequestMapping(value = "/user/tasks", method = RequestMethod.GET)
-    @ApiOperation(value = "查看个人任务列表", notes = "查看个人任务列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "Integer", paramType = "query")
-    })
-    public Result getPersonalTasksMethod(Page page) {
-        if (identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult() == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
-        List<Task> taskList = taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByTaskDueDate().desc().listPage(page.getOffset(), page.getCount());
-        page.setTotal(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).count());
-        return Result.success().setData(taskList).setMeta(page);
-    }
-
-    @RequestMapping(value = "/user/unclaimed/tasks", method = RequestMethod.GET)
-    @ApiOperation(value = "查看个人待签收任务列表", notes = "查看个人待签收任务列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "Integer", paramType = "query")
-    })
-    public Result getPersonalWaitClaimTasksMethod(Page page) {
-        List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
-        List<String> groupIds = new ArrayList<>();
-        for (Group group : groupList) {
-            groupIds.add(group.getId());
-        }
-        System.out.println(" -------------------------------------- admin user " + adminSession.getUser().getId());
-        System.out.println(" -------------------------------------- admin user " + adminSession.getUser().getId());
-        System.out.println(" -------------------------------------- groupList size " + groupList.size());
-        System.out.println(" -------------------------------------- groupList size " + groupList.size());
-        System.out.println(" -------------------------------------- groupNameList size " + groupIds.size());
-        System.out.println(" -------------------------------------- groupNameList size " + groupIds.size());
-        System.out.println(" -------------------------------------- groupNameList " + groupIds.toString());
-        System.out.println(" -------------------------------------- groupNameList " + groupIds.toString());
-        if (groupIds != null && groupIds.size() != 0) {
-            page.setTotal(taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().count());
-            List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByTaskDueDate().desc().listPage(page.getOffset(), page.getCount());
-//            List<Map<String, Object>> tasks = new ArrayList<>();
-//            for (Task task : taskList) {
-//                Map<String, Object> map = new LinkedHashMap<>();
-//                map.put("id", task.getId());
-//                map.put("delegationState", task.getDelegationState());
-//            }
-
-
-            // Result.success().setData(h);
-
-            return Result.success().setData(taskList).setMeta(page);
-        }
-        return Result.success().setData(null).setMeta(page);
-    }
+    private TaskService taskService;
+    @Autowired
+    private FinanceApplyInfoRepository financeApplyInfoRepository;
 
     @RequestMapping(value = "/determine/type", method = RequestMethod.PUT)
     @ApiOperation(value = "确定金融申请单类型,发起流程", notes = "确定金融申请单类型,发起流程")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Long", paramType = "query"),
+            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Long", paramType = "query"),
             @ApiImplicitParam(name = "applyType", value = "金融申请单类型", required = true, dataType = "String", paramType = "query")
     })
-    public Result determineFinanceOrderMethod(@RequestParam(value = "id", required = true)Long id,
+    public Result determineFinanceOrderMethod(@RequestParam(value = "financeId", required = true)Long financeId,
                                               @RequestParam(value = "applyType", required = true)String applyType) {
-        FinanceApplyInfo financeApplyInfo = financeApplyInfoRepository.findOne(id);
+        FinanceApplyInfo financeApplyInfo = financeApplyInfoRepository.findOne(financeId);
         if (financeApplyInfo == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-//        applyInfoRepository.updateApplyType(id, applyType);
+        if (runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)) != null) return Result.error(EnumAdminFinanceError.此金融单已经创建流程.toString());
+        financeApplyInfoRepository.updateApplyInfoType(financeId, applyType);
         if (financeApplyInfo.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
-            runtimeService.startProcessInstanceByKey("financingWorkFlow", String.valueOf(id));
-            Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(id)).singleResult();
+            runtimeService.startProcessInstanceByKey("financingWorkFlow", String.valueOf(financeApplyInfo.getId()));
+            Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeApplyInfo.getId())).singleResult();
             taskService.addGroupIdentityLink(task.getId(), EnumSpecialGroup.ManageTraderGroup.id, IdentityLinkType.CANDIDATE);
             return Result.success().setData(true);
         } else if (financeApplyInfo.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
@@ -123,15 +69,15 @@ public class FinanceHomeController {
 
             return Result.success().setData(true);
         } else {
-            return Result.error(EnumCommonError.Admin_System_Error.toString());
+            return Result.error(EnumCommonError.Admin_System_Error);
         }
     }
 
-    @RequestMapping(value = "/{financeId}/task/claim", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{processInstanceId}/task/claim", method = RequestMethod.PUT)
     @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作")
-    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "financeId")int financeId) {
-        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
+    @ApiImplicitParam(name = "processInstanceId", value = "任务对应流程实例id", required = true, dataType = "String", paramType = "path")
+    public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "processInstanceId")String processInstanceId) {
+        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
         List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
         List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
         for (IdentityLink identityLink : identityLinkList) {

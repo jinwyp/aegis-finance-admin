@@ -23,7 +23,7 @@ import java.util.Map;
 
 @Api(tags = {"admin-api-flow"}, description = "处理煤易融相关逻辑")
 @RequestMapping("/api/financing/admin/myr")
-@RestController
+@RestController("adminMYRFinancingController")
 public class MYRFinancingController {
     @Autowired
     private RuntimeService runtimeService;

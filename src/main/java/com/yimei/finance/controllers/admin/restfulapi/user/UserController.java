@@ -19,7 +19,7 @@ import java.util.List;
 
 @Api(tags = {"admin-api-user"})
 @RequestMapping("/api/financing/admin/users")
-@RestController
+@RestController("adminUserController")
 public class UserController {
 
     @Autowired
