@@ -72,11 +72,8 @@
 <div class="type-finance">
     <div class="type">
         <h2></h2>
-        <div id="youku">
-            <div class="anniu">
-                <span class="leftNav"></span>
-                <span class="rightNav"></span>
-            </div>
+        <div id="slide">
+
             <ul class="tuul">
                 <li class="no0"><a href="#"><img src="${staticPath}/css/images/finance/type-buy.jpg" /></a></li>
                 <li class="no1"><a href="#"><img src="${staticPath}/css/images/finance/type-melt.jpg" /></a></li>
@@ -88,8 +85,16 @@
                 <li class="no5 waiting"><a href="#"><img src="${staticPath}/css/images/finance/type-loan.jpg" /></a></li>
 
             </ul>
-
+            <div class="filter">
+                <span class="leftFilter"></span>
+                <span class="rightFilter"></span>
+            </div>
         </div>
+        <div class="anniu">
+            <span class="leftNav"></span>
+            <span class="rightNav"></span>
+        </div>
+
         <!--<div id="posterTvGrid86804" style="margin:40px auto 0 auto;"></div>-->
     </div>
 </div>
@@ -118,7 +123,7 @@
 </#if>
 
 
-<script src="${staticPath}/js/page2/financeHome.bundle.js"></script>
+<!--<script src="${staticPath}/js/page2/financeHome.bundle.js"></script>-->
 <script>
     System["import"]("${staticPath}/js/page/financeHome.js")
 </script>

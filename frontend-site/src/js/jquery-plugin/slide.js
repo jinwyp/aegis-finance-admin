@@ -12,29 +12,31 @@ var slider = () =>{
     //定义json
     var json0 = {"width":"174px","height":"122px","left":"-116px", "top":"100px"};
     var json1 = {"width":"386px","height":"482px","left":"0px", "top":"35px"};
-    var json2 = {"width":"450px","height":"556px","left":"274px", "top":"0"};
+    var json2 = {"width":"450px","height":"556px","left":"320px", "top":"0"};
     var json3 = {"width":"386px","height":"482px","left":"706px", "top":"35px"};
     var json4 = {"width":"174px","height":"122px","left":"1097px", "top":"100px"};
 
     var nowimg = 2;
 
-    var timer = setInterval(youanniuyewu,5000);
-    $("#youku").mouseenter(
+    var timer = setInterval(clickRight,5000);
+    $("#slide").mouseenter(
         function() {
             clearInterval(timer);
         }
     );
 
-    $("#youku").mouseleave(
+    $("#slide").mouseleave(
         function() {
             clearInterval(timer);
-            timer = setInterval(youanniuyewu,5000);
+            timer = setInterval(clickRight,5000);
         }
     );
 
 
-    $(".you").click(youanniuyewu);
-    function youanniuyewu(){
+    $(".rightNav").click(clickRight);
+    $(".rightFilter").click(clickRight);
+
+    function clickRight(){
         if(!$(".tuul li").is(":animated") || shangdi == true){
             if(nowimg < 5){
                 nowimg ++;
@@ -71,8 +73,9 @@ var slider = () =>{
 
     }
 
-    $(".zuo").click(
-        function(){
+    $(".leftNav").click(clickLeft);
+    $(".leftFilter").click(clickLeft);
+        function clickLeft(){
 
             if(!$(".tuul li").is(":animated") || shangdi == true){
 
@@ -109,7 +112,7 @@ var slider = () =>{
             }
 
         }
-    );
+
 
 };
 
