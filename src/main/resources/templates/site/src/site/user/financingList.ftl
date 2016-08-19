@@ -182,7 +182,7 @@
 </#if>
 
 <script>
-    System.import('${staticPath}/js/page/userCenterFinanceList.js')
+    System['import']('${staticPath}/js/page/userCenterFinanceList.js')
 </script>
 
 

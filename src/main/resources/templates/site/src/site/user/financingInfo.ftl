@@ -204,7 +204,7 @@
                             </tr>
                         </table>
                     </div>
-                    <input type="button" value="返回" class="back">
+                    <a href="/finance/user/financing" class="back">返回</a>
                 </div>
             </div>
         </div>
@@ -233,7 +233,7 @@
 </#if>
 
 <script>
-    System.import('${staticPath}/js/page/userCenterFinanceInfo.js')
+    System['import']('${staticPath}/js/page/userCenterFinanceInfo.js')
 </script>
 
 

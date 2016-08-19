@@ -7,8 +7,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+@Api(tags={"admin-page-error"})
 @RequestMapping("/api/financing/admin")
-@Api(value = "Admin-Error-Page-API", description = "错误页面处理接口")
 @Controller("adminErrorPageController")
 public class ErrorPageController {
     @Autowired

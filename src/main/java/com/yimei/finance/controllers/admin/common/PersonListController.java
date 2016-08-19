@@ -11,8 +11,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+@Api(tags = {"admin-api-group"}, description = "获取相关人员列表接口")
 @RequestMapping("/api/financing/admin")
-@Api(value = "Common-PersonList-API", description = "获取相关人员列表接口")
 @RestController
 public class PersonListController {
     @Autowired
