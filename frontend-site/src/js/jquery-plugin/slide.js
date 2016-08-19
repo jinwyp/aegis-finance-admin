@@ -12,7 +12,7 @@ var slider = () =>{
     //定义json
     var json0 = {"width":"174px","height":"122px","left":"-116px", "top":"100px"};
     var json1 = {"width":"386px","height":"482px","left":"0px", "top":"35px"};
-    var json2 = {"width":"450px","height":"556px","left":"320px", "top":"0"};
+    var json2 = {"width":"450px","height":"556px","left":"321px", "top":"0"};
     var json3 = {"width":"386px","height":"482px","left":"706px", "top":"35px"};
     var json4 = {"width":"174px","height":"122px","left":"1097px", "top":"100px"};
 
