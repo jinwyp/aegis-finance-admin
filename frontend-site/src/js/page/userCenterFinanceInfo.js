@@ -13,7 +13,6 @@ var financeInfo = (query)=> {
         css : {
             status : false
         }
-
     });
 
     var getFinanceInfo = (id) => {

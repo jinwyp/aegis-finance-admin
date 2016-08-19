@@ -19,7 +19,8 @@ var sourcePath = {
 
 var distPath = {
     'js'                               : '../dist/js/',
-    'jsPage'                           : 'js/page2/',
+    'jsPage'                           : 'js/page/',
+    'jsPage2'                          : 'js/page2/',
     'components'                       : '../dist/jspm_packages/',
     "manifest"                         : "../dist/rev/"
 };
@@ -68,18 +69,32 @@ gulp.task('js-release', ['components'], function(){
     return gulp.src(sourcePath.jsPage)
         .pipe(jspm({
             //inject : true,
+            minify : true
+        }))
+        .pipe(rev())
+        .pipe(gulp.dest(distPath.jsPage))
+        .pipe(rev.manifest('rev-manifest-js.json'))
+        .pipe(gulp.dest(distPath.manifest) );
+});
+
+
+
+gulp.task('js-release-dev', function(){
+    return gulp.src(sourcePath.jsPage)
+        .pipe(jspm({
+            //inject : true,
             minify : false
         }))
         // .pipe(rev())
-        .pipe(gulp.dest(distPath.jsPage));
+        .pipe(gulp.dest(distPath.jsPage2));
         // .pipe(rev.manifest('rev-manifest-js.json'))
         // .pipe(gulp.dest(distPath.manifest) );
 });
 
 
 
-gulp.task('watchJs', function() {
-    gulp.watch(sourcePath.js, ['esLint', 'js-release']);
+gulp.task('watchJs', [ 'js-release-dev'],function() {
+    gulp.watch(sourcePath.js, ['esLint', 'js-release-dev']);
 });
 
 
