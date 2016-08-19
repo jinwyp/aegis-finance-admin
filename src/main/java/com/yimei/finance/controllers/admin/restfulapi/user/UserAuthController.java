@@ -16,8 +16,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = {"admin-api-user"}, description = "用户登陆验证接口")
 @RequestMapping("/api/financing/admin")
-@RestController
-public class LoginAuthController {
+@RestController("adminUserAuthController")
+public class UserAuthController {
 
     @Autowired
     private AdminSession adminSession;
@@ -47,9 +47,9 @@ public class LoginAuthController {
      */
     @ApiOperation(value = "退出登录接口", notes = "退出登陆")
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
-    public String logout() {
+    public Result logout() {
         adminSession.logout();
-        return "admin/login";
+        return Result.success();
     }
 
 }

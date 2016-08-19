@@ -20,7 +20,7 @@ import java.util.List;
 
 @Api(tags = {"admin-api-group"})
 @RequestMapping("/api/financing/admin/groups")
-@RestController
+@RestController("adminGroupController")
 public class GroupController {
 
     @Autowired

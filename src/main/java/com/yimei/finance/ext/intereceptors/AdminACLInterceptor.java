@@ -1,6 +1,7 @@
 package com.yimei.finance.ext.intereceptors;
 
 import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.exception.UnauthorizedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -18,7 +19,7 @@ public class AdminACLInterceptor extends HandlerInterceptorAdapter {
     @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         if(request.getRequestURI().startsWith("/api/financing/admin") && !session.isLogined()){
-//            throw new UnauthorizedException();
+            throw new UnauthorizedException();
         }
         return super.preHandle(request, response, handler);
     }
