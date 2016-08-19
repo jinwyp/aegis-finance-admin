@@ -19,7 +19,7 @@ var sourcePath = {
 
 var distPath = {
     'js'                               : '../dist/js/',
-    'jsPage'                           : 'js/page/',
+    'jsPage'                           : '../dist/js/page/',
     'jsPage2'                          : 'js/page2/',
     'components'                       : '../dist/jspm_packages/',
     "manifest"                         : "../dist/rev/"

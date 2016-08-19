@@ -118,7 +118,7 @@
 </#if>
 
 
-<#--<script src="${staticPath}/js/page2/financeHome.bundle.js"></script>-->
+<script src="${staticPath}/js/page2/financeHome.bundle.js"></script>
 <script>
     System["import"]("${staticPath}/js/page/financeHome.js")
 </script>
