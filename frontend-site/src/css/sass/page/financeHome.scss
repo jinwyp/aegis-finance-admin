@@ -287,6 +287,15 @@ $assetPath : "/static/site";
   background-color: black;
   border:1px solid #ff9c50;
 }
+#slide li a{
+  width: 246px;
+  height: 66px;
+  display: inline-block;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  margin-left: -123px;
+}
 #slide li.waiting{
   display: none;
 }
