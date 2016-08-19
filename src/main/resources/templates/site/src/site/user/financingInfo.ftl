@@ -233,7 +233,7 @@
 </#if>
 
 <script>
-    System.import('${staticPath}/js/page/userCenterFinanceInfo.js')
+    System['import']('${staticPath}/js/page/userCenterFinanceInfo.js')
 </script>
 
 

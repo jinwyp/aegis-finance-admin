@@ -99,7 +99,7 @@
 </#if>
 
 <script>
-    System.import('${staticPath}/js/page/financeHome.js')
+    System['import']('${staticPath}/js/page/financeHome.js')
 </script>
 
 </body>
