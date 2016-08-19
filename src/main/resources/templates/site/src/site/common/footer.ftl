@@ -7,11 +7,11 @@
                     <div class="pd0">
                         <p>新手指导</p>
                         <ul>
-                            <li><a href="/teach/register">免费注册认证</a></li>
-                            <li><a href="/teach/buy">如何买煤</a></li>
-                            <li><a href="/teach/sell">如何卖煤</a></li>
-                            <li><a href="/teach/logisticsLink">物流指导</a></li>
-                            <li><a href="/teach/questions">常见问题</a></li>
+                            <li><a href="${sitepage}/teach/register">免费注册认证</a></li>
+                            <li><a href="${sitepage}/teach/buy">如何买煤</a></li>
+                            <li><a href="${sitepage}/teach/sell">如何卖煤</a></li>
+                            <li><a href="${sitepage}/teach/logisticsLink">物流指导</a></li>
+                            <li><a href="${sitepage}/teach/questions">常见问题</a></li>
                         </ul>
                     </div>
                 </li>
@@ -19,9 +19,9 @@
                     <div>
                         <p>行情资讯</p>
                         <ul>
-                            <li><a href="/news/hyyw">行业要闻</a></li>
-                            <li><a href="/news/zczz">政策追踪</a></li>
-                            <li><a href="/news/djsd">独家视点</a></li>
+                            <li><a href="${sitepage}/news/hyyw">行业要闻</a></li>
+                            <li><a href="${sitepage}/news/zczz">政策追踪</a></li>
+                            <li><a href="${sitepage}/news/djsd">独家视点</a></li>
                         </ul>
                     </div>
                 </li>
@@ -29,8 +29,8 @@
                     <div>
                         <p>增值服务</p>
                         <ul>
-                            <li><a href="/finance">金融服务</a></li>
-                            <li><a href="/group">易煤团购</a></li>
+                            <li><a href="${sitepage}/finance">金融服务</a></li>
+                            <li><a href="${sitepage}/group">易煤团购</a></li>
                         </ul>
                     </div>
                 </li>
@@ -38,9 +38,9 @@
                     <div>
                         <p>关于我们</p>
                         <ul>
-                            <li><a href="/aboutUs/#advantage">易煤优势</a></li>
-                            <li><a href="/aboutUs/#guarantee">资金保证</a></li>
-                            <li><a href="/aboutUs/invite">招贤纳士</a></li>
+                            <li><a href="${sitepage}/aboutUs/#advantage">易煤优势</a></li>
+                            <li><a href="${sitepage}/aboutUs/#guarantee">资金保证</a></li>
+                            <li><a href="${sitepage}/aboutUs/invite">招贤纳士</a></li>
                         </ul>
                     </div>
                 </li>

@@ -204,6 +204,42 @@
                             </tr>
                         </table>
                     </div>
+                    <!--若已上传补充材料 显示 开始-->
+                    <div class="table-title">
+                        <em></em>补充材料:
+                    </div>
+                    <div class="approvalInfo">
+                        <table>
+                            <tr>
+                                <th>已上传材料:</th>
+                                <td>
+                                    <ul>
+                                        <li class="paddingL0">
+                                            <p>税务单据</p>
+                                            <img src="" alt="">
+                                        </li>
+                                        <li>
+                                            <p>税务单据</p>
+                                            <img src="" alt="">
+                                        </li>
+                                        <li>
+                                            <p>税务单据</p>
+                                            <img src="" alt="">
+                                        </li>
+                                        <li>
+                                            <p>税务单据</p>
+                                            <img src="" alt="">
+                                        </li>
+                                    </ul>
+                                </td>
+                            </tr>
+                            <tr>
+                                <th>材料说明:</th>
+                                <td>{{@financeInfo.comments}}</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <!--补充材料结束-->
                     <a href="/finance/user/financing" class="back">返回</a>
                 </div>
             </div>
@@ -221,6 +257,7 @@
 <#include "../common/modal.ftl" >
 <!--modal stop-->
 
+<script src="${staticPath}/jspm_packages/github/es-shims/es5-shim@4.5.9/es5-shim.js"></script>
 <script src="${staticPath}/jspm_packages/system.js"></script>
 <script src="${staticPath}/js/config.js"></script>
 
