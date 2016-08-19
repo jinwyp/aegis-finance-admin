@@ -3,14 +3,13 @@
  */
 
 
-import 'js/jquery-plugin/slide.js';
 import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 
 
 var financeHome = () => {
 
     //轮播图图片及链接
-    var posterTvGrid86804 = new posterTvGrid('posterTvGrid86804', {className : 'posterTvGrid'}, [
+    var posterTvGrid86804 = new window.posterTvGrid('posterTvGrid86804', {className : 'posterTvGrid'}, [
         {
             'img'   : '/static/site/css/images/finance/type-loan.jpg',
             'title' : '煤易贷',

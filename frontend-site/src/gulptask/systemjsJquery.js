@@ -68,7 +68,7 @@ gulp.task('js-release', ['components'], function(){
     return gulp.src(sourcePath.jsPage)
         .pipe(jspm({
             //inject : true,
-            minify : true
+            minify : false
         }))
         .pipe(rev())
         .pipe(gulp.dest(distPath.jsPage))
