@@ -315,6 +315,7 @@ $assetPath : "/static/site";
 #slide .tuul li{
   position: absolute;
   background-color: black;
+  border:1px solid #ff9c50;
 }
 #slide li.waiting{
   display: none;
@@ -359,6 +360,8 @@ $assetPath : "/static/site";
     top: 35px;
     cursor: pointer;
     z-index: 1000;
+    background: #000000\9;
+    filter: alpha(opacity=50)\9;
   }
   .leftFilter{
     left: 0px;
@@ -370,7 +373,7 @@ $assetPath : "/static/site";
 
 #slide li.no0{width: 174px;height:122px;left:-116px;top:100px;z-index: 777;}
 #slide li.no1{width: 386px;height:482px;left:0px;top:35px;z-index: 888;}
-#slide li.no2{width: 450px;height:556px;left:320px;top:0px;z-index: 999;}
+#slide li.no2{width: 450px;height:556px;left:321px;top:0px;z-index: 999;}
 #slide li.no3{width: 386px;height:482px;left:706px;top:35px;z-index: 888;}
 #slide li.no4{width: 174px;height:122px;left:1097px;top:100px;z-index: 777;}
 
