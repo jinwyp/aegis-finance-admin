@@ -27,14 +27,11 @@ public class GroupController {
     private IdentityService identityService;
 
     @ApiOperation(value = "查询所有的用户组", notes = "查询所有用户组列表", response = GroupObject.class, responseContainer = "List")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "int", paramType = "query")
-    })
+    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     @RequestMapping(method = RequestMethod.GET)
     public Result getAllGroupsMethod(Page page) {
         page.setTotal(identityService.createGroupQuery().count());
-        List<GroupObject> groupObjectList = DozerUtils.copy(identityService.createGroupQuery().orderByGroupId().desc().list(), GroupObject.class);
+        List<GroupObject> groupObjectList = DozerUtils.copy(identityService.createGroupQuery().orderByGroupId().desc().listPage(page.getOffset(), page.getCount()), GroupObject.class);
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
@@ -51,8 +48,7 @@ public class GroupController {
     @ApiOperation(value = "查询用户组下的用户", notes = "根据 GroupId 查询该用户组下的用户", response = UserObject.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "groupId", value = "GroupId", required = true, dataType = "String", paramType = "path"),
-            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "int", paramType = "query")
+            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     })
     @RequestMapping(value = "/{groupId}/users", method = RequestMethod.GET)
     public Result getUsersByGroupIdMethod(@PathVariable(value = "groupId")String groupId, Page page) {
