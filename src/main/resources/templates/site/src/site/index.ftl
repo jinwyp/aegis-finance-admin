@@ -73,22 +73,22 @@
     <div class="type">
         <h2></h2>
         <div id="slide">
-
-            <ul class="tuul">
-                <li class="no0"><a href="#"><img src="${staticPath}/css/images/finance/type-buy.jpg" /></a></li>
-                <li class="no1"><a href="#"><img src="${staticPath}/css/images/finance/type-melt.jpg" /></a></li>
-                <li class="no2"><a href="#"><img src="${staticPath}/css/images/finance/type-loan.jpg" /></a></li>
-                <li class="no3"><a href="#"><img src="${staticPath}/css/images/finance/type-buy.jpg" /></a></li>
-
-                <li class="no4"><a href="#"><img src="${staticPath}/css/images/finance/type-melt.jpg" /></a></li>
-
-                <li class="no5 waiting"><a href="#"><img src="${staticPath}/css/images/finance/type-loan.jpg" /></a></li>
-
-            </ul>
             <div class="filter">
                 <span class="leftFilter"></span>
                 <span class="rightFilter"></span>
             </div>
+            <ul class="tuul">
+                <li class="no0"><a href="#"></a><img src="${staticPath}/css/images/finance/type-buy.jpg" /></li>
+                <li class="no1"><a href="#"></a><img src="${staticPath}/css/images/finance/type-melt.jpg" /></li>
+                <li class="no2"><a href="#"></a><img src="${staticPath}/css/images/finance/type-loan.jpg" /></li>
+                <li class="no3"><a href="#"></a><img src="${staticPath}/css/images/finance/type-buy.jpg" /></li>
+
+                <li class="no4"><a href="#"></a><img src="${staticPath}/css/images/finance/type-melt.jpg" /></li>
+
+                <li class="no5 waiting"><a href="#"></a><img src="${staticPath}/css/images/finance/type-loan.jpg" /></li>
+
+            </ul>
+
         </div>
         <div class="anniu">
             <span class="leftNav"></span>
