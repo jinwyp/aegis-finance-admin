@@ -1,5 +1,9 @@
 //电视剧大图滚动
-(function(jq){
+
+import $ from 'jquery';
+
+
+var slider = () =>{
 
     //定义一个初始速度
     var sudu = 1000;
@@ -106,4 +110,7 @@
 
         }
     );
-})(jQuery);
+
+};
+
+export default slider

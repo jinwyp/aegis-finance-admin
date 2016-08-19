@@ -2,12 +2,13 @@
  * Created by JinWYP on 8/1/16.
  */
 
-
-import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
+import slider from 'js/jquery-plugin/slide.js';
+import {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 
 
 var financeHome = () => {
 
+    slider();
 
     var postApplyInfo = (query) => {
 
