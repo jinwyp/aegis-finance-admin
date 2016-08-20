@@ -1,16 +1,18 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.repository.admin.applyinfo.FinanceApplyInfoRepository;
+import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.file.FileList;
 import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.repository.admin.applyinfo.EnumAdminFinanceError;
+import com.yimei.finance.repository.admin.applyinfo.FinanceApplyInfoRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
+import org.activiti.engine.*;
+import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.IdentityLinkType;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,12 +37,34 @@ public class MYRFinancingController {
     private AdminSession adminSession;
     @Autowired
     private FinanceApplyInfoRepository financeApplyInfoRepository;
+    @Autowired
+    private ProcessEngine processEngine;
+    @Autowired
+    private HistoryService historyService;
 
-    @RequestMapping(value = "/{financeId}/onlinetrader/material", method = RequestMethod.POST)
+    @RequestMapping(value = "/{processInstanceId}/onlinetrader/material", method = RequestMethod.POST)
     @ApiOperation(value = "线上交易员填写材料", notes = "线上交易员填写材料")
-    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Long", paramType = "path")
-    public Result myrOnlineTraderAddMaterialMethod() {
-        return Result.success();
+    @ApiImplicitParam(name = "processInstanceId", value = "任务对应流程实例id", required = true, dataType = "String", paramType = "path")
+    public Result myrOnlineTraderAddMaterialMethod(@PathVariable("processInstanceId")String processInstanceId) {
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+        System.out.println(" --------------------------------- " + processInstance.getBusinessKey());
+        System.out.println(" --------------------------------- " + processInstance.getBusinessKey());
+        System.out.println(" --------------------------------- " + processInstance.getBusinessKey());
+        System.out.println(" --------------------------------- " + processInstance.getBusinessKey());
+        System.out.println(" --------------------------------- " + processInstance.getBusinessKey());
+        System.out.println(" --------------------------------- " + processInstance.toString());
+        System.out.println(" --------------------------------- " + processInstance.toString());
+        System.out.println(" --------------------------------- " + processInstance.toString());
+        System.out.println(" --------------------------------- " + processInstance.toString());
+        System.out.println(" --------------------------------- " + processInstance.toString());
+        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).active().singleResult();
+        taskService.getProcessInstanceAttachments(processInstanceId);
+        taskService.getTaskAttachments(task.getId());
+        taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).processInstanceId(processInstanceId);
+
+        if (task == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
+        taskService.addGroupIdentityLink(task.getId(), EnumSpecialGroup.ManageSalesmanGroup.id, IdentityLinkType.CANDIDATE);
+        return Result.success().setData(true);
     }
 
     @RequestMapping(value = "/{financeId}/salesman/audit", method = RequestMethod.POST)

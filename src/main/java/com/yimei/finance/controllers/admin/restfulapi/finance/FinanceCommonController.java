@@ -92,17 +92,15 @@ public class FinanceCommonController {
     }
 
 
-    @RequestMapping(value = "/{financeId}/assign/trader/{userId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{processInstanceId}/assign/trader/{userId}", method = RequestMethod.PUT)
     @ApiOperation(value = "管理员分配人员", notes = "管理员分配人员操作")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "processInstanceId", value = "任务对应流程实例id", required = true, dataType = "Long", paramType = "path"),
             @ApiImplicitParam(name = "userId", value = "被分配人userId", required = true, dataType = "String", paramType = "path")
     })
-    public Result assignMYROnlineTraderMethod(@PathVariable(value = "financeId") Long financeId,
+    public Result assignMYROnlineTraderMethod(@PathVariable(value = "processInstanceId") String processInstanceId,
                                               @PathVariable(value = "userId") String userId) {
-        FinanceApplyInfo financeApplyInfo = financeApplyInfoRepository.findOne(financeId);
-        if (financeApplyInfo == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).active().singleResult();
+        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().executionId(task.getExecutionId()).singleResult();
         if (execution == null || StringUtils.isEmpty(execution.getActivityId())) return Result.error(EnumCommonError.Admin_System_Error);
