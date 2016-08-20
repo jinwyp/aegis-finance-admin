@@ -17,7 +17,8 @@ import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
+import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * Created by JinWYP on 8/15/16.
@@ -70,15 +71,9 @@ public class UserCenterController {
     @LoginRequired
     @RequestMapping(value = "/applyInfo", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(@RequestParam(value = "applyType", required = false ) String applyType, Page page) {
+        List<FinanceApplyInfo> financeApplyInfoList = financeApplyInfoRepository.findByUserId(userSession.getUser().getId());
 
-        return Result.success().setData(new ArrayList()
-        {{
-            add(new FinanceApplyInfo());
-            add(new FinanceApplyInfo());
-            add(new FinanceApplyInfo());
-            add(new FinanceApplyInfo());
-        }}
-        );
+        return Result.success().setData(financeApplyInfoList).setMeta(page);
     }
 
 
@@ -93,7 +88,7 @@ public class UserCenterController {
     @LoginRequired
     @RequestMapping(value = "/applyInfo/{id}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
-        FinanceApplyInfo financeApplyInfo = financeApplyInfoRepository.findOne(id);
+        FinanceApplyInfo financeApplyInfo = financeApplyInfoRepository.findByIdAndUserId(id, 0);
         if (financeApplyInfo == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         return Result.success().setData(financeApplyInfo);
     }
