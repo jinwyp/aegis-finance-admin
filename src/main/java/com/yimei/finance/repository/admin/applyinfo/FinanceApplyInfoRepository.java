@@ -16,18 +16,20 @@ public interface FinanceApplyInfoRepository extends JpaRepository<FinanceApplyIn
 //    @Query("select a from ApplyInfo a where a.id=:id")
 //    FinanceApplyInfo findById(@Param("id") Long id);
 
-     List<FinanceApplyInfo> findByUserId(int userId);
+    List<FinanceApplyInfo> findByUserId(int userId);
 
     FinanceApplyInfo findByIdAndUserId(@Param("id") Long id, @Param("userId")int userId);
 
 //    @Query("select applyType from ApplyInfo a where a.id=:id")
 //    String findTypeById(@Param("id")Long id);
 
+    void updateFinanceApplyInfo(FinanceApplyInfo financeApplyInfo);
+
     @Transactional
     @Modifying(clearAutomatically = true)
     @Query(" update FinanceApplyInfo applyInfo set applyInfo.applyType=:applyType where applyInfo.id=:id")
-    void updateApplyInfoType(@Param("id") Long id,
-                             @Param("applyType") String applyType);
+    void updateFinanceApplyInfoType(@Param("id") Long id,
+                                    @Param("applyType") String applyType);
 
 
 }
