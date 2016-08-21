@@ -7,10 +7,12 @@ import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.User;
-import org.activiti.engine.impl.persistence.entity.UserEntity;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
@@ -58,13 +60,24 @@ public class UserController {
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
+        System.out.println(" --------------------------- " + user.toString());
+        System.out.println(" --------------------------- " + user.toString());
+        System.out.println(" --------------------------- " + user.toString());
+        System.out.println(" --------------------------- " + user.toString());
+        System.out.println(" --------------------------- " + user.toString());
+        System.out.println(" --------------------------- " + user.toString());
+
         if (StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
         if (identityService.createUserQuery().userEmail(user.getEmail()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
-        user.setId(null);
-        user.setPassword(userService.securePassword(user.getPassword()));
-        UserEntity userEntity = DozerUtils.copy(user, UserEntity.class);
-        identityService.saveUser(userEntity);
-        return Result.success().setData(DozerUtils.copy(identityService.createUserQuery().userId(userEntity.getId()).singleResult(), UserObject.class));
+        User newUser = identityService.newUser("");
+//        DozerUtils.copy(user, newUser);
+        newUser.setId(null);
+        newUser.setPassword(userService.securePassword(user.getPassword()));
+        newUser.setEmail(user.getEmail());
+        newUser.setFirstName(user.getFirstName());
+        newUser.setLastName(user.getLastName());
+        identityService.saveUser(newUser);
+        return Result.success().setData(DozerUtils.copy(identityService.createUserQuery().userId(newUser.getId()).singleResult(), UserObject.class));
     }
 
     @ApiOperation(value = "删除用户", notes = "根据 UserId 删除用户")

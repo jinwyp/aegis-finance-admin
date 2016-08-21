@@ -14,12 +14,12 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AttachmentObject implements Serializable {
-    protected String name;
-    protected String url;
-    protected String description;
-    protected String type;
-    protected String taskId;
-    protected String processInstanceId;
-    protected String userId;
-    protected Date time;
+    private String name;
+    private String url;
+    private String description;
+    private String type;
+    private String taskId;
+    private String processInstanceId;
+    private String userId;
+    private Date time;
 }

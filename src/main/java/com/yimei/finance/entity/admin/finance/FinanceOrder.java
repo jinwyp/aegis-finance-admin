@@ -1,5 +1,6 @@
 package com.yimei.finance.entity.admin.finance;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,21 +13,22 @@ import java.math.BigDecimal;
  * Created by zhangbolun on 16/8/16.
  */
 @Entity
-@Table(name = "T_finance_apply_info")
+@Table(name = "t_finance_order")
+@ApiModel(value = "financeOrder", description = "金融申请单对象")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FinanceApplyInfo implements Serializable {
+public class FinanceOrder implements Serializable {
     @Id
     @Column(name = "id", length = 11)
     @GeneratedValue
-    private Long id ;                                                //主键
+    private Long id;                                                 //主键
     @Column(name = "user_id", length = 11)
-    private int userId ;                                             //申请人用户id
+    private int userId;                                              //申请人用户id
     @Column(name = "apply_type", length = 20)
     private String applyType;                                        //申请类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
     @Column(name = "financing_amount", length = 20)
-    private BigDecimal financingAmount;                              // 拟融资金额（单位：万元）
+    private BigDecimal financingAmount;                              //拟融资金额（单位：万元）
     @Column(name = "expect_date", length = 10)
     private int expectDate;                                          //拟使用资金时间（单位：天）
     @Column(name = "business_amount", length = 10)
@@ -41,7 +43,7 @@ public class FinanceApplyInfo implements Serializable {
     private String transferPort;                                     //中转港口/地全称
     @Column(name = "comments", length = 1000)
     private String comments;                                         //备注说明
-    @Column(name = "contractor",length = 100)
+    @Column(name = "contractor", length = 100)
     private String contractor;                                       //签约单位全称
     @Column(name = "downstream_contractor", length = 100)
     private String downstreamContractor;                             //下游签约单位全称
@@ -60,10 +62,14 @@ public class FinanceApplyInfo implements Serializable {
     @Column(name = "source_id", length = 100)
     private String sourceId;                                         //流水号，编号
 //    @Column(name = "apply_date_time")
-//    @Convert(converter = LocalDateTimePersistenceConverter.class)
 //    private LocalDateTime applyDateTime;                             //申请时间
     @Column(name = "apply_user_name", length = 50)
     private String applyUserName;                                    //申请人姓名
     @Column(name = "apply_company_name", length = 50)
     private String applyCompanyName;                                 //申请公司名称
+
+//    @Temporal(TemporalType.TIMESTAMP)
+//    public LocalDateTime getApplyDateTime() {
+//        return applyDateTime;
+//    }
 }

@@ -1,4 +1,4 @@
-package com.yimei.finance.repository.admin.applyinfo;
+package com.yimei.finance.entity.admin.finance;
 
 /**
  * admin模块,金融单错误信息

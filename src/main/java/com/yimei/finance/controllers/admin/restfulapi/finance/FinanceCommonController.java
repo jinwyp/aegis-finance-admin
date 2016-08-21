@@ -1,15 +1,15 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.entity.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.entity.admin.finance.EnumFinanceAssignEvent;
 import com.yimei.finance.entity.admin.finance.EnumFinanceOrderType;
-import com.yimei.finance.entity.admin.finance.FinanceApplyInfo;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.admin.user.EnumAdminUserError;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Result;
-import com.yimei.finance.repository.admin.applyinfo.EnumAdminFinanceError;
-import com.yimei.finance.repository.admin.applyinfo.FinanceApplyInfoRepository;
+import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -43,7 +43,7 @@ public class FinanceCommonController {
     @Autowired
     private TaskService taskService;
     @Autowired
-    private FinanceApplyInfoRepository financeApplyInfoRepository;
+    private FinanceOrderRepository financeOrderRepository;
 
     @RequestMapping(value = "/determine/type", method = RequestMethod.PUT)
     @ApiOperation(value = "确定金融申请单类型,发起流程", notes = "确定金融申请单类型,发起流程")
@@ -53,19 +53,20 @@ public class FinanceCommonController {
     })
     public Result determineFinanceOrderMethod(@RequestParam(value = "financeId", required = true)Long financeId,
                                               @RequestParam(value = "applyType", required = true)String applyType) {
-        FinanceApplyInfo financeApplyInfo = financeApplyInfoRepository.findOne(financeId);
-        if (financeApplyInfo == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
+        FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
+        if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         if (runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)) != null) return Result.error(EnumAdminFinanceError.此金融单已经创建流程.toString());
-        financeApplyInfoRepository.updateApplyInfoType(financeId, applyType);
-        if (financeApplyInfo.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
-            runtimeService.startProcessInstanceByKey("financingWorkFlow", String.valueOf(financeApplyInfo.getId()));
-            Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeApplyInfo.getId())).singleResult();
+        financeOrder.setApplyType(applyType);
+        financeOrderRepository.save(financeOrder);
+        if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
+            runtimeService.startProcessInstanceByKey("financingWorkFlow", String.valueOf(financeOrder.getId()));
+            Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeOrder.getId())).singleResult();
             taskService.addGroupIdentityLink(task.getId(), EnumSpecialGroup.ManageTraderGroup.id, IdentityLinkType.CANDIDATE);
             return Result.success().setData(true);
-        } else if (financeApplyInfo.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
+        } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
 
             return Result.success().setData(true);
-        } else if (financeApplyInfo.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
+        } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
 
             return Result.success().setData(true);
         } else {

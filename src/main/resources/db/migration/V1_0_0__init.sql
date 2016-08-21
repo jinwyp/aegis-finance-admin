@@ -25,45 +25,45 @@
 --   `workFlowInstanceId` varchar(45) DEFAULT NULL COMMENT '工作流实例id',
 --   PRIMARY KEY (`id`)
 -- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '申请信息表';
-
-CREATE TABLE `T_finance_apply_info_bills` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `T_finance_apply_info_id` int(11) DEFAULT NULL,
-  `path` varchar(100) DEFAULT NULL COMMENT '路径',
-  `billtype` varchar(50) DEFAULT NULL COMMENT '类别',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '申请信息账单表';
-
-CREATE TABLE `T_finance_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL COMMENT '角色名',
-  `comment` varchar(45) DEFAULT NULL COMMENT '备份描述',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '角色表';
-
-CREATE TABLE `T_finance_users` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(20) DEFAULT NULL COMMENT '用户姓名',
-  `phone` varchar(15) DEFAULT NULL COMMENT '联系电话',
-  `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
-  `password` varchar(15) DEFAULT NULL COMMENT '密码',
-  `lastLoginTime` datetime DEFAULT NULL COMMENT '最后一次登陆时间',
-  `department` varchar(20) DEFAULT NULL COMMENT '所属部门',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '用户表';
-
-CREATE TABLE `T_financing_review_result` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `workFlowInstanceId` varchar(45) DEFAULT NULL COMMENT '工作流实例id',
-  `reviewResult` varchar(2000) DEFAULT NULL COMMENT '结果json内容',
-  `isPassed` tinyint(1) DEFAULT NULL COMMENT '是否通过',
-  `nodeName` varchar(50) DEFAULT NULL COMMENT '节点名',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '节点审核结果表';
-
-CREATE TABLE `T_finance_user_role` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `T_finance_users_id` int(11) DEFAULT NULL,
-  `T_finance_role_id` int(11) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '用户角色中间表';
+--
+-- CREATE TABLE `T_finance_apply_info_bills` (
+--   `id` int(11) NOT NULL AUTO_INCREMENT,
+--   `T_finance_apply_info_id` int(11) DEFAULT NULL,
+--   `path` varchar(100) DEFAULT NULL COMMENT '路径',
+--   `billtype` varchar(50) DEFAULT NULL COMMENT '类别',
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '申请信息账单表';
+--
+-- CREATE TABLE `T_finance_role` (
+--   `id` int(11) NOT NULL AUTO_INCREMENT,
+--   `name` varchar(45) DEFAULT NULL COMMENT '角色名',
+--   `comment` varchar(45) DEFAULT NULL COMMENT '备份描述',
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '角色表';
+--
+-- CREATE TABLE `T_finance_users` (
+--   `id` int(11) NOT NULL AUTO_INCREMENT,
+--   `name` varchar(20) DEFAULT NULL COMMENT '用户姓名',
+--   `phone` varchar(15) DEFAULT NULL COMMENT '联系电话',
+--   `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
+--   `password` varchar(15) DEFAULT NULL COMMENT '密码',
+--   `lastLoginTime` datetime DEFAULT NULL COMMENT '最后一次登陆时间',
+--   `department` varchar(20) DEFAULT NULL COMMENT '所属部门',
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '用户表';
+--
+-- CREATE TABLE `T_financing_review_result` (
+--   `id` int(11) NOT NULL AUTO_INCREMENT,
+--   `workFlowInstanceId` varchar(45) DEFAULT NULL COMMENT '工作流实例id',
+--   `reviewResult` varchar(2000) DEFAULT NULL COMMENT '结果json内容',
+--   `isPassed` tinyint(1) DEFAULT NULL COMMENT '是否通过',
+--   `nodeName` varchar(50) DEFAULT NULL COMMENT '节点名',
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '节点审核结果表';
+--
+-- CREATE TABLE `T_finance_user_role` (
+--   `id` int(11) NOT NULL AUTO_INCREMENT,
+--   `T_finance_users_id` int(11) DEFAULT NULL,
+--   `T_finance_role_id` int(11) DEFAULT NULL,
+--   PRIMARY KEY (`id`)
+-- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '用户角色中间表';
