@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@Api(tags = {"admin-api-user"})
+@Api(tags = {"admin-api-user"}, description = "用户增删改查接口")
 @RequestMapping("/api/financing/admin/users")
 @RestController("adminUserController")
 public class UserController {
@@ -29,9 +29,9 @@ public class UserController {
     @Autowired
     private AdminUserServiceImpl userService;
 
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
-    @RequestMapping(method = RequestMethod.GET)
     public Result getAllUsersMethod(Page page) {
         page.setTotal(identityService.createUserQuery().count());
         List<UserObject> userObjectList = DozerUtils.copy(identityService.createUserQuery().listPage(page.getOffset(), page.getCount()), UserObject.class);
