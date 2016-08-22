@@ -317,7 +317,7 @@
           right: 20px;
           bottom: -6px;
           font-size:14px;
-          .line{  border:1px solid $input-border-color;  }
+          .line{  border:1px solid $input-border-color;  margin-left:4px;margin-right: 6px;  }
           a{ cursor: pointer;  text-decoration: none; }
           a:last-child{ margin-left:4px;}
         }
