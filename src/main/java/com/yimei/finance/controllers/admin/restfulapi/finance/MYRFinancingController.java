@@ -13,6 +13,7 @@ import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.service.admin.user.FinanceOrderServiceImpl;
 import io.swagger.annotations.*;
 import org.activiti.engine.*;
+import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.IdentityLinkType;
 import org.activiti.engine.task.Task;
@@ -63,7 +64,9 @@ public class MYRFinancingController {
             }
         }
         taskService.addGroupIdentityLink(task.getId(), EnumSpecialGroup.ManageSalesmanGroup.id, IdentityLinkType.CANDIDATE);
-//        taskService.complete(task.getId());
+        taskService.complete(task.getId());
+        Execution execution = runtimeService.createExecutionQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
+        runtimeService.signal(execution.getId());
         return Result.success().setData(true);
     }
 

@@ -23,13 +23,13 @@ public class FinanceOrder implements Serializable {
     @Column(name = "id", length = 11)
     @GeneratedValue
     private Long id;                                                 //主键
-    @Column(name = "user_id", length = 11)
+    @Column(name = "user_id", length = 11, nullable = false)
     private int userId;                                              //申请人用户id
     @Column(name = "apply_type", length = 20)
     private String applyType;                                        //申请类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
     @Column(name = "financing_amount", length = 20)
     private BigDecimal financingAmount;                              //拟融资金额（单位：万元）
-    @Column(name = "expect_date", length = 10)
+    @Column(name = "expect_date", length = 10, nullable = false)
     private int expectDate;                                          //拟使用资金时间（单位：天）
     @Column(name = "business_amount", length = 10)
     private BigDecimal businessAmount;                               //预期此笔业务量（单位：万吨）

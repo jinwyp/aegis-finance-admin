@@ -20,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Api(tags = {"admin-api-user"}, description = "用户增删改查接口")
-@RequestMapping("/api/financing/admin/users")
+@RequestMapping("/api/financing/admin/user")
 @RestController("adminUserController")
 public class UserController {
 
@@ -60,13 +60,6 @@ public class UserController {
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        System.out.println(" --------------------------- " + user.toString());
-        System.out.println(" --------------------------- " + user.toString());
-        System.out.println(" --------------------------- " + user.toString());
-        System.out.println(" --------------------------- " + user.toString());
-        System.out.println(" --------------------------- " + user.toString());
-        System.out.println(" --------------------------- " + user.toString());
-
         if (StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
         if (identityService.createUserQuery().userEmail(user.getEmail()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
         User newUser = identityService.newUser("");
