@@ -2,7 +2,9 @@ package com.yimei.finance.service.admin.user;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.user.EnumAdminUserError;
+import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.User;
 import org.apache.commons.codec.digest.DigestUtils;
@@ -26,7 +28,7 @@ public class AdminUserServiceImpl {
         if (user != null) {
             if (identityService.checkPassword(user.getId(), securePassword(password))) {
                 adminSession.login(user);
-                return Result.success().setData(user);
+                return Result.success().setData(DozerUtils.copy(user, UserObject.class));
             } else {
                 return Result.error(EnumAdminUserError.用户名或者密码错误.toString());
             }
