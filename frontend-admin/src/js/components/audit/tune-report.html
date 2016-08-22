@@ -12,7 +12,9 @@
 
     <div class="table-title">融资申请</div>
 
-    <div class="apply-title">尽调报告-(应收)
+    <div class="apply-title">
+        <span *ngIf="reportType==1">尽调报告-(应收)</span>
+        <span *ngIf="reportType==2">尽调报告-(订单、仓押)</span>
         <div>
             <a>查看申请材料</a>
             <span class="line"></span>
@@ -140,7 +142,7 @@
 
     <div class="row info-item">
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="button" class="btn btn-default btn-lg btn-save">保存</button>
+            <button type="button" class="btn btn-default btn-lg btn-save" [routerLink]="['/supervisereport']">保存</button>
             <button type="button" class="btn btn-default btn-lg btn-sure ml-20">保存并提交</button>
             <button type="button" class="btn btn-default btn-lg btn-return ml-20">返回</button>
         </div>

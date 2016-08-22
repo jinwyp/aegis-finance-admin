@@ -93,7 +93,11 @@
                             </tr>
                             <tr>
                                 <th>拟融资金额:</th>
-                                <td colspan="2"><span class="red">{{@financeInfo.financingAmount}}</span>万元</td>
+                                <td colspan="2">
+                                    <span class="red">{{@financeInfo.financingAmount | number(2)}}</span>万元
+                                    <br/>
+                                    <span class="gray">({{@financeInfo.financingAmount | switchTxt}})</span>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -268,7 +272,7 @@
 <script src="${staticPath}/js/page/userCenterFinanceInfo.bundle.js"></script>
 </#if>
 
-<#--<script src="${staticPath}/js/page2/userCenterFinanceInfo.bundle.js"></script>-->
+<!--<script src="${staticPath}/js/page2/userCenterFinanceInfo.bundle.js"></script>-->
 <script>
     System['import']('${staticPath}/js/page/userCenterFinanceInfo.js')
 </script>

@@ -90,7 +90,7 @@
                     <br/>
 
                     <label for="number">业务编号:</label>
-                    <input type="text" id="number" class="margin-l" ms-duplex="@searchQuery.businessId">
+                    <input type="text" id="number" class="margin-l" ms-duplex="@searchQuery.businessId" onkeyup="this.value=this.value.replace(/\D/g,'')">
 
                     <label for="type">业务类型:</label>
                     <div class="positionR selectDiv">
@@ -124,13 +124,13 @@
                         <th>审核状态</th>
                         <th>操作</th>
                     </tr>
-                    <tr class="borderB" ms-for="(key, order) in @financeList">
-                        <td>{{key+1}}</td>
-                        <td>{{order.sourceID}}</td>
+                    <tr class="borderB" ms-for="(index, order) in @financeList">
+                        <td>{{index+1}}</td>
+                        <td>{{order.sourceId}}</td>
                         <td>{{order.applyType}}</td>
                         <td>{{order.applyDateTime}}</td>
                         <td>{{order.applyUserName}}</td>
-                        <td class="bold">{{order.financingAmount}}</td>
+                        <td class="bold">{{order.financingAmount | number(2)}}</td>
                         <td class="bold">{{order.expectedDate}}</td>
                         <!--审核不通过-->
                         <!--<td class="gray" ms-visible="@order.approveState==='审核不通过'">{{order.approveState}}</td>-->
@@ -141,7 +141,7 @@
 
                         <td class="bold">{{order.approveState}}</td>
 
-                        <td class="blueA"><a href="#" >查看详情</a></td>
+                        <td class="blueA"><a ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a></td>
                     </tr>
 
                 </table>
@@ -149,11 +149,7 @@
                 <xmp ms-widget="[{is:'ms-pagination', $id:'pagination'}, @configPagination]"></xmp>
             </div>
 
-            <!--<input ms-duplex="@name">-->
-            <!--<p>Hello,{{@name}}!</p>-->
-            <!--<ul>-->
-            <!--<li ms-for="($index,el) in @array">{{$index}}&#45;&#45;{{el}}</li>-->
-            <!--</ul>-->
+
         </div>
         <!--右侧主内容结束-->
     </div>
@@ -181,7 +177,7 @@
 </#if>
 
 
-<script src="${staticPath}/js/page2/userCenterFinanceList.bundle.js"></script>
+<!--<script src="${staticPath}/js/page2/userCenterFinanceList.bundle.js"></script>-->
 <script>
     System['import']('${staticPath}/js/page/userCenterFinanceList.js')
 </script>
