@@ -4,28 +4,23 @@
 
 
 import { Component } from '@angular/core';
-
 // import { jQuery as $ } from '../../../jquery-plugin/bootstrap.js';
 // import { jQuery as $ } from '../../../../../../frontend-site/src/js/jquery-plugin';
+
 
 declare var __moduleName: string;
 
 @Component({
-    selector: 'process-tab',
+    selector: 'tune-report',
     moduleId: __moduleName || module.id,
-    templateUrl: 'process-tab.html'
+    templateUrl: 'tune-report.html'
 })
 
 
 
-export class ProcessTabComponent {
+export class TuneReportComponent {
 
-    tabObj = {
-        index : 2
-    }
+    reportType=1;
 
-    changeTab = (currentTab)=>{
-        this.tabObj.index = currentTab;
-    }
 }
 

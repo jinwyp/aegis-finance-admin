@@ -1,0 +1,86 @@
+<div class="item-margin breadcrumb-box">
+    <ol class="breadcrumb">
+        <li>审核管理</li>
+        <li>&gt;</li>
+        <li class="active">我的待办</li>
+    </ol>
+</div>
+
+<process-tab></process-tab>
+
+<div class="item-margin apply-box">
+
+    <div class="table-title">当前业务</div>
+
+    <div class="apply-title">业务审批
+        <div>
+            <a>查看申请材料</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered apply-table">
+        <tr class="item-max">
+            <td class="td-label">业务类型:</td>
+            <td width="250" class="td-val">煤易融</td>
+            <td class="td-label">业务编号:</td>
+            <td width="250" class="td-val">7437234923748923749382</td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span>上下游相关签约单位信息补充:</span></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-val td-textarea" colspan="4">
+                <textarea class="form-control" rows="4" placeholder="请输入"></textarea>
+            </td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span>业务操作模式介绍:</span></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-val td-textarea" colspan="4">
+                <textarea class="form-control" rows="4" placeholder="请输入"></textarea>
+            </td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span>物流/仓储地信息补充:</span></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-val td-textarea" colspan="4">
+                <textarea class="form-control" rows="4" placeholder="请输入"></textarea>
+            </td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span>其他补充说明:</span></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-val td-textarea" colspan="4">
+                <textarea class="form-control" rows="4" placeholder="请输入"></textarea>
+            </td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span>需要补充材料:</span></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-val td-textarea" colspan="4">
+                <textarea class="form-control" rows="4" placeholder="请输入"></textarea>
+            </td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><label><input type="checkbox">发送给用户</label></td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span>审核意见:</span><label><input type="radio" name="pass">通过</label><label><input type="radio" name="pass">不通过</label></td>
+        </tr>
+    </table>
+
+    <div class="row info-item">
+        <div class="col-sm-12 info-val no-bottom-border center">
+            <button type="button" class="btn btn-default btn-lg btn-save" [routerLink]="['/tunereport']">保存</button>
+            <button type="button" class="btn btn-default btn-lg btn-sure ml-20">保存并提交</button>
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20">返回</button>
+        </div>
+    </div>
+
+</div>
+
+

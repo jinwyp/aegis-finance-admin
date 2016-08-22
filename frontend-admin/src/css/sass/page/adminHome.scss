@@ -1,8 +1,11 @@
 @import '../helpers/_variables.scss';
 
 .homebox{
-  input{outline: none;}
+  input{outline: none;  margin:0;}
   .btn{outline: none;}
+  div.info-item .info-val.no-bottom-border{  border-bottom:none; }
+  .no-float{ clear:both; }
+  .center{text-align: center;}
   .left-menu-box{
     background-color: $menu-bg-color;
     .left-menu{
@@ -54,8 +57,6 @@
       }
     }
   }
-  div.info-item .info-val.no-bottom-border{  border-bottom:none; }
-  .no-float{ clear:both; }
 
   .right-main-box{
     .mt-50{ margin-top:50px;}
@@ -67,6 +68,7 @@
     .ml-30{ margin-left:30px;}
     .ml-50{ margin-left:50px;}
     .ml-70{ margin-left:70px;}
+    .mb-20{ margin-bottom:20px;}
     .fs-16{ font-size:16px;}
     .fs-14{ font-size:14px;}
     .fs-12{ font-size:12px;}
@@ -79,6 +81,13 @@
       width:200px;
       background-color: $err-color;
       border-color: $err-color;
+      border-radius: 3px;
+      color: $white;
+    }
+    .btn-save{
+      width:200px;
+      background-color: #6bc8e6;
+      border-color: #6bc8e6;
       border-radius: 3px;
       color: $white;
     }
@@ -194,8 +203,8 @@
 
     }
     .table-title{
-      height:50px;
-      line-height:50px;
+      height:40px;
+      line-height:40px;
       padding-left:20px;
       background-color: #f2f2f2;
       border-bottom:1px solid $border-color;
@@ -295,39 +304,67 @@
     }
 
     .apply-box{
+      margin-top:20px;
       border: 1px solid $input-border-color;
       .apply-title{
         font-size:24px;
         text-align: center;
         margin-top:40px;
         margin-bottom:20px;
+        position: relative;
+        div{
+          position: absolute;
+          right: 20px;
+          bottom: -6px;
+          font-size:14px;
+          .line{  border:1px solid $input-border-color;  }
+          a{ cursor: pointer;  text-decoration: none; }
+          a:last-child{ margin-left:4px;}
+        }
       }
       .apply-table{
         width:930px;
         margin:0 auto;
         font-size:14px;
-        tr.item-max>td{padding: 20px 20px;}
-        tr.item-min>td{padding: 4px 20px;}
+        tr.item-max td{padding: 14px 20px;}
+        tr.item-min td{padding: 4px 20px;}
+        tr.item-title td{  padding: 11px 20px 11px 0;  }
         td.td-label{ width:160px; background-color: #f7f7f7;  }
         td.td-val{ background-color: #fcfdfd;}
-        td.td-remark>textarea{ box-shadow: none;  border:none;  resize: none;  padding:0; }
-        tr>td>input{
+        td.td-textarea>textarea{ box-shadow: none;  border:none;  resize: none;  padding:4px 0; background-color: #fcfdfd; }
+        tr td>input{
           height:36px;
           line-height:36px;
           width:228px;
           border:none;
         }
-        tr>td>span{  margin-left:10px;  }
-        tr>td{
+        tr td.td-val>span{  margin-left:10px;  }
+        tr.item-title td>label{
+          margin-left:20px;
+          input{
+            margin-right:10px;
+          }
+        }
+        tr.item-title td>span{
+          border-left:2px solid #f66c54;
+          padding-left:20px;
+        }
+        tr td{
           vertical-align: middle;
-          .finance-type-selected{
-            border:1px solid #f66c54;
+          .finance-type{
+            border:1px solid $input-border-color;
+            margin-right: 15px;
+          }
+          .finance-type:last-child{  margin-right: 0px;  }
+          .finance-type.selected{
             background-color: #fdf2f2;
+            border:1px solid #f66c54;
           }
           .introduce{
             font-size:12px;
             color: $menu-text-color;
-            padding:10px 20px 0 40px;
+            padding:10px 20px 0 20px;
+            margin-bottom:20px;
           }
           .btn-upload{
             display: block;
@@ -335,7 +372,6 @@
             border:1px solid $input-border-color;
             text-align: center;
             padding:30px 0;
-            margin-top:20px;
             text-decoration: none;
             .upload-icon{
               display: inline-block;

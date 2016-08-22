@@ -17,7 +17,8 @@ import { UserInfoComponent } from '../components/role/user-info';
 import { WaitDealListComponent } from '../components/audit/wait-deal-list';
 import { DistributionPageComponent } from '../components/audit/distribution-page';
 import { FinanceApplyComponent } from '../components/audit/finance-apply';
-import { DistributionPersonComponent } from '../components/audit/common/distribution-person';
+import { BusinessApprovalComponent } from '../components/audit/business-approval';
+import { TuneReportComponent } from '../components/audit/tune-report';
 
 const routes: RouterConfig = [
     {
@@ -88,6 +89,14 @@ const routes: RouterConfig = [
     {
         path: 'financeapply',
         component: FinanceApplyComponent
+    },
+    {
+        path: 'businessapproval',
+        component: BusinessApprovalComponent
+    },
+    {
+        path: 'tunereport',
+        component: TuneReportComponent
     }
 ];
 

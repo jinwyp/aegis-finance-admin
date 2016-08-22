@@ -1,0 +1,149 @@
+<div class="item-margin breadcrumb-box">
+    <ol class="breadcrumb">
+        <li>审核管理</li>
+        <li>&gt;</li>
+        <li class="active">我的待办(8)</li>
+    </ol>
+</div>
+
+<!--<process-tab></process-tab>-->
+
+<div class="item-margin apply-box">
+
+    <div class="table-title">融资申请</div>
+
+    <div class="apply-title">尽调报告-(应收)
+        <div>
+            <a>查看申请材料</a>
+            <span class="line"></span>
+            <a>查看审批业务</a>
+        </div>
+    </div>
+
+    <table class="table table-bordered apply-table">
+        <tr class="item-max">
+            <td class="td-label">业务类型:</td>
+            <td width="250" class="td-val">煤易融</td>
+            <td class="td-label">业务编号:</td>
+            <td width="250" class="td-val">7437234923748923749382</td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span class="fs-16">项目主体信息</span></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-label">融资方:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-label">我方签约单位:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <!--应收字段-->
+        <tr *ngIf="reportType==1" class="item-min">
+            <td class="td-label">下游签约单位:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-label">终端用户:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-label">融资金额:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-label">融资期限:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-label">利率:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-label">业务开展时间:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <!--仓押字段-->
+        <tr *ngIf="reportType==2" class="item-min">
+            <td class="td-label">上游签约单位:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-label">下游签约单位:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <tr *ngIf="reportType==2" class="item-min">
+            <td class="td-label">运输方:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-label">中转港口:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <tr *ngIf="reportType==2" class="item-min">
+            <td class="td-label">质量检验单位:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-label">数量检验单位:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+
+        <tr class="item-min">
+            <td class="td-label">历史合作情况:</td>
+            <td colspan="3" class="td-val"><input type="text" class="describe" value="fsdfsdff"></td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span class="fs-16">贸易链及描述</span></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-label">业务主要信息:</td>
+            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-label">业务流转:</td>
+            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span class="fs-16">业务风险点<span class="fs-14 hint">(结合具体操作细节,对业务操作中的<span class="orange">可能风险点总结和提示</span>)</span></span></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-label">详细描述:</td>
+            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span class="fs-16">履约信用及能力评估<span class="fs-14 hint">(结合相关签约主体的企业资信和实际煤炭贸易操作能力,对上下游相关方的<span class="orange">履约信用和能力描绘和评估</span>)</span></span></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-label">详细描述:</td>
+            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span class="fs-16">综合意见<span class="fs-14 hint">(关于这单业务的最终综合意见和提示)</span></span></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-label">详细描述:</td>
+            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span class="fs-16">附件上传<span class="fs-14 hint">(详细的风控报告和相关单据材料等,<span class="orange">5M之内</span>)</span></span></td>
+        </tr>
+        <tr class="item-max">
+            <td class="td-val" colspan="4">
+                <a class="btn-upload">
+                    <span class="upload-icon"></span>
+                    <div class="mt-10">点击上传</div>
+                </a>
+            </td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span class="fs-16">需要补充材料:</span></td>
+        </tr>
+        <tr class="item-min">
+            <td class="td-val td-textarea" colspan="4">
+                <textarea class="form-control" rows="4" placeholder="请输入"></textarea>
+            </td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><label><input type="checkbox">发送给业务人员</label><label><input type="checkbox">发送给用户</label></td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span>审核意见:</span><label><input type="radio" name="pass">通过</label><label><input type="radio" name="pass">不通过</label></td>
+        </tr>
+    </table>
+
+    <div class="row info-item">
+        <div class="col-sm-12 info-val no-bottom-border center">
+            <button type="button" class="btn btn-default btn-lg btn-save">保存</button>
+            <button type="button" class="btn btn-default btn-lg btn-sure ml-20">保存并提交</button>
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20">返回</button>
+        </div>
+    </div>
+
+</div>
