@@ -40,8 +40,7 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
     @Value("${sso.memberaddress}")
     private String MEDBERADDRESS;
 
-    @Autowired
-    private ObjectMapper objectMapper;
+    private static ObjectMapper mapper = new ObjectMapper();
 
     public static final String passportCookieName = "passport";
 
@@ -71,12 +70,13 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
                         User user;
 
                         try {
-                            user = JsonUtils.toObject(userData, User.class);
+                            user = mapper.readValue(userData, User.class);
                         } catch (Exception e) {
-                            log.error("auth fail");
+                            log.error("User auth failed!");
                             redirectLoginPage(request, response);
                             return false;
                         }
+
                         session.login(user);
                     }
                 }
@@ -99,7 +99,7 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
 
         if (null != AJAX && AJAX.equals("XMLHttpRequest")) {
             OutputStream out = response.getOutputStream();
-            out.write(objectMapper.writeValueAsBytes(Result.error(401, url)));
+            out.write(mapper.writeValueAsBytes(Result.error(401, url)));
         } else {
             response.sendRedirect(url);
         }
