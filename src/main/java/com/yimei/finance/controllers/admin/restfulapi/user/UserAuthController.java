@@ -1,6 +1,7 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import io.swagger.annotations.Api;
@@ -26,7 +27,7 @@ public class UserAuthController {
     /**
      * 管理员登陆
      */
-    @ApiOperation(value = "登陆接口", notes = "需要输入用户名和密码登陆")
+    @ApiOperation(value = "登陆接口", notes = "需要输入用户名和密码登陆", response = UserObject.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "userName", value = "登陆用户名", required = true, dataType = "String", paramType = "form"),
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "form")
