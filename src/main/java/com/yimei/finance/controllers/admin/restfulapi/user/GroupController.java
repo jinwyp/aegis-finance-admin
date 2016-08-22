@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Api(tags = {"admin-api-group"})
-@RequestMapping("/api/financing/admin/groups")
+@RequestMapping("/api/financing/admin/group")
 @RestController("adminGroupController")
 public class GroupController {
 
