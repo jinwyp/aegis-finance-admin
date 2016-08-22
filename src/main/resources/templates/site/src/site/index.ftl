@@ -78,14 +78,12 @@
                 <span class="rightFilter"></span>
             </div>
             <ul class="tuul">
-                <li class="no0"><a href="#"></a><img src="${staticPath}/css/images/finance/type-buy.jpg" /></li>
-                <li class="no1"><a href="#"></a><img src="${staticPath}/css/images/finance/type-melt.jpg" /></li>
-                <li class="no2"><a href="#"></a><img src="${staticPath}/css/images/finance/type-loan.jpg" /></li>
-                <li class="no3"><a href="#"></a><img src="${staticPath}/css/images/finance/type-buy.jpg" /></li>
-
-                <li class="no4"><a href="#"></a><img src="${staticPath}/css/images/finance/type-melt.jpg" /></li>
-
-                <li class="no5 waiting"><a href="#"></a><img src="${staticPath}/css/images/finance/type-loan.jpg" /></li>
+                <li class="no0 type-buy"><a href="#"></a><img src="${staticPath}/css/images/finance/type-buy.jpg" /></li>
+                <li class="no1 type-melt"><a href="#"></a><img src="${staticPath}/css/images/finance/type-melt.jpg" /></li>
+                <li class="no2 type-loan"><a href="#"></a><img src="${staticPath}/css/images/finance/type-loan.jpg" /></li>
+                <li class="no3 type-bu"><a href="#"></a><img src="${staticPath}/css/images/finance/type-buy.jpg" /></li>
+                <li class="no4 type-melt"><a href="#"></a><img src="${staticPath}/css/images/finance/type-melt.jpg" /></li>
+                <li class="no5 waiting type-loan"><a href="#"></a><img src="${staticPath}/css/images/finance/type-loan.jpg" /></li>
 
             </ul>
 
