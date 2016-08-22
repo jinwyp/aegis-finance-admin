@@ -84,7 +84,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return new LocalValidatorFactoryBean();
     }
 
-
     @PostConstruct
     private void jacksonConfig() {
         objectMapper.registerModule(new Java8TimeModule());

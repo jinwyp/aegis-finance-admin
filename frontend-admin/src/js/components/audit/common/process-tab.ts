@@ -4,9 +4,9 @@
 
 
 import { Component } from '@angular/core';
+
 // import { jQuery as $ } from '../../../jquery-plugin/bootstrap.js';
 // import { jQuery as $ } from '../../../../../../frontend-site/src/js/jquery-plugin';
-
 
 declare var __moduleName: string;
 

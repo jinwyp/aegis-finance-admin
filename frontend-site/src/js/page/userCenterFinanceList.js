@@ -83,7 +83,7 @@ var financeList = () => {
             success  : (data)=> {
                 if (data.success){
                     vm.financeList = data.data;
-                    vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
+                    // vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
                 }else{
 
                 }

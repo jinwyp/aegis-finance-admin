@@ -72,11 +72,34 @@
 <div class="type-finance">
     <div class="type">
         <h2></h2>
+        <div id="slide">
+            <div class="filter">
+                <span class="leftFilter"></span>
+                <span class="rightFilter"></span>
+            </div>
+            <ul class="tuul">
+                <li class="no0"><a href="#"></a><img src="${staticPath}/css/images/finance/type-buy.jpg" /></li>
+                <li class="no1"><a href="#"></a><img src="${staticPath}/css/images/finance/type-melt.jpg" /></li>
+                <li class="no2"><a href="#"></a><img src="${staticPath}/css/images/finance/type-loan.jpg" /></li>
+                <li class="no3"><a href="#"></a><img src="${staticPath}/css/images/finance/type-buy.jpg" /></li>
 
-        <div id="posterTvGrid86804" style="margin:40px auto 0 auto;"></div>
+                <li class="no4"><a href="#"></a><img src="${staticPath}/css/images/finance/type-melt.jpg" /></li>
+
+                <li class="no5 waiting"><a href="#"></a><img src="${staticPath}/css/images/finance/type-loan.jpg" /></li>
+
+            </ul>
+
+        </div>
+        <div class="anniu">
+            <span class="leftNav"></span>
+            <span class="rightNav"></span>
+        </div>
+
+        <!--<div id="posterTvGrid86804" style="margin:40px auto 0 auto;"></div>-->
     </div>
 </div>
-<!--融资类型结束-->
+
+    <!--融资类型结束-->
 
 <!--footer start-->
 <#include "common/footer.ftl" >
@@ -96,10 +119,13 @@
 <!-- Remove this statement if you want to run the on the fly transpiler -->
 <!-- 生产环境使用 bundle.js 文件 -->
 <script src="${staticPath}/js/page/financeHome.bundle.js"></script>
+
 </#if>
 
+
+<!--<script src="${staticPath}/js/page2/financeHome.bundle.js"></script>-->
 <script>
-    System.import('${staticPath}/js/page/financeHome.js')
+    System["import"]("${staticPath}/js/page/financeHome.js")
 </script>
 
 </body>

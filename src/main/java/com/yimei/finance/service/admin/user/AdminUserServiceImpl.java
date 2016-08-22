@@ -1,17 +1,14 @@
 package com.yimei.finance.service.admin.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.repository.admin.user.EnumAdminUserError;
-import com.yimei.finance.repository.common.result.Result;
+import com.yimei.finance.entity.admin.user.EnumAdminUserError;
+import com.yimei.finance.entity.common.result.Result;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by liuxinjie on 16/8/16.
- */
 @Service
 public class AdminUserServiceImpl {
     @Autowired

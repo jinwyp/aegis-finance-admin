@@ -272,36 +272,106 @@ $assetPath : "/static/site";
 }
 
 //轮播开始
-
-.posterTvGrid{position:relative;height:556px;}
-.posterTvGrid img{max-width:none;max-height:none;border:0 none;background:#888;}
-.posterTvGrid .contentHolder{position:relative;overflow:hidden;}
-.posterTvGrid .contentHolderUnit{cursor:pointer;position:absolute;
+#slide{
+  width: 1092px;
+  height: 556px;
+  margin: 0px auto 100px;
+  position: relative;
+  overflow: hidden;
+}
+#slide ul{
+  list-style: none;
+}
+#slide .tuul li{
+  position: absolute;
+  background-color: black;
   border:1px solid #ff9c50;
-  box-shadow: 0 5px 10px rgba(0,0,0,.1);
 }
-.posterTvGrid .contentHolderUnit a.elementLink{display:block;overflow:hidden;z-index:3;position:absolute;left:0;right:0;width:100%;height:100%;}
-.posterTvGrid .contentHolderUnit img{width:100%;height:100%;}
-.posterTvGrid .contentHolderUnit .elementOverlay{z-index:1;position:absolute;top:0;left:0;background:#000;width:100%;height:100%;opacity:0;filter:opacity=0;}
-.posterTvGrid .contentHolderUnit .leftShadow{position:absolute;top:23px;left:-174px;width:174px;height:224px;}
-.posterTvGrid .contentHolderUnit .rightShadow{position:absolute;top:23px;right:-174px;width:174px;height:224px;}
-.posterTvGrid .bannerControls{}
-.posterTvGrid .leftNav,.posterTvGrid .rightNav{cursor:pointer;z-index:10;position:absolute;top:50%;width:28px;height:50px;margin-top:-43px;}
-.posterTvGrid .leftNav{left:-52px;background: url("#{$assetPath}/css/images/finance/left-right-trigle.png") no-repeat -56px 0;_background:none;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="img/slide_prev_btn.png");
-  &:hover{
-    background: url("#{$assetPath}/css/images/finance/left-right-trigle.png") no-repeat -28px 0;
+#slide li a{
+  width: 246px;
+  height: 66px;
+  display: inline-block;
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  margin-left: -123px;
+}
+#slide li.waiting{
+  display: none;
+}
+#slide li img{
+  width: 100%;
+  height: 100%;
+}
+
+.anniu {
+  span{
+    position: absolute;
+    width: 28px;
+    height: 50px;
+    top: 50%;
+    cursor: pointer;
+    background-image: url("#{$assetPath}/css/images/finance/left-right-trigle.png");
+    background-repeat: no-repeat;
+    z-index: 1000;
+  }
+  .leftNav {
+    background-position: -56px 0;
+    left: 0px;
+    &:hover {
+      background-position: -28px 0;
+    }
+  }
+  .rightNav {
+    background-position: -84px 0;
+    right: 0px;
+    &:hover {
+      background-position: 0 0;
+    }
+  }
+
+}
+.filter{
+  span{
+    position: absolute;
+    width: 320px;
+    height: 485px;
+    top: 35px;
+    cursor: pointer;
+    z-index: 9999;
+    background: #000000\9;
+    filter: alpha(opacity=1)\9;
+  }
+  .leftFilter{
+    left: 0px;
+  }
+  .rightFilter{
+    right: 0px;
   }
 }
-.posterTvGrid .rightNav{right:-52px;background: url("#{$assetPath}/css/images/finance/left-right-trigle.png") no-repeat -84px 0;_background:none;_filter:progid:DXImageTransform.Microsoft.AlphaImageLoader(src="img/slide_next_btn.png");
-  &:hover{
-    background: url("#{$assetPath}/css/images/finance/left-right-trigle.png") no-repeat 0 0;
-  }
+
+#slide li.no0{width: 174px;height:122px;left:-116px;top:100px;z-index: 777;}
+#slide li.no1{width: 386px;height:482px;left:0px;top:35px;z-index: 888;}
+#slide li.no2{width: 450px;height:556px;left:321px;top:0px;z-index: 999;}
+#slide li.no3{width: 386px;height:482px;left:706px;top:35px;z-index: 888;}
+#slide li.no4{width: 174px;height:122px;left:1097px;top:100px;z-index: 777;}
+
+#slide li.no1 img , #slide li.no3 img{
+  opacity: 0.3;
+  filter: alpha(opacity=30)\9;
 }
-.posterTvGrid .bottomNav{z-index:140;position:absolute;width:100%;height:10px;margin-top:270px;padding:10px 0 0;text-align:center;}
-.posterTvGrid .bottomNavButtonOFF{cursor:pointer;overflow:hidden;display:inline-block;*display:inline;*zoom:1;width:10px;height:10px;margin:0 5px;vertical-align:top;-webkit-border-radius:5px;-moz-border-radius:5px;border-radius:5px;background:#c3c3c3;}
-.posterTvGrid .bottomNavButtonOFF:hover{background:#aaa;}
-.posterTvGrid .bottomNavButtonON,
-.posterTvGrid .bottomNavButtonON:hover{background:#69aaec;}
+#slide .xiaoyuandian ul li{
+  float: left;
+  width: 16px;
+  height: 16px;
+  background-color: blue;
+  margin-right: 10px;
+  border-radius: 100px;
+  cursor: pointer;
+}
+#youku .xiaoyuandian ul li.cur{
+  background-color:green;
+}
 //轮播结束
 //融资类型结束
 

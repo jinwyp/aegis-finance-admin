@@ -49,6 +49,7 @@ frontend/src/css/stylesheets
 src/main/resources/templates/site/dist
 frontend-site/dist
 frontend-site/src/css/stylesheets
+frontend-site/src/js/page2
 
 src/main/resources/templates/admin/dist
 frontend-admin/dist

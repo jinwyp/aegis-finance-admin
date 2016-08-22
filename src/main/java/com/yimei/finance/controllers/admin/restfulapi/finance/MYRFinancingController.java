@@ -1,31 +1,31 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.repository.admin.applyinfo.ApplyInfoRepository;
-import com.yimei.finance.repository.admin.user.EnumSpecialGroup;
-import com.yimei.finance.repository.common.file.FileList;
-import com.yimei.finance.repository.common.result.Result;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
+import com.yimei.finance.entity.admin.finance.AttachmentList;
+import com.yimei.finance.entity.admin.finance.AttachmentObject;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
+import com.yimei.finance.entity.common.enums.EnumCommonError;
+import com.yimei.finance.entity.common.file.FileList;
+import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.entity.admin.finance.EnumAdminFinanceError;
+import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.service.admin.user.FinanceOrderServiceImpl;
+import io.swagger.annotations.*;
+import org.activiti.engine.*;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.IdentityLinkType;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.util.StringUtils;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(tags = {"admin-api-flow"}, description = "处理煤易融相关逻辑")
+@Api(tags = {"admin-api-flow"})
 @RequestMapping("/api/financing/admin/myr")
-@RestController
+@RestController("adminMYRFinancingController")
 public class MYRFinancingController {
     @Autowired
     private RuntimeService runtimeService;
@@ -36,152 +36,62 @@ public class MYRFinancingController {
     @Autowired
     private AdminSession adminSession;
     @Autowired
-    private ApplyInfoRepository applyInfoRepository;
+    private FinanceOrderRepository financeOrderRepository;
+    @Autowired
+    private ProcessEngine processEngine;
+    @Autowired
+    private HistoryService historyService;
+    @Autowired
+    private FinanceOrderServiceImpl financeOrderService;
 
-    @RequestMapping(value = "/start/{financeId}", method = RequestMethod.POST)
-    @ApiOperation(value = "发起流程", notes = "发起流程", response = Boolean.class)
-    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result startMYRWorkFlowMethod(@PathVariable(value = "financeId") int financeId) {
-        runtimeService.startProcessInstanceByKey("financingWorkFlow", String.valueOf(financeId));
-        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
-        taskService.addGroupIdentityLink(task.getId(), EnumSpecialGroup.ManageTraderGroup.id, IdentityLinkType.CANDIDATE);
+    @RequestMapping(value = "/{processInstanceId}/onlinetrader/material", method = RequestMethod.POST)
+    @ApiOperation(value = "线上交易员填写材料", notes = "线上交易员填写材料", response = Boolean.class)
+    @ApiImplicitParam(name = "processInstanceId", value = "任务对应流程实例id", required = true, dataType = "String", paramType = "path")
+    public Result myrOnlineTraderAddMaterialMethod(@PathVariable("processInstanceId")String processInstanceId,
+                                                   @ApiParam(name = "financeOrder", value = "金融申请单对象", required = true) FinanceOrder financeOrder,
+                                                   @ApiParam(name = "attachmentObjectList", value = "金融申请单上传单据列表", required = false)@RequestBody AttachmentList attachmentList) {
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).active().singleResult();
+        if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
+        if (StringUtils.isEmpty(processInstance.getBusinessKey()) || financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey())) == null) return Result.error(EnumCommonError.Admin_System_Error);
+        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
+        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
+        financeOrder.setId(Long.valueOf(processInstance.getBusinessKey()));
+        financeOrderService.updateFinanceOrder(financeOrder);
+        for (AttachmentObject attachmentObject : attachmentList.getAttachmentObjects()) {
+            if (!StringUtils.isEmpty(attachmentObject.getName()) && !StringUtils.isEmpty(attachmentObject.getUrl())) {
+                taskService.createAttachment(attachmentObject.getType(), task.getId(), processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
+            }
+        }
+        taskService.addGroupIdentityLink(task.getId(), EnumSpecialGroup.ManageSalesmanGroup.id, IdentityLinkType.CANDIDATE);
+//        taskService.complete(task.getId());
         return Result.success().setData(true);
     }
 
-    @RequestMapping(value = "/{financeId}/trader/manager/task/claim", method = RequestMethod.PUT)
-    @ApiOperation(value = "线上交易员管理员领取任务", notes = "线上交易员管理员组内成员领取任务")
+    @RequestMapping(value = "/{financeId}/salesman/audit", method = RequestMethod.POST)
+    @ApiOperation(value = "业务员填写材料并审核", notes = "业务员填写材料并审核")
     @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "financeId")int financeId) {
-        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
-        taskService.claim(task.getId(), adminSession.getUser().getId());
+    public Result myrSalesmanAddMaterialAndAuditMethod(@PathVariable("financeId")int financeId) {
         return Result.success();
     }
 
-    @RequestMapping(value = "/{financeId}/assign/trader/{traderId}", method = RequestMethod.PUT)
-    @ApiOperation(value = "分配线上交易员操作", notes = "分配线上交易员操作")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path"),
-            @ApiImplicitParam(name = "traderId", value = "交易员id", required = true, dataType = "Integer", paramType = "path")
-    })
-    public Result assignMYROnlineTraderMethod(@PathVariable(value = "financeId") int financeId,
-                                              @PathVariable(value = "traderId") int traderId) {
-        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
-        taskService.setAssignee(task.getId(), String.valueOf(traderId));
-        return Result.success();
-    }
-
-    @RequestMapping(value = "/trader/material", method = RequestMethod.POST)
-    @ApiOperation(value = "线上交易员填写材料", notes = "线上交易员填写材料")
-    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Long", paramType = "path")
-    public Result myrOnlineTraderAddMaterialMethod() {
-        return Result.success();
-    }
-
-    @RequestMapping(value = "/{financeId}/salesman/manager/task/claim", method = RequestMethod.PUT)
-    @ApiOperation(value = "业务员管理员领取任务", notes = "业务员管理员组内成员领取任务")
-    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result salesmanManagerClaimTaskMethod(@PathVariable(value = "financeId")int financeId) {
-        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
-        taskService.claim(task.getId(), adminSession.getUser().getId());
-        return Result.success();
-    }
-
-    @RequestMapping(value = "/{financeId}/assign/salesman/{salesmanId}", method = RequestMethod.PUT)
-    @ApiOperation(value = "分配业务员操作", notes = "分配业务员操作")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path"),
-            @ApiImplicitParam(name = "salesmanId", value = "业务员id", required = true, dataType = "Integer", paramType = "path")
-    })
-    public Result assignMYRSalesmanMethod(@PathVariable(value = "financeId") int financeId,
-                                          @PathVariable(value = "salesmanId") int salesmanId) {
-        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
-        taskService.setAssignee(task.getId(), String.valueOf(salesmanId));
-        return Result.success();
-    }
-
-    @RequestMapping(value = "/salesman/audit/pass/{financeId}", method = RequestMethod.POST)
-    @ApiOperation(value = "业务员填写材料并审核通过", notes = "业务员填写材料并审核通过")
-    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result myrSalesmanAddMaterialAndAuditPassMethod(@PathVariable("financeId")int financeId) {
-        return Result.success();
-    }
-
-    @RequestMapping(value = "/salesman/audit/notpass/{financeId}", method = RequestMethod.POST)
-    @ApiOperation(value = "业务员填写材料并审核不通过", notes = "业务员填写材料并审核不通过")
-    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result myrSalesmanAddMaterialAndAuditNotPassMethod(@PathVariable("financeId")int financeId) {
-        return Result.success();
-    }
-
-    @RequestMapping(value = "/{financeId}/investigator/manager/task/claim", method = RequestMethod.PUT)
-    @ApiOperation(value = "尽调员管理员领取任务", notes = "尽调员管理员组内成员领取任务")
-    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result investigatorManagerClaimTaskMethod(@PathVariable(value = "financeId")int financeId) {
-        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
-        taskService.claim(task.getId(), adminSession.getUser().getId());
-        return Result.success();
-    }
-
-    @RequestMapping(value = "/{financeId}/assign/investigator/{investigatorId}", method = RequestMethod.PUT)
-    @ApiOperation(value = "分配尽调员操作", notes = "分配尽调员操作")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path"),
-            @ApiImplicitParam(name = "investigatorId", value = "尽调员id", required = true, dataType = "Integer", paramType = "path")
-    })
-    public Result assignMYRInvestigatorMethod(@PathVariable(value = "financeId") int financeId,
-                                              @PathVariable(value = "investigatorId") int investigatorId) {
-        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
-        taskService.setAssignee(task.getId(), String.valueOf(investigatorId));
-        return Result.success();
-    }
-
-    @RequestMapping(value = "/investigator/need/material/{financeId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{financeId}/investigator/need/material", method = RequestMethod.PUT)
     @ApiOperation(value = "尽调员确认需要补充材料", notes = "尽调员确认需要业务员补充材料")
     @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
     public Result myrInvestigatorConfirmNeedSupplyMaterialMethod(@PathVariable("financeId")int financeId) {
         return Result.success();
     }
 
-    @RequestMapping(value = "/salesman/supply/investigation/material/{financeId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/{financeId}/salesman/supply/investigation/material", method = RequestMethod.PUT)
     @ApiOperation(value = "业务员补充材料", notes = "业务员补充材料")
     @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
     public Result myrSalesmanSupplyInvestigationMaterialMethod(@PathVariable("financeId")int financeId) {
         return Result.success();
     }
 
-    @RequestMapping(value = "/investigator/audit/pass/{financeId}", method = RequestMethod.PUT)
-    @ApiOperation(value = "尽调员审核通过", notes = "尽调员审核通过")
+    @RequestMapping(value = "/{financeId}/investigator/audit", method = RequestMethod.PUT)
+    @ApiOperation(value = "尽调员审核", notes = "尽调员审核")
     @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result myrInvestigatorAuditPassMethod(@PathVariable("financeId")int financeId) {
-        return Result.success();
-    }
-
-    @RequestMapping(value = "/investigator/audit/notpass/{financeId}", method = RequestMethod.PUT)
-    @ApiOperation(value = "尽调员审核不通过", notes = "尽调员审核不通过")
-    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result myrInvestigatorAuditNotPassMethod(@PathVariable("financeId")int financeId) {
-        return Result.success();
-    }
-
-    @RequestMapping(value = "/{financeId}/riskmanager/manager/task/claim", method = RequestMethod.PUT)
-    @ApiOperation(value = "风控管理员领取任务", notes = "风控管理员组内成员领取任务")
-    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result riskManagerManagerClaimTaskMethod(@PathVariable(value = "financeId")int financeId) {
-        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
-        taskService.claim(task.getId(), adminSession.getUser().getId());
-        return Result.success();
-    }
-
-    @RequestMapping(value = "/{financeId}/assign/riskmanager/{riskManagerId}", method = RequestMethod.PUT)
-    @ApiOperation(value = "分配风控人员操作", notes = "分配风控人员操作")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path"),
-            @ApiImplicitParam(name = "riskManagerId", value = "风控人员Id", required = true, dataType = "Integer", paramType = "path")
-    })
-    public Result assignMYRRiskManagerMethod(@PathVariable(value = "financeId") int financeId,
-                                             @PathVariable(value = "riskManagerId") int riskManagerId) {
-        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
-        taskService.setAssignee(task.getId(), String.valueOf(riskManagerId));
+    public Result myrInvestigatorAuditMethod(@PathVariable("financeId")int financeId) {
         return Result.success();
     }
 
@@ -199,17 +109,10 @@ public class MYRFinancingController {
         return Result.success();
     }
 
-    @RequestMapping(value = "/{financeId}/riskmanager/audit/pass", method = RequestMethod.PUT)
-    @ApiOperation(value = "风控人员审核通过", notes = "风控人员审核通过")
+    @RequestMapping(value = "/{financeId}/riskmanager/audit", method = RequestMethod.PUT)
+    @ApiOperation(value = "风控人员审核", notes = "风控人员审核")
     @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result myrRiskManagerAuditPassMethod(@PathVariable("financeId")int financeId) {
-        return Result.success();
-    }
-
-    @RequestMapping(value = "/{financeId}/riskmanager/audit/notpass", method = RequestMethod.PUT)
-    @ApiOperation(value = "风控人员审核不通过", notes = "风控人员审核不通过, 流程结束.")
-    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
-    public Result myrRiskManagerAuditNotPassMethod(@PathVariable("financeId")int financeId) {
+    public Result myrRiskManagerAuditMethod(@PathVariable("financeId")int financeId) {
         return Result.success();
     }
 
