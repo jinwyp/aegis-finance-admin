@@ -87,7 +87,7 @@ public class UserCenterController {
     @LoginRequired
     @RequestMapping(value = "/applyInfo/{id}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
-        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, 0);
+        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, userSession.getUser().getId());
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         return Result.success().setData(financeOrder);
     }

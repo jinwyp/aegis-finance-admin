@@ -124,9 +124,9 @@
                         <th>审核状态</th>
                         <th>操作</th>
                     </tr>
-                    <tr class="borderB" ms-for="(key, order) in @financeList">
-                        <td>{{key+1}}</td>
-                        <td>{{order.sourceID}}</td>
+                    <tr class="borderB" ms-for="(index, order) in @financeList">
+                        <td>{{index+1}}</td>
+                        <td>{{order.sourceId}}</td>
                         <td>{{order.applyType}}</td>
                         <td>{{order.applyDateTime}}</td>
                         <td>{{order.applyUserName}}</td>
@@ -141,7 +141,7 @@
 
                         <td class="bold">{{order.approveState}}</td>
 
-                        <td class="blueA"><a href="#" >查看详情</a></td>
+                        <td class="blueA"><a href="/finance/user/financing/{{order.id}}" >查看详情</a></td>
                     </tr>
 
                 </table>
@@ -181,7 +181,7 @@
 </#if>
 
 
-<script src="${staticPath}/js/page2/userCenterFinanceList.bundle.js"></script>
+<!--<script src="${staticPath}/js/page2/userCenterFinanceList.bundle.js"></script>-->
 <script>
     System['import']('${staticPath}/js/page/userCenterFinanceList.js')
 </script>
