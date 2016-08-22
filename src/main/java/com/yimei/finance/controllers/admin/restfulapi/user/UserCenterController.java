@@ -133,16 +133,22 @@ public class UserCenterController {
         ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().executionId(task.getExecutionId()).singleResult();
         if (execution == null || StringUtils.isEmpty(execution.getActivityId())) return Result.error(EnumCommonError.Admin_System_Error);
         List<User> userList = new ArrayList<>();
+        String financeEventType = "";
         if (execution.getActivityId().equals(EnumFinanceAssignType.assignOnlineTrader.toString())) {
             userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.OnlineTraderGroup.id).list();
+            financeEventType = EnumFinanceEventType.onlineTraderAddMaterial.toString();
         } else if (execution.getActivityId().equals(EnumFinanceAssignType.assignSalesman.toString())) {
             userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SalesmanGroup.id).list();
+            financeEventType = EnumFinanceEventType.salesmanAudit.toString();
         } else if (execution.getActivityId().equals(EnumFinanceAssignType.assignInvestigator.toString())) {
             userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.InvestigatorGroup.id).list();
+            financeEventType = EnumFinanceEventType.investigatorAudit.toString();
         } else if (execution.getActivityId().equals(EnumFinanceAssignType.assignSupervisor.toString())) {
             userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SupervisorGroup.id).list();
+            financeEventType = EnumFinanceEventType.supervisorAudit.toString();
         } else if (execution.getActivityId().equals(EnumFinanceAssignType.assignRiskManager.toString())) {
             userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.RiskGroup.id).list();
+            financeEventType = EnumFinanceEventType.riskManagerAudit.toString();
         } else {
             return Result.error(EnumCommonError.Admin_System_Error);
         }
@@ -152,9 +158,11 @@ public class UserCenterController {
                 List<Task> taskList = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).active().list();
                 for (Task t : taskList) {
                     Execution exe = runtimeService.createExecutionQuery().executionId(t.getExecutionId()).singleResult();
-                    if (exe.getActivityId().equals(EnumFinanceEventType.onlineTraderAddMaterial.toString())) {
+                    if (exe.getActivityId().equals(financeEventType)) {
                         taskService.setAssignee(t.getId(), userId);
                         return Result.success().setData(true);
+                    } else {
+                        return Result.error(EnumCommonError.Admin_System_Error);
                     }
                 }
             }

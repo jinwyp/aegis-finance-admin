@@ -4,6 +4,7 @@ import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  * Created by liuxinjie on 16/8/22.
@@ -13,6 +14,7 @@ public class FinanceOrderServiceImpl {
     @Autowired
     private FinanceOrderRepository financeOrderRepository;
 
+    @Transactional
     public void updateFinanceOrder(FinanceOrder financeOrder) {
         FinanceOrder order = financeOrderRepository.findOne(financeOrder.getId());
         order.setFinancingAmount(financeOrder.getFinancingAmount());
