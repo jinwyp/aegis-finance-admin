@@ -78,7 +78,7 @@ public class UserCenterController {
     @ApiOperation(value = "查看个人任务列表", notes = "查看个人任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
-        List<TaskObject> taskList = DozerUtils.copy(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).orderByTaskDueDate().desc().listPage(page.getOffset(), page.getCount()), TaskObject.class);
+        List<TaskObject> taskList = DozerUtils.copy(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByTaskDueDate().desc().listPage(page.getOffset(), page.getCount()), TaskObject.class);
         page.setTotal(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).count());
         return Result.success().setData(taskList).setMeta(page);
     }
@@ -100,11 +100,11 @@ public class UserCenterController {
         return Result.success().setData(null).setMeta(page);
     }
 
-    @RequestMapping(value = "/{processInstanceId}/task/claim", method = RequestMethod.PUT)
+    @RequestMapping(value = "/task/{taskId}/claim", method = RequestMethod.PUT)
     @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作", response = Boolean.class)
-    @ApiImplicitParam(name = "processInstanceId", value = "任务流程实例id", required = true, dataType = "String", paramType = "path")
-    public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "processInstanceId")String processInstanceId) {
-        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).active().singleResult();
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "taskId")String taskId) {
+        Task task = taskService.createTaskQuery().taskId(taskId).active().singleResult();
         List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
         List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
         for (IdentityLink identityLink : identityLinkList) {
@@ -118,44 +118,45 @@ public class UserCenterController {
         return Result.error(EnumAdminUserError.你没有权限领取此任务.toString());
     }
 
-    @RequestMapping(value = "/{processInstanceId}/assign/trader/{userId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/assign/trader/{taskId}/{userId}", method = RequestMethod.PUT)
     @ApiOperation(value = "管理员分配人员", notes = "管理员分配人员操作")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "processInstanceId", value = "任务流程实例id", required = true, dataType = "String", paramType = "path"),
+            @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "userId", value = "被分配人userId", required = true, dataType = "String", paramType = "path")
     })
-    public Result assignMYROnlineTraderMethod(@PathVariable(value = "processInstanceId") String processInstanceId,
+    public Result assignMYROnlineTraderMethod(@PathVariable(value = "taskId") String taskId,
                                               @PathVariable(value = "userId") String userId) {
-        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).active().singleResult();
+        Task task = taskService.createTaskQuery().taskId(taskId).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
+        User user = identityService.createUserQuery().userId(userId).singleResult();
+        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().executionId(task.getExecutionId()).singleResult();
         if (execution == null || StringUtils.isEmpty(execution.getActivityId())) return Result.error(EnumCommonError.Admin_System_Error);
         List<User> userList = new ArrayList<>();
-        if (execution.getActivityId().equals(EnumFinanceAssignEvent.assignOnlineTrader.toString())) {
+        if (execution.getActivityId().equals(EnumFinanceAssignType.assignOnlineTrader.toString())) {
             userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.OnlineTraderGroup.id).list();
-        } else if (execution.getActivityId().equals(EnumFinanceAssignEvent.assignSalesman.toString())) {
+        } else if (execution.getActivityId().equals(EnumFinanceAssignType.assignSalesman.toString())) {
             userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SalesmanGroup.id).list();
-        } else if (execution.getActivityId().equals(EnumFinanceAssignEvent.assignInvestigator.toString())) {
+        } else if (execution.getActivityId().equals(EnumFinanceAssignType.assignInvestigator.toString())) {
             userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.InvestigatorGroup.id).list();
-        } else if (execution.getActivityId().equals(EnumFinanceAssignEvent.assignSupervisor.toString())) {
+        } else if (execution.getActivityId().equals(EnumFinanceAssignType.assignSupervisor.toString())) {
             userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SupervisorGroup.id).list();
-        } else if (execution.getActivityId().equals(EnumFinanceAssignEvent.assignRiskManager.toString())) {
+        } else if (execution.getActivityId().equals(EnumFinanceAssignType.assignRiskManager.toString())) {
             userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.RiskGroup.id).list();
         } else {
             return Result.error(EnumCommonError.Admin_System_Error);
         }
-        for (User user : userList) {
-            if (user.getId().equals(userId)) {
+        for (User u : userList) {
+            if (u.getId().equals(userId)) {
                 taskService.complete(task.getId());
-                List<Task> taskList = taskService.createTaskQuery().processInstanceId(processInstanceId).list();
-
+                List<Task> taskList = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).active().list();
                 for (Task t : taskList) {
                     Execution exe = runtimeService.createExecutionQuery().executionId(t.getExecutionId()).singleResult();
-                    if (exe.getActivityId().equals(EnumFinanceTaskType.onlineTraderAddMaterial.toString())) {
+                    if (exe.getActivityId().equals(EnumFinanceEventType.onlineTraderAddMaterial.toString())) {
                         taskService.setAssignee(t.getId(), userId);
+                        return Result.success().setData(true);
                     }
                 }
-                return Result.success().setData(true);
             }
         }
         return Result.error(EnumAdminFinanceError.该用户没有处理此金融单的权限.toString());
