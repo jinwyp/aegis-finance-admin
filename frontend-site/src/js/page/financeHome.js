@@ -36,16 +36,20 @@ var financeHome = () => {
         });
     };
 
+
+    $('.banner_link').click(()=> {
+        $('html, body').animate({scrollTop:'1200px'},'500',function(){});
+    });
     //modal
-    $('.banner_link').click(function () {
+    $('#slide .type-buy').click(()=>{
         $('.modal_1').modal();
     });
 
-    $('#md_ok_1').click(function () {
-        postApplyInfo({
-            applyType : ''
-        });
-    });
+    // $('#md_ok_1').click(function () {
+    //     postApplyInfo({
+    //         applyType : ''
+    //     });
+    // });
 
 
 };
