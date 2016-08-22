@@ -18,14 +18,10 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/financing/admin")
 @RestController("adminUserAuthController")
 public class UserAuthController {
-
     @Autowired
     private AdminSession adminSession;
-
     @Autowired
     private AdminUserServiceImpl adminService;
-
-
 
     /**
      * 管理员登陆
@@ -41,12 +37,11 @@ public class UserAuthController {
         return adminService.login(userName, password);
     }
 
-
     /**
      * 管理员退出登录
      */
     @ApiOperation(value = "退出登录接口", notes = "退出登陆")
-    @RequestMapping(value = "/logout", method = RequestMethod.GET)
+    @RequestMapping(value = "/logout", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
     public Result logout() {
         adminSession.logout();
         return Result.success();

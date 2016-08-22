@@ -9,9 +9,6 @@ import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-/**
- * Created by liuxinjie on 16/8/16.
- */
 @Service
 public class AdminUserServiceImpl {
     @Autowired
