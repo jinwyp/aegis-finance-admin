@@ -55,7 +55,7 @@ public class FinanceCommonController {
                                               @RequestParam(value = "applyType", required = true)String applyType) {
         FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        if (runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)) != null) return Result.error(EnumAdminFinanceError.此金融单已经创建流程.toString());
+        if (runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult() != null) return Result.error(EnumAdminFinanceError.此金融单已经创建流程.toString());
         financeOrder.setApplyType(applyType);
         financeOrderRepository.save(financeOrder);
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
