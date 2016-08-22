@@ -31,7 +31,7 @@ requireDir('./gulptask', { recurse: true });
 
 
 
-gulp.task('watch',['watchSass', 'watchJs']);
+gulp.task('watch',[ 'watchJs', 'watchSass']);
 
 
 
