@@ -18,7 +18,10 @@ declare var __moduleName: string;
 
 export class FinanceApplyComponent {
 
-    title = '申请页面';
+    financeType=1;
+    changeType = (typeIndex)=>{
+        this.financeType=typeIndex;
+    }
 
 }
 

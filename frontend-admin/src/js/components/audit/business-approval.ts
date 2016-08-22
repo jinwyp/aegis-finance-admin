@@ -9,16 +9,14 @@ import { Component } from '@angular/core';
 declare var __moduleName: string;
 
 @Component({
-    selector: 'finance-table',
+    selector: 'business-approval',
     moduleId: __moduleName || module.id,
-    templateUrl: 'finance-table.html'
+    templateUrl: 'business-approval.html'
 })
 
 
 
-export class FinanceTableComponent {
-
-    title = '申请表单';
+export class BusinessApprovalComponent {
 
 }
 

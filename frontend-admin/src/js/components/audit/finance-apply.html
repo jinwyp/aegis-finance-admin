@@ -6,48 +6,141 @@
     </ol>
 </div>
 
-<finance-table></finance-table>
+<process-tab></process-tab>
 
-<!--<div class="item-margin distribution-box">-->
+<div class="item-margin apply-box">
 
-    <!--<div class="main-title">当前业务</div>-->
+    <div class="table-title">融资申请</div>
 
-    <!--<div class="row mt-50 info-item">-->
-        <!--<span class="col-sm-4 info-label-input">选择你要分配的线上交易员:</span>-->
-        <!--<div class="col-sm-8 info-val">-->
-            <!--<input type="text" value="角色名称">-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="row info-item">-->
-        <!--<span class="col-sm-4 info-label">线上交易员姓名:</span>-->
-        <!--<div class="col-sm-8 info-val">-->
-            <!--<span>线上交易员姓名</span>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="row info-item">-->
-        <!--<span class="col-sm-4 info-label">联系方式:</span>-->
-        <!--<div class="col-sm-8 info-val">-->
-            <!--<span>18621266707</span>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="row info-item">-->
-        <!--<span class="col-sm-4 info-label">角色名称:</span>-->
-        <!--<div class="col-sm-8 info-val">-->
-            <!--<span>角色名称</span>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="row info-item">-->
-        <!--<span class="col-sm-4 info-label">所属部门:</span>-->
-        <!--<div class="col-sm-8 info-val">-->
-            <!--<span>所属部门</span>-->
-        <!--</div>-->
-    <!--</div>-->
-    <!--<div class="row info-item">-->
-        <!--<span class="col-sm-4 info-label-input"></span>-->
-        <!--<div class="col-sm-8 info-val no-bottom-border">-->
-            <!--<button type="button" class="btn btn-default btn-lg btn-sure">分配</button>-->
-            <!--<button type="button" class="btn btn-default btn-lg btn-return ml-20">返回</button>-->
-        <!--</div>-->
-    <!--</div>-->
+    <div class="apply-title">需求提报</div>
 
-<!--</div>-->
+    <table class="table table-bordered apply-table">
+        <tr class="item-max">
+            <td class="td-label">选择融资类型:</td>
+            <td class="td-val finance-types" colspan="3">
+                <div [class]="'finance-type'" [class.selected]="financeType==1">
+                    <div><label><input name="aa" type="radio" [checked]="financeType==1" (click)="changeType(1)">煤易融</label></div>
+                    <div class="introduce">我有煤，可发运至终端形成应收账款，需要实现资金的快速回流</div>
+                </div>
+                <div [class]="'finance-type'" [class.selected]="financeType==2">
+                    <div><label><input name="aa" type="radio" [checked]="financeType==2" (click)="changeType(2)">煤易贷</label></div>
+                    <div class="introduce">我有煤，可质押,想要实现快速融资</div>
+                </div>
+                <div [class]="'finance-type'" [class.selected]="financeType==3">
+                    <div><label><input name="aa" type="radio" [checked]="financeType==3" (click)="changeType(3)">煤易购</label></div>
+                    <div class="introduce">我有采购订单，需要申请垫资采购，从而突破自身资金瓶颈</div>
+                </div>
+            </td>
+        </tr>
+
+        <tr class="item-min">
+            <td class="td-label">拟融资金额:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"><span>万元</span></td>
+            <td class="td-label">拟使用资金时间:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"><span>天</span></td>
+        </tr>
+
+        <!--煤易融-->
+        <tr *ngIf="financeType==1" class="item-min">
+            <td class="td-label">预期此笔业务量:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"><span>万吨</span></td>
+            <td class="td-label">运输方式:</td>
+            <td class="td-val">
+                <select>
+                    <option value ="volvo">请选择</option>
+                    <option value ="saab">汽运</option>
+                    <option value="opel">火运</option>
+                    <option value="audi">船运</option>
+                    <option value="audi">其它</option>
+                </select>
+            </td>
+        </tr>
+        <tr *ngIf="financeType==1" class="item-min">
+            <td class="td-label">预计单吨销售价:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"><span>元/吨</span></td>
+            <td class="td-label">签约单位全称:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <tr *ngIf="financeType==1" class="item-min">
+            <td class="td-label">下游签约单位全称:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-label">用煤终端:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+
+        <!--煤易贷-->
+        <tr *ngIf="financeType==2" class="item-min">
+            <td class="td-label">预期此笔业务量:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"><span>万吨</span></td>
+            <td class="td-label">煤炭仓储地:</td>
+            <td class="td-val">
+
+            </td>
+        </tr>
+        <tr *ngIf="financeType==2" class="item-min">
+            <td class="td-label">煤炭来源:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-label">煤炭仓储地:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <tr *ngIf="financeType==2" class="item-min">
+            <td class="td-label">单吨市场报价:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"><span>元/吨</span></td>
+            <td class="td-label">主要煤质指标:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+
+        <!--煤易购-->
+        <tr *ngIf="financeType==3" class="item-min">
+            <td class="td-label">预期此笔业务量:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"><span>万吨</span></td>
+            <td class="td-label">运输方式:</td>
+            <td class="td-val">
+                <select>
+                    <option value ="volvo">请选择</option>
+                    <option value ="saab">汽运</option>
+                    <option value="opel">火运</option>
+                    <option value="audi">船运</option>
+                    <option value="audi">其它</option>
+                </select>
+            </td>
+        </tr>
+        <tr *ngIf="financeType==3" class="item-min">
+            <td class="td-label">单吨采购价:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"><span>元/吨</span></td>
+            <td class="td-label">上游资源方全称:</td>
+            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+        <tr *ngIf="financeType==3" class="item-min">
+            <td class="td-label">中转港口/地全称:</td>
+            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+        </tr>
+
+        <tr class="item-max">
+            <td class="td-label">上传单据:</td>
+            <td class="td-val finance-type" colspan="3">
+                <div class="hint mb-20">如: 下游签约单位合同模板、历史供煤信息，终端结算回款历史单据、自身企业信用、财务状况</div>
+                <a class="btn-upload">
+                    <span class="upload-icon"></span>
+                    <div class="mt-10">点击上传</div>
+                </a>
+            </td>
+        </tr>
+        <tr class="item-max">
+            <td class="td-label">备注说明:</td>
+            <td class="td-val td-textarea" colspan="3">
+                <textarea class="form-control" rows="6"></textarea>
+            </td>
+        </tr>
+    </table>
+
+    <div class="row info-item">
+        <span class="col-sm-4 info-label-input"></span>
+        <div class="col-sm-8 info-val no-bottom-border">
+            <button type="button" class="btn btn-default btn-lg btn-sure" [routerLink]="['/businessapproval']">分配</button>
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20">返回</button>
+        </div>
+    </div>
+</div>
+
+

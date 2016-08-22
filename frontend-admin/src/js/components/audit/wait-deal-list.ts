@@ -18,7 +18,6 @@ declare var __moduleName: string;
 
 export class WaitDealListComponent {
 
-    title = '我的待办';
 
 }
 

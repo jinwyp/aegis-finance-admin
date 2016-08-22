@@ -55,7 +55,7 @@ public class FinanceCommonController {
                                               @RequestParam(value = "applyType", required = true)String applyType) {
         FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        if (runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)) != null) return Result.error(EnumAdminFinanceError.此金融单已经创建流程.toString());
+        if (runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult() != null) return Result.error(EnumAdminFinanceError.此金融单已经创建流程.toString());
         financeOrder.setApplyType(applyType);
         financeOrderRepository.save(financeOrder);
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
@@ -74,11 +74,11 @@ public class FinanceCommonController {
         }
     }
 
-    @RequestMapping(value = "/{processInstanceId}/task/claim", method = RequestMethod.PUT)
-    @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作")
-    @ApiImplicitParam(name = "processInstanceId", value = "任务对应流程实例id", required = true, dataType = "String", paramType = "path")
-    public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "processInstanceId")String processInstanceId) {
-        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).singleResult();
+    @RequestMapping(value = "/task/{taskId}/claim", method = RequestMethod.PUT)
+    @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作", response = Boolean.class)
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "taskId")String taskId) {
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
         List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
         for (IdentityLink identityLink : identityLinkList) {
@@ -93,15 +93,15 @@ public class FinanceCommonController {
     }
 
 
-    @RequestMapping(value = "/{processInstanceId}/assign/trader/{userId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/assign/trader/{taskId}/{userId}", method = RequestMethod.PUT)
     @ApiOperation(value = "管理员分配人员", notes = "管理员分配人员操作")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "processInstanceId", value = "任务对应流程实例id", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "userId", value = "被分配人userId", required = true, dataType = "String", paramType = "path")
     })
-    public Result assignMYROnlineTraderMethod(@PathVariable(value = "processInstanceId") String processInstanceId,
+    public Result assignMYROnlineTraderMethod(@PathVariable(value = "taskId") String taskId,
                                               @PathVariable(value = "userId") String userId) {
-        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).active().singleResult();
+        Task task = taskService.createTaskQuery().taskId(taskId).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().executionId(task.getExecutionId()).singleResult();
         if (execution == null || StringUtils.isEmpty(execution.getActivityId())) return Result.error(EnumCommonError.Admin_System_Error);

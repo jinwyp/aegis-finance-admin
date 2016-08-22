@@ -18,7 +18,7 @@ declare var __moduleName: string;
 
 export class DistributionPageComponent {
 
-    title = '分配人员';
+
 
 }
 

@@ -3,7 +3,7 @@
  */
 
 
-import { Component } from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 
 declare var __moduleName: string;
@@ -18,7 +18,7 @@ declare var __moduleName: string;
 
 export class DistributionPersonComponent {
 
-    title = '分配人员';
-
+    @Input()
+    data = {}
 }
 
