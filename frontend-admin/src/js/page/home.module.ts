@@ -39,7 +39,8 @@ import { DistributionPageComponent } from '../components/audit/distribution-page
 import { ProcessTabComponent } from '../components/audit/common/process-tab';
 import { DistributionPersonComponent } from '../components/audit/common/distribution-person';
 import { FinanceApplyComponent } from '../components/audit/finance-apply';
-import { FinanceTableComponent } from '../components/audit/common/finance-table';
+import { BusinessApprovalComponent } from '../components/audit/business-approval';
+import { TuneReportComponent } from '../components/audit/tune-report';
 
 
 import {AlertComponent} from 'ng2-bootstrap/ng2-bootstrap';
@@ -54,8 +55,9 @@ import {AlertComponent} from 'ng2-bootstrap/ng2-bootstrap';
         UserDetailComponent, UpdatePwdComponent,
         RoleListComponent, AddRoleComponent, RoleInfoComponent,
         UserListComponent, AddUserComponent, UserInfoComponent,
-        WaitDealListComponent,
-        DistributionPageComponent,ProcessTabComponent,DistributionPersonComponent,FinanceApplyComponent,FinanceTableComponent,DistributionPersonComponent
+        ProcessTabComponent, DistributionPersonComponent,
+        WaitDealListComponent, DistributionPageComponent, FinanceApplyComponent, BusinessApprovalComponent,
+        TuneReportComponent
     ],
     providers: [ OrderService,
         homePageRouterProviders,
