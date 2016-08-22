@@ -44,6 +44,12 @@ var financeHome = () => {
     $('#slide .type-buy').click(()=>{
         $('.modal_1').modal();
     });
+    $('#slide .type-melt').click(()=>{
+        $('.modal_1').modal();
+    });
+    $('#slide .type-loan').click(()=>{
+        $('.modal_1').modal();
+    });
 
     // $('#md_ok_1').click(function () {
     //     postApplyInfo({

@@ -54,10 +54,10 @@
             <div class="application ">
                 <div class="borderB clearfix">
                     <h4><span></span>融资详情</h4>
-                    <div class="floatR">
+                    <!--<div class="floatR">-->
                         <!--<span><em></em>了解业务类型</span>-->
-                        <a href="javascript:void(0);" id="finance">我要融资</a>
-                    </div>
+                        <!--<a href="javascript:void(0);" id="finance">我要融资</a>-->
+                    <!--</div>-->
                 </div>
 
                 <form>
