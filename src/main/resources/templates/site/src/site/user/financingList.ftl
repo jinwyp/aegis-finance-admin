@@ -141,7 +141,7 @@
 
                         <td class="bold">{{order.approveState}}</td>
 
-                        <td class="blueA"><a href="/finance/user/financing/{{order.id}}" >查看详情</a></td>
+                        <td class="blueA"><a ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a></td>
                     </tr>
 
                 </table>
