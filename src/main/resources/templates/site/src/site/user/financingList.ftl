@@ -50,13 +50,6 @@
 
 
         <!--右侧主内容开始-->
-        <!--<div class="financeCon ms-controller" ms-controller="test">-->
-            <!--<input ms-duplex="@name">-->
-            <!--<p>Hello,{{@name}}!</p>-->
-            <!--<ul>-->
-                <!--<li ms-for="($index,el) in @array">{{$index}}--{{el}}</li>-->
-            <!--</ul>-->
-        <!--</div>-->
         <div class="financeCon ms-controller" ms-controller="financeList">
             <div class="application ">
                 <div class="borderB clearfix">
@@ -90,7 +83,7 @@
                     <br/>
 
                     <label for="number">业务编号:</label>
-                    <input type="text" id="number" class="margin-l" ms-duplex="@searchQuery.businessId" onkeyup="this.value=this.value.replace(/\D/g,'')">
+                    <input type="text" id="number" class="margin-l" ms-duplex="@searchQuery.businessId">
 
                     <label for="type">业务类型:</label>
                     <div class="positionR selectDiv">
@@ -127,21 +120,34 @@
                     <tr class="borderB" ms-for="(index, order) in @financeList">
                         <td>{{index+1}}</td>
                         <td>{{order.sourceId}}</td>
-                        <td>{{order.applyType}}</td>
-                        <td>{{order.applyDateTime}}</td>
-                        <td>{{order.applyUserName}}</td>
-                        <td class="bold">{{order.financingAmount | number(2)}}</td>
-                        <td class="bold">{{order.expectedDate}}</td>
-                        <!--审核不通过-->
-                        <!--<td class="gray" ms-visible="@order.approveState==='审核不通过'">{{order.approveState}}</td>-->
-                        <!--待审核-->
-                        <!--<td class="green" ms-visible="@order.approveState==='待审核'">{{order.approveState}}</td>-->
-                        <!--审核通过-->
-                        <!--<td class="bold" ms-visible="@order.approveState==='审核通过'">{{order.approveState}}</td>-->
+                        <td>
+                            <span ms-visible="order.applyType==='MYR'">煤易融</span>
+                            <span ms-visible="order.applyType==='MYG'">煤易购</span>
+                            <span ms-visible="order.applyType==='MYD'">煤易贷</span>
+                            <span ms-visible="order.applyType===''">/</span>
+                        </td>
 
-                        <td class="bold">{{order.approveState}}</td>
+                        <td>{{order.applyDateTime || '/'}}</td>
+                        <td>{{order.applyUserName || '/'}}</td>
+                        <td>
+                            <span ms-visible="order.financingAmount===null">/</span>
+                            <span ms-visible="order.financingAmount!=null">{{order.financingAmount | number(2)}}</span>
 
-                        <td class="blueA"><a ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a></td>
+                        </td>
+                        <td>{{order.expectDate || '/'}}</td>
+
+                        <td>
+                            <span class="gray" ms-visible="order.approveState==='审核不通过'">{{order.approveState}}</span>
+                            <span class="green" ms-visible="order.approveState==='待审核'">{{order.approveState}}</span>
+                            <span class="bold" ms-visible="order.approveState==='审核通过'">{{order.approveState}}</span>
+                            <span ms-visible="order.approveState===''">/</span>
+                        </td>
+
+                        <td>
+                            <a  class="blueA" ms-visible="order.approveState==='审核不通过'" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <a  class="orangeA" ms-visible="order.approveState==='审核通过'" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <a  class="orangeA" ms-visible="order.approveState==='待审核'" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                        </td>
                     </tr>
 
                 </table>

@@ -118,15 +118,17 @@ $borderColor:#e4e4e4;
             border-bottom: 1px dotted $borderColor;
             table{
               width: 100%;
-              line-height: 40px;
+              //line-height: 40px;
               th{
                 width: 174px;
                 padding-left: 40px;
                 color: #999999;
                 vertical-align: top;
+                line-height: 40px;
               }
               td{
                 width: 335px;
+                line-height: 40px;
                 .red{
                   color: #ff6e27;
                   font-weight: bold;
@@ -136,8 +138,8 @@ $borderColor:#e4e4e4;
                 .gray{
                   color:#999999;
                   font-size: 12px;
-                  position: absolute;
-                  line-height: 0px;
+                  line-height: 5px;
+                  margin-bottom: 20px;
                 }
                 li{
                   float: left;

@@ -25,6 +25,7 @@ var financeInfo = (query)=> {
             method   : 'GET',
             dataType : 'json',
             success  : (data)=> {
+                console.log(data);
                 if (data.success){
                     vm.financeInfo = data.data;
                 }else{

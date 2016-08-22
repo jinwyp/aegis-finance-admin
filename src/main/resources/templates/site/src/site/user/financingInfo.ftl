@@ -73,7 +73,7 @@
                                 <td ms-visible="@financeInfo.applyType==='MYD'">煤易贷</td>
                                 <td ms-visible="@financeInfo.applyType==='MYG'">煤易购</td>
                                 <th>业务编号:</th>
-                                <td>{{@financeInfo.sourceID}}</td>
+                                <td>{{@financeInfo.sourceId}}</td>
                             </tr>
                             <tr>
                                 <th>申请人:</th>
@@ -87,16 +87,16 @@
                         <table>
                             <tr>
                                 <th>拟使用资金时间:</th>
-                                <td>{{@financeInfo.expectedDate}}天</td>
+                                <td>{{@financeInfo.expectDate}}&nbsp;天</td>
                                 <th colspan="2">预期此笔业务量:</th>
-                                <td>{{@financeInfo.businessAmount}}万吨</td>
+                                <td>{{@financeInfo.businessAmount}}&nbsp;万吨</td>
                             </tr>
                             <tr>
                                 <th>拟融资金额:</th>
                                 <td colspan="2">
-                                    <span class="red">{{@financeInfo.financingAmount | number(2)}}</span>万元
-                                    <br/>
-                                    <span class="gray">({{@financeInfo.financingAmount | switchTxt}})</span>
+                                    <span class="red">{{@financeInfo.financingAmount | number(2)}}</span>&nbsp;万元
+
+                                    <p class="gray">({{@financeInfo.financingAmount | switchTxt}})</p>
                                 </td>
                             </tr>
                         </table>
@@ -106,9 +106,9 @@
                         <table ms-visible="@financeInfo.applyType==='MYR'">
                             <tr>
                                 <th>签约单位全称:</th>
-                                <td>{{@financeInfo.contractors}}</td>
+                                <td>{{@financeInfo.contractor}}</td>
                                 <th>下游签约单位全称:</th>
-                                <td>{{@financeInfo.downstreamContractors}}</td>
+                                <td>{{@financeInfo.downstreamContractor}}</td>
                             </tr>
                             <tr>
                                 <th>用煤终端:</th>
@@ -118,7 +118,7 @@
                             </tr>
                             <tr>
                                 <th>预计单吨销售价:</th>
-                                <td colspan="2">{{@financeInfo.sellingPrice}}元/吨</td>
+                                <td colspan="2">{{@financeInfo.sellingPrice}}&nbsp;元/吨</td>
                             </tr>
                         </table>
                         <!--购-->
@@ -133,7 +133,7 @@
                                 <th>运输方式:</th>
                                 <td>{{@financeInfo.transportMode}}</td>
                                 <th>单吨采购价:</th>
-                                <td>{{@financeInfo.procurementPrice}}元/吨</td>
+                                <td>{{@financeInfo.procurementPrice}}&nbsp;元/吨</td>
                             </tr>
                         </table>
                         <!--贷-->
@@ -142,14 +142,14 @@
                                 <th>煤炭仓储地:</th>
                                 <td>{{@financeInfo.storageLocation}}</td>
                                 <th>煤炭来源:</th>
-                                <td>{{@financeInfo.coalSources}}</td>
+                                <td>{{@financeInfo.coalSource}}</td>
                             </tr>
                             <tr>
                                 <th>主要煤质指标:</th>
                                 <!--------------------------------------------字段无------------------------->
                                 <td>{{@financeInfo.transportMode}}</td>
                                 <th>单吨市场报价:</th>
-                                <td>{{@financeInfo.marketPrice}}元/吨</td>
+                                <td>{{@financeInfo.marketPrice}}&nbsp;元/吨</td>
                             </tr>
                         </table>
                     </div>
@@ -159,19 +159,7 @@
                                 <th>已上传单据:</th>
                                 <td colspan="3">
                                     <ul>
-                                        <li class="paddingL0">
-                                            <p>税务单据</p>
-                                            <img src="" alt="">
-                                        </li>
-                                        <li>
-                                            <p>税务单据</p>
-                                            <img src="" alt="">
-                                        </li>
-                                        <li>
-                                            <p>税务单据</p>
-                                            <img src="" alt="">
-                                        </li>
-                                        <li>
+                                        <li class="paddingL0" ms-for="(index, certificate) in @financeInfo">
                                             <p>税务单据</p>
                                             <img src="" alt="">
                                         </li>
@@ -199,8 +187,12 @@
                         <table>
                             <tr>
                                 <th>审批状态:</th>
-                                <td><span class="red"><em></em>{{@financeInfo.approveState}}</span></td>
-                                <!--<td><span class="green"><em></em>{{@financeInfo.approveState}}</span></td>-->
+                                <td >
+                                    <span class="red" ms-visible="@financeInfo.approveState==='补充材料'"><em></em>{{@financeInfo.approveState}}</span>
+                                    <span class="red" ms-visible="@financeInfo.approveState==='审核不通过'"><em></em>{{@financeInfo.approveState}}</span>
+                                    <span class="green" ms-visible="@financeInfo.approveState==='待审核'"><em></em>{{@financeInfo.approveState}}</span>
+                                    <span class="green" ms-visible="@financeInfo.approveState==='审核通过'"><em></em>{{@financeInfo.approveState}}</span>
+                                </td>
                             </tr>
                             <tr>
                                 <th>备注说明:</th>
