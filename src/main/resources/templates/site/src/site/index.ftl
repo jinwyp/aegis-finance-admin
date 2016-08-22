@@ -78,10 +78,10 @@
                 <span class="rightFilter"></span>
             </div>
             <ul class="tuul">
-                <li class="no0 type-buy"><a href="javascript:void(0);"></a><img src="${staticPath}/css/images/finance/type-buy.jpg" /></li>
+                <li class="no0 type-buy" ms-duplex="@financeList.applyType==='MYG'"><a href="javascript:void(0);"></a><img src="${staticPath}/css/images/finance/type-buy.jpg" /></li>
                 <li class="no1 type-melt"><a href="javascript:void(0);"></a><img src="${staticPath}/css/images/finance/type-melt.jpg" /></li>
                 <li class="no2 type-loan"><a href="javascript:void(0);"></a><img src="${staticPath}/css/images/finance/type-loan.jpg" /></li>
-                <li class="no3 type-bu"><a href="javascript:void(0);"></a><img src="${staticPath}/css/images/finance/type-buy.jpg" /></li>
+                <li class="no3 type-buy"><a href="javascript:void(0);"></a><img src="${staticPath}/css/images/finance/type-buy.jpg" /></li>
                 <li class="no4 type-melt"><a href="javascript:void(0);"></a><img src="${staticPath}/css/images/finance/type-melt.jpg" /></li>
                 <li class="no5 waiting type-loan"><a href="javascript:void(0);"></a><img src="${staticPath}/css/images/finance/type-loan.jpg" /></li>
 
