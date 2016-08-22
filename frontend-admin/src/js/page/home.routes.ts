@@ -19,6 +19,8 @@ import { DistributionPageComponent } from '../components/audit/distribution-page
 import { FinanceApplyComponent } from '../components/audit/finance-apply';
 import { BusinessApprovalComponent } from '../components/audit/business-approval';
 import { TuneReportComponent } from '../components/audit/tune-report';
+import { SuperviseReportComponent } from '../components/audit/supervise-report';
+import { RiskControlReportComponent } from '../components/audit/risk-control-report';
 
 const routes: RouterConfig = [
     {
@@ -97,6 +99,14 @@ const routes: RouterConfig = [
     {
         path: 'tunereport',
         component: TuneReportComponent
+    },
+    {
+        path: 'supervisereport',
+        component: SuperviseReportComponent
+    },
+    {
+        path: 'riskcontrolreport',
+        component: RiskControlReportComponent
     }
 ];
 
