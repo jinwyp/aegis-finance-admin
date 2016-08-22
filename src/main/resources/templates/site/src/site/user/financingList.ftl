@@ -90,7 +90,7 @@
                     <br/>
 
                     <label for="number">业务编号:</label>
-                    <input type="text" id="number" class="margin-l" ms-duplex="@searchQuery.businessId">
+                    <input type="text" id="number" class="margin-l" ms-duplex="@searchQuery.businessId" onkeyup="this.value=this.value.replace(/\D/g,'')">
 
                     <label for="type">业务类型:</label>
                     <div class="positionR selectDiv">
@@ -130,7 +130,7 @@
                         <td>{{order.applyType}}</td>
                         <td>{{order.applyDateTime}}</td>
                         <td>{{order.applyUserName}}</td>
-                        <td class="bold">{{order.financingAmount}}</td>
+                        <td class="bold">{{order.financingAmount | number(2)}}</td>
                         <td class="bold">{{order.expectedDate}}</td>
                         <!--审核不通过-->
                         <!--<td class="gray" ms-visible="@order.approveState==='审核不通过'">{{order.approveState}}</td>-->
@@ -149,11 +149,7 @@
                 <xmp ms-widget="[{is:'ms-pagination', $id:'pagination'}, @configPagination]"></xmp>
             </div>
 
-            <!--<input ms-duplex="@name">-->
-            <!--<p>Hello,{{@name}}!</p>-->
-            <!--<ul>-->
-            <!--<li ms-for="($index,el) in @array">{{$index}}&#45;&#45;{{el}}</li>-->
-            <!--</ul>-->
+
         </div>
         <!--右侧主内容结束-->
     </div>
