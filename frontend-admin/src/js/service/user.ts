@@ -7,6 +7,10 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
+import { HttpResult } from './http';
+
+
+
 class User {
 
     id :number;
@@ -22,10 +26,13 @@ class User {
 
 
 
+
 @Injectable()
 class UserService {
 
-    private ApiUrlOrder = 'app2/heroes';  // URL to web api
+    private apiUrl = {
+        login : '/api/financing/admin/login'
+    };
 
     private handleError(error: any) {
         console.error('Http 请求发生错误!! ', error);
@@ -37,21 +44,21 @@ class UserService {
     ) { }
 
 
-    getOrderList() {
-        return this.http.get(this.ApiUrlOrder).toPromise()
-            .then(response => response.json().data as User[])
+    login(user) {
+        return this.http.post(this.apiUrl.login, user).toPromise()
+            .then(response => response.json() as HttpResult)
             .catch(this.handleError);
     }
 
-    getUserById(id: number) {
-        return this.getOrderList().then(heroes => heroes.find(hero => hero.id === id));
-    }
+    // getUserById(id: number) {
+    //     return this.getOrderList().then(heroes => heroes.find(hero => hero.id === id));
+    // }
 
     // Add new Hero
     private post(hero: User): Promise<User> {
         let headers = new Headers({'Content-Type': 'application/json'});
 
-        return this.http.post(this.ApiUrlOrder, JSON.stringify(hero), {headers: headers}).toPromise()
+        return this.http.post(this.apiUrl.login, JSON.stringify(hero), {headers: headers}).toPromise()
             .then(res => res.json().data)
             .catch(this.handleError);
     }
@@ -61,7 +68,7 @@ class UserService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        let url = `${this.ApiUrlOrder}/${hero.id}`;
+        let url = `${this.apiUrl.login}/${hero.id}`;
 
         return this.http.put(url, JSON.stringify(hero), {headers: headers}).toPromise()
             .then(() => hero)
@@ -72,7 +79,7 @@ class UserService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        let url = `${this.ApiUrlOrder}/${hero.id}`;
+        let url = `${this.apiUrl.login}/${hero.id}`;
 
         return this.http.delete(url, {headers: headers}).toPromise()
             .catch(this.handleError);

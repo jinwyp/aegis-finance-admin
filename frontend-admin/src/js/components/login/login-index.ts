@@ -10,39 +10,52 @@ declare var __moduleName: string;
     moduleId    : __moduleName || module.id,
     templateUrl : 'login-index.html'
 })
-
-
-
 export class LoginComponent {
 
     constructor(
-        private userHttp: UserService
+        private user: UserService
     ) {}
 
-    active = true;
-    submitted = false;
+    css = {
+        activeForRefresh : true,
+        isSubmitted : false,
+        ajaxErrorHidden : true
+    };
+
+
     currentUser: User = new User();
 
-    powers = ['Really Smart', 'Super Flexible', 'Super Hot', 'Weather Changer'];
 
     ngOnInit() {
     }
 
 
-    login() {
-        this.submitted = true;
-        // this.orderService.getOrderList().then(heroes => this.heroes = heroes);
+    login(form) {
+        this.css.ajaxErrorHidden = true;
+        this.css.isSubmitted = true;
+        this.user.login({
+            email:this.currentUser.username,
+            password:this.currentUser.password
+        }).then((result)=>{
+            if (result.success){
+                alert('登录成功');
+                window.location.href = '/finance/admin/home';
+            }else{
+                this.css.ajaxErrorHidden = false;
+            }
+            console.log(result)
+        });
     }
 
-    showInfoAfterlogin() {
-        this.submitted = false;
+    showInfoAfterLogin() {
+        this.css.isSubmitted = false;
     }
 
     clearInput() {
 
         this.currentUser = new User();
-        this.active = false;
-        setTimeout(() => this.active = true, 0);
+        this.css.activeForRefresh = false;
+        setTimeout(() => this.css.activeForRefresh = true, 0);
     }
 
     get diagnostic() { return JSON.stringify(this.currentUser); }
