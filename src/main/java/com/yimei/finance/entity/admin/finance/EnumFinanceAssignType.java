@@ -3,7 +3,7 @@ package com.yimei.finance.entity.admin.finance;
 /**
  * 金融申请单,指派人事件
  */
-public enum EnumFinanceAssignEvent {
+public enum EnumFinanceAssignType {
     assignOnlineTrader("分配线上交易员"),
     assignSalesman("分配业务员"),
     assignInvestigator("分配尽调员"),
@@ -13,9 +13,9 @@ public enum EnumFinanceAssignEvent {
 
     public String name;
 
-    EnumFinanceAssignEvent(){};
+    EnumFinanceAssignType(){};
 
-    EnumFinanceAssignEvent(String name) {
+    EnumFinanceAssignType(String name) {
         this.name = name;
     }
 }

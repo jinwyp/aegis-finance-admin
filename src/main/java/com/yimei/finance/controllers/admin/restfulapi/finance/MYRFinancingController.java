@@ -1,14 +1,11 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.finance.AttachmentList;
-import com.yimei.finance.entity.admin.finance.AttachmentObject;
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.file.FileList;
 import com.yimei.finance.entity.common.result.Result;
-import com.yimei.finance.entity.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.service.admin.user.FinanceOrderServiceImpl;
 import io.swagger.annotations.*;
@@ -22,6 +19,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Api(tags = {"admin-api-flow"})
@@ -45,28 +43,30 @@ public class MYRFinancingController {
     @Autowired
     private FinanceOrderServiceImpl financeOrderService;
 
-    @RequestMapping(value = "/{processInstanceId}/onlinetrader/material", method = RequestMethod.POST)
+    @RequestMapping(value = "/onlinetrader/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "线上交易员填写材料", notes = "线上交易员填写材料", response = Boolean.class)
-    @ApiImplicitParam(name = "processInstanceId", value = "任务对应流程实例id", required = true, dataType = "String", paramType = "path")
-    public Result myrOnlineTraderAddMaterialMethod(@PathVariable("processInstanceId")String processInstanceId,
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    public Result myrOnlineTraderAddMaterialMethod(@PathVariable("taskId")String taskId,
                                                    @ApiParam(name = "financeOrder", value = "金融申请单对象", required = true) FinanceOrder financeOrder,
                                                    @ApiParam(name = "attachmentObjectList", value = "金融申请单上传单据列表", required = false)@RequestBody AttachmentList attachmentList) {
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).active().singleResult();
+        Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
+        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         if (StringUtils.isEmpty(processInstance.getBusinessKey()) || financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey())) == null) return Result.error(EnumCommonError.Admin_System_Error);
-        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
-        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
         financeOrder.setId(Long.valueOf(processInstance.getBusinessKey()));
         financeOrderService.updateFinanceOrder(financeOrder);
         for (AttachmentObject attachmentObject : attachmentList.getAttachmentObjects()) {
             if (!StringUtils.isEmpty(attachmentObject.getName()) && !StringUtils.isEmpty(attachmentObject.getUrl())) {
-                taskService.createAttachment(attachmentObject.getType(), task.getId(), processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
+                taskService.createAttachment(attachmentObject.getType(), task.getId(), task.getProcessInstanceId(), attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
             }
         }
-        taskService.addGroupIdentityLink(task.getId(), EnumSpecialGroup.ManageSalesmanGroup.id, IdentityLinkType.CANDIDATE);
         taskService.complete(task.getId());
-        Execution execution = runtimeService.createExecutionQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-        runtimeService.signal(execution.getId());
+        List<Task> taskList = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).active().list();
+        for (Task t : taskList) {
+            Execution exe = runtimeService.createExecutionQuery().executionId(t.getExecutionId()).singleResult();
+            if (exe.getActivityId().equals(EnumFinanceAssignType.assignSalesman.toString())) taskService.addGroupIdentityLink(t.getId(), EnumSpecialGroup.ManageSalesmanGroup.id, IdentityLinkType.CANDIDATE);
+        }
         return Result.success().setData(true);
     }
 

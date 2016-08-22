@@ -1,6 +1,8 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
+import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.user.EnumAdminUserError;
+import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.admin.user.GroupObject;
 import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.result.Page;
@@ -12,6 +14,7 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.activiti.engine.IdentityService;
+import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
@@ -23,11 +26,12 @@ import java.util.List;
 @RequestMapping("/api/financing/admin/user")
 @RestController("adminUserController")
 public class UserController {
-
     @Autowired
     private IdentityService identityService;
     @Autowired
     private AdminUserServiceImpl userService;
+    @Autowired
+    private AdminSession adminSession;
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
@@ -60,15 +64,13 @@ public class UserController {
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
+        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
         if (StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
         if (identityService.createUserQuery().userEmail(user.getEmail()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
         User newUser = identityService.newUser("");
-//        DozerUtils.copy(user, newUser);
+        DozerUtils.copy(user, newUser);
         newUser.setId(null);
         newUser.setPassword(userService.securePassword(user.getPassword()));
-        newUser.setEmail(user.getEmail());
-        newUser.setFirstName(user.getFirstName());
-        newUser.setLastName(user.getLastName());
         identityService.saveUser(newUser);
         return Result.success().setData(DozerUtils.copy(identityService.createUserQuery().userId(newUser.getId()).singleResult(), UserObject.class));
     }
@@ -77,6 +79,7 @@ public class UserController {
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Result deleteUserMethod(@PathVariable("id") String id) {
+        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
         User user = identityService.createUserQuery().userId(id).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         UserObject userObject = DozerUtils.copy(user, UserObject.class);
@@ -90,6 +93,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateUserMethod(@PathVariable("id") String id,
                                    @ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
+        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());
         if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());
         User oldUser = identityService.createUserQuery().userId(id).singleResult();
@@ -101,5 +105,17 @@ public class UserController {
         return Result.success().setData(DozerUtils.copy(identityService.createUserQuery().userId(id).singleResult(), UserObject.class));
     }
 
+    /**
+     * 检查是否具有超级管理员权限
+     */
+    public boolean checkRight() {
+        List<Group> groups = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
+        for (Group group : groups) {
+            if (group.getId().equals(EnumSpecialGroup.SuperAdminGroup.id)) {
+                return true;
+            }
+        }
+        return false;
+    }
 
 }
