@@ -98,6 +98,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         filter.setIncludeClientInfo(true);
         filter.setIncludeQueryString(true);
         filter.setIncludePayload(true);
+        filter.setIncludeHeaders(true);
         filter.setMaxPayloadLength(5120);
         return filter;
     }

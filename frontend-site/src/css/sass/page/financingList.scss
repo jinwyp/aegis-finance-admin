@@ -273,16 +273,19 @@ $borderColor:#e4e4e4;
                 font-weight: bold;
                 font-family: 'Arial';
               }
-              .orangeA{
+              .detailA{
                 width: 75px;
                 height: 27px;
                 display: inline-block;
-                border:1px solid #fd6e35;
-                color: #fd6e35;
                 border-radius: 2px;
                 text-decoration: none;
                 line-height: 27px;
                 transition: all 0.3s;
+              }
+              .orangeA{
+
+                border:1px solid #fd6e35;
+                color: #fd6e35;
                 &:hover{
                   background: #fd6e35;
                   color: #ffffff;
@@ -290,24 +293,19 @@ $borderColor:#e4e4e4;
                 }
               }
               .blueA{
-                width: 75px;
-                height: 27px;
-                display: inline-block;
                 border:1px solid #007193;
                 color: #007193;
-                border-radius: 2px;
-                text-decoration: none;
-                line-height: 27px;
-                transition: all 0.3s;
                 &:hover{
                   background: #1fb8ea;
                   color: #ffffff;
                   border-color: #1fb8ea;
                 }
               }
+              .grayA{
+                border:1px solid #999999;
+                color: #999999;
+              }
             }
-
-
           }
         }
       }

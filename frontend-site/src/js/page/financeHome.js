@@ -43,6 +43,30 @@ var financeHome = () => {
     //modal
     $('#slide .type-buy').click(()=>{
         $('.modal_1').modal();
+        $('#modalInfo_1').html('确定提交申请"煤易购"?');
+        $('#md_ok_1').click(function () {
+            postApplyInfo({
+                applyType : 'MYG'
+            });
+        });
+    });
+    $('#slide .type-melt').click(()=>{
+        $('.modal_1').modal();
+        $('#modalInfo_1').html('确定提交申请"煤易贷"?');
+        $('#md_ok_1').click(function () {
+            postApplyInfo({
+                applyType : 'MYD'
+            });
+        });
+    });
+    $('#slide .type-loan').click(()=>{
+        $('.modal_1').modal();
+        $('#modalInfo_1').html('确定提交申请"煤易融"?');
+        $('#md_ok_1').click(function () {
+            postApplyInfo({
+                applyType : 'MYR'
+            });
+        });
     });
 
     // $('#md_ok_1').click(function () {

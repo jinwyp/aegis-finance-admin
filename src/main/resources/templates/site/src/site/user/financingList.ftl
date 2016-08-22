@@ -54,10 +54,10 @@
             <div class="application ">
                 <div class="borderB clearfix">
                     <h4><span></span>融资详情</h4>
-                    <div class="floatR">
+                    <!--<div class="floatR">-->
                         <!--<span><em></em>了解业务类型</span>-->
-                        <a href="javascript:void(0);" id="finance">我要融资</a>
-                    </div>
+                        <!--<a href="javascript:void(0);" id="finance">我要融资</a>-->
+                    <!--</div>-->
                 </div>
 
                 <form>
@@ -140,13 +140,15 @@
                             <span class="gray" ms-visible="order.approveState==='审核不通过'">{{order.approveState}}</span>
                             <span class="green" ms-visible="order.approveState==='待审核'">{{order.approveState}}</span>
                             <span class="bold" ms-visible="order.approveState==='审核通过'">{{order.approveState}}</span>
+                            <span class="bold" ms-visible="order.approveState==='审核中'">{{order.approveState}}</span>
                             <span ms-visible="order.approveState===''">/</span>
                         </td>
 
                         <td>
-                            <a  class="blueA" ms-visible="order.approveState==='审核不通过'" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <a  class="orangeA" ms-visible="order.approveState==='审核通过'" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <a  class="orangeA" ms-visible="order.approveState==='待审核'" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <a  class="detailA blueA" ms-visible="order.approveState==='审核不通过'" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <a  class="detailA orangeA" ms-visible="order.approveState==='审核通过'" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <a  class="detailA grayA" ms-visible="order.approveState==='待审核'">查看详情</a>
+                            <a  class="detailA orangeA" ms-visible="order.approveState==='审核中'" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
                         </td>
                     </tr>
 
