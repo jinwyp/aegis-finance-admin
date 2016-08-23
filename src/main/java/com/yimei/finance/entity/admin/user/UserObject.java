@@ -14,9 +14,12 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserObject implements Serializable {
-    protected String id;
-    protected String firstName;
-    protected String lastName;
-    protected String email;
-    protected String password;
+    private String id;
+    private String username;                    //账号
+    private String name;                        //姓名
+    private String phone;                       //手机号
+    private String email;                       //邮箱
+    private String department;                  //部门
+    private String password;
+    private String[] groupIds;                  //用户组id数组
 }

@@ -14,6 +14,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Map;
+
 @Api(tags = {"admin-api-user"}, description = "用户登陆验证接口")
 @RequestMapping("/api/financing/admin")
 @RestController("adminUserAuthController")
@@ -32,8 +34,8 @@ public class UserAuthController {
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "form")
     })
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Result authLoginWithPassword(String username, String password) {
-        return adminService.login(username, password);
+    public Result authLoginWithPassword(Map<String, Object> map) {
+        return adminService.login(String.valueOf(map.get("username")), String.valueOf(map.get("password")));
     }
 
     /**

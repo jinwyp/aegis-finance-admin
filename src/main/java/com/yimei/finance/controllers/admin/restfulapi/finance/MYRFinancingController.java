@@ -38,6 +38,8 @@ public class MYRFinancingController {
     private FinanceOrderRepository financeOrderRepository;
     @Autowired
     private FinanceOrderServiceImpl financeOrderService;
+    @Autowired
+    private HistoryService historyService;
 
     @RequestMapping(value = "/onlinetrader/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "线上交易员填写材料", notes = "线上交易员填写材料", response = Boolean.class)
@@ -111,6 +113,13 @@ public class MYRFinancingController {
         vars.put(EnumFinanceConditions.investigatorAudit.toString(), pass);
         taskService.complete(taskId, vars);
         if (need == 1) {
+//            List<Task> taskList = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).active().list();
+//            for (Task t : taskList) {
+//                Execution exe = runtimeService.createExecutionQuery().executionId(t.getExecutionId()).singleResult();
+//                if (exe.getActivityId().equals(EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString())) {
+//                    taskService.setAssignee(t.getId(), );
+//                }
+//            }
             return Result.success();
         } else if (pass == 1) {
             return Result.success();
@@ -163,9 +172,11 @@ public class MYRFinancingController {
      * 添加附件方法
      */
     void addAttachmentsMethod(AttachmentList attachmentList, String taskId, String processInstanceId) {
-        for (AttachmentObject attachmentObject : attachmentList.getAttachmentObjects()) {
-            if (!StringUtils.isEmpty(attachmentObject.getName()) && !StringUtils.isEmpty(attachmentObject.getUrl())) {
-                taskService.createAttachment(attachmentObject.getType(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
+        if (attachmentList != null && attachmentList.getAttachmentObjects() != null && attachmentList.getAttachmentObjects().size() != 0) {
+            for (AttachmentObject attachmentObject : attachmentList.getAttachmentObjects()) {
+                if (!StringUtils.isEmpty(attachmentObject.getName()) && !StringUtils.isEmpty(attachmentObject.getUrl())) {
+                    taskService.createAttachment(attachmentObject.getType(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
+                }
             }
         }
     }
