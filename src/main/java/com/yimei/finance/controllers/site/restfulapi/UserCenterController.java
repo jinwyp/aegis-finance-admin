@@ -58,7 +58,7 @@ public class UserCenterController {
     @ApiImplicitParam(name = "applyType", value = "融资类型", required = true, dataType = "String", paramType = "query")
     @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
-    public Result requestFinancingOrder(@RequestParam(value = "applyType", required = true)String applyType) {
+    public Result requestFinancingOrder(@RequestBody String applyType) {
         System.out.println("Order Type:" + applyType);
         FinanceOrder financeOrder = new FinanceOrder();
         financeOrder.setApplyType(applyType);
