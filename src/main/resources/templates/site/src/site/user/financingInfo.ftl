@@ -159,7 +159,7 @@
                                 <th>已上传单据:</th>
                                 <td colspan="3">
                                     <ul>
-                                        <li class="paddingL0" ms-for="(index, certificate) in @financeInfo">
+                                        <li class="paddingL0">
                                             <p>税务单据</p>
                                             <img src="" alt="">
                                         </li>
@@ -214,18 +214,7 @@
                                             <p>税务单据</p>
                                             <img src="" alt="">
                                         </li>
-                                        <li>
-                                            <p>税务单据</p>
-                                            <img src="" alt="">
-                                        </li>
-                                        <li>
-                                            <p>税务单据</p>
-                                            <img src="" alt="">
-                                        </li>
-                                        <li>
-                                            <p>税务单据</p>
-                                            <img src="" alt="">
-                                        </li>
+                                        
                                     </ul>
                                 </td>
                             </tr>
