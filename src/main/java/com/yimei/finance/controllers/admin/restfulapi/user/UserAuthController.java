@@ -3,7 +3,6 @@ package com.yimei.finance.controllers.admin.restfulapi.user;
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.result.Result;
-import com.yimei.finance.entity.site.user.User;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -11,7 +10,9 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RestController;
 
 @Api(tags = {"admin-api-user"}, description = "用户登陆验证接口")
 @RequestMapping("/api/financing/admin")
@@ -31,8 +32,8 @@ public class UserAuthController {
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "form")
     })
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Result authLoginWithPassword(@RequestBody User user) {
-        return adminService.login(user.getEmail(), user.getPassword());
+    public Result authLoginWithPassword(String username, String password) {
+        return adminService.login(username, password);
     }
 
     /**
