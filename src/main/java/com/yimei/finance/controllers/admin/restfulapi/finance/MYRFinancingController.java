@@ -110,7 +110,6 @@ public class MYRFinancingController {
         vars.put(EnumFinanceConditions.needSalesmanInvestigationMaterial.toString(), need);
         vars.put(EnumFinanceConditions.investigatorAudit.toString(), pass);
         taskService.complete(taskId, vars);
-
         if (need == 1) {
             return Result.success();
         } else if (pass == 1) {
