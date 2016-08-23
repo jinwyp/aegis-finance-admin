@@ -81,44 +81,40 @@ class UserService {
     }
 
 
-
-    // Add new Hero
-    private post(hero: User): Promise<User> {
+    add(user: User) {
         let headers = new Headers({'Content-Type': 'application/json'});
 
-        return this.http.post(this.apiUrl.login, JSON.stringify(hero), {headers: headers}).toPromise()
-            .then(res => res.json().data)
+        return this.http.post(this.apiUrl.list, JSON.stringify(user), {headers: headers}).toPromise()
+            .then(res => res.json() as HttpResponse )
             .catch(this.handleError);
     }
 
-    // Update existing Hero
-    private put(hero: User) {
+    update(user: User) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        let url = `${this.apiUrl.login}/${hero.id}`;
+        let url = `${this.apiUrl.login}/${user.id}`;
 
-        return this.http.put(url, JSON.stringify(hero), {headers: headers}).toPromise()
-            .then(() => hero)
+        return this.http.put(url, JSON.stringify(user), {headers: headers}).toPromise()
+            .then(res => res.json() as HttpResponse )
             .catch(this.handleError);
     }
 
-    delete(hero: User) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
+    del(user: User) {
+        let headers = new Headers({'Content-Type': 'application/json'});
 
-        let url = `${this.apiUrl.login}/${hero.id}`;
+        let url = `${this.apiUrl.login}/${user.id}`;
 
         return this.http.delete(url, {headers: headers}).toPromise()
+            .then(res => res.json() as HttpResponse )
             .catch(this.handleError);
     }
 
-
-    save(hero: User): Promise<User>  {
-        if (hero.id) {
-            return this.put(hero);
+    save(user: User)  {
+        if (user.id) {
+            return this.update(user);
         }
-        return this.post(hero);
+        return this.add(user);
     }
 
 }
