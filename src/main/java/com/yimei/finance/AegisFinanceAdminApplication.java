@@ -46,10 +46,10 @@ public class AegisFinanceAdminApplication {
 						identityService.saveGroup(group);
 					}
 				}
-				if (identityService.createUserQuery().userEmail("admin").singleResult() == null) {
+				if (identityService.createUserQuery().userFirstName("admin").singleResult() == null) {
 					User user = identityService.newUser("");
 					user.setId(null);
-					user.setEmail("admin");
+					user.setFirstName("admin");
 					user.setPassword("1f71bc155f2f42aba0c4e95464b5df02");
 					identityService.saveUser(user);
 					identityService.createMembership(user.getId(), EnumSpecialGroup.SuperAdminGroup.id);
