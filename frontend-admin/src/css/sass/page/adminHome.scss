@@ -7,6 +7,7 @@
   div.info-item .info-val.no-bottom-border{  border-bottom:none; }
   .no-float{ clear:both; }
   .center{text-align: center;}
+  .help-block{ color: $err-color;  margin-bottom:0px; }
   .left-menu-box{
     width:184px;
     background-color: $menu-bg-color;
