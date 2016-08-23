@@ -11,7 +11,7 @@ var paginationTemplate = heredoc(function() {
 
      <nav class="pagination-financial" ms-visible="@_isShow">
      <ul class="pagination pageno">
-     <li> <a aria-label="Previous" ms-class="{disabled: @isDisabled('prev', 1)}" ms-click="@_changePage($event, @currentPage-1, 'prev' )"> <span aria-hidden="true" >上一页 </span> </a> </li>
+     <li> <a aria-label="Previous" ms-class="{disabled: @isDisabled('prev', 1)}" ms-click="@_changePage($event, @currentPage-1, 'prev' )"> <span aria-hidden="true">上一页</span> </a> </li>
 
      <li ms-for='(key, page) in @_pageArrayLeft'> <a ms-class="{active : page.value == @currentPage}" ms-click="@_changePage($event, page.value )">{{page.value}}</a> </li>
      <li ms-visible='@_ellipsisLeft'> <a >...</a> </li>
@@ -24,7 +24,7 @@ var paginationTemplate = heredoc(function() {
      <li ms-for='(key, page) in @_pageArrayRight'> <a ms-class="{active : page.value == @currentPage}" ms-click="@_changePage($event, page.value)">{{page.value}}</a> </li>
 
 
-     <li> <a aria-label="Next" ms-class="{disabled: @isDisabled('next', @totalPages)}" ms-click="@_changePage($event, @currentPage+1, 'next')"> <span aria-hidden="true"> 下一页 </span> </a> </li>
+     <li> <a aria-label="Next" ms-class="{disabled: @isDisabled('next', @totalPages)}" ms-click="@_changePage($event, @currentPage+1, 'next')"> <span aria-hidden="true">下一页</span> </a> </li>
      </ul>
 
      <div class="jump-to-page">

@@ -25,7 +25,7 @@ export class AddUserComponent {
 
     currentUser = {
         "id": 1,
-        "username": "liushengbin",
+        "username": "",
         "name": "liushengbin",
         "phone": "18621266707",
         "email": "liushengbin@yimei180.com",
@@ -35,13 +35,21 @@ export class AddUserComponent {
     };
 
     groups=[
-        { "id": "10001", "name": "系统管理员", "type": "null" },
-        { "id": "10002", "name": "客服人员", "type": "null" },
-        { "id": "10003", "name": "交易人员", "type": "null" },
-        { "id": "10004", "name": "监管人员", "type": "null" },
-        { "id": "10005", "name": "尽调人员", "type": "null" },
-        { "id": "10006", "name": "风控人员", "type": "null" }
-    ]
+        { "id": "10001", "name": "系统管理员", "type": "null" , "selected" :false},
+        { "id": "10002", "name": "客服人员", "type": "null" , "selected" :false},
+        { "id": "10003", "name": "交易人员", "type": "null" , "selected" :false},
+        { "id": "10004", "name": "监管人员", "type": "null" , "selected" :false},
+        { "id": "10005", "name": "尽调人员", "type": "null" , "selected" :false},
+        { "id": "10006", "name": "风控人员", "type": "null" , "selected" :false}
+    ];
+
+    ngOnInit(){
+        this.groups.forEach( (group)=>{
+            if (this.currentUser.groupIds.indexOf(group.id) > -1){
+                group.selected = true;
+            }
+        })
+    }
 
     css = {
         activeForRefresh : true,
@@ -49,9 +57,20 @@ export class AddUserComponent {
         ajaxErrorHidden : true
     };
 
+
+    selectGroup(group){
+        if (this.currentUser.groupIds.indexOf(group.id) === -1 ){
+            this.currentUser.groupIds.push(group.id);
+        }else{
+            this.currentUser.groupIds.splice(this.currentUser.groupIds.indexOf(group.id), 1);
+        }
+
+        console.log(this.currentUser.groupIds);
+    }
     addUser(form) {
         this.css.ajaxErrorHidden = true;
         this.css.isSubmitted = true;
+        console.log(this.currentUser);
         // this.userService.login({
         //     username:this.currentUser.username,
         //     password:this.currentUser.password

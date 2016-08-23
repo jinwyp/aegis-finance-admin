@@ -32,6 +32,4 @@ public class ToolsController {
     public Result findAllDepartmentListMethod() {
         return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.financedepartment.toString()));
     }
-
-
 }
