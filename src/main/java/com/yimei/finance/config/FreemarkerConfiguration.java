@@ -1,5 +1,6 @@
 package com.yimei.finance.config;
 
+import com.yimei.finance.config.freemarkermethod.SessionMethod;
 import freemarker.template.TemplateModelException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -22,6 +23,9 @@ public class FreemarkerConfiguration extends FreeMarkerAutoConfiguration.FreeMar
 
     @Autowired
     protected freemarker.template.Configuration configuration;
+
+    @Autowired
+    SessionMethod sessionMethod;
 
     @Value("${ssourl.env}")
     private String SSOURL;
@@ -47,8 +51,7 @@ public class FreemarkerConfiguration extends FreeMarkerAutoConfiguration.FreeMar
         configuration.setSharedVariable("sitepage",SITEPAGE);
         configuration.setSharedVariable("logisticspage",LOGISTICSPAGE);
         configuration.setSharedVariable("infopage",INFOPAGE);
-
-
+        configuration.setSharedVariable("session", sessionMethod);
 
     }
 }
