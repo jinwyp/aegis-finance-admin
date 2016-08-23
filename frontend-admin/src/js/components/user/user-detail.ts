@@ -20,5 +20,6 @@ export class UserDetailComponent {
 
     title = '基本信息';
 
+
 }
 
