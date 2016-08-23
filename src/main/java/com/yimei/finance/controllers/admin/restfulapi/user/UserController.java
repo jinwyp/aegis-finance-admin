@@ -5,6 +5,7 @@ import com.yimei.finance.entity.admin.user.EnumAdminUserError;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.admin.user.GroupObject;
 import com.yimei.finance.entity.admin.user.UserObject;
+import com.yimei.finance.entity.common.enums.EnumCommonString;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
@@ -70,8 +71,12 @@ public class UserController {
         User newUser = identityService.newUser("");
         DozerUtils.copy(user, newUser);
         newUser.setId(null);
-        newUser.setPassword(userService.securePassword(user.getPassword()));
+        newUser.setPassword(userService.securePassword(EnumCommonString.AdminUser_InitPwd.name));
         identityService.saveUser(newUser);
+        identityService.setUserInfo(newUser.getId(), "username", user.getUsername());
+        identityService.setUserInfo(newUser.getId(), "name", user.getName());
+        identityService.setUserInfo(newUser.getId(), "phone", user.getPhone());
+        identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
         if (user.getGroupIds() != null && user.getGroupIds().length != 0) {
             for (String gid : user.getGroupIds()) {
                 identityService.createMembership(newUser.getId(), gid);
