@@ -73,7 +73,7 @@ public class MYRFinancingController {
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
         Map<String, Object> vars = new HashMap<>();
-        vars.put(EnumFinanceConditions.salesmanAudit.toString(), pass == 0 ? false : true);
+        vars.put(EnumFinanceConditions.salesmanAudit.toString(), pass);
         taskService.complete(taskId, vars);
         if (pass == 1) {
             return addGroupIdentityLinkMethod(task.getProcessInstanceId(), EnumFinanceAssignType.assignInvestigator.toString(), EnumSpecialGroup.ManageInvestigatorGroup.id);
@@ -107,8 +107,8 @@ public class MYRFinancingController {
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
         Map<String, Object> vars = new HashMap<>();
-        vars.put(EnumFinanceConditions.needSalesmanInvestigationMaterial.toString(), need == 0 ? false : true);
-        vars.put(EnumFinanceConditions.investigatorAudit.toString(), pass == 0 ? false : true);
+        vars.put(EnumFinanceConditions.needSalesmanInvestigationMaterial.toString(), need);
+        vars.put(EnumFinanceConditions.investigatorAudit.toString(), pass);
         taskService.complete(taskId, vars);
 
         if (need == 1) {
