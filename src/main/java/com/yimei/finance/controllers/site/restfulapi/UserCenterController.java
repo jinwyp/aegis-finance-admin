@@ -55,7 +55,7 @@ public class UserCenterController {
     * 供应链金融 - 发起融资申请
     */
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
-    @ApiImplicitParam(name = "applyType", value = "融资类型", required = false, dataType = "String", paramType = "form")
+    @ApiImplicitParam(name = "applyType", value = "融资类型", required = true, dataType = "String", paramType = "query")
     @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public Result requestFinancingOrder(@RequestParam(value = "applyType", required = true)String applyType) {
