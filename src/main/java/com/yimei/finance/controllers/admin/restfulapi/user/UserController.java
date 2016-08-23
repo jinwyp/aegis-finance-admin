@@ -70,24 +70,14 @@ public class UserController {
         newUser.setId(null);
         newUser.setFirstName(user.getUsername());
         newUser.setPassword(userService.securePassword(EnumCommonString.AdminUser_InitPwd.name));
-        System.out.println(" --------------------------------------- " + newUser.getPassword());
-        System.out.println(" --------------------------------------- " + newUser.getPassword());
-        System.out.println(" --------------------------------------- " + newUser.getPassword());
-        System.out.println(" --------------------------------------- " + newUser.getPassword());
-        System.out.println(" --------------------------------------- " + newUser.getPassword());
-        System.out.println(" --------------------------------------- " + newUser.getPassword());
         newUser.setEmail(user.getEmail());
         identityService.saveUser(newUser);
         identityService.setUserInfo(newUser.getId(), "username", user.getUsername());
         identityService.setUserInfo(newUser.getId(), "name", user.getName());
         identityService.setUserInfo(newUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
-        if (user.getGroupIds() != null && user.getGroupIds().length != 0) {
-            for (String gid : user.getGroupIds()) {
-                if (identityService.createGroupQuery().groupId(gid).singleResult() == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
-                identityService.createMembership(newUser.getId(), gid);
-            }
-        }
+        Result result = addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
+        if (!result.isSuccess()) return result;
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(newUser.getId()).singleResult()));
     }
 
@@ -116,10 +106,11 @@ public class UserController {
         if (oldUser == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         oldUser.setEmail(user.getEmail());
         identityService.saveUser(oldUser);
-        identityService.setUserInfo(oldUser.getId(), "username", user.getUsername());
         identityService.setUserInfo(oldUser.getId(), "name", user.getName());
         identityService.setUserInfo(oldUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(oldUser.getId(), "department", user.getDepartment());
+        Result result = addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
+        if (!result.isSuccess()) return result;
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
     }
 
@@ -134,6 +125,21 @@ public class UserController {
             }
         }
         return false;
+    }
+
+    public Result addUserGroupMemberShip(String userId, String[] groupIds) {
+        if (groupIds == null || groupIds.length == 0) return Result.success();
+        List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
+        if (groupList != null && groupList.size() != 0) {
+            for (Group group : groupList) {
+                identityService.deleteMembership(userId, group.getId());
+            }
+        }
+        for (String gid : groupIds) {
+            if (identityService.createGroupQuery().groupId(gid).singleResult() == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
+            identityService.createMembership(userId, gid);
+        }
+        return Result.success();
     }
 
 }
