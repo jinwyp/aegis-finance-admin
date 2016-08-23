@@ -2,7 +2,7 @@
  * Created by JinWYP on 8/8/16.
  */
 
-import { provideRouter, RouterConfig }  from '@angular/router';
+import { Routes, RouterModule }   from '@angular/router';
 import { OrderListComponent } from '../components/order/order-list';
 import { HomeDashboardComponent } from '../components/home/home-dashboard';
 import { OrderDetailComponent } from '../components/order/order-detail';
@@ -22,64 +22,60 @@ import { TuneReportComponent } from '../components/audit/tune-report';
 import { SuperviseReportComponent } from '../components/audit/supervise-report';
 import { RiskControlReportComponent } from '../components/audit/risk-control-report';
 
-const routes: RouterConfig = [
+const routes: Routes = [
     {
         path: '',
-        redirectTo: '/dashboard',
+        redirectTo: '/userroles',
         pathMatch: 'full'
     },
-    {
-        path: 'dashboard',
-        component: HomeDashboardComponent
-    },
-    {
-        path: 'orders',
-        component: OrderListComponent
-    },
-    {
-        path: 'orders/:id',
-        component: OrderDetailComponent
-    },
+
     {
         path: 'userdetail',
         component: UserDetailComponent
     },
     {
-        path: 'updatepwd',
+        path: 'userpassword',
         component: UpdatePwdComponent
     },
+
     {
-        path: 'rolelist',
-        component: RoleListComponent
+        path: 'userroles',
+        component: RoleListComponent,
+        data: {type : 'list', title: 'User Role List' }
     },
     {
-        path: 'userrole',
-        component: RoleInfoComponent
+        path: 'userroles/add',
+        component: AddRoleComponent,
+        data: {type : 'add', title: 'User Role Add' }
     },
     {
-        path: 'addrole',
-        component: AddRoleComponent
+        path: 'userroles/:id',
+        component: RoleInfoComponent,
+        data: { type : 'info', title: 'User Role Info'}
     },
     {
-        path: 'editrole',
-        component: AddRoleComponent
+        path: 'userroles/:id/edit',
+        component: AddRoleComponent,
+        data: {type : 'update',  title: 'User Role Edit'}
     },
+
     {
-        path: 'userlist',
+        path: 'users',
         component: UserListComponent
     },
     {
-        path: 'adduser',
+        path: 'users/add',
         component: AddUserComponent
     },
     {
-        path: 'edituser',
-        component: AddUserComponent
-    },
-    {
-        path: 'userinfo',
+        path: 'users/:id',
         component: UserInfoComponent
     },
+    {
+        path: 'users/:id/edit',
+        component: AddUserComponent
+    },
+
     {
         path: 'waitdeallist',
         component: WaitDealListComponent
@@ -111,7 +107,8 @@ const routes: RouterConfig = [
 ];
 
 
-export const homePageRouterProviders = [
-    provideRouter(routes)
+export const homePageRouterProviders : any[] = [
+
 ];
 
+export const routing = RouterModule.forRoot(routes);

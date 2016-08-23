@@ -1,50 +1,27 @@
 
 <div class="row left-menu">
-    <div class="col-sm-12 menu-item">
+    <div class="col-sm-12 menu-item" [class.menu-selected]="css.currentTab===1">
         <a href="#" class="icon verify-icon dropdown-toggle" data-toggle="dropdown">审核管理<span class="caret"></span> </a>
         <ul class="nav nav-stacked">
-            <li role="presentation" class="active"><a class="item" [routerLink]="['/waitdeallist']">我的待办<span class="notice">8</span></a></li>
-            <li role="presentation"><a class="item" [routerLink]="['/']">我的审核<span class="notice">16</span></a></li>
+            <li role="presentation" class="active"><a class="item" [routerLink]="['/waitdeallist']" routerLinkActive="active" (click)="changeMenu(11)">我的待办<span class="notice">8</span></a></li>
+            <li role="presentation"><a class="item" [routerLink]="['/']" routerLinkActive="active" (click)="changeMenu(12)">我的审核<span class="notice">16</span></a></li>
         </ul>
     </div>
 
-    <div class="col-sm-12 menu-item">
+    <div class="col-sm-12 menu-item" [class.menu-selected]="css.currentTab===2">
         <a href="#" class="icon info-icon dropdown-toggle"  data-toggle="dropdown">个人信息<span class="caret"></span> </a>
         <ul class="nav nav-stacked">
-            <li role="presentation" class="active"><a class="item" [routerLink]="['/userdetail']">基本信息</a></li>
-            <li role="presentation"><a class="item" [routerLink]="['/updatepwd']">修改密码</a></li>
+            <li role="presentation" class="active"><a class="item" [routerLink]="['/userdetail']" routerLinkActive="active" (click)="changeMenu(21)">基本信息</a></li>
+            <li role="presentation"><a class="item" [routerLink]="['/userpassword']" routerLinkActive="active" (click)="changeMenu(22)">修改密码</a></li>
         </ul>
     </div>
 
-    <div class="col-sm-12 menu-item menu-selected">
+    <div class="col-sm-12 menu-item " [class.menu-selected]="css.currentTab===3">
         <a href="#" class="icon jurisdiction-icon dropdown-toggle" data-toggle="dropdown">权限设置<span class="caret"></span> </a>
         <ul class="nav nav-stacked">
-            <li role="presentation" class="active"><a class="item" [routerLink]="['/userlist']">用户管理</a></li>
-            <li role="presentation"><a class="item" [routerLink]="['/rolelist']">角色管理</a></li>
+            <li role="presentation" class="active"><a class="item" [routerLink]="['/users']" routerLinkActive="active" (click)="changeMenu(31)">用户管理</a></li>
+            <li role="presentation"><a class="item" [routerLink]="['/userroles']" routerLinkActive="active" (click)="changeMenu(32)">角色管理</a></li>
         </ul>
     </div>
 
-    <!--<ul>-->
-        <!--<li>-->
-            <!--<dl>-->
-                <!--<dt class="dropdown-toggle">审核管理</dt>-->
-                <!--<dd>我的待办</dd>-->
-                <!--<dd>我的审核</dd>-->
-            <!--</dl>-->
-        <!--</li>-->
-        <!--<li>-->
-        <!--<dl>-->
-        <!--<dt>个人信息</dt>-->
-        <!--<dd>基本信息</dd>-->
-        <!--<dd>修改密码</dd>-->
-        <!--</dl>-->
-        <!--</li>-->
-        <!--<li>-->
-        <!--<dl>-->
-        <!--<dt>权限设置</dt>-->
-        <!--<dd>用户管理</dd>-->
-        <!--<dd>角色管理</dd>-->
-        <!--</dl>-->
-        <!--</li>-->
-    <!--</ul>-->
 </div>

@@ -26,7 +26,12 @@ public class GroupController {
     private AdminSession adminSession;
 
     @ApiOperation(value = "查询所有的用户组", notes = "查询所有用户组列表", response = GroupObject.class, responseContainer = "List")
-    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "offset", value = "偏移数", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "total", value = "结果总数量", required = false, dataType = "int", paramType = "query")
+    })
     @RequestMapping(method = RequestMethod.GET)
     public Result getAllGroupsMethod(Page page) {
         page.setTotal(identityService.createGroupQuery().count());

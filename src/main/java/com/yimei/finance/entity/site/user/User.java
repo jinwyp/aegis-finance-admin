@@ -4,6 +4,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
+import java.lang.String;
 import java.time.LocalDateTime;
 
 /**
@@ -31,6 +32,15 @@ public class User implements Serializable {
     private String verifyuuid;		          //激活码
     private String userFrom;                  //用户来源
     private Integer traderid;                 //配置交易员id
+    private String companyName;
+
+    public String getCompanyName() {
+        return companyName;
+    }
+
+    public void setCompanyName(String companyName) {
+        this.companyName = companyName;
+    }
 
     public String getEmail() {
         return email;

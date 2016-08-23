@@ -6,14 +6,14 @@ import { NgModule }      from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule }   from '@angular/forms';
 import { HttpModule }     from '@angular/http';
-import { ROUTER_DIRECTIVES } from '@angular/router';
 
 import { XHRBackend } from '@angular/http';
 import { InMemoryBackendService, SEED_DATA } from 'angular2-in-memory-web-api';
 import { InMemoryDataServiceOrder }          from '../mock/api/in-memory-data.service';
 
-import { homePageRouterProviders } from './home.routes';
+import { routing, homePageRouterProviders } from './home.routes';
 import { Order, OrderService } from '../service/order';
+import { UserService, UserGroupService } from '../service/user';
 
 
 import { headerComponent } from '../components/header/header';
@@ -45,13 +45,12 @@ import { SuperviseReportComponent } from '../components/audit/supervise-report';
 import { RiskControlReportComponent } from '../components/audit/risk-control-report';
 
 
-import {AlertComponent} from 'ng2-bootstrap/ng2-bootstrap';
+import {AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
 @NgModule({
-    imports: [ BrowserModule, FormsModule, HttpModule],
+    imports: [ BrowserModule, FormsModule, HttpModule, routing],
     declarations: [
-        ROUTER_DIRECTIVES,
-        AlertComponent,
+        AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES,
         headerComponent, LeftMenuComponent,
         HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent,
         UserDetailComponent, UpdatePwdComponent,
@@ -59,13 +58,9 @@ import {AlertComponent} from 'ng2-bootstrap/ng2-bootstrap';
         UserListComponent, AddUserComponent, UserInfoComponent,
         ProcessTabComponent, DistributionPersonComponent,
         WaitDealListComponent, DistributionPageComponent, FinanceApplyComponent, BusinessApprovalComponent,
-        TuneReportComponent,SuperviseReportComponent,RiskControlReportComponent
+        TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent
     ],
-    providers: [ OrderService,
-        homePageRouterProviders,
-        { provide: XHRBackend, useClass: InMemoryBackendService }, // in-mem server
-        { provide: SEED_DATA,  useClass: InMemoryDataServiceOrder }     // in-mem server data
-    ],
+    providers: [ homePageRouterProviders, OrderService, UserService, UserGroupService ],
     bootstrap: [ HomeComponent ]
 })
 export class HomeModule { }
