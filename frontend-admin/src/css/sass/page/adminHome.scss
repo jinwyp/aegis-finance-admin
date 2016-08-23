@@ -27,7 +27,7 @@
   .help-block{ color: $err-color;  margin-bottom:0px; }
 
   .left-menu-box{
-    width:184px;
+    width:200px;
     background-color: $menu-bg-color;
     .left-menu{
       
@@ -60,7 +60,7 @@
         .nav > li > a.item {
           font-size: 14px;
           color: $menu-text-color;
-          padding:15px 15px 15px 70px;
+          padding:15px 15px 15px 60px;
           .notice{
             color: $white;
             background-color: $menu-text-color;
@@ -146,6 +146,7 @@
       border-bottom: 1px solid $border-color;
       font-size:14px;
       input{
+        width: 160px;
         height: 34px;
         line-height:34px;
         padding:0 10px;
@@ -153,6 +154,8 @@
         font-size:14px;
         border:1px solid $input-border-color;
       }
+      span{ margin-left:10px;}
+      span:first-child{ margin-left:0px;}
       .btn{
         margin-left:20px;
         width:110px;
