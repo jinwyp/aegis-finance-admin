@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * Created by JinWYP on 8/15/16.
  */
-@RequestMapping("/api/financing/site")
+@RequestMapping("/api/financing")
 @Api(tags = {"site-api"})
 @RestController("siteUserCenterController")
 public class UserCenterController {
