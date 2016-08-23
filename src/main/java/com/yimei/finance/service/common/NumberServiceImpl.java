@@ -22,9 +22,9 @@ public class NumberServiceImpl {
         int nums = numberRepository.findByTypeAndCreateDate(type, LocalDate.now()).size();
         String numsStr = "";
         if (nums > 999) numsStr = String.valueOf(nums);
-        else if (nums > 99) numsStr = "0" + numsStr;
-        else if (nums > 9) numsStr = "00" + numsStr;
-        else numsStr = "000" + numsStr;
+        else if (nums > 99) numsStr = "0" + nums;
+        else if (nums > 9) numsStr = "00" + nums;
+        else numsStr = "000" + nums;
         return type + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + numsStr;
     }
 }

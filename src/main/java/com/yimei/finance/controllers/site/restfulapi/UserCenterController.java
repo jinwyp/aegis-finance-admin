@@ -31,7 +31,7 @@ import java.util.List;
 /**
  * Created by JinWYP on 8/15/16.
  */
-@RequestMapping("/api/financing")
+@RequestMapping("/api/financing/site")
 @Api(tags = {"site-api"})
 @RestController("siteUserCenterController")
 public class UserCenterController {
@@ -56,7 +56,7 @@ public class UserCenterController {
     */
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
     @ApiImplicitParam(name = "applyType", value = "融资类型", required = false, dataType = "String", paramType = "form")
-//    @LoginRequired
+    @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public Result requestFinancingOrder(@RequestParam(value = "applyType", required = true)String applyType) {
         System.out.println("Order Type:" + applyType);
@@ -64,6 +64,7 @@ public class UserCenterController {
         financeOrder.setApplyType(applyType);
         financeOrder.setSourceId(numberService.getNextCode("JR"));
         financeOrder.setUserId(userSession.getUser().getId());
+//        financeOrder.setUserId(1);
         financeOrder.setApplyDateTime(LocalDateTime.now());
         financeOrder.setApproveState(EnumFinanceStatus.待审核.toString());
         financeOrderRepository.save(financeOrder);
