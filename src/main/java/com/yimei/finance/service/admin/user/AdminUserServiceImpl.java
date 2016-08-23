@@ -20,6 +20,8 @@ public class AdminUserServiceImpl {
     private AdminSession adminSession;
     @Autowired
     private IdentityService identityService;
+    @Autowired
+    private AdminUserServiceImpl userService;
 
     /**
      * 登陆方法
@@ -31,7 +33,7 @@ public class AdminUserServiceImpl {
         if (user != null) {
             if (identityService.checkPassword(user.getId(), securePassword(password))) {
                 adminSession.login(user);
-                return Result.success().setData(DozerUtils.copy(user, UserObject.class));
+                return Result.success().setData(userService.changeUserObject(user));
             } else {
                 return Result.error(EnumAdminUserError.用户名或者密码错误.toString());
             }

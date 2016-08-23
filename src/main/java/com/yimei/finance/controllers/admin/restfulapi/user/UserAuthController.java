@@ -1,10 +1,11 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.user.UserObject;
+import com.yimei.finance.entity.admin.user.UserLoginObject;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,9 +25,9 @@ public class UserAuthController {
     /**
      * 管理员登陆
      */
-    @ApiOperation(value = "登陆接口", notes = "需要输入用户名和密码登陆", response = UserObject.class)
+    @ApiOperation(value = "登陆接口", notes = "需要输入用户名和密码登陆", response = UserLoginObject.class)
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Result authLoginWithPassword(@ApiParam(name = "user", value = "只需填写username 和 password ")@RequestBody UserObject user) {
+    public Result authLoginWithPassword(@RequestBody UserLoginObject user) {
         return adminService.login(String.valueOf(user.getUsername()), user.getPassword());
     }
 
