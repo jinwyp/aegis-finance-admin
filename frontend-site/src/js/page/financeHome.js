@@ -44,7 +44,8 @@ var financeHome = () => {
     $('#slide .type-buy').click(()=>{
         $('.modal_1').modal();
         $('#modalInfo_1').html('确定提交申请"煤易购"?');
-        $('#md_ok_1').click(function () {
+        $('#md_ok_1').off();
+        $('#md_ok_1').click(()=> {
             postApplyInfo({
                 applyType : 'MYG'
             });
@@ -53,7 +54,8 @@ var financeHome = () => {
     $('#slide .type-melt').click(()=>{
         $('.modal_1').modal();
         $('#modalInfo_1').html('确定提交申请"煤易贷"?');
-        $('#md_ok_1').click(function () {
+        $('#md_ok_1').off();
+        $('#md_ok_1').click(()=>{
             postApplyInfo({
                 applyType : 'MYD'
             });
@@ -62,7 +64,8 @@ var financeHome = () => {
     $('#slide .type-loan').click(()=>{
         $('.modal_1').modal();
         $('#modalInfo_1').html('确定提交申请"煤易融"?');
-        $('#md_ok_1').click(function () {
+        $('#md_ok_1').off();
+        $('#md_ok_1').click(()=>{
             postApplyInfo({
                 applyType : 'MYR'
             });
