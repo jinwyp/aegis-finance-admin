@@ -27,6 +27,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by JinWYP on 8/15/16.
@@ -58,10 +59,10 @@ public class UserCenterController {
     @ApiImplicitParam(name = "applyType", value = "融资类型", required = true, dataType = "String", paramType = "query")
     @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
-    public Result requestFinancingOrder(@RequestBody String applyType) {
-        System.out.println("Order Type:" + applyType);
+    public Result requestFinancingOrder(@RequestBody Map<String, Object> map) {
+        System.out.println("Order Type:" + map.get("applyType"));
         FinanceOrder financeOrder = new FinanceOrder();
-        financeOrder.setApplyType(applyType);
+        financeOrder.setApplyType(String.valueOf(map.get("applyType")));
         financeOrder.setSourceId(numberService.getNextCode("JR"));
         financeOrder.setUserId(userSession.getUser().getId());
 //        financeOrder.setUserId(1);
