@@ -128,16 +128,18 @@ public class UserController {
     }
 
     public Result addUserGroupMemberShip(String userId, String[] groupIds) {
-        if (groupIds == null || groupIds.length == 0) return Result.success();
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
         if (groupList != null && groupList.size() != 0) {
             for (Group group : groupList) {
                 identityService.deleteMembership(userId, group.getId());
             }
         }
-        for (String gid : groupIds) {
-            if (identityService.createGroupQuery().groupId(gid).singleResult() == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
-            identityService.createMembership(userId, gid);
+        if (groupIds != null && groupIds.length != 0) {
+            for (String gid : groupIds) {
+                if (identityService.createGroupQuery().groupId(gid).singleResult() == null)
+                    return Result.error(EnumAdminGroupError.此组不存在.toString());
+                identityService.createMembership(userId, gid);
+            }
         }
         return Result.success();
     }
