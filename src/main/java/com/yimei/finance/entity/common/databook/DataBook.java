@@ -9,7 +9,7 @@ import java.io.Serializable;
  * Created by jack on 6/10/15.
  */
 @Entity
-@Table(name = "T_finance_databook")
+@Table(name = "t_finance_databook")
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor

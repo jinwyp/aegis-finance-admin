@@ -12,7 +12,7 @@ import java.util.List;
 public interface DataBookRepository extends JpaRepository<DataBook, Long> {
 
     DataBook findByTypeAndSequence(@Param("type") String type,
-                                       @Param("sequence") int sequence);
+                                   @Param("sequence") int sequence);
 
     List<DataBook> findByType(String type);
 }

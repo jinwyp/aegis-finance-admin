@@ -1,0 +1,30 @@
+package com.yimei.finance.service.common;
+
+import com.yimei.finance.entity.common.number.Number;
+import com.yimei.finance.repository.common.NumberRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+
+/**
+ * Created by liuxinjie on 16/8/23.
+ */
+@Service
+public class NumberServiceImpl {
+    @Autowired
+    private NumberRepository numberRepository;
+
+    public String getNextCode(String type) {
+        Number number = new Number(type, LocalDate.now());
+        numberRepository.save(number);
+        int nums = numberRepository.findByTypeAndCreateDate(type, LocalDate.now()).size();
+        String numsStr = "";
+        if (nums > 999) numsStr = String.valueOf(nums);
+        else if (nums > 99) numsStr = "0" + numsStr;
+        else if (nums > 9) numsStr = "00" + numsStr;
+        else numsStr = "000" + numsStr;
+        return type + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + numsStr;
+    }
+}

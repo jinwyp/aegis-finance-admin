@@ -2,11 +2,10 @@ package com.yimei.finance.ext.intereceptors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.finance.config.session.UserSession;
+import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.entity.site.user.User;
 import com.yimei.finance.ext.annotations.LoginRequired;
-import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.utils.HttpUtils;
-import com.yimei.finance.utils.JsonUtils;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +53,6 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
             redirectLoginPage(request, response);
             return false;
         } else {
-
             if (handler instanceof HandlerMethod) {
 
                 HandlerMethod method = (HandlerMethod) handler;
@@ -76,7 +74,6 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
                             redirectLoginPage(request, response);
                             return false;
                         }
-
                         session.login(user);
                     }
                 }

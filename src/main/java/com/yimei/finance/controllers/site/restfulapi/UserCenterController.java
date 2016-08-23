@@ -1,22 +1,30 @@
 package com.yimei.finance.controllers.site.restfulapi;
 
 import com.yimei.finance.config.session.UserSession;
+import com.yimei.finance.entity.admin.finance.EnumAdminFinanceError;
+import com.yimei.finance.entity.admin.finance.EnumFinanceOrderType;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
+import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.ext.annotations.LoginRequired;
-import com.yimei.finance.entity.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
 import com.yimei.finance.repository.tpl.TplRepository;
-import com.yimei.finance.utils.Utils;
+import com.yimei.finance.service.common.NumberServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.task.IdentityLinkType;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 /**
@@ -24,34 +32,51 @@ import java.util.List;
  */
 @RequestMapping("/api/financing")
 @Api(tags = {"site-api"})
-@RestController
+@RestController("siteUserCenterController")
 public class UserCenterController {
 
     @Autowired
-    FinanceOrderRepository financeOrderRepository;
+    private FinanceOrderRepository financeOrderRepository;
     @Autowired
-    TplRepository tplRepository;
+    private TplRepository tplRepository;
     @Autowired
-    JpaRepositoryDemo jpaRepositoryDemo;
+    private JpaRepositoryDemo jpaRepositoryDemo;
     @Autowired
-    UserSession userSession;
+    private UserSession userSession;
+    @Autowired
+    private RuntimeService runtimeService;
+    @Autowired
+    private TaskService taskService;
+    @Autowired
+    private NumberServiceImpl numberService;
 
     /**
     * 供应链金融 - 发起融资申请
     */
-//    @LoginRequired
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
     @ApiImplicitParam(name = "applyType", value = "融资类型", required = false, dataType = "String", paramType = "form")
     @LoginRequired
-    @RequestMapping(value = "/applyInfo", method = RequestMethod.POST)
-    public Result requestFinancingOrder(@RequestBody FinanceOrder financeOrder) {
-
-        System.out.println("Order Type:" + financeOrder.getApplyType());
-
-        financeOrder.setSourceId(Utils.generateSourceId("JR"));
+    @RequestMapping(value = "/apply", method = RequestMethod.POST)
+    public Result requestFinancingOrder(@RequestParam(value = "applyType", required = true)String applyType) {
+        System.out.println("Order Type:" + applyType);
+        FinanceOrder financeOrder = new FinanceOrder();
+        financeOrder.setApplyType(applyType);
+        financeOrder.setSourceId(numberService.getNextCode("JR"));
         financeOrder.setUserId(userSession.getUser().getId());
-//        financeApplyInfo.setApplyDateTime(LocalDateTime.now());
+        financeOrder.setApplyDateTime(LocalDateTime.now());
         financeOrderRepository.save(financeOrder);
+        if (runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeOrder.getId())).singleResult() != null) return Result.error(EnumAdminFinanceError.此金融单已经创建流程.toString());
+        if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
+            runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
+            Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeOrder.getId())).active().singleResult();
+            taskService.addGroupIdentityLink(task.getId(), EnumSpecialGroup.ManageTraderGroup.id, IdentityLinkType.CANDIDATE);
+        } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
+
+        } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
+
+        } else {
+            return Result.error(EnumCommonError.Admin_System_Error);
+        }
         return Result.success().setData(financeOrderRepository.findOne(financeOrder.getId()));
     }
 

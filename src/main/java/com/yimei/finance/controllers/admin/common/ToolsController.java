@@ -1,11 +1,9 @@
 package com.yimei.finance.controllers.admin.common;
 
-import com.yimei.finance.entity.admin.user.GroupObject;
 import com.yimei.finance.entity.common.databook.DataBook;
 import com.yimei.finance.entity.common.databook.EnumDataBookType;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.repository.admin.databook.DataBookRepository;
-import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.IdentityService;
@@ -33,12 +31,6 @@ public class ToolsController {
     @ApiOperation(value = "获取所有部门列表", notes = "获取所有部门列表", response = String.class, responseContainer = "List")
     public Result findAllDepartmentListMethod() {
         return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.financedepartment.toString()));
-    }
-
-    @RequestMapping(value = "/groups", method = RequestMethod.GET)
-    @ApiOperation(value = "获取所有组列表", notes = "获取所有用户组列表", response = GroupObject.class, responseContainer = "List")
-    public Result findAllUserGroupListMethod() {
-        return Result.success().setData(DozerUtils.copy(identityService.createGroupQuery().list(), GroupObject.class));
     }
 
 

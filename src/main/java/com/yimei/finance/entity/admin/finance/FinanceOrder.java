@@ -8,6 +8,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 /**
  * Created by zhangbolun on 16/8/16.
@@ -21,7 +22,7 @@ import java.math.BigDecimal;
 public class FinanceOrder implements Serializable {
     @Id
     @Column(name = "id", length = 11)
-    @GeneratedValue
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;                                                 //主键
     @Column(name = "user_id", length = 11, nullable = false)
     private int userId;                                              //申请人用户id
@@ -59,17 +60,18 @@ public class FinanceOrder implements Serializable {
     private BigDecimal marketPrice;                                  //单吨市场报价（元／吨）
     @Column(name = "approve_state", length = 30)
     private String approveState;                                     //审批状态
+    @Transient
+    private String approveStateName;                                 //审批状态 name
     @Column(name = "source_id", length = 100)
     private String sourceId;                                         //流水号，编号
-//    @Column(name = "apply_date_time")
-//    private LocalDateTime applyDateTime;                             //申请时间
+    @Column(name = "apply_date_time", length = 50)
+    private LocalDateTime applyDateTime;                             //申请时间
     @Column(name = "apply_user_name", length = 50)
     private String applyUserName;                                    //申请人姓名
     @Column(name = "apply_company_name", length = 50)
     private String applyCompanyName;                                 //申请公司名称
 
-//    @Temporal(TemporalType.TIMESTAMP)
-//    public LocalDateTime getApplyDateTime() {
-//        return applyDateTime;
-//    }
+    public String getApproveStateName() {
+        return EnumFinanceStatus.getName(EnumFinanceStatus.valueOf(approveState));
+    }
 }

@@ -18,4 +18,8 @@ public enum EnumFinanceStatus {
     EnumFinanceStatus(String name) {
         this.name = name;
     }
+
+    public static String getName(EnumFinanceStatus status) {
+        return status.name;
+    }
 }

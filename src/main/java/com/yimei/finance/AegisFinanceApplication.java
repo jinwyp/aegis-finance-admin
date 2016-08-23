@@ -1,12 +1,10 @@
 package com.yimei.finance;
 
-import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -19,13 +17,10 @@ import java.net.UnknownHostException;
 
 @SpringBootApplication
 @Slf4j
-public class AegisFinanceAdminApplication {
-	@Autowired
-	private AdminSession adminSession;
+public class AegisFinanceApplication {
 
 	public static void main(String[] args) throws UnknownHostException {
-		//SpringApplication.run(AegisFinanceAdminApplication.class, args);
-		SpringApplication app = new SpringApplication(AegisFinanceAdminApplication.class);
+		SpringApplication app = new SpringApplication(AegisFinanceApplication.class);
 		Environment env = app.run(args).getEnvironment();
 		log.info("Access URLs:\n----------------------------------------------------------\n\t" +
 						"Local: \t\thttp://127.0.0.1:{}\n\t" +
