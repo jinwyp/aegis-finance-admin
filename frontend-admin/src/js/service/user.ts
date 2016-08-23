@@ -80,9 +80,7 @@ class UserService {
             .catch(this.handleError);
     }
 
-
-
-    // Add new Hero
+    
     add(user: User) {
         let headers = new Headers({'Content-Type': 'application/json'});
 
@@ -91,7 +89,6 @@ class UserService {
             .catch(this.handleError);
     }
 
-    // Update existing Hero
     update(user: User) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
