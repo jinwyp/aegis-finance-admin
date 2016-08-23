@@ -12,7 +12,7 @@
         <span>用户姓名:</span><input type="text" value="fdsfsdfsdf">
         <span>角色名称:</span><input type="text" value="fdsfsdfsdf">
         <button class="btn btn-default" type="submit">查询</button>
-        <button type="button" class="btn btn-default btn-addrole" [routerLink]="['/adduser']">
+        <button type="button" class="btn btn-default btn-addrole" [routerLink]="['/users/add']">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加用户
         </button>
     </div>
@@ -53,8 +53,8 @@
             <td>2016-12-01 23:22:00</td>
             <td class="operation">
                 <span class="right-border">重置密码</span>
-                <span class="right-border" [routerLink]="['/userinfo']">查看</span>
-                <span class="right-border" [routerLink]="['/edituser']">编辑</span>
+                <span class="right-border" [routerLink]="['/users', 1]">查看</span>
+                <span class="right-border" [routerLink]="['/users', 1,'edit']">编辑</span>
                 <span>删除</span>
             </td>
         </tr>

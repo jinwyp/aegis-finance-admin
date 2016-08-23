@@ -1,5 +1,22 @@
 @import '../helpers/_variables.scss';
 
+.form-control{
+  display: inline-block;
+  height: 40px;
+  line-height:40px;
+  width:300px;
+  border:1px solid $input-border-color;
+  box-shadow: none;
+  padding:0 10px;
+  vertical-align: middle;
+  border-radius: 2px;
+}
+
+//.ng-valid[required] { border:1px solid red; }
+//.ng-invalid { border:1px solid red; }
+//.ng-untouched { border:1px solid $input-border-color; }
+//.ng-pristine { border:1px solid $input-border-color; }
+
 .homebox{
   padding:0;
   input{outline: none;  margin:0;}
@@ -8,6 +25,7 @@
   .no-float{ clear:both; }
   .center{text-align: center;}
   .help-block{ color: $err-color;  margin-bottom:0px; }
+
   .left-menu-box{
     width:184px;
     background-color: $menu-bg-color;
@@ -258,15 +276,15 @@
         padding:42px 0;
         color: $menu-text-color;
       }
-      .info-val>input{
-        height: 40px;
-        line-height:40px;
-        width:300px;
-        border:1px solid $input-border-color;
-        box-shadow: none;
-        padding:0 10px;
-        vertical-align: middle;
-      }
+      //.info-val>input{
+      //  height: 40px;
+      //  line-height:40px;
+      //  width:300px;
+      //  border:1px solid $input-border-color;
+      //  box-shadow: none;
+      //  padding:0 10px;
+      //  vertical-align: middle;
+      //}
       .info-val>textarea{
         resize: none;
         outline: none;
@@ -276,12 +294,7 @@
       .info-val{
         padding:30px 0;
         border-bottom: 1px solid $border-color;
-        .ng-valid[required] {
-          border:1px solid $input-border-color;
-        }
-        .ng-invalid {
-          border:1px solid red;
-        }
+
         .jurisdicition-manage{
           padding: 30px 0;
           border:1px solid $input-border-color;
