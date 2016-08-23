@@ -13,5 +13,14 @@ declare var __moduleName: string;
 })
 export class LeftMenuComponent {
 
+    css = {
+        currentTab : 1,
+        currentMenu : 1,
+    };
 
+    changeMenu = (menu)=>{
+        this.css.currentMenu = menu;
+        this.css.currentTab = Math.floor(menu/10);
+        console.log(this.css)
+    }
 }

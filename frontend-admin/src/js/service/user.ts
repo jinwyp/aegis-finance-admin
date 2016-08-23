@@ -7,7 +7,7 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { HttpResult } from './http';
+import { HttpResponse } from './http';
 
 
 
@@ -26,6 +26,20 @@ class User {
 
 
 
+class UserGroup {
+
+    id :number;
+    name : string;
+    type : string;
+
+    constructor() {
+        this.id  = 0;
+        this.name  = '';
+        this.type  = '';
+    }
+}
+
+
 
 @Injectable()
 class UserService {
@@ -35,7 +49,7 @@ class UserService {
     };
 
     private handleError(error: any) {
-        console.error('Http 请求发生错误!! ', error);
+        console.error('Http 用户 请求发生错误!! ', error);
         return Promise.reject(error.message || error);
     }
 
@@ -46,7 +60,7 @@ class UserService {
 
     login(user) {
         return this.http.post(this.apiUrl.login, user).toPromise()
-            .then(response => response.json() as HttpResult)
+            .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
 
@@ -96,4 +110,33 @@ class UserService {
 }
 
 
-export {User, UserService}
+
+@Injectable()
+class UserGroupService {
+
+    private apiUrl = {
+        list : '/api/financing/admin/group'
+    };
+
+    private handleError(error: any) {
+        console.error('Http 用户组 请求发生错误!! ', error);
+        return Promise.reject(error.message || error);
+    }
+
+    constructor(
+        private http: Http
+    ) { }
+
+
+    getList() {
+        return this.http.get(this.apiUrl.list).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(this.handleError);
+    }
+
+
+}
+
+
+
+export {User, UserService, UserGroup, UserGroupService}

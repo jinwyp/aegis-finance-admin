@@ -3,9 +3,9 @@
  */
 
 
-export class HttpResult {
+export class HttpResponse {
 
-    success :boolean;
+    success : boolean;
     error : {
         code : number,
         field : string,

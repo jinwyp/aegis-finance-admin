@@ -10,6 +10,7 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -34,8 +35,8 @@ public class UserAuthController {
             @ApiImplicitParam(name = "password", value = "密码", required = true, dataType = "String", paramType = "form")
     })
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Result authLoginWithPassword(Map<String, Object> map) {
-        return adminService.login(String.valueOf(map.get("username")), String.valueOf(map.get("password")));
+    public Result authLoginWithPassword(@RequestBody UserObject user) {
+        return adminService.login(user.getUsername(), user.getPassword());
     }
 
     /**
