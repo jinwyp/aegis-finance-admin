@@ -72,6 +72,7 @@ public class FinanceOrder implements Serializable {
     private String applyCompanyName;                                 //申请公司名称
 
     public String getApproveStateName() {
+        if (approveState == null) return null;
         return EnumFinanceStatus.getName(EnumFinanceStatus.valueOf(approveState));
     }
 }

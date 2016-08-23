@@ -3,6 +3,7 @@ package com.yimei.finance.controllers.site.restfulapi;
 import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.entity.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.entity.admin.finance.EnumFinanceOrderType;
+import com.yimei.finance.entity.admin.finance.EnumFinanceStatus;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
@@ -55,7 +56,7 @@ public class UserCenterController {
     */
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
     @ApiImplicitParam(name = "applyType", value = "融资类型", required = false, dataType = "String", paramType = "form")
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public Result requestFinancingOrder(@RequestParam(value = "applyType", required = true)String applyType) {
         System.out.println("Order Type:" + applyType);
@@ -64,6 +65,7 @@ public class UserCenterController {
         financeOrder.setSourceId(numberService.getNextCode("JR"));
         financeOrder.setUserId(userSession.getUser().getId());
         financeOrder.setApplyDateTime(LocalDateTime.now());
+        financeOrder.setApplyType(EnumFinanceStatus.PendingAudit.toString());
         financeOrderRepository.save(financeOrder);
         if (runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeOrder.getId())).singleResult() != null) return Result.error(EnumAdminFinanceError.此金融单已经创建流程.toString());
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
@@ -93,7 +95,7 @@ public class UserCenterController {
             @ApiImplicitParam(name = "applyType", value = "融资类型", required = false, dataType = "String", paramType = "query")
     })
     @LoginRequired
-    @RequestMapping(value = "/applyInfo", method = RequestMethod.GET)
+    @RequestMapping(value = "/apply", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(@RequestParam(value = "applyType", required = false ) String applyType, Page page) {
         List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserId(userSession.getUser().getId());
 
@@ -110,7 +112,7 @@ public class UserCenterController {
     @ApiOperation(value = "根据 id 查看金融申请单", notes = "根据 金融申请单id 查看金融申请单", response = FinanceOrder.class)
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Long", paramType = "path")
     @LoginRequired
-    @RequestMapping(value = "/applyInfo/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/apply/{id}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
         FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, userSession.getUser().getId());
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
