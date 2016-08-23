@@ -48,7 +48,7 @@ class UserService {
         login : '/api/financing/admin/login'
     };
 
-    private handleError(error: any) {
+    private handleError(error: any): Promise<any> {
         console.error('Http 用户 请求发生错误!! ', error);
         return Promise.reject(error.message || error);
     }
@@ -118,7 +118,7 @@ class UserGroupService {
         list : '/api/financing/admin/group'
     };
 
-    private handleError(error: any) {
+    private handleError(error: any) : Promise<any> {
         console.error('Http 用户组 请求发生错误!! ', error);
         return Promise.reject(error.message || error);
     }
@@ -133,6 +133,13 @@ class UserGroupService {
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
+
+    getGroupById(id: string) {
+        return this.http.get(this.apiUrl.list + '/' + id).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(this.handleError);
+    }
+
 
 
 }
