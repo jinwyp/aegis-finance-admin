@@ -64,7 +64,7 @@ public class UserController {
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user,
-                                @RequestParam(value = "groupIds[]", required = true)int[] groupIds) {
+                                @RequestParam(value = "groupIds[]", required = false)String[] groupIds) {
         if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
         if (StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
         if (identityService.createUserQuery().userEmail(user.getEmail()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
@@ -73,6 +73,11 @@ public class UserController {
         newUser.setId(null);
         newUser.setPassword(userService.securePassword(user.getPassword()));
         identityService.saveUser(newUser);
+        if (groupIds != null && groupIds.length != 0) {
+            for (String gid : groupIds) {
+                identityService.createMembership(newUser.getId(), gid);
+            }
+        }
         return Result.success().setData(DozerUtils.copy(identityService.createUserQuery().userId(newUser.getId()).singleResult(), UserObject.class));
     }
 
