@@ -1,10 +1,7 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.user.EnumAdminUserError;
-import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
-import com.yimei.finance.entity.admin.user.GroupObject;
-import com.yimei.finance.entity.admin.user.UserObject;
+import com.yimei.finance.entity.admin.user.*;
 import com.yimei.finance.entity.common.enums.EnumCommonString;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
@@ -36,10 +33,10 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
-    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
+    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getAllUsersMethod(Page page) {
         page.setTotal(identityService.createUserQuery().count());
-        List<UserObject> userObjectList = DozerUtils.copy(identityService.createUserQuery().listPage(page.getOffset(), page.getCount()), UserObject.class);
+        List<UserObject> userObjectList = userService.changeUserObject(identityService.createUserQuery().listPage(page.getOffset(), page.getCount()));
         return Result.success().setData(userObjectList).setMeta(page);
     }
 
@@ -49,7 +46,7 @@ public class UserController {
     public Result getUserByIdMethod(@PathVariable("id") String id) {
         User user = identityService.createUserQuery().userId(id).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
-        UserObject userObject = DozerUtils.copy(user, UserObject.class);
+        UserObject userObject = userService.changeUserObject(user);
         return Result.success().setData(userObject);
     }
 
@@ -66,12 +63,20 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
         if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
-        if (StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
-        if (identityService.createUserQuery().userEmail(user.getEmail()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
+        if (StringUtils.isEmpty(user.getUsername())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
+        if (identityService.createUserQuery().userFirstName(user.getUsername()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
         User newUser = identityService.newUser("");
         DozerUtils.copy(user, newUser);
         newUser.setId(null);
+        newUser.setFirstName(user.getUsername());
         newUser.setPassword(userService.securePassword(EnumCommonString.AdminUser_InitPwd.name));
+        System.out.println(" --------------------------------------- " + newUser.getPassword());
+        System.out.println(" --------------------------------------- " + newUser.getPassword());
+        System.out.println(" --------------------------------------- " + newUser.getPassword());
+        System.out.println(" --------------------------------------- " + newUser.getPassword());
+        System.out.println(" --------------------------------------- " + newUser.getPassword());
+        System.out.println(" --------------------------------------- " + newUser.getPassword());
+        newUser.setEmail(user.getEmail());
         identityService.saveUser(newUser);
         identityService.setUserInfo(newUser.getId(), "username", user.getUsername());
         identityService.setUserInfo(newUser.getId(), "name", user.getName());
@@ -79,10 +84,11 @@ public class UserController {
         identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
         if (user.getGroupIds() != null && user.getGroupIds().length != 0) {
             for (String gid : user.getGroupIds()) {
+                if (identityService.createGroupQuery().groupId(gid).singleResult() == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
                 identityService.createMembership(newUser.getId(), gid);
             }
         }
-        return Result.success().setData(DozerUtils.copy(identityService.createUserQuery().userId(newUser.getId()).singleResult(), UserObject.class));
+        return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(newUser.getId()).singleResult()));
     }
 
     @ApiOperation(value = "删除用户", notes = "根据 UserId 删除用户")
@@ -108,11 +114,13 @@ public class UserController {
         if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());
         User oldUser = identityService.createUserQuery().userId(id).singleResult();
         if (oldUser == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
-//        oldUser.setFirstName(user.getFirstName());
-//        oldUser.setLastName(user.getLastName());
         oldUser.setEmail(user.getEmail());
         identityService.saveUser(oldUser);
-        return Result.success().setData(DozerUtils.copy(identityService.createUserQuery().userId(id).singleResult(), UserObject.class));
+        identityService.setUserInfo(oldUser.getId(), "username", user.getUsername());
+        identityService.setUserInfo(oldUser.getId(), "name", user.getName());
+        identityService.setUserInfo(oldUser.getId(), "phone", user.getPhone());
+        identityService.setUserInfo(oldUser.getId(), "department", user.getDepartment());
+        return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
     }
 
     /**

@@ -34,7 +34,7 @@ export class LoginComponent {
         this.css.ajaxErrorHidden = true;
         this.css.isSubmitted = true;
         this.user.login({
-            email:this.currentUser.username,
+            username:this.currentUser.username,
             password:this.currentUser.password
         }).then((result)=>{
             if (result.success){
