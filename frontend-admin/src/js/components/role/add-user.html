@@ -9,18 +9,19 @@
 </div>
 
 <div class="item-margin">
-    <form class="form-horizontal" *ngIf="css.activeForRefresh" (ngSubmit)="addUser()" #loginForm="ngForm">
+    <form class="form-horizontal" *ngIf="css.activeForRefresh" (ngSubmit)="addUser()" #addUserForm="ngForm">
         <div class="row mt-50 info-item">
-            <label class="col-sm-2 info-label-input" for="usernameInput"><span class="orange">*</span><span>用户账号:</span></label>
+            <label class="col-sm-2 info-label-input" for="usernameInput"><span class="orange">*</span>用户账号:</label>
             <div class="col-sm-10 info-val">
-                <input type="text" id="usernameInput" name="username" [(ngModel)]="currentUser.username" #username="ngModel" required >
-                <span class="help-block" [class.hidden]="username.valid || username.pristine">请填写用户名!</span>
+                <input type="text" class="form-control" id="usernameInput" name="username" [(ngModel)]="currentUser.username" #username="ngModel" required >
+                <span class="help-block" [class.hidden]="username.valid || username.pristine || ajaxErrorHidden">请填写用户账号!</span>
             </div>
         </div>
         <div class="row info-item">
-            <label class="col-sm-2 info-label-input"><span class="orange">*</span><span>用户姓名:</span></label>
+            <label class="col-sm-2 info-label-input" for="nameInput"><span class="orange">*</span>用户姓名:</label>
             <div class="col-sm-10 info-val">
-                <input type="text" value="{{currentUser.name}}">
+                <input type="text" class="form-control" id="nameInput" name="name" [(ngModel)]="currentUser.name" #name="ngModel" required>
+                <span class="help-block" [class.hidden]="username.valid || username.pristine">请填用户姓名!</span>
             </div>
         </div>
         <div class="row info-item">
@@ -30,33 +31,37 @@
                     <span class="hint">(注:最多只能同时拥有<span class="orange">3个角色</span>)</span>
                 </div>
                 <div class="role user mt-10">
-                    <label *ngFor="let group of groups"><input type="checkbox" *ngFor="let gId of currentUser.groupIds" [checked]="gId===group.id" value="{{group.id}}">{{group.name}}</label>
+                    <label *ngFor="let group of groups"><input type="checkbox" name="groupIds" [checked]="group.selected" (change)="selectGroup(group)">{{group.name}}</label>
                 </div>
+                <span class="help-block" [class.hidden]="username.valid || username.pristine">请选择角色!</span>
             </div>
         </div>
         <div class="row info-item">
-            <label class="col-sm-2 info-label-input"><span class="orange">*</span><span>公司邮箱:</span></label>
+            <label class="col-sm-2 info-label-input" for="emailInput"><span class="orange">*</span><span>公司邮箱:</span></label>
             <div class="col-sm-10 info-val">
-                <input type="text" value="{{currentUser.email}}">
-                <button type="button" class="btn btn-default btn-return ml-20 btn-reset-pwd">重置密码</button>
+                <input type="text" class="form-control" id="emailInput" name="email" [(ngModel)]="currentUser.email" #email="ngModel" required >
+                <span class="help-block" [class.hidden]="username.valid || username.pristine">请填写公司邮箱!</span>
+                <!--<button type="button" class="btn btn-default btn-return ml-20 btn-reset-pwd">重置密码</button>-->
             </div>
         </div>
         <div class="row info-item">
-            <label class="col-sm-2 info-label-input"><span>手机号码:</span></label>
+            <label class="col-sm-2 info-label-input" for="phoneInput"><span>手机号码:</span></label>
             <div class="col-sm-10 info-val">
-                <input type="text" value="{{currentUser.phone}}">
+                <input type="text" class="form-control" id="phoneInput" name="phone" [(ngModel)]="currentUser.phone" #phone="ngModel" required >
+                <span class="help-block" [class.hidden]="username.valid || username.pristine">请填写手机号码!</span>
             </div>
         </div>
         <div class="row info-item">
             <label class="col-sm-2 info-label-input"><span>所属部门:</span></label>
             <div class="col-sm-10 info-val">
-                <input type="text" value="{{currentUser.department}}">
+                <input type="text" class="form-control" value="{{currentUser.department}}">
+                <span class="help-block" [class.hidden]="username.valid || username.pristine">请选择所属部门!</span>
             </div>
         </div>
         <div class="row info-item">
             <label class="col-sm-2 info-label-input"></label>
             <div class="col-sm-10 info-val no-bottom-border">
-                <button type="button" class="btn btn-default btn-lg btn-sure">保存</button>
+                <button type="submit" class="btn btn-default btn-lg btn-sure" [disabled]="!addUserForm.form.valid">保存</button>
                 <button type="button" class="btn btn-default btn-lg btn-return ml-20">返回</button>
                 <div class="mt-20 fs-14"><span class="hint">注:确认保存后,该系统用户的密码将<span class="orange">发送至填写的公司邮箱中。</span></span></div>
             </div>
