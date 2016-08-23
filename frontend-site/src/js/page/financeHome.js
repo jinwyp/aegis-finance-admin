@@ -72,12 +72,6 @@ var financeHome = () => {
         });
     });
 
-    // $('#md_ok_1').click(function () {
-    //     postApplyInfo({
-    //         applyType : ''
-    //     });
-    // });
-
 
 };
 
