@@ -48,7 +48,8 @@ class UserService {
 
     private apiUrl = {
         login : '/api/financing/admin/login',
-        list : '/api/financing/admin/user'
+        list : '/api/financing/admin/user',
+        group : '/api/financing/admin/group'
     };
 
     private handleError(error: any): Promise<any> {
@@ -115,6 +116,20 @@ class UserService {
             return this.update(user);
         }
         return this.add(user);
+    }
+
+    joinGroup(userId:number, groupId:string) {
+        let url = `${this.apiUrl.group}/${groupId}/${userId}`;
+        return this.http.post(url, {}).toPromise()
+            .then(res => res.json() as HttpResponse )
+            .catch(this.handleError);
+    }
+
+    leaveGroup(userId:number, groupId:string) {
+        let url = `${this.apiUrl.group}/${groupId}/${userId}`;
+        return this.http.delete(url).toPromise()
+            .then(res => res.json() as HttpResponse )
+            .catch(this.handleError);
     }
 
 }
