@@ -51,7 +51,14 @@ export class RoleInfoComponent implements OnInit, OnDestroy{
             }else{
 
             }
-            console.log(result)
+        });
+
+        this.group.getUserListByGroupId(id).then((result)=>{
+            if (result.success){
+                this.currentGroup.userList = result.data;
+            }else{
+
+            }
         });
     }
 

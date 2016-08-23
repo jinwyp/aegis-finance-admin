@@ -32,6 +32,8 @@ class UserGroup {
     name : string;
     type : string;
 
+    userList : User[];
+
     constructor() {
         this.id  = 0;
         this.name  = '';
@@ -136,6 +138,12 @@ class UserGroupService {
 
     getGroupById(id: string) {
         return this.http.get(this.apiUrl.list + '/' + id).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(this.handleError);
+    }
+
+    getUserListByGroupId(id: string) {
+        return this.http.get(this.apiUrl.list + '/' + id + '/users').toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
