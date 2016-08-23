@@ -5,6 +5,8 @@
 
 import { Component } from '@angular/core';
 
+import { User, UserService, UserGroup, UserGroupService } from '../../service/user';
+
 
 declare var __moduleName: string;
 
@@ -18,7 +20,28 @@ declare var __moduleName: string;
 
 export class UserListComponent {
 
-    title = '用户管理';
+    constructor(
+        private user: UserService
+    ) {}
+
+    userList : User[];
+
+
+    ngOnInit() {
+        this.getUserList();
+    }
+
+
+    getUserList() {
+
+        this.user.getList().then((result)=>{
+            if (result.success){
+                this.userList = result.data;
+            }else{
+
+            }
+        });
+    }
 
 }
 

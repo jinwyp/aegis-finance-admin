@@ -47,7 +47,8 @@ class UserGroup {
 class UserService {
 
     private apiUrl = {
-        login : '/api/financing/admin/login'
+        login : '/api/financing/admin/login',
+        list : '/api/financing/admin/user'
     };
 
     private handleError(error: any): Promise<any> {
@@ -66,9 +67,20 @@ class UserService {
             .catch(this.handleError);
     }
 
-    // getUserById(id: number) {
-    //     return this.getOrderList().then(heroes => heroes.find(hero => hero.id === id));
-    // }
+
+    getList() {
+        return this.http.get(this.apiUrl.list).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(this.handleError);
+    }
+
+    getUserById(id: number) {
+        return this.http.get(this.apiUrl.list + '/' + id).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(this.handleError);
+    }
+
+
 
     // Add new Hero
     private post(hero: User): Promise<User> {

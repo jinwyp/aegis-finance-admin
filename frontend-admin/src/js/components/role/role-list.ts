@@ -40,7 +40,6 @@ export class RoleListComponent {
             }else{
 
             }
-            console.log(result)
         });
     }
 }
