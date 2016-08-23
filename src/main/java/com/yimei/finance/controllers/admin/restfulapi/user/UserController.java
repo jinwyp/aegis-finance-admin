@@ -7,10 +7,7 @@ import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
@@ -33,12 +30,18 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
-    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "offset", value = "偏移数", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "total", value = "结果总数量", required = false, dataType = "int", paramType = "query")
+    })
     public Result getAllUsersMethod(Page page) {
         page.setTotal(identityService.createUserQuery().count());
         List<UserObject> userObjectList = userService.changeUserObject(identityService.createUserQuery().listPage(page.getOffset(), page.getCount()));
         return Result.success().setData(userObjectList).setMeta(page);
     }
+
 
     @ApiOperation(value = "查询单个用户", notes = "根据id查询用户对象", response = UserObject.class)
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
@@ -70,24 +73,14 @@ public class UserController {
         newUser.setId(null);
         newUser.setFirstName(user.getUsername());
         newUser.setPassword(userService.securePassword(EnumCommonString.AdminUser_InitPwd.name));
-        System.out.println(" --------------------------------------- " + newUser.getPassword());
-        System.out.println(" --------------------------------------- " + newUser.getPassword());
-        System.out.println(" --------------------------------------- " + newUser.getPassword());
-        System.out.println(" --------------------------------------- " + newUser.getPassword());
-        System.out.println(" --------------------------------------- " + newUser.getPassword());
-        System.out.println(" --------------------------------------- " + newUser.getPassword());
         newUser.setEmail(user.getEmail());
         identityService.saveUser(newUser);
         identityService.setUserInfo(newUser.getId(), "username", user.getUsername());
         identityService.setUserInfo(newUser.getId(), "name", user.getName());
         identityService.setUserInfo(newUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
-        if (user.getGroupIds() != null && user.getGroupIds().length != 0) {
-            for (String gid : user.getGroupIds()) {
-                if (identityService.createGroupQuery().groupId(gid).singleResult() == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
-                identityService.createMembership(newUser.getId(), gid);
-            }
-        }
+        Result result = addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
+        if (!result.isSuccess()) return result;
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(newUser.getId()).singleResult()));
     }
 
@@ -116,10 +109,11 @@ public class UserController {
         if (oldUser == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         oldUser.setEmail(user.getEmail());
         identityService.saveUser(oldUser);
-        identityService.setUserInfo(oldUser.getId(), "username", user.getUsername());
         identityService.setUserInfo(oldUser.getId(), "name", user.getName());
         identityService.setUserInfo(oldUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(oldUser.getId(), "department", user.getDepartment());
+        Result result = addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
+        if (!result.isSuccess()) return result;
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
     }
 
@@ -134,6 +128,23 @@ public class UserController {
             }
         }
         return false;
+    }
+
+    public Result addUserGroupMemberShip(String userId, String[] groupIds) {
+        List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
+        if (groupList != null && groupList.size() != 0) {
+            for (Group group : groupList) {
+                identityService.deleteMembership(userId, group.getId());
+            }
+        }
+        if (groupIds != null && groupIds.length != 0) {
+            for (String gid : groupIds) {
+                if (identityService.createGroupQuery().groupId(gid).singleResult() == null)
+                    return Result.error(EnumAdminGroupError.此组不存在.toString());
+                identityService.createMembership(userId, gid);
+            }
+        }
+        return Result.success();
     }
 
 }

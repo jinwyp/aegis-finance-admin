@@ -191,6 +191,7 @@
                                     <span class="red" ms-visible="@financeInfo.approveState==='补充材料'"><em></em>{{@financeInfo.approveState}}</span>
                                     <span class="red" ms-visible="@financeInfo.approveState==='审核不通过'"><em></em>{{@financeInfo.approveState}}</span>
                                     <span class="green" ms-visible="@financeInfo.approveState==='待审核'"><em></em>{{@financeInfo.approveState}}</span>
+                                    <span class="green" ms-visible="@financeInfo.approveState==='审核中'"><em></em>{{@financeInfo.approveState}}</span>
                                     <span class="green" ms-visible="@financeInfo.approveState==='审核通过'"><em></em>{{@financeInfo.approveState}}</span>
                                 </td>
                             </tr>

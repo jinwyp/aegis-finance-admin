@@ -44,7 +44,7 @@
                                     <td><a href="${sitepage}/sell">需求专区</a></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="${sitepage}/finance">金融</a></td>
+                                    <td><a href="/finance">金融</a></td>
                                     <td><a href="${sitepage}/tender">阳光采购</a></td>
                                     <td><a href="${sitepage}/coalzone">煤矿专区</a></td>
                                 </tr>

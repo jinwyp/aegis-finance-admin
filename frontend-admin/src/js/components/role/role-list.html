@@ -23,32 +23,18 @@
             <th width="200">操作人</th>
             <th width="200">操作</th>
         </tr>
-        <tr class="item">
-            <td>1</td>
-            <td>系统管理员</td>
-            <td>2</td>
-            <td>操作人</td>
-            <td>操作</td>
-        </tr>
-        <tr class="item">
-            <td>2</td>
-            <td>系统管理员</td>
-            <td>4</td>
-            <td>操作人</td>
-            <td>
-                <span class="operate-forbid">无法操作</span>
-            </td>
-        </tr>
-        <tr class="item">
-            <td>3</td>
-            <td>系统管理员</td>
-            <td>6</td>
+
+        <tr class="item" *ngFor="let role of groupList">
+            <td>{{role.id}}</td>
+            <td>{{role.name}}</td>
+            <td>{{role.type}}</td>
             <td>操作人</td>
             <td class="operation">
-                <span class="right-border" [routerLink]="['/userrole']">查看</span>
-                <span class="right-border" [routerLink]="['/editrole']">编辑</span>
-                <span>删除</span>
+                <span class="operate-forbid">无法操作</span>
+                <span class="right-border" [routerLink]="['/userroles', role.id ]">查看</span>
+                <span class="right-border" [routerLink]="['/userroles', role.id, 'edit']">编辑</span>
             </td>
         </tr>
+
     </table>
 </div>

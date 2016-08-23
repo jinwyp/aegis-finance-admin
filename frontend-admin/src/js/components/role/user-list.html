@@ -25,36 +25,17 @@
             <th width="200">最后一次登录</th>
             <th width="250">操作</th>
         </tr>
-        <tr class="item">
-            <td>1</td>
-            <td>admin</td>
-            <td>admin</td>
-            <td>系统管理员-系统管理员-系统管理员-系统管理员</td>
-            <td>2016-12-01 23:22:00</td>
-            <td>
-                <span class="operate-forbid">无法操作</span>
-            </td>
-        </tr>
-        <tr class="item">
-            <td>1</td>
-            <td>admin</td>
-            <td>admin</td>
-            <td>系统管理员</td>
-            <td>2016-12-01 23:22:00</td>
-            <td>
-                <span class="operate-forbid">无法操作</span>
-            </td>
-        </tr>
-        <tr class="item">
-            <td>1</td>
-            <td>admin</td>
-            <td>admin</td>
-            <td>系统管理员</td>
+        <tr class="item" *ngFor="let user of userList">
+            <td>{{user.id}}</td>
+            <td>{{user.username}}</td>
+            <td>{{user.name}}</td>
+            <td>{{user.groupIds}}</td>
             <td>2016-12-01 23:22:00</td>
             <td class="operation">
+                <span class="operate-forbid">无法操作</span>
                 <span class="right-border">重置密码</span>
-                <span class="right-border" [routerLink]="['/users', 1]">查看</span>
-                <span class="right-border" [routerLink]="['/users', 1,'edit']">编辑</span>
+                <span class="right-border" [routerLink]="['/users', user.id]">查看</span>
+                <span class="right-border" [routerLink]="['/users', user.id, 'edit']">编辑</span>
                 <span>删除</span>
             </td>
         </tr>

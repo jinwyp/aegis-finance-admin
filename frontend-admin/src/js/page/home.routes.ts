@@ -103,6 +103,11 @@ const routes: Routes = [
     {
         path: 'riskcontrolreport',
         component: RiskControlReportComponent
+    },
+
+    {
+        path: '**',
+        redirectTo: '/userroles'
     }
 ];
 

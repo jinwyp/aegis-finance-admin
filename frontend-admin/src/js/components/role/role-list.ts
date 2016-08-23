@@ -24,7 +24,7 @@ export class RoleListComponent {
         private group: UserGroupService
     ) {}
 
-    groupList : UserGroup[];
+    groupList : UserGroup[] ;
 
 
     ngOnInit() {
@@ -40,7 +40,6 @@ export class RoleListComponent {
             }else{
 
             }
-            console.log(result)
         });
     }
 }
