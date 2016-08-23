@@ -60,8 +60,6 @@ public class FinanceOrder implements Serializable {
     private BigDecimal marketPrice;                                  //单吨市场报价（元／吨）
     @Column(name = "approve_state", length = 30)
     private String approveState;                                     //审批状态
-    @Transient
-    private String approveStateName;                                 //审批状态 name
     @Column(name = "source_id", length = 100)
     private String sourceId;                                         //流水号，编号
     @Column(name = "apply_date_time", length = 50)
@@ -71,8 +69,4 @@ public class FinanceOrder implements Serializable {
     @Column(name = "apply_company_name", length = 50)
     private String applyCompanyName;                                 //申请公司名称
 
-    public String getApproveStateName() {
-        if (approveState == null) return null;
-        return EnumFinanceStatus.getName(EnumFinanceStatus.valueOf(approveState));
-    }
 }

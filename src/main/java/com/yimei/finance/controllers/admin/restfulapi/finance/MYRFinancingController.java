@@ -182,7 +182,7 @@ public class MYRFinancingController {
         taskService.complete(task.getId());
         FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
-        financeOrder.setApproveState(EnumFinanceStatus.AuditPass.toString());
+        financeOrder.setApproveState(EnumFinanceStatus.审核通过.toString());
         financeOrderRepository.save(financeOrder);
         return Result.success().setData(true);
     }
@@ -236,7 +236,7 @@ public class MYRFinancingController {
     Result auditNotPassMethod(Long financeId) {
         FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(financeId));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
-        financeOrder.setApproveState(EnumFinanceStatus.AuditNotPass.toString());
+        financeOrder.setApproveState(EnumFinanceStatus.审核不通过.toString());
         financeOrderRepository.save(financeOrder);
         return Result.success().setData(true);
     }
