@@ -45,13 +45,13 @@ import { SuperviseReportComponent } from '../components/audit/supervise-report';
 import { RiskControlReportComponent } from '../components/audit/risk-control-report';
 
 
-import {AlertComponent} from 'ng2-bootstrap/ng2-bootstrap';
+import {AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
 @NgModule({
     imports: [ BrowserModule, FormsModule, HttpModule],
     declarations: [
         ROUTER_DIRECTIVES,
-        AlertComponent,
+        AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES,
         headerComponent, LeftMenuComponent,
         HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent,
         UserDetailComponent, UpdatePwdComponent,
