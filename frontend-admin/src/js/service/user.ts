@@ -80,7 +80,7 @@ class UserService {
             .catch(this.handleError);
     }
 
-    
+
     add(user: User) {
         let headers = new Headers({'Content-Type': 'application/json'});
 

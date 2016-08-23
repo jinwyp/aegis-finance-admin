@@ -30,7 +30,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Api(tags = {"admin-api-user"}, description = "金融公用接口")
+@Api(tags = {"admin-api-flow"}, description = "金融公用接口")
 @RequestMapping("/api/financing/admin/user")
 @RestController("adminUserCenterController")
 public class UserCenterController {
