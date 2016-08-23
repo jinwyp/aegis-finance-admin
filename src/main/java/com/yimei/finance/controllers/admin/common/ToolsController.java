@@ -29,9 +29,17 @@ public class ToolsController {
         return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.transportmode.toString()));
     }
 
+    @RequestMapping(value = "/departments", method = RequestMethod.GET)
+    @ApiOperation(value = "获取所有部门列表", notes = "获取所有部门列表", response = String.class, responseContainer = "List")
+    public Result findAllDepartmentListMethod() {
+        return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.financedepartment.toString()));
+    }
+
     @RequestMapping(value = "/groups", method = RequestMethod.GET)
     @ApiOperation(value = "获取所有组列表", notes = "获取所有用户组列表", response = GroupObject.class, responseContainer = "List")
     public Result findAllUserGroupListMethod() {
         return Result.success().setData(DozerUtils.copy(identityService.createGroupQuery().list(), GroupObject.class));
     }
+
+
 }
