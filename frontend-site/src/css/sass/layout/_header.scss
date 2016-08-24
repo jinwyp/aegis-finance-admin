@@ -62,7 +62,7 @@ $color_border: #e4e4e4;
           padding: 0px 18px;
           position: relative;
           .Nav{
-            width: 485px!important;
+            width: 553px!important;
             height: 208px;
             background-color: white;
             position: absolute;
@@ -72,7 +72,7 @@ $color_border: #e4e4e4;
             border-right:1px solid $color_border;
             border-bottom:1px solid $color_border;
             border-left:1px solid $color_border;
-            padding: 25px;
+            padding: 25px 28px 25px 25px;
             display: none;
             div{
               h2{
@@ -100,6 +100,9 @@ $color_border: #e4e4e4;
                       color: $hoverColor;
                     }
                   }
+                }
+                .paddingRight0{
+                  padding-right: 0px;
                 }
               }
               .noborder{

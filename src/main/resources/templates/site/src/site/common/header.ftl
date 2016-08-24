@@ -64,7 +64,8 @@
                             <h2><span class="headBg"></span>我的易煤网</h2>
                             <table  class="noborder">
                                 <tr>
-                                    <td><a href="${sitepage}/account/order/buy">业务管理中心</a></td>
+                                    <td><a href="/finance/user/financing">供应链金融</a></td>
+                                    <td class="paddingRight0"><a href="${sitepage}/account/order/buy">业务管理中心</a></td>
                                 </tr>
                                 <tr>
                                     <td><a href="${payUrl}/">财务管理中心</a></td>
