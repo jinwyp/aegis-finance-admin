@@ -21,7 +21,7 @@
             <th width="200">角色名称</th>
             <th width="120">被分配人数(个)</th>
             <th width="100">操作人</th>
-            <th >操作</th>
+            <th width="100">操作</th>
         </tr>
 
         <tr class="item" *ngFor="let role of groupList">
@@ -30,9 +30,9 @@
             <td>{{role.memberNums}}</td>
             <td>操作人</td>
             <td class="operation">
-                <span class="operate-forbid">无法操作</span>
+                <!--<span class="operate-forbid">无法操作</span>-->
                 <span class="right-border" [routerLink]="['/userroles', role.id ]">查看</span>
-                <span class="right-border" [routerLink]="['/userroles', role.id, 'edit']">编辑</span>
+                <span [routerLink]="['/userroles', role.id, 'edit']">编辑</span>
             </td>
         </tr>
 

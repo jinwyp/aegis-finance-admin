@@ -81,7 +81,7 @@ export class AddUserComponent {
         this.css.isSubmitted = true;
         this.userService.add(this.currentUser).then((result)=>{
             if (result.success){
-                window.location.href = '/finance/admin/home';
+                window.location.href = '/finance/admin/home/users';
             }else{
                 this.css.ajaxErrorHidden = false;
             }

@@ -34,7 +34,7 @@ const routes: Routes = [
         component: UserDetailComponent
     },
     {
-        path: 'userpassword',
+        path: 'updatepwd/:id',
         component: UpdatePwdComponent
     },
 
@@ -65,7 +65,8 @@ const routes: Routes = [
     },
     {
         path: 'users/add',
-        component: AddUserComponent
+        component: AddUserComponent,
+        data: {type : 'add', title: 'User Add' }
     },
     {
         path: 'users/:id',
@@ -73,7 +74,8 @@ const routes: Routes = [
     },
     {
         path: 'users/:id/edit',
-        component: AddUserComponent
+        component: AddUserComponent,
+        data: {type : 'edit', title: 'User Edit' }
     },
 
     {

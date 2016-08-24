@@ -37,6 +37,7 @@ export class UserListComponent {
         this.user.getList().then((result)=>{
             if (result.success){
                 this.userList = result.data;
+                console.log(result);
             }else{
 
             }

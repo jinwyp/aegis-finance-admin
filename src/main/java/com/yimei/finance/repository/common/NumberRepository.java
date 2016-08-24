@@ -12,7 +12,8 @@ import java.util.List;
  */
 public interface NumberRepository extends JpaRepository<Number, Long> {
 
-    List<Number> findByTypeAndCreateDate(@Param("type") String type,
-                                         @Param("createDate") LocalDate LocalDate);
+    List<Number> findByTypeAndCreateDateAndIdLessThan(@Param("type") String type,
+                                                      @Param("createDate") LocalDate LocalDate,
+                                                      @Param("id") Long id);
 
 }

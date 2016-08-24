@@ -22,9 +22,9 @@
         </div>
     </div>
     <div class="row info-item">
-        <span class="col-sm-2 info-label"><span>选择角色:</span></span>
+        <span class="col-sm-2 info-label"><span>所属角色:</span></span>
         <div class="col-sm-10 info-val">
-            <span>角色名称</span>
+            <span *ngFor="let usergroup of currentUser.groupList">{{usergroup.name}}&nbsp;</span>
         </div>
     </div>
     <div class="row info-item">

@@ -1,6 +1,6 @@
 package com.yimei.finance.config.session;
 
-import org.activiti.engine.identity.User;
+import com.yimei.finance.entity.admin.user.UserObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;
@@ -12,22 +12,23 @@ import java.io.Serializable;
  */
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class AdminSession implements Serializable{
-    protected User user;
+public class AdminSession implements Serializable {
+    protected UserObject user;
 
-    public User getUser() {
+    public UserObject getUser() {
         return user;
     }
 
-    public boolean login(User user){
+    public boolean login(UserObject user) {
         this.user = user;
         return true;
     }
 
-    public boolean isLogined(){
-        return this.user!=null;
+    public boolean isLogined() {
+        return this.user != null;
     }
-    public void logout(){
+
+    public void logout() {
         this.user = null;
     }
 

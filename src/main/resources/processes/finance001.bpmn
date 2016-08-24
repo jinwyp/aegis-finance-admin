@@ -21,7 +21,7 @@
     <endEvent id="endevent1" name="业务员审核不通过"></endEvent>
     <sequenceFlow id="flow6" name="审核不通过" sourceRef="exclusivegateway1" targetRef="endevent1">
       <documentation>业务员审核不通过。</documentation>
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${salesmanAudit == false}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${salesmanAudit == 0}]]></conditionExpression>
     </sequenceFlow>
     <userTask id="assignInvestigator" name="分配尽调员">
       <documentation>分配尽调员。</documentation>
