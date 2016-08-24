@@ -3,7 +3,7 @@
  */
 
 
-import { Input, Component } from '@angular/core';
+import { Input, Output, EventEmitter, Component } from '@angular/core';
 
 
 declare var __moduleName: string;
@@ -21,8 +21,6 @@ export class CustomSelectComponent {
 
     selectedItem={key:'-1',value:'请选择'}
 
-    @Input()
-    attrName='';
 
     @Input()
     optionList=[
@@ -36,9 +34,14 @@ export class CustomSelectComponent {
     toggelSelect(){
         this.isopen=!this.isopen;
     }
+
+    @Output()
+    onChange = new EventEmitter();
     itemClick(obj){
         this.selectedItem=obj;
         this.isopen=!this.isopen;
+        this.onChange.emit({value: this.selectedItem.value});
+        console.log('child-----'+this.selectedItem.value);
     }
 
 }

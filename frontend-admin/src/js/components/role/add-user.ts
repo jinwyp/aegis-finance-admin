@@ -26,6 +26,8 @@ export class AddUserComponent {
         private groupService:UserGroupService
     ) {}
 
+    selectedItem={key:'-1',value:'请选择'}
+
     isAddStatus : boolean = false;
 
     currentUser = new User();
@@ -88,6 +90,11 @@ export class AddUserComponent {
             }
             console.log(result)
         });
+    }
+
+    selectChange($event){
+        this.currentUser.department = $event.value
+        console.log(this.currentUser);
     }
 
 }
