@@ -19,7 +19,6 @@ declare var __moduleName: string;
 export class CustomSelectComponent {
     isopen=true;
 
-
     selectedItem={key:'-1',value:'请选择'}
 
     @Input()

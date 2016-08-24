@@ -34,7 +34,7 @@ const routes: Routes = [
         component: UserDetailComponent
     },
     {
-        path: 'userpassword',
+        path: 'updatepwd/:id',
         component: UpdatePwdComponent
     },
 

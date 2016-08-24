@@ -87,12 +87,14 @@ class User {
     email : string;
     department : string;
     groupIds : string[];
+    groupList : UserGroup[];
 
     constructor() {
         this.id  = 0;
         this.username  = '';
         this.password  = '';
         this.groupIds = [];
+        this.groupList = [];
     }
 }
 
