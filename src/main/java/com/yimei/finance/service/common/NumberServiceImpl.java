@@ -19,7 +19,7 @@ public class NumberServiceImpl {
     public String getNextCode(String type) {
         Number number = new Number(type, LocalDate.now());
         numberRepository.save(number);
-        int nums = numberRepository.findByTypeAndCreateDate(type, LocalDate.now()).size();
+        int nums = numberRepository.findByTypeAndCreateDateAndIdLessThan(type, LocalDate.now(), number.getId()+1).size();
         String numsStr = "";
         if (nums > 999) numsStr = String.valueOf(nums);
         else if (nums > 99) numsStr = "0" + nums;

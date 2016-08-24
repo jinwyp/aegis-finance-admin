@@ -11,13 +11,8 @@ import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
-import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
-import com.yimei.finance.repository.tpl.TplRepository;
 import com.yimei.finance.service.common.NumberServiceImpl;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.IdentityLinkType;
@@ -25,9 +20,9 @@ import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by JinWYP on 8/15/16.
@@ -39,10 +34,6 @@ public class UserCenterController {
 
     @Autowired
     private FinanceOrderRepository financeOrderRepository;
-    @Autowired
-    private TplRepository tplRepository;
-    @Autowired
-    private JpaRepositoryDemo jpaRepositoryDemo;
     @Autowired
     private UserSession userSession;
     @Autowired
@@ -56,20 +47,17 @@ public class UserCenterController {
     * 供应链金融 - 发起融资申请
     */
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
-    @ApiImplicitParam(name = "applyType", value = "融资类型", required = true, dataType = "String", paramType = "query")
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
-    public Result requestFinancingOrder(@RequestBody Map<String, Object> map) {
-        System.out.println("Order Type:" + map.get("applyType"));
-        FinanceOrder financeOrder = new FinanceOrder();
-        financeOrder.setApplyType(String.valueOf(map.get("applyType")));
+    public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Valid @RequestBody FinanceOrder financeOrder) {
+        System.out.println("Order Type:" + financeOrder.getApplyType());
+        financeOrder.setApplyType(financeOrder.getApplyType());
         financeOrder.setSourceId(numberService.getNextCode("JR"));
-        financeOrder.setUserId(userSession.getUser().getId());
-//        financeOrder.setUserId(1);
+//        financeOrder.setUserId(userSession.getUser().getId());
+        financeOrder.setUserId(1);
         financeOrder.setApplyDateTime(LocalDateTime.now());
         financeOrder.setApproveState(EnumFinanceStatus.待审核.toString());
         financeOrderRepository.save(financeOrder);
-        if (runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeOrder.getId())).singleResult() != null) return Result.error(EnumAdminFinanceError.此金融单已经创建流程.toString());
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
             runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
             Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeOrder.getId())).active().singleResult();

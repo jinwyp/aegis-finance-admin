@@ -29,7 +29,9 @@
             <!--<td>{{user.id}}</td>-->
             <td>{{user.username}}</td>
             <td>{{user.name}}</td>
-            <td>{{user.groupList}}</td>
+            <td>
+                <span *ngFor="let usergroup of user.groupList">{{usergroup.name}}</span>
+            </td>
             <td>2016-12-01 23:22:00</td>
             <td class="operation">
                 <!--<span class="operate-forbid">无法操作</span>-->

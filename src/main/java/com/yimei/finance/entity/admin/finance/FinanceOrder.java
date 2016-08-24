@@ -4,8 +4,10 @@ import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
@@ -27,6 +29,8 @@ public class FinanceOrder implements Serializable {
     @Column(name = "user_id", length = 11, nullable = false)
     private int userId;                                              //申请人用户id
     @Column(name = "apply_type", length = 20)
+    @Size(min = 3, max = 10, message = "申请类型字段应在3-10个字符之间")
+    @NotBlank(message = "申请类型字段不能为空")
     private String applyType;                                        //申请类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
     @Column(name = "financing_amount", length = 20)
     private BigDecimal financingAmount;                              //拟融资金额（单位：万元）
