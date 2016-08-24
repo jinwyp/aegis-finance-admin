@@ -21,7 +21,7 @@ var financeInfo = (query)=> {
     var getFinanceInfo = (id) => {
 
         $.ajax({
-            url      : '/api/financing/applyInfo/' + id,
+            url      : '/api/financing/apply/' + id,
             method   : 'GET',
             dataType : 'json',
             success  : (data)=> {

@@ -76,7 +76,7 @@ var financeList = () => {
         var params = $.extend({}, query);
 
         $.ajax({
-            url      : '/api/financing/applyInfo',
+            url      : '/api/financing/apply',
             method   : 'GET',
             dataType : 'json',
             data     : params,
@@ -133,7 +133,7 @@ var financeList = () => {
         var params = $.extend({}, query);
 
         $.ajax({
-            url      : '/api/financing/applyInfo',
+            url      : '/api/financing/apply',
             method   : "POST",
             contentType: "application/json;charset=utf-8",
             dataType : "json",
