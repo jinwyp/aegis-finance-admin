@@ -16,5 +16,5 @@ public interface FinanceOrderRepository extends JpaRepository<FinanceOrder, Long
     FinanceOrder findByIdAndUserId(@Param("id") Long id,
                                    @Param("userId")int userId);
 
-
+    FinanceOrder findBySourceId(String sourceId);
 }
