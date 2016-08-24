@@ -21,10 +21,16 @@ declare var __moduleName: string;
 export class AddUserComponent {
 
     constructor(
-        private route: ActivatedRoute,
+        private activatedRoute: ActivatedRoute,
         private userService: UserService,
         private groupService:UserGroupService
     ) {}
+
+    css = {
+        activeForRefresh : true,
+        isSubmitted : false,
+        ajaxErrorHidden : true
+    };
 
     isAddStatus : boolean = false;
 
@@ -35,19 +41,12 @@ export class AddUserComponent {
     ngOnInit(){
         this.getGroupList();
 
-        console.log(this.route.data)
 
-        // if (this.route.data.type === 'add') {
-        //     this.isAddStatus = true;
-        // }
-
+        if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
+            this.isAddStatus = true;
+        }
     }
 
-    css = {
-        activeForRefresh : true,
-        isSubmitted : false,
-        ajaxErrorHidden : true
-    };
 
 
     getGroupList() {

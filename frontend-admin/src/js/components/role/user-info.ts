@@ -3,7 +3,7 @@
  */
 
 import { Component, OnInit, OnDestroy} from '@angular/core';
-import { Router, ActivatedRoute }      from '@angular/router';
+import { ActivatedRoute }      from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { User, UserService, UserGroup, UserGroupService } from '../../service/user';
