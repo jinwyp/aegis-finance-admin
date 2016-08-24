@@ -23,8 +23,6 @@ public class AdminUserServiceImpl {
     private AdminSession adminSession;
     @Autowired
     private IdentityService identityService;
-    @Autowired
-    private AdminUserServiceImpl userService;
 
     /**
      * 判断一个用户是否有 向该组 添加用户的 权限

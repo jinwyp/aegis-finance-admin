@@ -48,7 +48,7 @@ public class UserCenterController {
     @Autowired
     private RuntimeService runtimeService;
 
-    @RequestMapping(value = "/sessionUser", method = RequestMethod.GET)
+    @RequestMapping(value = "/session", method = RequestMethod.GET)
     @ApiOperation(value = "获取session中用户对象", notes = "获取session中用户对象", response = UserObject.class)
     public Result getSessionUserMethod() {
         return Result.success().setData(adminSession.getUser());
