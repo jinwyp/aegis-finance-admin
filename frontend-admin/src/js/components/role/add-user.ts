@@ -29,16 +29,7 @@ export class AddUserComponent {
     isAddStatus : boolean = false;
 
     currentUser = new User();
-    // currentUser = {
-    //     "id": 1,
-    //     "username": "",
-    //     "name": "liushengbin",
-    //     "phone": "18621266707",
-    //     "email": "liushengbin@yimei180.com",
-    //     "department": "技术部",
-    //     "password": "string",
-    //     "groupIds":["10001","10005"]
-    // };
+
     groups = [];
 
     ngOnInit(){
@@ -91,7 +82,7 @@ export class AddUserComponent {
         this.css.isSubmitted = true;
         this.userService.add(this.currentUser).then((result)=>{
             if (result.success){
-                window.location.href = '/finance/admin/home';
+                window.location.href = '/finance/admin/home/users';
             }else{
                 this.css.ajaxErrorHidden = false;
             }

@@ -13,7 +13,7 @@
         <div class="row mt-50 info-item">
             <label class="col-sm-2 info-label-input" for="usernameInput"><span class="orange">*</span>用户账号:</label>
             <div class="col-sm-10 info-val">
-                <input type="text" class="form-control" id="usernameInput" name="username" [(ngModel)]="currentUser.username" #username="ngModel" required >
+                <input type="text" class="form-control" id="usernameInput" name="username" [(ngModel)]="currentUser.username" maxlength="16" #username="ngModel" required >
                 <span class="help-block" [class.hidden]="username.valid || username.pristine || ajaxErrorHidden">请填写用户账号!</span>
             </div>
         </div>
@@ -56,8 +56,7 @@
             <div class="col-sm-10 info-val">
                 <!--<input type="text" class="form-control" value="{{currentUser.department}}">-->
                 <!--<span class="help-block" [class.hidden]="username.valid || username.pristine">请选择所属部门!</span>-->
-                <custom-select [attrName]="department"></custom-select>
-                <!--<custom-select ></custom-select>-->
+                <custom-select [attrName]="'department'"></custom-select>
             </div>
         </div>
         <div class="row info-item">
