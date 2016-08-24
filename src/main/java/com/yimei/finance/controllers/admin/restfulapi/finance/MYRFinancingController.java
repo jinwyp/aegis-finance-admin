@@ -41,7 +41,7 @@ public class MYRFinancingController {
     private FinanceOrderServiceImpl financeOrderService;
 
     @RequestMapping(value = "/onlinetrader/material/{taskId}", method = RequestMethod.POST)
-    @ApiOperation(value = "线上交易员填写材料", notes = "线上交易员填写材料", response = Boolean.class)
+    @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrOnlineTraderAddMaterialMethod(@PathVariable("taskId")String taskId,
                                                    @ApiParam(name = "financeOrder", value = "金融申请单对象", required = true) FinanceOrder financeOrder,
