@@ -6,13 +6,12 @@
       <documentation>分配线上交易员。</documentation>
     </userTask>
     <sequenceFlow id="flow1" sourceRef="startWorkFlow" targetRef="assignOnlineTrader"></sequenceFlow>
-    <userTask id="onlineTraderAddMaterial" name="线上交易员填写材料">
+    <userTask id="onlineTraderAudit" name="线上交易员审核并填写材料">
       <documentation>线上交易员填写材料。</documentation>
     </userTask>
     <userTask id="assignSalesman" name="分配业务员">
       <documentation>分配业务员</documentation>
     </userTask>
-    <sequenceFlow id="flow3" sourceRef="onlineTraderAddMaterial" targetRef="assignSalesman"></sequenceFlow>
     <userTask id="salesmanAudit" name="业务员审核并填写材料">
       <documentation>业务员审核并填写材料。</documentation>
     </userTask>
@@ -95,13 +94,14 @@
       <documentation>流程完成。</documentation>
     </endEvent>
     <sequenceFlow id="flow22" sourceRef="riskManagerAuditSuccess" targetRef="completeWorkFlow"></sequenceFlow>
-    <endEvent id="EndByOnlineTrader" name="显示交易员审核不通过"></endEvent>
+    <sequenceFlow id="flow23" sourceRef="assignOnlineTrader" targetRef="onlineTraderAudit"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway6" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="flow26" sourceRef="assignOnlineTrader" targetRef="exclusivegateway6"></sequenceFlow>
-    <sequenceFlow id="flow27" name="审核通过" sourceRef="exclusivegateway6" targetRef="onlineTraderAddMaterial">
+    <sequenceFlow id="flow24" sourceRef="onlineTraderAudit" targetRef="exclusivegateway6"></sequenceFlow>
+    <sequenceFlow id="flow25" name="审核通过" sourceRef="exclusivegateway6" targetRef="assignSalesman">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${onlineTraderAudit == 1}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow28" name="审核不通过" sourceRef="exclusivegateway6" targetRef="EndByOnlineTrader">
+    <endEvent id="EndByOnlineTrader" name="显示交易员审核不通过，流程结束。"></endEvent>
+    <sequenceFlow id="flow26" name="审核不通过" sourceRef="exclusivegateway6" targetRef="EndByOnlineTrader">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${onlineTraderAudit == 0}]]></conditionExpression>
     </sequenceFlow>
   </process>
@@ -113,8 +113,8 @@
       <bpmndi:BPMNShape bpmnElement="assignOnlineTrader" id="BPMNShape_assignOnlineTrader">
         <omgdc:Bounds height="55.0" width="105.0" x="25.0" y="64.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="onlineTraderAddMaterial" id="BPMNShape_onlineTraderAddMaterial">
-        <omgdc:Bounds height="55.0" width="105.0" x="25.0" y="207.0"></omgdc:Bounds>
+      <bpmndi:BPMNShape bpmnElement="onlineTraderAudit" id="BPMNShape_onlineTraderAudit">
+        <omgdc:Bounds height="55.0" width="105.0" x="25.0" y="140.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="assignSalesman" id="BPMNShape_assignSalesman">
         <omgdc:Bounds height="55.0" width="105.0" x="25.0" y="287.0"></omgdc:Bounds>
@@ -170,19 +170,15 @@
       <bpmndi:BPMNShape bpmnElement="completeWorkFlow" id="BPMNShape_completeWorkFlow">
         <omgdc:Bounds height="35.0" width="35.0" x="1335.0" y="380.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="EndByOnlineTrader" id="BPMNShape_EndByOnlineTrader">
-        <omgdc:Bounds height="35.0" width="35.0" x="152.0" y="146.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="exclusivegateway6" id="BPMNShape_exclusivegateway6">
-        <omgdc:Bounds height="40.0" width="40.0" x="57.0" y="143.0"></omgdc:Bounds>
+        <omgdc:Bounds height="40.0" width="40.0" x="57.0" y="220.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndByOnlineTrader" id="BPMNShape_EndByOnlineTrader">
+        <omgdc:Bounds height="35.0" width="35.0" x="161.0" y="223.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="77.0" y="47.0"></omgdi:waypoint>
         <omgdi:waypoint x="77.0" y="64.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow3" id="BPMNEdge_flow3">
-        <omgdi:waypoint x="77.0" y="262.0"></omgdi:waypoint>
-        <omgdi:waypoint x="77.0" y="287.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
         <omgdi:waypoint x="77.0" y="342.0"></omgdi:waypoint>
@@ -280,22 +276,26 @@
         <omgdi:waypoint x="1290.0" y="397.0"></omgdi:waypoint>
         <omgdi:waypoint x="1335.0" y="397.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26">
+      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23">
         <omgdi:waypoint x="77.0" y="119.0"></omgdi:waypoint>
-        <omgdi:waypoint x="77.0" y="143.0"></omgdi:waypoint>
+        <omgdi:waypoint x="77.0" y="140.0"></omgdi:waypoint>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow27" id="BPMNEdge_flow27">
-        <omgdi:waypoint x="77.0" y="183.0"></omgdi:waypoint>
-        <omgdi:waypoint x="77.0" y="207.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24">
+        <omgdi:waypoint x="77.0" y="195.0"></omgdi:waypoint>
+        <omgdi:waypoint x="77.0" y="220.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25">
+        <omgdi:waypoint x="77.0" y="260.0"></omgdi:waypoint>
+        <omgdi:waypoint x="77.0" y="287.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="87.0" y="183.0"></omgdc:Bounds>
+          <omgdc:Bounds height="16.0" width="100.0" x="86.0" y="259.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow28" id="BPMNEdge_flow28">
-        <omgdi:waypoint x="97.0" y="163.0"></omgdi:waypoint>
-        <omgdi:waypoint x="152.0" y="163.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26">
+        <omgdi:waypoint x="97.0" y="240.0"></omgdi:waypoint>
+        <omgdi:waypoint x="161.0" y="240.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="96.0" y="146.0"></omgdc:Bounds>
+          <omgdc:Bounds height="16.0" width="100.0" x="91.0" y="220.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>

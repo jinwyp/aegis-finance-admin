@@ -141,7 +141,7 @@ public class UserCenterController {
         String financeEventType = "";
         if (execution.getActivityId().equals(EnumFinanceAssignType.assignOnlineTrader.toString())) {
             userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.OnlineTraderGroup.id).list();
-            financeEventType = EnumFinanceEventType.onlineTraderAddMaterial.toString();
+            financeEventType = EnumFinanceEventType.onlineTraderAudit.toString();
         } else if (execution.getActivityId().equals(EnumFinanceAssignType.assignSalesman.toString())) {
             userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SalesmanGroup.id).list();
             financeEventType = EnumFinanceEventType.salesmanAudit.toString();

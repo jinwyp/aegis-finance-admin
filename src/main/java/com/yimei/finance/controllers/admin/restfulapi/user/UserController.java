@@ -6,6 +6,7 @@ import com.yimei.finance.entity.common.enums.EnumCommonString;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.exception.BusinessException;
+import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.*;
@@ -29,21 +30,17 @@ public class UserController {
     private AdminUserServiceImpl userService;
     @Autowired
     private AdminSession adminSession;
+    @Autowired
+    private AdminGroupServiceImpl groupService;
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "offset", value = "偏移数", required = false, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "total", value = "结果总数量", required = false, dataType = "int", paramType = "query")
-    })
+    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getAllUsersMethod(Page page) {
         page.setTotal(identityService.createUserQuery().count());
         List<UserObject> userObjectList = userService.changeUserObject(identityService.createUserQuery().listPage(page.getOffset(), page.getCount()));
         return Result.success().setData(userObjectList).setMeta(page);
     }
-
 
     @ApiOperation(value = "查询单个用户", notes = "根据id查询用户对象", response = UserObject.class)
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
@@ -60,7 +57,7 @@ public class UserController {
     @RequestMapping(value = "/{id}/groups", method = RequestMethod.GET)
     public Result getUserGroupsMethod(@PathVariable("id") String id, Page page) {
         page.setTotal(identityService.createGroupQuery().groupMember(id).count());
-        List<GroupObject> groupObjectList = DozerUtils.copy(identityService.createGroupQuery().groupMember(id).list(), GroupObject.class);
+        List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().groupMember(id).list());
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
@@ -68,7 +65,8 @@ public class UserController {
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        Result result = userService.checkAddUserToGroupAuthority(user.getGroupIds());
+        if (!result.isSuccess()) return result;
         if (StringUtils.isEmpty(user.getUsername())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
         if (identityService.createUserQuery().userFirstName(user.getUsername()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
         User newUser = identityService.newUser("");
@@ -82,8 +80,7 @@ public class UserController {
         identityService.setUserInfo(newUser.getId(), "name", user.getName());
         identityService.setUserInfo(newUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
-        Result result = addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
-        if (!result.isSuccess()) return result;
+        addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(newUser.getId()).singleResult()));
     }
 
@@ -91,7 +88,9 @@ public class UserController {
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Result deleteUserMethod(@PathVariable("id") String id) {
-        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        List<String> groupIds = userService.getUserGroupIdList(id);
+        Result result = userService.checkAddUserToGroupAuthority(groupIds);
+        if (!result.isSuccess()) return result;
         User user = identityService.createUserQuery().userId(id).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         UserObject userObject = DozerUtils.copy(user, UserObject.class);
@@ -105,7 +104,8 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateUserMethod(@PathVariable("id") String id,
                                    @ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        Result result = userService.checkAddUserToGroupAuthority(user.getGroupIds());
+        if (!result.isSuccess()) return result;
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());
         if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());
         User oldUser = identityService.createUserQuery().userId(id).singleResult();
@@ -115,40 +115,25 @@ public class UserController {
         identityService.setUserInfo(oldUser.getId(), "name", user.getName());
         identityService.setUserInfo(oldUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(oldUser.getId(), "department", user.getDepartment());
-        Result result = addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
-        if (!result.isSuccess()) return result;
+        addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
     }
 
-    /**
-     * 检查是否具有超级管理员权限
-     */
-    public boolean checkRight() {
-        List<Group> groups = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
-        for (Group group : groups) {
-            if (group.getId().equals(EnumSpecialGroup.SuperAdminGroup.id)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     @Transactional
-    public Result addUserGroupMemberShip(String userId, String[] groupIds) {
+    public void addUserGroupMemberShip(String userId, List<String> groupIds) {
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
         if (groupList != null && groupList.size() != 0) {
             for (Group group : groupList) {
                 identityService.deleteMembership(userId, group.getId());
             }
         }
-        if (groupIds != null && groupIds.length != 0) {
+        if (groupIds != null && groupIds.size() != 0) {
             for (String gid : groupIds) {
                 if (identityService.createGroupQuery().groupId(gid).singleResult() == null)
                     throw new BusinessException(EnumAdminGroupError.此组不存在.toString());
                 identityService.createMembership(userId, gid);
             }
         }
-        return Result.success();
     }
 
 }

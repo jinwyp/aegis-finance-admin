@@ -73,7 +73,7 @@ public class UserCenterController {
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
             runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
             Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeOrder.getId())).active().singleResult();
-            taskService.addGroupIdentityLink(task.getId(), EnumSpecialGroup.ManageTraderGroup.id, IdentityLinkType.CANDIDATE);
+            taskService.addGroupIdentityLink(task.getId(), EnumSpecialGroup.ManageOnlineTraderGroup.id, IdentityLinkType.CANDIDATE);
         } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
 
         } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {

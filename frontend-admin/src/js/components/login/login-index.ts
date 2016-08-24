@@ -40,10 +40,11 @@ export class LoginComponent {
             if (result.success){
                 alert('登录成功');
                 window.location.href = '/finance/admin/home';
-            }else{
+            }
+        }).catch((error)=>{
+            if (!error.success){
                 this.css.ajaxErrorHidden = false;
             }
-            console.log(result)
         });
     }
 

@@ -41,8 +41,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     }
 
 
-    @Autowired
-    protected KittHandlerExceptionResolver kittHandlerExceptionResolver;
+//    @Autowired
+//    protected KittHandlerExceptionResolver kittHandlerExceptionResolver;
     @Autowired
     protected SiteACLInterceptor siteACLInterceptor;
     @Autowired
@@ -56,10 +56,10 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         registry.addInterceptor(adminACLInterceptor).addPathPatterns("/finance/admin/**", "/api/financing/admin/**").excludePathPatterns("/api/financing/admin/login", "/api/financing/admin");
     }
 
-    @Override
-    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
-        exceptionResolvers.add(kittHandlerExceptionResolver);
-    }
+//    @Override
+//    public void configureHandlerExceptionResolvers(List<HandlerExceptionResolver> exceptionResolvers) {
+//        exceptionResolvers.add(kittHandlerExceptionResolver);
+//    }
 
     //添加信息转换器
     @Override

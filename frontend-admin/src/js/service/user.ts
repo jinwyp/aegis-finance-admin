@@ -139,8 +139,7 @@ class UserService {
 
     login(user) {
         return this.http.post(this.apiUrl.login, user).toPromise()
-            .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .then(response => response.json() as HttpResponse);
     }
 
 
