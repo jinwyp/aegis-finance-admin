@@ -12,7 +12,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class UserLoginObject implements Serializable {
-    @Size(min=6, max=20)
+    @Size(min=3, max=20)
     @NotBlank(message = "账号不能为空")
     private String username;                    //账号
 

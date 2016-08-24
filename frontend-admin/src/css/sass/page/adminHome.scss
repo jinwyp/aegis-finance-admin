@@ -27,13 +27,17 @@
   .help-block{ color: $err-color;  margin-bottom:0px; }
 
   .left-menu-box{
-    width:200px;
+    width:180px;
     background-color: $menu-bg-color;
+    padding-right: 0px;
     .left-menu{
-      
+      margin-right: 0px;
+
       .menu-item {
         padding-top: 20px;
         padding-bottom:20px;
+        padding-right: 0px;
+
         //border-top: 1px solid #e0e0e0;
         border-right: 1px solid $input-border-color;
         //border-bottom: 1px solid #e0e0e0;
@@ -80,6 +84,8 @@
   }
 
   .right-main-box{
+    padding-left: 0px;
+
     .mt-50{ margin-top:50px;}
     .mt-30{ margin-top:30px;}
     .mt-20{ margin-top:20px;}
