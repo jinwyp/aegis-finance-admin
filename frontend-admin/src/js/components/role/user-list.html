@@ -22,15 +22,15 @@
             <th width="100">用户账号</th>
             <th width="100">用户姓名</th>
             <th width="200">角色名称</th>
-            <th width="150">最后一次登录</th>
-            <th >操作</th>
+            <th width="120">最后一次登录</th>
+            <th width="130">操作</th>
         </tr>
         <tr class="item" *ngFor="let user of userList">
             <!--<td>{{user.id}}</td>-->
             <td>{{user.username}}</td>
             <td>{{user.name}}</td>
             <td>
-                <span *ngFor="let usergroup of user.groupList">{{usergroup.name}}</span>
+                <span *ngFor="let usergroup of user.groupList">{{usergroup.name}}&nbsp;</span>
             </td>
             <td>2016-12-01 23:22:00</td>
             <td class="operation">
