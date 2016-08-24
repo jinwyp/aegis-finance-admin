@@ -4,7 +4,8 @@
 
 
 import { Component } from '@angular/core';
-import { User, UserService, UserGroup, UserGroupService, groupList } from '../../service/user';
+import { Router, ActivatedRoute }      from '@angular/router';
+import { User, UserService, UserGroup, UserGroupService } from '../../service/user';
 
 
 declare var __moduleName: string;
@@ -20,11 +21,14 @@ declare var __moduleName: string;
 export class AddUserComponent {
 
     constructor(
+        private route: ActivatedRoute,
         private userService: UserService,
         private groupService:UserGroupService
     ) {}
 
-    currentUser=new User();
+    isAddStatus : boolean = false;
+
+    currentUser = new User();
     // currentUser = {
     //     "id": 1,
     //     "username": "",
@@ -35,14 +39,17 @@ export class AddUserComponent {
     //     "password": "string",
     //     "groupIds":["10001","10005"]
     // };
-    groups=groupList;
+    groups = [];
 
     ngOnInit(){
-        this.groups.forEach( (group)=> {
-            if (this.currentUser.groupIds.indexOf(group.id) > -1) {
-                group.selected = true;
-            }
-        })
+        this.getGroupList();
+
+        console.log(this.route.data)
+
+        // if (this.route.data.type === 'add') {
+        //     this.isAddStatus = true;
+        // }
+
     }
 
     css = {
@@ -51,6 +58,24 @@ export class AddUserComponent {
         ajaxErrorHidden : true
     };
 
+
+    getGroupList() {
+
+        this.groupService.getList().then((result)=>{
+            if (result.success){
+                this.groups = result.data;
+
+                this.groups.forEach( (group)=> {
+                    if (this.currentUser.groupIds.indexOf(group.id) > -1) {
+                        group.selected = true;
+                    }
+                });
+
+            }else{
+
+            }
+        });
+    }
 
     selectGroup(group){
         if (this.currentUser.groupIds.indexOf(group.id) === -1 ){

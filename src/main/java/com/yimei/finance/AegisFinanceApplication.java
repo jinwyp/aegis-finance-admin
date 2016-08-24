@@ -47,6 +47,7 @@ public class AegisFinanceApplication {
 					user.setFirstName("admin");
 					user.setPassword("1f71bc155f2f42aba0c4e95464b5df02");
 					identityService.saveUser(user);
+					identityService.setUserInfo(user.getId(), "username", "admin");
 					identityService.createMembership(user.getId(), EnumSpecialGroup.SuperAdminGroup.id);
 				}
             }

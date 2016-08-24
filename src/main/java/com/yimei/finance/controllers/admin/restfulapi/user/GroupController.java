@@ -36,7 +36,7 @@ public class GroupController {
     @RequestMapping(method = RequestMethod.GET)
     public Result getAllGroupsMethod(Page page) {
         page.setTotal(identityService.createGroupQuery().count());
-        List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().orderByGroupId().desc().listPage(page.getOffset(), page.getCount()));
+        List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().orderByGroupId().desc().listPage(page.getOffset(), 100));
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
