@@ -18,5 +18,6 @@ public class GroupObject implements Serializable {
     private String id;
     private String name;
     private String type;
+    private int memberNums;
 
 }

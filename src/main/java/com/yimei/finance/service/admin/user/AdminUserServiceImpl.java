@@ -2,6 +2,7 @@ package com.yimei.finance.service.admin.user;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.user.EnumAdminUserError;
+import com.yimei.finance.entity.admin.user.GroupObject;
 import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.utils.DozerUtils;
@@ -23,6 +24,36 @@ public class AdminUserServiceImpl {
     @Autowired
     private AdminUserServiceImpl userService;
 
+//    /**
+//     * 判断一个用户是否有 向该组 添加用户的 权限
+//     */
+//    public boolean checkUserAddUserToGroupRight(String[] groupIds) {
+//
+//    }
+
+    /**
+     * 封装 user, 从 User 到 UserObject
+     */
+    public UserObject changeUserObject(User user) {
+        UserObject userObject = new UserObject();
+        DozerUtils.copy(user, userObject);
+        userObject.setUsername(identityService.getUserInfo(user.getId(), "username"));
+        userObject.setPhone(identityService.getUserInfo(user.getId(), "phone"));
+        userObject.setName(identityService.getUserInfo(user.getId(), "name"));
+        userObject.setDepartment(identityService.getUserInfo(user.getId(), "department"));
+        userObject.setGroupList(DozerUtils.copy(identityService.createGroupQuery().groupMember(user.getId()).list(), GroupObject.class));
+        return userObject;
+    }
+
+    public List<UserObject> changeUserObject(List<User> userList) {
+        if (userList == null || userList.size() == 0) return null;
+        List<UserObject> userObjectList = new ArrayList<>();
+        for (User user : userList) {
+            userObjectList.add(changeUserObject(user));
+        }
+        return userObjectList;
+    }
+
     /**
      * 登陆方法
      * @param username              用户名
@@ -40,28 +71,6 @@ public class AdminUserServiceImpl {
         } else {
             return Result.error(EnumAdminUserError.该用户不存在或者已经被禁用.toString());
         }
-    }
-
-    /**
-     * 封装 user, 从 User 到 UserObject
-     */
-    public UserObject changeUserObject(User user) {
-        UserObject userObject = new UserObject();
-        DozerUtils.copy(user, userObject);
-        userObject.setUsername(identityService.getUserInfo(user.getId(), "username"));
-        userObject.setPhone(identityService.getUserInfo(user.getId(), "phone"));
-        userObject.setName(identityService.getUserInfo(user.getId(), "name"));
-        userObject.setDepartment(identityService.getUserInfo(user.getId(), "department"));
-        return userObject;
-    }
-
-    public List<UserObject> changeUserObject(List<User> userList) {
-        if (userList == null || userList.size() == 0) return null;
-        List<UserObject> userObjectList = new ArrayList<>();
-        for (User user : userList) {
-            userObjectList.add(changeUserObject(user));
-        }
-        return userObjectList;
     }
 
     public String securePassword(String password) {

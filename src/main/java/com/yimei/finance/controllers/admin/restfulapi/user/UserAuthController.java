@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @Api(tags = {"admin-api-user"}, description = "用户登陆验证接口")
 @RequestMapping("/api/financing/admin")
 @RestController("adminUserAuthController")
@@ -27,7 +29,7 @@ public class UserAuthController {
      */
     @ApiOperation(value = "登陆接口", notes = "需要输入用户名和密码登陆", response = UserLoginObject.class)
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Result authLoginWithPassword(@RequestBody UserLoginObject user) {
+    public Result authLoginWithPassword(@Valid @RequestBody UserLoginObject user) {
         return adminService.login(String.valueOf(user.getUsername()), user.getPassword());
     }
 

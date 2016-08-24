@@ -4,6 +4,8 @@ import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.user.*;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
+import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
@@ -24,6 +26,10 @@ public class GroupController {
     private IdentityService identityService;
     @Autowired
     private AdminSession adminSession;
+    @Autowired
+    private AdminGroupServiceImpl groupService;
+    @Autowired
+    private AdminUserServiceImpl userService;
 
     @ApiOperation(value = "查询所有的用户组", notes = "查询所有用户组列表", response = GroupObject.class, responseContainer = "List")
     @ApiImplicitParams({
@@ -35,7 +41,7 @@ public class GroupController {
     @RequestMapping(method = RequestMethod.GET)
     public Result getAllGroupsMethod(Page page) {
         page.setTotal(identityService.createGroupQuery().count());
-        List<GroupObject> groupObjectList = DozerUtils.copy(identityService.createGroupQuery().orderByGroupId().desc().listPage(page.getOffset(), page.getCount()), GroupObject.class);
+        List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().orderByGroupId().desc().listPage(page.getOffset(), page.getCount()));
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
@@ -45,7 +51,7 @@ public class GroupController {
     public Result getGroupByIdMethod(@PathVariable("groupId") String groupId) {
         Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
         if (group == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
-        GroupObject groupObject = DozerUtils.copy(group, GroupObject.class);
+        GroupObject groupObject = groupService.changeGroupObject(group);
         return Result.success().setData(groupObject);
     }
 
@@ -59,7 +65,7 @@ public class GroupController {
         if (identityService.createGroupQuery().groupId(groupId).singleResult() == null)
             return Result.error(EnumAdminGroupError.此组不存在.toString());
         page.setTotal(identityService.createUserQuery().memberOfGroup(groupId).count());
-        List<UserObject> userObjectList = DozerUtils.copy(identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list(), UserObject.class);
+        List<UserObject> userObjectList = userService.changeUserObject(identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list());
         return Result.success().setData(userObjectList).setMeta(page);
     }
 
@@ -73,7 +79,7 @@ public class GroupController {
         group.setId(null);
         GroupEntity groupEntity = DozerUtils.copy(group, GroupEntity.class);
         identityService.saveGroup(groupEntity);
-        return Result.success().setData(DozerUtils.copy(identityService.createGroupQuery().groupId(groupEntity.getId()).singleResult(), GroupObject.class));
+        return Result.success().setData(groupService.changeGroupObject(identityService.createGroupQuery().groupId(groupEntity.getId()).singleResult()));
     }
 
     @ApiOperation(value = "将一个用户添加到指定的组", notes = "将一个用户添加到指定的组", response = UserObject.class)
@@ -94,7 +100,7 @@ public class GroupController {
             if (group2.getId().equals(groupId)) return Result.error(EnumAdminGroupError.该用户已经在此组中.toString());
         }
         identityService.createMembership(userId, groupId);
-        return Result.success().setData(DozerUtils.copy(user, UserObject.class));
+        return Result.success().setData(userService.changeUserObject(user));
     }
 
     @ApiOperation(value = "将一个用户从指定的组移出", notes = "将一个用户从指定的组移出", response = GroupObject.class)
@@ -114,7 +120,7 @@ public class GroupController {
         for (Group group2 : groupList) {
             if (group2.getId().equals(groupId)) {
                 identityService.deleteMembership(userId, groupId);
-                return Result.success().setData(DozerUtils.copy(user, UserObject.class));
+                return Result.success().setData(userService.changeUserObject(user));
             }
         }
         return Result.error(EnumAdminGroupError.该用户并不在此组中.toString());
@@ -133,7 +139,7 @@ public class GroupController {
         group.setName(groupObject.getName());
         group.setType(groupObject.getType());
         identityService.saveGroup(group);
-        return Result.success().setData(DozerUtils.copy(identityService.createGroupQuery().groupId(group.getId()).singleResult(), GroupObject.class));
+        return Result.success().setData(groupService.changeGroupObject(identityService.createGroupQuery().groupId(group.getId()).singleResult()));
     }
 
     @ApiOperation(value = "删除用户组", notes = "根据Group Id 删除用户组", response = GroupObject.class)
@@ -143,7 +149,7 @@ public class GroupController {
         if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
         Group group = identityService.createGroupQuery().groupId(id).singleResult();
         if (group == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
-        GroupObject groupObject = DozerUtils.copy(group, GroupObject.class);
+        GroupObject groupObject = groupService.changeGroupObject(group);
         identityService.deleteGroup(id);
         return Result.success().setData(groupObject);
     }

@@ -6,6 +6,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Created by liuxinjie on 16/8/19.
@@ -23,6 +24,7 @@ public class UserObject implements Serializable {
     private String department;                  //部门
     private String password;
     private String[] groupIds;                  //用户组id数组
+    private List<GroupObject> groupList;        //用户所在组列表
 
     public String getUsername() {
         return username;

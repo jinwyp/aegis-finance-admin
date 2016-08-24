@@ -6,6 +6,7 @@ import com.yimei.finance.entity.common.enums.EnumCommonString;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.exception.BusinessException;
+import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.*;
@@ -29,21 +30,17 @@ public class UserController {
     private AdminUserServiceImpl userService;
     @Autowired
     private AdminSession adminSession;
+    @Autowired
+    private AdminGroupServiceImpl groupService;
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "count", value = "每页显示数量", required = false, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "offset", value = "偏移数", required = false, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "total", value = "结果总数量", required = false, dataType = "int", paramType = "query")
-    })
+    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getAllUsersMethod(Page page) {
         page.setTotal(identityService.createUserQuery().count());
         List<UserObject> userObjectList = userService.changeUserObject(identityService.createUserQuery().listPage(page.getOffset(), page.getCount()));
         return Result.success().setData(userObjectList).setMeta(page);
     }
-
 
     @ApiOperation(value = "查询单个用户", notes = "根据id查询用户对象", response = UserObject.class)
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
@@ -60,7 +57,7 @@ public class UserController {
     @RequestMapping(value = "/{id}/groups", method = RequestMethod.GET)
     public Result getUserGroupsMethod(@PathVariable("id") String id, Page page) {
         page.setTotal(identityService.createGroupQuery().groupMember(id).count());
-        List<GroupObject> groupObjectList = DozerUtils.copy(identityService.createGroupQuery().groupMember(id).list(), GroupObject.class);
+        List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().groupMember(id).list());
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
