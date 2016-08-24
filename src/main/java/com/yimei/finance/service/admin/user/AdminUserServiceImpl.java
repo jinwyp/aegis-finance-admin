@@ -99,9 +99,10 @@ public class AdminUserServiceImpl {
     public Result login(String username, String password) {
         User user = identityService.createUserQuery().userFirstName(username).singleResult();
         if (user != null) {
+            UserObject userObject = changeUserObject(user);
             if (identityService.checkPassword(user.getId(), securePassword(password))) {
-                adminSession.login(user);
-                return Result.success().setData(userService.changeUserObject(user));
+                adminSession.login(userObject);
+                return Result.success().setData(userObject);
             } else {
                 return Result.error(EnumAdminUserError.用户名或者密码错误.toString());
             }
