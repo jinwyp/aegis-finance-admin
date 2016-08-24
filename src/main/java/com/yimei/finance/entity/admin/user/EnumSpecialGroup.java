@@ -1,11 +1,14 @@
 package com.yimei.finance.entity.admin.user;
 
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * Created by liuxinjie on 16/8/15.
  */
 public enum EnumSpecialGroup {
     SuperAdminGroup("GROUP00000", "系统管理员组"),
-    ManageTraderGroup("GROUP00001", "线上交易员管理组"),
+    ManageOnlineTraderGroup("GROUP00001", "线上交易员管理组"),
     OnlineTraderGroup("GROUP00002", "线上交易员组"),
     ManageSalesmanGroup("GROUP00003", "业务员管理组"),
     SalesmanGroup("GROUP00004", "业务员组"),
@@ -26,5 +29,25 @@ public enum EnumSpecialGroup {
         this.name = name;
     }
 
+    public static EnumSpecialGroup getSonGroup(String id) {
+        EnumSpecialGroup group = getGroupById(id);
+        if (!group.toString().startsWith("Manage")) return null;
+        else {
+            String groupName = group.toString();
+            return EnumSpecialGroup.valueOf(groupName.substring(6, groupName.length()));
+        }
+    }
+
+    public static Map<String, EnumSpecialGroup> groups = new HashMap() {
+        {
+            for (EnumSpecialGroup group : EnumSpecialGroup.values()) {
+                this.put(group.id, group);
+            }
+        }
+    };
+
+    public static EnumSpecialGroup getGroupById(String id) {
+        return groups.get(id);
+    }
 
 }

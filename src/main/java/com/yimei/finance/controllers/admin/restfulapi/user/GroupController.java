@@ -90,6 +90,7 @@ public class GroupController {
     @RequestMapping(value = "/{groupId}/users/{userId}", method = RequestMethod.POST)
     public Result addUserToGroupMethod(@PathVariable("groupId") String groupId,
                                        @PathVariable("userId") String userId) {
+
         if (!checkRight()) return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
         Group group1 = identityService.createGroupQuery().groupId(groupId).singleResult();
         if (group1 == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
