@@ -9,18 +9,90 @@ import 'rxjs/add/operator/toPromise';
 
 import { HttpResponse } from './http';
 
-
+var groupList=[
+    {
+        "id":"GROUP00010",
+        "name":"风控员组",
+        "type":'',
+        "selected" : false
+    },
+    {
+        "id":"GROUP00009",
+        "name":"风控管理组",
+        "type":'',
+        "selected" : false
+    },
+    {
+        "id":"GROUP00008",
+        "name":"监管员组",
+        "type":'',
+        "selected" : false
+    },
+    {
+        "id":"GROUP00007",
+        "name":"监管员管理组",
+        "type":'',
+        "selected" : false
+    },
+    {
+        "id":"GROUP00006",
+        "name":"尽调员组",
+        "type":'',
+        "selected" : false
+    },
+    {
+        "id":"GROUP00005",
+        "name":"尽调员管理组",
+        "type":'',
+        "selected" : false
+    },
+    {
+        "id":"GROUP00004",
+        "name":"业务员组",
+        "type":'',
+        "selected" : false
+    },
+    {
+        "id":"GROUP00003",
+        "name":"业务员管理组",
+        "type":'',
+        "selected" : false
+    },
+    {
+        "id":"GROUP00002",
+        "name":"线上交易员组",
+        "type":'',
+        "selected" : false
+    },
+    {
+        "id":"GROUP00001",
+        "name":"线上交易员管理组",
+        "type":'',
+        "selected" : false
+    },{
+        "id":"GROUP00000",
+        "name":"超级管理员组",
+        "type":'',
+        "selected" : false
+    }
+    ];
 
 class User {
 
     id :number;
     username : string;
+    name : string;
     password : string;
+    phone : string;
+    email : string;
+    department : string;
+    groupIds : string[];
 
     constructor() {
         this.id  = 0;
         this.username  = '';
         this.password  = '';
+        this.groupIds = [];
     }
 }
 
@@ -32,7 +104,10 @@ class UserGroup {
     name : string;
     type : string;
 
+
     userList : User[];
+
+
 
     constructor() {
         this.id  = 0;
@@ -176,4 +251,4 @@ class UserGroupService {
 
 
 
-export {User, UserService, UserGroup, UserGroupService}
+export {User, UserService, UserGroup, UserGroupService, groupList}

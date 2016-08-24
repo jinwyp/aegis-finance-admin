@@ -1,0 +1,7 @@
+<div class="custom-select">
+    <label (click)="toggelSelect()">{{selectedItem.value}}</label>
+    <input type="hidden" name="{{attrName}}" [(ngModel)]="selectedItem.key">
+    <ul [class.hidden]="isopen">
+        <li *ngFor="let item of optionList" (click)="itemClick(item)">{{item.value}}</li>
+    </ul>
+</div>
