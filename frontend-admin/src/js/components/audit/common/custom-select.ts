@@ -17,31 +17,30 @@ declare var __moduleName: string;
 
 
 export class CustomSelectComponent {
-    isopen=true;
+    isopen = true;
 
-    selectedItem={key:'-1',value:'请选择'}
-
+    selectedItem = {key: '-1', value: '请选择'}
 
     @Input()
-    optionList=[
-        {key:'10001',value:'风控部'},
-        {key:'10002',value:'技术部'},
-        {key:'10003',value:'测试部'},
-        {key:'10004',value:'产品部'},
-        {key:'10005',value:'运营部'},
+    optionList = [
+        {key: '10001', value: '风控部'},
+        {key: '10002', value: '技术部'},
+        {key: '10003', value: '测试部'},
+        {key: '10004', value: '产品部'},
+        {key: '10005', value: '运营部'},
     ]
 
-    toggelSelect(){
-        this.isopen=!this.isopen;
+    toggelSelect() {
+        this.isopen = !this.isopen;
     }
 
     @Output()
     onChange = new EventEmitter();
+
     itemClick(obj){
         this.selectedItem=obj;
         this.isopen=!this.isopen;
         this.onChange.emit({value: this.selectedItem.value});
-        console.log('child-----'+this.selectedItem.value);
     }
 
 }

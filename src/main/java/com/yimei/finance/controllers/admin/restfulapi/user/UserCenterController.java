@@ -7,10 +7,10 @@ import com.yimei.finance.entity.admin.finance.EnumFinanceEventType;
 import com.yimei.finance.entity.admin.finance.TaskObject;
 import com.yimei.finance.entity.admin.user.EnumAdminUserError;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
+import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
-import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -47,37 +47,12 @@ public class UserCenterController {
     private TaskService taskService;
     @Autowired
     private RuntimeService runtimeService;
-    @Autowired
-    private FinanceOrderRepository financeOrderRepository;
 
-//    @RequestMapping(value = "/determine/type", method = RequestMethod.PUT)
-//    @ApiOperation(value = "确定金融申请单类型,发起流程", notes = "确定金融申请单类型,发起流程")
-//    @ApiImplicitParams({
-//            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Long", paramType = "query"),
-//            @ApiImplicitParam(name = "applyType", value = "金融申请单类型", required = true, dataType = "String", paramType = "query")
-//    })
-//    public Result determineFinanceOrderMethod(@RequestParam(value = "financeId", required = true)Long financeId,
-//                                              @RequestParam(value = "applyType", required = true)String applyType) {
-//        FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
-//        if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-//        if (runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult() != null) return Result.error(EnumAdminFinanceError.此金融单已经创建流程.toString());
-//        financeOrder.setApplyType(applyType);
-//        financeOrderRepository.save(financeOrder);
-//        if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
-//            runtimeService.startProcessInstanceByKey("financingWorkFlow", String.valueOf(financeOrder.getId()));
-//            Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeOrder.getId())).active().singleResult();
-//            taskService.addGroupIdentityLink(task.getId(), EnumSpecialGroup.ManageTraderGroup.id, IdentityLinkType.CANDIDATE);
-//            return Result.success().setData(true);
-//        } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
-//
-//            return Result.success().setData(true);
-//        } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
-//
-//            return Result.success().setData(true);
-//        } else {
-//            return Result.error(EnumCommonError.Admin_System_Error);
-//        }
-//    }
+    @RequestMapping(value = "/session", method = RequestMethod.GET)
+    @ApiOperation(value = "获取session中用户对象", notes = "获取session中用户对象", response = UserObject.class)
+    public Result getSessionUserMethod() {
+        return Result.success().setData(adminSession.getUser());
+    }
 
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
     @ApiOperation(value = "查看个人任务列表", notes = "查看个人任务列表", response = TaskObject.class, responseContainer = "List")

@@ -42,10 +42,15 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/onlinetrader/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParams({
+        @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),
+        @ApiImplicitParam(name = "pass", value = "是否审核通过, 0:审核不通过,1:审核通过", required = true, dataType = "Integer", paramType = "query")
+    })
     public Result myrOnlineTraderAddMaterialMethod(@PathVariable("taskId")String taskId,
+                                                   @RequestParam(value = "pass", required = true) int pass,
                                                    @ApiParam(name = "financeOrder", value = "金融申请单对象", required = true) FinanceOrder financeOrder,
                                                    @ApiParam(name = "attachmentList", value = "金融申请单上传单据列表", required = false)@RequestBody AttachmentList attachmentList) {
+        if (pass != 0 && pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
@@ -54,7 +59,9 @@ public class MYRFinancingController {
         financeOrder.setId(Long.valueOf(processInstance.getBusinessKey()));
         financeOrderService.updateFinanceOrder(financeOrder);
         addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
-        taskService.complete(taskId);
+        Map<String, Object> vars = new HashMap<>();
+        vars.put(EnumFinanceEventType.onlineTraderAudit.toString(), pass);
+        taskService.complete(taskId, vars);
         return addGroupIdentityLinkMethod(task.getProcessInstanceId(), EnumFinanceAssignType.assignSalesman.toString(), EnumSpecialGroup.ManageSalesmanGroup.id);
     }
 
