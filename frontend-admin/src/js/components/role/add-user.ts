@@ -57,7 +57,11 @@ export class AddUserComponent {
 
 
     ngOnDestroy() {
-        this.sub.unsubscribe();
+        if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
+
+        }else{
+            this.sub.unsubscribe();
+        }
     }
 
     getGroupList() {
