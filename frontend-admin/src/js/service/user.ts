@@ -9,73 +9,6 @@ import 'rxjs/add/operator/toPromise';
 
 import { HttpResponse } from './http';
 
-var groupList=[
-    {
-        "id":"GROUP00010",
-        "name":"风控员组",
-        "type":'',
-        "selected" : false
-    },
-    {
-        "id":"GROUP00009",
-        "name":"风控管理组",
-        "type":'',
-        "selected" : false
-    },
-    {
-        "id":"GROUP00008",
-        "name":"监管员组",
-        "type":'',
-        "selected" : false
-    },
-    {
-        "id":"GROUP00007",
-        "name":"监管员管理组",
-        "type":'',
-        "selected" : false
-    },
-    {
-        "id":"GROUP00006",
-        "name":"尽调员组",
-        "type":'',
-        "selected" : false
-    },
-    {
-        "id":"GROUP00005",
-        "name":"尽调员管理组",
-        "type":'',
-        "selected" : false
-    },
-    {
-        "id":"GROUP00004",
-        "name":"业务员组",
-        "type":'',
-        "selected" : false
-    },
-    {
-        "id":"GROUP00003",
-        "name":"业务员管理组",
-        "type":'',
-        "selected" : false
-    },
-    {
-        "id":"GROUP00002",
-        "name":"线上交易员组",
-        "type":'',
-        "selected" : false
-    },
-    {
-        "id":"GROUP00001",
-        "name":"线上交易员管理组",
-        "type":'',
-        "selected" : false
-    },{
-        "id":"GROUP00000",
-        "name":"超级管理员组",
-        "type":'',
-        "selected" : false
-    }
-    ];
 
 class User {
 
@@ -103,6 +36,7 @@ class UserGroup {
     id :number;
     name : string;
     type : string;
+    memberNums : number;
 
 
     userList : User[];
@@ -229,7 +163,17 @@ class UserGroupService {
 
     getList() {
         return this.http.get(this.apiUrl.list).toPromise()
-            .then(response => response.json() as HttpResponse)
+            .then( response => {
+                var result = response.json() as HttpResponse;
+                if (result.data ){
+                    result.data.forEach( group => {
+                        if (!group.type) {group.type =''}
+                        group.selected = false;
+                    })
+                }
+
+                return result;
+            })
             .catch(this.handleError);
     }
 
@@ -245,10 +189,8 @@ class UserGroupService {
             .catch(this.handleError);
     }
 
-
-
 }
 
 
 
-export {User, UserService, UserGroup, UserGroupService, groupList}
+export {User, UserService, UserGroup, UserGroupService}
