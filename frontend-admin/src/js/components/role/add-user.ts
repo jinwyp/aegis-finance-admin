@@ -4,7 +4,8 @@
 
 
 import { Component } from '@angular/core';
-import { User, UserService, UserGroup, UserGroupService, groupList } from '../../service/user';
+import { Router, ActivatedRoute }      from '@angular/router';
+import { User, UserService, UserGroup, UserGroupService } from '../../service/user';
 
 
 declare var __moduleName: string;
@@ -20,20 +21,26 @@ declare var __moduleName: string;
 export class AddUserComponent {
 
     constructor(
+        private route: ActivatedRoute,
         private userService: UserService,
         private groupService:UserGroupService
     ) {}
 
-    currentUser=new User();
+    isAddStatus : boolean = false;
 
-    groups=groupList;
+    currentUser = new User();
+
+    groups = [];
 
     ngOnInit(){
-        this.groups.forEach( (group)=> {
-            if (this.currentUser.groupIds.indexOf(group.id) > -1) {
-                group.selected = true;
-            }
-        })
+        this.getGroupList();
+
+        console.log(this.route.data)
+
+        // if (this.route.data.type === 'add') {
+        //     this.isAddStatus = true;
+        // }
+
     }
 
     css = {
@@ -42,6 +49,24 @@ export class AddUserComponent {
         ajaxErrorHidden : true
     };
 
+
+    getGroupList() {
+
+        this.groupService.getList().then((result)=>{
+            if (result.success){
+                this.groups = result.data;
+
+                this.groups.forEach( (group)=> {
+                    if (this.currentUser.groupIds.indexOf(group.id) > -1) {
+                        group.selected = true;
+                    }
+                });
+
+            }else{
+
+            }
+        });
+    }
 
     selectGroup(group){
         if (this.currentUser.groupIds.indexOf(group.id) === -1 ){

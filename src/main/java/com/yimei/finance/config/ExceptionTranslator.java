@@ -45,7 +45,20 @@ public class ExceptionTranslator {
     @ResponseBody
     public Result process400Error(Exception ex) {
         logger.error("400Exception:", ex);
-        return Result.error(400, ex.getMessage());
+        String flag1 = "default message [";
+        String flag2 = "]";
+        int startPlace = ex.getMessage().toString().lastIndexOf(flag1) + 17;
+        if (startPlace != -1) {
+            String message = ex.getMessage().substring(startPlace);
+            int endPlace = message.indexOf(flag2);
+            String error = message.substring(0, endPlace);
+            String field = "";
+            if (error.startsWith("账号")) field = "username";
+            else if (error.startsWith("密码")) field = "password";
+            return Result.error(400, error, field);
+        } else {
+            return Result.error(400, ex.getMessage());
+        }
     }
 
 //    @ExceptionHandler
