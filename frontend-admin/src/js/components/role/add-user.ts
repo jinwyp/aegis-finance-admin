@@ -21,42 +21,32 @@ declare var __moduleName: string;
 export class AddUserComponent {
 
     constructor(
-        private route: ActivatedRoute,
+        private activatedRoute: ActivatedRoute,
         private userService: UserService,
         private groupService:UserGroupService
     ) {}
-
-    isAddStatus : boolean = false;
-
-    currentUser = new User();
-    // currentUser = {
-    //     "id": 1,
-    //     "username": "",
-    //     "name": "liushengbin",
-    //     "phone": "18621266707",
-    //     "email": "liushengbin@yimei180.com",
-    //     "department": "技术部",
-    //     "password": "string",
-    //     "groupIds":["10001","10005"]
-    // };
-    groups = [];
-
-    ngOnInit(){
-        this.getGroupList();
-
-        console.log(this.route.data)
-
-        // if (this.route.data.type === 'add') {
-        //     this.isAddStatus = true;
-        // }
-
-    }
 
     css = {
         activeForRefresh : true,
         isSubmitted : false,
         ajaxErrorHidden : true
     };
+
+    isAddStatus : boolean = false;
+
+    currentUser = new User();
+
+    groups = [];
+
+    ngOnInit(){
+        this.getGroupList();
+
+
+        if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
+            this.isAddStatus = true;
+        }
+    }
+
 
 
     getGroupList() {
