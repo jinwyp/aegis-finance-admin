@@ -5,6 +5,7 @@ import com.yimei.finance.entity.admin.user.*;
 import com.yimei.finance.entity.common.enums.EnumCommonString;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.*;
@@ -12,6 +13,7 @@ import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -62,6 +64,7 @@ public class UserController {
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
+    @Transactional
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
@@ -130,6 +133,7 @@ public class UserController {
         return false;
     }
 
+    @Transactional
     public Result addUserGroupMemberShip(String userId, String[] groupIds) {
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
         if (groupList != null && groupList.size() != 0) {
@@ -140,7 +144,7 @@ public class UserController {
         if (groupIds != null && groupIds.length != 0) {
             for (String gid : groupIds) {
                 if (identityService.createGroupQuery().groupId(gid).singleResult() == null)
-                    return Result.error(EnumAdminGroupError.此组不存在.toString());
+                    throw new BusinessException(EnumAdminGroupError.此组不存在.toString());
                 identityService.createMembership(userId, gid);
             }
         }

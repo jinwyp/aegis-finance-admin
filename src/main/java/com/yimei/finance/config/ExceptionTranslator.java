@@ -2,6 +2,9 @@ package com.yimei.finance.config;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yimei.cloudservice.mailer.api.MailMessage;
+import com.yimei.cloudservice.queue.api.Queue;
+import com.yimei.cloudservice.queue.api.util.ObjectMapperUtil;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.exception.NotFoundException;
@@ -13,7 +16,6 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.bind.MethodArgumentNotValidException;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -22,12 +24,13 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.*;
+import java.time.ZonedDateTime;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
-/**
- * Created by xiangyang on 16/6/13.
- */
-@ControllerAdvice
+//@ControllerAdvice
 public class ExceptionTranslator {
 
     private static final Logger logger = LoggerFactory.getLogger(ExceptionTranslator.class);
@@ -115,41 +118,41 @@ public class ExceptionTranslator {
 
     @Async
     private void sendAlarmQueueMessage(HttpServletRequest request, Exception ex) {
-//        MailMessage mailMessage = new MailMessage();
-//
-//        String[] mail_tos = to.split(";");
-//        for (int i = 0; i < mail_tos.length; i++) {
-//            mailMessage.setTo(mail_tos[i]);
-//            mailMessage.setFrom("auto_server@yimei180.com");
-//            mailMessage.setSubject(ZonedDateTime.now().toString() + " " + ex.getClass().getName());
-//            StringBuilder sb = new StringBuilder();
-//            try {
-//                sb.append("requestHeader:\t")
-//                        .append(getHeadersInfo(request))
-//                        .append("\nrequestUrl:\t")
-//                        .append(request.getRequestURL())
-//                        .append("\nformData:\t")
-//                        .append(om.writeValueAsString(request.getParameterMap()))
-//                        .append("\nrequestBody:\t")
-//                        .append(om.writeValueAsString(extractPostRequestBody(request)))
-//                        .append("\n").append(ex.getMessage())
-//                        .append(getStackTrace(ex));
-//            } catch (Exception e) {
-//                logger.error("mail content build failed!", e);
-//            }
-//            mailMessage.setBody(sb.toString());
-//
-//            ObjectMapper mapper = ObjectMapperUtil.getMapper();
-//            String mailJson = null;
-//            try {
-//                mailJson = mapper.writeValueAsString(mailMessage);
-//                logger.info("message to send : " + mailJson);
-//            } catch (Exception e) {
-//                logger.error("can not jsonify mail, error[{}]", e);
-//                continue;
-//            }
-//            mailQueue.sendMessage(mailJson, 0);
-//        }
+        MailMessage mailMessage = new MailMessage();
+
+        String[] mail_tos = to.split(";");
+        for (int i = 0; i < mail_tos.length; i++) {
+            mailMessage.setTo(mail_tos[i]);
+            mailMessage.setFrom("auto_server@yimei180.com");
+            mailMessage.setSubject(ZonedDateTime.now().toString() + " " + ex.getClass().getName());
+            StringBuilder sb = new StringBuilder();
+            try {
+                sb.append("requestHeader:\t")
+                        .append(getHeadersInfo(request))
+                        .append("\nrequestUrl:\t")
+                        .append(request.getRequestURL())
+                        .append("\nformData:\t")
+                        .append(om.writeValueAsString(request.getParameterMap()))
+                        .append("\nrequestBody:\t")
+                        .append(om.writeValueAsString(extractPostRequestBody(request)))
+                        .append("\n").append(ex.getMessage())
+                        .append(getStackTrace(ex));
+            } catch (Exception e) {
+                logger.error("mail content build failed!", e);
+            }
+            mailMessage.setBody(sb.toString());
+
+            ObjectMapper mapper = ObjectMapperUtil.getMapper();
+            String mailJson = null;
+            try {
+                mailJson = mapper.writeValueAsString(mailMessage);
+                logger.info("message to send : " + mailJson);
+            } catch (Exception e) {
+                logger.error("can not jsonify mail, error[{}]", e);
+                continue;
+            }
+            mailQueue.sendMessage(mailJson, 0);
+        }
     }
 
 }

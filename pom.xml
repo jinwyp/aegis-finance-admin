@@ -18,6 +18,14 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 
+	<repositories>
+		<repository>
+			<id>nexus</id>
+			<name>Team Nexus Repository</name>
+			<url>http://maven.yimei180.com/content/groups/public</url>
+		</repository>
+	</repositories>
+
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -159,6 +167,36 @@
 					<artifactId>slf4j-log4j12</artifactId>
 				</exclusion>
 			</exclusions>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yimei</groupId>
+			<artifactId>cloudservice-queue-api</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yimei</groupId>
+			<artifactId>cloudservice-queue-aliyun</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yimei</groupId>
+			<artifactId>cloudservice-queue-file</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yimei</groupId>
+			<artifactId>cloudservice-queue-redis</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
+		</dependency>
+
+		<dependency>
+			<groupId>com.yimei</groupId>
+			<artifactId>cloudservice-mailer-api</artifactId>
+			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
 
 	</dependencies>
