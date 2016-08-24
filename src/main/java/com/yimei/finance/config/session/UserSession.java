@@ -7,27 +7,25 @@ import org.springframework.stereotype.Component;
 
 import java.io.Serializable;
 
-/**
- * Created by joe on 10/26/14.
- */
 @Component
 @Scope(value = "session", proxyMode = ScopedProxyMode.TARGET_CLASS)
-public class UserSession implements Serializable{
+public class UserSession implements Serializable {
     protected User user;
 
     public User getUser() {
         return user;
     }
 
-    public boolean login(User user){
+    public boolean login(User user) {
         this.user = user;
         return true;
     }
 
-    public boolean isLogined(){
-        return this.user!=null;
+    public boolean isLogined() {
+        return this.user != null;
     }
-    public void logout(){
+
+    public void logout() {
         this.user = null;
     }
 
