@@ -68,7 +68,7 @@ public class UserController {
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        if (!checkRight()) return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
         if (StringUtils.isEmpty(user.getUsername())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
         if (identityService.createUserQuery().userFirstName(user.getUsername()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
         User newUser = identityService.newUser("");
@@ -91,7 +91,7 @@ public class UserController {
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Result deleteUserMethod(@PathVariable("id") String id) {
-        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        if (!checkRight()) return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
         User user = identityService.createUserQuery().userId(id).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         UserObject userObject = DozerUtils.copy(user, UserObject.class);
@@ -105,7 +105,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateUserMethod(@PathVariable("id") String id,
                                    @ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        if (!checkRight()) return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());
         if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());
         User oldUser = identityService.createUserQuery().userId(id).singleResult();
@@ -121,7 +121,7 @@ public class UserController {
     }
 
     /**
-     * 检查是否具有超级管理员权限
+     * 检查是否具有系统管理员权限
      */
     public boolean checkRight() {
         List<Group> groups = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();

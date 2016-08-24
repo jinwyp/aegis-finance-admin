@@ -66,7 +66,7 @@ public class GroupController {
     @ApiOperation(value = "创建用户组", notes = "根据Group对象创建用户组", response = GroupObject.class)
     @RequestMapping(method = RequestMethod.POST)
     public Result addGroupMethod(@ApiParam(name = "group", value = "用户组对象", required = true) @RequestBody GroupObject group) {
-        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        if (!checkRight()) return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
         if (StringUtils.isEmpty(group.getName())) return Result.error(EnumAdminGroupError.组名称不能为空.toString());
         if (identityService.createGroupQuery().groupName(group.getName()).singleResult() != null)
             return Result.error(EnumAdminGroupError.已经存在名称相同的组.toString());
@@ -84,7 +84,7 @@ public class GroupController {
     @RequestMapping(value = "/{groupId}/users/{userId}", method = RequestMethod.POST)
     public Result addUserToGroupMethod(@PathVariable("groupId") String groupId,
                                        @PathVariable("userId") String userId) {
-        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        if (!checkRight()) return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
         Group group1 = identityService.createGroupQuery().groupId(groupId).singleResult();
         if (group1 == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
         User user = identityService.createUserQuery().userId(userId).singleResult();
@@ -105,7 +105,7 @@ public class GroupController {
     @RequestMapping(value = "/{groupId}/users/{userId}", method = RequestMethod.DELETE)
     public Result deleteUserFromGroupMethod(@PathVariable("groupId") String groupId,
                                             @PathVariable("userId") String userId) {
-        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        if (!checkRight()) return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
         Group group1 = identityService.createGroupQuery().groupId(groupId).singleResult();
         if (group1 == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
         User user = identityService.createUserQuery().userId(userId).singleResult();
@@ -125,7 +125,7 @@ public class GroupController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateGroupMethod(@PathVariable("id") String id,
                                     @ApiParam(name = "group", value = "用户组对象", required = true) @RequestBody GroupObject groupObject) {
-        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        if (!checkRight()) return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminGroupError.组id不能为空.toString());
         if (groupObject == null) return Result.error(EnumAdminGroupError.组对象不能为空.toString());
         Group group = identityService.createGroupQuery().groupId(id).singleResult();
@@ -140,7 +140,7 @@ public class GroupController {
     @ApiImplicitParam(name = "id", value = "Group 用户组Id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Result deleteGroupMethod(@PathVariable("id") String id) {
-        if (!checkRight()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        if (!checkRight()) return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
         Group group = identityService.createGroupQuery().groupId(id).singleResult();
         if (group == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
         GroupObject groupObject = DozerUtils.copy(group, GroupObject.class);
@@ -149,7 +149,7 @@ public class GroupController {
     }
 
     /**
-     * 检查是否具有超级管理员权限
+     * 检查是否具有系统管理员权限
      */
     public boolean checkRight() {
         List<Group> groups = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
