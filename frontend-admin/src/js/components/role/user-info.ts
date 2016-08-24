@@ -22,7 +22,7 @@ declare var __moduleName: string;
 export class UserInfoComponent implements OnInit, OnDestroy{
 
     constructor(
-        private route: ActivatedRoute,
+        private activatedRoute: ActivatedRoute,
         private user: UserService,
         private group: UserGroupService
     ) {}
@@ -33,7 +33,7 @@ export class UserInfoComponent implements OnInit, OnDestroy{
 
 
     ngOnInit() {
-        this.sub = this.route.params.subscribe(params => {
+        this.sub = this.activatedRoute.params.subscribe(params => {
             this.getUserInfo(params['id']);
         });
     }
