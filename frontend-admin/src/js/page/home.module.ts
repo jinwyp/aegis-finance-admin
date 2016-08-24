@@ -43,6 +43,7 @@ import { BusinessApprovalComponent } from '../components/audit/business-approval
 import { TuneReportComponent } from '../components/audit/tune-report';
 import { SuperviseReportComponent } from '../components/audit/supervise-report';
 import { RiskControlReportComponent } from '../components/audit/risk-control-report';
+import { CustomSelectComponent } from '../components/audit/common/custom-select';
 
 
 import {AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
@@ -58,7 +59,7 @@ import {AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstr
         UserListComponent, AddUserComponent, UserInfoComponent,
         ProcessTabComponent, DistributionPersonComponent,
         WaitDealListComponent, DistributionPageComponent, FinanceApplyComponent, BusinessApprovalComponent,
-        TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent
+        TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent, CustomSelectComponent
     ],
     providers: [ homePageRouterProviders, OrderService, UserService, UserGroupService ],
     bootstrap: [ HomeComponent ]
