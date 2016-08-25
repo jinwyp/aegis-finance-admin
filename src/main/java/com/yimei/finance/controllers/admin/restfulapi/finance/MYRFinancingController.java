@@ -129,7 +129,7 @@ public class MYRFinancingController {
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
         Map<String, Object> vars = new HashMap<>();
-        vars.put(EnumFinanceConditions.needSalesmanInvestigationMaterial.toString(), need);
+        vars.put(EnumFinanceConditions.needSalesmanSupplyInvestigationMaterial.toString(), need);
         vars.put(EnumFinanceConditions.investigatorAudit.toString(), pass);
         taskService.complete(taskId, vars);
         if (need == 1) {
@@ -172,13 +172,13 @@ public class MYRFinancingController {
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
         Map<String, Object> vars = new HashMap<>();
-        vars.put(EnumFinanceConditions.needInvestigatorRiskMaterial.toString(), need);
+        vars.put(EnumFinanceConditions.needInvestigatorSupplyRiskMaterial.toString(), need);
         vars.put(EnumFinanceConditions.riskManagerAudit.toString(), pass);
         taskService.complete(taskId, vars);
         if (need == 1) {
             Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
             if (!result.isSuccess()) return result;
-            return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorSupplyMaterial.toString(), String.valueOf(result.getData()));
+            return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorSupplyRiskMaterial.toString(), String.valueOf(result.getData()));
         } else if (pass == 1) {
             return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAuditSuccess.toString(), adminSession.getUser().getId());
         } else {
