@@ -23,7 +23,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Api(tags = {"admin-api-user"}, description = "用户增删改查接口")
-@RequestMapping("/api/financing/admin/user")
+@RequestMapping("/api/financing/admin/users")
 @RestController("adminUserController")
 public class UserController {
     @Autowired
