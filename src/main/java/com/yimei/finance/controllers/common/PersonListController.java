@@ -1,4 +1,4 @@
-package com.yimei.finance.controllers.admin.common;
+package com.yimei.finance.controllers.common;
 
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.admin.user.UserObject;
