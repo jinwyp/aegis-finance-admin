@@ -19,9 +19,9 @@ var financeList = () => {
             status : false
         },
         searchQuery : {
-            requestUsername : '',
-            status : '',
-            type : '',
+            // requestUsername : '',
+            status : '全部',
+            type : '全部',
             businessId : '',
             startDate : '',
             endDate : '',
@@ -34,7 +34,7 @@ var financeList = () => {
                 vm.searchQuery.page = page;
 
                 getFinanceList({
-                    requestUsername : vm.searchQuery.requestUsername,
+                    // requestUsername : vm.searchQuery.requestUsername,
                     status : vm.searchQuery.status,
                     type : vm.searchQuery.type,
                     businessId : vm.searchQuery.businessId,
@@ -58,7 +58,7 @@ var financeList = () => {
 
         searchFinanceOrder : (event)=>{
             getFinanceList({
-                requestUsername : vm.searchQuery.requestUsername,
+                // requestUsername : vm.searchQuery.requestUsername,
                 status : vm.searchQuery.status,
                 type : vm.searchQuery.type,
                 businessId : vm.searchQuery.businessId,
