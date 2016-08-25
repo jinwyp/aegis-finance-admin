@@ -60,7 +60,8 @@ class UserService {
     private apiUrl = {
         login : '/api/financing/admin/login',
         list : '/api/financing/admin/user',
-        group : '/api/financing/admin/group'
+        group : '/api/financing/admin/group',
+        departmentList : '/api/financing/admin/departments'
     };
 
     private handleError(error: any): Promise<any> {
@@ -81,6 +82,12 @@ class UserService {
 
     getList() {
         return this.http.get(this.apiUrl.list).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(this.handleError);
+    }
+
+    getDepartmentList() {
+        return this.http.get(this.apiUrl.departmentList).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
@@ -111,7 +118,7 @@ class UserService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        let url = `${this.apiUrl.login}/${user.id}`;
+        let url = `${this.apiUrl.list}/${user.id}`;
 
         return this.http.put(url, JSON.stringify(user), {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
@@ -121,7 +128,7 @@ class UserService {
     del(user: User) {
         let headers = new Headers({'Content-Type': 'application/json'});
 
-        let url = `${this.apiUrl.login}/${user.id}`;
+        let url = `${this.apiUrl.list}/${user.id}`;
 
         return this.http.delete(url, {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
@@ -157,7 +164,7 @@ class UserService {
 class UserGroupService {
 
     private apiUrl = {
-        list : '/api/financing/admin/group'
+        groupList : '/api/financing/admin/group'
     };
 
     private handleError(error: any) : Promise<any> {
@@ -171,7 +178,7 @@ class UserGroupService {
 
 
     getList() {
-        return this.http.get(this.apiUrl.list).toPromise()
+        return this.http.get(this.apiUrl.groupList).toPromise()
             .then( response => {
                 var result = response.json() as HttpResponse;
                 if (result.data ){
@@ -180,20 +187,19 @@ class UserGroupService {
                         group.selected = false;
                     })
                 }
-
                 return result;
             })
             .catch(this.handleError);
     }
 
     getGroupById(id: string) {
-        return this.http.get(this.apiUrl.list + '/' + id).toPromise()
+        return this.http.get(this.apiUrl.groupList + '/' + id).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
 
     getUserListByGroupId(id: string) {
-        return this.http.get(this.apiUrl.list + '/' + id + '/users').toPromise()
+        return this.http.get(this.apiUrl.groupList + '/' + id + '/users').toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }

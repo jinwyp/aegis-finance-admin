@@ -4,7 +4,7 @@
         <li>&gt;</li>
         <li>用户管理</li>
         <li>&gt;</li>
-        <li class="active">添加用户</li>
+        <li class="active">{{addUserTitle}}</li>
     </ol>
 </div>
 
@@ -21,7 +21,7 @@
             <label class="col-sm-2 info-label-input" for="nameInput"><span class="orange">*</span>用户姓名:</label>
             <div class="col-sm-10 info-val">
                 <input type="text" class="form-control" id="nameInput" name="name" [(ngModel)]="currentUser.name" #name="ngModel" required>
-                <span class="help-block" [class.hidden]="username.valid || username.pristine">请填用户姓名!</span>
+                <span class="help-block" [class.hidden]="name.valid || name.pristine">请填用户姓名!</span>
             </div>
         </div>
         <div class="row info-item">
@@ -40,7 +40,7 @@
             <label class="col-sm-2 info-label-input" for="emailInput"><span class="orange">*</span><span>公司邮箱:</span></label>
             <div class="col-sm-10 info-val">
                 <input type="text" class="form-control" id="emailInput" name="email" [(ngModel)]="currentUser.email" #email="ngModel" required >
-                <span class="help-block" [class.hidden]="username.valid || username.pristine">请填写公司邮箱!</span>
+                <span class="help-block" [class.hidden]="email.valid || email.pristine">请填写公司邮箱!</span>
                 <!--<button type="button" class="btn btn-default btn-return ml-20 btn-reset-pwd">重置密码</button>-->
             </div>
         </div>
@@ -54,7 +54,8 @@
         <div class="row info-item">
             <label class="col-sm-2 info-label-input"><span>所属部门:</span></label>
             <div class="col-sm-10 info-val">
-                <custom-select (onChange)="selectChange($event)"></custom-select>
+                <!--<custom-select (onChange)="selectChange($event)"></custom-select>-->
+                <string-select [optionList]="departments" [selectedItem]="currentUser.department" (onChange)="selectChange($event)"></string-select>
                 <!--<input type="text" [(ngModel)]="currentUser.department" name="department">-->
             </div>
         </div>

@@ -37,23 +37,27 @@ export class AddUserComponent {
     };
 
     isAddStatus : boolean = false;
+    addUserTitle='添加用户';
 
     private sub: Subscription;
     currentUser = new User();
 
     groups = [];
+    departments = [];
 
     ngOnInit(){
 
-
         if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
             this.isAddStatus = true;
+            this.addUserTitle='添加用户';
             this.getGroupList();
         }else{
             this.sub = this.activatedRoute.params.subscribe(params => {
                 this.getUserInfo(params['id']);
+                this.addUserTitle='编辑用户';
             });
         }
+        this.getDepartmentList();
     }
 
 
@@ -78,6 +82,17 @@ export class AddUserComponent {
                     }
                 });
 
+            }else{
+
+            }
+        });
+    }
+
+    getDepartmentList() {
+        this.userService.getDepartmentList().then((result)=>{
+            if (result.success){
+                this.departments = result.data;
+                console.log(result);
             }else{
 
             }
@@ -111,14 +126,26 @@ export class AddUserComponent {
     addUser(form) {
         this.css.ajaxErrorHidden = true;
         this.css.isSubmitted = true;
-        this.userService.add(this.currentUser).then((result)=>{
-            if (result.success){
-                window.location.href = '/finance/admin/home/users';
-            }else{
-                this.css.ajaxErrorHidden = false;
-            }
-            console.log(result)
-        });
+        if(this.isAddStatus){
+            this.userService.add(this.currentUser).then((result)=>{
+                if (result.success){
+                    window.location.href = '/finance/admin/home/users';
+                }else{
+                    this.css.ajaxErrorHidden = false;
+                }
+                console.log(result)
+            });
+        }else{
+            console.log("-----------save-----------")
+            this.userService.save(this.currentUser).then((result)=>{
+                if (result.success){
+                    window.location.href = '/finance/admin/home/users';
+                }else{
+                    this.css.ajaxErrorHidden = false;
+                }
+                console.log(result)
+            });
+        }
     }
 
     selectChange($event){
