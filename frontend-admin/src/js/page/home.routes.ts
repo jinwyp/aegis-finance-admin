@@ -24,7 +24,7 @@ import { RiskControlReportComponent } from '../components/task/risk-control-repo
 const routes: Routes = [
     {
         path: '',
-        redirectTo: '/userroles',
+        redirectTo: '/tasks/pending',
         pathMatch: 'full'
     },
 
@@ -119,7 +119,7 @@ const routes: Routes = [
 
     {
         path: '**',
-        redirectTo: '/userroles'
+        redirectTo: '/tasks/pending'
     }
 ];
 
