@@ -89,7 +89,7 @@ export class AddUserComponent {
     }
 
     getDepartmentList() {
-        this.groupService.getDepartmentList().then((result)=>{
+        this.userService.getDepartmentList().then((result)=>{
             if (result.success){
                 this.departments = result.data;
                 console.log(result);
