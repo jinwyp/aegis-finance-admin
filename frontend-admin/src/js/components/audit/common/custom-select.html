@@ -1,7 +1,7 @@
 <div class="custom-select">
-    <label (click)="toggleSelect()">{{selectedItem.value}}</label>
-    <span class="caret" (click)="toggelSelect()"></span>
-    <ul [class.hidden]="isopen">
+    <label (click)="toggleSelect()">{{selectedItem.name || '-'}}</label>
+    <span class="caret" (click)="toggleSelect()"></span>
+    <ul [class.hidden]="isClose">
         <li *ngFor="let item of optionList" (click)="itemClick(item)">{{item.name}}</li>
     </ul>
 </div>

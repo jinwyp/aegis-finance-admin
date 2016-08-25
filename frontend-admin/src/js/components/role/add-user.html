@@ -55,7 +55,7 @@
             <label class="col-sm-2 info-label-input"><span>所属部门:</span></label>
             <div class="col-sm-10 info-val">
                 <!--<custom-select (onChange)="selectChange($event)"></custom-select>-->
-                <string-select [optionList]="departments" [selectedItem]="currentUser.department" (onChange)="selectChange($event)"></string-select>
+                <custom-select [optionList]="departments" (onChange)="selectChange($event)"></custom-select>
                 <!--<input type="text" [(ngModel)]="currentUser.department" name="department">-->
             </div>
         </div>

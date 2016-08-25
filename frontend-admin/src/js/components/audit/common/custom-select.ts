@@ -17,18 +17,18 @@ declare var __moduleName: string;
 
 
 export class CustomSelectComponent {
-    isOpen : boolean = true;
+    isClose : boolean = true;
 
-    selectedItem = {
-        id: '-1',
-        value: '请选择'
-    };
+
 
     @Input()
     optionList = [];
 
+    @Input()
+    selectedItem = {};
+
     toggleSelect() {
-        this.isOpen = !this.isOpen;
+        this.isClose = !this.isClose;
     }
 
     @Output()
@@ -36,7 +36,7 @@ export class CustomSelectComponent {
 
     itemClick(item){
         this.selectedItem = item;
-        this.isOpen = !this.isOpen;
+        this.isClose = !this.isClose;
         this.onChange.emit(this.selectedItem);
     }
 

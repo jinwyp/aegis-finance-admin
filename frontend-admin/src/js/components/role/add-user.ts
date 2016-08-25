@@ -91,7 +91,7 @@ export class AddUserComponent {
     getDepartmentList() {
         this.userService.getDepartmentList().then((result)=>{
             if (result.success){
-                this.departments = result.data.map( item => { return item.name});
+                this.departments = result.data;
                 console.log(result);
             }else{
 
@@ -149,7 +149,8 @@ export class AddUserComponent {
     }
 
     selectChange($event){
-        this.currentUser.department = $event.value
+
+        this.currentUser.department = $event.name;
         console.log(this.currentUser);
     }
 
