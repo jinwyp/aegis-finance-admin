@@ -47,14 +47,14 @@
         <div class="row info-item">
             <label class="col-sm-2 info-label-input" for="phoneInput"><span>手机号码:</span></label>
             <div class="col-sm-10 info-val">
-                <input type="text" class="form-control" id="phoneInput" name="phone" [(ngModel)]="currentUser.phone" #phone="ngModel" >
+                <input type="text" class="form-control" id="phoneInput" name="phone" pattern="1[3|4|5|7|8]\d{9}" [(ngModel)]="currentUser.phone" #phone="ngModel" >
                 <span class="help-block" [class.hidden]="phone.valid || phone.pristine">请填写手机号码!</span>
             </div>
         </div>
         <div class="row info-item">
             <label class="col-sm-2 info-label-input"><span>所属部门:</span></label>
             <div class="col-sm-10 info-val">
-                <custom-select [optionList]="departments" [selectedItem]="selectedItem" (onChange)="selectChange($event)"></custom-select>
+                <custom-select [optionList]="departments" [selectedItem]="selectedItem" pattern="'[a-zA-Z0-9]{1,10}@[a-zA-Z0-9]{1,5}\.[a-zA-Z0-9]{1,5}'" (onChange)="selectChange($event)"></custom-select>
             </div>
         </div>
         <div class="row info-item">

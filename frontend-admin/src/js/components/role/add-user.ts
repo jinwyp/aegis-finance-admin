@@ -131,7 +131,9 @@ export class AddUserComponent {
         if (this.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
                 if (result.success) {
+                    // window.location.href = '/finance/admin/home/users/add';
                     window.location.href = '/finance/admin/home/users';
+                    // this.clear();
                 } else {
                     this.css.ajaxErrorHidden = false;
                 }
@@ -153,6 +155,12 @@ export class AddUserComponent {
         this.currentUser.department = $event.name;
         this.selectedItem.name      = $event.name;
         console.log(this.currentUser);
+    }
+
+    clear() {
+        this.currentUser       = new User();
+        this.selectedItem.name = '请选择';
+        console.log(this.groups);
     }
 
 }
