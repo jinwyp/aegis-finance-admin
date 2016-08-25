@@ -9,14 +9,14 @@ import { Component } from '@angular/core';
 declare var __moduleName: string;
 
 @Component({
-    selector: 'distribution-page',
+    selector: 'assign-person',
     moduleId: __moduleName || module.id,
-    templateUrl: 'distribution-page.html'
+    templateUrl: 'assign-person.html'
 })
 
 
 
-export class DistributionPageComponent {
+export class AssignPersonComponent {
 
 
 
