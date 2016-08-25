@@ -7,7 +7,7 @@ import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.service.admin.user.FinanceOrderServiceImpl;
-import com.yimei.finance.service.admin.user.WorkFlowServiceImpl;
+import com.yimei.finance.service.admin.workflow.WorkFlowServiceImpl;
 import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;

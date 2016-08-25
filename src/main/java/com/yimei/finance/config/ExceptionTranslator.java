@@ -1,8 +1,10 @@
 package com.yimei.finance.config;
 
+import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.exception.NotFoundException;
+import com.yimei.finance.exception.UnauthorizedException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
@@ -13,6 +15,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import javax.servlet.http.HttpServletRequest;
+
 @ControllerAdvice
 public class ExceptionTranslator {
 //    @Autowired
@@ -21,24 +25,6 @@ public class ExceptionTranslator {
 //    private Queue mailQueue;
 //    @Value("${mail.to}")
 //    private String to;
-
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionTranslator.class);
-
-    @ExceptionHandler(NotFoundException.class)
-    @ResponseStatus(HttpStatus.NOT_FOUND)
-    @ResponseBody
-    public Result process404Error(NotFoundException ex) {
-        logger.error("404Exception:",ex);
-        return Result.error(404, ex.getMessage());
-    }
-
-    @ExceptionHandler(BusinessException.class)
-    @ResponseStatus(HttpStatus.CONFLICT)
-    @ResponseBody
-    public Result process409Error(BusinessException ex) {
-        logger.error("409Exception:",ex);
-        return Result.error(409, ex.getMessage());
-    }
 
     @ExceptionHandler({MethodArgumentNotValidException.class, TypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -61,16 +47,44 @@ public class ExceptionTranslator {
         }
     }
 
-//    @ExceptionHandler
-//    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-//    @ResponseBody
-//    public Result process500Error(HttpServletRequest request, Exception ex) {
-//        logger.error("500Exception:",ex);
-//        this.sendAlarmQueueMessage(request, ex);
-//        return Result.error(500, ex.getMessage());
-//
-//    }
-//
+    private static final Logger logger = LoggerFactory.getLogger(ExceptionTranslator.class);
+
+    @ExceptionHandler(UnauthorizedException.class)
+    @ResponseStatus(HttpStatus.UNAUTHORIZED)
+    @ResponseBody
+    public Result process401Error(UnauthorizedException ex) {
+        logger.error("401Exception:" + ex);
+        return Result.error(401, EnumCommonError.请您登录.toString());
+    }
+
+    @ExceptionHandler(NotFoundException.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public Result process404Error(NotFoundException ex) {
+        logger.error("404Exception:",ex);
+        return Result.error(404, ex.getMessage());
+    }
+
+    @ExceptionHandler(BusinessException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody
+    public Result process409Error(BusinessException ex) {
+        logger.error("409Exception:",ex);
+        return Result.error(409, ex.getMessage());
+    }
+
+    @ExceptionHandler
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    @ResponseBody
+    public Result process500Error(HttpServletRequest request, Exception ex) {
+        logger.error("500Exception:",ex);
+        //this.sendAlarmQueueMessage(request, ex);
+        return Result.error(500, ex.getMessage());
+
+    }
+
+
+
 //    //获取header对象
 //    private String getHeadersInfo(HttpServletRequest request) throws JsonProcessingException {
 //        Map<String, String> map = new HashMap<String, String>();
