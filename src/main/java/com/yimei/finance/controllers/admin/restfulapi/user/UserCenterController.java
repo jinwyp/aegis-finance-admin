@@ -53,7 +53,7 @@ public class UserCenterController {
 
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    @ApiOperation(value = "查看个人任务列表", notes = "查看个人任务列表", response = TaskObject.class, responseContainer = "List")
+    @ApiOperation(value = "查看个人代办任务列表", notes = "查看个人代办任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
         List<TaskObject> taskList = DozerUtils.copy(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()), TaskObject.class);
@@ -62,7 +62,7 @@ public class UserCenterController {
     }
 
     @RequestMapping(value = "/unclaimed", method = RequestMethod.GET)
-    @ApiOperation(value = "查看个人待领取任务列表", notes = "查看个人待领取任务列表", response = TaskObject.class, responseContainer = "List")
+    @ApiOperation(value = "给分配管理员查看待领取任务列表", notes = "给线上交易员管理组, 业务员管理组, 尽调员管理组, 监管员管理组, 风控管理组, 查看待领取任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalWaitClaimTasksMethod(Page page) {
         List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
