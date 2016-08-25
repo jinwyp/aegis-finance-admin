@@ -41,7 +41,7 @@
             <div class="col-sm-10 info-val">
                 <input type="text" class="form-control" id="emailInput" name="email" [(ngModel)]="currentUser.email" #email="ngModel" required >
                 <span class="help-block" [class.hidden]="email.valid || email.pristine">请填写公司邮箱!</span>
-                <!--<button type="button" class="btn btn-default btn-return ml-20 btn-reset-pwd">重置密码</button>-->
+                <button type="button" class="btn btn-default btn-return ml-20 btn-reset-pwd" [class.hidden]="isAddStatus">重置密码</button>
             </div>
         </div>
         <div class="row info-item">
@@ -52,7 +52,7 @@
             </div>
         </div>
         <div class="row info-item">
-            <label class="col-sm-2 info-label-input"><span>所属部门:{{currentUser.department}}{{selectedItem.name}}</span></label>
+            <label class="col-sm-2 info-label-input"><span>所属部门:</span></label>
             <div class="col-sm-10 info-val">
                 <custom-select [optionList]="departments" [selectedItem]="selectedItem" (onChange)="selectChange($event)"></custom-select>
             </div>

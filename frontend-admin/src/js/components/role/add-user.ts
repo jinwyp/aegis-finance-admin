@@ -40,7 +40,7 @@ export class AddUserComponent {
 
     groups       = [];
     departments  = [];
-    selectedItem = {name : this.currentUser.department};
+    selectedItem = {name : '请选择'};
 
     ngOnInit() {
 
@@ -102,6 +102,7 @@ export class AddUserComponent {
                 this.currentUser = result.data;
                 console.log(this.currentUser);
                 this.getGroupList();
+                this.selectedItem.name = this.currentUser.department;
             } else {
 
             }
