@@ -138,7 +138,7 @@ public class UserController {
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
     }
 
-    @ApiOperation(value = "管理员帮助用户找回密码", notes = "管理员帮助用户找回密码", response = Boolean.class)
+    @ApiOperation(value = "管理员帮助用户重置密码", notes = "管理员帮助用户重置密码, 生成随机密码, 发送到用户邮箱.", response = Boolean.class)
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/resetpwd/{id}", method = RequestMethod.POST)
     public Result resetUserPasswordMethod(@PathVariable("id")String id) {
