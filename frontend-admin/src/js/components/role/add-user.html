@@ -54,17 +54,16 @@
         <div class="row info-item">
             <label class="col-sm-2 info-label-input"><span>所属部门:</span></label>
             <div class="col-sm-10 info-val">
-                <!--<input type="text" class="form-control" value="{{currentUser.department}}">-->
-                <!--<span class="help-block" [class.hidden]="username.valid || username.pristine">请选择所属部门!</span>-->
-                <custom-select [attrName]="'department'"></custom-select>
+                <custom-select (onChange)="selectChange($event)"></custom-select>
+                <!--<input type="text" [(ngModel)]="currentUser.department" name="department">-->
             </div>
         </div>
         <div class="row info-item">
             <label class="col-sm-2 info-label-input"></label>
             <div class="col-sm-10 info-val no-bottom-border">
                 <button type="submit" class="btn btn-default btn-lg btn-sure" [disabled]="!addUserForm.form.valid">保存</button>
-                <button type="button" class="btn btn-default btn-lg btn-return ml-20">返回</button>
-                <div class="mt-20 fs-14"><span class="hint">注:确认保存后,该系统用户的密码将<span class="orange">发送至填写的公司邮箱中。</span></span></div>
+                <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['/users']">返回</button>
+                <div class="mt-20 fs-14"><span class="hint">注:确认保存后,该系统用户的密码将 <span class="orange">发送至填写的公司邮箱中。</span></span></div>
             </div>
         </div>
     </form>

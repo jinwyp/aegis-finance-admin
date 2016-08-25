@@ -5,6 +5,8 @@
 
 import { Component } from '@angular/core';
 import { Router, ActivatedRoute }      from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
+
 import { User, UserService, UserGroup, UserGroupService } from '../../service/user';
 
 
@@ -26,6 +28,8 @@ export class AddUserComponent {
         private groupService:UserGroupService
     ) {}
 
+    selectedItem={key:'-1',value:'请选择'}
+
     css = {
         activeForRefresh : true,
         isSubmitted : false,
@@ -34,20 +38,33 @@ export class AddUserComponent {
 
     isAddStatus : boolean = false;
 
+    private sub: Subscription;
     currentUser = new User();
 
     groups = [];
 
     ngOnInit(){
-        this.getGroupList();
 
 
         if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
             this.isAddStatus = true;
+            this.getGroupList();
+        }else{
+            this.sub = this.activatedRoute.params.subscribe(params => {
+                this.getUserInfo(params['id']);
+            });
         }
     }
 
 
+
+    ngOnDestroy() {
+        if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
+
+        }else{
+            this.sub.unsubscribe();
+        }
+    }
 
     getGroupList() {
 
@@ -67,6 +84,19 @@ export class AddUserComponent {
         });
     }
 
+    getUserInfo(id) {
+
+        this.userService.getUserById(id).then((result)=>{
+            if (result.success){
+                this.currentUser = result.data;
+                console.log(this.currentUser)
+                this.getGroupList();
+            }else{
+
+            }
+        });
+    }
+
     selectGroup(group){
         if (this.currentUser.groupIds.indexOf(group.id) === -1 ){
             this.currentUser.groupIds.push(group.id);
@@ -76,6 +106,8 @@ export class AddUserComponent {
 
         console.log(this.currentUser.groupIds);
     }
+
+
     addUser(form) {
         this.css.ajaxErrorHidden = true;
         this.css.isSubmitted = true;
@@ -87,6 +119,11 @@ export class AddUserComponent {
             }
             console.log(result)
         });
+    }
+
+    selectChange($event){
+        this.currentUser.department = $event.value
+        console.log(this.currentUser);
     }
 
 }
