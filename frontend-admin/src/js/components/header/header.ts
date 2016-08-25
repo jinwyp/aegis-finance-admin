@@ -36,7 +36,9 @@ export class headerComponent {
         });
     }
 
-    logout() {
+    logout(event) {
+        event.preventDefault();
+        event.stopPropagation();
         this.user.logout().then((result)=>{
             if (result.success){
                 window.location.href = '/finance/admin/login';

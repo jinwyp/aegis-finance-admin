@@ -102,10 +102,10 @@ public class AdminUserServiceImpl {
                 adminSession.login(userObject);
                 return Result.success().setData(userObject);
             } else {
-                return Result.error(EnumAdminUserError.用户名或者密码错误.toString());
+                return Result.error(401, EnumAdminUserError.用户名或者密码错误.toString());
             }
         } else {
-            return Result.error(EnumAdminUserError.该用户不存在或者已经被禁用.toString());
+            return Result.error(401, EnumAdminUserError.该用户不存在或者已经被禁用.toString());
         }
     }
 

@@ -12,14 +12,12 @@ import { User, UserService, UserGroup, UserGroupService } from '../../service/us
 
 declare var __moduleName: string;
 
+
 @Component({
     selector: 'add-user',
     moduleId: __moduleName || module.id,
     templateUrl: 'add-user.html'
 })
-
-
-
 export class AddUserComponent {
 
     constructor(

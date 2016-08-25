@@ -3,9 +3,7 @@
  */
 
 import { Routes, RouterModule }   from '@angular/router';
-import { OrderListComponent } from '../components/order/order-list';
-import { HomeDashboardComponent } from '../components/home/home-dashboard';
-import { OrderDetailComponent } from '../components/order/order-detail';
+
 import { UserDetailComponent } from '../components/user/user-detail';
 import { UserUpdatePasswordComponent } from '../components/user/user-update-password';
 import { RoleListComponent } from '../components/role/role-list';
@@ -42,54 +40,56 @@ const routes: Routes = [
     {
         path: 'userroles',
         component: RoleListComponent,
-        data: {type : 'list', title: 'User Role List' }
+        data: { routetype : 'list', title: 'User Role List' }
     },
     {
         path: 'userroles/add',
         component: AddRoleComponent,
-        data: {type : 'add', title: 'User Role Add' }
+        data: { routetype : 'add', title: 'User Role Add' }
     },
     {
         path: 'userroles/:id',
         component: RoleInfoComponent,
-        data: { type : 'info', title: 'User Role Info'}
+        data: { routetype : 'info', title: 'User Role Info'}
     },
     {
         path: 'userroles/:id/edit',
         component: AddRoleComponent,
-        data: {type : 'update',  title: 'User Role Edit'}
+        data: { routetype : 'update',  title: 'User Role Edit'}
     },
 
     {
         path: 'users',
         component: UserListComponent,
-        data: {type : 'list', title: 'User List' }
+        data: { routetype : 'list', title: 'User List' }
     },
     {
         path: 'users/add',
         component: AddUserComponent,
-        data: {type : 'add', title: 'User Add' }
+        data: { routetype : 'add', title: 'User Add' }
     },
     {
         path: 'users/:id',
         component: UserInfoComponent,
-        data: { type : 'list', title: 'User Info'}
+        data: { routetype : 'list', title: 'User Info'}
     },
     {
         path: 'users/:id/edit',
         component: AddUserComponent,
-        data: {type : 'edit', title: 'User Edit' }
+        data: { routetype : 'edit', title: 'User Edit' }
     },
 
 
     {
         path: 'tasks/pending',
-        component: PendingListComponent
+        component: PendingListComponent,
+        data: { routetype : 'pending', title: 'User Pending Tasks' }
     },
 
     {
         path: 'tasks/all',
-        component: PendingListComponent
+        component: PendingListComponent,
+        data: {type : 'all', title: 'User All Tasks' }
     },
 
     {

@@ -12,8 +12,8 @@ import { InMemoryBackendService, SEED_DATA } from 'angular2-in-memory-web-api';
 import { InMemoryDataServiceOrder }          from '../mock/api/in-memory-data.service';
 
 import { routing, homePageRouterProviders } from './home.routes';
-import { Order, OrderService } from '../service/order';
 import { UserService, UserGroupService } from '../service/user';
+import { TaskService } from '../service/task';
 
 
 import { headerComponent } from '../components/header/header';
@@ -63,7 +63,7 @@ import {AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstr
         PendingListComponent, DistributionPageComponent, FinanceApplyComponent, BusinessApprovalComponent,
         TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent, CustomSelectComponent
     ],
-    providers: [ homePageRouterProviders, OrderService, UserService, UserGroupService ],
+    providers: [ homePageRouterProviders, TaskService, UserService, UserGroupService ],
     bootstrap: [ HomeComponent ]
 })
 export class HomeModule { }
