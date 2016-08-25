@@ -7,7 +7,6 @@ import com.yimei.finance.entity.admin.finance.EnumFinanceEventType;
 import com.yimei.finance.entity.admin.finance.TaskObject;
 import com.yimei.finance.entity.admin.user.EnumAdminUserError;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
-import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;

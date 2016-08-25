@@ -1,4 +1,4 @@
-package com.yimei.finance.controllers.common;
+package com.yimei.finance.controllers.admin.common;
 
 import com.yimei.finance.entity.admin.finance.EnumMYRFinanceAllSteps;
 import com.yimei.finance.entity.common.databook.DataBook;

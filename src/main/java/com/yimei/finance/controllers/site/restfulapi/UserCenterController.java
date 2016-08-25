@@ -7,6 +7,7 @@ import com.yimei.finance.entity.admin.finance.EnumFinanceStatus;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
+import com.yimei.finance.entity.common.result.MapObject;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.ext.annotations.LoginRequired;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -110,6 +112,16 @@ public class UserCenterController {
         FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, userSession.getUser().getId());
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         return Result.success().setData(financeOrder);
+    }
+
+    @RequestMapping(value = "/status", method = RequestMethod.GET)
+    @ApiOperation(value = "前台金融单状态list", notes = "前台金融单状态list", response = MapObject.class, responseContainer = "List")
+    public Result findFinanceStatusList() {
+        List<MapObject> mapList = new ArrayList<>();
+        for (EnumFinanceStatus status : EnumFinanceStatus.values()) {
+            mapList.add(new MapObject(String.valueOf(status.id), status.name));
+        }
+        return Result.success().setData(mapList);
     }
 }
 
