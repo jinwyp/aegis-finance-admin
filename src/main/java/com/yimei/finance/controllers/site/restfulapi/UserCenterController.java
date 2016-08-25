@@ -70,7 +70,7 @@ public class UserCenterController {
         } else {
             return Result.error(EnumCommonError.Admin_System_Error);
         }
-        return Result.success().setData(financeOrderRepository.findOne(financeOrder.getId()));
+        return Result.success().setData(financeOrderRepository.findBySourceId(financeOrder.getSourceId()));
     }
 
 
