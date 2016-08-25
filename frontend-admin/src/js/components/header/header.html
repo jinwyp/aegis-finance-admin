@@ -1,12 +1,13 @@
 <nav class="navbar navbar-fixed-top h-80">
     <div class="container-fluid header-bg">
         <div id="navbar" class="navbar-collapse collapse">
-            <a class="header-logo" [routerLink]="['/dashboard']"></a>
+            <a class="header-logo" [routerLink]="['/']"></a>
             <span class="header-title">金融管理系统</span>
+
             <ul class="nav navbar-nav navbar-right">
-                <li><a class="" [routerLink]="['/dashboard']" routerLinkActive="active">jack</a></li>
-                <li><a [routerLink]="['/orders']" routerLinkActive="active">修改密码</a></li>
-                <li><a href="#">退出</a></li>
+                <li><a class="" [routerLink]="['/']" routerLinkActive="active">{{currentUserSession.username}}</a></li>
+                <li><a [routerLink]="['/user/password']" routerLinkActive="active">修改密码</a></li>
+                <li><a href="#" (click)="logout()">退出</a></li>
             </ul>
         </div>
     </div>

@@ -3,7 +3,7 @@
  */
 import { Component } from '@angular/core';
 
-
+import { User, UserService } from '../../service/user';
 
 declare var __moduleName: string;
 
@@ -15,5 +15,35 @@ declare var __moduleName: string;
 })
 export class headerComponent {
 
+    constructor(
+        private user: UserService
+    ) {}
+
+    currentUserSession : User = new User();
+
+    ngOnInit() {
+        this.getCurrentUser();
+    }
+
+    getCurrentUser() {
+
+        this.user.getCurrentUser().then((result)=>{
+            if (result.success){
+                this.currentUserSession = result.data;
+            }else{
+
+            }
+        });
+    }
+
+    logout() {
+        this.user.logout().then((result)=>{
+            if (result.success){
+                window.location.href = '/finance/admin/login';
+            }else{
+
+            }
+        });
+    }
 
 }

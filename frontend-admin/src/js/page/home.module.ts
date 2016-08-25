@@ -26,7 +26,7 @@ import { OrderListComponent } from '../components/order/order-list';
 import { OrderDetailComponent } from '../components/order/order-detail';
 
 import { UserDetailComponent } from '../components/user/user-detail';
-import { UpdatePwdComponent } from '../components/user/update-pwd';
+import { UserUpdatePasswordComponent } from '../components/user/user-update-password';
 
 import { RoleListComponent } from '../components/role/role-list';
 import { RoleInfoComponent } from '../components/role/role-info';
@@ -34,6 +34,8 @@ import { AddRoleComponent } from '../components/role/add-role';
 import { UserListComponent } from '../components/role/user-list';
 import { AddUserComponent } from '../components/role/add-user';
 import { UserInfoComponent } from '../components/role/user-info';
+
+
 import { WaitDealListComponent } from '../components/audit/wait-deal-list';
 import { DistributionPageComponent } from '../components/audit/distribution-page';
 import { ProcessTabComponent } from '../components/audit/common/process-tab';
@@ -53,8 +55,8 @@ import {AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstr
     declarations: [
         AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES,
         headerComponent, LeftMenuComponent,
-        HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent,
-        UserDetailComponent, UpdatePwdComponent,
+        HomeComponent, HomeDashboardComponent,
+        UserDetailComponent, UserUpdatePasswordComponent,
         RoleListComponent, AddRoleComponent, RoleInfoComponent,
         UserListComponent, AddUserComponent, UserInfoComponent,
         ProcessTabComponent, DistributionPersonComponent,

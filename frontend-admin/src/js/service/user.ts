@@ -7,7 +7,7 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
-import { HttpResponse } from './http';
+import { HttpResponse, API } from './http';
 
 
 var permisson = {
@@ -62,12 +62,6 @@ class UserGroup {
 @Injectable()
 class UserService {
 
-    private apiUrl = {
-        login : '/api/financing/admin/login',
-        list : '/api/financing/admin/user',
-        group : '/api/financing/admin/group'
-    };
-
     private handleError(error: any): Promise<any> {
         console.error('Http 用户 请求发生错误!! ', error);
         return Promise.reject(error.message || error);
@@ -79,25 +73,36 @@ class UserService {
 
 
     login(user) {
-        return this.http.post(this.apiUrl.login, user).toPromise()
+        return this.http.post(API.login, user).toPromise()
             .then(response => response.json() as HttpResponse);
     }
 
+    logout() {
+        return this.http.get(API.logout).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(this.handleError);
+    }
+
+    getCurrentUser() {
+        return this.http.get(API.session).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(this.handleError);
+    }
 
     getList() {
-        return this.http.get(this.apiUrl.list).toPromise()
+        return this.http.get(API.users).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
 
     getDepartmentList() {
-        return this.http.get(this.apiUrl.list + '/departments').toPromise()
+        return this.http.get(API.users + '/departments').toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
 
     getUserById(id: number) {
-        return this.http.get(this.apiUrl.list + '/' + id).toPromise()
+        return this.http.get(API.users + '/' + id).toPromise()
             .then(response => {
                 var result = response.json() as HttpResponse;
                 if (result.data ){
@@ -113,7 +118,7 @@ class UserService {
     add(user: User) {
         let headers = new Headers({'Content-Type': 'application/json'});
 
-        return this.http.post(this.apiUrl.list, JSON.stringify(user), {headers: headers}).toPromise()
+        return this.http.post(API.users, JSON.stringify(user), {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
             .catch(this.handleError);
     }
@@ -122,7 +127,7 @@ class UserService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        let url = `${this.apiUrl.list}/${user.id}`;
+        let url = `${API.users}/${user.id}`;
 
         return this.http.put(url, JSON.stringify(user), {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
@@ -132,7 +137,7 @@ class UserService {
     del(user: User) {
         let headers = new Headers({'Content-Type': 'application/json'});
 
-        let url = `${this.apiUrl.list}/${user.id}`;
+        let url = `${API.users}/${user.id}`;
 
         return this.http.delete(url, {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
@@ -147,14 +152,14 @@ class UserService {
     }
 
     joinGroup(userId:number, groupId:string) {
-        let url = `${this.apiUrl.group}/${groupId}/${userId}`;
+        let url = `${API.groups}/${groupId}/${userId}`;
         return this.http.post(url, {}).toPromise()
             .then(res => res.json() as HttpResponse )
             .catch(this.handleError);
     }
 
     leaveGroup(userId:number, groupId:string) {
-        let url = `${this.apiUrl.group}/${groupId}/${userId}`;
+        let url = `${API.groups}/${groupId}/${userId}`;
         return this.http.delete(url).toPromise()
             .then(res => res.json() as HttpResponse )
             .catch(this.handleError);
@@ -167,10 +172,6 @@ class UserService {
 @Injectable()
 class UserGroupService {
 
-    private apiUrl = {
-        groupList : '/api/financing/admin/group'
-    };
-
     private handleError(error: any) : Promise<any> {
         console.error('Http 用户组 请求发生错误!! ', error);
         return Promise.reject(error.message || error);
@@ -182,7 +183,7 @@ class UserGroupService {
 
 
     getList() {
-        return this.http.get(this.apiUrl.groupList).toPromise()
+        return this.http.get(API.groups).toPromise()
             .then( response => {
                 var result = response.json() as HttpResponse;
                 if (result.data ){
@@ -197,13 +198,13 @@ class UserGroupService {
     }
 
     getGroupById(id: string) {
-        return this.http.get(this.apiUrl.groupList + '/' + id).toPromise()
+        return this.http.get(API.groups + '/' + id).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
 
     getUserListByGroupId(id: string) {
-        return this.http.get(this.apiUrl.groupList + '/' + id + '/users').toPromise()
+        return this.http.get(API.groups + '/' + id + '/users').toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }

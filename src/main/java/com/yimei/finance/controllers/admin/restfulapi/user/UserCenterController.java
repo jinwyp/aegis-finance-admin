@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Api(tags = {"admin-api-flow"}, description = "金融公用接口")
-@RequestMapping("/api/financing/admin/user")
+@RequestMapping("/api/financing/admin/tasks")
 @RestController("adminUserCenterController")
 public class UserCenterController {
     @Autowired
@@ -48,13 +48,9 @@ public class UserCenterController {
     @Autowired
     private RuntimeService runtimeService;
 
-    @RequestMapping(value = "/session", method = RequestMethod.GET)
-    @ApiOperation(value = "获取session中用户对象", notes = "获取session中用户对象", response = UserObject.class)
-    public Result getSessionUserMethod() {
-        return Result.success().setData(adminSession.getUser());
-    }
 
-    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
     @ApiOperation(value = "查看个人任务列表", notes = "查看个人任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
@@ -63,8 +59,8 @@ public class UserCenterController {
         return Result.success().setData(taskList).setMeta(page);
     }
 
-    @RequestMapping(value = "/unclaimed/tasks", method = RequestMethod.GET)
-    @ApiOperation(value = "查看个人待领取任务列表", notes = "查看个人待领取任务列表")
+    @RequestMapping(value = "/unclaimed", method = RequestMethod.GET)
+    @ApiOperation(value = "查看个人待领取任务列表", notes = "查看个人待领取任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalWaitClaimTasksMethod(Page page) {
         List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
@@ -80,7 +76,8 @@ public class UserCenterController {
         return Result.success().setData(null).setMeta(page);
     }
 
-    @RequestMapping(value = "/task/{taskId}/claim", method = RequestMethod.PUT)
+
+    @RequestMapping(value = "/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "taskId")String taskId) {
@@ -106,7 +103,8 @@ public class UserCenterController {
         return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
     }
 
-    @RequestMapping(value = "/assign/trader/{taskId}/{userId}", method = RequestMethod.PUT)
+
+    @RequestMapping(value = "/{taskId}/trader/{userId}", method = RequestMethod.PUT)
     @ApiOperation(value = "管理员分配人员", notes = "管理员分配人员操作")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),

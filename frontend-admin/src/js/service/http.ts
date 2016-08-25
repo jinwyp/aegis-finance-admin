@@ -2,8 +2,16 @@
  * Created by tttt on 8/22/16.
  */
 
+var API = {
+    login : '/api/financing/admin/login',
+    logout : '/api/financing/admin/logout',
+    session : '/api/financing/admin/session',
+    users : '/api/financing/admin/user',
+    groups : '/api/financing/admin/group'
+};
 
-export class HttpResponse {
+
+class HttpResponse {
 
     success : boolean;
     error : {
@@ -20,3 +28,6 @@ export class HttpResponse {
     data : any;
 
 }
+
+
+export {HttpResponse, API}
