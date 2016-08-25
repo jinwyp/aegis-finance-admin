@@ -28,7 +28,6 @@ export class AddUserComponent {
         private groupService:UserGroupService
     ) {}
 
-    selectedItem={key:'-1',value:'请选择'}
 
     css = {
         activeForRefresh : true,
@@ -37,7 +36,7 @@ export class AddUserComponent {
     };
 
     isAddStatus : boolean = false;
-    addUserTitle='添加用户';
+    addUserTitle = '添加用户';
 
     private sub: Subscription;
     currentUser = new User();
@@ -63,9 +62,7 @@ export class AddUserComponent {
 
 
     ngOnDestroy() {
-        if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
-
-        }else{
+        if (this.sub) {
             this.sub.unsubscribe();
         }
     }
