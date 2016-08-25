@@ -3,97 +3,93 @@
  */
 
 
-import { Component } from '@angular/core';
-import { Router, ActivatedRoute }      from '@angular/router';
-import { Subscription } from 'rxjs/Subscription';
+import {Component} from '@angular/core';
+import {ActivatedRoute}      from '@angular/router';
+import {Subscription} from 'rxjs/Subscription';
 
-import { User, UserService, UserGroup, UserGroupService } from '../../service/user';
+import {User, UserService, UserGroupService} from '../../service/user';
 
 
-declare var __moduleName: string;
+declare var __moduleName:string;
 
 @Component({
-    selector: 'add-user',
-    moduleId: __moduleName || module.id,
-    templateUrl: 'add-user.html'
+    selector :    'add-user',
+    moduleId :    __moduleName || module.id,
+    templateUrl : 'add-user.html'
 })
-
 
 
 export class AddUserComponent {
 
-    constructor(
-        private activatedRoute: ActivatedRoute,
-        private userService: UserService,
-        private groupService:UserGroupService
-    ) {}
-
-    selectedItem={key:'-1',value:'请选择'}
+    constructor(private activatedRoute:ActivatedRoute,
+                private userService:UserService,
+                private groupService:UserGroupService) {
+    }
 
     css = {
         activeForRefresh : true,
-        isSubmitted : false,
-        ajaxErrorHidden : true
+        isSubmitted :      false,
+        ajaxErrorHidden :  true
     };
 
-    isAddStatus : boolean = false;
-    addUserTitle='添加用户';
+    isAddStatus:boolean = false;
+    addUserTitle        = '添加用户';
 
-    private sub: Subscription;
-    currentUser = new User();
+    private sub:Subscription;
+            currentUser = new User();
 
-    groups = [];
-    departments = [];
+    groups       = [];
+    departments  = [];
+    selectedItem = {name : this.currentUser.department};
 
-    ngOnInit(){
+    ngOnInit() {
 
         if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
-            this.isAddStatus = true;
-            this.addUserTitle='添加用户';
+            this.isAddStatus  = true;
+            this.addUserTitle = '添加用户';
             this.getGroupList();
-        }else{
+        } else {
             this.sub = this.activatedRoute.params.subscribe(params => {
                 this.getUserInfo(params['id']);
-                this.addUserTitle='编辑用户';
+                this.addUserTitle = '编辑用户';
             });
         }
         this.getDepartmentList();
     }
 
 
-
     ngOnDestroy() {
         if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
 
-        }else{
+        } else {
             this.sub.unsubscribe();
         }
     }
 
     getGroupList() {
 
-        this.groupService.getList().then((result)=>{
-            if (result.success){
+        this.groupService.getList().then((result)=> {
+            if (result.success) {
                 this.groups = result.data;
 
-                this.groups.forEach( (group)=> {
+                this.groups.forEach((group)=> {
                     if (this.currentUser.groupIds.indexOf(group.id) > -1) {
                         group.selected = true;
                     }
                 });
 
-            }else{
+            } else {
 
             }
         });
     }
 
     getDepartmentList() {
-        this.userService.getDepartmentList().then((result)=>{
-            if (result.success){
+        this.userService.getDepartmentList().then((result)=> {
+            if (result.success) {
                 this.departments = result.data;
                 console.log(result);
-            }else{
+            } else {
 
             }
         });
@@ -101,19 +97,19 @@ export class AddUserComponent {
 
     getUserInfo(id) {
 
-        this.userService.getUserById(id).then((result)=>{
-            if (result.success){
+        this.userService.getUserById(id).then((result)=> {
+            if (result.success) {
                 this.currentUser = result.data;
-                console.log(this.currentUser)
+                console.log(this.currentUser);
                 this.getGroupList();
-            }else{
+            } else {
 
             }
         });
     }
 
-    selectGroup(group){
-        if (this.currentUser.groupIds.indexOf(group.id) === -1 ){
+    selectGroup(group) {
+        if (this.currentUser.groupIds.indexOf(group.id) === -1) {
             this.currentUser.groupIds.push(group.id);
             group.selected = true;
             // 最多只能同时拥有3个角色
@@ -121,31 +117,30 @@ export class AddUserComponent {
             //     this.currentUser.groupIds.push(group.id);
             //     group.selected = true;
             // }
-        }else{
+        } else {
             this.currentUser.groupIds.splice(this.currentUser.groupIds.indexOf(group.id), 1);
             group.selected = false;
         }
     }
 
 
-    addUser(form) {
+    addUser() {
         this.css.ajaxErrorHidden = true;
-        this.css.isSubmitted = true;
-        if(this.isAddStatus){
-            this.userService.add(this.currentUser).then((result)=>{
-                if (result.success){
+        this.css.isSubmitted     = true;
+        if (this.isAddStatus) {
+            this.userService.add(this.currentUser).then((result)=> {
+                if (result.success) {
                     window.location.href = '/finance/admin/home/users';
-                }else{
+                } else {
                     this.css.ajaxErrorHidden = false;
                 }
                 console.log(result)
             });
-        }else{
-            console.log("-----------save-----------")
-            this.userService.save(this.currentUser).then((result)=>{
-                if (result.success){
+        } else {
+            this.userService.save(this.currentUser).then((result)=> {
+                if (result.success) {
                     window.location.href = '/finance/admin/home/users';
-                }else{
+                } else {
                     this.css.ajaxErrorHidden = false;
                 }
                 console.log(result)
@@ -153,9 +148,9 @@ export class AddUserComponent {
         }
     }
 
-    selectChange($event){
-
+    selectChange($event) {
         this.currentUser.department = $event.name;
+        this.selectedItem.name      = $event.name;
         console.log(this.currentUser);
     }
 

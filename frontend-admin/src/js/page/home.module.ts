@@ -44,14 +44,15 @@ import { TuneReportComponent } from '../components/audit/tune-report';
 import { SuperviseReportComponent } from '../components/audit/supervise-report';
 import { RiskControlReportComponent } from '../components/audit/risk-control-report';
 import { CustomSelectComponent } from '../components/audit/common/custom-select';
+import { CustomModalComponent } from '../components/audit/common/custom-modal';
 
 
-import {AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+import {AlertComponent, ModalDirective, MODAL_DIRECTIVES, BS_VIEW_PROVIDERS,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
 
 @NgModule({
     imports: [ BrowserModule, FormsModule, HttpModule, routing],
     declarations: [
-        AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES,
+        AlertComponent,ModalDirective,MODAL_DIRECTIVES,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES,
         headerComponent, LeftMenuComponent,
         HomeComponent, HomeDashboardComponent, OrderListComponent, OrderDetailComponent,
         UserDetailComponent, UpdatePwdComponent,
@@ -59,9 +60,9 @@ import {AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstr
         UserListComponent, AddUserComponent, UserInfoComponent,
         ProcessTabComponent, DistributionPersonComponent,
         WaitDealListComponent, DistributionPageComponent, FinanceApplyComponent, BusinessApprovalComponent,
-        TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent, CustomSelectComponent
+        TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent, CustomSelectComponent, CustomModalComponent
     ],
-    providers: [ homePageRouterProviders, OrderService, UserService, UserGroupService ],
+    providers: [ homePageRouterProviders, OrderService, UserService, UserGroupService,BS_VIEW_PROVIDERS ],
     bootstrap: [ HomeComponent ]
 })
 export class HomeModule { }

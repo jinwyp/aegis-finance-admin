@@ -38,8 +38,9 @@
                 <span class="right-border" [routerLink]="['/updatepwd', user.id]">重置密码</span>
                 <span class="right-border" [routerLink]="['/users', user.id]">查看</span>
                 <span class="right-border" [routerLink]="['/users', user.id, 'edit']">编辑</span>
-                <span>删除</span>
+                <span (click)="lgModal.show()">删除</span>
             </td>
         </tr>
     </table>
 </div>
+<!--<custom-modal></custom-modal>-->
