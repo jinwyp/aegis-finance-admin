@@ -6,6 +6,7 @@ package com.yimei.finance.entity.admin.finance;
 public enum EnumFinanceStatus {
     审核中,
     待审核,
+    补充材料,
     审核通过,
     审核不通过,
     ;
