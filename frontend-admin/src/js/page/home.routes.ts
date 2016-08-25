@@ -14,7 +14,7 @@ import { AddUserComponent } from '../components/role/add-user';
 import { UserInfoComponent } from '../components/role/user-info';
 
 import { PendingListComponent } from '../components/task/pending-list';
-import { DistributionPageComponent } from '../components/task/distribution-page';
+import { AssignPersonComponent } from '../components/task/assign-person';
 import { FinanceApplyComponent } from '../components/task/finance-apply';
 import { BusinessApprovalComponent } from '../components/task/business-approval';
 import { TuneReportComponent } from '../components/task/tune-report';
@@ -93,8 +93,8 @@ const routes: Routes = [
     },
 
     {
-        path: 'distributionpage',
-        component: DistributionPageComponent
+        path: 'tasks/:id/assign',
+        component: AssignPersonComponent
     },
     {
         path: 'financeapply',

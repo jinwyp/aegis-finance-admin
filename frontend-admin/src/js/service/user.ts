@@ -85,7 +85,13 @@ class UserService {
 
     getCurrentUser() {
         return this.http.get(API.session).toPromise()
-            .then(response => response.json() as HttpResponse)
+            .then(response => {
+                var result = response.json() as HttpResponse;
+                if (result.data ){
+                    result.data.groupIds = result.data.groupList.map( group => { return group.id})
+                }
+                return result;
+            })
             .catch(this.handleError);
     }
 

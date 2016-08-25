@@ -7,6 +7,7 @@ import { Component } from '@angular/core';
 import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
 
 import { Task, TaskService } from '../../service/task';
+import { User, UserService } from '../../service/user';
 
 declare var __moduleName: string;
 
@@ -21,7 +22,8 @@ export class PendingListComponent {
     constructor(
         private router: Router,
         private activatedRoute: ActivatedRoute,
-        private task: TaskService
+        private task: TaskService,
+        private user: UserService
     ) {}
 
     routeData :any = {
@@ -29,11 +31,12 @@ export class PendingListComponent {
         title : ''
     };
 
-    taskList : Task[] = [];
+    isAssignPerson : boolean = false;  //是否到分配人的步骤
 
+    taskList : Task[] = [];
+    currentUserSession : User = new User();
 
     ngOnInit(){
-
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
             if (this.routeData.routetype === 'pending'){
@@ -41,6 +44,7 @@ export class PendingListComponent {
             }
         });
 
+        this.getCurrentUser();
     }
 
 
@@ -49,6 +53,20 @@ export class PendingListComponent {
             if (result.success){
                 this.taskList = result.data;
 
+            }else{
+
+            }
+        });
+    }
+
+    getCurrentUser() {
+
+        this.user.getCurrentUser().then((result)=>{
+            if (result.success){
+                this.currentUserSession = result.data;
+                if (this.currentUserSession.groupIds.indexOf('GROUP00001') > -1){
+                    this.isAssignPerson = true;
+                }
             }else{
 
             }

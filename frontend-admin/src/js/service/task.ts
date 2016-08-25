@@ -19,6 +19,7 @@ class Task {
 
     companyName : string;
 
+    createTime : number;
 
     constructor() {
         this.id  = 0;
