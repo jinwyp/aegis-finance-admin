@@ -3,17 +3,16 @@
  */
 
 
-import { Input, Output, EventEmitter, Component } from '@angular/core';
+import {Input, Output, EventEmitter, Component} from '@angular/core';
 
 
-declare var __moduleName: string;
+declare var __moduleName:string;
 
 @Component({
-    selector: 'string-select',
-    moduleId: __moduleName || module.id,
-    templateUrl: 'string-select.html'
+    selector :    'string-select',
+    moduleId :    __moduleName || module.id,
+    templateUrl : 'string-select.html'
 })
-
 
 
 export class StringSelectComponent {
@@ -23,7 +22,7 @@ export class StringSelectComponent {
     selectedItem = '请选择';
 
     @Input()
-    optionList = []
+    optionList = [];
 
     toggelSelect() {
         this.isopen = !this.isopen;
@@ -32,10 +31,10 @@ export class StringSelectComponent {
     @Output()
     onChange = new EventEmitter();
 
-    itemClick(obj){
-        this.selectedItem=obj;
-        this.isopen=!this.isopen;
-        this.onChange.emit({value: this.selectedItem});
+    itemClick(obj) {
+        this.selectedItem = obj;
+        this.isopen       = !this.isopen;
+        this.onChange.emit({value : this.selectedItem});
     }
 
 }

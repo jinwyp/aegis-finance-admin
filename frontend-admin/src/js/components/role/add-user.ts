@@ -91,7 +91,7 @@ export class AddUserComponent {
     getDepartmentList() {
         this.userService.getDepartmentList().then((result)=>{
             if (result.success){
-                this.departments = result.data;
+                this.departments = result.data.map( item => { return item.name});
                 console.log(result);
             }else{
 
