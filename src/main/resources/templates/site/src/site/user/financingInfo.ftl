@@ -51,14 +51,14 @@
         <div class="financeCon ms-controller" ms-controller="financeInfo">
             <div class="application">
                 <!--面包屑开始-->
-                <div>
-                    <ol class="breadcrumb">
-                        <li><a href="#">用户中心</a></li>
-                        <li><a href="#">融资管理</a></li>
-                        <li><a href="#">我的融资</a></li>
-                        <li class="active">融资详情</li>
-                    </ol>
-                </div>
+                <!--<div>-->
+                    <!--<ol class="breadcrumb">-->
+                        <!--<li><a href="#">用户中心</a></li>-->
+                        <!--<li><a href="#">融资管理</a></li>-->
+                        <!--<li><a href="#">我的融资</a></li>-->
+                        <!--<li class="active">融资详情</li>-->
+                    <!--</ol>-->
+                <!--</div>-->
                 <!--面包屑结束-->
                 <h4><span></span>融资详情</h4>
                 <div class="table" >
@@ -76,10 +76,10 @@
                                 <td>{{@financeInfo.sourceId}}</td>
                             </tr>
                             <tr>
-                                <th>申请人:</th>
-                                <td>{{@financeInfo.applyUserName}}</td>
-                                <th>申请时间:</th>
-                                <td>{{@financeInfo.applyDateTime}}</td>
+                                <!--<th>申请人:</th>-->
+                                <!--<td>{{@financeInfo.applyUserName}}</td>-->
+                                <th colspan="1">申请时间:</th>
+                                <td colspan="3">{{@financeInfo.applyDateTime}}</td>
                             </tr>
                         </table>
                     </div>
@@ -87,13 +87,14 @@
                         <table>
                             <tr>
                                 <th>拟使用资金时间:</th>
-                                <td>{{@financeInfo.expectDate}}&nbsp;天</td>
+                                <td>{{@financeInfo.expectDate || '--'}}&nbsp;天</td>
                                 <th colspan="2">预期此笔业务量:</th>
-                                <td>{{@financeInfo.businessAmount}}&nbsp;万吨</td>
+                                <td>{{@financeInfo.businessAmount || '--'}}&nbsp;万吨</td>
                             </tr>
                             <tr>
                                 <th>拟融资金额:</th>
-                                <td colspan="2">
+                                <td colspan="2" ms-visible="@financeInfo.financingAmount===null">--</td>
+                                <td colspan="2" ms-visible="@financeInfo.financingAmount!=null">
                                     <span class="red">{{@financeInfo.financingAmount | number(2)}}</span>&nbsp;万元
 
                                     <p class="gray">({{@financeInfo.financingAmount | switchTxt}})</p>
@@ -106,50 +107,50 @@
                         <table ms-visible="@financeInfo.applyType==='MYR'">
                             <tr>
                                 <th>签约单位全称:</th>
-                                <td>{{@financeInfo.contractor}}</td>
+                                <td>{{@financeInfo.contractor || '--'}}</td>
                                 <th>下游签约单位全称:</th>
-                                <td>{{@financeInfo.downstreamContractor}}</td>
+                                <td>{{@financeInfo.downstreamContractor || '--'}}</td>
                             </tr>
                             <tr>
                                 <th>用煤终端:</th>
-                                <td>{{@financeInfo.terminalServer}}</td>
+                                <td>{{@financeInfo.terminalServer || '--'}}</td>
                                 <th>运输方式:</th>
-                                <td>{{@financeInfo.transportMode}}</td>
+                                <td>{{@financeInfo.transportMode || '--'}}</td>
                             </tr>
                             <tr>
                                 <th>预计单吨销售价:</th>
-                                <td colspan="2">{{@financeInfo.sellingPrice}}&nbsp;元/吨</td>
+                                <td colspan="2">{{@financeInfo.sellingPrice || '--'}}&nbsp;元/吨</td>
                             </tr>
                         </table>
                         <!--购-->
                         <table ms-visible="@financeInfo.applyType==='MYG'">
                             <tr>
                                 <th>上游资源方全称:</th>
-                                <td>{{@financeInfo.upstreamResource}}</td>
+                                <td>{{@financeInfo.upstreamResource || '--'}}</td>
                                 <th>中转港口/地全称:</th>
-                                <td>{{@financeInfo.transferPort}}</td>
+                                <td>{{@financeInfo.transferPort || '--'}}</td>
                             </tr>
                             <tr>
                                 <th>运输方式:</th>
-                                <td>{{@financeInfo.transportMode}}</td>
+                                <td>{{@financeInfo.transportMode || '--'}}</td>
                                 <th>单吨采购价:</th>
-                                <td>{{@financeInfo.procurementPrice}}&nbsp;元/吨</td>
+                                <td>{{@financeInfo.procurementPrice || '--'}}&nbsp;元/吨</td>
                             </tr>
                         </table>
                         <!--贷-->
                         <table ms-visible="@financeInfo.applyType==='MYD'">
                             <tr>
                                 <th>煤炭仓储地:</th>
-                                <td>{{@financeInfo.storageLocation}}</td>
+                                <td>{{@financeInfo.storageLocation || '--'}}</td>
                                 <th>煤炭来源:</th>
-                                <td>{{@financeInfo.coalSource}}</td>
+                                <td>{{@financeInfo.coalSource || '--'}}</td>
                             </tr>
                             <tr>
                                 <th>主要煤质指标:</th>
                                 <!--------------------------------------------字段无------------------------->
-                                <td>{{@financeInfo.transportMode}}</td>
+                                <td>{{@financeInfo.transportMode || '--'}}</td>
                                 <th>单吨市场报价:</th>
-                                <td>{{@financeInfo.marketPrice}}&nbsp;元/吨</td>
+                                <td>{{@financeInfo.marketPrice || '--'}}&nbsp;元/吨</td>
                             </tr>
                         </table>
                     </div>
