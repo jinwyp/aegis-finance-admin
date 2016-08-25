@@ -65,8 +65,7 @@ class UserService {
     private apiUrl = {
         login : '/api/financing/admin/login',
         list : '/api/financing/admin/user',
-        group : '/api/financing/admin/group',
-        departmentList : '/api/financing/admin/departments'
+        group : '/api/financing/admin/group'
     };
 
     private handleError(error: any): Promise<any> {
@@ -92,7 +91,7 @@ class UserService {
     }
 
     getDepartmentList() {
-        return this.http.get(this.apiUrl.departmentList).toPromise()
+        return this.http.get(this.apiUrl.list + '/departments').toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
