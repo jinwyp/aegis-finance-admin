@@ -48,11 +48,7 @@ public class UserCenterController {
     @Autowired
     private RuntimeService runtimeService;
 
-    @RequestMapping(value = "/session", method = RequestMethod.GET)
-    @ApiOperation(value = "获取session中用户对象", notes = "获取session中用户对象", response = UserObject.class)
-    public Result getSessionUserMethod() {
-        return Result.success().setData(adminSession.getUser());
-    }
+
 
     @RequestMapping(value = "/tasks", method = RequestMethod.GET)
     @ApiOperation(value = "查看个人任务列表", notes = "查看个人任务列表", response = TaskObject.class, responseContainer = "List")

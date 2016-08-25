@@ -2,6 +2,7 @@ package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.user.UserLoginObject;
+import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import io.swagger.annotations.Api;
@@ -41,6 +42,13 @@ public class UserAuthController {
     public Result logout() {
         adminSession.logout();
         return Result.success();
+    }
+
+
+    @ApiOperation(value = "获取session中当前用户对象", notes = "获取session中用户对象", response = UserObject.class)
+    @RequestMapping(value = "/session", method = RequestMethod.GET)
+    public Result getSessionUserMethod() {
+        return Result.success().setData(adminSession.getUser());
     }
 
 }
