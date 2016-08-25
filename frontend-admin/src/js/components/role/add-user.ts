@@ -113,13 +113,20 @@ export class AddUserComponent {
     }
 
     selectGroup(group){
+
+
         if (this.currentUser.groupIds.indexOf(group.id) === -1 ){
-            this.currentUser.groupIds.push(group.id);
+
+            // 最多只能同时拥有3个角色
+            if (this.currentUser.groupIds.length < 3){
+                this.currentUser.groupIds.push(group.id);
+                group.selected = true;
+            }
         }else{
             this.currentUser.groupIds.splice(this.currentUser.groupIds.indexOf(group.id), 1);
+            group.selected = false;
         }
 
-        console.log(this.currentUser.groupIds);
     }
 
 
