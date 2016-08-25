@@ -49,7 +49,7 @@ class TaskService {
     }
 
     getAdminTaskList() {
-        return this.http.get(API.task).toPromise()
+        return this.http.get(API.task + '/unclaimed').toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
@@ -57,7 +57,7 @@ class TaskService {
 
     assignTrader(taskId : string, userId : string) {
 
-        return this.http.post(API.users, {}).toPromise()
+        return this.http.post(API.users + '/' + taskId, {}).toPromise()
             .then(res => res.json() as HttpResponse )
             .catch(this.handleError);
     }

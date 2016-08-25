@@ -114,8 +114,9 @@ public class UserCenterController {
         return Result.success().setData(financeOrder);
     }
 
+
     @RequestMapping(value = "/status", method = RequestMethod.GET)
-    @ApiOperation(value = "前台金融单状态list", notes = "前台金融单状态list", response = MapObject.class, responseContainer = "List")
+    @ApiOperation(value = "融资申请状态列表", notes = "融资申请状态列表", response = MapObject.class, responseContainer = "List")
     public Result findFinanceStatusList() {
         List<MapObject> mapList = new ArrayList<>();
         for (EnumFinanceStatus status : EnumFinanceStatus.values()) {

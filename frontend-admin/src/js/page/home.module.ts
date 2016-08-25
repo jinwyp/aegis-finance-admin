@@ -36,16 +36,16 @@ import { AddUserComponent } from '../components/role/add-user';
 import { UserInfoComponent } from '../components/role/user-info';
 
 
-import { WaitDealListComponent } from '../components/audit/wait-deal-list';
-import { DistributionPageComponent } from '../components/audit/distribution-page';
-import { ProcessTabComponent } from '../components/audit/common/process-tab';
-import { DistributionPersonComponent } from '../components/audit/common/distribution-person';
-import { FinanceApplyComponent } from '../components/audit/finance-apply';
-import { BusinessApprovalComponent } from '../components/audit/business-approval';
-import { TuneReportComponent } from '../components/audit/tune-report';
-import { SuperviseReportComponent } from '../components/audit/supervise-report';
-import { RiskControlReportComponent } from '../components/audit/risk-control-report';
-import { CustomSelectComponent } from '../components/audit/common/custom-select';
+import { PendingListComponent } from '../components/task/pending-list';
+import { DistributionPageComponent } from '../components/task/distribution-page';
+import { ProcessTabComponent } from '../components/task/common/process-tab';
+import { DistributionPersonComponent } from '../components/task/common/distribution-person';
+import { FinanceApplyComponent } from '../components/task/finance-apply';
+import { BusinessApprovalComponent } from '../components/task/business-approval';
+import { TuneReportComponent } from '../components/task/tune-report';
+import { SuperviseReportComponent } from '../components/task/supervise-report';
+import { RiskControlReportComponent } from '../components/task/risk-control-report';
+import { CustomSelectComponent } from '../components/task/common/custom-select';
 
 
 import {AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
@@ -60,7 +60,7 @@ import {AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstr
         RoleListComponent, AddRoleComponent, RoleInfoComponent,
         UserListComponent, AddUserComponent, UserInfoComponent,
         ProcessTabComponent, DistributionPersonComponent,
-        WaitDealListComponent, DistributionPageComponent, FinanceApplyComponent, BusinessApprovalComponent,
+        PendingListComponent, DistributionPageComponent, FinanceApplyComponent, BusinessApprovalComponent,
         TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent, CustomSelectComponent
     ],
     providers: [ homePageRouterProviders, OrderService, UserService, UserGroupService ],

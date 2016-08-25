@@ -9,14 +9,14 @@ import { Component } from '@angular/core';
 declare var __moduleName: string;
 
 @Component({
-    selector: 'wait-deal-list',
+    selector: 'pending-list',
     moduleId: __moduleName || module.id,
-    templateUrl: 'wait-deal-list.html'
+    templateUrl: 'pending-list.html'
 })
 
 
 
-export class WaitDealListComponent {
+export class PendingListComponent {
 
 
 }

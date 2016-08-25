@@ -14,13 +14,14 @@ import { AddRoleComponent } from '../components/role/add-role';
 import { UserListComponent } from '../components/role/user-list';
 import { AddUserComponent } from '../components/role/add-user';
 import { UserInfoComponent } from '../components/role/user-info';
-import { WaitDealListComponent } from '../components/audit/wait-deal-list';
-import { DistributionPageComponent } from '../components/audit/distribution-page';
-import { FinanceApplyComponent } from '../components/audit/finance-apply';
-import { BusinessApprovalComponent } from '../components/audit/business-approval';
-import { TuneReportComponent } from '../components/audit/tune-report';
-import { SuperviseReportComponent } from '../components/audit/supervise-report';
-import { RiskControlReportComponent } from '../components/audit/risk-control-report';
+
+import { PendingListComponent } from '../components/task/pending-list';
+import { DistributionPageComponent } from '../components/task/distribution-page';
+import { FinanceApplyComponent } from '../components/task/finance-apply';
+import { BusinessApprovalComponent } from '../components/task/business-approval';
+import { TuneReportComponent } from '../components/task/tune-report';
+import { SuperviseReportComponent } from '../components/task/supervise-report';
+import { RiskControlReportComponent } from '../components/task/risk-control-report';
 
 const routes: Routes = [
     {
@@ -61,7 +62,8 @@ const routes: Routes = [
 
     {
         path: 'users',
-        component: UserListComponent
+        component: UserListComponent,
+        data: {type : 'list', title: 'User List' }
     },
     {
         path: 'users/add',
@@ -70,7 +72,8 @@ const routes: Routes = [
     },
     {
         path: 'users/:id',
-        component: UserInfoComponent
+        component: UserInfoComponent,
+        data: { type : 'list', title: 'User Info'}
     },
     {
         path: 'users/:id/edit',
@@ -78,10 +81,17 @@ const routes: Routes = [
         data: {type : 'edit', title: 'User Edit' }
     },
 
+
     {
-        path: 'waitdeallist',
-        component: WaitDealListComponent
+        path: 'tasks/pending',
+        component: PendingListComponent
     },
+
+    {
+        path: 'tasks/all',
+        component: PendingListComponent
+    },
+
     {
         path: 'distributionpage',
         component: DistributionPageComponent
