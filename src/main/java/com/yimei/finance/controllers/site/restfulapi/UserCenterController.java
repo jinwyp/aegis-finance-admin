@@ -54,7 +54,6 @@ public class UserCenterController {
         financeOrder.setApplyType(financeOrder.getApplyType());
         financeOrder.setSourceId(numberService.getNextCode("JR"));
         financeOrder.setUserId(userSession.getUser().getId());
-//        financeOrder.setUserId(1);
         financeOrder.setApplyDateTime(LocalDateTime.now());
         financeOrder.setApproveState(EnumFinanceStatus.待审核.toString());
         financeOrderRepository.save(financeOrder);
@@ -70,16 +69,12 @@ public class UserCenterController {
         } else {
             return Result.error(EnumCommonError.Admin_System_Error);
         }
-        return Result.success().setData(financeOrderRepository.findOne(financeOrder.getId()));
+        return Result.success().setData(financeOrderRepository.findBySourceId(financeOrder.getSourceId()));
     }
-
-
-
 
     /**
      * 供应链金融 - 用户中心 - 获取融资申请列表
      */
-
     @ApiOperation(value = "融资申请列表", notes = "用户查询融资申请列表", response = FinanceOrder.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query"),
@@ -89,17 +84,12 @@ public class UserCenterController {
     @RequestMapping(value = "/apply", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(@RequestParam(value = "applyType", required = false ) String applyType, Page page) {
         List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserId(userSession.getUser().getId());
-
         return Result.success().setData(financeOrderList).setMeta(page);
     }
-
-
 
     /**
      * 供应链金融 - 用户中心 - 获取融资申请详细信息
      */
-//    @LoginRequired
-
     @ApiOperation(value = "根据 id 查看金融申请单", notes = "根据 金融申请单id 查看金融申请单", response = FinanceOrder.class)
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Long", paramType = "path")
     @LoginRequired

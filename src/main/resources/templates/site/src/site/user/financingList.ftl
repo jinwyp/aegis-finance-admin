@@ -73,6 +73,7 @@
                         <ul class="select">
                             <li ms-click="@clickStatus('全部')">全部</li>
                             <li ms-click="@clickStatus('待审核')">待审核</li>
+                            <li ms-click="@clickStatus('审核中')">审核中</li>
                             <li ms-click="@clickStatus('补充材料')">补充材料</li>
                             <li ms-click="@clickStatus('审核通过')">审核通过</li>
                             <li class="lastLi" ms-click="@clickStatus('审核不通过')">审核不通过</li>
@@ -97,8 +98,8 @@
                         <span class="trigger"></span>
                     </div>
 
-                    <label>申请人:</label>
-                    <input type="text" placeholder="请输入申请人姓名" class="margin-l" ms-duplex="@searchQuery.requestUsername">
+                    <!--<label>申请人:</label>-->
+                    <!--<input type="text" placeholder="请输入申请人姓名" class="margin-l" ms-duplex="@searchQuery.requestUsername">-->
                     <input type="button" value="查询" ms-click="@searchFinanceOrder()">
                     <input type="button" value="导出Excel" id="excel" class="excel">
                 </form>
@@ -111,7 +112,7 @@
                         <th>业务编号</th>
                         <th>业务类型</th>
                         <th>申请时间</th>
-                        <th>申请人</th>
+                        <!--<th>申请人</th>-->
                         <th>拟融资总额状态<br/>(万元)</th>
                         <th>使用时间<br/>(天)</th>
                         <th>审核状态</th>
@@ -128,7 +129,7 @@
                         </td>
 
                         <td>{{order.applyDateTime || '/'}}</td>
-                        <td>{{order.applyUserName || '/'}}</td>
+                        <!--<td>{{order.applyUserName || '/'}}</td>-->
                         <td>
                             <span ms-visible="order.financingAmount===null">/</span>
                             <span ms-visible="order.financingAmount!=null">{{order.financingAmount | number(2)}}</span>
