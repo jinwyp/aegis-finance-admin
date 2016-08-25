@@ -7,7 +7,7 @@ import { OrderListComponent } from '../components/order/order-list';
 import { HomeDashboardComponent } from '../components/home/home-dashboard';
 import { OrderDetailComponent } from '../components/order/order-detail';
 import { UserDetailComponent } from '../components/user/user-detail';
-import { UpdatePwdComponent } from '../components/user/update-pwd';
+import { UserUpdatePasswordComponent } from '../components/user/user-update-password';
 import { RoleListComponent } from '../components/role/role-list';
 import { RoleInfoComponent } from '../components/role/role-info';
 import { AddRoleComponent } from '../components/role/add-role';
@@ -30,12 +30,12 @@ const routes: Routes = [
     },
 
     {
-        path: 'userdetail',
+        path: 'user/detail',
         component: UserDetailComponent
     },
     {
-        path: 'updatepwd/:id',
-        component: UpdatePwdComponent
+        path: 'user/password',
+        component: UserUpdatePasswordComponent
     },
 
     {

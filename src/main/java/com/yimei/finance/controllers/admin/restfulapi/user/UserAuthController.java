@@ -38,7 +38,7 @@ public class UserAuthController {
      * 管理员退出登录
      */
     @ApiOperation(value = "退出登录接口", notes = "退出登陆")
-    @RequestMapping(value = "/logout", method = RequestMethod.POST, produces = MediaType.APPLICATION_JSON_VALUE)
+    @RequestMapping(value = "/logout", method = RequestMethod.POST)
     public Result logout() {
         adminSession.logout();
         return Result.success();
