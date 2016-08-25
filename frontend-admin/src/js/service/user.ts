@@ -10,6 +10,11 @@ import 'rxjs/add/operator/toPromise';
 import { HttpResponse } from './http';
 
 
+var permisson = {
+    GROUP00010 : ['新增用户', '修改用户']
+};
+
+
 class User {
 
     id :number;
