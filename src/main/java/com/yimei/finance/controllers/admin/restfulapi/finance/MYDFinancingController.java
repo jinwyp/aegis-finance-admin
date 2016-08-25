@@ -6,7 +6,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 @Api(value = "admin-api-flow-myd", description = "煤易贷相关接口")
 @RequestMapping("/api/financing/admin/myd")
-@RestController("adminMYGFinancingController")
+@RestController("adminMYDFinancingController")
 public class MYDFinancingController {
 
 }
