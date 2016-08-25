@@ -6,9 +6,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-/**
- * Created by zhangbolun on 16/8/16.
- */
 public interface FinanceOrderRepository extends JpaRepository<FinanceOrder, Long> {
 
     List<FinanceOrder> findByUserId(int userId);

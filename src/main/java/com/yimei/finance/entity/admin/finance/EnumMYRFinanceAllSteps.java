@@ -1,8 +1,5 @@
 package com.yimei.finance.entity.admin.finance;
 
-/**
- * Created by liuxinjie on 16/8/25.
- */
 public enum EnumMYRFinanceAllSteps {
     Client_Apply(2, "客户发起申请"),
     Wait_Assign_OnlineTrader(4, "待分配线上交易员"),
