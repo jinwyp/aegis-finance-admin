@@ -11,8 +11,8 @@
     <div class="col-sm-12 menu-item" [class.menu-selected]="css.currentTab===2">
         <a href="#" class="icon info-icon dropdown-toggle"  data-toggle="dropdown">个人信息<span class="caret"></span> </a>
         <ul class="nav nav-stacked">
-            <li role="presentation" class="active"><a class="item" [routerLink]="['/userdetail']" routerLinkActive="active" (click)="changeMenu(21)">基本信息</a></li>
-            <li role="presentation"><a class="item" [routerLink]="['/userpassword']" routerLinkActive="active" (click)="changeMenu(22)">修改密码</a></li>
+            <li role="presentation" class="active"><a class="item" [routerLink]="['/user/detail']" routerLinkActive="active" (click)="changeMenu(21)">基本信息</a></li>
+            <li role="presentation"><a class="item" [routerLink]="['/user/password']" routerLinkActive="active" (click)="changeMenu(22)">修改密码</a></li>
         </ul>
     </div>
 
