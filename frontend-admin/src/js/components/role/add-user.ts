@@ -113,8 +113,6 @@ export class AddUserComponent {
     }
 
     selectGroup(group){
-
-
         if (this.currentUser.groupIds.indexOf(group.id) === -1 ){
 
             // 最多只能同时拥有3个角色
@@ -126,7 +124,6 @@ export class AddUserComponent {
             this.currentUser.groupIds.splice(this.currentUser.groupIds.indexOf(group.id), 1);
             group.selected = false;
         }
-
     }
 
 
