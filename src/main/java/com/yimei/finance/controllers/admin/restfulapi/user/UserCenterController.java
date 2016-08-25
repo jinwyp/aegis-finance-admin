@@ -1,10 +1,7 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.finance.EnumAdminFinanceError;
-import com.yimei.finance.entity.admin.finance.EnumFinanceAssignType;
-import com.yimei.finance.entity.admin.finance.EnumFinanceEventType;
-import com.yimei.finance.entity.admin.finance.TaskObject;
+import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.entity.admin.user.EnumAdminUserError;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
@@ -79,10 +76,11 @@ public class UserCenterController {
     }
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
-    @ApiOperation(value = "个人处理任务历史记录列表", notes = "查看个人处理任务历史记录列表", response = TaskObject.class, responseContainer = "List")
+    @ApiOperation(value = "个人处理任务历史记录列表", notes = "查看个人处理任务历史记录列表", response = HistoryTaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalHistoryTasksMethod(Page page) {
-        return Result.success();
+        List<HistoryTaskObject> taskList = DozerUtils.copy(historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()), HistoryTaskObject.class);
+        return Result.success().setData(taskList);
     }
 
     @RequestMapping(value = "/{taskId}", method = RequestMethod.POST)
