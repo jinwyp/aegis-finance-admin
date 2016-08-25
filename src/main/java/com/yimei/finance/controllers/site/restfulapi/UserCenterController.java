@@ -93,7 +93,7 @@ public class UserCenterController {
     @RequestMapping(value = "/apply", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(@RequestParam(value = "startDate", required = false) String startDate,
                                             @RequestParam(value = "endDate", required = false) String endDate,
-                                            @RequestParam(value = "approveStateId", required = false) int approveStateId,
+                                            @RequestParam(value = "approveStateId", required = false, defaultValue = "0") int approveStateId,
                                             @RequestParam(value = "sourceId", required = false) String sourceId,
                                             @RequestParam(value = "applyType", required = false ) String applyType,
                                             Page page) {

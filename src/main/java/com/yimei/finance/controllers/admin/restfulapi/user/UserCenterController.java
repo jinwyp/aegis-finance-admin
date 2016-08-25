@@ -15,6 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -46,6 +47,8 @@ public class UserCenterController {
     private TaskService taskService;
     @Autowired
     private RuntimeService runtimeService;
+    @Autowired
+    private HistoryService historyService;
 
 
 
@@ -75,6 +78,12 @@ public class UserCenterController {
         return Result.success().setData(null).setMeta(page);
     }
 
+    @RequestMapping(value = "/history", method = RequestMethod.GET)
+    @ApiOperation(value = "个人处理任务历史记录列表", notes = "查看个人处理任务历史记录列表", response = TaskObject.class, responseContainer = "List")
+    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
+    public Result getPersonalHistoryTasksMethod(Page page) {
+        return Result.success();
+    }
 
     @RequestMapping(value = "/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作", response = Boolean.class)
