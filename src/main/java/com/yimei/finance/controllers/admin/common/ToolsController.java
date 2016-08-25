@@ -31,11 +31,6 @@ public class ToolsController {
         return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.transportmode.toString()));
     }
 
-    @RequestMapping(value = "/departments", method = RequestMethod.GET)
-    @ApiOperation(value = "获取所有部门列表", notes = "获取所有部门列表", response = String.class, responseContainer = "List")
-    public Result findAllDepartmentListMethod() {
-        return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.financedepartment.toString()));
-    }
 
     @RequestMapping(value = "/myr/steps", method = RequestMethod.GET)
     @ApiOperation(value = "煤易融流程所有步骤", notes = "煤易融流程所有步骤", response = EnumMYRFinanceAllSteps.class, responseContainer = "List")

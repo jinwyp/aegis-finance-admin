@@ -10,6 +10,11 @@ import 'rxjs/add/operator/toPromise';
 import { HttpResponse } from './http';
 
 
+var permisson = {
+    GROUP00010 : ['新增用户', '修改用户']
+};
+
+
 class User {
 
     id :number;
@@ -60,8 +65,7 @@ class UserService {
     private apiUrl = {
         login : '/api/financing/admin/login',
         list : '/api/financing/admin/user',
-        group : '/api/financing/admin/group',
-        departmentList : '/api/financing/admin/departments'
+        group : '/api/financing/admin/group'
     };
 
     private handleError(error: any): Promise<any> {
@@ -87,7 +91,7 @@ class UserService {
     }
 
     getDepartmentList() {
-        return this.http.get(this.apiUrl.departmentList).toPromise()
+        return this.http.get(this.apiUrl.list + '/departments').toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
