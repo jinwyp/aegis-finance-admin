@@ -7,9 +7,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-/**
- * Created by liuxinjie on 16/8/22.
- */
 @Service
 public class FinanceOrderServiceImpl {
     @Autowired

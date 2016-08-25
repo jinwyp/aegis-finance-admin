@@ -12,9 +12,6 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-/**
- * Created by zhangbolun on 16/8/16.
- */
 @Entity
 @Table(name = "t_finance_order")
 @ApiModel(value = "financeOrder", description = "金融申请单对象")
@@ -62,16 +59,16 @@ public class FinanceOrder implements Serializable {
     private String coalSource;                                       //煤炭来源
     @Column(name = "market_price", length = 10)
     private BigDecimal marketPrice;                                  //单吨市场报价（元／吨）
-    @Column(name = "approve_state", length = 30)
+    @Column(name = "approve_state", length = 30, nullable = false)
     private String approveState;                                     //审批状态
-    @Column(name = "approve_state_id")
+    @Column(name = "approve_state_id", length = 3, nullable = false)
     private int approveStateId;                                      //审批状态Id
     @Column(name = "source_id", length = 100)
     private String sourceId;                                         //流水号，编号
-    @Column(name = "apply_date_time", length = 50)
-    private LocalDateTime applyDateTime;                             //申请时间
-    @Column(name = "end_time")
-    private LocalDateTime endTime;
+    @Column(name = "apply_date_time")
+    private LocalDateTime applyDateTime;                             //发起时间
+//    @Column(name = "end_date_time")
+//    private LocalDateTime endDateTime;                               //结束时间
     @Column(name = "apply_user_name", length = 50)
     private String applyUserName;                                    //申请人姓名
     @Column(name = "apply_company_name", length = 50)
