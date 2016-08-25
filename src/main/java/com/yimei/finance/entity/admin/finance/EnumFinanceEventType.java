@@ -1,8 +1,5 @@
 package com.yimei.finance.entity.admin.finance;
 
-/**
- * Created by liuxinjie on 16/8/22.
- */
 public enum EnumFinanceEventType {
     onlineTraderAudit("线上交易员审核并填写材料"),
     salesmanAudit("业务员审核并填写材料"),

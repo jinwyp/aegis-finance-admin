@@ -23,9 +23,9 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class FinanceOrder implements Serializable {
     @Id
-    @Column(name = "id", length = 11)
+    @Column(name = "id", length = 30)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;                                                 //主键
+    private Long id;                                               //主键
     @Column(name = "user_id", length = 11, nullable = false)
     private int userId;                                              //申请人用户id
     @Column(name = "apply_type", length = 20)
@@ -64,10 +64,14 @@ public class FinanceOrder implements Serializable {
     private BigDecimal marketPrice;                                  //单吨市场报价（元／吨）
     @Column(name = "approve_state", length = 30)
     private String approveState;                                     //审批状态
+    @Column(name = "approve_state_id")
+    private int approveStateId;                                      //审批状态Id
     @Column(name = "source_id", length = 100)
     private String sourceId;                                         //流水号，编号
     @Column(name = "apply_date_time", length = 50)
     private LocalDateTime applyDateTime;                             //申请时间
+    @Column(name = "end_time")
+    private LocalDateTime endTime;
     @Column(name = "apply_user_name", length = 50)
     private String applyUserName;                                    //申请人姓名
     @Column(name = "apply_company_name", length = 50)

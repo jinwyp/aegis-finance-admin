@@ -13,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.LinkedHashMap;
+import java.util.Map;
+
 @Api(value = "admin-api-tools", description = "公用工具接口")
 @RequestMapping("/api/financing/admin")
 @RestController("adminCommonToolsController")
@@ -37,7 +40,11 @@ public class ToolsController {
     @RequestMapping(value = "/myr/steps", method = RequestMethod.GET)
     @ApiOperation(value = "煤易融流程所有步骤", notes = "煤易融流程所有步骤", response = EnumMYRFinanceAllSteps.class, responseContainer = "List")
     public Result findMYRFinanceAllSteps() {
-        return Result.success().setData(EnumMYRFinanceAllSteps.values());
+        Map<Integer, Object> stepList = new LinkedHashMap<>();
+        for (EnumMYRFinanceAllSteps step : EnumMYRFinanceAllSteps.values()) {
+            stepList.put(step.id, step.name);
+        }
+        return Result.success().setData(stepList);
     }
 
 
