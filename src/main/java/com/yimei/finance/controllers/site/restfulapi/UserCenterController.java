@@ -7,6 +7,7 @@ import com.yimei.finance.entity.admin.finance.EnumFinanceStatus;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
+import com.yimei.finance.entity.common.result.MapObject;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.ext.annotations.LoginRequired;
@@ -22,6 +23,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -47,15 +49,18 @@ public class UserCenterController {
     * 供应链金融 - 发起融资申请
     */
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Valid @RequestBody FinanceOrder financeOrder) {
         System.out.println("Order Type:" + financeOrder.getApplyType());
         financeOrder.setApplyType(financeOrder.getApplyType());
         financeOrder.setSourceId(numberService.getNextCode("JR"));
         financeOrder.setUserId(userSession.getUser().getId());
+        financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
+//        financeOrder.setUserId(1);
         financeOrder.setApplyDateTime(LocalDateTime.now());
-        financeOrder.setApproveState(EnumFinanceStatus.待审核.toString());
+        financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
+        financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
         financeOrderRepository.save(financeOrder);
         financeOrder = financeOrderRepository.findBySourceId(financeOrder.getSourceId());
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
@@ -77,12 +82,21 @@ public class UserCenterController {
      */
     @ApiOperation(value = "融资申请列表", notes = "用户查询融资申请列表", response = FinanceOrder.class, responseContainer = "List")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "applyType", value = "融资类型", required = false, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "startDate", value = "开始时间", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "endDate", value = "结束时间", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "approveStateId", value = "状态Id", required = false, dataType = "Integer", paramType = "query"),
+            @ApiImplicitParam(name = "sourceId", value = "业务编号", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "applyType", value = "融资类型", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     })
     @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.GET)
-    public Result getFinancingApplyInfoList(@RequestParam(value = "applyType", required = false ) String applyType, Page page) {
+    public Result getFinancingApplyInfoList(@RequestParam(value = "startDate", required = false) String startDate,
+                                            @RequestParam(value = "endDate", required = false) String endDate,
+                                            @RequestParam(value = "approveStateId", required = false, defaultValue = "0") int approveStateId,
+                                            @RequestParam(value = "sourceId", required = false) String sourceId,
+                                            @RequestParam(value = "applyType", required = false ) String applyType,
+                                            Page page) {
         List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserId(userSession.getUser().getId());
         return Result.success().setData(financeOrderList).setMeta(page);
     }
@@ -98,6 +112,16 @@ public class UserCenterController {
         FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, userSession.getUser().getId());
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         return Result.success().setData(financeOrder);
+    }
+
+    @RequestMapping(value = "/status", method = RequestMethod.GET)
+    @ApiOperation(value = "前台金融单状态list", notes = "前台金融单状态list", response = MapObject.class, responseContainer = "List")
+    public Result findFinanceStatusList() {
+        List<MapObject> mapList = new ArrayList<>();
+        for (EnumFinanceStatus status : EnumFinanceStatus.values()) {
+            mapList.add(new MapObject(String.valueOf(status.id), status.name));
+        }
+        return Result.success().setData(mapList);
     }
 }
 

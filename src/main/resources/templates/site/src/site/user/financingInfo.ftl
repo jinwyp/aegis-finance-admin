@@ -189,11 +189,16 @@
                             <tr>
                                 <th>审批状态:</th>
                                 <td >
-                                    <span class="red" ms-visible="@financeInfo.approveState==='补充材料'"><em></em>{{@financeInfo.approveState}}</span>
-                                    <span class="red" ms-visible="@financeInfo.approveState==='审核不通过'"><em></em>{{@financeInfo.approveState}}</span>
-                                    <span class="green" ms-visible="@financeInfo.approveState==='待审核'"><em></em>{{@financeInfo.approveState}}</span>
-                                    <span class="green" ms-visible="@financeInfo.approveState==='审核中'"><em></em>{{@financeInfo.approveState}}</span>
-                                    <span class="green" ms-visible="@financeInfo.approveState==='审核通过'"><em></em>{{@financeInfo.approveState}}</span>
+                                    <!--补充材料-->
+                                    <span class="red" ms-visible="@financeInfo.approveStateId===6"><em></em>审核中(补充材料)</span>
+                                    <!--审核不通过-->
+                                    <span class="red" ms-visible="@financeInfo.approveStateId===10"><em></em>审核不通过</span>
+                                    <!--待审核-->
+                                    <span class="green" ms-visible="@financeInfo.approveStateId===2"><em></em>待审核</span>
+                                    <!--审核中-->
+                                    <span class="green" ms-visible="@financeInfo.approveStateId===4"><em></em>审核中</span>
+                                    <!--审核通过-->
+                                    <span class="green" ms-visible="@financeInfo.approveStateId===8"><em></em>审核通过</span>
                                 </td>
                             </tr>
                             <tr>

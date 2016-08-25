@@ -2,10 +2,12 @@ package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.user.*;
+import com.yimei.finance.entity.common.databook.EnumDataBookType;
 import com.yimei.finance.entity.common.enums.EnumCommonString;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.exception.BusinessException;
+import com.yimei.finance.repository.admin.databook.DataBookRepository;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
@@ -21,15 +23,21 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Api(tags = {"admin-api-user"}, description = "用户增删改查接口")
-@RequestMapping("/api/financing/admin/user")
+@RequestMapping("/api/financing/admin/users")
 @RestController("adminUserController")
 public class UserController {
     @Autowired
+    private DataBookRepository dataBookRepository;
+
+    @Autowired
     private IdentityService identityService;
+
     @Autowired
     private AdminUserServiceImpl userService;
+
     @Autowired
     private AdminSession adminSession;
+    
     @Autowired
     private AdminGroupServiceImpl groupService;
 
@@ -60,6 +68,14 @@ public class UserController {
         List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().groupMember(id).list());
         return Result.success().setData(groupObjectList).setMeta(page);
     }
+
+
+    @RequestMapping(value = "/departments", method = RequestMethod.GET)
+    @ApiOperation(value = "获取所有部门列表", notes = "获取所有部门列表", response = String.class, responseContainer = "List")
+    public Result findAllDepartmentListMethod() {
+        return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.financedepartment.toString()));
+    }
+
 
     @Transactional
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)

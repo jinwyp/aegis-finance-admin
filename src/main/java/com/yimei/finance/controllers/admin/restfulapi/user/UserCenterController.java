@@ -7,7 +7,6 @@ import com.yimei.finance.entity.admin.finance.EnumFinanceEventType;
 import com.yimei.finance.entity.admin.finance.TaskObject;
 import com.yimei.finance.entity.admin.user.EnumAdminUserError;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
-import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
@@ -16,6 +15,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -36,7 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Api(tags = {"admin-api-flow"}, description = "金融公用接口")
-@RequestMapping("/api/financing/admin/user")
+@RequestMapping("/api/financing/admin/tasks")
 @RestController("adminUserCenterController")
 public class UserCenterController {
     @Autowired
@@ -47,15 +47,13 @@ public class UserCenterController {
     private TaskService taskService;
     @Autowired
     private RuntimeService runtimeService;
+    @Autowired
+    private HistoryService historyService;
 
-    @RequestMapping(value = "/session", method = RequestMethod.GET)
-    @ApiOperation(value = "获取session中用户对象", notes = "获取session中用户对象", response = UserObject.class)
-    public Result getSessionUserMethod() {
-        return Result.success().setData(adminSession.getUser());
-    }
 
-    @RequestMapping(value = "/tasks", method = RequestMethod.GET)
-    @ApiOperation(value = "查看个人任务列表", notes = "查看个人任务列表", response = TaskObject.class, responseContainer = "List")
+
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @ApiOperation(value = "查看个人代办任务列表", notes = "查看个人代办任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
         List<TaskObject> taskList = DozerUtils.copy(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()), TaskObject.class);
@@ -63,8 +61,8 @@ public class UserCenterController {
         return Result.success().setData(taskList).setMeta(page);
     }
 
-    @RequestMapping(value = "/unclaimed/tasks", method = RequestMethod.GET)
-    @ApiOperation(value = "查看个人待领取任务列表", notes = "查看个人待领取任务列表")
+    @RequestMapping(value = "/unclaimed", method = RequestMethod.GET)
+    @ApiOperation(value = "给分配管理员查看待领取任务列表", notes = "给线上交易员管理组, 业务员管理组, 尽调员管理组, 监管员管理组, 风控管理组, 查看待领取任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalWaitClaimTasksMethod(Page page) {
         List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
@@ -80,7 +78,14 @@ public class UserCenterController {
         return Result.success().setData(null).setMeta(page);
     }
 
-    @RequestMapping(value = "/task/{taskId}/claim", method = RequestMethod.PUT)
+    @RequestMapping(value = "/history", method = RequestMethod.GET)
+    @ApiOperation(value = "个人处理任务历史记录列表", notes = "查看个人处理任务历史记录列表", response = TaskObject.class, responseContainer = "List")
+    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
+    public Result getPersonalHistoryTasksMethod(Page page) {
+        return Result.success();
+    }
+
+    @RequestMapping(value = "/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "taskId")String taskId) {
@@ -106,7 +111,8 @@ public class UserCenterController {
         return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
     }
 
-    @RequestMapping(value = "/assign/trader/{taskId}/{userId}", method = RequestMethod.PUT)
+
+    @RequestMapping(value = "/{taskId}/trader/{userId}", method = RequestMethod.PUT)
     @ApiOperation(value = "管理员分配人员", notes = "管理员分配人员操作")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),

@@ -8,6 +8,8 @@ import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
 
+import { HttpResponse } from './http';
+
 
 
 class Order {

@@ -74,7 +74,7 @@
                             <li ms-click="@clickStatus('全部')">全部</li>
                             <li ms-click="@clickStatus('待审核')">待审核</li>
                             <li ms-click="@clickStatus('审核中')">审核中</li>
-                            <li ms-click="@clickStatus('补充材料')">补充材料</li>
+                            <li ms-click="@clickStatus('审核中(补充材料)')">审核中(补充材料)</li>
                             <li ms-click="@clickStatus('审核通过')">审核通过</li>
                             <li class="lastLi" ms-click="@clickStatus('审核不通过')">审核不通过</li>
                         </ul>
@@ -138,18 +138,25 @@
                         <td>{{order.expectDate || '/'}}</td>
 
                         <td>
-                            <span class="gray" ms-visible="order.approveState==='审核不通过'">{{order.approveState}}</span>
-                            <span class="green" ms-visible="order.approveState==='待审核'">{{order.approveState}}</span>
-                            <span class="bold" ms-visible="order.approveState==='审核通过'">{{order.approveState}}</span>
-                            <span class="bold" ms-visible="order.approveState==='审核中'">{{order.approveState}}</span>
-                            <span ms-visible="order.approveState===''">/</span>
+                            <span class="gray" ms-visible="order.approveStateId===10">审核不通过</span>
+                            <span class="green" ms-visible="order.approveStateId===2">待审核</span>
+                            <span class="bold" ms-visible="order.approveStateId===8">审核通过</span>
+                            <span class="bold" ms-visible="order.approveStateId===4">审核中</span>
+                            <span class="bold" ms-visible="order.approveStateId===6">审核中(补充材料)</span>
+                            <span ms-visible="order.approveStateId===''">/</span>
                         </td>
 
                         <td>
-                            <a  class="detailA blueA" ms-visible="order.approveState==='审核不通过'" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <a  class="detailA orangeA" ms-visible="order.approveState==='审核通过'" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <a  class="detailA grayA" ms-visible="order.approveState==='待审核'">查看详情</a>
-                            <a  class="detailA orangeA" ms-visible="order.approveState==='审核中'" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <!--审核不通过-->
+                            <a  class="detailA blueA" ms-visible="order.approveStateId===10" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <!--审核通过-->
+                            <a  class="detailA orangeA" ms-visible="order.approveStateId===8" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <!--待审核-->
+                            <a  class="detailA grayA" ms-visible="order.approveStateId===2">查看详情</a>
+                            <!--审核中-->
+                            <a  class="detailA orangeA" ms-visible="order.approveStateId===4" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <!--审核中(补充材料)-->
+                            <a  class="detailA orangeA" ms-visible="order.approveStateId===6" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
                         </td>
                     </tr>
 

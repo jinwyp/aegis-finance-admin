@@ -6,7 +6,7 @@ import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
-import com.yimei.finance.service.admin.user.FinanceOrderServiceImpl;
+import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.admin.workflow.WorkFlowServiceImpl;
 import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
@@ -58,7 +58,7 @@ public class MYRFinancingController {
         if (StringUtils.isEmpty(processInstance.getBusinessKey()) || financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey())) == null)
             return Result.error(EnumCommonError.Admin_System_Error);
         financeOrder.setId(Long.valueOf(processInstance.getBusinessKey()));
-        financeOrderService.updateFinanceOrder(financeOrder);
+        financeOrderService.updateFinanceOrderByOnlineTrader(financeOrder);
         workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
         Map<String, Object> vars = new HashMap<>();
         vars.put(EnumFinanceEventType.onlineTraderAudit.toString(), pass);
@@ -108,6 +108,7 @@ public class MYRFinancingController {
         taskService.complete(taskId);
         Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
         if (!result.isSuccess()) return result;
+        financeOrderService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.Auditing);
         return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString(), String.valueOf(result.getData()));
     }
 
@@ -135,6 +136,7 @@ public class MYRFinancingController {
         if (need == 1) {
             Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
             if (!result.isSuccess()) return result;
+            financeOrderService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.SupplyMaterial);
             return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString(), String.valueOf(result.getData()));
         } else if (pass == 1) {
             return workFlowService.addGroupIdentityLinkMethod(task.getProcessInstanceId(), EnumFinanceAssignType.assignRiskManager.toString(), EnumSpecialGroup.ManageRiskGroup.id);
@@ -154,8 +156,10 @@ public class MYRFinancingController {
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
         taskService.complete(taskId);
-        Task lastTask = taskService.createTaskQuery().taskId(task.getParentTaskId()).singleResult();
-        return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), lastTask.getAssignee());
+        Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString());
+        if (!result.isSuccess()) return result;
+        financeOrderService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.Auditing);
+        return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
     }
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.PUT)
@@ -178,6 +182,7 @@ public class MYRFinancingController {
         if (need == 1) {
             Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
             if (!result.isSuccess()) return result;
+            financeOrderService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.SupplyMaterial);
             return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorSupplyRiskMaterial.toString(), String.valueOf(result.getData()));
         } else if (pass == 1) {
             return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAuditSuccess.toString(), adminSession.getUser().getId());
@@ -199,8 +204,7 @@ public class MYRFinancingController {
         taskService.complete(task.getId());
         FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
-        financeOrder.setApproveState(EnumFinanceStatus.审核通过.toString());
-        financeOrderRepository.save(financeOrder);
+        financeOrderService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditPass);
         return Result.success().setData(true);
     }
 

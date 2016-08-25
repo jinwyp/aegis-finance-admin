@@ -79,9 +79,10 @@ public class WorkFlowServiceImpl {
      * 审核不通过
      */
     public Result auditNotPassMethod(Long financeId) {
-        FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(financeId));
+        FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
-        financeOrder.setApproveState(EnumFinanceStatus.审核不通过.toString());
+        financeOrder.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
+        financeOrder.setApproveState(EnumFinanceStatus.AuditNotPass.name);
         financeOrderRepository.save(financeOrder);
         return Result.success().setData(true);
     }
