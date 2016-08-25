@@ -7,7 +7,7 @@ import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
-import com.yimei.finance.utils.DozerUtils;
+import com.yimei.finance.service.admin.workflow.WorkFlowServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -46,14 +46,16 @@ public class UserCenterController {
     private RuntimeService runtimeService;
     @Autowired
     private HistoryService historyService;
-
-
+    @Autowired
+    private WorkFlowServiceImpl workFlowService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
     @ApiOperation(value = "查看个人待办任务列表", notes = "查看个人代办任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
-        List<TaskObject> taskList = DozerUtils.copy(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()), TaskObject.class);
+        Result result = workFlowService.changeTaskObject(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()));
+        if (!result.isSuccess()) return result;
+        List<TaskObject> taskList = (List<TaskObject>) result.getData();
         page.setTotal(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).count());
         return Result.success().setData(taskList).setMeta(page);
     }
@@ -69,7 +71,9 @@ public class UserCenterController {
         }
         if (groupIds != null && groupIds.size() != 0) {
             page.setTotal(taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().count());
-            List<TaskObject> taskList = DozerUtils.copy(taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()), TaskObject.class);
+            Result result = workFlowService.changeTaskObject(taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()));
+            if (!result.isSuccess()) return result;
+            List<TaskObject> taskList = (List<TaskObject>) result.getData();
             return Result.success().setData(taskList).setMeta(page);
         }
         return Result.success().setData(null).setMeta(page);
@@ -79,7 +83,9 @@ public class UserCenterController {
     @ApiOperation(value = "个人处理任务记录列表", notes = "查看个人处理任务记录列表", response = HistoryTaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalHistoryTasksMethod(Page page) {
-        List<HistoryTaskObject> taskList = DozerUtils.copy(historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()), HistoryTaskObject.class);
+        Result result = workFlowService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()));
+        if (!result.isSuccess()) return result;
+        List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
         return Result.success().setData(taskList);
     }
 

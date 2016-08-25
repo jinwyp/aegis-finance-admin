@@ -12,8 +12,12 @@ import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.common.NumberServiceImpl;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.IdentityLinkType;
@@ -22,7 +26,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -33,7 +36,6 @@ import java.util.List;
 @Api(tags = {"site-api"})
 @RestController("siteUserCenterController")
 public class UserCenterController {
-
     @Autowired
     private FinanceOrderRepository financeOrderRepository;
     @Autowired
@@ -44,12 +46,14 @@ public class UserCenterController {
     private TaskService taskService;
     @Autowired
     private NumberServiceImpl numberService;
+    @Autowired
+    private FinanceOrderServiceImpl financeOrderService;
 
     /**
     * 供应链金融 - 发起融资申请
     */
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
-//    @LoginRequired
+    @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Valid @RequestBody FinanceOrder financeOrder) {
         System.out.println("Order Type:" + financeOrder.getApplyType());
@@ -58,7 +62,7 @@ public class UserCenterController {
         financeOrder.setUserId(userSession.getUser().getId());
         financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
 //        financeOrder.setUserId(1);
-        financeOrder.setApplyDateTime(LocalDateTime.now());
+//        financeOrder.setApplyDateTime(LocalDateTime.now());
         financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
         financeOrderRepository.save(financeOrder);
@@ -81,24 +85,12 @@ public class UserCenterController {
      * 供应链金融 - 用户中心 - 获取融资申请列表
      */
     @ApiOperation(value = "融资申请列表", notes = "用户查询融资申请列表", response = FinanceOrder.class, responseContainer = "List")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "startDate", value = "开始时间", required = false, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "endDate", value = "结束时间", required = false, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "approveStateId", value = "状态Id", required = false, dataType = "Integer", paramType = "query"),
-            @ApiImplicitParam(name = "sourceId", value = "业务编号", required = false, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "applyType", value = "融资类型", required = false, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
-    })
     @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.GET)
-    public Result getFinancingApplyInfoList(@RequestParam(value = "startDate", required = false) String startDate,
-                                            @RequestParam(value = "endDate", required = false) String endDate,
-                                            @RequestParam(value = "approveStateId", required = false, defaultValue = "0") int approveStateId,
-                                            @RequestParam(value = "sourceId", required = false) String sourceId,
-                                            @RequestParam(value = "applyType", required = false ) String applyType,
-                                            Page page) {
-        List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserId(userSession.getUser().getId());
-        return Result.success().setData(financeOrderList).setMeta(page);
+//    public Result getFinancingApplyInfoList(@RequestBody CombineObject object) {
+    public Result getFinancingApplyInfoList(Page page) {
+//        return financeOrderService.getFinanceOrderBySelect(1, object.financeOrderSearch, object.page);
+        return Result.success().setData(financeOrderRepository.findByUserId(userSession.getUser().getId()));
     }
 
     /**

@@ -49,7 +49,7 @@ public class MYRFinancingController {
     public Result myrOnlineTraderAddMaterialMethod(@PathVariable("taskId")String taskId,
                                                    @RequestParam(value = "pass", required = true) int pass,
                                                    @ApiParam(name = "financeOrder", value = "金融申请单对象", required = true) FinanceOrder financeOrder,
-                                                   @ApiParam(name = "attachmentList", value = "金融申请单上传单据列表", required = false)@RequestBody AttachmentList attachmentList) {
+                                                   @ApiParam(name = "attachmentList", value = "金融申请单上传单据列表", required = false) AttachmentList attachmentList) {
         if (pass != 0 && pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
