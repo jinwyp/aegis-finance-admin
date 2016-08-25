@@ -1,7 +1,9 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
-import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.user.*;
+import com.yimei.finance.entity.admin.user.EnumAdminGroupError;
+import com.yimei.finance.entity.admin.user.EnumAdminUserError;
+import com.yimei.finance.entity.admin.user.GroupObject;
+import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.databook.EnumDataBookType;
 import com.yimei.finance.entity.common.enums.EnumCommonString;
 import com.yimei.finance.entity.common.result.Page;
@@ -10,8 +12,13 @@ import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.databook.DataBookRepository;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
+import com.yimei.finance.service.common.message.MailServiceImpl;
+import com.yimei.finance.utils.CodeUtils;
 import com.yimei.finance.utils.DozerUtils;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
@@ -28,18 +35,14 @@ import java.util.List;
 public class UserController {
     @Autowired
     private DataBookRepository dataBookRepository;
-
     @Autowired
     private IdentityService identityService;
-
     @Autowired
     private AdminUserServiceImpl userService;
-
-    @Autowired
-    private AdminSession adminSession;
-    
     @Autowired
     private AdminGroupServiceImpl groupService;
+    @Autowired
+    private MailServiceImpl mailService;
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
@@ -135,6 +138,20 @@ public class UserController {
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
     }
 
+    @ApiOperation(value = "管理员帮助用户找回密码", notes = "管理员帮助用户找回密码", response = Boolean.class)
+    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
+    @RequestMapping(value = "/resetpwd/{id}", method = RequestMethod.POST)
+    public Result resetUserPasswordMethod(@PathVariable("id")String id) {
+        User user = identityService.createUserQuery().userId(id).singleResult();
+        String subject = "重置密码邮件";
+        String password = CodeUtils.CreateNumLetterCode();
+        user.setPassword(password);
+        identityService.saveUser(user);
+        String content = "你好: " + user.getFirstName() + ", 管理员为你重置密码, 新密码是: " + password;
+        mailService.sendSimpleMail(user.getEmail(), subject, content);
+        return Result.success().setData(true);
+    }
+
     @Transactional
     public void addUserGroupMemberShip(String userId, List<String> groupIds) {
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
@@ -151,5 +168,7 @@ public class UserController {
             }
         }
     }
+
+
 
 }
