@@ -1,5 +1,6 @@
 package com.yimei.finance.controllers.admin.common;
 
+import com.yimei.finance.entity.admin.finance.EnumMYRFinanceAllSteps;
 import com.yimei.finance.entity.common.databook.DataBook;
 import com.yimei.finance.entity.common.databook.EnumDataBookType;
 import com.yimei.finance.entity.common.result.Result;
@@ -31,6 +32,12 @@ public class ToolsController {
     @ApiOperation(value = "获取所有部门列表", notes = "获取所有部门列表", response = String.class, responseContainer = "List")
     public Result findAllDepartmentListMethod() {
         return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.financedepartment.toString()));
+    }
+
+    @RequestMapping(value = "/myr/steps", method = RequestMethod.GET)
+    @ApiOperation(value = "煤易融流程所有步骤", notes = "煤易融流程所有步骤", response = EnumMYRFinanceAllSteps.class, responseContainer = "List")
+    public Result findMYRFinanceAllSteps() {
+        return Result.success().setData(EnumMYRFinanceAllSteps.values());
     }
 
 
