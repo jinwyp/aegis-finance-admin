@@ -72,13 +72,11 @@ public class UserController {
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
-
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     @ApiOperation(value = "获取所有部门列表", notes = "获取所有部门列表", response = String.class, responseContainer = "List")
     public Result findAllDepartmentListMethod() {
         return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.financedepartment.toString()));
     }
-
 
     @Transactional
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
@@ -116,7 +114,6 @@ public class UserController {
         identityService.deleteUser(id);
         return Result.success().setData(userObject);
     }
-
 
     @ApiOperation(value = "修改用户", notes = "根据 User Id修改用户", response = UserObject.class)
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
@@ -168,7 +165,5 @@ public class UserController {
             }
         }
     }
-
-
 
 }
