@@ -58,7 +58,7 @@ public class UserCenterController {
     @ApiOperation(value = "查看个人任务列表", notes = "查看个人任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
-        List<TaskObject> taskList = DozerUtils.copy(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByTaskDueDate().desc().listPage(page.getOffset(), page.getCount()), TaskObject.class);
+        List<TaskObject> taskList = DozerUtils.copy(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()), TaskObject.class);
         page.setTotal(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).count());
         return Result.success().setData(taskList).setMeta(page);
     }
@@ -74,7 +74,7 @@ public class UserCenterController {
         }
         if (groupIds != null && groupIds.size() != 0) {
             page.setTotal(taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().count());
-            List<TaskObject> taskList = DozerUtils.copy(taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByTaskDueDate().desc().listPage(page.getOffset(), page.getCount()), TaskObject.class);
+            List<TaskObject> taskList = DozerUtils.copy(taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()), TaskObject.class);
             return Result.success().setData(taskList).setMeta(page);
         }
         return Result.success().setData(null).setMeta(page);
@@ -85,6 +85,14 @@ public class UserCenterController {
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "taskId")String taskId) {
         Task task = taskService.createTaskQuery().taskId(taskId).active().singleResult();
+        if (task == null) return Result.error(EnumAdminFinanceError.此任务不存在或者已经完成.toString());
+        if (!StringUtils.isEmpty(task.getAssignee())) {
+            if (task.getAssignee().equals(adminSession.getUser().getId())) {
+                return Result.error(EnumAdminFinanceError.你已经领取此任务.toString());
+            } else {
+                return Result.error(EnumAdminFinanceError.此任务已经被其他人领取.toString());
+            }
+        }
         List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
         List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
         for (IdentityLink identityLink : identityLinkList) {
@@ -95,7 +103,7 @@ public class UserCenterController {
                 }
             }
         }
-        return Result.error(EnumAdminUserError.你没有权限领取此任务.toString());
+        return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
     }
 
     @RequestMapping(value = "/assign/trader/{taskId}/{userId}", method = RequestMethod.PUT)
@@ -107,7 +115,7 @@ public class UserCenterController {
     public Result assignMYROnlineTraderMethod(@PathVariable(value = "taskId") String taskId,
                                               @PathVariable(value = "userId") String userId) {
         Task task = taskService.createTaskQuery().taskId(taskId).active().singleResult();
-        if (task == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
+        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
         User user = identityService.createUserQuery().userId(userId).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         ExecutionEntity execution = (ExecutionEntity) runtimeService.createExecutionQuery().executionId(task.getExecutionId()).singleResult();
