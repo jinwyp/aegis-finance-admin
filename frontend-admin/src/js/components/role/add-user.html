@@ -31,7 +31,7 @@
                     <span class="hint">(注:最多只能同时拥有<span class="orange">3个角色</span>)</span>
                 </div>
                 <div class="role user mt-10">
-                    <label *ngFor="let group of groups"><input type="checkbox" name="groupIds" [checked]="group.selected" [disabled]="currentUser.groupIds.length === 3 && !group.selected" (change)="selectGroup(group)">{{group.name}}</label>
+                    <label *ngFor="let group of groups"><input type="checkbox" name="groupIds" [checked]="group.selected" [disabled]="currentUser.groupIds.length === 13 && !group.selected" (change)="selectGroup(group)">{{group.name}}</label>
                 </div>
                 <span class="help-block" [class.hidden]="username.valid || username.pristine">请选择角色!</span>
             </div>
