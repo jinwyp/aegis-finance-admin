@@ -9,7 +9,6 @@ import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.exception.BusinessException;
-import com.yimei.finance.service.admin.workflow.WorkFlowServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -58,10 +57,8 @@ public class FinancingCommonController {
     private IdentityService identityService;
     @Autowired
     private HistoryService historyService;
-    @Autowired
-    private WorkFlowServiceImpl workFlowService;
 
-    @RequestMapping(value = "/tasks/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/tasks/claim/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "taskId") String taskId) {
