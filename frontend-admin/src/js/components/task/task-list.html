@@ -27,7 +27,7 @@
             </td>
             <td>{{task.createTime | date:"yyyy/MM/dd"}}</td>
             <td>{{task.applyCompanyName}}</td>
-            <td>{{task.businessAmount}}</td>
+            <td>{{task.financingAmount}}</td>
             <td>{{task.description}}</td>
             <td>{{task.assigneeName}}</td>
             <td>{{task.assigneeDepartment}}</td>
@@ -37,7 +37,7 @@
                 <!--<span>已完成</span>-->
             </td>
             <td>
-                <button type="button" class="btn btn-xs btn-default btn-sure w-80" [class.hidden]="!isAssignPerson" [routerLink]="['/tasks', task.id, 'assign']">分配人员</button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" [routerLink]="['/tasks', task.id, 'assign']">分配人员</button>
                 <!--<button type="button" class="btn btn-xs btn-default btn-return w-80">补充材料</button>-->
             </td>
         </tr>
