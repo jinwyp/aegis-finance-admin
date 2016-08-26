@@ -133,61 +133,6 @@ public class UserCenterController {
         return Result.success().setData(mapList);
     }
 
-    @LoginRequired
-    @RequestMapping(value = "/export/excel", method = RequestMethod.GET)
-    @ApiOperation(value = "导出金融申请单", notes = "导出金融申请单")
-    public void exportFinancingOrderToExcel(HttpServletResponse response,
-                                              HttpServletRequest request) throws IOException {
-        HSSFWorkbook wb = new HSSFWorkbook();
-        String filename = "金融申请单列表_" + LocalDate.now();
-        HSSFSheet sheet = wb.createSheet(filename);
-        HSSFRow row = sheet.createRow(0);
-        CellStyle style = wb.createCellStyle();
-        style.setAlignment(CellStyle.ALIGN_CENTER);
-        style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
-        sheet.setVerticallyCenter(true);
-        sheet.setHorizontallyCenter(true);
-        sheet.setColumnWidth(0, 1200);
-        sheet.setColumnWidth(1, 6000);
-        sheet.setColumnWidth(2, 5000);
-        sheet.setColumnWidth(3, 5000);
-        sheet.setColumnWidth(4, 3000);
-        sheet.setColumnWidth(5, 5000);
-        sheet.setColumnWidth(6, 6000);
-        String[] excelHeader = {"序号", "业务编号", "业务类型", "申请时间", "拟融资总金额", "使用天数", "审核状态"};
-        for (int i=0; i <excelHeader.length; i++) {
-            HSSFCell cell = row.createCell(i);
-            cell.setCellValue(excelHeader[i]);
-            cell.setCellStyle(style);
-        }
-        SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserId(userSession.getUser().getId());
-        for (int i = 0; i < financeOrderList.size(); i++) {
-            FinanceOrder order = financeOrderList.get(i);
-            row = sheet.createRow(i+1);
-            row.createCell(0).setCellValue(String.valueOf(i + 1));
-            row.createCell(1).setCellValue(String.valueOf(order.getSourceId()));
-            row.createCell(2).setCellValue(String.valueOf(order.getApplyTypeName()));
-            if (order.getApplyDateTime() != null && !StringUtils.isEmpty(String.valueOf(order.getApplyDateTime()))) {
-                row.createCell(3).setCellValue(String.valueOf(myFmt.format(order.getApplyDateTime())));
-            }
-            row.createCell(4).setCellValue(String.valueOf(order.getFinancingAmount()));
-            row.createCell(5).setCellValue(String.valueOf(order.getExpectDate()));
-            row.createCell(6).setCellValue(String.valueOf(order.getApproveState()));
-        }
-        response.setCharacterEncoding("UTF-8");
-        response.setContentType("application/x-download");
-        filename += LocalDate.now() + ".xls";
-        if(request.getHeader("user-agent").toLowerCase().contains("firefox")) {
-            filename =  new String(filename.getBytes("UTF-8"), "ISO-8859-1");
-        } else {
-            filename = URLEncoder.encode(filename, "UTF-8");
-        }
-        response.addHeader("Content-Disposition", "attachment;filename="+ filename);
-        OutputStream out = response.getOutputStream();
-        wb.write(out);
-        out.close();
-    }
 
 }
 

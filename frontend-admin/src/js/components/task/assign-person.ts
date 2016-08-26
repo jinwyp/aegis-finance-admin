@@ -13,9 +13,6 @@ declare var __moduleName: string;
     moduleId: __moduleName || module.id,
     templateUrl: 'assign-person.html'
 })
-
-
-
 export class AssignPersonComponent {
 
 

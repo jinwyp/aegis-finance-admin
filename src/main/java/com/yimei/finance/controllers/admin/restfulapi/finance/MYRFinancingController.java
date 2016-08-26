@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.HashMap;
 import java.util.Map;
 
-@Api(value = "admin-api-flow-myr", description = "煤易融相关接口")
+@Api(tags = "admin-api-flow-myr", description = "煤易融相关接口")
 @RequestMapping("/api/financing/admin/myr")
 @RestController("adminMYRFinancingController")
 public class MYRFinancingController {
@@ -39,6 +39,7 @@ public class MYRFinancingController {
     private FinanceOrderServiceImpl financeOrderService;
     @Autowired
     private WorkFlowServiceImpl workFlowService;
+
 
     @RequestMapping(value = "/onlinetrader/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
@@ -70,6 +71,7 @@ public class MYRFinancingController {
         }
     }
 
+
     @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "业务员审核并填写材料", notes = "业务员审核并填写材料")
     @ApiImplicitParams({
@@ -95,6 +97,7 @@ public class MYRFinancingController {
         }
     }
 
+
     @RequestMapping(value = "/salesman/supply/investigation/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
@@ -112,6 +115,7 @@ public class MYRFinancingController {
         if (!result1.isSuccess()) return result1;
         return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString(), String.valueOf(result.getData()));
     }
+
 
     @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.PUT)
     @ApiOperation(value = "尽调员审核", notes = "尽调员审核")
@@ -147,6 +151,7 @@ public class MYRFinancingController {
         }
     }
 
+
     @RequestMapping(value = "/investigator/supply/riskmanager/material/{taskId}", method = RequestMethod.PUT)
     @ApiOperation(value = "监管员补充材料", notes = "监管员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
@@ -164,6 +169,7 @@ public class MYRFinancingController {
         if (!result1.isSuccess()) return result1;
         return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
     }
+
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.PUT)
     @ApiOperation(value = "风控人员审核", notes = "风控人员审核")
@@ -194,6 +200,7 @@ public class MYRFinancingController {
             return workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditNotPass);
         }
     }
+
 
     @RequestMapping(value = "/riskmanager/contract/{taskId}", method = RequestMethod.PUT)
     @ApiOperation(value = "风控人员上传合同", notes = "风控人员上传合同,流程完成", response = Boolean.class)

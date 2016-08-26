@@ -31,9 +31,8 @@ export class TaskListComponent {
         title : ''
     };
 
-    isAssignPerson : boolean = false;  //是否到分配人的步骤
-
     taskList : Task[] = [];
+    taskPendingList : Task[] = [];
     currentUserSession : User = new User();
 
     ngOnInit(){
@@ -47,6 +46,18 @@ export class TaskListComponent {
         this.getCurrentUser();
     }
 
+    getCurrentUser() {
+        this.user.getUserSessionObservable.subscribe(
+            result => {
+                if (result && result.success) {
+                    this.currentUserSession = result.data;
+                } else {
+
+                }
+            },
+            error => console.error(error)
+        )
+    }
 
     getPendingTaskList () {
         this.task.getAdminTaskList().then((result)=>{
@@ -59,20 +70,6 @@ export class TaskListComponent {
         });
     }
 
-    getCurrentUser() {
-        this.user.getUserSessionObservable.subscribe(
-            result => {
-                if (result && result.success) {
-                    this.currentUserSession = result.data;
-                    if (this.currentUserSession.groupIds.indexOf('GROUP00001') > -1){
-                        this.isAssignPerson = true;
-                    }
-                } else {
 
-                }
-            },
-            error => console.error(error)
-        )
-    }
 }
 

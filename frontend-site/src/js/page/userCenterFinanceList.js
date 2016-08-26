@@ -169,7 +169,7 @@ var financeList = () => {
     });
 
     $('#excel').click(()=>{
-        location.href="/api/financing/export/excel"
+        location.href="/finance/user/financing/excel"
     })
 
 
