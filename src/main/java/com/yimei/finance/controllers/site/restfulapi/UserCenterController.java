@@ -159,7 +159,6 @@ public class UserCenterController {
         }
         SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserId(userSession.getUser().getId());
-//        List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserId(1);
         for (int i = 0; i < financeOrderList.size(); i++) {
             FinanceOrder order = financeOrderList.get(i);
             row = sheet.createRow(i+1);
