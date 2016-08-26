@@ -1,6 +1,7 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.entity.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.entity.admin.finance.HistoryTaskObject;
 import com.yimei.finance.entity.admin.finance.TaskObject;
 import com.yimei.finance.entity.common.result.Page;
@@ -12,8 +13,11 @@ import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.identity.Group;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,7 +40,21 @@ public class UserCenterController {
     @Autowired
     private WorkFlowServiceImpl workFlowService;
 
-    @RequestMapping( method = RequestMethod.GET)
+    @RequestMapping(value = "/{taskId}", method = RequestMethod.GET)
+    @ApiOperation(value = "通过 id 查询任务对象", notes = "通过 id 查询任务对象", response = TaskObject.class)
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    public Result getTaskByIdMethod(@PathVariable(value = "taskId") String taskId) {
+        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+        HistoricTaskInstance historicTaskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
+        if (task == null && historicTaskInstance == null) return Result.error(EnumAdminFinanceError.不存在此任务.toString());
+        if (task != null) {
+            return workFlowService.changeTaskObject(task);
+        } else {
+            return workFlowService.changeHistoryTaskObject(historicTaskInstance);
+        }
+    }
+
+    @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "个人待办任务列表", notes = "个人待办任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {

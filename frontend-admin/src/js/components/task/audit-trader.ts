@@ -70,10 +70,10 @@ export class AuditTraderComponent {
 
         let auditType : string = '';
 
-        if (this.taskStatus === '线上交易员审核并填写材料') auditType = 'investigator';
+        if (this.taskStatus === '线上交易员审核并填写材料') auditType = 'onlinetrader';
 
         if (this.taskStatus && auditType) {
-            this.task.audit(this.taskId, auditType).then((result)=>{
+            this.task.audit(this.taskId, auditType, 1).then((result)=>{
                 if (result.success){
                     alert('保存成功!!')
 
