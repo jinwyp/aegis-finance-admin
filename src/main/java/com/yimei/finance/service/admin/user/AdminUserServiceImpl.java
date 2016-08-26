@@ -1,7 +1,5 @@
 package com.yimei.finance.service.admin.user;
 
-import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.user.EnumAdminUserError;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.admin.user.GroupObject;
 import com.yimei.finance.entity.admin.user.UserObject;
@@ -20,16 +18,16 @@ import java.util.List;
 @Service
 public class AdminUserServiceImpl {
     @Autowired
-    private AdminSession adminSession;
-    @Autowired
     private IdentityService identityService;
+    @Autowired
+    private AdminGroupServiceImpl groupService;
 
     /**
      * 判断一个用户是否有 向该组 添加用户的 权限
      */
-    public Result checkAddUserToGroupAuthority(List<String> groupIds) {
-        if (getUserGroupIdList(adminSession.getUser().getId()).contains(EnumSpecialGroup.SuperAdminGroup.id)) return Result.success();
-        List<String> canGroupIds = getCanAddUserGroupIds(adminSession.getUser().getId());
+    public Result checkAddUserToGroupAuthority(String userId, List<String> groupIds) {
+        if (getUserGroupIdList(userId).contains(EnumSpecialGroup.SuperAdminGroup.id)) return Result.success();
+        List<String> canGroupIds = getCanAddUserGroupIds(userId);
         for (String gid : groupIds) {
             if (!canGroupIds.contains(gid)) {
                 EnumSpecialGroup group = EnumSpecialGroup.getGroupById(gid);
@@ -42,12 +40,33 @@ public class AdminUserServiceImpl {
     /**
      * 获取一个用户 有权限添加 用户的组 list
      */
+    public List<GroupObject> getCanAddUserGroupList(String userId) {
+        List<GroupObject> groupObjectList = new ArrayList<>();
+        List<String> groupIds = getCanAddUserGroupIds(userId);
+        for (String gid : groupIds) {
+            groupObjectList.add(groupService.changeGroupObject(identityService.createGroupQuery().groupId(gid).singleResult()));
+        }
+        return groupObjectList;
+    }
+
+
+    /**
+     * 获取一个用户 有权限添加 用户的组id list
+     */
     public List<String> getCanAddUserGroupIds(String userId) {
-        List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
+        List<Group> groupList = new ArrayList<>();
         List<String> sonGroupIds = new ArrayList<>();
-        for (Group group : groupList) {
-            EnumSpecialGroup sonGroup = EnumSpecialGroup.getSonGroup(group.getId());
-            if (sonGroup != null) sonGroupIds.add(sonGroup.id);
+        if (getUserGroupIdList(userId).contains(EnumSpecialGroup.SuperAdminGroup.id)) {
+            groupList = identityService.createGroupQuery().list();
+            for (Group group : groupList) {
+                sonGroupIds.add(group.getId());
+            }
+        } else {
+            groupList = identityService.createGroupQuery().groupMember(userId).list();
+            for (Group group : groupList) {
+                EnumSpecialGroup sonGroup = EnumSpecialGroup.getSonGroup(group.getId());
+                if (sonGroup != null) sonGroupIds.add(sonGroup.id);
+            }
         }
         return sonGroupIds;
     }
@@ -87,26 +106,6 @@ public class AdminUserServiceImpl {
             userObjectList.add(changeUserObject(user));
         }
         return userObjectList;
-    }
-
-    /**
-     * 登陆方法
-     * @param username              用户名
-     * @param password              密码
-     */
-    public Result login(String username, String password) {
-        User user = identityService.createUserQuery().userFirstName(username).singleResult();
-        if (user != null) {
-            UserObject userObject = changeUserObject(user);
-            if (identityService.checkPassword(user.getId(), securePassword(password))) {
-                adminSession.login(userObject);
-                return Result.success().setData(userObject);
-            } else {
-                return Result.error(401, EnumAdminUserError.用户名或者密码错误.toString());
-            }
-        } else {
-            return Result.error(401, EnumAdminUserError.该用户不存在或者已经被禁用.toString());
-        }
     }
 
     public String securePassword(String password) {

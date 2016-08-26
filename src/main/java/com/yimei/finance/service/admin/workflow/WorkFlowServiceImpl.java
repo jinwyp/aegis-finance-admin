@@ -117,6 +117,8 @@ public class WorkFlowServiceImpl {
         FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
+        taskObject.setApplyType(financeOrder.getApplyType());
+        taskObject.setFinancingAmount(financeOrder.getFinancingAmount());
         if (!StringUtils.isEmpty(task.getAssignee())) {
             UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
             taskObject.setAssigneeName(user.getUsername());
@@ -143,6 +145,8 @@ public class WorkFlowServiceImpl {
         FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
+        taskObject.setApplyType(financeOrder.getApplyType());
+        taskObject.setFinancingAmount(financeOrder.getFinancingAmount());
         UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
         taskObject.setAssigneeName(user.getUsername());
         taskObject.setAssigneeDepartment(user.getDepartment());

@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -21,4 +22,6 @@ public class HistoryTaskObject {
     private Date endTime;
     protected Date dueDate;
     private String applyCompanyName;
+    private String applyType;
+    private BigDecimal financingAmount;
 }
