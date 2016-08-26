@@ -51,7 +51,8 @@
 //.ng-pristine { border:1px solid $input-border-color; }
 
 .homebox{
-  padding:0;
+  min-width:1000px;
+
   input{outline: none;  margin:0;}
   .btn{outline: none;}
   div.info-item .info-val.no-bottom-border{  border-bottom:none; }
@@ -60,26 +61,22 @@
   .help-block{ color: $err-color;  margin-bottom:0px; }
 
   .left-menu-box{
-    width:180px;
+    min-width:180px;
     background-color: $menu-bg-color;
-    padding-right: 0px;
     .left-menu{
-      margin-right: 0px;
-
       .menu-item {
         padding-top: 20px;
         padding-bottom:20px;
-        padding-right: 0px;
-
-        //border-top: 1px solid #e0e0e0;
         border-right: 1px solid $input-border-color;
-        //border-bottom: 1px solid #e0e0e0;
+        a{
+          span.pr-10{  padding-right:10px; }
+        }
         .icon {
           margin-left: 8px;
           display: inline-block;
           height: 38px;
           line-height: 38px;
-          padding-left: 44px;
+          padding-left: 30px;
           font-size: 18px;
           color: $menu-text-color;
           text-decoration: none;
@@ -97,7 +94,7 @@
         .nav > li > a.item {
           font-size: 14px;
           color: $menu-text-color;
-          padding:15px 15px 15px 60px;
+          padding:15px 0 15px 38px;
           .notice{
             color: $white;
             background-color: $menu-text-color;
@@ -117,8 +114,7 @@
   }
 
   .right-main-box{
-    padding-left: 0px;
-
+    min-width:820px;
     .mt-50{ margin-top:50px;}
     .mt-30{ margin-top:30px;}
     .mt-20{ margin-top:20px;}
@@ -164,8 +160,7 @@
     .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td,
     .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{border-top: none;padding: 0;}
 
-    .item-margin{ margin:0 30px;overflow: hidden; }
-
+    .item-margin{ margin:0 15px;overflow: hidden; }
 
     .breadcrumb-box{
       .breadcrumb{
@@ -467,4 +462,19 @@
       .info-item>span{ text-align: right;  padding-right:30px; }
     }
   }
+}
+
+.modal-container{
+  display: none;
+  filter: Alpha(opacity=30);
+  -moz-opacity: 0.3;
+  -khtml-opacity: 0.3;
+  opacity: 0.3;
+  background-color: #000;
+  width: 100%; height: 100%;
+  z-index: 200;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow: hidden;
 }

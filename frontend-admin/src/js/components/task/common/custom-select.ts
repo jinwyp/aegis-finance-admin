@@ -3,23 +3,21 @@
  */
 
 
-import { Input, Output, EventEmitter, Component } from '@angular/core';
+import {Input, Output, EventEmitter, Component} from '@angular/core';
 
 
-declare var __moduleName: string;
+declare var __moduleName:string;
 
 @Component({
-    selector: 'custom-select',
-    moduleId: __moduleName || module.id,
-    templateUrl: 'custom-select.html'
+    selector :    'custom-select',
+    moduleId :    __moduleName || module.id,
+    templateUrl : 'custom-select.html'
 })
 
 
-
 export class CustomSelectComponent {
-    isClose : boolean = true;
 
-
+    isClose:boolean = true;
 
     @Input()
     optionList = [];
@@ -32,11 +30,11 @@ export class CustomSelectComponent {
     }
 
     @Output()
-    onChange : any = new EventEmitter();
+    onChange:any = new EventEmitter();
 
-    itemClick(item){
+    itemClick(item) {
         this.selectedItem = item;
-        this.isClose = !this.isClose;
+        this.isClose      = !this.isClose;
         this.onChange.emit(this.selectedItem);
     }
 

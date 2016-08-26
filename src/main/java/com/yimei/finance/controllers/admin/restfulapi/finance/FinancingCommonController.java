@@ -9,6 +9,7 @@ import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.exception.BusinessException;
+import com.yimei.finance.service.admin.workflow.WorkFlowServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -57,6 +58,8 @@ public class FinancingCommonController {
     private IdentityService identityService;
     @Autowired
     private HistoryService historyService;
+    @Autowired
+    private WorkFlowServiceImpl workFlowService;
 
     @RequestMapping(value = "/tasks/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作", response = Boolean.class)
@@ -138,28 +141,24 @@ public class FinancingCommonController {
         return Result.error(EnumAdminFinanceError.该用户没有处理此金融单的权限.toString());
     }
 
-
     @RequestMapping(value = "/process/{processInstanceId}/image", method = RequestMethod.GET)
     @ApiOperation(value = "通过流程实例id获取流程图", notes = "通过流程实例id获取流程图")
     @ApiImplicitParam(name = "processInstanceId", value = "流程实例id", required = true, dataType = "String", paramType = "path")
-    public void gene(@PathVariable("processInstanceId") String processInstanceId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getProcessDiagramMethod(@PathVariable("processInstanceId") String processInstanceId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("image/gif");
         OutputStream out = response.getOutputStream();
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
         HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
         if (processInstance == null && historicProcessInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
         String processDefinitionId = processInstance != null ? processInstance.getProcessDefinitionId() : historicProcessInstance.getProcessDefinitionId();
-        String processId = processInstance != null ? processInstance.getId() : historicProcessInstance.getId();
         BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
         InputStream inputStream = null;
         if (processInstance != null) {
             inputStream = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator()
-                    .generateDiagram(bpmnModel, "png", runtimeService.getActiveActivityIds(processId));
-        } else if (historicProcessInstance != null) {
-            inputStream = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator()
-                    .generateDiagram(bpmnModel, "png", null);
+                    .generateDiagram(bpmnModel, "png", runtimeService.getActiveActivityIds(processInstanceId));
         } else {
-            throw new BusinessException(EnumCommonError.Admin_System_Error);
+            inputStream = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator()
+                    .generatePngDiagram(bpmnModel);
         }
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
         int len = 0;
@@ -171,6 +170,7 @@ public class FinancingCommonController {
         out.write(b);
         out.flush();
     }
+
 }
 
 

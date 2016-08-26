@@ -1,7 +1,7 @@
 
 <div class="row left-menu">
     <div class="col-sm-12 menu-item" [class.menu-selected]="css.currentTab===1">
-        <a href="#" class="icon verify-icon dropdown-toggle" data-toggle="dropdown">审核管理<span class="caret"></span> </a>
+        <a class="icon verify-icon dropdown-toggle" data-toggle="dropdown"><span class="pr-10">审核管理</span><span class="caret"></span></a>
         <ul class="nav nav-stacked">
             <li role="presentation" class="active"><a class="item" [routerLink]="['/tasks/pending']" routerLinkActive="active" (click)="changeMenu(11)">我的待办<span class="notice">8</span></a></li>
             <li role="presentation"><a class="item" [routerLink]="['/tasks/all']" routerLinkActive="active" (click)="changeMenu(12)">我的审核<span class="notice">16</span></a></li>
@@ -9,7 +9,7 @@
     </div>
 
     <div class="col-sm-12 menu-item" [class.menu-selected]="css.currentTab===2">
-        <a href="#" class="icon info-icon dropdown-toggle"  data-toggle="dropdown">个人信息<span class="caret"></span> </a>
+        <a class="icon info-icon dropdown-toggle"  data-toggle="dropdown"><span class="pr-10">个人信息</span><span class="caret"></span></a>
         <ul class="nav nav-stacked">
             <li role="presentation" class="active"><a class="item" [routerLink]="['/user/detail']" routerLinkActive="active" (click)="changeMenu(21)">基本信息</a></li>
             <li role="presentation"><a class="item" [routerLink]="['/user/password']" routerLinkActive="active" (click)="changeMenu(22)">修改密码</a></li>
@@ -17,7 +17,7 @@
     </div>
 
     <div class="col-sm-12 menu-item " [class.menu-selected]="css.currentTab===3">
-        <a href="#" class="icon jurisdiction-icon dropdown-toggle" data-toggle="dropdown">权限设置<span class="caret"></span> </a>
+        <a class="icon jurisdiction-icon dropdown-toggle" data-toggle="dropdown"><span class="pr-10">权限设置</span><span class="caret"></span></a>
         <ul class="nav nav-stacked">
             <li role="presentation" class="active"><a class="item" [routerLink]="['/users']" routerLinkActive="active" (click)="changeMenu(31)">用户管理</a></li>
             <li role="presentation"><a class="item" [routerLink]="['/userroles']" routerLinkActive="active" (click)="changeMenu(32)">角色管理</a></li>
