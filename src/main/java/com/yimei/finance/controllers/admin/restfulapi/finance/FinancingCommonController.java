@@ -151,7 +151,6 @@ public class FinancingCommonController {
         HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
         if (processInstance == null && historicProcessInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
         String processDefinitionId = processInstance != null ? processInstance.getProcessDefinitionId() : historicProcessInstance.getProcessDefinitionId();
-
         BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
         InputStream inputStream = null;
         if (processInstance != null) {
