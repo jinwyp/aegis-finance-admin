@@ -68,11 +68,11 @@ public class FinanceOrder implements Serializable {
     private int approveStateId;                                      //审批状态Id
     @Column(name = "source_id", length = 100)
     private String sourceId;                                         //流水号，编号
-    @Column(name = "apply_date_time")
+    @Column(name = "apply_date_time", nullable = false)
     private Date applyDateTime;                                      //发起时间
-    @Column(name = "end_date_time")
+    @Column(name = "end_date_time", nullable = true)
     private Date endDateTime;                                        //结束时间
-    @Column(name = "last_update_time")
+    @Column(name = "last_update_time", nullable = false)
     private Date lastUpdateTime;                                     //最后一次处理时间
     @Column(name = "apply_user_name", length = 50)
     private String applyUserName;                                    //申请人姓名

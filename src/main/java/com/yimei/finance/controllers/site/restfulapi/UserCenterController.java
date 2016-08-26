@@ -67,18 +67,20 @@ public class UserCenterController {
     * 供应链金融 - 发起融资申请
     */
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
-//    @LoginRequired
+    @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Valid @RequestBody FinanceOrder financeOrder) {
         System.out.println("Order Type:" + financeOrder.getApplyType());
         financeOrder.setApplyType(financeOrder.getApplyType());
         financeOrder.setSourceId(numberService.getNextCode("JR"));
-//        financeOrder.setUserId(userSession.getUser().getId());
-//        financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
-        financeOrder.setUserId(1);
-        financeOrder.setApplyDateTime(new Date());
+        financeOrder.setUserId(userSession.getUser().getId());
+        financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
+//        financeOrder.setUserId(1);
         financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
+        financeOrder.setApplyDateTime(new Date());
+        financeOrder.setLastUpdateTime(new Date());
+        financeOrder.setEndDateTime(null);
         financeOrderRepository.save(financeOrder);
         financeOrder = financeOrderRepository.findBySourceId(financeOrder.getSourceId());
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
