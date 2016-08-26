@@ -23,6 +23,10 @@ public class AdminUserServiceImpl {
     private AdminGroupServiceImpl groupService;
 
     /**
+     * 获取可以查看
+     */
+
+    /**
      * 判断一个用户是否有 向该组 添加用户的 权限
      */
     public Result checkAddUserToGroupAuthority(String userId, List<String> groupIds) {

@@ -7,10 +7,12 @@ import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
-import org.activiti.engine.*;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
-import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.IdentityLinkType;
@@ -38,10 +40,6 @@ public class WorkFlowServiceImpl {
     private AdminUserServiceImpl userService;
     @Autowired
     private IdentityService identityService;
-    @Autowired
-    private ProcessEngine processEngine;
-    @Autowired
-    private RepositoryServiceImpl repositoryService;
 
     /**
      * 添加附件方法
@@ -53,6 +51,16 @@ public class WorkFlowServiceImpl {
                     taskService.createAttachment(attachmentObject.getType(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
                 }
             }
+        }
+    }
+
+    /**
+     * 添加备注信息
+     */
+    public void addComment(String taskId, String processInstanceId, String comment) {
+//    public void addComment(String taskId, String processInstanceId, String comment, String type) {
+        if (!StringUtils.isEmpty(comment)) {
+            taskService.addComment(taskId, processInstanceId, comment);
         }
     }
 
@@ -121,6 +129,9 @@ public class WorkFlowServiceImpl {
         return Result.success().setData(assignUserId);
     }
 
+    /**
+     * 封装 task, 从 Task 到 TaskObject
+     */
     public Result changeTaskObject(Task task) {
         TaskObject taskObject = DozerUtils.copy(task, TaskObject.class);
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
@@ -136,6 +147,7 @@ public class WorkFlowServiceImpl {
             taskObject.setAssigneeName(user.getUsername());
             taskObject.setAssigneeDepartment(user.getDepartment());
         }
+        taskObject.setCommentList(DozerUtils.copy(taskService.getTaskComments(task.getId()), CommentObject.class));
         return Result.success().setData(taskObject);
     }
 
@@ -149,6 +161,9 @@ public class WorkFlowServiceImpl {
         return Result.success().setData(taskObjectList);
     }
 
+    /**
+     * 封装 HistoryTask, 从 HistoryTask 到 HistoryTaskObject
+     */
     public Result changeHistoryTaskObject(HistoricTaskInstance task) {
         HistoryTaskObject taskObject = DozerUtils.copy(task, HistoryTaskObject.class);
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
@@ -164,6 +179,7 @@ public class WorkFlowServiceImpl {
         UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
         taskObject.setAssigneeName(user.getUsername());
         taskObject.setAssigneeDepartment(user.getDepartment());
+        taskObject.setCommentList(DozerUtils.copy(taskService.getTaskComments(task.getId()), CommentObject.class));
         return Result.success().setData(taskObject);
     }
 
@@ -175,6 +191,12 @@ public class WorkFlowServiceImpl {
             taskObjectList.add((HistoryTaskObject) result.getData());
         }
         return Result.success().setData(taskObjectList);
+    }
+
+    List<CommentObject> getTaskCommentObject(String taskId) {
+        List<CommentObject> commentObjectList = new ArrayList<>();
+
+        return commentObjectList;
     }
 
 

@@ -13,5 +13,6 @@ public enum EnumAdminFinanceError {
     你已经领取此任务,
     你没有权限领取此任务,
     此任务已经被其他人领取,
+    不存在此任务,
     ;
 }
