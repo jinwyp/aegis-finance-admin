@@ -40,6 +40,7 @@ import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -75,9 +76,11 @@ public class UserCenterController {
         financeOrder.setUserId(userSession.getUser().getId());
         financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
 //        financeOrder.setUserId(1);
-//        financeOrder.setApplyDateTime(new Date());
         financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
+        financeOrder.setApplyDateTime(new Date());
+        financeOrder.setLastUpdateTime(new Date());
+        financeOrder.setEndDateTime(null);
         financeOrderRepository.save(financeOrder);
         financeOrder = financeOrderRepository.findBySourceId(financeOrder.getSourceId());
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
@@ -129,7 +132,6 @@ public class UserCenterController {
         }
         return Result.success().setData(mapList);
     }
-
 
 
 }

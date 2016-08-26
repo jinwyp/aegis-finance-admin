@@ -99,8 +99,8 @@ public class IndexController {
     @LoginRequired
     @RequestMapping(value = "/finance/user/financing/excel", method = RequestMethod.GET)
     @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的申请 - 导出金融申请单", notes = "供应链金融 我的融资 申请列表 导出金融申请单", response = MapObject.class, responseContainer = "List")
-    public Result exportFinancingOrderToExcel(HttpServletResponse response,
-                                              HttpServletRequest request) throws IOException {
+    public void exportFinancingOrderToExcel(HttpServletResponse response,
+                                            HttpServletRequest request) throws IOException {
         HSSFWorkbook wb = new HSSFWorkbook();
         String filename = "金融申请单列表_" + LocalDate.now();
         HSSFSheet sheet = wb.createSheet(filename);
@@ -150,7 +150,6 @@ public class IndexController {
         OutputStream out = response.getOutputStream();
         wb.write(out);
         out.close();
-        return Result.success();
     }
 
 }
