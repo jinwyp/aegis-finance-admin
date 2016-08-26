@@ -135,8 +135,8 @@ public class UserCenterController {
 
     @LoginRequired
     @RequestMapping(value = "/export/excel", method = RequestMethod.GET)
-    @ApiOperation(value = "导出金融申请单", notes = "导出金融申请单", response = MapObject.class, responseContainer = "List")
-    public Result exportFinancingOrderToExcel(HttpServletResponse response,
+    @ApiOperation(value = "导出金融申请单", notes = "导出金融申请单")
+    public void exportFinancingOrderToExcel(HttpServletResponse response,
                                               HttpServletRequest request) throws IOException {
         HSSFWorkbook wb = new HSSFWorkbook();
         String filename = "金融申请单列表_" + LocalDate.now();
@@ -187,7 +187,6 @@ public class UserCenterController {
         OutputStream out = response.getOutputStream();
         wb.write(out);
         out.close();
-        return Result.success();
     }
 
 }
