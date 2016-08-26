@@ -91,7 +91,7 @@ public class UserController {
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        Result result = userService.checkAddUserToGroupAuthority(user.getGroupIds());
+        Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
         if (!result.isSuccess()) return result;
         if (StringUtils.isEmpty(user.getUsername())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
         if (identityService.createUserQuery().userFirstName(user.getUsername()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
@@ -115,7 +115,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Result deleteUserMethod(@PathVariable("id") String id) {
         List<String> groupIds = userService.getUserGroupIdList(id);
-        Result result = userService.checkAddUserToGroupAuthority(groupIds);
+        Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), groupIds);
         if (!result.isSuccess()) return result;
         User user = identityService.createUserQuery().userId(id).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
@@ -129,7 +129,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateUserMethod(@PathVariable("id") String id,
                                    @ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        Result result = userService.checkAddUserToGroupAuthority(user.getGroupIds());
+        Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
         if (!result.isSuccess()) return result;
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());
         if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());

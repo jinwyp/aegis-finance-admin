@@ -1,14 +1,16 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.entity.admin.user.EnumAdminUserError;
 import com.yimei.finance.entity.admin.user.UserLoginObject;
 import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,14 +26,27 @@ public class UserAuthController {
     private AdminSession adminSession;
     @Autowired
     private AdminUserServiceImpl adminService;
+    @Autowired
+    private IdentityService identityService;
 
     /**
      * 管理员登陆
      */
     @ApiOperation(value = "登陆接口", notes = "需要输入用户名和密码登陆", response = UserLoginObject.class)
     @RequestMapping(value = "/login", method = RequestMethod.POST)
-    public Result authLoginWithPassword(@Valid @RequestBody UserLoginObject user) {
-        return adminService.login(String.valueOf(user.getUsername()), user.getPassword());
+    public Result authLoginWithPassword(@Valid @RequestBody UserLoginObject userLoginObject) {
+        User user = identityService.createUserQuery().userFirstName(userLoginObject.getUsername()).singleResult();
+        if (user != null) {
+            UserObject userObject = adminService.changeUserObject(user);
+            if (identityService.checkPassword(user.getId(), adminService.securePassword(userLoginObject.getPassword()))) {
+                adminSession.login(userObject);
+                return Result.success().setData(userObject);
+            } else {
+                return Result.error(401, EnumAdminUserError.用户名或者密码错误.toString());
+            }
+        } else {
+            return Result.error(401, EnumAdminUserError.该用户不存在或者已经被禁用.toString());
+        }
     }
 
     /**
