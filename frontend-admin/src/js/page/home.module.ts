@@ -39,7 +39,6 @@ import { UserInfoComponent } from '../components/role/user-info';
 import { TaskListComponent } from '../components/task/task-list';
 import { AssignPersonComponent } from '../components/task/assign-person';
 import { ProcessTabComponent } from '../components/task/common/process-tab';
-import { DistributionPersonComponent } from '../components/task/common/distribution-person';
 import { FinanceApplyComponent } from '../components/task/finance-apply';
 import { BusinessApprovalComponent } from '../components/task/business-approval';
 import { TuneReportComponent } from '../components/task/tune-report';
@@ -59,7 +58,7 @@ import {AlertComponent,} from 'ng2-bootstrap/ng2-bootstrap';
         UserDetailComponent, UserUpdatePasswordComponent,
         RoleListComponent, AddRoleComponent, RoleInfoComponent,
         UserListComponent, AddUserComponent, UserInfoComponent,
-        ProcessTabComponent, DistributionPersonComponent,
+        ProcessTabComponent,
         TaskListComponent, AssignPersonComponent, FinanceApplyComponent, BusinessApprovalComponent,
         TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent, CustomSelectComponent
     ],

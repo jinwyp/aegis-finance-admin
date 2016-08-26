@@ -201,12 +201,11 @@ public class MYRFinancingController {
         }
     }
 
-
     @RequestMapping(value = "/riskmanager/contract/{taskId}", method = RequestMethod.PUT)
     @ApiOperation(value = "风控人员上传合同", notes = "风控人员上传合同,流程完成", response = Boolean.class)
-    @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path")
     public Result myrRiskManagerUploadContractMethod(@PathVariable("taskId")String taskId,
-                                                     @ApiParam(name = "attachmentList", value = "尽调员上传资料文件", required = false)@RequestBody AttachmentList attachmentList) {
+                                                     @ApiParam(name = "attachmentList", value = "风控人员上传资料文件", required = false)@RequestBody AttachmentList attachmentList) {
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
