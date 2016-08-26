@@ -49,12 +49,12 @@ import { CustomSelectComponent } from '../components/audit/common/custom-select'
 import { CustomModalComponent } from '../components/audit/common/custom-modal';
 
 
-import {AlertComponent, ModalDirective, MODAL_DIRECTIVES, BS_VIEW_PROVIDERS,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+import {AlertComponent,} from 'ng2-bootstrap/ng2-bootstrap';
 
 @NgModule({
     imports: [ BrowserModule, FormsModule, HttpModule, routing],
     declarations: [
-        AlertComponent,ModalDirective,MODAL_DIRECTIVES,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES,
+        AlertComponent,
         headerComponent, LeftMenuComponent,
         HomeComponent, HomeDashboardComponent,
         UserDetailComponent, UserUpdatePasswordComponent,
@@ -64,7 +64,7 @@ import {AlertComponent, ModalDirective, MODAL_DIRECTIVES, BS_VIEW_PROVIDERS,DROP
         WaitDealListComponent, DistributionPageComponent, FinanceApplyComponent, BusinessApprovalComponent,
         TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent, CustomSelectComponent, CustomModalComponent
     ],
-    providers: [ homePageRouterProviders, OrderService, UserService, UserGroupService,BS_VIEW_PROVIDERS ],
+    providers: [ homePageRouterProviders, OrderService, UserService, UserGroupService ],
     bootstrap: [ HomeComponent ]
 })
 export class HomeModule { }
