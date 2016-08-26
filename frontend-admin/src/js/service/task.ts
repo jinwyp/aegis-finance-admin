@@ -143,10 +143,11 @@ class TaskService {
     audit(taskId : string, auditType : string, isApproved: number = 0, isNeedFile : number = 0) {
 
         let auditStep = {
-            investigator : 'investigator',
             onlinetrader : 'onlinetrader',
-            riskmanager : 'riskmanager',
             salesman : 'salesman',
+            investigator : 'investigator',
+            riskmanager : 'riskmanager'
+
         };
 
         let url = `${API.tasksMYR}/${auditStep[auditType]}/audit/${taskId}?pass=${isApproved}&need=${isNeedFile}`;
