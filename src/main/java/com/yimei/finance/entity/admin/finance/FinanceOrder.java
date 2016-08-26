@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
@@ -29,6 +30,8 @@ public class FinanceOrder implements Serializable {
     @Size(min = 3, max = 10, message = "申请类型字段应在3-10个字符之间")
     @NotBlank(message = "申请类型字段不能为空")
     private String applyType;                                        //申请类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
+    @Transient
+    private String applyTypeName;
     @Column(name = "financing_amount", length = 20)
     private BigDecimal financingAmount;                              //拟融资金额（单位：万元）
     @Column(name = "expect_date", length = 10, nullable = false)
@@ -73,5 +76,19 @@ public class FinanceOrder implements Serializable {
     private String applyUserName;                                    //申请人姓名
     @Column(name = "apply_company_name", length = 50)
     private String applyCompanyName;                                 //申请公司名称
+
+    public String getApplyTypeName() {
+        if (StringUtils.isEmpty(applyType)) {
+            return applyType;
+        } else if (applyType.equals("MYR")) {
+            return "煤易融";
+        } else if (applyType.equals("MYD")) {
+            return "煤易贷";
+        } else if (applyType.equals("MYG")) {
+            return "煤易购";
+        } else {
+            return applyType;
+        }
+    }
 
 }
