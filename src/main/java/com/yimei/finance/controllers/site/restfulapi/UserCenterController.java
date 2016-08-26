@@ -62,7 +62,7 @@ public class UserCenterController {
         financeOrder.setUserId(userSession.getUser().getId());
         financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
 //        financeOrder.setUserId(1);
-//        financeOrder.setApplyDateTime(LocalDateTime.now());
+//        financeOrder.setApplyDateTime(new Date());
         financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
         financeOrderRepository.save(financeOrder);

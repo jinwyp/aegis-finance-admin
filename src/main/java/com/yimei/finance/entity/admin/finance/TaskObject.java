@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by liuxinjie on 16/8/19.
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

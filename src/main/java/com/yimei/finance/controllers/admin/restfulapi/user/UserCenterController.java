@@ -50,7 +50,7 @@ public class UserCenterController {
     private WorkFlowServiceImpl workFlowService;
 
     @RequestMapping(value = "/", method = RequestMethod.GET)
-    @ApiOperation(value = "查看个人待办任务列表", notes = "查看个人代办任务列表", response = TaskObject.class, responseContainer = "List")
+    @ApiOperation(value = "个人待办任务列表", notes = "个人待办任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
         Result result = workFlowService.changeTaskObject(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()));
@@ -80,7 +80,7 @@ public class UserCenterController {
     }
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
-    @ApiOperation(value = "个人处理任务记录列表", notes = "查看个人处理任务记录列表", response = HistoryTaskObject.class, responseContainer = "List")
+    @ApiOperation(value = "个人已处理任务记录列表", notes = "个人已处理任务记录列表", response = HistoryTaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "Integer", paramType = "query")
     public Result getPersonalHistoryTasksMethod(Page page) {
         Result result = workFlowService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()));
