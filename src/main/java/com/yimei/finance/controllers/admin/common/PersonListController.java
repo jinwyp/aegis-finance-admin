@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@Api(tags = {"admin-api-userList"}, description = "获取管理人员列表接口 例如: 交易员列表 等")
+@Api(tags = {"admin-api-userList"}, description = "没有用到, 获取管理人员列表 如:交易员列表 等")
 @RequestMapping("/api/financing/admin")
 @RestController("adminPersonListController")
 public class PersonListController {

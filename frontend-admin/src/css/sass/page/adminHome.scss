@@ -61,12 +61,17 @@
   .help-block{ color: $err-color;  margin-bottom:0px; }
 
   .left-menu-box{
-    min-width:180px;
+    min-width:178px;
     background-color: $menu-bg-color;
+    padding-right: 0px;
+
     .left-menu{
+      margin-right: 0px;
+
       .menu-item {
         padding-top: 20px;
         padding-bottom:20px;
+        padding-right: 0px;
         border-right: 1px solid $input-border-color;
         a{
           span.pr-10{  padding-right:10px; }
@@ -114,6 +119,7 @@
   }
 
   .right-main-box{
+    padding-left: 0px;
     min-width:820px;
     .mt-50{ margin-top:50px;}
     .mt-30{ margin-top:30px;}
@@ -212,7 +218,7 @@
       margin-top:20px;
       overflow: hidden;
       border:1px solid $input-border-color;
-      max-height:406px;
+      max-height:500px;
       .nav-tabs>li{margin-top: -1px;  cursor: pointer;}
       .nav-tabs>li>a{  border-radius: 0px;  margin-right:0px;  color: #333; }
       .nav-tabs>li>a:hover{  color: #f66c54; }

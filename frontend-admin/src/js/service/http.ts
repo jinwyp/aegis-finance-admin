@@ -6,7 +6,8 @@ var API = {
     login : '/api/financing/admin/login',
     logout : '/api/financing/admin/logout',
     session : '/api/financing/admin/session',
-    task : '/api/financing/admin/tasks',
+    tasks : '/api/financing/admin/tasks',
+    tasksMYR : '/api/financing/admin/myr',
     users : '/api/financing/admin/users',
     groups : '/api/financing/admin/groups'
 };

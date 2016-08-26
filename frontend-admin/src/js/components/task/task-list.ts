@@ -4,7 +4,7 @@
 
 
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { Task, TaskService } from '../../service/task';
 import { User, UserService } from '../../service/user';
@@ -20,7 +20,6 @@ declare var __moduleName: string;
 export class TaskListComponent {
 
     constructor(
-        private router: Router,
         private activatedRoute: ActivatedRoute,
         private task: TaskService,
         private user: UserService
@@ -31,7 +30,7 @@ export class TaskListComponent {
         title : ''
     };
 
-    taskList : Task[] = [];
+    taskAssignList : Task[] = [];
     taskPendingList : Task[] = [];
     currentUserSession : User = new User();
 
@@ -39,6 +38,7 @@ export class TaskListComponent {
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
             if (this.routeData.routetype === 'pending'){
+                this.getAssignTaskList();
                 this.getPendingTaskList();
             }
         });
@@ -59,11 +59,20 @@ export class TaskListComponent {
         )
     }
 
-    getPendingTaskList () {
+    getAssignTaskList () {
         this.task.getAdminTaskList().then((result)=>{
             if (result.success){
-                this.taskList = result.data;
+                this.taskAssignList = result.data;
+            }else{
 
+            }
+        });
+    }
+
+    getPendingTaskList () {
+        this.task.getTaskList().then((result)=>{
+            if (result.success){
+                this.taskPendingList = result.data;
             }else{
 
             }

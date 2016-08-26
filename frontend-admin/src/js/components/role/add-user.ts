@@ -131,7 +131,6 @@ export class AddUserComponent {
             this.userService.add(this.currentUser).then((result)=> {
                 if (result.success) {
                     // window.location.href = '/finance/admin/home/users/add';
-                    window.location.href = '/finance/admin/home/users';
                     // this.clear();
                 } else {
                     this.css.ajaxErrorHidden = false;

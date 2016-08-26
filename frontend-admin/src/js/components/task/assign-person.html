@@ -8,6 +8,51 @@
     </ol>
 </div>
 
-<process-tab></process-tab>
+<process-tab [processInstanceId]="taskProcessInstanceId"></process-tab>
 
-<distribution-person></distribution-person>
+
+<div class="item-margin distribution-box">
+
+    <div class="table-title">当前业务</div>
+
+    <div class="row mt-50 info-item">
+        <span class="col-sm-4 info-label-input">选择你要分配的线上交易员:</span>
+        <div class="col-sm-8 info-val">
+            <select class="form-control" [(ngModel)]="selectedUser" >
+                <option *ngFor="let user of userList" [ngValue]="user">{{user.username}} - {{user.email}}</option>
+            </select>
+        </div>
+    </div>
+    <div class="row info-item">
+        <span class="col-sm-4 info-label">线上交易员姓名:</span>
+        <div class="col-sm-8 info-val">
+            <span>{{selectedUser.name}}</span>
+        </div>
+    </div>
+    <div class="row info-item">
+        <span class="col-sm-4 info-label">联系方式:</span>
+        <div class="col-sm-8 info-val">
+            <span>{{selectedUser.phone}}</span>
+        </div>
+    </div>
+    <div class="row info-item">
+        <span class="col-sm-4 info-label">角色名称:</span>
+        <div class="col-sm-8 info-val">
+            <span *ngFor="let group of selectedUser.groupList">{{group.name}}</span>
+        </div>
+    </div>
+    <div class="row info-item">
+        <span class="col-sm-4 info-label">所属部门:</span>
+        <div class="col-sm-8 info-val">
+            <span>{{selectedUser.department}}</span>
+        </div>
+    </div>
+    <div class="row info-item">
+        <span class="col-sm-4 info-label-input"></span>
+        <div class="col-sm-8 info-val no-bottom-border">
+            <button type="button" class="btn btn-default btn-lg btn-sure" (click)="assignPerson()" >分配</button>
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/pending']">返回</button>
+        </div>
+    </div>
+
+</div>

@@ -38,7 +38,7 @@ public class MYRFinancingController {
     private WorkFlowServiceImpl workFlowService;
 
 
-    @RequestMapping(value = "/onlinetrader/material/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.PUT)
     @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),
@@ -72,10 +72,10 @@ public class MYRFinancingController {
     }
 
 
-    @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.PUT)
     @ApiOperation(value = "业务员审核并填写材料", notes = "业务员审核并填写材料")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path"),
+            @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "pass", value = "审核结果: 0:审核不通过, 1:审核通过", required = true, dataType = "Integer", paramType = "query"),
             @ApiImplicitParam(name = "comment", value = "备注,批注,审核信息等", required = false, dataType = "String", paramType = "query")
     })
@@ -104,7 +104,7 @@ public class MYRFinancingController {
     @RequestMapping(value = "/salesman/supply/investigation/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path"),
+            @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "comment", value = "备注,批注等", required = false, dataType = "String", paramType = "query")
     })
     public Result myrSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
@@ -128,7 +128,7 @@ public class MYRFinancingController {
     @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.PUT)
     @ApiOperation(value = "尽调员审核", notes = "尽调员审核")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "taskId", value = "金融申请单id", required = true, dataType = "Integer", paramType = "path"),
+            @ApiImplicitParam(name = "taskId", value = "金融申请单id", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "need", value = "是否需要补充材料: 0:不需要, 1:需要", required = true, dataType = "Integer", paramType = "query"),
             @ApiImplicitParam(name = "pass", value = "审核结果: 0:审核不通过, 1:审核通过", required = true, dataType = "Integer", paramType = "query"),
             @ApiImplicitParam(name = "comment", value = "备注,批注等", required = false, dataType = "String", paramType = "query")
@@ -163,7 +163,7 @@ public class MYRFinancingController {
     }
 
 
-    @RequestMapping(value = "/investigator/supply/riskmanager/material/{taskId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/investigator/supply/riskmanager/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "监管员补充材料", notes = "监管员补充风控人员要求的材料")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path"),
@@ -222,7 +222,7 @@ public class MYRFinancingController {
         }
     }
 
-    @RequestMapping(value = "/riskmanager/contract/{taskId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/riskmanager/contract/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "风控人员上传合同", notes = "风控人员上传合同,流程完成", response = Boolean.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path"),

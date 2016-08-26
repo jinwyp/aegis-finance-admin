@@ -10,6 +10,14 @@ import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 import { HttpResponse, API } from './http';
 
+var GroupId = {
+    'trader' : 'GROUP00002', //线上交易员组
+    'salesman' : 'GROUP00004', //业务员组
+    'investigator' : 'GROUP00006', //尽调员组
+    'supervisor' : 'GROUP00008', //监管员组
+    'riskmanager' : 'GROUP00010'  //风控员组
+};
+
 
 var permisson = {
     GROUP00010 : ['新增用户', '修改用户']
@@ -18,7 +26,7 @@ var permisson = {
 
 class User {
 
-    id :number;
+    id :string;
     username : string;
     name : string;
     password : string;
@@ -29,7 +37,7 @@ class User {
     groupList : UserGroup[];
 
     constructor() {
-        this.id  = 0;
+        this.id  = '';
         this.username  = '';
         this.password  = '';
         this.groupIds = [];
@@ -110,7 +118,7 @@ class UserService {
 
 
     getTaskList() {
-        return this.http.get(API.task).toPromise()
+        return this.http.get(API.tasks).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
@@ -241,4 +249,4 @@ class UserGroupService {
 
 
 
-export {UserLoginService, User, UserService, UserGroup, UserGroupService}
+export {UserLoginService, User, UserService, UserGroup, UserGroupService, GroupId}
