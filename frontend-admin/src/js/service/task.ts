@@ -62,7 +62,7 @@ class TaskService {
             .then( (response) => {
                 var result = response.json();
                 if (result.data ){
-                    return this.http.put(API.tasks + '/' + taskId + '/trader/' + userId, {}).toPromise()
+                    return this.http.put(API.tasks + '/' + taskId + '/person/' + userId, {}).toPromise()
                 }else{
                     Promise.reject('管理员领取任务失败!')
                 }

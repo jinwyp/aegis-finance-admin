@@ -88,7 +88,7 @@ public class FinancingCommonController {
     }
 
 
-    @RequestMapping(value = "/tasks/{taskId}/trader/{userId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/tasks/{taskId}/person/{userId}", method = RequestMethod.PUT)
     @ApiOperation(value = "管理员分配人员", notes = "管理员分配人员操作")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),
