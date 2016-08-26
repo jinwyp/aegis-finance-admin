@@ -118,7 +118,7 @@ class UserService {
 
 
     getTaskList() {
-        return this.http.get(API.task).toPromise()
+        return this.http.get(API.tasks).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }

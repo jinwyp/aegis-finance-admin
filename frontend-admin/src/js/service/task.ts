@@ -13,7 +13,7 @@ import { HttpResponse, API } from './http';
 
 class Task {
 
-    id :number;
+    id :string;
     applyType : string;
     applyTime : string;
 
@@ -22,7 +22,7 @@ class Task {
     createTime : number;
 
     constructor() {
-        this.id  = 0;
+        this.id  = '';
     }
 }
 
@@ -44,22 +44,30 @@ class TaskService {
 
 
     getTaskList() {
-        return this.http.get(API.task).toPromise()
+        return this.http.get(API.tasks).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
 
     getAdminTaskList() {
-        return this.http.get(API.task + '/unclaimed').toPromise()
+        return this.http.get(API.tasks + '/unclaimed').toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
 
 
-    assignTrader(taskId : string, userId : string) {
+    assignPerson(taskId : string, userId : string) {
 
-        return this.http.post(API.users + '/' + taskId, {}).toPromise()
-            .then(res => res.json() as HttpResponse )
+        return this.http.post(API.tasks + '/' + taskId, {}).toPromise()
+            .then( (response) => {
+                var result = response.json();
+                if (result.data ){
+                    return this.http.put(API.tasks + '/' + taskId + '/trader/' + userId, {}).toPromise()
+                }else{
+                    Promise.reject('管理员领取任务失败!')
+                }
+            })
+            .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
 

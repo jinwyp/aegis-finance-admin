@@ -26,7 +26,7 @@ export class AssignPersonComponent {
     selectedUser : User = new User();
     userList : User[] = [];
 
-    taskId : number = 0;
+    taskId : string = '';
     taskStatus : string = '';
 
 
@@ -78,7 +78,17 @@ export class AssignPersonComponent {
                 }
             });
         }
+    }
 
+    assignPerson (){
+        this.task.assignPerson(this.taskId, this.selectedUser.id).then((result)=>{
+            if (result.success){
+                alert('分配成功!!')
+
+            }else{
+                alert('分配失败!')
+            }
+        });
     }
 
 }
