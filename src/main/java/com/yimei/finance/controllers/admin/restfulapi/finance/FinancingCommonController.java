@@ -8,12 +8,14 @@ import com.yimei.finance.entity.admin.user.EnumAdminUserError;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.exception.BusinessException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.*;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.impl.persistence.entity.ExecutionEntity;
@@ -53,6 +55,8 @@ public class FinancingCommonController {
     private AdminSession adminSession;
     @Autowired
     private IdentityService identityService;
+    @Autowired
+    private HistoryService historyService;
 
     @RequestMapping(value = "/tasks/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作", response = Boolean.class)
@@ -141,12 +145,24 @@ public class FinancingCommonController {
         response.setContentType("image/gif");
         OutputStream out = response.getOutputStream();
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
-        BpmnModel bpmnModel = repositoryService.getBpmnModel(processInstance.getProcessDefinitionId());
-        InputStream is = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator()
-                .generateDiagram(bpmnModel, "png", runtimeService.getActiveActivityIds(processInstance.getId()));
+        HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+        if (processInstance == null && historicProcessInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        String processDefinitionId = processInstance != null ? processInstance.getProcessDefinitionId() : historicProcessInstance.getProcessDefinitionId();
+        String processId = processInstance != null ? processInstance.getId() : historicProcessInstance.getId();
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
+        InputStream inputStream = null;
+        if (processInstance != null) {
+            inputStream = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator()
+                    .generateDiagram(bpmnModel, "png", runtimeService.getActiveActivityIds(processId));
+        } else if (historicProcessInstance != null) {
+            inputStream = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator()
+                    .generateDiagram(bpmnModel, "png", null);
+        } else {
+            throw new BusinessException(EnumCommonError.Admin_System_Error);
+        }
         ByteArrayOutputStream bytestream = new ByteArrayOutputStream();
         int len = 0;
-        while ((len = is.read()) != -1) {
+        while ((len = inputStream.read()) != -1) {
             bytestream.write(len);
         }
         byte[] b = bytestream.toByteArray();

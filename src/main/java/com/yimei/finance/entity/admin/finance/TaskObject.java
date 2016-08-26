@@ -25,4 +25,5 @@ public class TaskObject implements Serializable {
     private String applyType;
     private BigDecimal financingAmount;
 
+
 }

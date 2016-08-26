@@ -11,6 +11,7 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
@@ -149,9 +150,11 @@ public class WorkFlowServiceImpl {
     public Result changeHistoryTaskObject(HistoricTaskInstance task) {
         HistoryTaskObject taskObject = DozerUtils.copy(task, HistoryTaskObject.class);
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-        if (processInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
-        if (StringUtils.isEmpty(processInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
-        FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
+        HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
+        if (processInstance == null && historicProcessInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
+        String businessKey = processInstance != null ? processInstance.getBusinessKey() : historicProcessInstance.getBusinessKey();
+        if (StringUtils.isEmpty(businessKey)) return Result.error(EnumCommonError.Admin_System_Error);
+        FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(businessKey));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
         taskObject.setApplyType(financeOrder.getApplyType());
