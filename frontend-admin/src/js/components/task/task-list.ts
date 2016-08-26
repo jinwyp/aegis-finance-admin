@@ -60,17 +60,19 @@ export class TaskListComponent {
     }
 
     getCurrentUser() {
+        this.user.getUserSessionObservable.subscribe(
+            result => {
+                if (result && result.success) {
+                    this.currentUserSession = result.data;
+                    if (this.currentUserSession.groupIds.indexOf('GROUP00001') > -1){
+                        this.isAssignPerson = true;
+                    }
+                } else {
 
-        this.user.getCurrentUser().then((result)=>{
-            if (result.success){
-                this.currentUserSession = result.data;
-                if (this.currentUserSession.groupIds.indexOf('GROUP00001') > -1){
-                    this.isAssignPerson = true;
                 }
-            }else{
-
-            }
-        });
+            },
+            error => console.error(error)
+        )
     }
 }
 
