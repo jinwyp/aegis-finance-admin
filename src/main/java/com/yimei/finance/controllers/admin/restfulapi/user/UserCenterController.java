@@ -36,7 +36,7 @@ public class UserCenterController {
     @Autowired
     private WorkFlowServiceImpl workFlowService;
 
-    @RequestMapping(value = "/", method = RequestMethod.GET)
+    @RequestMapping( method = RequestMethod.GET)
     @ApiOperation(value = "个人待办任务列表", notes = "个人待办任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
@@ -46,6 +46,7 @@ public class UserCenterController {
         page.setTotal(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).count());
         return Result.success().setData(taskList).setMeta(page);
     }
+
 
     @RequestMapping(value = "/unclaimed", method = RequestMethod.GET)
     @ApiOperation(value = "给分配管理员查看待领取任务列表", notes = "给线上交易员管理组, 业务员管理组, 尽调员管理组, 监管员管理组, 风控管理组, 查看待领取任务列表", response = TaskObject.class, responseContainer = "List")
