@@ -48,12 +48,12 @@ import { RiskControlReportComponent } from '../components/task/risk-control-repo
 import { CustomSelectComponent } from '../components/task/common/custom-select';
 
 
-import {AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstrap/ng2-bootstrap';
+import {AlertComponent,} from 'ng2-bootstrap/ng2-bootstrap';
 
 @NgModule({
     imports: [ BrowserModule, FormsModule, HttpModule, routing],
     declarations: [
-        AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES,
+        AlertComponent,
         headerComponent, LeftMenuComponent,
         HomeComponent, HomeDashboardComponent,
         UserDetailComponent, UserUpdatePasswordComponent,

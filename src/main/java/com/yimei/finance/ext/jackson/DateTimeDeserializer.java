@@ -19,8 +19,7 @@ public class DateTimeDeserializer extends JsonDeserializer<Date> {
     @Override
     public Date deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
         String str = jp.getText().trim();
-        if (str.length() == 0)
-            return null;
+        if (str.length() == 0) return null;
         try {
             return dateTimeformatter.parse(str);
         } catch (ParseException e) {
