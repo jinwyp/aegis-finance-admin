@@ -9,34 +9,35 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { TaskService } from '../../service/task';
-import { GroupId, User, UserService, UserGroupService } from '../../service/user';
+import { User, UserService } from '../../service/user';
+
 
 declare var __moduleName: string;
 
 @Component({
-    selector: 'assign-person',
+    selector: 'finance-apply',
     moduleId: __moduleName || module.id,
-    templateUrl: 'assign-person.html'
+    templateUrl: 'audit-trader.html'
 })
-export class AssignPersonComponent {
+
+
+
+export class AuditTraderComponent {
 
     private sub: Subscription;
 
     currentUserSession : User = new User();
-    selectedUser : User = new User();
-    userList : User[] = [];
 
     taskId : string = '';
     taskStatus : string = '';
     taskProcessInstanceId : string = '';
 
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private task: TaskService,
-        private user: UserService,
-        private group: UserGroupService
+        private user: UserService
     ) {}
+
 
     ngOnInit(){
         this.sub = this.activatedRoute.params.subscribe(params => {
@@ -45,12 +46,12 @@ export class AssignPersonComponent {
 
         this.activatedRoute.queryParams.subscribe(params => {
             this.taskStatus = params['status'];
-            this.taskProcessInstanceId = params['status'];
-            this.getUserList();
+            this.taskProcessInstanceId = params['processInstanceId'];
         });
 
         this.getCurrentUser();
     }
+
 
     getCurrentUser() {
         this.user.getUserSessionObservable.subscribe(
@@ -65,32 +66,31 @@ export class AssignPersonComponent {
         )
     }
 
-    getUserList() {
-        let groupId : string = '';
+    audit (){
 
-        if (this.taskStatus === '分配线上交易员') groupId = GroupId.trader;
+        let auditType : string = '';
 
-        if (this.taskStatus && groupId) {
-            this.group.getUserListByGroupId(groupId).then((result)=>{
+        if (this.taskStatus === '线上交易员审核并填写材料') auditType = 'investigator';
+
+        if (this.taskStatus && auditType) {
+            this.task.audit(this.taskId, auditType).then((result)=>{
                 if (result.success){
-                    this.userList = result.data;
+                    alert('保存成功!!')
 
                 }else{
-
+                    alert('保存失败!')
                 }
             });
         }
+
     }
 
-    assignPerson (){
-        this.task.assignPerson(this.taskId, this.selectedUser.id).then((result)=>{
-            if (result.success){
-                alert('分配成功!!')
 
-            }else{
-                alert('分配失败!')
-            }
-        });
+
+
+    financeType=1;
+    changeType = (typeIndex)=>{
+        this.financeType=typeIndex;
     }
 
 }

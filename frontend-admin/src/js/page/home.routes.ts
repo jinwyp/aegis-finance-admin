@@ -15,7 +15,7 @@ import { UserInfoComponent } from '../components/role/user-info';
 
 import { TaskListComponent } from '../components/task/task-list';
 import { AssignPersonComponent } from '../components/task/assign-person';
-import { FinanceApplyComponent } from '../components/task/finance-apply';
+import { AuditTraderComponent, } from '../components/task/audit-trader';
 import { BusinessApprovalComponent } from '../components/task/business-approval';
 import { TuneReportComponent } from '../components/task/tune-report';
 import { SuperviseReportComponent } from '../components/task/supervise-report';
@@ -96,9 +96,11 @@ const routes: Routes = [
         path: 'tasks/:id/assign',
         component: AssignPersonComponent
     },
+
+
     {
-        path: 'financeapply',
-        component: FinanceApplyComponent
+        path: 'tasks/:id/trader',
+        component: AuditTraderComponent,
     },
     {
         path: 'businessapproval',

@@ -10,6 +10,75 @@ import 'rxjs/add/operator/toPromise';
 import { HttpResponse, API } from './http';
 
 
+var taskStatus = [
+    {
+        "id": "2",
+        "name": "客户发起申请"
+    },
+    {
+        "id": "4",
+        "name": "待分配线上交易员"
+    },
+    {
+        "id": "6",
+        "name": "待线上交易员审核"
+    },
+    {
+        "id": "8",
+        "name": "线上交易员审核不通过"
+    },
+    {
+        "id": "10",
+        "name": "待分配业务员"
+    },
+    {
+        "id": "12",
+        "name": "待业务员审核"
+    },
+    {
+        "id": "14",
+        "name": "业务员审核不通过"
+    },
+    {
+        "id": "16",
+        "name": "待分配尽调员"
+    },
+    {
+        "id": "18",
+        "name": "待尽调员审核"
+    },
+    {
+        "id": "20",
+        "name": "待业务员补充尽调材料"
+    },
+    {
+        "id": "22",
+        "name": "尽调员审核不通过"
+    },
+    {
+        "id": "24",
+        "name": "待分配风控人员"
+    },
+    {
+        "id": "26",
+        "name": "待尽调员补充风控材料"
+    },
+    {
+        "id": "28",
+        "name": "风控人员审核不通过"
+    },
+    {
+        "id": "30",
+        "name": "风控人员填写合同模板并通知用户"
+    },
+    {
+        "id": "32",
+        "name": "审核通过,流程完成"
+    }
+];
+
+
+
 
 class Task {
 
@@ -67,6 +136,22 @@ class TaskService {
                     Promise.reject('管理员领取任务失败!')
                 }
             })
+            .then(response => response.json() as HttpResponse)
+            .catch(this.handleError);
+    }
+
+    audit(taskId : string, auditType : string, isApproved: number = 0, isNeedFile : number = 0) {
+
+        let auditStep = {
+            investigator : 'investigator',
+            onlinetrader : 'onlinetrader',
+            riskmanager : 'riskmanager',
+            salesman : 'salesman',
+        };
+
+        let url = `${API.tasksMYR}/${auditStep[auditType]}/audit/${taskId}?pass=${isApproved}&need=${isNeedFile}`;
+
+        return this.http.put(url, {} ).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
