@@ -11,7 +11,7 @@
         <tr class="head">
             <th width="60">融资类型</th>
             <th width="80">申请时间</th>
-            <th width="200">申请公司名称</th>
+            <th width="150">申请公司名称</th>
             <th width="100">拟融资总额状态<br/>(万元)</th>
             <th width="100">当前步骤</th>
             <th width="100">当前处理人</th>
@@ -37,11 +37,12 @@
                 <!--<span>已完成</span>-->
             </td>
             <td>
-                <button type="button" class="btn btn-xs btn-default btn-sure w-80" [routerLink]="['/tasks', task.id, 'assign']">分配人员</button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80"  [routerLink]="['/tasks', task.id, 'assign']" [queryParams]="{status:task.name}">
+                    <span *ngIf="task.name==='分配线上交易员'" > 分配线上交易员</span>
+                </button>
+
                 <!--<button type="button" class="btn btn-xs btn-default btn-return w-80">补充材料</button>-->
             </td>
         </tr>
-
-
     </table>
 </div>

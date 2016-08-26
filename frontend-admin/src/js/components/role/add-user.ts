@@ -129,7 +129,7 @@ export class AddUserComponent {
         if(this.isAddStatus){
             this.userService.add(this.currentUser).then((result)=>{
                 if (result.success){
-                    window.location.href = '/finance/admin/home/users';
+                    alert('添加成功')
                 }else{
                     this.css.ajaxErrorHidden = false;
                 }
@@ -137,9 +137,9 @@ export class AddUserComponent {
             });
         }else{
             console.log("-----------save-----------")
-            this.userService.save(this.currentUser).then((result)=>{
+            this.userService.update(this.currentUser).then((result)=>{
                 if (result.success){
-                    window.location.href = '/finance/admin/home/users';
+                    alert('修改成功')
                 }else{
                     this.css.ajaxErrorHidden = false;
                 }

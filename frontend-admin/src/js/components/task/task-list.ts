@@ -4,7 +4,7 @@
 
 
 import { Component } from '@angular/core';
-import { Router, ActivatedRoute, NavigationEnd } from '@angular/router';
+import { ActivatedRoute } from '@angular/router';
 
 import { Task, TaskService } from '../../service/task';
 import { User, UserService } from '../../service/user';
@@ -20,7 +20,6 @@ declare var __moduleName: string;
 export class TaskListComponent {
 
     constructor(
-        private router: Router,
         private activatedRoute: ActivatedRoute,
         private task: TaskService,
         private user: UserService
