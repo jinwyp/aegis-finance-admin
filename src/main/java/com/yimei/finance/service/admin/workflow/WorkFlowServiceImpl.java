@@ -7,12 +7,10 @@ import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
-import org.activiti.engine.HistoryService;
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
+import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.impl.RepositoryServiceImpl;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.IdentityLinkType;
@@ -40,6 +38,10 @@ public class WorkFlowServiceImpl {
     private AdminUserServiceImpl userService;
     @Autowired
     private IdentityService identityService;
+    @Autowired
+    private ProcessEngine processEngine;
+    @Autowired
+    private RepositoryServiceImpl repositoryService;
 
     /**
      * 添加附件方法
@@ -174,5 +176,6 @@ public class WorkFlowServiceImpl {
         }
         return Result.success().setData(taskObjectList);
     }
+
 
 }
