@@ -3,7 +3,7 @@ package com.yimei.finance.entity.admin.finance;
 /**
  * 金融申请单 备注/批注 类型
  */
-public enum EnumFinanceOrderCommentType {
+public enum EnumFinanceCommentType {
 
     OnlineTraderAuditComment("GROUP00002_Audit", "线上交易员审核备注"),
     OnlineTraderManageComment("GROUP0000", "线上交易员管理员备注"),
@@ -22,19 +22,19 @@ public enum EnumFinanceOrderCommentType {
     public String id;
     public String name;
 
-    public String RiskManagerManageRight = "01";
-    public String RiskManagerRight = "01_01";
-    public String InvestigatorManageRight = "01_01_0101";
-    public String InvestigatorRight = "01_01_0101_01";
-    public String SupervisorManageRight = "01_01_0103";
-    public String SupervisorRight = "01_01_0103_01";
-    public String SalesmanManageRight = "01_01_01_";
+    public static final String RiskManagerManageRight = "AA";
+    public static final String RiskManagerRight = "AA_BB";
+    public static final String InvestigatorManageRight = "AA_BB_FLAG_EE";
+    public static final String InvestigatorRight = "AA_BB_CCDEE_FF";
+    public static final String SupervisorManageRight = "AA_BB_CCDGG";
+    public static final String SupervisorRight = "AA_BB_CCDGG_HH";
+    public static final String SalesmanManageRight = "AA_BB_CCD_";
 
 
-    EnumFinanceOrderCommentType() {
+    EnumFinanceCommentType() {
     }
 
-    EnumFinanceOrderCommentType(String id, String name) {
+    EnumFinanceCommentType(String id, String name) {
         this.id = id;
         this.name = name;
     }
