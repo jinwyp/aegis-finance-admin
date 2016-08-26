@@ -30,12 +30,10 @@
     .navbar-nav{
       margin-top:15px;
       margin-right: 0px;
+      a{  color: #ffffff;  }
     }
-    .navbar-nav>li>a{
-      color: #ffffff;
-      &:hover{
-        background-color: transparent;
-      }
+    .nav>li>a:focus, .nav>li>a:hover{
+      background-color: #47b3e4;
     }
   }
 }
