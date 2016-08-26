@@ -7,6 +7,7 @@
 </div>
 
 <div class="row item-margin">
+    <form class="form-horizontal" *ngIf="css.activeForRefresh" (ngSubmit)="saveUser()" #saveUserForm="ngForm">
     <div class="row mt-50 info-item">
         <span class="col-sm-2 info-label">账号:</span>
         <span class="col-sm-10 info-val">{{currentUserSession.username}}</span>
@@ -27,16 +28,16 @@
     <div class="row info-item">
         <label class="col-sm-2 info-label-input" for="phoneInput">联系方式:</label>
         <div class="col-sm-10 info-val">
-            <input type="text" class="form-control" id="phoneInput" name="phone" [(ngModel)]="currentUserSession.phone" maxlength="16" #phone="ngModel" required >
+            <input type="text" class="form-control" id="phoneInput" name="phone" [(ngModel)]="currentUserSession.phone" maxlength="16" #phone="ngModel" >
             <span class="help-block" [class.hidden]="phone.valid || phone.pristine || css.ajaxErrorHidden">请填写联系方式!</span>
         </div>
     </div>
     <div class="row info-item">
         <label class="col-sm-2 info-label-input" for="emailInput">邮箱:</label>
         <div class="col-sm-10 info-val">
-            <input type="text" class="form-control" id="emailInput" name="email" [(ngModel)]="currentUserSession.email" maxlength="16" #email="ngModel" required >
+            <input type="text" class="form-control" id="emailInput" name="email" [(ngModel)]="currentUserSession.email" maxlength="16" #email="ngModel" >
             <span class="help-block" [class.hidden]="email.valid || email.pristine || css.ajaxErrorHidden">请填写邮箱!</span>
-            <span class="hint">注:管理员帮您<span class="orange">找回密码</span>的重要途径</span>
+            <span class="hint ml-10">注:管理员帮您<span class="orange">找回密码</span>的重要途径</span>
         </div>
     </div>
     <div class="row info-item">
@@ -48,7 +49,8 @@
     <div class="row info-item">
         <span class="col-sm-2 info-label-input"></span>
         <div class="col-sm-10 info-val">
-            <button type="button" class="btn btn-default btn-lg btn-save">保存</button>
+            <button type="submit" class="btn btn-default btn-lg btn-save">保存</button>
         </div>
     </div>
+    </form>
 </div>

@@ -27,11 +27,12 @@ export class UserDetailComponent {
     };
 
     currentUserSession : User = new User();
-
     departments  = [];
+    selectedItem = {name : '请选择'};
 
     ngOnInit() {
         this.getCurrentUser();
+        this.getDepartmentList();
     }
 
     getCurrentUser() {
@@ -40,7 +41,7 @@ export class UserDetailComponent {
             result => {
                 if (result && result.success) {
                     this.currentUserSession = result.data;
-                    console.log(this.currentUserSession)
+                    this.selectedItem.name = this.currentUserSession.department;
                 } else {
 
                 }
@@ -55,11 +56,10 @@ export class UserDetailComponent {
 
         this.userService.save(this.currentUserSession).then((result)=> {
             if (result.success) {
-                window.location.href = '/finance/admin/home/users';
+                window.location.href = '/finance/admin/home/user/detail';
             } else {
                 this.css.ajaxErrorHidden = false;
             }
-            console.log(result)
         });
     }
 
@@ -67,11 +67,15 @@ export class UserDetailComponent {
         this.userService.getDepartmentList().then((result)=> {
             if (result.success) {
                 this.departments = result.data;
-                console.log(result);
             } else {
 
             }
         });
+    }
+
+    selectChange($event) {
+        this.currentUserSession.department = $event.name;
+        this.selectedItem.name      = $event.name;
     }
 
 }
