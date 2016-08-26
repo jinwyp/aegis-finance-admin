@@ -130,7 +130,7 @@ public class UserCenterController {
         return Result.success().setData(mapList);
     }
 
-//    @LoginRequired
+    @LoginRequired
     @RequestMapping(value = "/export/excel", method = RequestMethod.GET)
     @ApiOperation(value = "导出金融申请单", notes = "导出金融申请单", response = MapObject.class, responseContainer = "List")
     public Result exportFinancingOrderToExcel(HttpServletResponse response,
@@ -158,8 +158,8 @@ public class UserCenterController {
             cell.setCellStyle(style);
         }
         SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-//        List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserId(userSession.getUser().getId());
-        List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserId(1);
+        List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserId(userSession.getUser().getId());
+//        List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserId(1);
         for (int i = 0; i < financeOrderList.size(); i++) {
             FinanceOrder order = financeOrderList.get(i);
             row = sheet.createRow(i+1);
