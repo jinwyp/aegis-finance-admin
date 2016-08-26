@@ -27,16 +27,22 @@ export class headerComponent {
 
     getCurrentUser() {
 
-        this.user.getCurrentUser().then((result)=>{
-            if (result.success){
-                this.currentUserSession = result.data;
-            }else{
+        this.user.getUserSessionObservable.subscribe(
+            result => {
+                if (result && result.success) {
+                    this.currentUserSession = result.data;
+                } else {
 
-            }
-        });
+                }
+            },
+            error => console.error(error)
+        )
     }
 
-    logout() {
+
+    logout(event) {
+        event.preventDefault();
+        event.stopPropagation();
         this.user.logout().then((result)=>{
             if (result.success){
                 window.location.href = '/finance/admin/login';

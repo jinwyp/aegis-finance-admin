@@ -9,14 +9,12 @@ import { Component } from '@angular/core';
 declare var __moduleName: string;
 
 @Component({
-    selector: 'wait-deal-list',
+    selector: 'assign-person',
     moduleId: __moduleName || module.id,
-    templateUrl: 'wait-deal-list.html'
+    templateUrl: 'assign-person.html'
 })
+export class AssignPersonComponent {
 
-
-
-export class WaitDealListComponent {
 
 
 }

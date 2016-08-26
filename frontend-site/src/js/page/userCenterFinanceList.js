@@ -93,7 +93,6 @@ var financeList = () => {
 
     getFinanceList();
 
-
     //datePicker
     var pickerStart = $('.startDate').pickadate({format:'yyyy-mm-dd', max:true, clear: '清空'});
     var pickerEnd = $('.endDate').pickadate({max:true, clear: '清空'});
@@ -168,6 +167,10 @@ var financeList = () => {
             applyType : ""
         });
     });
+
+    $('#excel').click(()=>{
+        location.href="/finance/user/financing/excel"
+    })
 
 
 

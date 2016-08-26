@@ -1,23 +1,29 @@
 package com.yimei.finance.service.admin.workflow;
 
-import com.yimei.finance.entity.admin.finance.AttachmentList;
-import com.yimei.finance.entity.admin.finance.AttachmentObject;
-import com.yimei.finance.entity.admin.finance.EnumFinanceStatus;
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.entity.admin.finance.*;
+import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
+import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.Execution;
+import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.IdentityLinkType;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -30,7 +36,10 @@ public class WorkFlowServiceImpl {
     private RuntimeService runtimeService;
     @Autowired
     private FinanceOrderRepository financeOrderRepository;
-
+    @Autowired
+    private AdminUserServiceImpl userService;
+    @Autowired
+    private IdentityService identityService;
 
     /**
      * 添加附件方法
@@ -75,15 +84,22 @@ public class WorkFlowServiceImpl {
         return Result.error(EnumCommonError.Admin_System_Error);
     }
 
+
     /**
-     * 审核不通过
+     * 更改金融单状态
      */
-    public Result auditNotPassMethod(Long financeId) {
+    @Transactional
+    public Result updateFinanceOrderApproveState(Long financeId, EnumFinanceStatus status) {
         FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
-        financeOrder.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
-        financeOrder.setApproveState(EnumFinanceStatus.AuditNotPass.name);
-        financeOrderRepository.save(financeOrder);
+        FinanceOrder order = financeOrderRepository.findOne(financeId);
+        order.setApproveStateId(status.id);
+        order.setApproveState(status.name);
+        order.setLastUpdateTime(new Date());
+        if (status.id == EnumFinanceStatus.AuditNotPass.id || status.id == EnumFinanceStatus.AuditPass.id) {
+            order.setEndDateTime(new Date());
+        }
+        financeOrderRepository.save(order);
         return Result.success().setData(true);
     }
 
@@ -102,4 +118,61 @@ public class WorkFlowServiceImpl {
         if (StringUtils.isEmpty(assignUserId)) return Result.error(EnumCommonError.Admin_System_Error);
         return Result.success().setData(assignUserId);
     }
+
+    public Result changeTaskObject(Task task) {
+        TaskObject taskObject = DozerUtils.copy(task, TaskObject.class);
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
+        if (processInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
+        if (StringUtils.isEmpty(processInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
+        FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
+        if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
+        taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
+        taskObject.setApplyType(financeOrder.getApplyType());
+        taskObject.setFinancingAmount(financeOrder.getFinancingAmount());
+        if (!StringUtils.isEmpty(task.getAssignee())) {
+            UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
+            taskObject.setAssigneeName(user.getUsername());
+            taskObject.setAssigneeDepartment(user.getDepartment());
+        }
+        return Result.success().setData(taskObject);
+    }
+
+    public Result changeTaskObject(List<Task> taskList) {
+        List<TaskObject> taskObjectList = new ArrayList<>();
+        for (Task task : taskList) {
+            Result result = changeTaskObject(task);
+            if (!result.isSuccess()) return result;
+            taskObjectList.add((TaskObject) result.getData());
+        }
+        return Result.success().setData(taskObjectList);
+    }
+
+    public Result changeHistoryTaskObject(HistoricTaskInstance task) {
+        HistoryTaskObject taskObject = DozerUtils.copy(task, HistoryTaskObject.class);
+        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
+        HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
+        if (processInstance == null && historicProcessInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
+        String businessKey = processInstance != null ? processInstance.getBusinessKey() : historicProcessInstance.getBusinessKey();
+        if (StringUtils.isEmpty(businessKey)) return Result.error(EnumCommonError.Admin_System_Error);
+        FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(businessKey));
+        if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
+        taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
+        taskObject.setApplyType(financeOrder.getApplyType());
+        taskObject.setFinancingAmount(financeOrder.getFinancingAmount());
+        UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
+        taskObject.setAssigneeName(user.getUsername());
+        taskObject.setAssigneeDepartment(user.getDepartment());
+        return Result.success().setData(taskObject);
+    }
+
+    public Result changeHistoryTaskObject(List<HistoricTaskInstance> taskList) {
+        List<HistoryTaskObject> taskObjectList = new ArrayList<>();
+        for (HistoricTaskInstance task : taskList) {
+            Result result = changeHistoryTaskObject(task);
+            if (!result.isSuccess()) return result;
+            taskObjectList.add((HistoryTaskObject) result.getData());
+        }
+        return Result.success().setData(taskObjectList);
+    }
+
 }

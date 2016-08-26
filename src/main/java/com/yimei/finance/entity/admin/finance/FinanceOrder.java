@@ -5,12 +5,13 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "t_finance_order")
@@ -29,6 +30,8 @@ public class FinanceOrder implements Serializable {
     @Size(min = 3, max = 10, message = "申请类型字段应在3-10个字符之间")
     @NotBlank(message = "申请类型字段不能为空")
     private String applyType;                                        //申请类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
+    @Transient
+    private String applyTypeName;
     @Column(name = "financing_amount", length = 20)
     private BigDecimal financingAmount;                              //拟融资金额（单位：万元）
     @Column(name = "expect_date", length = 10, nullable = false)
@@ -65,13 +68,29 @@ public class FinanceOrder implements Serializable {
     private int approveStateId;                                      //审批状态Id
     @Column(name = "source_id", length = 100)
     private String sourceId;                                         //流水号，编号
-    @Column(name = "apply_date_time")
-    private LocalDateTime applyDateTime;                             //发起时间
-//    @Column(name = "end_date_time")
-//    private LocalDateTime endDateTime;                               //结束时间
+    @Column(name = "apply_date_time", nullable = false)
+    private Date applyDateTime;                                      //发起时间
+    @Column(name = "end_date_time", nullable = true)
+    private Date endDateTime;                                        //结束时间
+    @Column(name = "last_update_time", nullable = false)
+    private Date lastUpdateTime;                                     //最后一次处理时间
     @Column(name = "apply_user_name", length = 50)
     private String applyUserName;                                    //申请人姓名
     @Column(name = "apply_company_name", length = 50)
     private String applyCompanyName;                                 //申请公司名称
+
+    public String getApplyTypeName() {
+        if (StringUtils.isEmpty(applyType)) {
+            return applyType;
+        } else if (applyType.equals("MYR")) {
+            return "煤易融";
+        } else if (applyType.equals("MYD")) {
+            return "煤易贷";
+        } else if (applyType.equals("MYG")) {
+            return "煤易购";
+        } else {
+            return applyType;
+        }
+    }
 
 }

@@ -12,8 +12,8 @@ import { InMemoryBackendService, SEED_DATA } from 'angular2-in-memory-web-api';
 import { InMemoryDataServiceOrder }          from '../mock/api/in-memory-data.service';
 
 import { routing, homePageRouterProviders } from './home.routes';
-import { Order, OrderService } from '../service/order';
 import { UserService, UserGroupService } from '../service/user';
+import { TaskService } from '../service/task';
 
 
 import { headerComponent } from '../components/header/header';
@@ -36,17 +36,16 @@ import { AddUserComponent } from '../components/role/add-user';
 import { UserInfoComponent } from '../components/role/user-info';
 
 
-import { WaitDealListComponent } from '../components/audit/wait-deal-list';
-import { DistributionPageComponent } from '../components/audit/distribution-page';
-import { ProcessTabComponent } from '../components/audit/common/process-tab';
-import { DistributionPersonComponent } from '../components/audit/common/distribution-person';
-import { FinanceApplyComponent } from '../components/audit/finance-apply';
-import { BusinessApprovalComponent } from '../components/audit/business-approval';
-import { TuneReportComponent } from '../components/audit/tune-report';
-import { SuperviseReportComponent } from '../components/audit/supervise-report';
-import { RiskControlReportComponent } from '../components/audit/risk-control-report';
-import { CustomSelectComponent } from '../components/audit/common/custom-select';
-import { CustomModalComponent } from '../components/audit/common/custom-modal';
+import { TaskListComponent } from '../components/task/task-list';
+import { AssignPersonComponent } from '../components/task/assign-person';
+import { ProcessTabComponent } from '../components/task/common/process-tab';
+import { DistributionPersonComponent } from '../components/task/common/distribution-person';
+import { FinanceApplyComponent } from '../components/task/finance-apply';
+import { BusinessApprovalComponent } from '../components/task/business-approval';
+import { TuneReportComponent } from '../components/task/tune-report';
+import { SuperviseReportComponent } from '../components/task/supervise-report';
+import { RiskControlReportComponent } from '../components/task/risk-control-report';
+import { CustomSelectComponent } from '../components/task/common/custom-select';
 
 
 import {AlertComponent,} from 'ng2-bootstrap/ng2-bootstrap';
@@ -61,10 +60,10 @@ import {AlertComponent,} from 'ng2-bootstrap/ng2-bootstrap';
         RoleListComponent, AddRoleComponent, RoleInfoComponent,
         UserListComponent, AddUserComponent, UserInfoComponent,
         ProcessTabComponent, DistributionPersonComponent,
-        WaitDealListComponent, DistributionPageComponent, FinanceApplyComponent, BusinessApprovalComponent,
-        TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent, CustomSelectComponent, CustomModalComponent
+        TaskListComponent, AssignPersonComponent, FinanceApplyComponent, BusinessApprovalComponent,
+        TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent, CustomSelectComponent
     ],
-    providers: [ homePageRouterProviders, OrderService, UserService, UserGroupService ],
+    providers: [ homePageRouterProviders, TaskService, UserService, UserGroupService ],
     bootstrap: [ HomeComponent ]
 })
 export class HomeModule { }

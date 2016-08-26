@@ -12,25 +12,26 @@ import {User, UserService, UserGroupService} from '../../service/user';
 
 declare var __moduleName:string;
 
+
 @Component({
     selector :    'add-user',
     moduleId :    __moduleName || module.id,
     templateUrl : 'add-user.html'
 })
-
-
 export class AddUserComponent {
 
-    constructor(private activatedRoute:ActivatedRoute,
-                private userService:UserService,
-                private groupService:UserGroupService) {
-    }
+    constructor(
+        private activatedRoute: ActivatedRoute,
+        private userService: UserService,
+        private groupService:UserGroupService
+    ) {}
 
     css = {
         activeForRefresh : true,
         isSubmitted :      false,
         ajaxErrorHidden :  true
     };
+
 
     isAddStatus:boolean = false;
     addUserTitle        = '添加用户';
@@ -59,9 +60,7 @@ export class AddUserComponent {
 
 
     ngOnDestroy() {
-        if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
-
-        } else {
+        if (this.sub) {
             this.sub.unsubscribe();
         }
     }

@@ -3,9 +3,7 @@
  */
 
 import { Routes, RouterModule }   from '@angular/router';
-import { OrderListComponent } from '../components/order/order-list';
-import { HomeDashboardComponent } from '../components/home/home-dashboard';
-import { OrderDetailComponent } from '../components/order/order-detail';
+
 import { UserDetailComponent } from '../components/user/user-detail';
 import { UserUpdatePasswordComponent } from '../components/user/user-update-password';
 import { RoleListComponent } from '../components/role/role-list';
@@ -14,18 +12,19 @@ import { AddRoleComponent } from '../components/role/add-role';
 import { UserListComponent } from '../components/role/user-list';
 import { AddUserComponent } from '../components/role/add-user';
 import { UserInfoComponent } from '../components/role/user-info';
-import { WaitDealListComponent } from '../components/audit/wait-deal-list';
-import { DistributionPageComponent } from '../components/audit/distribution-page';
-import { FinanceApplyComponent } from '../components/audit/finance-apply';
-import { BusinessApprovalComponent } from '../components/audit/business-approval';
-import { TuneReportComponent } from '../components/audit/tune-report';
-import { SuperviseReportComponent } from '../components/audit/supervise-report';
-import { RiskControlReportComponent } from '../components/audit/risk-control-report';
+
+import { TaskListComponent } from '../components/task/task-list';
+import { AssignPersonComponent } from '../components/task/assign-person';
+import { FinanceApplyComponent } from '../components/task/finance-apply';
+import { BusinessApprovalComponent } from '../components/task/business-approval';
+import { TuneReportComponent } from '../components/task/tune-report';
+import { SuperviseReportComponent } from '../components/task/supervise-report';
+import { RiskControlReportComponent } from '../components/task/risk-control-report';
 
 const routes: Routes = [
     {
         path: '',
-        redirectTo: '/userroles',
+        redirectTo: '/tasks/pending',
         pathMatch: 'full'
     },
 
@@ -41,50 +40,61 @@ const routes: Routes = [
     {
         path: 'userroles',
         component: RoleListComponent,
-        data: {type : 'list', title: 'User Role List' }
+        data: { routetype : 'list', title: 'User Role List' }
     },
     {
         path: 'userroles/add',
         component: AddRoleComponent,
-        data: {type : 'add', title: 'User Role Add' }
+        data: { routetype : 'add', title: 'User Role Add' }
     },
     {
         path: 'userroles/:id',
         component: RoleInfoComponent,
-        data: { type : 'info', title: 'User Role Info'}
+        data: { routetype : 'info', title: 'User Role Info'}
     },
     {
         path: 'userroles/:id/edit',
         component: AddRoleComponent,
-        data: {type : 'update',  title: 'User Role Edit'}
+        data: { routetype : 'update',  title: 'User Role Edit'}
     },
 
     {
         path: 'users',
-        component: UserListComponent
+        component: UserListComponent,
+        data: { routetype : 'list', title: 'User List' }
     },
     {
         path: 'users/add',
         component: AddUserComponent,
-        data: {type : 'add', title: 'User Add' }
+        data: { routetype : 'add', title: 'User Add' }
     },
     {
         path: 'users/:id',
-        component: UserInfoComponent
+        component: UserInfoComponent,
+        data: { routetype : 'list', title: 'User Info'}
     },
     {
         path: 'users/:id/edit',
         component: AddUserComponent,
-        data: {type : 'edit', title: 'User Edit' }
+        data: { routetype : 'edit', title: 'User Edit' }
+    },
+
+
+    {
+        path: 'tasks/pending',
+        component: TaskListComponent,
+        data: { routetype : 'pending', title: 'User Pending Tasks' }
     },
 
     {
-        path: 'waitdeallist',
-        component: WaitDealListComponent
+        path: 'tasks/all',
+        component: TaskListComponent,
+        data: {routetype : 'all', title: 'User All Tasks' }
     },
+
     {
-        path: 'distributionpage',
-        component: DistributionPageComponent
+        path: 'tasks/:id/assign',
+        component: AssignPersonComponent
     },
     {
         path: 'financeapply',
@@ -109,7 +119,7 @@ const routes: Routes = [
 
     {
         path: '**',
-        redirectTo: '/userroles'
+        redirectTo: '/tasks/pending'
     }
 ];
 

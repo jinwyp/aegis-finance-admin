@@ -3,8 +3,8 @@
     <div class="col-sm-12 menu-item" [class.menu-selected]="css.currentTab===1">
         <a class="icon verify-icon dropdown-toggle" data-toggle="dropdown"><span class="pr-10">审核管理</span><span class="caret"></span></a>
         <ul class="nav nav-stacked">
-            <li role="presentation" class="active"><a class="item" [routerLink]="['/waitdeallist']" routerLinkActive="active" (click)="changeMenu(11)">我的待办<span class="notice">8</span></a></li>
-            <li role="presentation"><a class="item" [routerLink]="['/']" routerLinkActive="active" (click)="changeMenu(12)">我的审核<span class="notice">16</span></a></li>
+            <li role="presentation" class="active"><a class="item" [routerLink]="['/tasks/pending']" routerLinkActive="active" (click)="changeMenu(11)">我的待办<span class="notice">8</span></a></li>
+            <li role="presentation"><a class="item" [routerLink]="['/tasks/all']" routerLinkActive="active" (click)="changeMenu(12)">我的审核<span class="notice">16</span></a></li>
         </ul>
     </div>
 

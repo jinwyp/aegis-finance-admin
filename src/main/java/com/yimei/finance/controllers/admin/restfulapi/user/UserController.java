@@ -1,7 +1,10 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.user.*;
+import com.yimei.finance.entity.admin.user.EnumAdminGroupError;
+import com.yimei.finance.entity.admin.user.EnumAdminUserError;
+import com.yimei.finance.entity.admin.user.GroupObject;
+import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.entity.common.databook.EnumDataBookType;
 import com.yimei.finance.entity.common.enums.EnumCommonString;
 import com.yimei.finance.entity.common.result.Page;
@@ -10,8 +13,13 @@ import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.databook.DataBookRepository;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
+import com.yimei.finance.service.common.message.MailServiceImpl;
+import com.yimei.finance.utils.CodeUtils;
 import com.yimei.finance.utils.DozerUtils;
-import io.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
@@ -28,18 +36,16 @@ import java.util.List;
 public class UserController {
     @Autowired
     private DataBookRepository dataBookRepository;
-
     @Autowired
     private IdentityService identityService;
-
     @Autowired
     private AdminUserServiceImpl userService;
-
-    @Autowired
-    private AdminSession adminSession;
-    
     @Autowired
     private AdminGroupServiceImpl groupService;
+    @Autowired
+    private MailServiceImpl mailService;
+    @Autowired
+    private AdminSession adminSession;
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
@@ -69,6 +75,11 @@ public class UserController {
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
+    @ApiOperation(value = "查询当前用户有权限添加用户的组列表", notes = "查询当前用户有权限添加用户的组列表", response = GroupObject.class, responseContainer = "List")
+    @RequestMapping(value = "/haveright", method = RequestMethod.GET)
+    public Result getHaveRightGroupListMethod() {
+        return Result.success().setData(userService.getCanAddUserGroupList(adminSession.getUser().getId()));
+    }
 
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     @ApiOperation(value = "获取所有部门列表", notes = "获取所有部门列表", response = String.class, responseContainer = "List")
@@ -76,12 +87,11 @@ public class UserController {
         return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.financedepartment.toString()));
     }
 
-
     @Transactional
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        Result result = userService.checkAddUserToGroupAuthority(user.getGroupIds());
+        Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
         if (!result.isSuccess()) return result;
         if (StringUtils.isEmpty(user.getUsername())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
         if (identityService.createUserQuery().userFirstName(user.getUsername()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
@@ -105,7 +115,7 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Result deleteUserMethod(@PathVariable("id") String id) {
         List<String> groupIds = userService.getUserGroupIdList(id);
-        Result result = userService.checkAddUserToGroupAuthority(groupIds);
+        Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), groupIds);
         if (!result.isSuccess()) return result;
         User user = identityService.createUserQuery().userId(id).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
@@ -114,13 +124,12 @@ public class UserController {
         return Result.success().setData(userObject);
     }
 
-
     @ApiOperation(value = "修改用户", notes = "根据 User Id修改用户", response = UserObject.class)
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateUserMethod(@PathVariable("id") String id,
                                    @ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        Result result = userService.checkAddUserToGroupAuthority(user.getGroupIds());
+        Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
         if (!result.isSuccess()) return result;
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());
         if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());
@@ -133,6 +142,20 @@ public class UserController {
         identityService.setUserInfo(oldUser.getId(), "department", user.getDepartment());
         addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
+    }
+
+    @ApiOperation(value = "管理员帮助用户重置密码", notes = "管理员帮助用户重置密码, 生成随机密码, 发送到用户邮箱.", response = Boolean.class)
+    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
+    @RequestMapping(value = "/resetpwd/{id}", method = RequestMethod.POST)
+    public Result resetUserPasswordMethod(@PathVariable("id")String id) {
+        User user = identityService.createUserQuery().userId(id).singleResult();
+        String subject = "重置密码邮件";
+        String password = CodeUtils.CreateNumLetterCode();
+        user.setPassword(password);
+        identityService.saveUser(user);
+        String content = "你好: " + user.getFirstName() + ", 管理员为你重置密码, 新密码是: " + password;
+        mailService.sendSimpleMail(user.getEmail(), subject, content);
+        return Result.success().setData(true);
     }
 
     @Transactional

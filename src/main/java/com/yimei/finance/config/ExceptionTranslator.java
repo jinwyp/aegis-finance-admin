@@ -53,7 +53,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
     public Result process401Error(UnauthorizedException ex) {
-        logger.error("401Exception:" + ex);
+        logger.error("401 Exception: " + ex);
         return Result.error(401, EnumCommonError.请您登录.toString());
     }
 
@@ -61,7 +61,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public Result process404Error(NotFoundException ex) {
-        logger.error("404Exception:",ex);
+        logger.error("404 Exception: ",ex);
         return Result.error(404, ex.getMessage());
     }
 
@@ -69,7 +69,7 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
     public Result process409Error(BusinessException ex) {
-        logger.error("409Exception:",ex);
+        logger.error("409 Exception: ",ex);
         return Result.error(409, ex.getMessage());
     }
 
@@ -77,10 +77,9 @@ public class ExceptionTranslator {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public Result process500Error(HttpServletRequest request, Exception ex) {
-        logger.error("500Exception:",ex);
+        logger.error("500 Exception: ",ex);
         //this.sendAlarmQueueMessage(request, ex);
         return Result.error(500, ex.getMessage());
-
     }
 
 
