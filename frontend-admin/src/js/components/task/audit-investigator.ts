@@ -9,34 +9,37 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { TaskService } from '../../service/task';
-import { GroupId, User, UserService, UserGroupService } from '../../service/user';
+import { User, UserService } from '../../service/user';
+
+
+
 
 declare var __moduleName: string;
 
 @Component({
-    selector: 'assign-person',
+    selector: 'audit-investigator',
     moduleId: __moduleName || module.id,
-    templateUrl: 'assign-person.html'
+    templateUrl: 'audit-investigator.html'
 })
-export class AssignPersonComponent {
+
+
+
+export class AuditInvestigatorComponent {
 
     private sub: Subscription;
 
     currentUserSession : User = new User();
-    selectedUser : User = new User();
-    userList : User[] = [];
 
     taskId : string = '';
     taskStatus : string = '';
     taskProcessInstanceId : string = '';
 
-
     constructor(
         private activatedRoute: ActivatedRoute,
         private task: TaskService,
-        private user: UserService,
-        private group: UserGroupService
+        private user: UserService
     ) {}
+
 
     ngOnInit(){
         this.sub = this.activatedRoute.params.subscribe(params => {
@@ -46,11 +49,11 @@ export class AssignPersonComponent {
         this.activatedRoute.queryParams.subscribe(params => {
             this.taskStatus = params['status'];
             this.taskProcessInstanceId = params['processInstanceId'];
-            this.getUserList();
         });
 
         this.getCurrentUser();
     }
+
 
     getCurrentUser() {
         this.user.getUserSessionObservable.subscribe(
@@ -65,36 +68,27 @@ export class AssignPersonComponent {
         )
     }
 
-    getUserList() {
-        let groupId : string = '';
+    audit (){
 
-        if (this.taskStatus === '分配线上交易员') groupId = GroupId.trader;
-        if (this.taskStatus === '分配业务员') groupId = GroupId.salesman;
-        if (this.taskStatus === '分配尽调员') groupId = GroupId.investigator;
-        if (this.taskStatus === '分配风控人员') groupId = GroupId.riskmanager;
+        let auditType : string = '';
 
-        if (this.taskStatus && groupId) {
-            this.group.getUserListByGroupId(groupId).then((result)=>{
+        if (this.taskStatus === '尽调员审核') auditType = 'investigator';
+
+        if (this.taskStatus && auditType) {
+            this.task.audit(this.taskId, auditType, 1).then((result)=>{
                 if (result.success){
-                    this.userList = result.data;
+                    alert('保存成功!!')
 
                 }else{
-
+                    alert('保存失败!')
                 }
             });
         }
+
     }
 
-    assignPerson (){
-        this.task.assignPerson(this.taskId, this.selectedUser.id).then((result)=>{
-            if (result.success){
-                alert('分配成功!!')
 
-            }else{
-                alert('分配失败!')
-            }
-        });
-    }
+    reportType=1;
 
 }
 

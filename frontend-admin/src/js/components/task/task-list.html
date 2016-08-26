@@ -39,6 +39,9 @@
             <td>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80"  [routerLink]="['/tasks', task.id, 'assign']" [queryParams]="{status:task.name, processInstanceId:task.processInstanceId}">
                     <span *ngIf="task.name==='分配线上交易员'" > 分配线上交易员</span>
+                    <span *ngIf="task.name==='分配业务员'" > 分配业务员</span>
+                    <span *ngIf="task.name==='分配尽调员'" > 分配尽调员</span>
+                    <span *ngIf="task.name==='分配风控人员'" > 分配风控人员</span>
                 </button>
 
                 <!--<button type="button" class="btn btn-xs btn-default btn-return w-80">补充材料</button>-->
@@ -65,6 +68,10 @@
             </td>
             <td>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.name==='线上交易员审核并填写材料'" [routerLink]="['/tasks', task.id, 'trader']" [queryParams]="{status:task.name, processInstanceId:task.processInstanceId}"> 审核并填写材料 </button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.name==='业务员审核并填写材料'" [routerLink]="['/tasks', task.id, 'salesman']" [queryParams]="{status:task.name, processInstanceId:task.processInstanceId}"> 审核并填写材料 </button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.name==='尽调员审核'" [routerLink]="['/tasks', task.id, 'investigator']" [queryParams]="{status:task.name, processInstanceId:task.processInstanceId}"> 审核 </button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.name==='风控人员审核'" [routerLink]="['/tasks', task.id, 'riskmanager']" [queryParams]="{status:task.name, processInstanceId:task.processInstanceId}"> 审核 </button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.name==='填写合同模板，通知用户'" [routerLink]="['/tasks', task.id, 'riskmanager']" [queryParams]="{status:task.name, processInstanceId:task.processInstanceId}"> 填写合同 </button>
 
                 <!--<button type="button" class="btn btn-xs btn-default btn-return w-80">补充材料</button>-->
             </td>
