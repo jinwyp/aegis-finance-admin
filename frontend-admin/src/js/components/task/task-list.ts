@@ -15,9 +15,9 @@ declare var __moduleName: string;
 @Component({
     selector: 'pending-list',
     moduleId: __moduleName || module.id,
-    templateUrl: 'pending-list.html'
+    templateUrl: 'task-list.html'
 })
-export class PendingListComponent {
+export class TaskListComponent {
 
     constructor(
         private router: Router,

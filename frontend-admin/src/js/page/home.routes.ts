@@ -13,7 +13,7 @@ import { UserListComponent } from '../components/role/user-list';
 import { AddUserComponent } from '../components/role/add-user';
 import { UserInfoComponent } from '../components/role/user-info';
 
-import { PendingListComponent } from '../components/task/pending-list';
+import { TaskListComponent } from '../components/task/task-list';
 import { AssignPersonComponent } from '../components/task/assign-person';
 import { FinanceApplyComponent } from '../components/task/finance-apply';
 import { BusinessApprovalComponent } from '../components/task/business-approval';
@@ -82,14 +82,14 @@ const routes: Routes = [
 
     {
         path: 'tasks/pending',
-        component: PendingListComponent,
+        component: TaskListComponent,
         data: { routetype : 'pending', title: 'User Pending Tasks' }
     },
 
     {
         path: 'tasks/all',
-        component: PendingListComponent,
-        data: {type : 'all', title: 'User All Tasks' }
+        component: TaskListComponent,
+        data: {routetype : 'all', title: 'User All Tasks' }
     },
 
     {

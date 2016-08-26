@@ -36,7 +36,7 @@ import { AddUserComponent } from '../components/role/add-user';
 import { UserInfoComponent } from '../components/role/user-info';
 
 
-import { PendingListComponent } from '../components/task/pending-list';
+import { TaskListComponent } from '../components/task/task-list';
 import { AssignPersonComponent } from '../components/task/assign-person';
 import { ProcessTabComponent } from '../components/task/common/process-tab';
 import { DistributionPersonComponent } from '../components/task/common/distribution-person';
@@ -60,7 +60,7 @@ import {AlertComponent,DROPDOWN_DIRECTIVES,TOOLTIP_DIRECTIVES} from 'ng2-bootstr
         RoleListComponent, AddRoleComponent, RoleInfoComponent,
         UserListComponent, AddUserComponent, UserInfoComponent,
         ProcessTabComponent, DistributionPersonComponent,
-        PendingListComponent, AssignPersonComponent, FinanceApplyComponent, BusinessApprovalComponent,
+        TaskListComponent, AssignPersonComponent, FinanceApplyComponent, BusinessApprovalComponent,
         TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent, CustomSelectComponent
     ],
     providers: [ homePageRouterProviders, TaskService, UserService, UserGroupService ],
