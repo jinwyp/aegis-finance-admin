@@ -40,10 +40,10 @@ import { TaskListComponent } from '../components/task/task-list';
 import { AssignPersonComponent } from '../components/task/assign-person';
 import { ProcessTabComponent } from '../components/task/common/process-tab';
 import { AuditTraderComponent } from '../components/task/audit-trader';
-import { BusinessApprovalComponent } from '../components/task/business-approval';
-import { TuneReportComponent } from '../components/task/tune-report';
+import { AuditSalesmanComponent } from '../components/task/audit-salesman';
+import { AuditInvestigatorComponent } from '../components/task/audit-investigator';
 import { SuperviseReportComponent } from '../components/task/supervise-report';
-import { RiskControlReportComponent } from '../components/task/risk-control-report';
+import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
 import { CustomSelectComponent } from '../components/task/common/custom-select';
 
 
@@ -59,8 +59,8 @@ import {AlertComponent,} from 'ng2-bootstrap/ng2-bootstrap';
         RoleListComponent, AddRoleComponent, RoleInfoComponent,
         UserListComponent, AddUserComponent, UserInfoComponent,
         TaskListComponent, AssignPersonComponent, ProcessTabComponent,
-        AuditTraderComponent, BusinessApprovalComponent,
-        TuneReportComponent, SuperviseReportComponent, RiskControlReportComponent, CustomSelectComponent
+        AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, SuperviseReportComponent, AuditRiskManagerComponent,
+        CustomSelectComponent
     ],
     providers: [ homePageRouterProviders, TaskService, UserService, UserGroupService ],
     bootstrap: [ HomeComponent ]
