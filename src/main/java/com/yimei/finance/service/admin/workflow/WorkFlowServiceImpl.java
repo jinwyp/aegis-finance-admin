@@ -18,9 +18,11 @@ import org.activiti.engine.task.IdentityLinkType;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -81,15 +83,22 @@ public class WorkFlowServiceImpl {
         return Result.error(EnumCommonError.Admin_System_Error);
     }
 
+
     /**
-     * 审核不通过
+     * 更改金融单状态
      */
-    public Result auditNotPassMethod(Long financeId) {
+    @Transactional
+    public Result updateFinanceOrderApproveState(Long financeId, EnumFinanceStatus status) {
         FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
-        financeOrder.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
-        financeOrder.setApproveState(EnumFinanceStatus.AuditNotPass.name);
-        financeOrderRepository.save(financeOrder);
+        FinanceOrder order = financeOrderRepository.findOne(financeId);
+        order.setApproveStateId(status.id);
+        order.setApproveState(status.name);
+        order.setLastUpdateTime(new Date());
+        if (status.id == EnumFinanceStatus.AuditNotPass.id || status.id == EnumFinanceStatus.AuditPass.id) {
+            order.setEndDateTime(new Date());
+        }
+        financeOrderRepository.save(order);
         return Result.success().setData(true);
     }
 
