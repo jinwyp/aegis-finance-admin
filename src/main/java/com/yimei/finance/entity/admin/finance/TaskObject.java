@@ -15,6 +15,7 @@ import java.util.List;
 public class TaskObject implements Serializable {
     private String id;
     private String processInstanceId;
+    private String taskDefinitionKey;
     private String assignee;
     private String assigneeName;
     private String assigneeDepartment;

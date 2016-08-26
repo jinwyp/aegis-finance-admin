@@ -14,6 +14,7 @@ import java.util.List;
 public class HistoryTaskObject {
     protected String id;
     private String processInstanceId;
+    private String taskDefinitionKey;
     protected String assignee;
     private String assigneeName;
     private String assigneeDepartment;
