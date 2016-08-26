@@ -63,7 +63,6 @@ export class TaskListComponent {
         this.task.getAdminTaskList().then((result)=>{
             if (result.success){
                 this.taskList = result.data;
-
             }else{
 
             }
