@@ -16,10 +16,10 @@ import { UserInfoComponent } from '../components/role/user-info';
 import { TaskListComponent } from '../components/task/task-list';
 import { AssignPersonComponent } from '../components/task/assign-person';
 import { AuditTraderComponent, } from '../components/task/audit-trader';
-import { BusinessApprovalComponent } from '../components/task/business-approval';
-import { TuneReportComponent } from '../components/task/tune-report';
+import { AuditSalesmanComponent } from '../components/task/audit-salesman';
+import { AuditInvestigatorComponent } from '../components/task/audit-investigator';
 import { SuperviseReportComponent } from '../components/task/supervise-report';
-import { RiskControlReportComponent } from '../components/task/risk-control-report';
+import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
 
 const routes: Routes = [
     {
@@ -103,20 +103,20 @@ const routes: Routes = [
         component: AuditTraderComponent,
     },
     {
-        path: 'businessapproval',
-        component: BusinessApprovalComponent
+        path: 'tasks/:id/salesman',
+        component: AuditSalesmanComponent
     },
     {
-        path: 'tunereport',
-        component: TuneReportComponent
+        path: 'tasks/:id/investigator',
+        component: AuditInvestigatorComponent
     },
     {
-        path: 'supervisereport',
+        path: 'tasks/:id/supervisor',
         component: SuperviseReportComponent
     },
     {
-        path: 'riskcontrolreport',
-        component: RiskControlReportComponent
+        path: 'tasks/:id/riskmanager',
+        component: AuditRiskManagerComponent
     },
 
     {

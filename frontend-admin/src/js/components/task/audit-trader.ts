@@ -15,7 +15,7 @@ import { User, UserService } from '../../service/user';
 declare var __moduleName: string;
 
 @Component({
-    selector: 'finance-apply',
+    selector: 'audit-trader',
     moduleId: __moduleName || module.id,
     templateUrl: 'audit-trader.html'
 })
