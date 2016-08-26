@@ -66,7 +66,7 @@ public class MYRFinancingController {
         if (pass == 1) {
             return workFlowService.addGroupIdentityLinkMethod(task.getProcessInstanceId(), EnumFinanceAssignType.assignSalesman.toString(), EnumSpecialGroup.ManageSalesmanGroup.id);
         } else {
-            return workFlowService.auditNotPassMethod(Long.valueOf(processInstance.getBusinessKey()));
+            return workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditNotPass);
         }
     }
 
@@ -91,7 +91,7 @@ public class MYRFinancingController {
         if (pass == 1) {
             return workFlowService.addGroupIdentityLinkMethod(task.getProcessInstanceId(), EnumFinanceAssignType.assignInvestigator.toString(), EnumSpecialGroup.ManageInvestigatorGroup.id);
         } else {
-            return workFlowService.auditNotPassMethod(Long.valueOf(processInstance.getBusinessKey()));
+            return workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditNotPass);
         }
     }
 
@@ -108,7 +108,8 @@ public class MYRFinancingController {
         taskService.complete(taskId);
         Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
         if (!result.isSuccess()) return result;
-        financeOrderService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.Auditing);
+        Result result1 = workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.Auditing);
+        if (!result1.isSuccess()) return result1;
         return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString(), String.valueOf(result.getData()));
     }
 
@@ -136,12 +137,13 @@ public class MYRFinancingController {
         if (need == 1) {
             Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
             if (!result.isSuccess()) return result;
-            financeOrderService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.SupplyMaterial);
+            Result result1 = workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.SupplyMaterial);
+            if (!result1.isSuccess()) return result1;
             return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString(), String.valueOf(result.getData()));
         } else if (pass == 1) {
             return workFlowService.addGroupIdentityLinkMethod(task.getProcessInstanceId(), EnumFinanceAssignType.assignRiskManager.toString(), EnumSpecialGroup.ManageRiskGroup.id);
         } else {
-            return workFlowService.auditNotPassMethod(Long.valueOf(processInstance.getBusinessKey()));
+            return workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditNotPass);
         }
     }
 
@@ -158,7 +160,8 @@ public class MYRFinancingController {
         taskService.complete(taskId);
         Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString());
         if (!result.isSuccess()) return result;
-        financeOrderService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.Auditing);
+        Result result1 = workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.Auditing);
+        if (!result1.isSuccess()) return result1;
         return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
     }
 
@@ -182,12 +185,13 @@ public class MYRFinancingController {
         if (need == 1) {
             Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
             if (!result.isSuccess()) return result;
-            financeOrderService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.SupplyMaterial);
+            Result result1 = workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.SupplyMaterial);
+            if (!result1.isSuccess()) return result1;
             return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorSupplyRiskMaterial.toString(), String.valueOf(result.getData()));
         } else if (pass == 1) {
             return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAuditSuccess.toString(), adminSession.getUser().getId());
         } else {
-            return workFlowService.auditNotPassMethod(Long.valueOf(processInstance.getBusinessKey()));
+            return workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditNotPass);
         }
     }
 
@@ -202,10 +206,7 @@ public class MYRFinancingController {
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
         taskService.complete(task.getId());
-        FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
-        if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
-        financeOrderService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditPass);
-        return Result.success().setData(true);
+        return workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditPass);
     }
 
 

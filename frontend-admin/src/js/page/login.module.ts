@@ -11,14 +11,14 @@ import { HttpModule }     from '@angular/http';
 
 
 import { LoginComponent } from '../components/login/login-index';
-import { User, UserService } from '../service/user';
+import { UserLoginService } from '../service/user';
 
 
 
 @NgModule({
     imports: [ BrowserModule, FormsModule, HttpModule],
     declarations: [ LoginComponent ],
-    providers: [ UserService ],
+    providers: [ UserLoginService ],
     bootstrap: [ LoginComponent ]
 })
 export class LoginModule { }

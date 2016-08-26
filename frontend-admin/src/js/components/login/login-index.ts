@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 
-import { User, UserService } from '../../service/user';
+import { User, UserLoginService } from '../../service/user';
 
 declare var __moduleName: string;
 
@@ -13,7 +13,7 @@ declare var __moduleName: string;
 export class LoginComponent {
 
     constructor(
-        private user: UserService
+        private user: UserLoginService
     ) {}
 
     css = {

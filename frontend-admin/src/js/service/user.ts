@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 import { HttpResponse, API } from './http';
 
@@ -58,6 +59,21 @@ class UserGroup {
 }
 
 
+@Injectable()
+class UserLoginService {
+
+    constructor(
+        private http: Http
+    ) {}
+
+    login(user) {
+        return this.http.post(API.login, user).toPromise()
+            .then(response => response.json() as HttpResponse);
+    }
+
+}
+
+
 
 @Injectable()
 class UserService {
@@ -67,15 +83,23 @@ class UserService {
         return Promise.reject(error.message || error);
     }
 
+    private userSession = new BehaviorSubject<HttpResponse>(null);
+    getUserSessionObservable = this.userSession.asObservable();
+
     constructor(
         private http: Http
-    ) { }
-
-
-    login(user) {
-        return this.http.post(API.login, user).toPromise()
-            .then(response => response.json() as HttpResponse);
+    ) {
+        this.http.get(API.session).subscribe((response) => {
+            var result = response.json();
+            if (result.data ){
+                result.data.groupIds = result.data.groupList.map( group => { return group.id})
+            }
+            this.userSession.next(result)
+        });
     }
+
+
+
 
     logout() {
         return this.http.get(API.logout).toPromise()
@@ -83,17 +107,7 @@ class UserService {
             .catch(this.handleError);
     }
 
-    getCurrentUser() {
-        return this.http.get(API.session).toPromise()
-            .then(response => {
-                var result = response.json() as HttpResponse;
-                if (result.data ){
-                    result.data.groupIds = result.data.groupList.map( group => { return group.id})
-                }
-                return result;
-            })
-            .catch(this.handleError);
-    }
+
 
     getTaskList() {
         return this.http.get(API.task).toPromise()
@@ -227,4 +241,4 @@ class UserGroupService {
 
 
 
-export {User, UserService, UserGroup, UserGroupService}
+export {UserLoginService, User, UserService, UserGroup, UserGroupService}

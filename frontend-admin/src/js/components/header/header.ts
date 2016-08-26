@@ -27,14 +27,18 @@ export class headerComponent {
 
     getCurrentUser() {
 
-        this.user.getCurrentUser().then((result)=>{
-            if (result.success){
-                this.currentUserSession = result.data;
-            }else{
+        this.user.getUserSessionObservable.subscribe(
+            result => {
+                if (result && result.success) {
+                    this.currentUserSession = result.data;
+                } else {
 
-            }
-        });
+                }
+            },
+            error => console.error(error)
+        )
     }
+
 
     logout(event) {
         event.preventDefault();

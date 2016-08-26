@@ -52,17 +52,6 @@ public class FinanceOrderServiceImpl {
     }
 
     /**
-     * 更改金融单状态
-     */
-    @Transactional
-    public void updateFinanceOrderApproveState(Long financeId, EnumFinanceStatus status) {
-        FinanceOrder order = financeOrderRepository.findOne(financeId);
-        order.setApproveStateId(status.id);
-        order.setApproveState(status.name);
-        financeOrderRepository.save(order);
-    }
-
-    /**
      * 查询金融单
      */
     public Result getFinanceOrderBySelect(int userId, FinanceOrderSearch order, Page page) {
