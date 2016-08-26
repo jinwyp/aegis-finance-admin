@@ -72,7 +72,7 @@ public class FinanceOrder implements Serializable {
     private Date applyDateTime;                                      //发起时间
     @Column(name = "end_date_time", nullable = true)
     private Date endDateTime;                                        //结束时间
-    @Column(name = "last_update_time", nullable = false)
+    @Column(name = "last_update_time")
     private Date lastUpdateTime;                                     //最后一次处理时间
     @Column(name = "apply_user_name", length = 50)
     private String applyUserName;                                    //申请人姓名
