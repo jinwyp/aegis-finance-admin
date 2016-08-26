@@ -134,7 +134,8 @@ public class FinancingCommonController {
         return Result.error(EnumAdminFinanceError.该用户没有处理此金融单的权限.toString());
     }
 
-    @RequestMapping(value = "/process/image/{processInstanceId}", method = RequestMethod.GET)
+
+    @RequestMapping(value = "/process/{processInstanceId}/image", method = RequestMethod.GET)
     @ApiOperation(value = "通过流程实例id获取流程图", notes = "通过流程实例id获取流程图")
     @ApiImplicitParam(name = "processInstanceId", value = "流程实例id", required = true, dataType = "String", paramType = "path")
     public void gene(@PathVariable("processInstanceId") String processInstanceId, HttpServletRequest request, HttpServletResponse response) throws IOException {
