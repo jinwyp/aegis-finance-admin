@@ -5,6 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.Date;
 
 @Data
@@ -21,6 +22,7 @@ public class TaskObject implements Serializable {
     private Date createTime;
     private Date dueDate;
     private String applyCompanyName;
-
+    private String applyType;
+    private BigDecimal financingAmount;
 
 }

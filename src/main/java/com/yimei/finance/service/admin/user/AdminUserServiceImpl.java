@@ -23,6 +23,8 @@ public class AdminUserServiceImpl {
     private AdminSession adminSession;
     @Autowired
     private IdentityService identityService;
+    @Autowired
+    private AdminGroupServiceImpl groupService;
 
     /**
      * 判断一个用户是否有 向该组 添加用户的 权限
@@ -42,12 +44,40 @@ public class AdminUserServiceImpl {
     /**
      * 获取一个用户 有权限添加 用户的组 list
      */
-    public List<String> getCanAddUserGroupIds(String userId) {
+    public List<GroupObject> getCanAddUserGroupList(String userId) {
+        if (getUserGroupIdList(adminSession.getUser().getId()).contains(EnumSpecialGroup.SuperAdminGroup.id)) {
+            return groupService.changeGroupObject(identityService.createGroupQuery().list());
+        }
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
-        List<String> sonGroupIds = new ArrayList<>();
+        List<GroupObject> groupObjectList = new ArrayList<>();
         for (Group group : groupList) {
             EnumSpecialGroup sonGroup = EnumSpecialGroup.getSonGroup(group.getId());
-            if (sonGroup != null) sonGroupIds.add(sonGroup.id);
+            if (sonGroup != null) {
+                GroupObject groupObject = groupService.changeGroupObject(identityService.createGroupQuery().groupId(sonGroup.id).singleResult());
+                groupObjectList.add(groupObject);
+            }
+        }
+        return groupObjectList;
+    }
+
+
+    /**
+     * 获取一个用户 有权限添加 用户的组id list
+     */
+    public List<String> getCanAddUserGroupIds(String userId) {
+        List<Group> groupList = new ArrayList<>();
+        List<String> sonGroupIds = new ArrayList<>();
+        if (getUserGroupIdList(adminSession.getUser().getId()).contains(EnumSpecialGroup.SuperAdminGroup.id)) {
+            groupList = identityService.createGroupQuery().list();
+            for (Group group : groupList) {
+                sonGroupIds.add(group.getId());
+            }
+        } else {
+            groupList = identityService.createGroupQuery().groupMember(userId).list();
+            for (Group group : groupList) {
+                EnumSpecialGroup sonGroup = EnumSpecialGroup.getSonGroup(group.getId());
+                if (sonGroup != null) sonGroupIds.add(sonGroup.id);
+            }
         }
         return sonGroupIds;
     }

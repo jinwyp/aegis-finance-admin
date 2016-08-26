@@ -1,5 +1,6 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
+import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.user.EnumAdminGroupError;
 import com.yimei.finance.entity.admin.user.EnumAdminUserError;
 import com.yimei.finance.entity.admin.user.GroupObject;
@@ -43,6 +44,8 @@ public class UserController {
     private AdminGroupServiceImpl groupService;
     @Autowired
     private MailServiceImpl mailService;
+    @Autowired
+    private AdminSession adminSession;
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
@@ -70,6 +73,12 @@ public class UserController {
         page.setTotal(identityService.createGroupQuery().groupMember(id).count());
         List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().groupMember(id).list());
         return Result.success().setData(groupObjectList).setMeta(page);
+    }
+
+    @ApiOperation(value = "查询当前用户有权限添加用户的组", notes = "查询当前用户有权限添加用户的组列表", response = GroupObject.class, responseContainer = "List")
+    @RequestMapping(value = "/haveright", method = RequestMethod.GET)
+    public Result getHaveRightGroupListMethod() {
+        return Result.success().setData(userService.getCanAddUserGroupList(adminSession.getUser().getId()));
     }
 
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
