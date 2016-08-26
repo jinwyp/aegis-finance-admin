@@ -75,7 +75,7 @@ public class UserController {
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
-    @ApiOperation(value = "查询当前用户有权限添加用户的组", notes = "查询当前用户有权限添加用户的组列表", response = GroupObject.class, responseContainer = "List")
+    @ApiOperation(value = "查询当前用户有权限添加用户的组列表", notes = "查询当前用户有权限添加用户的组列表", response = GroupObject.class, responseContainer = "List")
     @RequestMapping(value = "/haveright", method = RequestMethod.GET)
     public Result getHaveRightGroupListMethod() {
         return Result.success().setData(userService.getCanAddUserGroupList(adminSession.getUser().getId()));
