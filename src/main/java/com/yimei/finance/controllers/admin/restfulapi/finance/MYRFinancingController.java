@@ -53,6 +53,7 @@ public class MYRFinancingController {
         if (pass != 0 && pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
+        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.onlineTraderAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         if (StringUtils.isEmpty(processInstance.getBusinessKey()) || financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey())) == null)
@@ -86,6 +87,7 @@ public class MYRFinancingController {
         if (pass != 0 && pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
+        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行业务员审核操作.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
@@ -112,6 +114,7 @@ public class MYRFinancingController {
                                                                @ApiParam(name = "attachmentList", value = "业务员上传资料文件", required = false) @RequestBody AttachmentList attachmentList) {
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
+        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行业务与补充尽调员材料操作.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
@@ -141,6 +144,7 @@ public class MYRFinancingController {
         if (need != 0 && need != 1 && pass != 0 && pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
+        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.investigatorAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行尽调员审核操作.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
@@ -164,7 +168,7 @@ public class MYRFinancingController {
 
 
     @RequestMapping(value = "/investigator/supply/riskmanager/material/{taskId}", method = RequestMethod.POST)
-    @ApiOperation(value = "监管员补充材料", notes = "监管员补充风控人员要求的材料")
+    @ApiOperation(value = "尽调员补充材料", notes = "尽调员补充风控人员要求的材料")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path"),
             @ApiImplicitParam(name = "comment", value = "备注,批注等", required = false, dataType = "String", paramType = "query")
@@ -174,6 +178,7 @@ public class MYRFinancingController {
                                                                  @ApiParam(name = "attachmentList", value = "业务员上传资料文件", required = false) @RequestBody AttachmentList attachmentList) {
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
+        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.investigatorSupplyRiskMaterial.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行尽调员补充风控人员要求的材料操作.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
@@ -201,6 +206,7 @@ public class MYRFinancingController {
         if (need != 0 && need != 1 && pass != 0 && pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
+        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行风控人员审核操作.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
@@ -233,6 +239,7 @@ public class MYRFinancingController {
                                                      @ApiParam(name = "attachmentList", value = "风控人员上传资料文件", required = false) @RequestBody AttachmentList attachmentList) {
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
+        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAuditSuccess.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行填写合同操作.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
         if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
         workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
