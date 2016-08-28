@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test">
-  <process id="financingMYDWorkFlow" name="煤易融" isExecutable="true">
+  <process id="financingMYGWorkFlow" name="煤易融" isExecutable="true">
     <startEvent id="startWorkFlow" name="客户发起申请"></startEvent>
     <userTask id="assignOnlineTrader" name="分配线上交易员" activiti:candidateGroups="${GROUP00001}">
       <documentation>分配线上交易员。</documentation>
@@ -58,17 +58,17 @@
     <sequenceFlow id="flow15" sourceRef="assignRiskManager" targetRef="riskManagerAudit"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway4" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow16" sourceRef="riskManagerAudit" targetRef="exclusivegateway4"></sequenceFlow>
-    <userTask id="investigatorSupplyRiskMaterial" name="尽调员补充材料">
+    <userTask id="supervisorSupplyRiskMaterial" name="监管员补充监管材料">
       <documentation>尽调员补充材料。</documentation>
     </userTask>
-    <sequenceFlow id="flow17" name="需要补充材料" sourceRef="exclusivegateway4" targetRef="investigatorSupplyRiskMaterial">
+    <sequenceFlow id="flow17" name="需要补充监管材料" sourceRef="exclusivegateway4" targetRef="supervisorSupplyRiskMaterial">
       <documentation>需要尽调员补充材料。</documentation>
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needInvestigatorSupplyRiskMaterial == 1}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needSupervisorSupplyRiskMaterial == 1}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow18" sourceRef="investigatorSupplyRiskMaterial" targetRef="riskManagerAudit"></sequenceFlow>
+    <sequenceFlow id="flow18" sourceRef="supervisorSupplyRiskMaterial" targetRef="riskManagerAudit"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway5" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow19" sourceRef="exclusivegateway4" targetRef="exclusivegateway5">
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needInvestigatorSupplyRiskMaterial == 0}]]></conditionExpression>
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needInvestigatorSupplyRiskMaterial == 0 && needSupervisorSupplyRiskMaterial == 0}]]></conditionExpression>
     </sequenceFlow>
     <endEvent id="EndByRiskManager" name="风控人员审核不通过，流程结束。"></endEvent>
     <sequenceFlow id="flow20" name="审核不通过" sourceRef="exclusivegateway5" targetRef="EndByRiskManager">
@@ -128,9 +128,14 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${investigatorAudit == 1}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow41" sourceRef="parallelgateway2" targetRef="assignRiskManager"></sequenceFlow>
+    <userTask id="investigatorSupplyRiskMaterial" name="尽调员补充材料"></userTask>
+    <sequenceFlow id="flow42" sourceRef="riskManagerAudit" targetRef="supervisorSupplyRiskMaterial"></sequenceFlow>
+    <sequenceFlow id="flow43" name="需要补充尽调材料" sourceRef="exclusivegateway4" targetRef="supervisorSupplyRiskMaterial">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needInvestigatorSupplyRiskMaterial == 1}]]></conditionExpression>
+    </sequenceFlow>
   </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_financingMYDWorkFlow">
-    <bpmndi:BPMNPlane bpmnElement="financingMYDWorkFlow" id="BPMNPlane_financingMYDWorkFlow">
+  <bpmndi:BPMNDiagram id="BPMNDiagram_financingMYGWorkFlow">
+    <bpmndi:BPMNPlane bpmnElement="financingMYGWorkFlow" id="BPMNPlane_financingMYGWorkFlow">
       <bpmndi:BPMNShape bpmnElement="startWorkFlow" id="BPMNShape_startWorkFlow">
         <omgdc:Bounds height="35.0" width="35.0" x="60.0" y="12.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
@@ -179,7 +184,7 @@
       <bpmndi:BPMNShape bpmnElement="exclusivegateway4" id="BPMNShape_exclusivegateway4">
         <omgdc:Bounds height="40.0" width="40.0" x="1105.0" y="294.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="investigatorSupplyRiskMaterial" id="BPMNShape_investigatorSupplyRiskMaterial">
+      <bpmndi:BPMNShape bpmnElement="supervisorSupplyRiskMaterial" id="BPMNShape_supervisorSupplyRiskMaterial">
         <omgdc:Bounds height="55.0" width="105.0" x="960.0" y="204.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="exclusivegateway5" id="BPMNShape_exclusivegateway5">
@@ -223,6 +228,9 @@
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="parallelgateway2" id="BPMNShape_parallelgateway2">
         <omgdc:Bounds height="40.0" width="40.0" x="740.0" y="294.0"></omgdc:Bounds>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="investigatorSupplyRiskMaterial" id="BPMNShape_investigatorSupplyRiskMaterial">
+        <omgdc:Bounds height="55.0" width="105.0" x="960.0" y="367.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
         <omgdi:waypoint x="77.0" y="47.0"></omgdi:waypoint>
@@ -287,7 +295,7 @@
         <omgdi:waypoint x="1125.0" y="231.0"></omgdi:waypoint>
         <omgdi:waypoint x="1065.0" y="231.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="66.0" x="1089.0" y="261.0"></omgdc:Bounds>
+          <omgdc:Bounds height="16.0" width="100.0" x="1076.0" y="241.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18">
@@ -392,6 +400,18 @@
       <bpmndi:BPMNEdge bpmnElement="flow41" id="BPMNEdge_flow41">
         <omgdi:waypoint x="780.0" y="314.0"></omgdi:waypoint>
         <omgdi:waypoint x="820.0" y="314.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow42" id="BPMNEdge_flow42">
+        <omgdi:waypoint x="1012.0" y="287.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1012.0" y="259.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow43" id="BPMNEdge_flow43">
+        <omgdi:waypoint x="1125.0" y="334.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1125.0" y="394.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1012.0" y="259.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="1076.0" y="366.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
