@@ -5,16 +5,14 @@ import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Result;
-import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
-import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
-import com.yimei.finance.service.admin.workflow.WorkFlowServiceImpl;
+import com.yimei.finance.service.admin.finance.FinanceFlowStepServiceImpl;
+import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
 import io.swagger.annotations.*;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -31,11 +29,9 @@ public class MYRFinancingController {
     @Autowired
     private AdminSession adminSession;
     @Autowired
-    private FinanceOrderRepository financeOrderRepository;
+    private FinanceFlowMethodServiceImpl workFlowService;
     @Autowired
-    private FinanceOrderServiceImpl financeOrderService;
-    @Autowired
-    private WorkFlowServiceImpl workFlowService;
+    private FinanceFlowStepServiceImpl flowStepService;
 
 
     @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.PUT)
@@ -50,26 +46,7 @@ public class MYRFinancingController {
                                                    @RequestParam(value = "comment", required = false) String comment,
                                                    @ApiParam(name = "financeOrder", value = "金融申请单对象", required = true) FinanceOrder financeOrder,
                                                    @ApiParam(name = "attachmentList", value = "金融申请单上传单据列表", required = false) AttachmentList attachmentList) {
-        if (pass != 0 && pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
-        Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
-        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
-        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.onlineTraderAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
-        if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
-        if (StringUtils.isEmpty(processInstance.getBusinessKey()) || financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey())) == null)
-            return Result.error(EnumCommonError.Admin_System_Error);
-        financeOrder.setId(Long.valueOf(processInstance.getBusinessKey()));
-        financeOrderService.updateFinanceOrderByOnlineTrader(financeOrder);
-        workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
-        workFlowService.addComment(task.getId(), task.getProcessInstanceId(), comment);
-        Map<String, Object> vars = new HashMap<>();
-        vars.put(EnumFinanceEventType.onlineTraderAudit.toString(), pass);
-        taskService.complete(taskId, vars);
-        if (pass == 1) {
-            return workFlowService.addGroupIdentityLinkMethod(task.getProcessInstanceId(), EnumFinanceAssignType.assignSalesman.toString(), EnumSpecialGroup.ManageSalesmanGroup.id);
-        } else {
-            return workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditNotPass);
-        }
+        return flowStepService.onlineTraderAuditFinanceOrderMethod(adminSession.getUser().getId(), taskId, pass, comment, financeOrder, attachmentList);
     }
 
 
@@ -84,22 +61,7 @@ public class MYRFinancingController {
                                                        @RequestParam(value = "pass", required = true) int pass,
                                                        @RequestParam(value = "comment", required = false) String comment,
                                                        @ApiParam(name = "attachmentList", value = "业务员上传资料文件", required = false) @RequestBody AttachmentList attachmentList) {
-        if (pass != 0 && pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
-        Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
-        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
-        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行业务员审核操作.toString());
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
-        if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
-        workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
-        workFlowService.addComment(task.getId(), task.getProcessInstanceId(), comment);
-        Map<String, Object> vars = new HashMap<>();
-        vars.put(EnumFinanceConditions.salesmanAudit.toString(), pass);
-        taskService.complete(taskId, vars);
-        if (pass == 1) {
-            return workFlowService.addGroupIdentityLinkMethod(task.getProcessInstanceId(), EnumFinanceAssignType.assignInvestigator.toString(), EnumSpecialGroup.ManageInvestigatorGroup.id);
-        } else {
-            return workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditNotPass);
-        }
+        return flowStepService.salesmanAutidFinanceOrderMethod(adminSession.getUser().getId(), taskId, pass, comment, attachmentList);
     }
 
 
@@ -112,21 +74,8 @@ public class MYRFinancingController {
     public Result myrSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
                                                                @RequestParam(value = "comment", required = false) String comment,
                                                                @ApiParam(name = "attachmentList", value = "业务员上传资料文件", required = false) @RequestBody AttachmentList attachmentList) {
-        Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
-        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
-        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行业务与补充尽调员材料操作.toString());
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
-        if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
-        workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
-        workFlowService.addComment(task.getId(), task.getProcessInstanceId(), comment);
-        taskService.complete(taskId);
-        Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
-        if (!result.isSuccess()) return result;
-        Result result1 = workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.Auditing);
-        if (!result1.isSuccess()) return result1;
-        return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString(), String.valueOf(result.getData()));
+        return flowStepService.salesmanSupplyInvestigationMaterialFinanceOrderMethod(adminSession.getUser().getId(), taskId, comment, attachmentList);
     }
-
 
     @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.PUT)
     @ApiOperation(value = "尽调员审核", notes = "尽调员审核")
@@ -141,31 +90,8 @@ public class MYRFinancingController {
                                              @RequestParam(value = "pass", required = true) int pass,
                                              @RequestParam(value = "comment", required = false) String comment,
                                              @ApiParam(name = "attachmentList", value = "尽调员上传资料文件", required = false) @RequestBody AttachmentList attachmentList) {
-        if (need != 0 && need != 1 && pass != 0 && pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
-        Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
-        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
-        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.investigatorAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行尽调员审核操作.toString());
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
-        if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
-        workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
-        workFlowService.addComment(task.getId(), task.getProcessInstanceId(), comment);
-        Map<String, Object> vars = new HashMap<>();
-        vars.put(EnumFinanceConditions.needSalesmanSupplyInvestigationMaterial.toString(), need);
-        vars.put(EnumFinanceConditions.investigatorAudit.toString(), pass);
-        taskService.complete(taskId, vars);
-        if (need == 1) {
-            Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
-            if (!result.isSuccess()) return result;
-            Result result1 = workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.SupplyMaterial);
-            if (!result1.isSuccess()) return result1;
-            return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString(), String.valueOf(result.getData()));
-        } else if (pass == 1) {
-            return workFlowService.addGroupIdentityLinkMethod(task.getProcessInstanceId(), EnumFinanceAssignType.assignRiskManager.toString(), EnumSpecialGroup.ManageRiskGroup.id);
-        } else {
-            return workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditNotPass);
-        }
+        return flowStepService.investigatorAuditFinanceOrderMethod(adminSession.getUser().getId(), taskId, need, pass, comment, attachmentList);
     }
-
 
     @RequestMapping(value = "/investigator/supply/riskmanager/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "尽调员补充材料", notes = "尽调员补充风控人员要求的材料")
@@ -176,21 +102,8 @@ public class MYRFinancingController {
     public Result myrInvestigatorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
                                                                  @RequestParam(value = "comment", required = false) String comment,
                                                                  @ApiParam(name = "attachmentList", value = "业务员上传资料文件", required = false) @RequestBody AttachmentList attachmentList) {
-        Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
-        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
-        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.investigatorSupplyRiskMaterial.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行尽调员补充风控人员要求的材料操作.toString());
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
-        if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
-        workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
-        workFlowService.addComment(task.getId(), task.getProcessInstanceId(), comment);
-        taskService.complete(taskId);
-        Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString());
-        if (!result.isSuccess()) return result;
-        Result result1 = workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.Auditing);
-        if (!result1.isSuccess()) return result1;
-        return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
+        return flowStepService.investigatorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), taskId, comment, attachmentList);
     }
-
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.PUT)
     @ApiOperation(value = "风控人员审核", notes = "风控人员审核")
@@ -203,29 +116,7 @@ public class MYRFinancingController {
                                             @RequestParam(value = "pass", required = true) int pass,
                                             @RequestParam(value = "comment", required = false) String comment,
                                             @ApiParam(name = "attachmentList", value = "尽调员上传资料文件", required = false) @RequestBody AttachmentList attachmentList) {
-        if (need != 0 && need != 1 && pass != 0 && pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
-        Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
-        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
-        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行风控人员审核操作.toString());
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
-        if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
-        workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
-        workFlowService.addComment(task.getId(), task.getProcessInstanceId(), comment);
-        Map<String, Object> vars = new HashMap<>();
-        vars.put(EnumFinanceConditions.needInvestigatorSupplyRiskMaterial.toString(), need);
-        vars.put(EnumFinanceConditions.riskManagerAudit.toString(), pass);
-        taskService.complete(taskId, vars);
-        if (need == 1) {
-            Result result = workFlowService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
-            if (!result.isSuccess()) return result;
-            Result result1 = workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.SupplyMaterial);
-            if (!result1.isSuccess()) return result1;
-            return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorSupplyRiskMaterial.toString(), String.valueOf(result.getData()));
-        } else if (pass == 1) {
-            return workFlowService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAuditSuccess.toString(), adminSession.getUser().getId());
-        } else {
-            return workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditNotPass);
-        }
+        return flowStepService.riskManagerAuditMYRFinanceOrderMethod(adminSession.getUser().getId(), taskId, need, pass, comment, attachmentList);
     }
 
     @RequestMapping(value = "/riskmanager/contract/{taskId}", method = RequestMethod.POST)
@@ -237,15 +128,7 @@ public class MYRFinancingController {
     public Result myrRiskManagerUploadContractMethod(@PathVariable("taskId") String taskId,
                                                      @RequestParam(value = "comment", required = false) String comment,
                                                      @ApiParam(name = "attachmentList", value = "风控人员上传资料文件", required = false) @RequestBody AttachmentList attachmentList) {
-        Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).active().singleResult();
-        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
-        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAuditSuccess.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行填写合同操作.toString());
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).active().singleResult();
-        if (processInstance == null) return Result.error(EnumAdminFinanceError.此流程不存在或已经结束.toString());
-        workFlowService.addAttachmentsMethod(attachmentList, taskId, task.getProcessInstanceId());
-        workFlowService.addComment(task.getId(), task.getProcessInstanceId(), comment);
-        taskService.complete(task.getId());
-        return workFlowService.updateFinanceOrderApproveState(Long.valueOf(processInstance.getBusinessKey()), EnumFinanceStatus.AuditPass);
+        return flowStepService.riskManagerAddContractFinanceOrderMethod(adminSession.getUser().getId(), taskId, comment, attachmentList);
     }
 
 

@@ -6,7 +6,7 @@ import com.yimei.finance.entity.admin.finance.HistoryTaskObject;
 import com.yimei.finance.entity.admin.finance.TaskObject;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
-import com.yimei.finance.service.admin.workflow.WorkFlowServiceImpl;
+import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -38,7 +38,7 @@ public class UserCenterController {
     @Autowired
     private HistoryService historyService;
     @Autowired
-    private WorkFlowServiceImpl workFlowService;
+    private FinanceFlowMethodServiceImpl workFlowService;
 
     @RequestMapping(value = "/{taskId}", method = RequestMethod.GET)
     @ApiOperation(value = "通过 id 查询任务对象", notes = "通过 id 查询任务对象", response = TaskObject.class)
