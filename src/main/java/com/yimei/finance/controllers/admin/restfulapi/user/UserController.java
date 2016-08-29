@@ -163,8 +163,10 @@ public class UserController {
     @RequestMapping(value = "/changepwd", method = RequestMethod.POST)
     public Result resetUserPasswordMethod(@RequestParam(value = "oldPassword", required = true)String oldPassword,
                                           @RequestParam(value = "newPassword", required = true)String newPassword) {
-        if (!identityService.checkPassword(adminSession.getUser().getId(), userService.securePassword(oldPassword))) {
-            return Result.error(EnumAdminUserError.旧密码不正确.toString());
+        if (newPassword.length() < 6 || newPassword.length() > 16) {
+            return Result.error(EnumAdminUserError.NewPasswordLengthError);
+        } else if (!identityService.checkPassword(adminSession.getUser().getId(), userService.securePassword(oldPassword))) {
+            return Result.error(EnumAdminUserError.原密码不正确.toString());
         } else {
             User user = identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult();
             user.setPassword(userService.securePassword(newPassword));
