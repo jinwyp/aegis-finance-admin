@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { TaskService } from '../../service/task';
+import { Task, TaskService, TaskStatus } from '../../service/task';
 import { User, UserService } from '../../service/user';
 
 
@@ -29,8 +29,7 @@ export class AuditRiskManagerComponent {
     currentUserSession : User = new User();
 
     taskId : string = '';
-    taskStatus : string = '';
-    taskProcessInstanceId : string = '';
+    currentTask : Task = new Task();
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -42,11 +41,7 @@ export class AuditRiskManagerComponent {
     ngOnInit(){
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.taskId = params['id'];
-        });
-
-        this.activatedRoute.queryParams.subscribe(params => {
-            this.taskStatus = params['status'];
-            this.taskProcessInstanceId = params['processInstanceId'];
+            this.getTaskInfo(params['id']);
         });
 
         this.getCurrentUser();
@@ -66,13 +61,24 @@ export class AuditRiskManagerComponent {
         )
     }
 
+    getTaskInfo (id) {
+        this.task.getTaskInfoById(id).then((result)=>{
+            if (result.success){
+                this.currentTask = result.data;
+            }else{
+
+            }
+        });
+    }
+
+
     audit (){
 
         let auditType : string = '';
 
-        if (this.taskStatus === '风控人员审核') auditType = 'riskmanager';
+        if (this.currentTask.taskDefinitionKey === TaskStatus.riskManagerAudit) auditType = 'riskmanager'; // 风控人员审核
 
-        if (this.taskStatus && auditType) {
+        if (this.currentTask.taskDefinitionKey && auditType) {
             this.task.audit(this.taskId, auditType, 1).then((result)=>{
                 if (result.success){
                     alert('保存成功!!')
