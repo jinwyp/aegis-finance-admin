@@ -2,6 +2,7 @@ package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.entity.common.result.CombineObject;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.entity.common.result.TaskMap;
 import com.yimei.finance.service.admin.finance.FinanceFlowStepServiceImpl;
@@ -27,9 +28,8 @@ public class MYDFinancingController {
     @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydOnlineTraderAddMaterialMethod(@PathVariable("taskId") String taskId,
-                                                   @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @Valid TaskMap taskMap,
-                                                   @ApiParam(name = "financeOrder", value = "金融申请单对象", required = true) @RequestBody FinanceOrder financeOrder) {
-        return flowStepService.onlineTraderAuditFinanceOrderMethod(adminSession.getUser().getId(), taskId, taskMap, financeOrder);
+                                                   @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody @Valid CombineObject<TaskMap, FinanceOrder> map) {
+        return flowStepService.onlineTraderAuditFinanceOrderMethod(adminSession.getUser().getId(), taskId, map.t, map.u);
     }
 
     @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.POST)
