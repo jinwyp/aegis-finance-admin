@@ -1,7 +1,6 @@
 package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.entity.admin.finance.*;
-import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.entity.site.user.FinanceOrderSearch;
@@ -11,8 +10,7 @@ import com.yimei.finance.utils.Where;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.history.HistoricProcessInstance;
-import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Attachment;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,13 +101,11 @@ public class FinanceOrderServiceImpl {
     }
 
     public List<AttachmentObject> getOnlineTraderAttachmentListByFinanceOrderId(Long financeId) {
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
-        HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
-        if (processInstance == null && historicProcessInstance == null) return null;
-        String processInstanceId = processInstance != null ? processInstance.getProcessInstanceId() : historicProcessInstance.getId();
-        Task task = taskService.createTaskQuery().processInstanceId(processInstanceId).taskDefinitionKey(EnumFinanceEventType.onlineTraderAudit.toString()).singleResult();
-        if (task == null) return null;
-        List<Attachment> attachmentList = taskService.getTaskAttachments(task.getId());
+        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(EnumFinanceEventType.onlineTraderAudit.toString()).singleResult();
+        HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(EnumFinanceEventType.onlineTraderAudit.toString()).singleResult();
+        if (task == null && taskInstance == null) return null;
+        String taskId = task != null ? task.getId() : taskInstance.getId();
+        List<Attachment> attachmentList = taskService.getTaskAttachments(taskId);
         if (attachmentList == null || attachmentList.size() == 0) return null;
         return DozerUtils.copy(attachmentList, AttachmentObject.class);
     }

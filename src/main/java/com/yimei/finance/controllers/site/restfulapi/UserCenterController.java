@@ -101,6 +101,7 @@ public class UserCenterController {
     @RequestMapping(value = "/apply/{id}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
         FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, userSession.getUser().getId());
+//        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, 1);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         financeOrder.setAttachmentList(financeOrderService.getOnlineTraderAttachmentListByFinanceOrderId(financeOrder.getId()));
         return Result.success().setData(financeOrder);
