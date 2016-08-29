@@ -4,7 +4,8 @@
         <li>&gt;</li>
         <li>用户管理</li>
         <li>&gt;</li>
-        <li class="active">{{addUserTitle}}</li>
+        <li class="active" *ngIf="isAddStatus">添加用户</li>
+        <li class="active" *ngIf="!isAddStatus">编辑用户</li>
     </ol>
 </div>
 
