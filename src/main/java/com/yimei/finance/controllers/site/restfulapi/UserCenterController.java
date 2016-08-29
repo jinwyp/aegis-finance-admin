@@ -70,9 +70,9 @@ public class UserCenterController {
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
             runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
         } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
-            runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
+            runtimeService.startProcessInstanceByKey("financingMYGWorkFlow", String.valueOf(financeOrder.getId()));
         } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
-            runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
+            runtimeService.startProcessInstanceByKey("financingMYDWorkFlow", String.valueOf(financeOrder.getId()));
         } else {
             return Result.error(EnumCommonError.Admin_System_Error);
         }
