@@ -38,14 +38,14 @@ import { UserInfoComponent } from '../components/role/user-info';
 
 import { TaskListComponent } from '../components/task/task-list';
 import { AssignPersonComponent } from '../components/task/assign-person';
-import { ProcessTabComponent } from '../components/task/common/process-tab';
+import { ProcessTabComponent } from '../components/task/process-tab';
 import { AuditTraderComponent } from '../components/task/audit-trader';
 import { AuditSalesmanComponent } from '../components/task/audit-salesman';
 import { AuditInvestigatorComponent } from '../components/task/audit-investigator';
 import { SuperviseReportComponent } from '../components/task/supervise-report';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
-import { CustomSelectComponent } from '../components/task/common/custom-select';
-import { CustomModalComponent } from '../components/audit/common/custom-modal';
+import { CustomSelectComponent } from '../components/aegis-ui/custom-select';
+import { CustomModalComponent } from '../components/aegis-ui/custom-modal';
 
 
 import {AlertComponent,} from 'ng2-bootstrap/ng2-bootstrap';
