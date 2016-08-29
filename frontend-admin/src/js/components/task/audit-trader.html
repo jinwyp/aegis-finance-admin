@@ -6,7 +6,9 @@
     </ol>
 </div>
 
-<process-tab [processInstanceId]="taskProcessInstanceId"></process-tab>
+<process-tab [processInstanceId]="currentTask.processInstanceId"></process-tab>
+
+
 
 <div class="item-margin apply-box">
 
@@ -18,103 +20,92 @@
         <tr class="item-max">
             <td class="td-label">选择融资类型:</td>
             <td class="td-val finance-types" colspan="3">
-                <div [class]="'finance-type'" [class.selected]="financeType==1">
-                    <div><label><input name="aa" type="radio" [checked]="financeType==1" (click)="changeType(1)">煤易融</label></div>
+                <div class="finance-type" [class.selected]="currentTask.applyType==='MYR'">
+                    <div><label><input type="radio" disabled [checked]="currentTask.applyType==='MYR'" >煤易融</label></div>
                     <div class="introduce">我有煤，可发运至终端形成应收账款，需要实现资金的快速回流</div>
                 </div>
-                <div [class]="'finance-type'" [class.selected]="financeType==2">
-                    <div><label><input name="aa" type="radio" [checked]="financeType==2" (click)="changeType(2)">煤易贷</label></div>
+                <div class="finance-type" [class.selected]="currentTask.applyType==='MYD'">
+                    <div><label><input type="radio" disabled [checked]="currentTask.applyType==='MYD'">煤易贷</label></div>
                     <div class="introduce">我有煤，可质押,想要实现快速融资</div>
                 </div>
-                <div [class]="'finance-type'" [class.selected]="financeType==3">
-                    <div><label><input name="aa" type="radio" [checked]="financeType==3" (click)="changeType(3)">煤易购</label></div>
+                <div class="finance-type" [class.selected]="currentTask.applyType==='MYG'">
+                    <div><label><input type="radio" disabled [checked]="currentTask.applyType==='MYG'">煤易购</label></div>
                     <div class="introduce">我有采购订单，需要申请垫资采购，从而突破自身资金瓶颈</div>
                 </div>
             </td>
         </tr>
 
+
         <tr class="item-min">
             <td class="td-label">拟融资金额:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"><span>万元</span></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.financingAmount"><span>万元</span></td>
             <td class="td-label">拟使用资金时间:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"><span>天</span></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.expectDate"><span>天</span></td>
+        </tr>
+
+        <tr class="item-min">
+            <td class="td-label">预期此笔业务量:</td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.businessAmount" ><span>万吨</span></td>
+
+            <td class="td-label" *ngIf="currentTask.applyType==='MYR'||currentTask.applyType==='MYG'">运输方式:</td>
+            <td class="td-val" *ngIf="currentTask.applyType==='MYR'||currentTask.applyType==='MYG'">
+                <select [(ngModel)]="currentTask.transportMode">
+                    <option value ="">请选择</option>
+                    <option value ="汽运">汽运</option>
+                    <option value="海运">海运</option>
+                    <option value="火运">火运</option>
+                    <option value="其它">其它</option>
+                </select>
+            </td>
         </tr>
 
         <!--煤易融-->
-        <tr *ngIf="financeType==1" class="item-min">
-            <td class="td-label">预期此笔业务量:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"><span>万吨</span></td>
-            <td class="td-label">运输方式:</td>
-            <td class="td-val">
-                <select>
-                    <option value ="volvo">请选择</option>
-                    <option value ="saab">汽运</option>
-                    <option value="opel">火运</option>
-                    <option value="audi">船运</option>
-                    <option value="audi">其它</option>
-                </select>
-            </td>
-        </tr>
-        <tr *ngIf="financeType==1" class="item-min">
+
+        <tr *ngIf="currentTask.applyType==='MYR'" class="item-min">
             <td class="td-label">预计单吨销售价:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"><span>元/吨</span></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.sellingPrice"><span>元/吨</span></td>
             <td class="td-label">签约单位全称:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.contractor"></td>
         </tr>
-        <tr *ngIf="financeType==1" class="item-min">
+        <tr *ngIf="currentTask.applyType==='MYR'" class="item-min">
             <td class="td-label">下游签约单位全称:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.downstreamContractor"></td>
             <td class="td-label">用煤终端:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.terminalServer"></td>
         </tr>
+
 
         <!--煤易贷-->
-        <tr *ngIf="financeType==2" class="item-min">
-            <td class="td-label">预期此笔业务量:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"><span>万吨</span></td>
+        <tr *ngIf="currentTask.applyType==='MYD'" class="item-min">
             <td class="td-label">煤炭仓储地:</td>
-            <td class="td-val">
-
-            </td>
-        </tr>
-        <tr *ngIf="financeType==2" class="item-min">
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.storageLocation"></td>
             <td class="td-label">煤炭来源:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"></td>
-            <td class="td-label">煤炭仓储地:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.coalSource"></td>
         </tr>
-        <tr *ngIf="financeType==2" class="item-min">
+        <tr *ngIf="currentTask.applyType==='MYD'" class="item-min">
             <td class="td-label">单吨市场报价:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"><span>元/吨</span></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.marketPrice"><span>元/吨</span></td>
             <td class="td-label">主要煤质指标:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-val"><input type="text" value="缺字段" ></td>
         </tr>
+
+
 
         <!--煤易购-->
-        <tr *ngIf="financeType==3" class="item-min">
-            <td class="td-label">预期此笔业务量:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"><span>万吨</span></td>
-            <td class="td-label">运输方式:</td>
-            <td class="td-val">
-                <select>
-                    <option value ="volvo">请选择</option>
-                    <option value ="saab">汽运</option>
-                    <option value="opel">火运</option>
-                    <option value="audi">船运</option>
-                    <option value="audi">其它</option>
-                </select>
-            </td>
-        </tr>
-        <tr *ngIf="financeType==3" class="item-min">
+
+        <tr *ngIf="currentTask.applyType==='MYG'" class="item-min">
             <td class="td-label">单吨采购价:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"><span>元/吨</span></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.procurementPrice"><span>元/吨</span></td>
             <td class="td-label">上游资源方全称:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.upstreamResource"></td>
         </tr>
-        <tr *ngIf="financeType==3" class="item-min">
+        <tr *ngIf="currentTask.applyType==='MYG'" class="item-min">
             <td class="td-label">中转港口/地全称:</td>
-            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.transferPort"></td>
         </tr>
+
+        <!--煤易购 结束-->
+
 
         <tr class="item-max">
             <td class="td-label">上传单据:</td>
@@ -129,7 +120,7 @@
         <tr class="item-max">
             <td class="td-label">备注说明:</td>
             <td class="td-val td-textarea" colspan="3">
-                <textarea class="form-control" rows="6"></textarea>
+                <textarea class="form-control" rows="6" [(ngModel)]="currentTask.comments"></textarea>
             </td>
         </tr>
     </table>
@@ -137,6 +128,7 @@
     <div class="row info-item">
         <span class="col-sm-4 info-label-input"></span>
         <div class="col-sm-8 info-val no-bottom-border">
+            <button type="button" class="btn btn-default btn-lg btn-sure" (click)="saveOrder()">保存</button>
             <button type="button" class="btn btn-default btn-lg btn-sure" (click)="audit()">保存并提交</button>
             <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/pending']">返回</button>
         </div>

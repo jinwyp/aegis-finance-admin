@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { TaskService } from '../../service/task';
+import {TaskService, Task, TaskStatus} from '../../service/task';
 import { GroupId, User, UserService, UserGroupService } from '../../service/user';
 
 declare var __moduleName: string;
@@ -27,8 +27,7 @@ export class AssignPersonComponent {
     userList : User[] = [];
 
     taskId : string = '';
-    taskStatus : string = '';
-    taskProcessInstanceId : string = '';
+    currentTask : Task = new Task();
 
 
     constructor(
@@ -41,12 +40,7 @@ export class AssignPersonComponent {
     ngOnInit(){
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.taskId = params['id'];
-        });
-
-        this.activatedRoute.queryParams.subscribe(params => {
-            this.taskStatus = params['status'];
-            this.taskProcessInstanceId = params['processInstanceId'];
-            this.getUserList();
+            this.getTaskInfo(params['id']);
         });
 
         this.getCurrentUser();
@@ -65,15 +59,26 @@ export class AssignPersonComponent {
         )
     }
 
+    getTaskInfo (id) {
+        this.task.getTaskInfoById(id).then((result)=>{
+            if (result.success){
+                this.currentTask = result.data;
+                this.getUserList();
+            }else{
+
+            }
+        });
+    }
+
     getUserList() {
         let groupId : string = '';
 
-        if (this.taskStatus === '分配线上交易员') groupId = GroupId.trader;
-        if (this.taskStatus === '分配业务员') groupId = GroupId.salesman;
-        if (this.taskStatus === '分配尽调员') groupId = GroupId.investigator;
-        if (this.taskStatus === '分配风控人员') groupId = GroupId.riskmanager;
+        if (this.currentTask.taskDefinitionKey === TaskStatus.assignOnlineTrader) groupId = GroupId.trader;  // 分配线上交易员
+        if (this.currentTask.taskDefinitionKey === TaskStatus.assignSalesman) groupId = GroupId.salesman;  // 分配业务员
+        if (this.currentTask.taskDefinitionKey === TaskStatus.assignInvestigator) groupId = GroupId.investigator; // 分配尽调员
+        if (this.currentTask.taskDefinitionKey === TaskStatus.assignRiskManager) groupId = GroupId.riskmanager; // 分配风控人员
 
-        if (this.taskStatus && groupId) {
+        if (this.currentTask.taskDefinitionKey && groupId) {
             this.group.getUserListByGroupId(groupId).then((result)=>{
                 if (result.success){
                     this.userList = result.data;
@@ -84,6 +89,9 @@ export class AssignPersonComponent {
             });
         }
     }
+
+
+
 
     assignPerson (){
         this.task.assignPerson(this.taskId, this.selectedUser.id).then((result)=>{

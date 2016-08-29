@@ -11,6 +11,7 @@ import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.common.NumberServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -43,6 +44,8 @@ public class UserCenterController {
     private TaskService taskService;
     @Autowired
     private NumberServiceImpl numberService;
+    @Autowired
+    private FinanceOrderServiceImpl financeOrderService;
 
     /**
     * 供应链金融 - 发起融资申请
@@ -67,9 +70,9 @@ public class UserCenterController {
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
             runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
         } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
-            runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
+            runtimeService.startProcessInstanceByKey("financingMYGWorkFlow", String.valueOf(financeOrder.getId()));
         } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
-            runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
+            runtimeService.startProcessInstanceByKey("financingMYDWorkFlow", String.valueOf(financeOrder.getId()));
         } else {
             return Result.error(EnumCommonError.Admin_System_Error);
         }
@@ -98,7 +101,9 @@ public class UserCenterController {
     @RequestMapping(value = "/apply/{id}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
         FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, userSession.getUser().getId());
+//        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, 1);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
+        financeOrder.setAttachmentList(financeOrderService.getOnlineTraderAttachmentListByFinanceOrderId(financeOrder.getId()));
         return Result.success().setData(financeOrder);
     }
 

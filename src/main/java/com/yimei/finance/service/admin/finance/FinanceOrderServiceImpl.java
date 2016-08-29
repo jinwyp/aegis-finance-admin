@@ -1,18 +1,19 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.EnumFinanceStatus;
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.entity.site.user.FinanceOrderSearch;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.utils.DozerUtils;
 import com.yimei.finance.utils.Where;
-import org.hibernate.Criteria;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.RuntimeService;
+import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.task.Attachment;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -20,8 +21,6 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.TypedQuery;
-import java.util.ArrayList;
 import java.util.List;
 
 @Service("financeOrderService")
@@ -30,6 +29,12 @@ public class FinanceOrderServiceImpl {
     private FinanceOrderRepository financeOrderRepository;
     @PersistenceContext
     private EntityManager entityManager;
+    @Autowired
+    private RuntimeService runtimeService;
+    @Autowired
+    private HistoryService historyService;
+    @Autowired
+    private TaskService taskService;
 
     /**
      * 交易员补充材料
@@ -95,4 +100,13 @@ public class FinanceOrderServiceImpl {
         return Result.success().setData(financeOrderList).setMeta(page);
     }
 
+    public List<AttachmentObject> getOnlineTraderAttachmentListByFinanceOrderId(Long financeId) {
+        Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(EnumFinanceEventType.onlineTraderAudit.toString()).singleResult();
+        HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(EnumFinanceEventType.onlineTraderAudit.toString()).singleResult();
+        if (task == null && taskInstance == null) return null;
+        String taskId = task != null ? task.getId() : taskInstance.getId();
+        List<Attachment> attachmentList = taskService.getTaskAttachments(taskId);
+        if (attachmentList == null || attachmentList.size() == 0) return null;
+        return DozerUtils.copy(attachmentList, AttachmentObject.class);
+    }
 }
