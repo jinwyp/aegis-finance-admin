@@ -21,6 +21,5 @@ export class LeftMenuComponent {
     changeMenu = (menu)=>{
         this.css.currentMenu = menu;
         this.css.currentTab = Math.floor(menu/10);
-        console.log(this.css)
     }
 }

@@ -55,7 +55,7 @@
         <div class="row info-item">
             <label class="col-sm-2 info-label-input"><span>所属部门:</span></label>
             <div class="col-sm-10 info-val">
-                <custom-select [optionList]="departments" [selectedItem]="selectedItem" (onChange)="selectChange($event)"></custom-select>
+                <custom-select  [optionList]="departments" [(ngModel)]="selectedItem" [ngModelOptions]="{standalone: true}"></custom-select>
             </div>
         </div>
         <div class="row info-item">
