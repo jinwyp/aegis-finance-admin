@@ -15,7 +15,6 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.IdentityLinkType;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,21 +61,6 @@ public class FinanceFlowMethodServiceImpl {
             taskService.addComment(taskId, processInstanceId, comment, type);
         }
     }
-
-//    /**
-//     * 分配待选组方法
-//     */
-//    public Result addGroupIdentityLinkMethod(String processInstanceId, String financeAssignType, String groupId) {
-//        List<Task> taskList = taskService.createTaskQuery().processInstanceId(processInstanceId).active().list();
-//        for (Task t : taskList) {
-//            Execution exe = runtimeService.createExecutionQuery().executionId(t.getExecutionId()).singleResult();
-//            if (exe.getActivityId().equals(financeAssignType)) {
-//                taskService.addGroupIdentityLink(t.getId(), groupId, IdentityLinkType.CANDIDATE);
-//                return Result.success().setData(true);
-//            }
-//        }
-//        return Result.error(EnumCommonError.Admin_System_Error);
-//    }
 
     /**
      * 指派给人方法

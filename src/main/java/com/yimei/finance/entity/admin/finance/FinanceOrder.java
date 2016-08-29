@@ -12,6 +12,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @Entity
 @Table(name = "t_finance_order")
@@ -81,6 +82,8 @@ public class FinanceOrder implements Serializable {
     private String applyUserName;                                    //申请人姓名
     @Column(name = "apply_company_name", length = 50)
     private String applyCompanyName;                                 //申请公司名称
+    @Transient
+    private List<AttachmentObject> attachmentList;                   //线上交易员上传表单列表
 
     public String getApplyTypeName() {
         if (StringUtils.isEmpty(applyType)) {

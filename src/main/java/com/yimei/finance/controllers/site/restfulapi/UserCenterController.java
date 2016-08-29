@@ -11,6 +11,7 @@ import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.common.NumberServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -43,6 +44,8 @@ public class UserCenterController {
     private TaskService taskService;
     @Autowired
     private NumberServiceImpl numberService;
+    @Autowired
+    private FinanceOrderServiceImpl financeOrderService;
 
     /**
     * 供应链金融 - 发起融资申请
@@ -94,11 +97,12 @@ public class UserCenterController {
      */
     @ApiOperation(value = "根据 id 查看金融申请单", notes = "根据 金融申请单id 查看金融申请单", response = FinanceOrder.class)
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Long", paramType = "path")
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(value = "/apply/{id}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
-        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, userSession.getUser().getId());
+        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, 1);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
+        financeOrder.setAttachmentList(financeOrderService.getOnlineTraderAttachmentListByFinanceOrderId(financeOrder.getId()));
         return Result.success().setData(financeOrder);
     }
 
