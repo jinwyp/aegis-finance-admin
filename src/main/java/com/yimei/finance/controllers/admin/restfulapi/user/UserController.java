@@ -157,7 +157,7 @@ public class UserController {
 
     @ApiOperation(value = "用户修改密码", notes = "用户自己修改密码", response = Boolean.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "oldPassword", value = "旧密码", required = true, dataType = "String", paramType = "form"),
+            @ApiImplicitParam(name = "oldPassword", value = "原密码", required = true, dataType = "String", paramType = "form"),
             @ApiImplicitParam(name = "newPassword", value = "新密码", required = true, dataType = "String", paramType = "form")
     })
     @RequestMapping(value = "/changepwd", method = RequestMethod.POST)
