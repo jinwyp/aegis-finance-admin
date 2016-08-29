@@ -25,8 +25,10 @@ export class CustomSelectComponent {
     @Input()
     selectedItem = {};
 
+
     toggleSelect() {
         this.isClose = !this.isClose;
+        console.log(this.selectedItem);
     }
 
     @Output()

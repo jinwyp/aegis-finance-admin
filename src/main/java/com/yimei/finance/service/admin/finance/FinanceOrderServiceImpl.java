@@ -30,8 +30,6 @@ public class FinanceOrderServiceImpl {
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired
-    private RuntimeService runtimeService;
-    @Autowired
     private HistoryService historyService;
     @Autowired
     private TaskService taskService;
@@ -51,6 +49,7 @@ public class FinanceOrderServiceImpl {
         order.setDownstreamContractor(financeOrder.getDownstreamContractor());
         order.setTerminalServer(financeOrder.getTerminalServer());
         order.setComments(financeOrder.getComments());
+        order.setCoalQuantityIndex(financeOrder.getCoalQuantityIndex());
         order.setApproveStateId(EnumFinanceStatus.Auditing.id);
         order.setApproveState(EnumFinanceStatus.Auditing.name);
         financeOrderRepository.save(order);

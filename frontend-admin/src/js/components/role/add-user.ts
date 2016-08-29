@@ -33,8 +33,7 @@ export class AddUserComponent {
     };
 
 
-    isAddStatus:boolean = false;
-    addUserTitle        = '添加用户';
+    isAddStatus : boolean = false;
 
     private sub:Subscription;
             currentUser = new User();
@@ -47,12 +46,10 @@ export class AddUserComponent {
 
         if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
             this.isAddStatus  = true;
-            this.addUserTitle = '添加用户';
             this.getGroupList();
         } else {
             this.sub = this.activatedRoute.params.subscribe(params => {
                 this.getUserInfo(params['id']);
-                this.addUserTitle = '编辑用户';
             });
         }
         this.getDepartmentList();
@@ -130,8 +127,8 @@ export class AddUserComponent {
         if (this.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
                 if (result.success) {
-                    // window.location.href = '/finance/admin/home/users/add';
-                    // this.clear();
+
+                    this.clear();
                 } else {
                     this.css.ajaxErrorHidden = false;
                 }
@@ -140,7 +137,6 @@ export class AddUserComponent {
         } else {
             this.userService.save(this.currentUser).then((result)=> {
                 if (result.success) {
-                    window.location.href = '/finance/admin/home/users';
                 } else {
                     this.css.ajaxErrorHidden = false;
                 }
@@ -152,13 +148,17 @@ export class AddUserComponent {
     selectChange($event) {
         this.currentUser.department = $event.name;
         this.selectedItem.name      = $event.name;
-        console.log(this.currentUser);
     }
 
     clear() {
-        this.currentUser       = new User();
+        this.currentUser.username       = '';
+        this.currentUser.name       = '';
+        this.currentUser.email       = '';
+        this.currentUser.phone       = '';
+        this.currentUser.department       = '';
         this.selectedItem.name = '请选择';
-        console.log(this.groups);
+        console.log('-------------');
+        console.log(this.selectedItem.name);
     }
 
 }
