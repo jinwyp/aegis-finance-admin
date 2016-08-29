@@ -160,10 +160,11 @@
                                 <th>已上传单据:</th>
                                 <td colspan="3">
                                     <ul>
-                                        <li class="paddingL0" ms-for="(index, bill) in @financeInfo.attachmentList">
+                                        <li class="paddingL0" ms-visible="@financeInfo.attachmentList!=null" ms-for="(index, bill) in @financeInfo.attachmentList">
                                             <p>{{bill.name}}</p>
                                             <img  ms-attr="{src: bill.url}">
                                         </li>
+                                        <li ms-visible="@financeInfo.attachmentList===null">--</li>
                                     </ul>
                                 </td>
 
