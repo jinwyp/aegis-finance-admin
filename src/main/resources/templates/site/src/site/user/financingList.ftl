@@ -54,10 +54,10 @@
             <div class="application ">
                 <div class="borderB clearfix">
                     <h4><span></span>融资详情</h4>
-                    <!--<div class="floatR">-->
+                    <div class="floatR">
                         <!--<span><em></em>了解业务类型</span>-->
-                        <!--<a href="javascript:void(0);" id="finance">我要融资</a>-->
-                    <!--</div>-->
+                        <a href="/finance">《&nbsp;返回易煤金融</a>
+                    </div>
                 </div>
 
                 <form>
@@ -142,7 +142,7 @@
                             <span class="green" ms-visible="order.approveStateId===2">待审核</span>
                             <span class="bold" ms-visible="order.approveStateId===8">审核通过</span>
                             <span class="bold" ms-visible="order.approveStateId===4">审核中</span>
-                            <span class="bold" ms-visible="order.approveStateId===6">审核中(补充材料)</span>
+                            <span class="bold" ms-visible="order.approveStateId===6">审核中<br/><b>(补充材料)</b></span>
                             <span ms-visible="order.approveStateId===''">/</span>
                         </td>
 
