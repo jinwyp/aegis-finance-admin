@@ -1,35 +1,20 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.finance.*;
-import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
-import com.yimei.finance.entity.common.enums.EnumCommonError;
+import com.yimei.finance.entity.admin.finance.AttachmentList;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.service.admin.finance.FinanceFlowStepServiceImpl;
-import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
 import io.swagger.annotations.*;
-import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
-import org.activiti.engine.runtime.ProcessInstance;
-import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.HashMap;
-import java.util.Map;
 
 @Api(tags = "admin-api-flow-myr", description = "煤易融相关接口")
 @RequestMapping("/api/financing/admin/myr")
 @RestController("adminMYRFinancingController")
 public class MYRFinancingController {
     @Autowired
-    private RuntimeService runtimeService;
-    @Autowired
-    private TaskService taskService;
-    @Autowired
     private AdminSession adminSession;
-    @Autowired
-    private FinanceFlowMethodServiceImpl workFlowService;
     @Autowired
     private FinanceFlowStepServiceImpl flowStepService;
 

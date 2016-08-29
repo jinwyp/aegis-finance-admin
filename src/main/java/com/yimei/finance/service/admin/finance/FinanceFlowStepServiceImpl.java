@@ -98,7 +98,9 @@ public class FinanceFlowStepServiceImpl {
         flowMethodService.addComment(task.getId(), task.getProcessInstanceId(), comment, EnumFinanceCommentType.InvestigatorAuditComment.id);
         Map<String, Object> vars = new HashMap<>();
         vars.put(EnumFinanceConditions.needSalesmanSupplyInvestigationMaterial.toString(), need);
-        vars.put(EnumFinanceConditions.investigatorAudit.toString(), pass);
+        if (need == 0) {
+            vars.put(EnumFinanceConditions.investigatorAudit.toString(), pass);
+        }
         taskService.complete(taskId, vars);
         if (need == 1) {
             Result result = flowMethodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
