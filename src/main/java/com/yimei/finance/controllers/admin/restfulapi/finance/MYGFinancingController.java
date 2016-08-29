@@ -18,7 +18,7 @@ public class MYGFinancingController {
     @Autowired
     private AdminSession adminSession;
 
-    @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),
@@ -34,7 +34,7 @@ public class MYGFinancingController {
     }
 
 
-    @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "业务员审核并填写材料", notes = "业务员审核并填写材料")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),
@@ -61,7 +61,7 @@ public class MYGFinancingController {
         return flowStepService.salesmanSupplyInvestigationMaterialFinanceOrderMethod(adminSession.getUser().getId(), taskId, comment, attachmentList);
     }
 
-    @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "尽调员审核", notes = "尽调员审核")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "金融申请单id", required = true, dataType = "String", paramType = "path"),
@@ -89,7 +89,7 @@ public class MYGFinancingController {
         return flowStepService.salesmanSupplySupervisionMaterialFinanceOrderMethod(adminSession.getUser().getId(), taskId, comment, attachmentList);
     }
 
-    @RequestMapping(value = "/supervisor/audit/{taskId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/supervisor/audit/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "监管员审核", notes = "监管员审核")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "金融申请单id", required = true, dataType = "String", paramType = "path"),
@@ -129,7 +129,7 @@ public class MYGFinancingController {
         return flowStepService.supervisorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), taskId, comment, attachmentList);
     }
 
-    @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.PUT)
+    @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "风控人员审核", notes = "风控人员审核")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path"),
