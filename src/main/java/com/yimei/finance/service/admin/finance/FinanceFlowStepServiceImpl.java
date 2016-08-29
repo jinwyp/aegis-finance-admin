@@ -191,8 +191,8 @@ public class FinanceFlowStepServiceImpl {
         return flowMethodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
     }
 
-    public Result riskManagerAuditMYRFinanceOrderMethod(String userId, String taskId, int need, int pass, String comment, AttachmentList attachmentList) {
-        if (need != 0 && need != 1 && pass != 0 && pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
+    public Result riskManagerAuditMYRFinanceOrderMethod(String userId, String taskId, int need, int need2, int pass, String comment, AttachmentList attachmentList) {
+        if (need != 0 && need != 1 && need2 != 0 && need2 != 1 && pass != 0 && pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
         Task task = taskService.createTaskQuery().taskId(taskId).taskAssignee(userId).active().singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行风控人员审核操作.toString());
@@ -202,6 +202,7 @@ public class FinanceFlowStepServiceImpl {
         flowMethodService.addComment(task.getId(), task.getProcessInstanceId(), comment, EnumFinanceCommentType.RiskManagerAuditComment.id);
         Map<String, Object> vars = new HashMap<>();
         vars.put(EnumFinanceConditions.needInvestigatorSupplyRiskMaterial.toString(), need);
+        vars.put(EnumFinanceConditions.needSupervisorSupplyRiskMaterial.toString(), need2);
         vars.put(EnumFinanceConditions.riskManagerAudit.toString(), pass);
         taskService.complete(taskId, vars);
         if (need == 1) {

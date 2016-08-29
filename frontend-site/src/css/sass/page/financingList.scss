@@ -71,7 +71,6 @@ $borderColor:#e4e4e4;
             font-size: 16px;
             font-weight: bold;
             padding-bottom: 10px;
-
             float: left;
             span{
               width: 2px;
@@ -97,15 +96,16 @@ $borderColor:#e4e4e4;
               }
             }
             a{
-              width: 70px;
-              height: 24px;
-              display: inline-block;
-              background: #fd6e35;
-              color: #ffffff;
-              border-radius: 2px;
+              //width: 70px;
+              //height: 24px;
+              //display: inline-block;
+              //background: #fd6e35;
+              color: #007193;
+              //border-radius: 2px;
+              font-size: 14px;
               line-height: 24px;
-              text-align: center;
-              margin-left: 20px;
+              //text-align: center;
+              //margin-left: 20px;
               text-decoration: none;
             }
           }
@@ -263,6 +263,11 @@ $borderColor:#e4e4e4;
               vertical-align: middle;
               text-align: center;
               line-height: 18px;
+              span{
+                b{
+                  font-weight: normal;
+                }
+              }
               .green{
                 color: #18aa6b;
                 font-weight: bold;
