@@ -232,8 +232,9 @@ class UserGroupService {
                 var result = response.json() as HttpResponse;
                 if (result.data ){
                     result.data.forEach( group => {
-                        if (!group.type) {group.type =''}
                         group.selected = false;
+                        if (!group.type) {group.type =''}
+
                     })
                 }
                 return result;
