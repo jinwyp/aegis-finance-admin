@@ -89,11 +89,10 @@ export class AuditTraderComponent {
         }
     }
 
-
-
-
-    changeType = (typeIndex)=>{
+    saveOrder (){
+        console.log(this.currentTask)
     }
+
 
 }
 
