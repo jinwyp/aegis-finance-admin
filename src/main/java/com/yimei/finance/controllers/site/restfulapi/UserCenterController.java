@@ -5,7 +5,6 @@ import com.yimei.finance.entity.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.entity.admin.finance.EnumFinanceOrderType;
 import com.yimei.finance.entity.admin.finance.EnumFinanceStatus;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.MapObject;
 import com.yimei.finance.entity.common.result.Page;
@@ -20,25 +19,10 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.task.IdentityLinkType;
-import org.activiti.engine.task.Task;
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ss.usermodel.CellStyle;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.net.URLEncoder;
-import java.text.SimpleDateFormat;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -67,15 +51,15 @@ public class UserCenterController {
     * 供应链金融 - 发起融资申请
     */
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Valid @RequestBody FinanceOrder financeOrder) {
         System.out.println("Order Type:" + financeOrder.getApplyType());
         financeOrder.setApplyType(financeOrder.getApplyType());
         financeOrder.setSourceId(numberService.getNextCode("JR"));
-        financeOrder.setUserId(userSession.getUser().getId());
-        financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
-//        financeOrder.setUserId(1);
+//        financeOrder.setUserId(userSession.getUser().getId());
+//        financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
+        financeOrder.setUserId(1);
         financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
         financeOrder.setApplyDateTime(new Date());
