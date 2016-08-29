@@ -3,10 +3,7 @@
  */
 
 
-import {Input, Output, EventEmitter, Component } from '@angular/core';
-
-// import { jQuery as $ } from '../../../jquery-plugin/bootstrap.js';
-// import { jQuery as $ } from '../../../../../../frontend-site/src/js/jquery-plugin';
+import {Input, Component } from '@angular/core';
 
 declare var __moduleName: string;
 
@@ -15,9 +12,6 @@ declare var __moduleName: string;
     moduleId: __moduleName || module.id,
     templateUrl: 'process-tab.html'
 })
-
-
-
 export class ProcessTabComponent {
 
     currentTab = {
@@ -26,6 +20,9 @@ export class ProcessTabComponent {
 
     @Input()
     processInstanceId : string = '0';
+
+    @Input()
+    processList = [];
 
     changeTab = (currentTab)=>{
         this.currentTab.index = currentTab;
