@@ -116,12 +116,17 @@ class Task {
     processInstanceId : string;
     taskDefinitionKey : string;
 
+
     financingAmount : number;
+    expectDate : string;
+    businessAmount : number;
+    transportMode : string;
+
     applyCompanyName : string;
     assignee : string;
     assigneeDepartment : string;
     assigneeName : string;
-    dueDate : string;
+
 
     createTime : string;
 

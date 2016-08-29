@@ -7,47 +7,50 @@
 </div>
 
 <div class="row item-margin">
+    <form class="form-horizontal" *ngIf="css.activeForRefresh" (ngSubmit)="saveUser()" #saveUserForm="ngForm">
     <div class="row mt-50 info-item">
         <span class="col-sm-2 info-label">账号:</span>
-        <span class="col-sm-10 info-val">fdsfsdfsdfds</span>
+        <span class="col-sm-10 info-val">{{currentUserSession.username}}</span>
     </div>
     <div class="row info-item">
         <span class="col-sm-2 info-label">所属角色:</span>
         <ul class="col-sm-10 role-info info-val">
-            <li>运营总监<a>查看角色权限</a></li>
-            <li>市场总监<a>查看角色权限</a></li>
-            <li>市场总监<a>查看角色权限</a></li>
+            <li *ngFor="let group of currentUserSession.groupList">{{group.name}}<a>查看角色权限</a></li>
         </ul>
     </div>
     <div class="row info-item form-group">
-        <label class="col-sm-2 info-label-input" for="alterEgo">姓名:</label>
+        <label class="col-sm-2 info-label-input" for="nameInput">姓名:</label>
         <div class="col-sm-10 info-val">
-            <input type="text" class="form-control" id="alterEgo" required >
+            <input type="text" class="form-control" id="nameInput" name="username" [(ngModel)]="currentUserSession.name" maxlength="16" #name="ngModel" required >
+            <span class="help-block" [class.hidden]="name.valid || name.pristine || css.ajaxErrorHidden">请填写用户姓名!</span>
         </div>
     </div>
     <div class="row info-item">
-        <label class="col-sm-2 info-label-input">联系方式:</label>
+        <label class="col-sm-2 info-label-input" for="phoneInput">联系方式:</label>
         <div class="col-sm-10 info-val">
-            <input type="text" value="fsdfsfsd">
+            <input type="text" class="form-control" id="phoneInput" name="phone" [(ngModel)]="currentUserSession.phone" maxlength="16" #phone="ngModel" >
+            <span class="help-block" [class.hidden]="phone.valid || phone.pristine || css.ajaxErrorHidden">请填写联系方式!</span>
         </div>
     </div>
     <div class="row info-item">
-        <label class="col-sm-2 info-label-input">邮箱:</label>
+        <label class="col-sm-2 info-label-input" for="emailInput">邮箱:</label>
         <div class="col-sm-10 info-val">
-            <input type="text" value="fsdfsfsd">
-            <span class="hint">注:管理员帮您<span class="orange">找回密码</span>的重要途径</span>
+            <input type="text" class="form-control" id="emailInput" name="email" [(ngModel)]="currentUserSession.email" maxlength="16" #email="ngModel" >
+            <span class="help-block" [class.hidden]="email.valid || email.pristine || css.ajaxErrorHidden">请填写邮箱!</span>
+            <span class="hint ml-10">注:管理员帮您<span class="orange">找回密码</span>的重要途径</span>
         </div>
     </div>
     <div class="row info-item">
         <label class="col-sm-2 info-label-input">公司职位:</label>
         <div class="col-sm-10 info-val">
-            <input type="text" disabled value="fsdfsfsd">
+            <custom-select [optionList]="departments" [selectedItem]="selectedItem" (onChange)="selectChange($event)"></custom-select>
         </div>
     </div>
     <div class="row info-item">
         <span class="col-sm-2 info-label-input"></span>
         <div class="col-sm-10 info-val">
-            <button type="button" class="btn btn-default btn-lg btn-save">保存</button>
+            <button type="submit" class="btn btn-default btn-lg btn-save">保存</button>
         </div>
     </div>
+    </form>
 </div>

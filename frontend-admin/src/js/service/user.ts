@@ -159,6 +159,14 @@ class UserService {
             .catch(this.handleError);
     }
 
+    changePwd(user) {
+        let headers = new Headers({'Content-Type': 'application/json'});
+        // return this.http.post(API.users + '/changepwd' , JSON.stringify(user), {headers: headers}).toPromise()
+        return this.http.post(API.users + '/changepwd' , {oldPassword: user.oldPassword, newPassword:user.newPassword}, {headers: headers}).toPromise()
+            .then(res => res.json() as HttpResponse )
+            .catch(this.handleError);
+    }
+
     update(user: User) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -224,8 +232,9 @@ class UserGroupService {
                 var result = response.json() as HttpResponse;
                 if (result.data ){
                     result.data.forEach( group => {
-                        if (!group.type) {group.type =''}
                         group.selected = false;
+                        if (!group.type) {group.type =''}
+
                     })
                 }
                 return result;

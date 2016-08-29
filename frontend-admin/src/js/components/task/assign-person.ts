@@ -97,7 +97,7 @@ export class AssignPersonComponent {
         this.task.assignPerson(this.taskId, this.selectedUser.id).then((result)=>{
             if (result.success){
                 alert('分配成功!!')
-
+                window.location.href = '/finance/admin/home/tasks';
             }else{
                 alert('分配失败!')
             }

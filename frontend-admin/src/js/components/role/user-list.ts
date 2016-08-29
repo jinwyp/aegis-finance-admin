@@ -15,9 +15,6 @@ declare var __moduleName: string;
     moduleId: __moduleName || module.id,
     templateUrl: 'user-list.html'
 })
-
-
-
 export class UserListComponent {
 
     constructor(
@@ -25,6 +22,7 @@ export class UserListComponent {
     ) {}
 
     userList : User[];
+    modalStatus :boolean = true;
 
 
     ngOnInit() {
@@ -42,6 +40,14 @@ export class UserListComponent {
 
             }
         });
+    }
+
+    showModal(){
+        this.modalStatus = false;
+    }
+
+    hideModal(){
+        this.modalStatus = true;
     }
 
 }
