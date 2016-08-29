@@ -43,4 +43,4 @@
         </tr>
     </table>
 </div>
-<custom-modal [modalStatus]="modalStatus"></custom-modal>
+<custom-modal [modalStatus]="modalStatus" (onChange)="stateChange($event)"></custom-modal>

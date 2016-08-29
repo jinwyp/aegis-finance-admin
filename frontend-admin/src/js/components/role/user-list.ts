@@ -44,10 +44,18 @@ export class UserListComponent {
 
     showModal(){
         this.modalStatus = false;
+        console.log('showModal');
+        console.log(this.modalStatus);
     }
 
     hideModal(){
         this.modalStatus = true;
+        console.log('hideModal');
+        console.log(this.modalStatus);
+    }
+
+    stateChange($event){
+        this.modalStatus=$event.name;
     }
 
 }

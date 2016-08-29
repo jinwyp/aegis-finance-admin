@@ -496,5 +496,13 @@
     top: 20%;
     left: 20%;
     padding:0;
+    .modal-title{
+      padding:10px;
+      .del-icon{
+        float: right;
+        margin-top:3px;
+        cursor: pointer;
+      }
+    }
   }
 }
