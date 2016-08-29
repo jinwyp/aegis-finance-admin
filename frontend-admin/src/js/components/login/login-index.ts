@@ -18,7 +18,6 @@ export class LoginComponent {
 
     css = {
         activeForRefresh : true,
-        isSubmitted : false,
         ajaxErrorHidden : true
     };
 
@@ -32,7 +31,6 @@ export class LoginComponent {
 
     login(form) {
         this.css.ajaxErrorHidden = true;
-        this.css.isSubmitted = true;
         this.user.login({
             username:this.currentUser.username,
             password:this.currentUser.password
@@ -50,9 +48,6 @@ export class LoginComponent {
         });
     }
 
-    showInfoAfterLogin() {
-        this.css.isSubmitted = false;
-    }
 
     clearInput() {
 
