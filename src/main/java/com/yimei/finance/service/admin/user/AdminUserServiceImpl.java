@@ -1,5 +1,6 @@
 package com.yimei.finance.service.admin.user;
 
+import com.yimei.finance.entity.admin.user.EnumAdminUserError;
 import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.admin.user.GroupObject;
 import com.yimei.finance.entity.admin.user.UserObject;
@@ -114,5 +115,13 @@ public class AdminUserServiceImpl {
 
     public String securePassword(String password) {
         return DigestUtils.md5Hex("$&*" + DigestUtils.md5Hex("@." + password + "$*************") + "!@#%……&");
+    }
+
+    public Result checkUserPhone(String phone) {
+        List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().list());
+        for (UserObject user : userObjectList) {
+            if (user.getPhone().equals(phone)) return Result.error(EnumAdminUserError.此手机号已经存在.toString());
+        }
+        return Result.success();
     }
 }

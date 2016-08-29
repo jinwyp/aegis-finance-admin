@@ -92,6 +92,9 @@ public class UserController {
         if (!result.isSuccess()) return result;
         if (StringUtils.isEmpty(user.getUsername())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
         if (identityService.createUserQuery().userFirstName(user.getUsername()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
+        if (identityService.createUserQuery().userEmail(user.getEmail()).singleResult() != null) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
+        Result result1 = userService.checkUserPhone(user.getPhone());
+        if (!result1.isSuccess()) return result1;
         User newUser = identityService.newUser("");
         DozerUtils.copy(user, newUser);
         newUser.setId(null);
@@ -104,6 +107,9 @@ public class UserController {
         identityService.setUserInfo(newUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
         addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
+        String subject = "开通账户通知邮件";
+        String content = "你好: 你的账号已开通, 用户名:" + user.getUsername() + ", 初始密码:123456, 请修改密码.";
+        mailService.sendSimpleMail(user.getEmail(), subject, content);
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(newUser.getId()).singleResult()));
     }
 

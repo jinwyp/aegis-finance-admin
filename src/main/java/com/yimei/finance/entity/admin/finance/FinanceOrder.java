@@ -24,16 +24,13 @@ public class FinanceOrder implements Serializable {
     @Id
     @Column(name = "id", length = 30)
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;                                               //主键
-
+    private Long id;                                                 //主键
     @Column(name = "user_id", length = 11, nullable = false)
     private int userId;                                              //申请人用户id
-
     @Column(name = "apply_type", length = 20)
     @Size(min = 3, max = 10, message = "申请类型字段应在3-10个字符之间")
     @NotBlank(message = "申请类型字段不能为空")
     private String applyType;                                        //申请类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
-
     @Transient
     private String applyTypeName;
     @Column(name = "financing_amount", length = 20)
@@ -82,6 +79,8 @@ public class FinanceOrder implements Serializable {
     private String applyUserName;                                    //申请人姓名
     @Column(name = "apply_company_name", length = 50)
     private String applyCompanyName;                                 //申请公司名称
+    @Column(name = "coal_quantity_index", length = 500)
+    private String coalQuantityIndex;                                //主要煤质指标
     @Transient
     private List<AttachmentObject> attachmentList;                   //线上交易员上传表单列表
 
