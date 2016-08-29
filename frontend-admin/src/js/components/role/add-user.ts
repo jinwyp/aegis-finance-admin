@@ -40,7 +40,7 @@ export class AddUserComponent {
 
     groups       = [];
     departments  = [];
-    selectedItem = {name : '请选择'};
+    selectedItem = '请选择';
 
     ngOnInit() {
 
@@ -98,7 +98,7 @@ export class AddUserComponent {
                 this.currentUser = result.data;
                 console.log(this.currentUser);
                 this.getGroupList();
-                this.selectedItem.name = this.currentUser.department;
+                this.selectedItem = this.currentUser.department;
             } else {
 
             }
@@ -124,7 +124,9 @@ export class AddUserComponent {
     addUser() {
         this.css.ajaxErrorHidden = true;
         this.css.isSubmitted     = true;
+        this.currentUser.department = this.selectedItem;
         if (this.isAddStatus) {
+
             this.userService.add(this.currentUser).then((result)=> {
                 if (result.success) {
 
@@ -145,20 +147,15 @@ export class AddUserComponent {
         }
     }
 
-    selectChange($event) {
-        this.currentUser.department = $event.name;
-        this.selectedItem.name      = $event.name;
-    }
 
     clear() {
-        this.currentUser.username       = '';
+        this.currentUser.username   = '';
         this.currentUser.name       = '';
-        this.currentUser.email       = '';
-        this.currentUser.phone       = '';
-        this.currentUser.department       = '';
-        this.selectedItem.name = '请选择';
-        console.log('-------------');
-        console.log(this.selectedItem.name);
+        this.currentUser.email      = '';
+        this.currentUser.phone      = '';
+        this.currentUser.department = '';
+        this.currentUser.groupIds   = [];
+        this.selectedItem     = '请选择';
     }
 
 }

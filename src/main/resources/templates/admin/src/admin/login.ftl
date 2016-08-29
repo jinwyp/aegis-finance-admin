@@ -12,7 +12,7 @@
 
     <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/main.css"/>
     <link rel="stylesheet" href="/static/admin/node_modules/bootstrap/dist/css/bootstrap.min.css">
-    <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/page/adminHome.css"/>
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/page/login.css"/>
 
 </head>
 <body>

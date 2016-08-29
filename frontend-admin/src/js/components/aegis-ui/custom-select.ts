@@ -3,41 +3,83 @@
  */
 
 
-import {Input, Output, EventEmitter, Component} from '@angular/core';
+import {Input, Component, forwardRef} from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 
 declare var __moduleName:string;
 
+
+const noop = () => {};
+
+export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => CustomSelectComponent),
+    multi: true
+};
+
+
 @Component({
     selector :    'custom-select',
     moduleId :    __moduleName || module.id,
-    templateUrl : 'custom-select.html'
+    templateUrl : 'custom-select.html',
+    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
+export class CustomSelectComponent implements ControlValueAccessor{
 
 
-export class CustomSelectComponent {
+    private innerSelectedItem: any = '' ; // The internal data model
+
+    //Placeholders for the callbacks which are later provided by the Control Value Accessor
+    private onTouchedCallback: () => void = noop;
+    private onChangeCallback: (_: any) => {};
+
+    //get accessor
+    get value(): any {
+        return this.innerSelectedItem;
+    };
+
+    //set accessor including call the onchange callback
+    set value(v: any) {
+        if (v !== this.innerSelectedItem) {
+            this.innerSelectedItem = v;
+            this.onChangeCallback(v);
+        }
+    }
+
+    //From ControlValueAccessor interface
+    writeValue(value: any) {
+        if (value !== this.innerSelectedItem) {
+            this.innerSelectedItem = value;
+        }
+    }
+
+    //From ControlValueAccessor interface
+    registerOnChange(fn: any) {
+        this.onChangeCallback = fn;
+    }
+
+    //From ControlValueAccessor interface
+    registerOnTouched(fn: any) {
+        this.onTouchedCallback = fn;
+    }
+
 
     isClose:boolean = true;
 
     @Input()
     optionList = [];
 
-    @Input()
-    selectedItem = {};
-
 
     toggleSelect() {
         this.isClose = !this.isClose;
-        console.log(this.selectedItem);
     }
 
-    @Output()
-    onChange:any = new EventEmitter();
 
     itemClick(item) {
-        this.selectedItem = item;
-        this.isClose      = !this.isClose;
-        this.onChange.emit(this.selectedItem);
+        this.isClose = !this.isClose;
+        this.value = item.name;
+        this.onChangeCallback(item.name);
     }
 
 }

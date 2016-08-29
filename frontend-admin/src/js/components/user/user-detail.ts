@@ -28,7 +28,7 @@ export class UserDetailComponent {
 
     currentUserSession : User = new User();
     departments  = [];
-    selectedItem = {name : '请选择'};
+    selectedItem = '请选择';
 
     ngOnInit() {
         this.getCurrentUser();
@@ -41,7 +41,7 @@ export class UserDetailComponent {
             result => {
                 if (result && result.success) {
                     this.currentUserSession = result.data;
-                    this.selectedItem.name = this.currentUserSession.department;
+                    this.selectedItem = this.currentUserSession.department;
                 } else {
 
                 }
@@ -53,6 +53,8 @@ export class UserDetailComponent {
     saveUser() {
         this.css.ajaxErrorHidden = true;
         this.css.isSubmitted     = true;
+
+        this.currentUserSession.department = this.selectedItem;
 
         this.userService.save(this.currentUserSession).then((result)=> {
             if (result.success) {
@@ -73,10 +75,6 @@ export class UserDetailComponent {
         });
     }
 
-    selectChange($event) {
-        this.currentUserSession.department = $event.name;
-        this.selectedItem.name      = $event.name;
-    }
 
 }
 
