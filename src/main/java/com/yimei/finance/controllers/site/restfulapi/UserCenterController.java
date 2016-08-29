@@ -97,10 +97,10 @@ public class UserCenterController {
      */
     @ApiOperation(value = "根据 id 查看金融申请单", notes = "根据 金融申请单id 查看金融申请单", response = FinanceOrder.class)
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Long", paramType = "path")
-//    @LoginRequired
+    @LoginRequired
     @RequestMapping(value = "/apply/{id}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
-        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, 1);
+        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, userSession.getUser().getId());
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         financeOrder.setAttachmentList(financeOrderService.getOnlineTraderAttachmentListByFinanceOrderId(financeOrder.getId()));
         return Result.success().setData(financeOrder);
