@@ -38,9 +38,9 @@
                 <span class="right-border" [routerLink]="['/users', user.id, 'password']">重置密码</span>
                 <span class="right-border" [routerLink]="['/users', user.id]">查看</span>
                 <span class="right-border" [routerLink]="['/users', user.id, 'edit']">编辑</span>
-                <span (click)="showModal()">删除</span>
+                <span (click)="showModal(user.id)">删除</span>
             </td>
         </tr>
     </table>
 </div>
-<custom-modal [modalStatus]="modalStatus" (onChange)="stateChange($event)"></custom-modal>
+<custom-modal [modalStatus]="modalStatus" [btnClick]="btnClick" (onChange)="stateChange($event)"></custom-modal>

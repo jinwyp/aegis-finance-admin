@@ -19,12 +19,21 @@ export class CustomModalComponent {
     @Input()
     modalStatus : boolean = false;
 
+    @Input()
+    btnClick : boolean = false;
+
     @Output()
     onChange:any = new EventEmitter();
-    public hideModal():void {
+
+    public hideModal() {
         this.modalStatus=true;
-        this.onChange.emit(this.modalStatus);
+        this.onChange.emit({modalStatus:this.modalStatus,btnClick:false});
     }
 
+    public sureClick() {
+        this.modalStatus=true;
+        this.btnClick=true;
+        this.onChange.emit({modalStatus:this.modalStatus,btnClick:this.btnClick});
+    }
 }
 
