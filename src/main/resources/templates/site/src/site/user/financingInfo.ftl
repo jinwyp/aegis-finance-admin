@@ -171,16 +171,16 @@
 
                         </table>
                     </div>
-                    <div class="paddingTable">
-                        <table>
-                            <tr>
-                                <th>备注说明:</th>
-                                <td colspan="3">
-                                    {{@financeInfo.comments}}
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
+                    <!--<div class="paddingTable">-->
+                        <!--<table>-->
+                            <!--<tr>-->
+                                <!--<th>备注说明:</th>-->
+                                <!--<td colspan="3">-->
+                                    <!--{{@financeInfo.comments}}-->
+                                <!--</td>-->
+                            <!--</tr>-->
+                        <!--</table>-->
+                    <!--</div>-->
                     <div class="table-title">
                         <em></em>审批信息:
                     </div>
@@ -225,10 +225,10 @@
                                     </ul>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>材料说明:</th>
-                                <td>{{@financeInfo.comments}}</td>
-                            </tr>
+                            <!--<tr>-->
+                                <!--<th>材料说明:</th>-->
+                                <!--<td>{{@financeInfo.comments}}</td>-->
+                            <!--</tr>-->
                         </table>
                     </div>
                     <!--补充材料结束-->
