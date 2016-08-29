@@ -58,7 +58,7 @@ public class FinancingCommonController {
     @Autowired
     private HistoryService historyService;
 
-    @RequestMapping(value = "/tasks/claim/{taskId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/tasks/{taskId}/claim", method = RequestMethod.POST)
     @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "taskId") String taskId) {
