@@ -73,10 +73,10 @@ export class AssignPersonComponent {
     getUserList() {
         let groupId : string = '';
 
-        if (this.currentTask.taskDefinitionKey === TaskStatus.assignOnlineTrader) groupId = GroupId.trader;  //分配线上交易员
-        if (this.currentTask.taskDefinitionKey === '分配业务员') groupId = GroupId.salesman;
-        if (this.currentTask.taskDefinitionKey === '分配尽调员') groupId = GroupId.investigator;
-        if (this.currentTask.taskDefinitionKey === '分配风控人员') groupId = GroupId.riskmanager;
+        if (this.currentTask.taskDefinitionKey === TaskStatus.assignOnlineTrader) groupId = GroupId.trader;  // 分配线上交易员
+        if (this.currentTask.taskDefinitionKey === TaskStatus.assignSalesman) groupId = GroupId.salesman;  // 分配业务员
+        if (this.currentTask.taskDefinitionKey === TaskStatus.assignInvestigator) groupId = GroupId.investigator; // 分配尽调员
+        if (this.currentTask.taskDefinitionKey === TaskStatus.assignRiskManager) groupId = GroupId.riskmanager; // 分配风控人员
 
         if (this.currentTask.taskDefinitionKey && groupId) {
             this.group.getUserListByGroupId(groupId).then((result)=>{

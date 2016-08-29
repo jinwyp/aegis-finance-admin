@@ -157,14 +157,16 @@ public class UserController {
 
     @ApiOperation(value = "用户修改密码", notes = "用户自己修改密码", response = Boolean.class)
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "oldPassword", value = "旧密码", required = true, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "newPassword", value = "新密码", required = true, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "oldPassword", value = "原密码", required = true, dataType = "String", paramType = "form"),
+            @ApiImplicitParam(name = "newPassword", value = "新密码", required = true, dataType = "String", paramType = "form")
     })
     @RequestMapping(value = "/changepwd", method = RequestMethod.POST)
     public Result resetUserPasswordMethod(@RequestParam(value = "oldPassword", required = true)String oldPassword,
                                           @RequestParam(value = "newPassword", required = true)String newPassword) {
-        if (!identityService.checkPassword(adminSession.getUser().getId(), userService.securePassword(oldPassword))) {
-            return Result.error(EnumAdminUserError.旧密码不正确.toString());
+        if (newPassword.length() < 6 || newPassword.length() > 16) {
+            return Result.error(EnumAdminUserError.NewPasswordLengthError);
+        } else if (!identityService.checkPassword(adminSession.getUser().getId(), userService.securePassword(oldPassword))) {
+            return Result.error(EnumAdminUserError.原密码不正确.toString());
         } else {
             User user = identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult();
             user.setPassword(userService.securePassword(newPassword));

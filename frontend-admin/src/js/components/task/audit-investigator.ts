@@ -8,7 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 
 import { Subscription } from 'rxjs/Subscription';
 
-import { TaskService } from '../../service/task';
+import { Task, TaskService, TaskStatus } from '../../service/task';
 import { User, UserService } from '../../service/user';
 
 
@@ -31,8 +31,8 @@ export class AuditInvestigatorComponent {
     currentUserSession : User = new User();
 
     taskId : string = '';
-    taskStatus : string = '';
-    taskProcessInstanceId : string = '';
+    currentTask : Task = new Task();
+
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -44,11 +44,7 @@ export class AuditInvestigatorComponent {
     ngOnInit(){
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.taskId = params['id'];
-        });
-
-        this.activatedRoute.queryParams.subscribe(params => {
-            this.taskStatus = params['status'];
-            this.taskProcessInstanceId = params['processInstanceId'];
+            this.getTaskInfo(params['id']);
         });
 
         this.getCurrentUser();
@@ -68,13 +64,24 @@ export class AuditInvestigatorComponent {
         )
     }
 
+    getTaskInfo (id) {
+        this.task.getTaskInfoById(id).then((result)=>{
+            if (result.success){
+                this.currentTask = result.data;
+            }else{
+
+            }
+        });
+    }
+
+
     audit (){
 
         let auditType : string = '';
 
-        if (this.taskStatus === '尽调员审核') auditType = 'investigator';
+        if (this.currentTask.taskDefinitionKey === TaskStatus.investigatorAudit) auditType = 'investigator'; // 尽调员审核
 
-        if (this.taskStatus && auditType) {
+        if (this.currentTask.taskDefinitionKey && auditType) {
             this.task.audit(this.taskId, auditType, 1).then((result)=>{
                 if (result.success){
                     alert('保存成功!!')

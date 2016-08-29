@@ -34,12 +34,12 @@ var taskStatusList = [
     {
         'id': '10',
         'name': '待分配业务员',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'assignSalesman'
     },
     {
         'id': '12',
         'name': '待业务员审核',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'salesmanAudit'
     },
     {
         'id': '14',
@@ -49,12 +49,12 @@ var taskStatusList = [
     {
         'id': '16',
         'name': '待分配尽调员',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'assignInvestigator'
     },
     {
         'id': '18',
         'name': '待尽调员审核',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'investigatorAudit'
     },
     {
         'id': '20',
@@ -69,7 +69,12 @@ var taskStatusList = [
     {
         'id': '24',
         'name': '待分配风控人员',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'assignRiskManager'
+    },
+    {
+        'id': '25',
+        'name': '待风控员审核',
+        'taskDefinitionKey' : 'riskManagerAudit'
     },
     {
         'id': '26',
@@ -84,7 +89,7 @@ var taskStatusList = [
     {
         'id': '30',
         'name': '风控人员填写合同模板并通知用户',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'riskManagerAuditSuccess'
     },
     {
         'id': '32',
@@ -189,7 +194,7 @@ class TaskService {
 
         let url = `${API.tasksMYR}/${auditStep[auditType]}/audit/${taskId}?pass=${isApproved}&need=${isNeedFile}`;
 
-        return this.http.put(url, {} ).toPromise()
+        return this.http.post(url, {} ).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
