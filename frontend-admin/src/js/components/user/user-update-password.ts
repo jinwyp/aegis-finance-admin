@@ -13,12 +13,9 @@ declare var __moduleName: string;
     moduleId: __moduleName || module.id,
     templateUrl: 'user-update-password.html'
 })
-
-
-
 export class UserUpdatePasswordComponent {
 
-    title = '修改密码';
+
 
 }
 

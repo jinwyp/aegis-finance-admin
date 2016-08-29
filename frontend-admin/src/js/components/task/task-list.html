@@ -17,7 +17,7 @@
             <th width="100">当前处理人</th>
             <th width="100">所属部门</th>
             <th width="100">流程状态</th>
-            <th >操作</th>
+            <th width="100">操作</th>
         </tr>
         <tr class="item" *ngFor="let task of taskAssignList">
             <td>
@@ -27,10 +27,10 @@
             </td>
             <td>{{task.createTime | date:"yyyy/MM/dd"}}</td>
             <td>{{task.applyCompanyName}}</td>
-            <td>{{task.financingAmount}}</td>
-            <td>{{task.description}}</td>
-            <td>{{task.assigneeName}}</td>
-            <td>{{task.assigneeDepartment}}</td>
+            <td>{{task.financingAmount||'--'}}</td>
+            <td>{{task.name}}</td>
+            <td>{{task.assigneeName||'--'}}</td>
+            <td>{{task.assigneeDepartment||'--'}}</td>
             <td>
                 <span class="green">{{task.name}}</span> <br/>
                 <!--<span class="orange">(补充材料)</span><br/>-->
@@ -38,10 +38,11 @@
             </td>
             <td>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80"  [routerLink]="['/tasks', task.id, 'assign']" [queryParams]="{status:task.name, processInstanceId:task.processInstanceId}">
-                    <span *ngIf="task.name==='分配线上交易员'" > 分配线上交易员</span>
-                    <span *ngIf="task.name==='分配业务员'" > 分配业务员</span>
-                    <span *ngIf="task.name==='分配尽调员'" > 分配尽调员</span>
-                    <span *ngIf="task.name==='分配风控人员'" > 分配风控人员</span>
+                    <span> 分配</span>
+                    <!--<span *ngIf="task.name==='分配线上交易员'" > 分配线上交易员</span>-->
+                    <!--<span *ngIf="task.name==='分配业务员'" > 分配业务员</span>-->
+                    <!--<span *ngIf="task.name==='分配尽调员'" > 分配尽调员</span>-->
+                    <!--<span *ngIf="task.name==='分配风控人员'" > 分配风控人员</span>-->
                 </button>
 
                 <!--<button type="button" class="btn btn-xs btn-default btn-return w-80">补充材料</button>-->

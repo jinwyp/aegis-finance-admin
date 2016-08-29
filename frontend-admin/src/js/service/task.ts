@@ -127,7 +127,7 @@ class TaskService {
 
     assignPerson(taskId : string, userId : string) {
 
-        return this.http.post(API.tasks + '/' + taskId, {}).toPromise()
+        return this.http.post(API.tasks + '/claim/' + taskId, {}).toPromise()
             .then( (response) => {
                 var result = response.json();
                 if (result.data ){

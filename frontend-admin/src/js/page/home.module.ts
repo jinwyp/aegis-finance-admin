@@ -45,6 +45,7 @@ import { AuditInvestigatorComponent } from '../components/task/audit-investigato
 import { SuperviseReportComponent } from '../components/task/supervise-report';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
 import { CustomSelectComponent } from '../components/task/common/custom-select';
+import { CustomModalComponent } from '../components/audit/common/custom-modal';
 
 
 import {AlertComponent,} from 'ng2-bootstrap/ng2-bootstrap';
@@ -60,7 +61,7 @@ import {AlertComponent,} from 'ng2-bootstrap/ng2-bootstrap';
         UserListComponent, AddUserComponent, UserInfoComponent,
         TaskListComponent, AssignPersonComponent, ProcessTabComponent,
         AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, SuperviseReportComponent, AuditRiskManagerComponent,
-        CustomSelectComponent
+        CustomSelectComponent,CustomModalComponent
     ],
     providers: [ homePageRouterProviders, TaskService, UserService, UserGroupService ],
     bootstrap: [ HomeComponent ]
