@@ -92,9 +92,7 @@ export class AuditTraderComponent {
 
 
 
-    financeType=1;
     changeType = (typeIndex)=>{
-        this.financeType=typeIndex;
     }
 
 }
