@@ -160,7 +160,7 @@ public class UserController {
             @ApiImplicitParam(name = "oldPassword", value = "旧密码", required = true, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "newPassword", value = "新密码", required = true, dataType = "String", paramType = "query")
     })
-    @RequestMapping(value = "/changepwd", method = RequestMethod.PUT)
+    @RequestMapping(value = "/changepwd", method = RequestMethod.POST)
     public Result resetUserPasswordMethod(@RequestParam(value = "oldPassword", required = true)String oldPassword,
                                           @RequestParam(value = "newPassword", required = true)String newPassword) {
         if (!identityService.checkPassword(adminSession.getUser().getId(), userService.securePassword(oldPassword))) {

@@ -11,7 +11,6 @@ import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
-import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.common.NumberServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -44,8 +43,6 @@ public class UserCenterController {
     private TaskService taskService;
     @Autowired
     private NumberServiceImpl numberService;
-    @Autowired
-    private FinanceOrderServiceImpl financeOrderService;
 
     /**
     * 供应链金融 - 发起融资申请
