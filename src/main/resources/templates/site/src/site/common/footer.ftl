@@ -85,7 +85,7 @@
                 <li><a href="http://www.snctc.cn/#" target="_blank">陕西煤炭交易中心</a></li>
                 <li><a href="http://www.imcec.cn/#" target="_blank">内蒙古煤炭交易中心</a></li>
                 <li><a href="http://www.sspp.co/" target="_blank">超级船东</a></li>
-                <li><a href="/teach/friendlylink" target="_new">更多...</a></li>
+                <li><a href="${sitepage}/teach/friendlylink" target="_new">更多...</a></li>
             </ul>
             <!--友情链接结束-->
 
