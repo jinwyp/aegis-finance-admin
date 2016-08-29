@@ -29,7 +29,7 @@ public class MYGFinancingController {
                                                    @RequestParam(value = "pass", required = true) int pass,
                                                    @RequestParam(value = "comment", required = false) String comment,
                                                    @ApiParam(name = "financeOrder", value = "金融申请单对象", required = true) FinanceOrder financeOrder,
-                                                   @ApiParam(name = "attachmentList", value = "金融申请单上传单据列表", required = false) AttachmentList attachmentList) {
+                                                   @ApiParam(name = "attachmentList", value = "金融申请单上传单据列表", required = false) @RequestBody AttachmentList attachmentList) {
         return flowStepService.onlineTraderAuditFinanceOrderMethod(adminSession.getUser().getId(), taskId, pass, comment, financeOrder, attachmentList);
     }
 
