@@ -4,12 +4,10 @@
 <div class="container-fluid">
 
     <div class="row">
-        <div class="col-sm-12">
+        <div class="col-sm-offset-2 col-sm-8">
             <h1>管理登录</h1>
         </div>
-    </div>
 
-    <div class="row">
         <div class="col-sm-12">
             <form class="form-horizontal" *ngIf="css.activeForRefresh" (ngSubmit)="login()" #loginForm="ngForm">
                 <div class="form-group has-feedback" [class.has-success]="username.valid && username.dirty" [class.has-error]="username.invalid && username.dirty">
@@ -47,27 +45,13 @@
                         <button type="submit" class="btn btn-default" [disabled]="!loginForm.form.valid">登录</button>
                         <button type="button" class="btn btn-default" (click)="clearInput()">清空</button>
                     </div>
-                    <div class="col-sm-offset-2 col-sm-10">
-                        <h2>{{diagnostic}}</h2>
-                    </div>
+
                 </div>
             </form>
+        </div>
 
-
-            <div [hidden]="!css.isSubmitted">
-                <h2>你提交的信息:</h2>
-                <div class="row">
-                    <div class="col-sm-1">用户名:</div>
-                    <div class="col-sm-2 ">{{ currentUser.username }}</div>
-
-                    <div class="col-sm-1">密码:</div>
-                    <div class="col-sm-2">{{ currentUser.password }}</div>
-                </div>
-
-                <br>
-                <button class="btn btn-default" (click)="showInfoAfterLogin()">返回</button>
-            </div>
-
+        <div class="col-sm-12">
+            <h2>{{diagnostic}}</h2>
         </div>
     </div>
 
