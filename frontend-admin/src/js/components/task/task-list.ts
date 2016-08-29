@@ -6,7 +6,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Task, TaskService } from '../../service/task';
+import { Task, TaskService, TaskStatus } from '../../service/task';
 import { User, UserService } from '../../service/user';
 
 declare var __moduleName: string;
@@ -32,6 +32,7 @@ export class TaskListComponent {
 
     taskAssignList : Task[] = [];
     taskPendingList : Task[] = [];
+    taskStatusStep : any = TaskStatus;
     currentUserSession : User = new User();
 
     ngOnInit(){
