@@ -6,7 +6,9 @@
     </ol>
 </div>
 
-<process-tab [processInstanceId]="taskProcessInstanceId"></process-tab>
+<process-tab [processInstanceId]="currentTask.processInstanceId"></process-tab>
+
+
 
 <div class="item-margin apply-box">
 
@@ -18,16 +20,16 @@
         <tr class="item-max">
             <td class="td-label">选择融资类型:</td>
             <td class="td-val finance-types" colspan="3">
-                <div [class]="'finance-type'" [class.selected]="financeType==1">
-                    <div><label><input name="aa" type="radio" [checked]="financeType==1" (click)="changeType(1)">煤易融</label></div>
+                <div [class]="'finance-type'" [class.selected]="currentTask.applyType==='MYR'">
+                    <div><label><input name="aa" type="radio" [checked]="currentTask.applyType==='MYR'" (click)="changeType(1)">煤易融</label></div>
                     <div class="introduce">我有煤，可发运至终端形成应收账款，需要实现资金的快速回流</div>
                 </div>
-                <div [class]="'finance-type'" [class.selected]="financeType==2">
-                    <div><label><input name="aa" type="radio" [checked]="financeType==2" (click)="changeType(2)">煤易贷</label></div>
+                <div [class]="'finance-type'" [class.selected]="currentTask.applyType==='MYD'">
+                    <div><label><input name="aa" type="radio" [checked]="currentTask.applyType==='MYD'" (click)="changeType(2)">煤易贷</label></div>
                     <div class="introduce">我有煤，可质押,想要实现快速融资</div>
                 </div>
-                <div [class]="'finance-type'" [class.selected]="financeType==3">
-                    <div><label><input name="aa" type="radio" [checked]="financeType==3" (click)="changeType(3)">煤易购</label></div>
+                <div [class]="'finance-type'" [class.selected]="currentTask.applyType==='MYG'">
+                    <div><label><input name="aa" type="radio" [checked]="currentTask.applyType==='MYG'" (click)="changeType(3)">煤易购</label></div>
                     <div class="introduce">我有采购订单，需要申请垫资采购，从而突破自身资金瓶颈</div>
                 </div>
             </td>
@@ -41,7 +43,7 @@
         </tr>
 
         <!--煤易融-->
-        <tr *ngIf="financeType==1" class="item-min">
+        <tr *ngIf="currentTask.applyType==1" class="item-min">
             <td class="td-label">预期此笔业务量:</td>
             <td class="td-val"><input type="text" value="fsdfsdff"><span>万吨</span></td>
             <td class="td-label">运输方式:</td>
@@ -55,13 +57,13 @@
                 </select>
             </td>
         </tr>
-        <tr *ngIf="financeType==1" class="item-min">
+        <tr *ngIf="currentTask.applyType==='MYR'" class="item-min">
             <td class="td-label">预计单吨销售价:</td>
             <td class="td-val"><input type="text" value="fsdfsdff"><span>元/吨</span></td>
             <td class="td-label">签约单位全称:</td>
             <td class="td-val"><input type="text" value="fsdfsdff"></td>
         </tr>
-        <tr *ngIf="financeType==1" class="item-min">
+        <tr *ngIf="currentTask.applyType==='MYR'" class="item-min">
             <td class="td-label">下游签约单位全称:</td>
             <td class="td-val"><input type="text" value="fsdfsdff"></td>
             <td class="td-label">用煤终端:</td>
@@ -69,7 +71,7 @@
         </tr>
 
         <!--煤易贷-->
-        <tr *ngIf="financeType==2" class="item-min">
+        <tr *ngIf="currentTask.applyType==='MYD'" class="item-min">
             <td class="td-label">预期此笔业务量:</td>
             <td class="td-val"><input type="text" value="fsdfsdff"><span>万吨</span></td>
             <td class="td-label">煤炭仓储地:</td>
@@ -77,13 +79,13 @@
 
             </td>
         </tr>
-        <tr *ngIf="financeType==2" class="item-min">
+        <tr *ngIf="currentTask.applyType==='MYD'" class="item-min">
             <td class="td-label">煤炭来源:</td>
             <td class="td-val"><input type="text" value="fsdfsdff"></td>
             <td class="td-label">煤炭仓储地:</td>
             <td class="td-val"><input type="text" value="fsdfsdff"></td>
         </tr>
-        <tr *ngIf="financeType==2" class="item-min">
+        <tr *ngIf="currentTask.applyType==='MYD'" class="item-min">
             <td class="td-label">单吨市场报价:</td>
             <td class="td-val"><input type="text" value="fsdfsdff"><span>元/吨</span></td>
             <td class="td-label">主要煤质指标:</td>
@@ -91,7 +93,7 @@
         </tr>
 
         <!--煤易购-->
-        <tr *ngIf="financeType==3" class="item-min">
+        <tr *ngIf="currentTask.applyType==='MYG'" class="item-min">
             <td class="td-label">预期此笔业务量:</td>
             <td class="td-val"><input type="text" value="fsdfsdff"><span>万吨</span></td>
             <td class="td-label">运输方式:</td>
@@ -105,13 +107,13 @@
                 </select>
             </td>
         </tr>
-        <tr *ngIf="financeType==3" class="item-min">
+        <tr *ngIf="currentTask.applyType==='MYG'" class="item-min">
             <td class="td-label">单吨采购价:</td>
             <td class="td-val"><input type="text" value="fsdfsdff"><span>元/吨</span></td>
             <td class="td-label">上游资源方全称:</td>
             <td class="td-val"><input type="text" value="fsdfsdff"></td>
         </tr>
-        <tr *ngIf="financeType==3" class="item-min">
+        <tr *ngIf="currentTask.applyType==='MYG'" class="item-min">
             <td class="td-label">中转港口/地全称:</td>
             <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
         </tr>
