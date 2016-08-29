@@ -1,4 +1,4 @@
-package com.yimei.finance.service.admin.workflow;
+package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.entity.admin.user.UserObject;
@@ -26,8 +26,8 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-@Service
-public class WorkFlowServiceImpl {
+@Service("financeFlowMethodService")
+public class FinanceFlowMethodServiceImpl {
     @Autowired
     private TaskService taskService;
     @Autowired
@@ -57,27 +57,26 @@ public class WorkFlowServiceImpl {
     /**
      * 添加备注信息
      */
-    public void addComment(String taskId, String processInstanceId, String comment) {
-//    public void addComment(String taskId, String processInstanceId, String comment, String type) {
+    public void addComment(String taskId, String processInstanceId, String comment, String type) {
         if (!StringUtils.isEmpty(comment)) {
-            taskService.addComment(taskId, processInstanceId, comment);
+            taskService.addComment(taskId, processInstanceId, comment, type);
         }
     }
 
-    /**
-     * 分配待选组方法
-     */
-    public Result addGroupIdentityLinkMethod(String processInstanceId, String financeAssignType, String groupId) {
-        List<Task> taskList = taskService.createTaskQuery().processInstanceId(processInstanceId).active().list();
-        for (Task t : taskList) {
-            Execution exe = runtimeService.createExecutionQuery().executionId(t.getExecutionId()).singleResult();
-            if (exe.getActivityId().equals(financeAssignType)) {
-                taskService.addGroupIdentityLink(t.getId(), groupId, IdentityLinkType.CANDIDATE);
-                return Result.success().setData(true);
-            }
-        }
-        return Result.error(EnumCommonError.Admin_System_Error);
-    }
+//    /**
+//     * 分配待选组方法
+//     */
+//    public Result addGroupIdentityLinkMethod(String processInstanceId, String financeAssignType, String groupId) {
+//        List<Task> taskList = taskService.createTaskQuery().processInstanceId(processInstanceId).active().list();
+//        for (Task t : taskList) {
+//            Execution exe = runtimeService.createExecutionQuery().executionId(t.getExecutionId()).singleResult();
+//            if (exe.getActivityId().equals(financeAssignType)) {
+//                taskService.addGroupIdentityLink(t.getId(), groupId, IdentityLinkType.CANDIDATE);
+//                return Result.success().setData(true);
+//            }
+//        }
+//        return Result.error(EnumCommonError.Admin_System_Error);
+//    }
 
     /**
      * 指派给人方法

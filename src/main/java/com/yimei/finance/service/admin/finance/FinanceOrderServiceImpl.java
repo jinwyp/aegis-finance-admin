@@ -24,7 +24,7 @@ import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("financeOrderService")
 public class FinanceOrderServiceImpl {
     @Autowired
     private FinanceOrderRepository financeOrderRepository;

@@ -16,10 +16,7 @@ import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.service.common.message.MailServiceImpl;
 import com.yimei.finance.utils.CodeUtils;
 import com.yimei.finance.utils.DozerUtils;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
@@ -156,6 +153,24 @@ public class UserController {
         String content = "你好: " + user.getFirstName() + ", 管理员为你重置密码, 新密码是: " + password;
         mailService.sendSimpleMail(user.getEmail(), subject, content);
         return Result.success().setData(true);
+    }
+
+    @ApiOperation(value = "用户修改密码", notes = "用户自己修改密码", response = Boolean.class)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "oldPassword", value = "旧密码", required = true, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "newPassword", value = "新密码", required = true, dataType = "String", paramType = "query")
+    })
+    @RequestMapping(value = "/changepwd", method = RequestMethod.PUT)
+    public Result resetUserPasswordMethod(@RequestParam(value = "oldPassword", required = true)String oldPassword,
+                                          @RequestParam(value = "newPassword", required = true)String newPassword) {
+        if (!identityService.checkPassword(adminSession.getUser().getId(), userService.securePassword(oldPassword))) {
+            return Result.error(EnumAdminUserError.旧密码不正确.toString());
+        } else {
+            User user = identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult();
+            user.setPassword(userService.securePassword(newPassword));
+            identityService.saveUser(user);
+            return Result.success().setData(true);
+        }
     }
 
     @Transactional

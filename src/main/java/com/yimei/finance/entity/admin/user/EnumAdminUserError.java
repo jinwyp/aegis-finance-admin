@@ -14,5 +14,6 @@ public enum EnumAdminUserError {
     只有系统管理员组成员才能执行此操作,
     用户名不能为空,
     密码不能为空,
+    旧密码不正确,
     ;
 }

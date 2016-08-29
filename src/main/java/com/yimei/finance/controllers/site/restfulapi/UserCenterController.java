@@ -85,15 +85,14 @@ public class UserCenterController {
         financeOrder = financeOrderRepository.findBySourceId(financeOrder.getSourceId());
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
             runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
-            Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeOrder.getId())).active().singleResult();
-            taskService.addGroupIdentityLink(task.getId(), EnumSpecialGroup.ManageOnlineTraderGroup.id, IdentityLinkType.CANDIDATE);
         } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
-
+            runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
         } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
-
+            runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
         } else {
             return Result.error(EnumCommonError.Admin_System_Error);
         }
+        taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeOrder.getId())).active().singleResult();
         return Result.success().setData(financeOrderRepository.findBySourceId(financeOrder.getSourceId()));
     }
 
