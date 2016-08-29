@@ -101,7 +101,7 @@ public class MYRFinancingController {
                                             @RequestParam(value = "pass", required = true) int pass,
                                             @RequestParam(value = "comment", required = false) String comment,
                                             @ApiParam(name = "attachmentList", value = "尽调员上传资料文件", required = false) @RequestBody AttachmentList attachmentList) {
-        return flowStepService.riskManagerAuditMYRFinanceOrderMethod(adminSession.getUser().getId(), taskId, need, pass, comment, attachmentList);
+        return flowStepService.riskManagerAuditMYRFinanceOrderMethod(adminSession.getUser().getId(), taskId, need, 0, pass, comment, attachmentList);
     }
 
     @RequestMapping(value = "/riskmanager/contract/{taskId}", method = RequestMethod.POST)
