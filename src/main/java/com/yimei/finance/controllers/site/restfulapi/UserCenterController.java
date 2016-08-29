@@ -51,15 +51,15 @@ public class UserCenterController {
     * 供应链金融 - 发起融资申请
     */
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
-//    @LoginRequired
+    @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Valid @RequestBody FinanceOrder financeOrder) {
         System.out.println("Order Type:" + financeOrder.getApplyType());
         financeOrder.setApplyType(financeOrder.getApplyType());
         financeOrder.setSourceId(numberService.getNextCode("JR"));
-//        financeOrder.setUserId(userSession.getUser().getId());
-//        financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
-        financeOrder.setUserId(1);
+        financeOrder.setUserId(userSession.getUser().getId());
+        financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
+//        financeOrder.setUserId(1);
         financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
         financeOrder.setApplyDateTime(new Date());
@@ -97,11 +97,12 @@ public class UserCenterController {
      */
     @ApiOperation(value = "根据 id 查看金融申请单", notes = "根据 金融申请单id 查看金融申请单", response = FinanceOrder.class)
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Long", paramType = "path")
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(value = "/apply/{id}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
-        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, userSession.getUser().getId());
+        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, 1);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
+        financeOrder.setAttachmentList(financeOrderService.getOnlineTraderAttachmentListByFinanceOrderId(financeOrder.getId()));
         return Result.success().setData(financeOrder);
     }
 
