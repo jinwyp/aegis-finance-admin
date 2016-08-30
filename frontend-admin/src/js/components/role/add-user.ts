@@ -105,7 +105,6 @@ export class AddUserComponent {
 
     changeSelectGroup (event){
         this.currentUser.groupIds = event.selectedIds;
-        console.log(event.selectedIds)
     }
 
 
