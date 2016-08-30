@@ -25,4 +25,5 @@ public class HistoryTaskObject {
     private String applyCompanyName;
     private String applyType;
     private BigDecimal financingAmount;
+    private String sourceId;
 }

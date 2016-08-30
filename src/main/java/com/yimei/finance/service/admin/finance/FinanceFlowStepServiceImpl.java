@@ -18,8 +18,6 @@ public class FinanceFlowStepServiceImpl {
     @Autowired
     private TaskService taskService;
     @Autowired
-    private RuntimeService runtimeService;
-    @Autowired
     private FinanceFlowMethodServiceImpl flowMethodService;
     @Autowired
     private FinanceOrderServiceImpl orderService;
