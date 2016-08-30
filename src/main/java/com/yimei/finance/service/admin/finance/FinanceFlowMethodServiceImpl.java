@@ -179,11 +179,6 @@ public class FinanceFlowMethodServiceImpl {
         return Result.success().setData(taskObjectList);
     }
 
-    List<CommentObject> getTaskCommentObject(String taskId) {
-        List<CommentObject> commentObjectList = new ArrayList<>();
-
-        return commentObjectList;
-    }
 
 
 }

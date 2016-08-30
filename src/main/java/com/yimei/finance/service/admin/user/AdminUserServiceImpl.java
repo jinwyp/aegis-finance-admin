@@ -12,6 +12,7 @@ import org.activiti.engine.identity.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -118,6 +119,7 @@ public class AdminUserServiceImpl {
     }
 
     public Result checkUserPhone(String phone) {
+        if (StringUtils.isEmpty(phone)) return Result.success();
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().list());
         for (UserObject user : userObjectList) {
             if (user.getPhone().equals(phone)) return Result.error(EnumAdminUserError.此手机号已经存在.toString());

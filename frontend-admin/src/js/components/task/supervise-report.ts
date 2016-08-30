@@ -4,8 +4,7 @@
 
 
 import { Component } from '@angular/core';
-// import { jQuery as $ } from '../../../jquery-plugin/bootstrap.js';
-// import { jQuery as $ } from '../../../../../../frontend-site/src/js/jquery-plugin';
+import { Task, TaskService, TaskStatus } from '../../service/task';
 
 
 declare var __moduleName: string;
@@ -15,11 +14,9 @@ declare var __moduleName: string;
     moduleId: __moduleName || module.id,
     templateUrl: 'supervise-report.html'
 })
-
-
-
 export class SuperviseReportComponent {
 
+    currentTask : Task = new Task();
 
 
 }
