@@ -128,7 +128,7 @@
                             <span ms-visible="order.applyType===''">/</span>
                         </td>
 
-                        <td>{{order.applyDateTime || '/'}}</td>
+                        <td>{{order.createTime || '/'}}</td>
                         <!--<td>{{order.applyUserName || '/'}}</td>-->
                         <td>
                             <span ms-visible="order.financingAmount===null">/</span>
