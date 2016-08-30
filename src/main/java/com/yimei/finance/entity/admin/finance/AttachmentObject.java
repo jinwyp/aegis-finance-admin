@@ -1,8 +1,6 @@
 package com.yimei.finance.entity.admin.finance;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -12,12 +10,16 @@ import java.util.Date;
  */
 @Data
 @NoArgsConstructor
+@RequiredArgsConstructor
 @AllArgsConstructor
 public class AttachmentObject implements Serializable {
+    @NonNull
     private String name;
+    @NonNull
+    private String type;
+    @NonNull
     private String url;
     private String description;
-    private String type;
     private String taskId;
     private String processInstanceId;
     private String userId;

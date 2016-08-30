@@ -1,5 +1,6 @@
 package com.yimei.finance.utils;
 
+import com.yimei.finance.entity.admin.finance.AttachmentObject;
 import com.yimei.finance.service.common.file.Storage;
 import com.yimei.finance.service.common.file.StorageException;
 import org.apache.commons.codec.binary.Hex;
@@ -33,16 +34,15 @@ public class StoreUtils {
             return BigInteger.valueOf(byteSize).divide(BigInteger.valueOf(FileUtils.ONE_MB));
         } else if (units == FileSizeUnits.GB) {
             return BigInteger.valueOf(byteSize).divide(BigInteger.valueOf(FileUtils.ONE_GB));
+        } else if (units == FileSizeUnits.PB) {
+            return BigInteger.valueOf(byteSize).divide(BigInteger.valueOf(FileUtils.ONE_GB * 1000));
         }
         return BigInteger.valueOf(-1);
     }
 
-
-
     public static String getFileType(MultipartFile file) {
         return file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
     }
-
 
     /**
      * @param storage
@@ -51,20 +51,18 @@ public class StoreUtils {
      * @return
      * @throws IOException
      */
-    public static String save(Storage storage, MultipartFile file, String bucket) throws IOException {
-
+    public static AttachmentObject save(Storage storage, MultipartFile file, String bucket) throws IOException {
         String suffix = getFileType(file);
-
-        String filename = Hex.encodeHexString(DigestUtils.md5(file.getInputStream())) + "." + suffix;
-
+        String fileOriginName = file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf("."));
+        String fileName = Hex.encodeHexString(DigestUtils.md5(file.getInputStream())) + "." + suffix;
+        String fileUrl = "/files/" + bucket + "/" + Hex.encodeHexString(DigestUtils.md5(file.getInputStream())) + "." + suffix;
         try {
-            storage.save(bucket, filename, file.getInputStream(), 0, null);
+            storage.save(bucket, fileName, file.getInputStream(), 0, null);
         } catch (StorageException e) {
             logger.error("上传文件出错:{}",e.getMessage());
             throw new RuntimeException("can not save");
         }
-
-        return filename;
+        return new AttachmentObject(fileOriginName, suffix, fileUrl);
     }
 
 }
