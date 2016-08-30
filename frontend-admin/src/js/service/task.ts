@@ -110,16 +110,36 @@ class Task {
 
     id :string;
     name :string;
-    applyType : string;
-    applyTime : string;
     processInstanceId : string;
     taskDefinitionKey : string;
 
+    applyType : string;
+    applyTime : string;
 
+    //公用字段
     financingAmount : number;
     expectDate : string;
     businessAmount : number;
     transportMode : string;
+
+    //煤易融
+    sellingPrice : number;
+    contractor : string;
+    downstreamContractor : string;
+    terminalServer : string;
+
+    //煤易贷
+    storageLocation : string;
+    coalSource : string;
+    marketPrice : number;
+    coalQuantityIndex : string;
+
+    //煤易购
+    procurementPrice : number;
+    upstreamResource : string;
+    transferPort : string;
+
+    comments : string;
 
     applyCompanyName : string;
     assignee : string;
