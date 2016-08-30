@@ -30,51 +30,51 @@
         </tr>
         <tr class="item-min">
             <td class="td-label">仓库性质:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.storageProperty"></td>
             <td class="td-label">仓库地址:</td>
-            <td class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.storageAddress"></td>
         </tr>
         <tr class="item-title">
-            <td colspan="4"><span class="fs-16">我放与港口的历史合作状况</span></td>
+            <td colspan="4"><span class="fs-16">我方与港口的历史合作状况</span></td>
         </tr>
         <tr class="item-min">
             <td class="td-label">详细描述:</td>
-            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.historicalCooperationDetail"></td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">经营及堆存状况</span></td>
         </tr>
         <tr class="item-min">
             <td class="td-label">详细描述:</td>
-            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.operatingStorageDetail"></td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">保管及进出库流程规范程度</span></td>
         </tr>
         <tr class="item-min">
             <td class="td-label">详细描述:</td>
-            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.portStandardDegree"></td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">监管配合状况</span></td>
         </tr>
         <tr class="item-min">
             <td class="td-label">详细描述:</td>
-            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.supervisionCooperateDetail"></td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">监管方案</span></td>
         </tr>
         <tr class="item-min">
             <td class="td-label">详细描述:</td>
-            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.supervisionScheme"></td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">结论</span></td>
         </tr>
         <tr class="item-min">
             <td class="td-label">详细描述:</td>
-            <td colspan="3" class="td-val"><input type="text" value="fsdfsdff"></td>
+            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.finalConclusion"></td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">附件上传<span class="fs-14 hint">(详细的风控报告和相关单据材料等,<span class="orange">5M之内</span>)</span></span></td>
@@ -92,7 +92,7 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="4" placeholder="请输入"></textarea>
+                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentTask.supplyMaterialIntroduce"></textarea>
             </td>
         </tr>
         <tr class="item-title">
