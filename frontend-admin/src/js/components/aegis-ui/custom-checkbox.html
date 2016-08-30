@@ -1,0 +1,8 @@
+
+
+
+
+<label *ngFor="let group of sourceData">
+    <input type="checkbox" name="groupIds" [checked]="group.selected" [disabled]="isDisable(group)" (change)="click(group)">{{group.name}}
+</label>
+

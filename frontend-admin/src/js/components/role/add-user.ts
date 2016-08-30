@@ -73,7 +73,7 @@ export class AddUserComponent {
                         group.selected = true;
                     }
                 });
-
+                console.log(this.groups)
             } else {
 
             }
@@ -158,5 +158,9 @@ export class AddUserComponent {
         this.selectedItem     = '请选择';
     }
 
+
+    changeSelect (event){
+        console.log(event.selectedIds)
+    }
 }
 
