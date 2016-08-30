@@ -21,9 +21,6 @@ declare var __moduleName: string;
     moduleId: __moduleName || module.id,
     templateUrl: 'audit-investigator.html'
 })
-
-
-
 export class AuditInvestigatorComponent {
 
     private sub: Subscription;

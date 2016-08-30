@@ -117,37 +117,81 @@ class Task {
     applyTime : string;
 
     //公用字段
-    financingAmount : number;
-    expectDate : string;
-    businessAmount : number;
-    transportMode : string;
+    financingAmount : number;               //拟融资金额（单位：万元）
+    expectDate : string;                    //拟使用资金时间（单位：天）
+    businessAmount : number;                //预期此笔业务量（单位：万吨）
+    transportMode : string;                 //运输方式：海运\汽运\火运\其他
 
     //煤易融
-    sellingPrice : number;
-    contractor : string;
-    downstreamContractor : string;
-    terminalServer : string;
+    sellingPrice : number;                  //预计单吨销售价 (元/吨)
+    contractor : string;                    //签约单位全称
+    downstreamContractor : string;          //下游签约单位全称
+    terminalServer : string;                //用煤终端
 
     //煤易贷
-    storageLocation : string;
-    coalSource : string;
-    marketPrice : number;
-    coalQuantityIndex : string;
+    storageLocation : string;               //煤炭仓储地
+    coalSource : string;                    //煤炭来源
+    marketPrice : number;                   //单吨市场报价（元／吨）
+    coalQuantityIndex : string;             //主要煤质指标
 
     //煤易购
-    procurementPrice : number;
-    upstreamResource : string;
-    transferPort : string;
+    procurementPrice : number;              //单吨采购价 (元/吨)
+    upstreamResource : string;              //上游资源方全称
+    transferPort : string;                  //中转港口/地全称
 
-    comments : string;
+    comments : string;                      //备注说明
 
     applyCompanyName : string;
     assignee : string;
     assigneeDepartment : string;
     assigneeName : string;
 
-
     createTime : string;
+
+    //业务员表单字段
+    contractCompaniesInfoSupply : string;   //上下游签约单位信息补充
+    businessModelIntroduce : string;        //业务操作模式介绍
+    logisticsStorageInfoSupply : string;    //物流仓储信息补充
+    otherInfoSupply : string;               //其它补充说明
+    supplyMaterialIntroduce : string;       //补充材料说明
+
+    //尽调员表单字段
+    financingParty : string;                //融资方
+    ourContractCompany : string;            //我方签约公司
+    upstreamContractCompany : string;       //上游签约单位
+    downstreamContractCompany : string;     //下游签约单位
+    endUser : string;                       //终端用户
+    transportParty : string;                //运输方
+    transitPort : string;                   //中转港口
+    qualityInspectionUnit : string;         //质量检验单位
+    quantityInspectionUnit : string;        //数量检验单位
+    // financingAmount : number;
+    financingPeriod : number;               //融资期限
+    interestRate : number;                  //利率
+    businessStartTime : string;             //业务开始时间
+
+    historicalCooperationDetail : string;   //历史合作情况
+    mainBusinessInfo : string;              //业务主要信息
+    businessTransferInfo : string;          //业务流转信息
+    businessRiskPoint : string;             //业务风险点
+    performanceCreditAbilityEval:string;    //履约信用及能力评估
+    finalConclusion:string;                 //综合意见/最终结论
+    // supplyMaterialIntroduce : string;
+
+    //监管员表单字段
+    storagePlaceName : string;                //仓储地名称
+    storageProperty : string;                 //仓储性质
+    storageAddress : string;                  //仓储地地址
+    // historicalCooperationDetail : string;//历史合作情况
+    operatingStorageDetail : string;          //经营及堆存情况
+    portStandardDegree : string;              //保管及进出库流程规范程度
+    supervisionCooperateDetail : string;      //监管配合情况
+    supervisionScheme : string;               //监管方案
+    // finalConclusion : string;               //最终结论/综合意见
+    needSupplyMaterial : boolean;             //需要补充材料 true: 需要, false: 不需要
+    // supplyMaterialIntroduce : string;       //补充材料说明
+    noticeApplyUser : boolean;                //通知申请用户 true: 通知, false: 不通知
+    noticeSalesman : boolean;                 //通知业务员   true: 通知, false: 不通知
 
 
     constructor() {
