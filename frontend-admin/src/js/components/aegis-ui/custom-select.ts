@@ -10,7 +10,7 @@ import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 declare var __moduleName:string;
 
 
-const noop = () => {};
+
 
 export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
     provide: NG_VALUE_ACCESSOR,
@@ -31,7 +31,7 @@ export class CustomSelectComponent implements ControlValueAccessor{
     private innerSelectedItem: any = '' ; // The internal data model
 
     //Placeholders for the callbacks which are later provided by the Control Value Accessor
-    private onTouchedCallback: () => void = noop;
+    private onTouchedCallback: () => {};
     private onChangeCallback: (_: any) => {};
 
     //get accessor

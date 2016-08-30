@@ -48,15 +48,12 @@ export class UserListComponent {
     }
 
     hiddenModal() {
-        this.isHiddenModal = true;
         this.userId = '';
     }
-
-
+    
     delUser(){
         if (this.userId){
             this.user.del(this.userId).then((result)=> {
-                // console.log(result);
                 if (result.success) {
                     this.getUserList();
                 } else {

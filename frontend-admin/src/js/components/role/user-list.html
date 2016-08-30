@@ -44,4 +44,4 @@
         </tr>
     </table>
 </div>
-<custom-modal [isHidden]="isHiddenModal" (cancel)="hiddenModal()" (confirm)="delUser()"></custom-modal>
+<custom-modal [(ngModel)]="isHiddenModal" (cancel)="hiddenModal()" (confirm)="delUser()"></custom-modal>
