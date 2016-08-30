@@ -116,15 +116,19 @@ export class AddUserComponent {
 
             this.userService.add(this.currentUser).then((result)=> {
                 if (result.success) {
+                    alert('添加用户成功');
                     this.clear();
                 } else {
+                    alert(result.error.message);
                     this.css.ajaxErrorHidden = false;
                 }
             });
         } else {
-            this.userService.save(this.currentUser).then((result)=> {
+            this.userService.update(this.currentUser).then((result)=> {
                 if (result.success) {
+                    alert('保存用户成功');
                 } else {
+                    alert(result.error.message);
                     this.css.ajaxErrorHidden = false;
                 }
             });

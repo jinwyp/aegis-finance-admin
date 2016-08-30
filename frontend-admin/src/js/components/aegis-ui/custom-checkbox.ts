@@ -25,6 +25,13 @@ export class CustomCheckboxComponent{
 
     selectedIds :string[] = [];
 
+
+    ngOnChanges() {
+        this.sourceData.forEach(group => {
+            if (group.selected ) {this.selectedIds.push(group.id) }
+        })
+    }
+
     click (group){
 
         if (this.selectedIds.indexOf(group.id) === -1 ){
