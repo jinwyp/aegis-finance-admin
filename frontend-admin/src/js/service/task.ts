@@ -278,7 +278,7 @@ class TaskService {
             .catch(this.handleError);
     }
 
-    audit(taskId : string, auditType : string, isApproved: number = 0, isNeedFile : number = 0) {
+    audit(taskId : string, taskType : string, taskStep : string, body : any) {
 
         let auditStep = {
             onlinetrader : 'onlinetrader',
@@ -287,9 +287,17 @@ class TaskService {
             riskmanager : 'riskmanager'
         };
 
-        let url = `${API.tasksMYR}/${auditStep[auditType]}/audit/${taskId}?pass=${isApproved}&need=${isNeedFile}`;
+        let auditType = {
+            MYR : API.tasksMYR,
+            MYD : API.tasksMYD,
+            MYG : API.tasksMYG
+        };
 
-        return this.http.post(url, {} ).toPromise()
+        let url = auditType[taskType] + '/' + auditStep[taskStep] + '/audit/' + taskId;
+
+        let headers = new Headers({'Content-Type': 'application/json'});
+
+        return this.http.post(url, JSON.stringify(body), {headers: headers}).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }

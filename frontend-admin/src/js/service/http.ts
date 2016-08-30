@@ -8,6 +8,8 @@ var API = {
     session : '/api/financing/admin/session',
     tasks : '/api/financing/admin/tasks',
     tasksMYR : '/api/financing/admin/myr',
+    tasksMYG : '/api/financing/admin/myg',
+    tasksMYD : '/api/financing/admin/myd',
     users : '/api/financing/admin/users',
     groups : '/api/financing/admin/groups'
 };
