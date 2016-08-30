@@ -21,10 +21,10 @@ export class UserListComponent {
     constructor(private user:UserService) {
     }
 
-    userList:User[];
-    modalStatus:boolean = true;
-    btnClick:boolean    = false;
-    userId :string = '';
+    userList : User[];
+    isHiddenModal : boolean = true;
+    btnClick : boolean    = false;
+    userId : string       = '';
 
 
     ngOnInit() {
@@ -33,7 +33,6 @@ export class UserListComponent {
 
 
     getUserList() {
-
         this.user.getList().then((result)=> {
             if (result.success) {
                 this.userList = result.data;
@@ -45,34 +44,29 @@ export class UserListComponent {
     }
 
     showModal(id:string) {
-        this.modalStatus = false;
-        this.userId=id;
-        console.log(this.userId);
-        if (this.btnClick) {
+        this.isHiddenModal = false;
+        this.userId = id;
+        console.log(this.isHiddenModal);
+    }
+
+    hiddenModal() {
+        this.isHiddenModal = true;
+        this.userId = '';
+        console.log(this.isHiddenModal);
+    }
+
+
+    delUser(){
+        if (this.userId){
             this.user.del(this.userId).then((result)=> {
                 // console.log(result);
                 if (result.success) {
-                    window.location.reload();
+                    this.getUserList();
                 } else {
 
                 }
             });
         }
-    }
-    delUser(id){
-        this.user.del(id).then((result)=> {
-            // console.log(result);
-            if (result.success) {
-                window.location.reload();
-            } else {
-
-            }
-        });
-    }
-
-    stateChange($event) {
-        this.btnClick    = $event.btnClick;
-        this.modalStatus = $event.modalStatus;
     }
 
 }

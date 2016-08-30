@@ -41,6 +41,9 @@ export class TaskListComponent {
             if (this.routeData.routetype === 'pending'){
                 this.getAssignTaskList();
                 this.getPendingTaskList();
+            }else{
+
+                this.getAllTaskList();
             }
         });
 
@@ -80,6 +83,15 @@ export class TaskListComponent {
         });
     }
 
+    getAllTaskList () {
+        this.task.getTaskHistoryList().then((result)=>{
+            if (result.success){
+                this.taskPendingList = result.data;
+            }else{
+
+            }
+        });
+    }
 
 }
 

@@ -1,15 +1,16 @@
-<div class="modal-container" [class.hidden]="modalStatus">
+<div class="modal-container" [class.hidden]="isHidden">
     <!--弹出层---->
     <div class="modal-bg">
     </div>
     <div class="modal-body">
         <div class="div-title">
             <span>提示</span>
-            <span class="glyphicon glyphicon-remove del-icon" (click)="hideModal()" aria-hidden="true"></span>
+            <span class="glyphicon glyphicon-remove del-icon" (click)="cancelClick()" aria-hidden="true"></span>
         </div>
+
         <div class="div-main">您确定删除该订单吗?</div>
         <div class="div-operation">
-            <button type="button" class="btn btn-default btn-sure" (click)="sureClick()">确定</button>
+            <button type="button" class="btn btn-default btn-sure" (click)="confirmClick()">确定</button>
         </div>
     </div>
 </div>

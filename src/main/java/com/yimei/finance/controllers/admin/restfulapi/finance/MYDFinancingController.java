@@ -28,7 +28,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydOnlineTraderAddMaterialMethod(@PathVariable("taskId") String taskId,
-                                                   @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody @Valid CombineObject<TaskMap, FinanceOrder> map) {
+                                                   @ApiParam(name = "map", value = "参数body对象", required = true) @RequestBody @Valid CombineObject<TaskMap, FinanceOrder> map) {
         return flowStepService.onlineTraderAuditFinanceOrderMethod(adminSession.getUser().getId(), taskId, map.t, map.u);
     }
 
