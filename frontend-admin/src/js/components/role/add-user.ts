@@ -73,7 +73,6 @@ export class AddUserComponent {
                         group.selected = true;
                     }
                 });
-                console.log(this.groups)
             } else {
 
             }
@@ -95,9 +94,9 @@ export class AddUserComponent {
         this.userService.getUserById(id).then((result)=> {
             if (result.success) {
                 this.currentUser = result.data;
-                console.log(this.currentUser);
-                this.getGroupList();
                 this.selectedItem = this.currentUser.department;
+                this.getGroupList();
+
             } else {
 
             }
@@ -106,7 +105,6 @@ export class AddUserComponent {
 
     changeSelectGroup (event){
         this.currentUser.groupIds = event.selectedIds;
-        console.log(event.selectedIds)
     }
 
 
@@ -118,20 +116,21 @@ export class AddUserComponent {
 
             this.userService.add(this.currentUser).then((result)=> {
                 if (result.success) {
-
+                    alert('添加用户成功');
                     this.clear();
                 } else {
+                    alert(result.error.message);
                     this.css.ajaxErrorHidden = false;
                 }
-                console.log(result)
             });
         } else {
-            this.userService.save(this.currentUser).then((result)=> {
+            this.userService.update(this.currentUser).then((result)=> {
                 if (result.success) {
+                    alert('保存用户成功');
                 } else {
+                    alert(result.error.message);
                     this.css.ajaxErrorHidden = false;
                 }
-                console.log(result)
             });
         }
     }
