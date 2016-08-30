@@ -3,11 +3,13 @@
     <div class="modal-bg">
     </div>
     <div class="modal-body">
-        <div class="modal-title">
-            <span>{{modalTitle}}</span>
-            <span></span>
+        <div class="div-title">
+            <span>提示</span>
+            <span class="glyphicon glyphicon-remove del-icon" (click)="hideModal()" aria-hidden="true"></span>
         </div>
-        <div class="modal-content"></div>
-        <div class="modal-operation"></div>
+        <div class="div-main">您确定删除该订单吗?</div>
+        <div class="div-operation">
+            <button type="button" class="btn btn-default btn-sure" (click)="sureClick()">确定</button>
+        </div>
     </div>
 </div>

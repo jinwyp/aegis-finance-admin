@@ -3,8 +3,7 @@
  */
 
 
-import {Component, Input ViewChild} from '@angular/core';
-import {ModalDirective} from 'ng2-bootstrap/components/modal/modal.component';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
 
 
 declare var __moduleName:string;
@@ -16,20 +15,25 @@ declare var __moduleName:string;
 })
 export class CustomModalComponent {
 
-    modalTitle='提示';
 
     @Input()
-    modalStatus : boolean = true;
+    modalStatus : boolean = false;
 
-    @ViewChild('childModal') public childModal:ModalDirective;
+    @Input()
+    btnClick : boolean = false;
 
-    public showChildModal():void {
-        this.childModal.show();
+    @Output()
+    onChange:any = new EventEmitter();
+
+    public hideModal() {
+        this.modalStatus=true;
+        this.onChange.emit({modalStatus:this.modalStatus,btnClick:false});
     }
 
-    public hideChildModal():void {
-        this.childModal.hide();
+    public sureClick() {
+        this.modalStatus=true;
+        this.btnClick=true;
+        this.onChange.emit({modalStatus:this.modalStatus,btnClick:this.btnClick});
     }
-
 }
 

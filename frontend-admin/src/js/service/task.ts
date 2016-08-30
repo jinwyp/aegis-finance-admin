@@ -101,7 +101,6 @@ var taskStatusList = [
 var TaskStatus : any = {};
 taskStatusList.forEach( (status) => { TaskStatus[status.taskDefinitionKey] = status.taskDefinitionKey });
 
-console.log(TaskStatus);
 
 
 
