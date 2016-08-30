@@ -17,23 +17,23 @@ export class CustomModalComponent {
 
 
     @Input()
-    modalStatus : boolean = false;
+    isHidden : boolean = true;
 
-    @Input()
-    btnClick : boolean = false;
 
     @Output()
-    onChange:any = new EventEmitter();
+    confirm:any = new EventEmitter();
 
-    public hideModal() {
-        this.modalStatus=true;
-        this.onChange.emit({modalStatus:this.modalStatus,btnClick:false});
+    @Output()
+    cancel:any = new EventEmitter();
+
+    public cancelClick() {
+        this.isHidden = true;
+        this.cancel.emit({isModalHidden:this.isHidden});
     }
 
-    public sureClick() {
-        this.modalStatus=true;
-        this.btnClick=true;
-        this.onChange.emit({modalStatus:this.modalStatus,btnClick:this.btnClick});
+    public confirmClick() {
+        this.isHidden = true;
+        this.confirm.emit({isModalHidden:this.isHidden});
     }
 }
 
