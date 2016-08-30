@@ -20,6 +20,7 @@ body{
     height: 387px;
     display: inline-block;
     background: rgba(0,0,0,.4);
+    filter: alpha(opacity(0.4));
     //border:1px solid #58626a;
     .title{
       h1{

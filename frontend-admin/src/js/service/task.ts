@@ -6,6 +6,7 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
 import { HttpResponse, API } from './http';
 
@@ -111,7 +112,7 @@ class Task {
     id :string;
     name :string;
     applyType : string;
-    applyTime : string;
+    createTime : string;
     processInstanceId : string;
     taskDefinitionKey : string;
 
@@ -126,8 +127,6 @@ class Task {
     assigneeDepartment : string;
     assigneeName : string;
 
-
-    createTime : string;
 
 
     constructor() {
@@ -148,6 +147,15 @@ class TaskService {
         return Promise.reject(error.message || error);
     }
 
+    private AllTaskListInfo = new BehaviorSubject<any>(null);
+    private PendingTaskListInfo = new BehaviorSubject<any>(null);
+    getAllTaskLengthObservable = this.AllTaskListInfo.asObservable();
+    getPendingTaskLengthObservable = this.PendingTaskListInfo.asObservable();
+    setAllTaskLengthObservable (allTaskLength : number){ this.AllTaskListInfo.next({allTaskLength : allTaskLength }) };
+    setPendingTaskLengthObservable (pendingTaskLength : number ){ this.PendingTaskListInfo.next({pendingTaskLength : pendingTaskLength}) };
+
+
+
     constructor(
         private http: Http
     ) { }
@@ -155,6 +163,12 @@ class TaskService {
 
     getTaskList() {
         return this.http.get(API.tasks).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(this.handleError);
+    }
+
+    getTaskHistoryList() {
+        return this.http.get(API.tasks + '/history').toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(this.handleError);
     }
@@ -193,7 +207,6 @@ class TaskService {
             salesman : 'salesman',
             investigator : 'investigator',
             riskmanager : 'riskmanager'
-
         };
 
         let url = `${API.tasksMYR}/${auditStep[auditType]}/audit/${taskId}?pass=${isApproved}&need=${isNeedFile}`;
