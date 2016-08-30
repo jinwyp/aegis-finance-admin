@@ -6,7 +6,6 @@
 import {Component} from '@angular/core';
 
 import {User, UserService, UserGroup, UserGroupService} from '../../service/user';
-import {window} from "@angular/platform-browser/src/facade/browser";
 
 
 declare var __moduleName:string;
@@ -18,8 +17,9 @@ declare var __moduleName:string;
 })
 export class UserListComponent {
 
-    constructor(private user:UserService) {
-    }
+    constructor(
+        private user:UserService
+    ) {}
 
     userList : User[];
     isHiddenModal : boolean = true;
@@ -50,7 +50,7 @@ export class UserListComponent {
     hiddenModal() {
         this.userId = '';
     }
-    
+
     delUser(){
         if (this.userId){
             this.user.del(this.userId).then((result)=> {

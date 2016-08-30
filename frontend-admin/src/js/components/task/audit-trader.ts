@@ -72,7 +72,10 @@ export class AuditTraderComponent {
     }
 
 
-    audit (){
+    audit (isAudit : boolean){
+
+
+
         let auditType : string = '';
 
         if (this.currentTask.taskDefinitionKey === TaskStatus.onlineTraderAudit) auditType = 'onlinetrader'; //线上交易员审核并填写材料
@@ -89,9 +92,6 @@ export class AuditTraderComponent {
         }
     }
 
-    saveOrder (){
-        console.log(this.currentTask)
-    }
 
 
 }
