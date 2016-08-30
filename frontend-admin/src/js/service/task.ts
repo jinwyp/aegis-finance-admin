@@ -159,6 +159,12 @@ class TaskService {
             .catch(this.handleError);
     }
 
+    getTaskHistoryList() {
+        return this.http.get(API.tasks + '/history').toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(this.handleError);
+    }
+
     getAdminTaskList() {
         return this.http.get(API.tasks + '/unclaimed').toPromise()
             .then(response => response.json() as HttpResponse)
@@ -193,7 +199,6 @@ class TaskService {
             salesman : 'salesman',
             investigator : 'investigator',
             riskmanager : 'riskmanager'
-
         };
 
         let url = `${API.tasksMYR}/${auditStep[auditType]}/audit/${taskId}?pass=${isApproved}&need=${isNeedFile}`;
