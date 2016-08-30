@@ -82,13 +82,14 @@ public class FinanceFlowMethodServiceImpl {
      * 更改金融单状态
      */
     @Transactional
-    public Result updateFinanceOrderApproveState(Long financeId, EnumFinanceStatus status) {
+    public Result updateFinanceOrderApproveState(Long financeId, EnumFinanceStatus status, String userId) {
         FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         FinanceOrder order = financeOrderRepository.findOne(financeId);
         order.setApproveStateId(status.id);
         order.setApproveState(status.name);
         order.setLastUpdateTime(new Date());
+        order.setLastUpdateManId(userId);
         if (status.id == EnumFinanceStatus.AuditNotPass.id || status.id == EnumFinanceStatus.AuditPass.id) {
             order.setEndTime(new Date());
         }
@@ -130,7 +131,6 @@ public class FinanceFlowMethodServiceImpl {
             taskObject.setAssigneeName(user.getUsername());
             taskObject.setAssigneeDepartment(user.getDepartment());
         }
-        taskObject.setCommentList(DozerUtils.copy(taskService.getTaskComments(task.getId()), CommentObject.class));
         return Result.success().setData(taskObject);
     }
 
@@ -162,7 +162,6 @@ public class FinanceFlowMethodServiceImpl {
         UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
         taskObject.setAssigneeName(user.getUsername());
         taskObject.setAssigneeDepartment(user.getDepartment());
-        taskObject.setCommentList(DozerUtils.copy(taskService.getTaskComments(task.getId()), CommentObject.class));
         return Result.success().setData(taskObject);
     }
 
