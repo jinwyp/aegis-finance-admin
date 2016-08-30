@@ -1,11 +1,16 @@
 @import '../helpers/_variables.scss';
 body{
-  background:#1d4e89 url("#{$assetPath}/css/images/bg_img.jpg") no-repeat left 80px;
+  background-image: url("#{$assetPath}/css/images/bg_img.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;/* 当内容高度大于图片高度时，背景图像的位置相对于viewport固定 */
   background-size: cover;
 }
+
 .loginWrap{
   width: 100%;
   //min-height: 900px;
+  //margin-bottom: 100px;
 
   text-align: center;
   .loginCon{
@@ -56,6 +61,7 @@ body{
         color: #ffffff;
         border:none;
         font-size: 18px;
+        outline: none;
       }
       .tips{
         width: 330px;
