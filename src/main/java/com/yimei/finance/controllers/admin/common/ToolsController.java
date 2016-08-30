@@ -1,18 +1,28 @@
 package com.yimei.finance.controllers.admin.common;
 
+import com.yimei.finance.entity.admin.finance.AttachmentObject;
 import com.yimei.finance.entity.admin.finance.EnumMYRFinanceAllSteps;
 import com.yimei.finance.entity.common.databook.DataBook;
 import com.yimei.finance.entity.common.databook.EnumDataBookType;
 import com.yimei.finance.entity.common.result.MapObject;
 import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.repository.admin.databook.DataBookRepository;
+import com.yimei.finance.service.common.file.LocalStorage;
+import com.yimei.finance.utils.StoreUtils;
+import com.yimei.finance.utils.WebUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,6 +32,8 @@ import java.util.List;
 public class ToolsController {
     @Autowired
     private DataBookRepository dataBookRepository;
+    @Autowired
+    private LocalStorage localStorage;
 
     @RequestMapping(value = "/transportmodes", method = RequestMethod.GET)
     @ApiOperation(value = "获取运输方式列表", notes = "获取运输方式列表数据", response = DataBook.class, responseContainer = "List")
@@ -37,6 +49,31 @@ public class ToolsController {
             stepList.add(new MapObject(String.valueOf(step.id), step.name));
         }
         return Result.success().setData(stepList);
+    }
+
+    /**
+     * 上传文件
+     */
+    @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
+    public AttachmentObject uploadFileMethod(@RequestParam(value = "id", required = true)int id, @RequestParam("file") MultipartFile file) throws IOException {
+        String picSavePath = StoreUtils.save(localStorage ,file,"/upload");
+        String url = localStorage.loadFileRootDirectory()+"/upload/"+picSavePath;
+        return null;
+    }
+
+    /**
+     * 下载文件
+     */
+    @RequestMapping(value = "/download/file", method = RequestMethod.GET)
+    public void doDownloadFile(@RequestParam(value = "path", required = true) String path, HttpServletResponse response) {
+        try {
+            if (path != null && path.startsWith("/files/")) {
+                File file = new File(localStorage.getServerFileRootPath(), path.substring("/files/".length()));
+                WebUtils.doDownloadFile(file, response);
+            }
+        } catch (IOException e) {
+            throw new NotFoundException();
+        }
     }
 
 
