@@ -67,17 +67,9 @@
       <documentation>风控人员审核不通过。</documentation>
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${riskManagerAudit == 0}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="riskManagerAuditSuccess" name="填写合同模板，通知用户">
-      <documentation>上传合同模板，通知用户。</documentation>
-    </userTask>
-    <sequenceFlow id="flow21" sourceRef="exclusivegateway5" targetRef="riskManagerAuditSuccess">
-      <documentation>风控人员审核通过。</documentation>
-      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${riskManagerAudit == 1}]]></conditionExpression>
-    </sequenceFlow>
     <endEvent id="completeWorkFlowSuccess" name="审核通过，流程完成。">
       <documentation>流程完成。</documentation>
     </endEvent>
-    <sequenceFlow id="flow22" sourceRef="riskManagerAuditSuccess" targetRef="completeWorkFlowSuccess"></sequenceFlow>
     <sequenceFlow id="flow23" sourceRef="assignOnlineTrader" targetRef="onlineTraderAudit"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway6" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow24" sourceRef="onlineTraderAudit" targetRef="exclusivegateway6"></sequenceFlow>
@@ -130,6 +122,9 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needSupervisorSupplyRiskMaterial == 1}]]></conditionExpression>
     </sequenceFlow>
     <sequenceFlow id="flow47" sourceRef="supervisorSupplyRiskMaterial" targetRef="riskManagerAudit"></sequenceFlow>
+    <sequenceFlow id="flow48" name="审核通过" sourceRef="exclusivegateway5" targetRef="completeWorkFlowSuccess">
+      <conditionExpression xsi:type="tFormalExpression"><![CDATA[${riskManagerAudit == 1}]]></conditionExpression>
+    </sequenceFlow>
   </process>
   <bpmndi:BPMNDiagram id="BPMNDiagram_financingMYDWorkFlow">
     <bpmndi:BPMNPlane bpmnElement="financingMYDWorkFlow" id="BPMNPlane_financingMYDWorkFlow">
@@ -187,11 +182,8 @@
       <bpmndi:BPMNShape bpmnElement="EndByRiskManager" id="BPMNShape_EndByRiskManager">
         <omgdc:Bounds height="35.0" width="35.0" x="1188.0" y="214.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="riskManagerAuditSuccess" id="BPMNShape_riskManagerAuditSuccess">
-        <omgdc:Bounds height="55.0" width="105.0" x="1265.0" y="287.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="completeWorkFlowSuccess" id="BPMNShape_completeWorkFlowSuccess">
-        <omgdc:Bounds height="35.0" width="35.0" x="1416.0" y="297.0"></omgdc:Bounds>
+        <omgdc:Bounds height="35.0" width="35.0" x="1270.0" y="297.0"></omgdc:Bounds>
       </bpmndi:BPMNShape>
       <bpmndi:BPMNShape bpmnElement="exclusivegateway6" id="BPMNShape_exclusivegateway6">
         <omgdc:Bounds height="40.0" width="40.0" x="57.0" y="220.0"></omgdc:Bounds>
@@ -298,14 +290,6 @@
           <omgdc:Bounds height="16.0" width="55.0" x="1175.0" y="261.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow21" id="BPMNEdge_flow21">
-        <omgdi:waypoint x="1225.0" y="314.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1265.0" y="314.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow22" id="BPMNEdge_flow22">
-        <omgdi:waypoint x="1370.0" y="314.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1416.0" y="314.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23">
         <omgdi:waypoint x="77.0" y="119.0"></omgdi:waypoint>
         <omgdi:waypoint x="77.0" y="140.0"></omgdi:waypoint>
@@ -406,6 +390,13 @@
       <bpmndi:BPMNEdge bpmnElement="flow47" id="BPMNEdge_flow47">
         <omgdi:waypoint x="1012.0" y="255.0"></omgdi:waypoint>
         <omgdi:waypoint x="1012.0" y="287.0"></omgdi:waypoint>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow48" id="BPMNEdge_flow48">
+        <omgdi:waypoint x="1225.0" y="314.0"></omgdi:waypoint>
+        <omgdi:waypoint x="1270.0" y="314.0"></omgdi:waypoint>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="100.0" x="1235.0" y="314.0"></omgdc:Bounds>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
