@@ -89,7 +89,6 @@ export class AuditSalesmanComponent {
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
                     alert('保存成功!!')
-
                 }else{
                     alert('保存失败!')
                 }
