@@ -78,7 +78,6 @@ public class UserCenterController {
         } else {
             return Result.error(EnumCommonError.Admin_System_Error);
         }
-        taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeOrder.getId())).active().singleResult();
         return Result.success().setData(financeOrderRepository.findBySourceId(financeOrder.getSourceId()));
     }
 

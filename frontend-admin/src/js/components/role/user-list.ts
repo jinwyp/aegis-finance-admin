@@ -36,7 +36,6 @@ export class UserListComponent {
         this.user.getList().then((result)=> {
             if (result.success) {
                 this.userList = result.data;
-                console.log(result);
             } else {
 
             }
@@ -46,13 +45,11 @@ export class UserListComponent {
     showModal(id:string) {
         this.isHiddenModal = false;
         this.userId = id;
-        console.log(this.isHiddenModal);
     }
 
     hiddenModal() {
         this.isHiddenModal = true;
         this.userId = '';
-        console.log(this.isHiddenModal);
     }
 
 
