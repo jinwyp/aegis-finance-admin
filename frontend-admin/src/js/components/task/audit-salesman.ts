@@ -19,9 +19,6 @@ declare var __moduleName: string;
     moduleId: __moduleName || module.id,
     templateUrl: 'audit-salesman.html'
 })
-
-
-
 export class AuditSalesmanComponent {
 
     private sub: Subscription;
@@ -73,14 +70,23 @@ export class AuditSalesmanComponent {
     }
 
 
-    audit (){
+    audit (isAudit : boolean, isApproved : boolean){
 
         let auditType : string = '';
+        let body : any = {
+            t : {
+                submit : isAudit === true ? 1 : 0,
+                pass : isApproved === true ? 1 : 0,
+                need : 0,
+                need2 : 0
+            },
+            u : this.currentTask
+        };
 
         if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanAudit) auditType = 'salesman'; // 业务员审核并填写材料
 
         if (this.currentTask.taskDefinitionKey && auditType) {
-            this.task.audit(this.taskId, auditType, 1).then((result)=>{
+            this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
                     alert('保存成功!!')
 

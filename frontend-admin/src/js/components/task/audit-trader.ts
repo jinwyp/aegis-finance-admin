@@ -72,19 +72,26 @@ export class AuditTraderComponent {
     }
 
 
-    audit (isAudit : boolean){
-
-
+    audit (isAudit : boolean, isApproved : boolean){
 
         let auditType : string = '';
+        let body : any = {
+            t : {
+                submit : isAudit === true ? 1 : 0,
+                pass : isApproved === true ? 1 : 0,
+                need : 0,
+                need2 : 0
+            },
+            u : this.currentTask
+        };
 
         if (this.currentTask.taskDefinitionKey === TaskStatus.onlineTraderAudit) auditType = 'onlinetrader'; //线上交易员审核并填写材料
 
         if (this.currentTask.taskDefinitionKey && auditType) {
-            this.task.audit(this.taskId, auditType, 1).then((result)=>{
+
+            this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
                     alert('保存成功!!')
-
                 }else{
                     alert('保存失败!')
                 }

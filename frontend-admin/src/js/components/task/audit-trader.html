@@ -128,8 +128,8 @@
     <div class="row info-item">
         <!--<span class="col-sm-4 info-label-input"></span>-->
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(false)">保存</button>
-            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(true)">保存并提交</button>
+            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(false, false)">保存</button>
+            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(true, true)">保存并提交</button>
             <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['tasks/pending']">返回</button>
         </div>
     </div>
