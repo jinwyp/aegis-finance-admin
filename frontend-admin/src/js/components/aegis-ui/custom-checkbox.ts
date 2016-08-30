@@ -21,25 +21,24 @@ export class CustomCheckboxComponent{
     limitLength : number = 0;
 
     @Output()
-    change:any = new EventEmitter();
+    onChange:any = new EventEmitter();
 
     selectedIds :string[] = [];
 
     click (group){
 
-        if (this.selectedIds.indexOf(group.id) > -1 ){
-            this.selectedIds.splice(this.selectedIds.indexOf(group.id), 1);
-            group.selected = false;
-        }else{
+        if (this.selectedIds.indexOf(group.id) === -1 ){
             if (this.selectedIds.length < this.limitLength) {
                 this.selectedIds.push(group.id);
                 group.selected = true;
             }
+        }else{
+            this.selectedIds.splice(this.selectedIds.indexOf(group.id), 1);
+            group.selected = false;
         }
-        this.change.emit({selectedIds:this.selectedIds});
-
-        console.log(this.selectedIds)
+        this.onChange.emit({selectedIds:this.selectedIds});
     }
+
 
     isDisable (group){
         return this.selectedIds.length === this.limitLength && !group.selected

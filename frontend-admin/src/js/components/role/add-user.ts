@@ -84,7 +84,6 @@ export class AddUserComponent {
         this.userService.getDepartmentList().then((result)=> {
             if (result.success) {
                 this.departments = result.data;
-                console.log(result);
             } else {
 
             }
@@ -105,19 +104,9 @@ export class AddUserComponent {
         });
     }
 
-    selectGroup(group) {
-        if (this.currentUser.groupIds.indexOf(group.id) === -1) {
-            this.currentUser.groupIds.push(group.id);
-            group.selected = true;
-            // 最多只能同时拥有3个角色
-            // if (this.currentUser.groupIds.length < 3){
-            //     this.currentUser.groupIds.push(group.id);
-            //     group.selected = true;
-            // }
-        } else {
-            this.currentUser.groupIds.splice(this.currentUser.groupIds.indexOf(group.id), 1);
-            group.selected = false;
-        }
+    changeSelectGroup (event){
+        this.currentUser.groupIds = event.selectedIds;
+        console.log(event.selectedIds)
     }
 
 
@@ -159,8 +148,6 @@ export class AddUserComponent {
     }
 
 
-    changeSelect (event){
-        console.log(event.selectedIds)
-    }
+
 }
 
