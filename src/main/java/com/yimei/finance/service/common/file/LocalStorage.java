@@ -88,10 +88,6 @@ public class LocalStorage implements Storage {
         file.mkdir();
     }
 
-    public String loadFileRootDirectory() {
-        return "/files";
-    }
-
     /**
      * 获取服务器 files 目录绝对路径
      */

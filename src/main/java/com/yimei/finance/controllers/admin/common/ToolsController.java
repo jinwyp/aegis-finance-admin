@@ -1,6 +1,5 @@
 package com.yimei.finance.controllers.admin.common;
 
-import com.yimei.finance.entity.admin.finance.AttachmentObject;
 import com.yimei.finance.entity.admin.finance.EnumMYRFinanceAllSteps;
 import com.yimei.finance.entity.common.databook.DataBook;
 import com.yimei.finance.entity.common.databook.EnumDataBookType;
@@ -55,10 +54,8 @@ public class ToolsController {
      * 上传文件
      */
     @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
-    public AttachmentObject uploadFileMethod(@RequestParam(value = "id", required = true)int id, @RequestParam("file") MultipartFile file) throws IOException {
-        String picSavePath = StoreUtils.save(localStorage ,file,"/upload");
-        String url = localStorage.loadFileRootDirectory()+"/upload/"+picSavePath;
-        return null;
+    public Result uploadFileMethod(@RequestParam("file") MultipartFile file) throws IOException {
+        return Result.success().setData(StoreUtils.save(localStorage, file, "finance"));
     }
 
     /**
