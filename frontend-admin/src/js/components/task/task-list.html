@@ -2,7 +2,7 @@
     <ol class="breadcrumb">
         <li>审核管理</li>
         <li>&gt;</li>
-        <li class="active">我的待办(8)</li>
+        <li class="active">我的待办({{this.taskPendingList.length + this.taskAssignList.length}})</li>
     </ol>
 </div>
 
@@ -13,7 +13,6 @@
             <th width="80">申请时间</th>
             <th width="150">申请公司名称</th>
             <th width="100">拟融资总额状态<br/>(万元)</th>
-            <th width="100">当前步骤</th>
             <th width="100">当前处理人</th>
             <th width="100">所属部门</th>
             <th width="100">流程状态</th>
@@ -28,7 +27,6 @@
             <td>{{task.createTime | date:"yyyy/MM/dd"}}</td>
             <td>{{task.applyCompanyName}}</td>
             <td>{{task.financingAmount||'--'}}</td>
-            <td>{{task.name}}</td>
             <td>{{task.assigneeName||'--'}}</td>
             <td>{{task.assigneeDepartment||'--'}}</td>
             <td>
@@ -37,7 +35,7 @@
                 <!--<span>已完成</span>-->
             </td>
             <td>
-                <button type="button" class="btn btn-xs btn-default btn-sure w-80"  [routerLink]="['/tasks', task.id, 'assign']" [queryParams]="{status:task.name, processInstanceId:task.processInstanceId}">
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80"  [routerLink]="['/tasks', task.id, 'assign']">
                     <span> 分配</span>
                     <!--<span *ngIf="task.name==='分配线上交易员'" > 分配线上交易员</span>-->
                     <!--<span *ngIf="task.name==='分配业务员'" > 分配业务员</span>-->
@@ -51,17 +49,16 @@
 
 
         <tr class="item" *ngFor="let task of taskPendingList">
-            <td>
+            <td>{{task.id}}
                 <span *ngIf="task.applyType==='MYR'">煤易融</span>
                 <span *ngIf="task.applyType==='MYG'">煤易购</span>
                 <span *ngIf="task.applyType==='MYD'">煤易贷</span>
             </td>
             <td>{{task.createTime | date:"yyyy/MM/dd"}}</td>
             <td>{{task.applyCompanyName}}</td>
-            <td>{{task.financingAmount}}</td>
-            <td>{{task.description}}</td>
-            <td>{{task.assigneeName}}</td>
-            <td>{{task.assigneeDepartment}}</td>
+            <td>{{task.financingAmount||'--'}}</td>
+            <td>{{task.assigneeName||'--'}}</td>
+            <td>{{task.assigneeDepartment||'--'}}</td>
             <td>
                 <span class="green">{{task.name}}</span> <br/>
                 <!--<span class="orange">(补充材料)</span><br/>-->
@@ -72,7 +69,7 @@
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.salesmanAudit" [routerLink]="['/tasks', task.id, 'salesman']" > 审核并填写材料 </button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.investigatorAudit" [routerLink]="['/tasks', task.id, 'investigator']" > 审核 </button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.riskManagerAudit" [routerLink]="['/tasks', task.id, 'riskmanager']" > 审核 </button>
-                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.riskManagerAudit" [routerLink]="['/tasks', task.id, 'riskmanager']" > 填写合同 </button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.riskManagerAuditSuccess" [routerLink]="['/tasks', task.id, 'riskmanager']" > 填写合同 </button>
 
                 <!--<button type="button" class="btn btn-xs btn-default btn-return w-80">补充材料</button>-->
             </td>

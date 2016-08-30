@@ -46,6 +46,7 @@ import { SuperviseReportComponent } from '../components/task/supervise-report';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
 import { CustomSelectComponent } from '../components/aegis-ui/custom-select';
 import { CustomModalComponent } from '../components/aegis-ui/custom-modal';
+import { CustomCheckboxComponent } from '../components/aegis-ui/custom-checkbox';
 
 
 import {AlertComponent,} from 'ng2-bootstrap/ng2-bootstrap';
@@ -61,7 +62,7 @@ import {AlertComponent,} from 'ng2-bootstrap/ng2-bootstrap';
         UserListComponent, AddUserComponent, UserInfoComponent,
         TaskListComponent, AssignPersonComponent, ProcessTabComponent,
         AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, SuperviseReportComponent, AuditRiskManagerComponent,
-        CustomSelectComponent,CustomModalComponent
+        CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent
     ],
     providers: [ homePageRouterProviders, TaskService, UserService, UserGroupService ],
     bootstrap: [ HomeComponent ]

@@ -36,7 +36,6 @@ export class LoginComponent {
             password:this.currentUser.password
         }).then((result)=>{
             if (result.success){
-                alert('登录成功');
                 window.location.href = '/finance/admin/home';
             }else{
                 this.css.ajaxErrorHidden = false;

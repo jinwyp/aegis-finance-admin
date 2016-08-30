@@ -79,7 +79,7 @@
                                 <!--<th>申请人:</th>-->
                                 <!--<td>{{@financeInfo.applyUserName}}</td>-->
                                 <th colspan="1">申请时间:</th>
-                                <td colspan="3">{{@financeInfo.applyDateTime}}</td>
+                                <td colspan="3">{{@financeInfo.createTime}}</td>
                             </tr>
                         </table>
                     </div>
