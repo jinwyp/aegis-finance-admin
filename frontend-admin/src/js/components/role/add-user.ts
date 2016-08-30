@@ -68,13 +68,19 @@ export class AddUserComponent {
             if (result.success) {
                 this.groups = result.data;
 
-                this.groups.forEach((group)=> {
-                    if (this.currentUser.groupIds.indexOf(group.id) > -1) {
-                        group.selected = true;
-                    }
-                });
+                this.setCheckBoxStatus();
             } else {
 
+            }
+        });
+    }
+
+    setCheckBoxStatus(){
+        this.groups.forEach((group)=> {
+            if (this.currentUser.groupIds.indexOf(group.id) > -1) {
+                group.selected = true;
+            }else{
+                group.selected = false;
             }
         });
     }
@@ -133,6 +139,7 @@ export class AddUserComponent {
                 }
             });
         }
+        console.log(this.currentUser);
     }
 
 
@@ -143,6 +150,7 @@ export class AddUserComponent {
         this.currentUser.phone      = '';
         this.currentUser.department = '';
         this.currentUser.groupIds   = [];
+        this.setCheckBoxStatus();
         this.selectedItem     = '请选择';
     }
 
