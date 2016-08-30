@@ -24,6 +24,7 @@ public class HistoryTaskObject {
     protected Date dueDate;
     private String applyCompanyName;
     private String applyType;
+    private String applyTypeName;
     private BigDecimal financingAmount;
     private String sourceId;
 }

@@ -125,6 +125,7 @@ public class FinanceFlowMethodServiceImpl {
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
         taskObject.setApplyType(financeOrder.getApplyType());
+        taskObject.setApplyTypeName(financeOrder.getApplyTypeName());
         taskObject.setFinancingAmount(financeOrder.getFinancingAmount());
         taskObject.setSourceId(financeOrder.getSourceId());
         if (!StringUtils.isEmpty(task.getAssignee())) {
@@ -159,6 +160,7 @@ public class FinanceFlowMethodServiceImpl {
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
         taskObject.setApplyType(financeOrder.getApplyType());
+        taskObject.setApplyTypeName(financeOrder.getApplyTypeName());
         taskObject.setFinancingAmount(financeOrder.getFinancingAmount());
         taskObject.setSourceId(financeOrder.getSourceId());
         UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
