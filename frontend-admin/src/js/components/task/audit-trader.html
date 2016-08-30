@@ -38,7 +38,7 @@
 
         <tr class="item-min">
             <td class="td-label">拟融资金额:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.financingAmount"><span>万元</span></td>
+            <td class="td-val"><input type="text" readonly [(ngModel)]="currentTask.financingAmount"><span>万元</span></td>
             <td class="td-label">拟使用资金时间:</td>
             <td class="td-val"><input type="text" [(ngModel)]="currentTask.expectDate"><span>天</span></td>
         </tr>
@@ -86,7 +86,7 @@
             <td class="td-label">单吨市场报价:</td>
             <td class="td-val"><input type="text" [(ngModel)]="currentTask.marketPrice"><span>元/吨</span></td>
             <td class="td-label">主要煤质指标:</td>
-            <td class="td-val"><input type="text" value="缺字段" ></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentTask.coalQuantityIndex"></td>
         </tr>
 
 
@@ -128,9 +128,9 @@
     <div class="row info-item">
         <!--<span class="col-sm-4 info-label-input"></span>-->
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="submit" class="btn btn-default btn-lg btn-sure" (click)="saveOrder()">保存</button>
-            <button type="submit" class="btn btn-default btn-lg btn-sure ml-20" (click)="audit()">保存并提交</button>
-            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/pending']">返回</button>
+            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="saveOrder()">保存</button>
+            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit()">保存并提交</button>
+            <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['tasks/pending']">返回</button>
         </div>
     </div>
 </div>

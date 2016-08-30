@@ -151,49 +151,60 @@ class Task {
 
 
     //业务员表单字段
-    contractCompaniesInfoSupply : string;   //上下游签约单位信息补充
-    businessModelIntroduce : string;        //业务操作模式介绍
-    logisticsStorageInfoSupply : string;    //物流仓储信息补充
-    otherInfoSupply : string;               //其它补充说明
-    supplyMaterialIntroduce : string;       //补充材料说明
+    contractCompaniesInfoSupply : string;       //上下游签约单位信息补充
+    businessModelIntroduce : string;            //业务操作模式介绍
+    logisticsStorageInfoSupply : string;        //物流仓储信息补充
+    otherInfoSupply : string;                   //其它补充说明
+    supplyMaterialIntroduce : string;           //补充材料说明
 
     //尽调员表单字段
-    financingParty : string;                //融资方
-    ourContractCompany : string;            //我方签约公司
-    upstreamContractCompany : string;       //上游签约单位
-    downstreamContractCompany : string;     //下游签约单位
-    endUser : string;                       //终端用户
-    transportParty : string;                //运输方
-    transitPort : string;                   //中转港口
-    qualityInspectionUnit : string;         //质量检验单位
-    quantityInspectionUnit : string;        //数量检验单位
+    financingParty : string;                    //融资方
+    ourContractCompany : string;                //我方签约公司
+    upstreamContractCompany : string;           //上游签约单位
+    downstreamContractCompany : string;         //下游签约单位
+    endUser : string;                           //终端用户
+    transportParty : string;                    //运输方
+    transitPort : string;                       //中转港口
+    qualityInspectionUnit : string;             //质量检验单位
+    quantityInspectionUnit : string;            //数量检验单位
     // financingAmount : number;
-    financingPeriod : number;               //融资期限
-    interestRate : number;                  //利率
-    businessStartTime : string;             //业务开始时间
+    financingPeriod : number;                   //融资期限
+    interestRate : number;                      //利率
+    businessStartTime : string;                 //业务开始时间
 
-    historicalCooperationDetail : string;   //历史合作情况
-    mainBusinessInfo : string;              //业务主要信息
-    businessTransferInfo : string;          //业务流转信息
-    businessRiskPoint : string;             //业务风险点
-    performanceCreditAbilityEval:string;    //履约信用及能力评估
-    finalConclusion:string;                 //综合意见/最终结论
+    historicalCooperationDetail : string;       //历史合作情况
+    mainBusinessInfo : string;                  //业务主要信息
+    businessTransferInfo : string;              //业务流转信息
+    businessRiskPoint : string;                 //业务风险点
+    performanceCreditAbilityEval:string;        //履约信用及能力评估
+    finalConclusion:string;                     //综合意见/最终结论
     // supplyMaterialIntroduce : string;
 
     //监管员表单字段
-    storagePlaceName : string;                //仓储地名称
-    storageProperty : string;                 //仓储性质
-    storageAddress : string;                  //仓储地地址
-    // historicalCooperationDetail : string;//历史合作情况
-    operatingStorageDetail : string;          //经营及堆存情况
-    portStandardDegree : string;              //保管及进出库流程规范程度
-    supervisionCooperateDetail : string;      //监管配合情况
-    supervisionScheme : string;               //监管方案
-    // finalConclusion : string;               //最终结论/综合意见
-    needSupplyMaterial : boolean;             //需要补充材料 true: 需要, false: 不需要
-    // supplyMaterialIntroduce : string;       //补充材料说明
-    noticeApplyUser : boolean;                //通知申请用户 true: 通知, false: 不通知
-    noticeSalesman : boolean;                 //通知业务员   true: 通知, false: 不通知
+    storagePlaceName : string;                  //仓储地名称
+    storageProperty : string;                   //仓储性质
+    storageAddress : string;                    //仓储地地址
+    // historicalCooperationDetail : string;       //历史合作情况
+    operatingStorageDetail : string;            //经营及堆存情况
+    portStandardDegree : string;                //保管及进出库流程规范程度
+    supervisionCooperateDetail : string;        //监管配合情况
+    supervisionScheme : string;                 //监管方案
+    // finalConclusion : string;                   //最终结论/综合意见
+    needSupplyMaterial : boolean;               //需要补充材料 true: 需要, false: 不需要
+    // supplyMaterialIntroduce : string;           //补充材料说明
+    noticeApplyUser : boolean;                  //通知申请用户 true: 通知, false: 不通知
+    noticeSalesman : boolean;                   //通知业务员   true: 通知, false: 不通知
+
+    distributionAbilityEval : string;           //分销能力评估
+    paymentSituationEval : string;              //预计回款情况
+    // businessRiskPoint : string;                 //业务风险点
+    riskControlScheme : string;                 //风险控制方案
+    // finalConclusion : string;                   //风控结论/最终结论/综合意见
+    // needSupplyMaterial : boolean;               //需要补充材料 true: 需要, false: 不需要
+    // supplyMaterialIntroduce : string;           //补充材料说明
+    // noticeApplyUser : boolean;                  //通知申请用户 true: 通知, false: 不通知
+    // noticeSalesman : boolean;                   //通知业务员   true: 通知, false: 不通知
+    editContract : boolean;                     //编辑和他     true: 需要编辑, false: 不需要编辑
 
 
     constructor() {
