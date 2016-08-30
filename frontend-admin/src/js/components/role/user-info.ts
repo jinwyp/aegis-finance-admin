@@ -16,9 +16,6 @@ declare var __moduleName: string;
     moduleId: __moduleName || module.id,
     templateUrl: 'user-info.html'
 })
-
-
-
 export class UserInfoComponent implements OnInit, OnDestroy{
 
     constructor(
@@ -47,7 +44,6 @@ export class UserInfoComponent implements OnInit, OnDestroy{
         this.user.getUserById(id).then((result)=>{
             if (result.success){
                 this.currentUser = result.data;
-                console.log(result);
             }else{
 
             }
