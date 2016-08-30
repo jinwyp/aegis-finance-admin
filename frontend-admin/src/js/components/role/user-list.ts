@@ -46,13 +46,11 @@ export class UserListComponent {
     showModal(id:string) {
         this.isHiddenModal = false;
         this.userId = id;
-        console.log(this.isHiddenModal);
     }
 
     hiddenModal() {
         this.isHiddenModal = true;
         this.userId = '';
-        console.log(this.isHiddenModal);
     }
 
 

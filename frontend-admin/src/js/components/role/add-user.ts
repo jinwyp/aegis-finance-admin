@@ -73,7 +73,6 @@ export class AddUserComponent {
                         group.selected = true;
                     }
                 });
-                console.log(this.groups)
             } else {
 
             }
@@ -95,9 +94,9 @@ export class AddUserComponent {
         this.userService.getUserById(id).then((result)=> {
             if (result.success) {
                 this.currentUser = result.data;
-                console.log(this.currentUser);
-                this.getGroupList();
                 this.selectedItem = this.currentUser.department;
+                this.getGroupList();
+
             } else {
 
             }
@@ -118,12 +117,10 @@ export class AddUserComponent {
 
             this.userService.add(this.currentUser).then((result)=> {
                 if (result.success) {
-
                     this.clear();
                 } else {
                     this.css.ajaxErrorHidden = false;
                 }
-                console.log(result)
             });
         } else {
             this.userService.save(this.currentUser).then((result)=> {
@@ -131,7 +128,6 @@ export class AddUserComponent {
                 } else {
                     this.css.ajaxErrorHidden = false;
                 }
-                console.log(result)
             });
         }
     }
