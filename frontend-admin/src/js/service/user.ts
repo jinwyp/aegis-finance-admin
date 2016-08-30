@@ -182,7 +182,7 @@ class UserService {
         let headers = new Headers({'Content-Type': 'application/json'});
 
         let url = `${API.users}/${id}`;
-
+        console.log(url+'---------'+typeof id);
         return this.http.delete(url, {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
             .catch(this.handleError);

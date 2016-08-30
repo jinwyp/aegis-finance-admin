@@ -48,11 +48,6 @@ export class UserListComponent {
         this.modalStatus = false;
         this.userId=id;
         console.log(this.userId);
-    }
-
-    stateChange($event) {
-        this.btnClick    = $event.btnClick;
-        this.modalStatus = $event.modalStatus;
         if (this.btnClick) {
             this.user.del(this.userId).then((result)=> {
                 // console.log(result);
@@ -63,6 +58,21 @@ export class UserListComponent {
                 }
             });
         }
+    }
+    delUser(id){
+        this.user.del(id).then((result)=> {
+            // console.log(result);
+            if (result.success) {
+                window.location.reload();
+            } else {
+
+            }
+        });
+    }
+
+    stateChange($event) {
+        this.btnClick    = $event.btnClick;
+        this.modalStatus = $event.modalStatus;
     }
 
 }
