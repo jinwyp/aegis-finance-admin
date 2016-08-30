@@ -122,7 +122,7 @@ public class AdminUserServiceImpl {
         if (StringUtils.isEmpty(phone)) return Result.success();
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().list());
         for (UserObject user : userObjectList) {
-            if (user.getPhone().equals(phone)) return Result.error(EnumAdminUserError.此手机号已经存在.toString());
+            if (!StringUtils.isEmpty(user.getPhone()) && user.getPhone().equals(phone)) return Result.error(EnumAdminUserError.此手机号已经存在.toString());
         }
         return Result.success();
     }
