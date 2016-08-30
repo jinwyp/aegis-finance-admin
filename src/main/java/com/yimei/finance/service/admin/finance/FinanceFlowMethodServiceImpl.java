@@ -90,7 +90,7 @@ public class FinanceFlowMethodServiceImpl {
         order.setApproveState(status.name);
         order.setLastUpdateTime(new Date());
         if (status.id == EnumFinanceStatus.AuditNotPass.id || status.id == EnumFinanceStatus.AuditPass.id) {
-            order.setEndDateTime(new Date());
+            order.setEndTime(new Date());
         }
         financeOrderRepository.save(order);
         return Result.success().setData(true);

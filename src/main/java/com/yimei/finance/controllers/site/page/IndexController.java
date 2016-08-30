@@ -3,7 +3,6 @@ package com.yimei.finance.controllers.site.page;
 import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.common.result.MapObject;
-import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import io.swagger.annotations.Api;
@@ -15,12 +14,12 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.env.Environment;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -131,8 +130,8 @@ public class IndexController {
             row.createCell(0).setCellValue(String.valueOf(i + 1));
             row.createCell(1).setCellValue(String.valueOf(order.getSourceId()));
             row.createCell(2).setCellValue(String.valueOf(order.getApplyTypeName()));
-            if (order.getApplyDateTime() != null && !StringUtils.isEmpty(String.valueOf(order.getApplyDateTime()))) {
-                row.createCell(3).setCellValue(String.valueOf(myFmt.format(order.getApplyDateTime())));
+            if (order.getCreateTime() != null && !StringUtils.isEmpty(String.valueOf(order.getCreateTime()))) {
+                row.createCell(3).setCellValue(String.valueOf(myFmt.format(order.getCreateTime())));
             }
             row.createCell(4).setCellValue(String.valueOf(order.getFinancingAmount()));
             row.createCell(5).setCellValue(String.valueOf(order.getExpectDate()));

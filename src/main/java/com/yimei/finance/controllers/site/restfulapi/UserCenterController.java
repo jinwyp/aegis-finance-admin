@@ -62,9 +62,9 @@ public class UserCenterController {
 //        financeOrder.setUserId(1);
         financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
-        financeOrder.setApplyDateTime(new Date());
+        financeOrder.setCreateTime(new Date());
         financeOrder.setLastUpdateTime(new Date());
-        financeOrder.setEndDateTime(null);
+        financeOrder.setEndTime(null);
         financeOrderRepository.save(financeOrder);
         financeOrder = financeOrderRepository.findBySourceId(financeOrder.getSourceId());
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
