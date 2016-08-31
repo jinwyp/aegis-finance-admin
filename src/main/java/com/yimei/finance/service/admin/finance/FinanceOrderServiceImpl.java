@@ -9,6 +9,7 @@ import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.entity.site.user.FinanceOrderSearch;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.utils.DozerUtils;
+import com.yimei.finance.utils.Where;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
@@ -17,9 +18,11 @@ import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 import java.util.List;
 
 @Service("financeOrderService")
@@ -58,45 +61,56 @@ public class FinanceOrderServiceImpl {
      * 查询金融单
      */
     public Result getFinanceOrderBySelect(int userId, FinanceOrderSearch order, Page page) {
-//        String hql = " select o.id, o.sourceId, o.applyType, o.createTime, o.financingAmount, o.expectDate, " +
-//                " o.approveState from FinanceOrder o where o.userId=:userId ";
-//        if (order != null) {
-//            if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
-//                hql += " and o.createTime between :startDate and :endDate ";
-//            }
-//            if (order.getApproveStateId() != 0) {
-//                hql += " and o.approveStateId=:approveStateId ";
-//            }
-//            if (!StringUtils.isEmpty(order.getSourceId())) {
-//                hql += " and o.sourceId like :sourceId ";
-//            }
-//            if (!StringUtils.isEmpty(order.getApplyType())) {
-//                hql += " and o.applyType=:applyType ";
-//            }
-//        }
-//
-//        Query query = entityManager.createQuery(hql);
-//        query.setParameter("userId", userId);
-//        if (order != null) {
-//            if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
-//                query.setParameter("startDate", order.getStartDate());
-//                query.setParameter("endDate", order.getEndDate());
-//            }
-//            if (order.getApproveStateId() != 0) {
-//                query.setParameter("approveStateId", order.getApproveStateId());
-//            }
-//            if (!StringUtils.isEmpty(order.getSourceId())) {
-//                query.setParameter("sourceId", Where.$like$(order.getSourceId()));
-//            }
-//            if (!StringUtils.isEmpty(order.getApplyType())) {
-//                query.setParameter("applyType", order.getApplyType());
-//            }
-//        }
-//        List<FinanceOrder> totalList = query.getResultList();
-//        page.setTotal(Long.valueOf(totalList.size()));
-//        List<FinanceOrder> financeOrderList = totalList.subList(page.getOffset(), (int) (page.getOffset() + page.getPage() * page.getTotal()));
-//        return Result.success().setData(financeOrderList).setMeta(page);
-        return Result.success();
+        String hql = " select o.id, o.sourceId, o.applyType, o.createTime, o.financingAmount, o.expectDate, " +
+                " o.approveState from FinanceOrder o where o.userId=:userId ";
+        if (order != null) {
+            if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
+                hql += " and o.createTime between :startDate and :endDate ";
+            }
+            if (order.getApproveStateId() != 0) {
+                hql += " and o.approveStateId=:approveStateId ";
+            }
+            if (!StringUtils.isEmpty(order.getSourceId())) {
+                hql += " and o.sourceId like :sourceId ";
+            }
+            if (!StringUtils.isEmpty(order.getApplyType())) {
+                hql += " and o.applyType=:applyType ";
+            }
+        }
+
+        Query query = entityManager.createQuery(hql);
+        query.setParameter("userId", userId);
+        if (order != null) {
+            if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
+                query.setParameter("startDate", order.getStartDate());
+                query.setParameter("endDate", order.getEndDate());
+            }
+            if (order.getApproveStateId() != 0) {
+                query.setParameter("approveStateId", order.getApproveStateId());
+            }
+            if (!StringUtils.isEmpty(order.getSourceId())) {
+                query.setParameter("sourceId", Where.$like$(order.getSourceId()));
+            }
+            if (!StringUtils.isEmpty(order.getApplyType())) {
+                query.setParameter("applyType", order.getApplyType());
+            }
+        }
+        List<FinanceOrder> totalList = query.getResultList();
+        page.setTotal(Long.valueOf(totalList.size()));
+        List<FinanceOrder> financeOrderList = totalList.subList(page.getOffset(), (int) (page.getOffset() + page.getPage() * page.getTotal()));
+        System.out.println(" ------------------------ " + financeOrderList.size());
+        System.out.println(" ------------------------ " + financeOrderList.size());
+        System.out.println(" ------------------------ " + financeOrderList.size());
+        System.out.println(" ------------------------ " + financeOrderList.size());
+        System.out.println(" ------------------------ " + financeOrderList.size());
+        System.out.println(" ------------------------ " + financeOrderList.toString());
+        System.out.println(" ------------------------ " + financeOrderList.toString());
+        System.out.println(" ------------------------ " + financeOrderList.toString());
+        System.out.println(" ------------------------ " + financeOrderList.toString());
+        System.out.println(" ------------------------ " + financeOrderList.toString());
+        System.out.println(" ------------------------ " + financeOrderList.toString());
+
+        return Result.success().setData(financeOrderList).setMeta(page);
     }
 
 

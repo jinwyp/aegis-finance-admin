@@ -2,9 +2,10 @@ package com.yimei.finance.controllers.site.restfulapi;
 
 import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.entity.admin.finance.EnumAdminFinanceError;
+import com.yimei.finance.entity.admin.finance.EnumFinanceOrderType;
 import com.yimei.finance.entity.admin.finance.EnumFinanceStatus;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.entity.admin.finance.FinanceOrderTest;
+import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.CombineObject;
 import com.yimei.finance.entity.common.result.MapObject;
 import com.yimei.finance.entity.common.result.Page;
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,44 +49,35 @@ public class UserCenterController {
     /**
     * 供应链金融 - 发起融资申请
     */
-    @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrderTest.class)
+    @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
 //    @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
-    public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Valid @RequestBody FinanceOrderTest financeOrder) {
+    public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Valid @RequestBody FinanceOrder financeOrder) {
         System.out.println("Order Type:" + financeOrder.getApplyType());
-        System.out.println("Order Type:" + financeOrder.getApplyType());
-        System.out.println("Order Type:" + financeOrder.getApplyType());
-        System.out.println("Order Type:" + financeOrder.getApplyType());
-        System.out.println("Order Type:" + financeOrder.getApplyType());
-        System.out.println("Order Type:" + financeOrder.getApplyType());
-        System.out.println("Order Type:" + financeOrder.getApplyType());
-        System.out.println("Order Type:" + financeOrder.getApplyType());
-        System.out.println("Order Type:" + financeOrder.getApplyType());
-//        financeOrder.setApplyType(financeOrder.getApplyType());
-//        financeOrder.setSourceId(numberService.getNextCode("JR"));
-//        financeOrder.setUserId(userSession.getUser().getId());
-//        financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
-//        financeOrder.setCreateManId(String.valueOf(userSession.getUser().getId()));
-//        financeOrder.setLastUpdateManId(String.valueOf(userSession.getUser().getId()));
-//        financeOrder.setCreateTime(new Date());
-//        financeOrder.setLastUpdateTime(new Date());
-//        financeOrder.setEndTime(null);
-////        financeOrder.setUserId(1);
-//        financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
-//        financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
-//        orderRepository.save(financeOrder);
-//        financeOrder = orderRepository.findBySourceId(financeOrder.getSourceId());
-//        if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
-//            runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
-//        } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
-//            runtimeService.startProcessInstanceByKey("financingMYGWorkFlow", String.valueOf(financeOrder.getId()));
-//        } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
-//            runtimeService.startProcessInstanceByKey("financingMYDWorkFlow", String.valueOf(financeOrder.getId()));
-//        } else {
-//            return Result.error(EnumCommonError.Admin_System_Error);
-//        }
-//        return Result.success().setData(orderRepository.findBySourceId(financeOrder.getSourceId()));
-        return Result.success().setData(true);
+        financeOrder.setApplyType(financeOrder.getApplyType());
+        financeOrder.setSourceId(numberService.getNextCode("JR"));
+        financeOrder.setUserId(userSession.getUser().getId());
+        financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
+        financeOrder.setCreateManId(String.valueOf(userSession.getUser().getId()));
+        financeOrder.setLastUpdateManId(String.valueOf(userSession.getUser().getId()));
+        financeOrder.setCreateTime(new Date());
+        financeOrder.setLastUpdateTime(new Date());
+        financeOrder.setEndTime(null);
+//        financeOrder.setUserId(1);
+        financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
+        financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
+        orderRepository.save(financeOrder);
+        financeOrder = orderRepository.findBySourceId(financeOrder.getSourceId());
+        if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
+            runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
+        } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
+            runtimeService.startProcessInstanceByKey("financingMYGWorkFlow", String.valueOf(financeOrder.getId()));
+        } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
+            runtimeService.startProcessInstanceByKey("financingMYDWorkFlow", String.valueOf(financeOrder.getId()));
+        } else {
+            return Result.error(EnumCommonError.Admin_System_Error);
+        }
+        return Result.success().setData(orderRepository.findBySourceId(financeOrder.getSourceId()));
     }
 
     /**

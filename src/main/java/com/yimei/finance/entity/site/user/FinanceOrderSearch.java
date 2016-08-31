@@ -16,7 +16,7 @@ public class FinanceOrderSearch implements Serializable {
     private Date startDate;
     private Date endDate;
     private int approveStateId;
-    private Date applyType;
-    private Date sourceId;
+    private String applyType;
+    private String sourceId;
 
 }
