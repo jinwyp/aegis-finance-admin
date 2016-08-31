@@ -1,9 +1,6 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.AttachmentObject;
-import com.yimei.finance.entity.admin.finance.EnumFinanceEventType;
-import com.yimei.finance.entity.admin.finance.EnumFinanceStatus;
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.entity.site.user.FinanceOrderSearch;
@@ -23,6 +20,7 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.TypedQuery;
 import java.util.List;
 
 @Service("financeOrderService")
@@ -61,9 +59,7 @@ public class FinanceOrderServiceImpl {
      * 查询金融单
      */
     public Result getFinanceOrderBySelect(int userId, FinanceOrderSearch order, Page page) {
-        String hql = " select o.id as id, o.sourceId as sourceId, o.applyType as applyType, o.createTime as createTime, " +
-                " o.financingAmount as financingAmount, o.expectDate as expectDate, " +
-                " o.approveState as approveState from FinanceOrder o where o.userId=:userId ";
+        String hql = " select o from FinanceOrder o where o.userId=:userId ";
         if (order != null) {
             if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
                 hql += " and o.createTime between :startDate and :endDate ";
@@ -79,7 +75,7 @@ public class FinanceOrderServiceImpl {
             }
         }
 
-        Query query = entityManager.createQuery(hql);
+        TypedQuery<FinanceOrder> query = entityManager.createQuery(hql, FinanceOrder.class);
         query.setParameter("userId", userId);
         if (order != null) {
             if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
@@ -101,7 +97,7 @@ public class FinanceOrderServiceImpl {
         System.out.println(" ----------------------------------------- ");
         System.out.println(" ----------------------------------------- ");
 
-        System.out.println(query.getResultList().get(0).toString());
+        System.out.println(query.getResultList().get(0));
 
         System.out.println(" ----------------------------------------- ");
         System.out.println(" ----------------------------------------- ");
