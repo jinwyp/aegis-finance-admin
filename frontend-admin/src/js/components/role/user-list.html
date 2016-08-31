@@ -21,14 +21,17 @@
             <!--<th width="60">序号</th>-->
             <th width="100">用户账号</th>
             <th width="80">用户姓名</th>
-            <th width="200">角色名称</th>
-            <th width="120">最后一次登录</th>
-            <th width="200">操作</th>
+            <th width="100">所在部门</th>
+            <th width="200">所属角色</th>
+
+            <th width="150">最后一次登录</th>
+            <th >操作</th>
         </tr>
         <tr class="item" *ngFor="let user of userList">
             <!--<td>{{user.id}}</td>-->
             <td>{{user.username}}</td>
             <td>{{user.name}}</td>
+            <td>{{user.department}}</td>
             <td>
                 <span *ngFor="let usergroup of user.groupList">{{usergroup.name}}&nbsp;</span>
             </td>

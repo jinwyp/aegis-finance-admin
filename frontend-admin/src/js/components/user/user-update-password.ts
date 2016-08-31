@@ -19,25 +19,37 @@ export class UserUpdatePasswordComponent {
     constructor(
         private userService: UserService
     ) {}
-    user={
-        oldPassword : '',
-        newPassword : ''
+
+    css = {
+        activeForRefresh : true,
+        isSubmitted :      false,
+        ajaxErrorHidden :  true,
+        ajaxSuccessHidden : true
     };
-    comfirmPassword='';
+
+    user = {
+        oldPassword : '',
+        newPassword : '',
+        confirmPassword : ''
+    };
+
 
     checkPwd(){
         // this.oldPassword===this.newPassword;
     }
 
     changePwd() {
-        console.log(this.user);
-        this.userService.changePwd(this.user).then((result)=> {
-            if (result.success) {
-                window.location.href = '/finance/admin/home/users';
-            } else {
+        this.css.ajaxErrorHidden = true;
+        this.css.ajaxSuccessHidden = true;
+        this.css.isSubmitted     = true;
 
+        this.userService.updatePassword(this.user).then((result)=> {
+            if (result.success) {
+                this.css.ajaxSuccessHidden = false;
+            } else {
+                this.css.ajaxErrorHidden = false;
             }
-            console.log(result);
+            this.css.isSubmitted = false;
         });
     }
 

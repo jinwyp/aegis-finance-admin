@@ -15,7 +15,7 @@
     <div class="row info-item">
         <span class="col-sm-2 info-label">所属角色:</span>
         <ul class="col-sm-10 role-info info-val">
-            <li *ngFor="let group of currentUserSession.groupList">{{group.name}}<a>查看角色权限</a></li>
+            <li *ngFor="let group of currentUserSession.groupList">{{group.name}}</li>
         </ul>
     </div>
     <div class="row info-item form-group">
@@ -37,7 +37,7 @@
         <div class="col-sm-10 info-val">
             <input type="text" class="form-control" id="emailInput" name="email" [(ngModel)]="currentUserSession.email" maxlength="16" #email="ngModel" >
             <span class="help-block" [class.hidden]="email.valid || email.pristine || css.ajaxErrorHidden">请填写邮箱!</span>
-            <span class="hint ml-10">注:管理员帮您<span class="orange">找回密码</span>的重要途径</span>
+            <span class="hint ml-10">提示:系统管理员帮您<span class="orange">找回密码</span>的重要途径</span>
         </div>
     </div>
     <div class="row info-item">
@@ -47,9 +47,11 @@
         </div>
     </div>
     <div class="row info-item">
-        <span class="col-sm-2 info-label-input"></span>
-        <div class="col-sm-10 info-val">
-            <button type="submit" class="btn btn-default btn-lg btn-save">保存</button>
+        <div class="col-sm-offset-2 col-sm-4 info-val">
+            <button type="submit" class="btn btn-default btn-lg btn-save" [disabled]="css.isSubmitted">保存</button>
+        </div>
+        <div class="col-sm-4 info-val">
+            <div class="alert alert-success" role="alert" [class.hidden]="css.ajaxSuccessHidden">保存成功!</div>
         </div>
     </div>
     </form>
