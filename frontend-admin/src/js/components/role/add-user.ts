@@ -39,7 +39,7 @@ export class AddUserComponent {
 
     groups       = [];
     departments  = [];
-    selectedItem = '请选择';
+    selectedItem = '';
     modalShowText : string ='';
 
     ngOnInit() {
