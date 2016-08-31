@@ -136,11 +136,13 @@ public class UserController {
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateUserInfoMethod(@PathVariable("id") String id,
-                                   @ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
+                                       @ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
         Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
         if (!result.isSuccess()) return result;
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());
-        if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());
+        if (StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户邮箱不能为空.toString());
+        User emailUser = identityService.createUserQuery().userEmail(user.getEmail()).singleResult();
+        if (emailUser != null && !emailUser.getId().equals(id)) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
         User oldUser = identityService.createUserQuery().userId(id).singleResult();
         if (oldUser == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         oldUser.setEmail(user.getEmail());
@@ -155,7 +157,9 @@ public class UserController {
     @ApiOperation(value = "用户自己修改信息", notes = "用户自己修改信息", response = UserObject.class)
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public Result updateUserSelfInfoMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());
+        if (!StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户邮箱不能为空.toString());
+        User emailUser = identityService.createUserQuery().userEmail(user.getEmail()).singleResult();
+        if (emailUser != null && !emailUser.getId().equals(adminSession.getUser().getId())) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
         User oldUser = identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult();
         oldUser.setEmail(user.getEmail());
         identityService.saveUser(oldUser);
