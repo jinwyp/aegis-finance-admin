@@ -61,8 +61,9 @@ public class FinanceOrderServiceImpl {
      * 查询金融单
      */
     public Result getFinanceOrderBySelect(int userId, FinanceOrderSearch order, Page page) {
-        String hql = " select o.id, o.sourceId, o.applyType, o.createTime, o.financingAmount, o.expectDate, " +
-                " o.approveState from FinanceOrder o where o.userId=:userId ";
+        String hql = " select o.id as id, o.sourceId as sourceId, o.applyType as applyType, o.createTime as createTime, " +
+                " o.financingAmount as financingAmount, o.expectDate as expectDate, " +
+                " o.approveState as approveState from FinanceOrder o where o.userId=:userId ";
         if (order != null) {
             if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
                 hql += " and o.createTime between :startDate and :endDate ";
@@ -95,21 +96,24 @@ public class FinanceOrderServiceImpl {
                 query.setParameter("applyType", order.getApplyType());
             }
         }
+        System.out.println(" ----------------------------------------- ");
+        System.out.println(" ----------------------------------------- ");
+        System.out.println(" ----------------------------------------- ");
+        System.out.println(" ----------------------------------------- ");
+
+        System.out.println(query.getResultList().get(0).toString());
+
+        System.out.println(" ----------------------------------------- ");
+        System.out.println(" ----------------------------------------- ");
+        System.out.println(" ----------------------------------------- ");
+        System.out.println(" ----------------------------------------- ");
+        System.out.println(" ----------------------------------------- ");
+
         List<FinanceOrder> totalList = query.getResultList();
+
+
         page.setTotal(Long.valueOf(totalList.size()));
         List<FinanceOrder> financeOrderList = totalList.subList(page.getOffset(), (int) (page.getOffset() + page.getPage() * page.getTotal()));
-        System.out.println(" ------------------------ " + financeOrderList.size());
-        System.out.println(" ------------------------ " + financeOrderList.size());
-        System.out.println(" ------------------------ " + financeOrderList.size());
-        System.out.println(" ------------------------ " + financeOrderList.size());
-        System.out.println(" ------------------------ " + financeOrderList.size());
-        System.out.println(" ------------------------ " + financeOrderList.toString());
-        System.out.println(" ------------------------ " + financeOrderList.toString());
-        System.out.println(" ------------------------ " + financeOrderList.toString());
-        System.out.println(" ------------------------ " + financeOrderList.toString());
-        System.out.println(" ------------------------ " + financeOrderList.toString());
-        System.out.println(" ------------------------ " + financeOrderList.toString());
-
         return Result.success().setData(financeOrderList).setMeta(page);
     }
 

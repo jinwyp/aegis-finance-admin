@@ -80,7 +80,7 @@ public class UserCenterController {
      * 供应链金融 - 用户中心 - 获取融资申请列表
      */
     @ApiOperation(value = "融资申请列表", notes = "用户查询融资申请列表", response = FinanceOrder.class, responseContainer = "List")
-    @LoginRequired
+//    @LoginRequired
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页数", required = false, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "sourceId", value = "业务编号", required = false, dataType = "String", paramType = "query"),
@@ -91,7 +91,8 @@ public class UserCenterController {
     })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(FinanceOrderSearch orderSearch,  Page page) {
-        return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), orderSearch, page);
+        return orderService.getFinanceOrderBySelect(1, orderSearch, page);
+//        return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), orderSearch, page);
     }
 
     /**
@@ -103,12 +104,10 @@ public class UserCenterController {
     @RequestMapping(value = "/apply/{id}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
         FinanceOrder financeOrder = orderRepository.findByIdAndUserId(id, userSession.getUser().getId());
-//        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, 1);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         financeOrder.setAttachmentList(orderService.getOnlineTraderAttachmentListByFinanceOrderId(financeOrder.getId()));
         return Result.success().setData(financeOrder);
     }
-
 
     @RequestMapping(value = "/status", method = RequestMethod.GET)
     @ApiOperation(value = "融资申请状态列表", notes = "融资申请状态列表", response = MapObject.class, responseContainer = "List")

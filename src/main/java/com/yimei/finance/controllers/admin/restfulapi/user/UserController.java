@@ -1,10 +1,7 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.user.EnumAdminGroupError;
-import com.yimei.finance.entity.admin.user.EnumAdminUserError;
-import com.yimei.finance.entity.admin.user.GroupObject;
-import com.yimei.finance.entity.admin.user.UserObject;
+import com.yimei.finance.entity.admin.user.*;
 import com.yimei.finance.entity.common.databook.EnumDataBookType;
 import com.yimei.finance.entity.common.enums.EnumCommonString;
 import com.yimei.finance.entity.common.result.Page;
@@ -25,6 +22,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @Api(tags = {"admin-api-user"}, description = "用户增删改查接口")
@@ -162,20 +160,15 @@ public class UserController {
     }
 
     @ApiOperation(value = "用户修改密码", notes = "用户自己修改密码", response = Boolean.class)
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "oldPassword", value = "原密码", required = true, dataType = "String", paramType = "form"),
-            @ApiImplicitParam(name = "newPassword", value = "新密码", required = true, dataType = "String", paramType = "form")
-    })
     @RequestMapping(value = "/changepwd", method = RequestMethod.POST)
-    public Result resetUserPasswordMethod(@RequestParam(value = "oldPassword", required = true)String oldPassword,
-                                          @RequestParam(value = "newPassword", required = true)String newPassword) {
-        if (newPassword.length() < 6 || newPassword.length() > 16) {
-            return Result.error(EnumAdminUserError.NewPasswordLengthError);
-        } else if (!identityService.checkPassword(adminSession.getUser().getId(), userService.securePassword(oldPassword))) {
+    public Result resetUserPasswordMethod(@ApiParam(name = "user", value = "用户密码") @Valid @RequestBody UserPasswordObject userObject) {
+        if (!identityService.checkPassword(adminSession.getUser().getId(), userService.securePassword(userObject.getOldPassword()))) {
             return Result.error(EnumAdminUserError.原密码不正确.toString());
+        } else if (userService.securePassword(userObject.getNewPassword()).equals(identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult().getPassword())) {
+            return Result.error(EnumAdminUserError.新密码和原密码一样.toString());
         } else {
             User user = identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult();
-            user.setPassword(userService.securePassword(newPassword));
+            user.setPassword(userService.securePassword(userObject.getNewPassword()));
             identityService.saveUser(user);
             return Result.success().setData(true);
         }
