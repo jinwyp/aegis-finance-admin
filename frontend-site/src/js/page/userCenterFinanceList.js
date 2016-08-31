@@ -76,7 +76,7 @@ var financeList = () => {
         var params = $.extend({}, query);
 
         $.ajax({
-            url      : '/api/financing/apply',
+            url      : '/api/financing/list',
             method   : 'GET',
             dataType : 'json',
             data     : params,
@@ -126,52 +126,41 @@ var financeList = () => {
     });
 
 
-    //我要融资
-    // var requestApplyInfo = (query) => {
-    //
-    //     var params = $.extend({}, query);
-    //
-    //     $.ajax({
-    //         url      : '/api/financing/apply',
-    //         method   : "POST",
-    //         contentType: "application/json;charset=utf-8",
-    //         dataType : "json",
-    //         data     : JSON.stringify(params),
-    //         success  : (data)=> {
-    //             if (data.success){
-    //                 $('.modal_1').modal('hide');
-    //                 setTimeout(()=>{
-    //                     $('.modal_2').modal();
-    //                     $('#modalImg_2').removeClass('attention').addClass('yes');
-    //                     $('#modalInfo_2').html('申请成功!');
-    //                     $('#md_ok_2').val('确定').modal('hide');
-    //                     $('#md_ok_2').click(()=>{
-    //                         $('.modal_2').modal('hide');
-    //                     })
-    //                 },500);
-    //
-    //             }else{
-    //                 window.location.href = data.error.message;
-    //             }
-    //         }
-    //     })
-    // };
-
-    //modal
-    // $('#finance').click(() => {
-    //     $('.modal_1').modal();
-    // });
-    // $('#md_ok_1').click(function () {
-    //
-    //     requestApplyInfo({
-    //         applyType : ""
-    //     });
-    // });
-
+    //导出excel
     $('#excel').click(()=>{
         location.href="/finance/user/financing/excel"
     })
 
+    // //分页相关
+    // var vm = {};
+    //
+    // var app = {
+    //     init : function(){
+    //         vm = avalon.define({
+    //             $id: "paginationController",
+    //
+    //             configPagination : {
+    //                 totalPages : 0,
+    //                 currentPage : 1,
+    //                 inputCurrentPages : 1,
+    //                 isShowPagination : true,
+    //                 changePageNo : function(page){
+    //                     $("#submitSearch").trigger("click",[page]);
+    //                 }
+    //             }
+    //         });
+    //     }
+    // };
+    //
+    // $( document ).ready( function() {
+    //     app.init();
+    //
+    //     vm.configPagination.currentPage = Number($("#page").val());
+    //     vm.configPagination.inputCurrentPages = Number($("#page").val());
+    //     vm.configPagination.totalPages = Math.ceil($("#count").val() / $("#pagesize").val());
+    //
+    //     if (Number($("#count").val()) < 10) {vm.configPagination.isShowPagination = false}
+    // });
 
 
 };
