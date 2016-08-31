@@ -21,6 +21,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.sql.Date;
 import java.util.List;
 
 @Service("financeOrderService")
@@ -79,8 +80,8 @@ public class FinanceOrderServiceImpl {
         query.setParameter("userId", userId);
         if (order != null) {
             if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
-                query.setParameter("startDate", order.getStartDate());
-                query.setParameter("endDate", order.getEndDate());
+                query.setParameter("startDate", Date.valueOf(order.getStartDate()));
+                query.setParameter("endDate", Date.valueOf(order.getEndDate()));
             }
             if (order.getApproveStateId() != 0) {
                 query.setParameter("approveStateId", order.getApproveStateId());
@@ -92,12 +93,11 @@ public class FinanceOrderServiceImpl {
                 query.setParameter("applyType", order.getApplyType());
             }
         }
-        System.out.println(" ----------------------------------------- ");
+        System.out.println(" ----------------------------------------- " + hql);
         System.out.println(" ----------------------------------------- ");
         System.out.println(" ----------------------------------------- ");
         System.out.println(" ----------------------------------------- ");
 
-        System.out.println(query.getResultList().get(0));
 
         System.out.println(" ----------------------------------------- ");
         System.out.println(" ----------------------------------------- ");

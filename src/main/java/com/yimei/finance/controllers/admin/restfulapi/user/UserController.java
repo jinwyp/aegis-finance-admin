@@ -44,7 +44,10 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
-    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
+    @ApiImplicitParams({
+
+            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
+    })
     public Result getAllUsersMethod(Page page) {
         page.setTotal(identityService.createUserQuery().count());
         List<UserObject> userObjectList = userService.changeUserObject(identityService.createUserQuery().listPage(page.getOffset(), page.getCount()));
