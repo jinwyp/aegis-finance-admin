@@ -11,13 +11,11 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserLoginObject implements Serializable {
-    @Size(min=3, max=20, message = "账号应在3-20个字符之间")
-    @NotBlank(message = "账号不能为空")
-    private String username;                    //账号
-
+public class UserPasswordObject implements Serializable {
     @Size(min=6, max=16, message = "密码应在6-16个字符之间")
-    @NotBlank(message = "密码不能为空")
-    private String password;
-
+    @NotBlank(message = "原密码不能为空")
+    private String oldPassword;
+    @Size(min=6, max=16, message = "密码应在6-16个字符之间")
+    @NotBlank(message = "新密码不能为空")
+    private String newPassword;
 }
