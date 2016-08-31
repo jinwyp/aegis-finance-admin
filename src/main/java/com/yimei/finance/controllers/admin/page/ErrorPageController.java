@@ -8,14 +8,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Api(tags={"admin-page-error"})
-@RequestMapping("/api/financing/admin")
 @Controller("adminErrorPageController")
 public class ErrorPageController {
     @Autowired
     private AdminSession adminSession;
 
 
-    @RequestMapping(value = "/404", method = RequestMethod.GET)
+    @RequestMapping(value = "/admin/404", method = RequestMethod.GET)
     public String Page404() {
         return "admin/http/404";
     }
