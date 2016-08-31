@@ -32,15 +32,16 @@ public class FinanceFlowStepServiceImpl {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.onlineTraderAudit.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
         orderService.updateFinanceOrderByOnlineTrader(financeOrder);
+
         if (taskMap.getSubmit() == 0) {
-            return Result.success().setData(orderService.findById(financeOrder.getId()));
+            return Result.success();
         } else {
             if (taskMap.getPass() != 0 && taskMap.getPass() != 1) return Result.error(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
             vars.put(EnumFinanceEventType.onlineTraderAudit.toString(), taskMap.getPass());
             taskService.complete(task.getId(), vars);
             if (taskMap.getPass() == 1) {
-                return Result.success().setData(orderService.findById(financeOrder.getId()));
+                return Result.success();
             } else {
                 return methodService.updateFinanceOrderApproveState(financeOrder.getId(), EnumFinanceStatus.AuditNotPass, userId);
             }

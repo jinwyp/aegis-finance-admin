@@ -23,7 +23,6 @@ public class HomePageController {
         if (adminSession.getUser() == null) {
             return "redirect:/finance/admin/login";
         }
-
         return "admin/home";
     }
 

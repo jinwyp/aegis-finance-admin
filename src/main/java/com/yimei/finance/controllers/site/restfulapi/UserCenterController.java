@@ -92,7 +92,6 @@ public class UserCenterController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(FinanceOrderSearch orderSearch, Page page) {
         return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), orderSearch, page);
-//        return orderService.getFinanceOrderBySelect(1, orderSearch, page);
     }
 
     /**
@@ -105,7 +104,6 @@ public class UserCenterController {
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
         FinanceOrder financeOrder = orderRepository.findByIdAndUserId(id, userSession.getUser().getId());
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        financeOrder.setAttachmentList(orderService.getOnlineTraderAttachmentListByFinanceOrderId(financeOrder.getId()));
         return Result.success().setData(financeOrder);
     }
 

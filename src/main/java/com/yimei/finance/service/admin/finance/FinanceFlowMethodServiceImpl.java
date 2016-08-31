@@ -2,11 +2,10 @@ package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.entity.admin.user.UserObject;
-import com.yimei.finance.representation.common.enums.EnumCommonError;
-import com.yimei.finance.representation.common.result.Result;
-import com.yimei.finance.entity.admin.finance.TaskObject;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.HistoryService;
@@ -58,15 +57,6 @@ public class FinanceFlowMethodServiceImpl {
     }
 
     /**
-     * 添加备注信息
-     */
-    public void addComment(String taskId, String processInstanceId, String comment, String type) {
-        if (!StringUtils.isEmpty(comment)) {
-            taskService.addComment(taskId, processInstanceId, comment, type);
-        }
-    }
-
-    /**
      * 指派给人方法
      */
     public Result setAssignUserMethod(String processInstanceId, String financeEventType, String userId) {
@@ -80,7 +70,6 @@ public class FinanceFlowMethodServiceImpl {
         }
         return Result.error(EnumCommonError.Admin_System_Error);
     }
-
 
     /**
      * 更改金融单状态
@@ -98,7 +87,7 @@ public class FinanceFlowMethodServiceImpl {
             order.setEndTime(new Date());
         }
         orderRepository.save(order);
-        return Result.success().setData(orderService.findById(financeId));
+        return Result.success();
     }
 
     /**
@@ -182,7 +171,5 @@ public class FinanceFlowMethodServiceImpl {
         }
         return Result.success().setData(taskObjectList);
     }
-
-
 
 }
