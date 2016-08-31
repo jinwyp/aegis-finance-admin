@@ -133,10 +133,10 @@ public class UserController {
         return Result.success().setData(userObject);
     }
 
-    @ApiOperation(value = "修改用户", notes = "根据 User Id修改用户", response = UserObject.class)
+    @ApiOperation(value = "修改用户信息", notes = "根据 User Id修改用户", response = UserObject.class)
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Result updateUserMethod(@PathVariable("id") String id,
+    public Result updateUserInfoMethod(@PathVariable("id") String id,
                                    @ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
         Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
         if (!result.isSuccess()) return result;
@@ -153,9 +153,9 @@ public class UserController {
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
     }
 
-    @ApiOperation(value = "自己修改信息", notes = "用户自己修改信息", response = UserObject.class)
+    @ApiOperation(value = "用户自己修改信息", notes = "用户自己修改信息", response = UserObject.class)
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public Result updateUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
+    public Result updateUserSelfInfoMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
         if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());
         User oldUser = identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult();
         oldUser.setEmail(user.getEmail());
