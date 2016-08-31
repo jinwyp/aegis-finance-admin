@@ -261,17 +261,18 @@ class TaskService {
     assignPerson(taskId : string, userId : string) {
 
         return this.http.post(API.tasks + '/' + taskId + '/claim', {}).toPromise()
-            .then( (response) => {
+            .then<HttpResponse | any>( (response) => {
                 var result = response.json();
-                if (result.data ){
+                if (result.success ){
                     return this.http.put(API.tasks + '/' + taskId + '/person/' + userId, {}).toPromise()
+                        .then(response => response.json() as HttpResponse)
                 }else{
-                    Promise.reject('管理员领取任务失败!')
+                    return Promise.resolve(result)
                 }
             })
-            .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }
+
 
     audit(taskId : string, taskType : string, taskStep : string, body : any) {
 

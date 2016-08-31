@@ -9,13 +9,18 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.http.HttpStatus;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.OutputStream;
 
 @ControllerAdvice
 public class ExceptionTranslator {
@@ -63,6 +68,36 @@ public class ExceptionTranslator {
     public Result process404Error(NotFoundException ex) {
         logger.error("404 Exception: ",ex);
         return Result.error(404, ex.getMessage());
+    }
+
+    @ExceptionHandler(NoHandlerFoundException.class)
+    @ResponseStatus(value= HttpStatus.NOT_FOUND)
+    @ResponseBody
+    public Result requestHandlingNoHandlerFound(NoHandlerFoundException ex, HttpServletRequest request,HttpServletResponse response) throws IOException {
+        logger.error("404 Exception: ",ex);
+        String AJAX = request.getHeader("X-Requested-With");
+        String currentUrl = request.getRequestURL().toString();
+
+        if (null != AJAX && AJAX.equals("XMLHttpRequest") || currentUrl.contains("/api"))  {
+            return Result.error(404, ex.getMessage());
+        } else {
+            if (currentUrl.contains("/admin")) {
+                response.sendRedirect("/admin/404");
+            } else {
+                response.sendRedirect("/404");
+            }
+
+        }
+
+        return null;
+    }
+
+    @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
+    @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
+    @ResponseBody
+    public Result process405Error(HttpRequestMethodNotSupportedException ex) {
+        logger.error("405 Exception: ",ex);
+        return Result.error(405, ex.getMessage());
     }
 
     @ExceptionHandler(BusinessException.class)
