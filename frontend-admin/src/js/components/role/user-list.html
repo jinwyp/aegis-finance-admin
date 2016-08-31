@@ -11,7 +11,7 @@
         <span>用户账号:</span><input type="text" value="">
         <span>用户姓名:</span><input type="text" value="">
         <span>角色名称:</span><input type="text" value="">
-        <button class="btn btn-default" type="submit">查询</button>
+        <button class="btn btn-default" type="button" >查询</button>
         <button type="button" class="btn btn-default btn-addrole" [routerLink]="['/users/add']">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加用户
         </button>
@@ -19,32 +19,33 @@
     <table class="table table-striped mt-20 info-table">
         <tr class="head">
             <!--<th width="60">序号</th>-->
-            <th width="100">用户账号</th>
-            <th width="80">用户姓名</th>
-            <th width="100">所在部门</th>
-            <th width="200">所属角色</th>
-
+            <th width="120">用户账号</th>
+            <th width="100">用户姓名</th>
+            <th width="120">所在部门</th>
+            <th width="250">所属角色</th>
             <th width="150">最后一次登录</th>
             <th >操作</th>
         </tr>
         <tr class="item" *ngFor="let user of userList">
             <!--<td>{{user.id}}</td>-->
             <td>{{user.username}}</td>
-            <td>{{user.name}}</td>
-            <td>{{user.department}}</td>
+            <td>{{user.name||'--'}}</td>
+            <td>{{user.department||'--'}}</td>
             <td>
                 <span *ngFor="let usergroup of user.groupList">{{usergroup.name}}&nbsp;</span>
             </td>
             <td>2016-12-01 23:22:00</td>
             <td class="operation">
                 <!--<span class="operate-forbid">无法操作</span>-->
-                <span class="right-border" [routerLink]="['/users', user.id, 'password']">重置密码</span>
+                <span class="right-border" (click)="showResetModal(user.id,'确认重置用户密码吗?')">重置密码</span>
                 <span class="right-border" [routerLink]="['/users', user.id]">查看</span>
                 <span class="right-border" [routerLink]="['/users', user.id, 'edit']">编辑</span>
                 <!--<span (click)="showModal(user.id)">删除</span>-->
-                <span (click)="showModal(user.id)">删除</span>
+                <span (click)="showDelModal(user.id,'确认删除该用户吗?')">删除</span>
             </td>
         </tr>
     </table>
 </div>
-<custom-modal [(ngModel)]="isHiddenModal" (cancel)="hiddenModal()" (confirm)="delUser()"></custom-modal>
+<custom-modal [(ngModel)]="isHiddenDelModal" [modalShowText]="modalShowText" (cancel)="hiddenModal()" (confirm)="delUser()"></custom-modal>
+<custom-modal [(ngModel)]="isHiddenResetModal" [modalShowText]="modalShowText" (cancel)="hiddenModal()" (confirm)="resetPwd()"></custom-modal>
+<custom-modal [(ngModel)]="isHiddenMsgModal" [modalShowText]="modalShowText" (cancel)="hiddenModal()" (confirm)="hiddenModal()"></custom-modal>

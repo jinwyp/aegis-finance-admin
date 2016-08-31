@@ -22,9 +22,12 @@ export class UserListComponent {
     ) {}
 
     userList : User[];
-    isHiddenModal : boolean = true;
+    isHiddenDelModal : boolean = true;
+    isHiddenResetModal : boolean = true;
+    isHiddenMsgModal : boolean = true;
     btnClick : boolean    = false;
     userId : string       = '';
+    modalShowText : string       = '';
 
 
     ngOnInit() {
@@ -42,8 +45,15 @@ export class UserListComponent {
         });
     }
 
-    showModal(id:string) {
-        this.isHiddenModal = false;
+    showDelModal(id:string, modalShowText:string) {
+        this.isHiddenDelModal = false;
+        this.modalShowText =modalShowText;
+        this.userId = id;
+    }
+
+    showResetModal(id:string, modalShowText:string) {
+        this.isHiddenResetModal = false;
+        this.modalShowText =modalShowText;
         this.userId = id;
     }
 
@@ -59,6 +69,19 @@ export class UserListComponent {
                 } else {
 
                 }
+            });
+        }
+    }
+
+    resetPwd(){
+        if (this.userId){
+            this.user.resetPassword(this.userId).then((result)=> {
+                if (result.success) {
+                    this.modalShowText='重置密码成功!';
+                } else {
+                    this.modalShowText=result.error.message;
+                }
+                this.isHiddenMsgModal=false;
             });
         }
     }
