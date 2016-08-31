@@ -80,7 +80,7 @@ public class UserCenterController {
      * 供应链金融 - 用户中心 - 获取融资申请列表
      */
     @ApiOperation(value = "融资申请列表", notes = "用户查询融资申请列表", response = FinanceOrder.class, responseContainer = "List")
-//    @LoginRequired
+    @LoginRequired
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页数", required = false, dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "sourceId", value = "业务编号", required = false, dataType = "String", paramType = "query"),
@@ -91,30 +91,7 @@ public class UserCenterController {
     })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(FinanceOrderSearch orderSearch,  Page page) {
-//    public Result getFinancingApplyInfoList(Page page) {
-
-        System.out.println(" ---------------------------------- " + orderSearch);
-        System.out.println(" ---------------------------------- " + orderSearch);
-        System.out.println(" ---------------------------------- " + orderSearch);
-        System.out.println(" ---------------------------------- " + orderSearch);
-        System.out.println(" ---------------------------------- " + orderSearch);
-        System.out.println(" ---------------------------------- " + orderSearch);
-        System.out.println(" ---------------------------------- " + orderSearch.toString());
-        System.out.println(" ---------------------------------- " + orderSearch.toString());
-        System.out.println(" ---------------------------------- " + orderSearch.toString());
-        System.out.println(" ---------------------------------- " + orderSearch.toString());
-        System.out.println(" ---------------------------------- " + orderSearch.toString());
-        System.out.println(" ---------------------------------- " + orderSearch.toString());
-        System.out.println(" ---------------------------------- " + page.toString());
-        System.out.println(" ---------------------------------- " + page.toString());
-        System.out.println(" ---------------------------------- " + page.toString());
-        System.out.println(" ---------------------------------- " + page.toString());
-        System.out.println(" ---------------------------------- " + page.toString());
-        System.out.println(" ---------------------------------- " + page.toString());
-        System.out.println(" ---------------------------------- " + page.toString());
-
-        return orderService.getFinanceOrderBySelect(1, orderSearch, page);
-//        return Result.success().setData(financeOrderRepository.findByUserId(userSession.getUser().getId()));
+        return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), orderSearch, page);
     }
 
     /**
