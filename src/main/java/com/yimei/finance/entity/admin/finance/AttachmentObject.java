@@ -7,7 +7,6 @@ import java.util.Date;
 
 @Data
 @NoArgsConstructor
-@RequiredArgsConstructor
 @AllArgsConstructor
 public class AttachmentObject implements Serializable {
     private String name;
