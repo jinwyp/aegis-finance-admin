@@ -22,6 +22,11 @@ export class AssignPersonComponent {
 
     private sub: Subscription;
 
+    css = {
+        ajaxErrorHidden : true,
+        ajaxSuccessHidden : true
+    };
+
     currentUserSession : User = new User();
     selectedUser : User = new User();
     userList : User[] = [];
@@ -92,16 +97,22 @@ export class AssignPersonComponent {
 
 
 
-
     assignPerson (){
-        this.task.assignPerson(this.taskId, this.selectedUser.id).then((result)=>{
-            if (result.success){
-                alert('分配成功!!')
-                window.location.href = '/finance/admin/home/tasks';
-            }else{
-                alert('分配失败!')
-            }
-        });
+
+        this.css.ajaxErrorHidden = true;
+        this.css.ajaxSuccessHidden = true;
+
+        if (this.selectedUser.id){
+            this.task.assignPerson(this.taskId, this.selectedUser.id).then((result)=>{
+                if (result.success){
+                    this.css.ajaxSuccessHidden = false;
+                }else{
+                    this.css.ajaxErrorHidden = false;
+                }
+            });
+        }else{
+            this.css.ajaxErrorHidden = false;
+        }
     }
 
 }

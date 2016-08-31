@@ -1,1 +1,1 @@
-404 page not found
+404 site page not found
