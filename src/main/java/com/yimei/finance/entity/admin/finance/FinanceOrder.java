@@ -1,6 +1,6 @@
 package com.yimei.finance.entity.admin.finance;
 
-import com.yimei.finance.entity.common.basic.BaseEntity;
+import com.yimei.finance.representation.common.basic.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;

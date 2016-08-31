@@ -1,14 +1,14 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.finance.EnumAdminFinanceError;
-import com.yimei.finance.entity.admin.finance.EnumFinanceAssignType;
-import com.yimei.finance.entity.admin.finance.EnumFinanceEventType;
-import com.yimei.finance.entity.admin.user.EnumAdminUserError;
-import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
-import com.yimei.finance.entity.common.enums.EnumCommonError;
-import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.exception.BusinessException;
+import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
+import com.yimei.finance.representation.admin.finance.EnumFinanceAssignType;
+import com.yimei.finance.representation.admin.finance.EnumFinanceEventType;
+import com.yimei.finance.representation.admin.user.EnumAdminUserError;
+import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.result.Result;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;

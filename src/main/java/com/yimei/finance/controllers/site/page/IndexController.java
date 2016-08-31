@@ -2,7 +2,7 @@ package com.yimei.finance.controllers.site.page;
 
 import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.entity.common.result.MapObject;
+import com.yimei.finance.representation.common.result.MapObject;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import io.swagger.annotations.Api;

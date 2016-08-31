@@ -1,10 +1,13 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.*;
-import com.yimei.finance.entity.common.result.Page;
-import com.yimei.finance.entity.common.result.Result;
-import com.yimei.finance.entity.site.user.FinanceOrderSearch;
+import com.yimei.finance.entity.admin.finance.AttachmentObject;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.representation.admin.finance.EnumFinanceEventType;
+import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;
+import com.yimei.finance.representation.common.result.Page;
+import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.representation.site.user.FinanceOrderSearch;
 import com.yimei.finance.utils.DozerUtils;
 import com.yimei.finance.utils.Where;
 import org.activiti.engine.HistoryService;
@@ -19,7 +22,6 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
 import java.sql.Date;
 import java.util.List;

@@ -1,13 +1,18 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.user.*;
-import com.yimei.finance.entity.common.databook.EnumDataBookType;
-import com.yimei.finance.entity.common.enums.EnumCommonString;
-import com.yimei.finance.entity.common.result.Page;
-import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.entity.admin.user.GroupObject;
+import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.databook.DataBookRepository;
+import com.yimei.finance.representation.admin.user.AdminUserSearch;
+import com.yimei.finance.representation.admin.user.EnumAdminGroupError;
+import com.yimei.finance.representation.admin.user.EnumAdminUserError;
+import com.yimei.finance.representation.admin.user.UserPasswordObject;
+import com.yimei.finance.representation.common.databook.EnumDataBookType;
+import com.yimei.finance.representation.common.enums.EnumCommonString;
+import com.yimei.finance.representation.common.result.Page;
+import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.service.common.message.MailServiceImpl;
@@ -45,13 +50,13 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
     @ApiImplicitParams({
-
+            @ApiImplicitParam(name = "username", value = "用户账号", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "name", value = "用户姓名", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "groupName", value = "组名", required = false, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     })
-    public Result getAllUsersMethod(Page page) {
-        page.setTotal(identityService.createUserQuery().count());
-        List<UserObject> userObjectList = userService.changeUserObject(identityService.createUserQuery().listPage(page.getOffset(), page.getCount()));
-        return Result.success().setData(userObjectList).setMeta(page);
+    public Result getAllUsersMethod(AdminUserSearch userSearch, Page page) {
+        return userService.getUserListBySelect(userSearch, page);
     }
 
     @ApiOperation(value = "查询单个用户", notes = "根据id查询用户对象", response = UserObject.class)
