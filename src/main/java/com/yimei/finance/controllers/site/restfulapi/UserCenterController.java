@@ -6,7 +6,6 @@ import com.yimei.finance.entity.admin.finance.EnumFinanceOrderType;
 import com.yimei.finance.entity.admin.finance.EnumFinanceStatus;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
-import com.yimei.finance.entity.common.result.CombineObject;
 import com.yimei.finance.entity.common.result.MapObject;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
@@ -15,10 +14,7 @@ import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.common.NumberServiceImpl;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.*;
 import org.activiti.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -84,22 +80,18 @@ public class UserCenterController {
      * 供应链金融 - 用户中心 - 获取融资申请列表
      */
     @ApiOperation(value = "融资申请列表", notes = "用户查询融资申请列表", response = FinanceOrder.class, responseContainer = "List")
-//    @LoginRequired
-    @RequestMapping(value = "/list", method = RequestMethod.POST)
-    public Result getFinancingApplyInfoList(@ApiParam(name = "map", value = "参数body对象", required = false) @RequestBody CombineObject<FinanceOrderSearch, Page> map) {
-        System.out.println(" ---------------------------- " + map.t.toString());
-        System.out.println(" ---------------------------- " + map.t.toString());
-        System.out.println(" ---------------------------- " + map.t.toString());
-        System.out.println(" ---------------------------- " + map.t.toString());
-
-        System.out.println(" ---------------------------- " + map.u.toString());
-        System.out.println(" ---------------------------- " + map.u.toString());
-        System.out.println(" ---------------------------- " + map.u.toString());
-        System.out.println(" ---------------------------- " + map.u.toString());
-        System.out.println(" ---------------------------- " + map.u.toString());
-//    public Result getFinancingApplyInfoList(Page page) {
-        return orderService.getFinanceOrderBySelect(1, map.t, map.u);
-//        return Result.success().setData(financeOrderRepository.findByUserId(userSession.getUser().getId()));
+    @LoginRequired
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "page", value = "页数", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "sourceId", value = "业务编号", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "startDate", value = "开始时间", required = false, dataType = "Date", paramType = "query"),
+            @ApiImplicitParam(name = "endDate", value = "结束时间", required = false, dataType = "Date", paramType = "query"),
+            @ApiImplicitParam(name = "approveStateId", value = "审批状态id", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "applyType", value = "业务类型", required = false, dataType = "String", paramType = "query")
+    })
+    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    public Result getFinancingApplyInfoList(FinanceOrderSearch orderSearch,  Page page) {
+        return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), orderSearch, page);
     }
 
     /**
