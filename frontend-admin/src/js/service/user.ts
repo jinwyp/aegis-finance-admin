@@ -8,7 +8,7 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
-import { HttpResponse, API } from './http';
+import {GlobalPromiseHttpCatch, HttpResponse, API } from './http';
 
 var GroupId = {
     'trader' : 'GROUP00002', //线上交易员组
@@ -86,11 +86,6 @@ class UserLoginService {
 @Injectable()
 class UserService {
 
-    private handleError(error: any): Promise<any> {
-        console.error('Http 用户 请求发生错误!! ', error);
-        return Promise.reject(error.message || error);
-    }
-
     private userSession = new BehaviorSubject<HttpResponse>(null);
     getUserSessionObservable = this.userSession.asObservable();
 
@@ -112,29 +107,27 @@ class UserService {
     logout() {
         return this.http.get(API.logout).toPromise()
             .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
-
 
 
     getTaskList() {
         return this.http.get(API.tasks).toPromise()
             .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
-
 
 
     getList() {
         return this.http.get(API.users).toPromise()
             .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     getDepartmentList() {
         return this.http.get(API.users + '/departments').toPromise()
             .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     getUserById(id: number) {
@@ -147,7 +140,7 @@ class UserService {
 
                 return result;
             })
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
 
@@ -156,15 +149,15 @@ class UserService {
 
         return this.http.post(API.users, JSON.stringify(user), {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
-    changePwd(user) {
+    updatePassword(user) {
         let headers = new Headers({'Content-Type': 'application/json'});
         // return this.http.post(API.users + '/changepwd' , JSON.stringify(user), {headers: headers}).toPromise()
         return this.http.post(API.users + '/changepwd' , {oldPassword: user.oldPassword, newPassword:user.newPassword}, {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     update(user: User) {
@@ -175,14 +168,14 @@ class UserService {
 
         return this.http.put(url, JSON.stringify(user), {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     del(id: string) {
         let url = `${API.users}/${id}`;
         return this.http.delete(url).toPromise()
             .then(res => res.json() as HttpResponse )
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     save(user: User)  {
@@ -196,14 +189,14 @@ class UserService {
         let url = `${API.groups}/${groupId}/${userId}`;
         return this.http.post(url, {}).toPromise()
             .then(res => res.json() as HttpResponse )
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     leaveGroup(userId:number, groupId:string) {
         let url = `${API.groups}/${groupId}/${userId}`;
         return this.http.delete(url).toPromise()
             .then(res => res.json() as HttpResponse )
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
 }
@@ -212,11 +205,6 @@ class UserService {
 
 @Injectable()
 class UserGroupService {
-
-    private handleError(error: any) : Promise<any> {
-        console.error('Http 用户组 请求发生错误!! ', error);
-        return Promise.reject(error.message || error);
-    }
 
     constructor(
         private http: Http
@@ -236,19 +224,19 @@ class UserGroupService {
                 }
                 return result;
             })
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     getGroupById(id: string) {
         return this.http.get(API.groups + '/' + id).toPromise()
             .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     getUserListByGroupId(id: string) {
         return this.http.get(API.groups + '/' + id + '/users').toPromise()
             .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
 }

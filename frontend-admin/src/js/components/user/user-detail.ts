@@ -24,7 +24,8 @@ export class UserDetailComponent {
         isHiddenSaveText : true,
         isSubmitted :      false,
         activeForRefresh : true,
-        ajaxErrorHidden :  true
+        ajaxErrorHidden :  true,
+        ajaxSuccessHidden : true
     };
 
     currentUserSession : User = new User();
@@ -54,18 +55,17 @@ export class UserDetailComponent {
 
     saveUser() {
         this.css.ajaxErrorHidden = true;
+        this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted     = true;
 
         this.currentUserSession.department = this.selectedItem;
         this.userService.save(this.currentUserSession).then((result)=> {
             if (result.success) {
-                console.log(this.currentUserSession);
-                window.location.href = '/finance/admin/home/user/detail';
-                this.css.isHiddenSaveText = false;
+                this.css.ajaxSuccessHidden = false;
             } else {
                 this.css.ajaxErrorHidden = false;
             }
-            this.css.isSubmitted     = false;
+            this.css.isSubmitted = false;
         });
     }
 
