@@ -68,13 +68,40 @@ public class FinanceOrderServiceImpl {
             if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
                 hql += " and o.createTime between :startDate and :endDate ";
             }
+
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
             if (order.getApproveStateId() != 0) {
+                System.out.println(" ----------------------------------- approveState " + (order.getApproveStateId() != 0));
+                System.out.println(" ----------------------------------- approveState " + (order.getApproveStateId() != 0));
+                System.out.println(" ----------------------------------- approveState " + (order.getApproveStateId() != 0));
+                System.out.println(" ----------------------------------- approveState " + (order.getApproveStateId() != 0));
+                System.out.println(" ----------------------------------- approveState " + (order.getApproveStateId() != 0));
+                System.out.println(" ----------------------------------- approveState " + (order.getApproveStateId() != 0));
                 hql += " and o.approveStateId=:approveStateId ";
             }
             if (!StringUtils.isEmpty(order.getSourceId())) {
+                System.out.println(" ----------------------------------- sourceId " + (!StringUtils.isEmpty(order.getSourceId())));
+                System.out.println(" ----------------------------------- sourceId " + (!StringUtils.isEmpty(order.getSourceId())));
+                System.out.println(" ----------------------------------- sourceId " + (!StringUtils.isEmpty(order.getSourceId())));
+                System.out.println(" ----------------------------------- sourceId " + (!StringUtils.isEmpty(order.getSourceId())));
+                System.out.println(" ----------------------------------- sourceId " + (!StringUtils.isEmpty(order.getSourceId())));
                 hql += " and o.sourceId like :sourceId ";
             }
             if (!StringUtils.isEmpty(order.getApplyType())) {
+                System.out.println(" ----------------------------------- applyType " + (!StringUtils.isEmpty(order.getApplyType())));
+                System.out.println(" ----------------------------------- applyType " + (!StringUtils.isEmpty(order.getApplyType())));
+                System.out.println(" ----------------------------------- applyType " + (!StringUtils.isEmpty(order.getApplyType())));
+                System.out.println(" ----------------------------------- applyType " + (!StringUtils.isEmpty(order.getApplyType())));
+                System.out.println(" ----------------------------------- applyType " + (!StringUtils.isEmpty(order.getApplyType())));
+                System.out.println(" ----------------------------------- applyType " + (!StringUtils.isEmpty(order.getApplyType())));
                 hql += " and o.applyType=:applyType ";
             }
         }
@@ -97,16 +124,12 @@ public class FinanceOrderServiceImpl {
             }
         }
         System.out.println(" ----------------------------------------- " + hql);
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
-
-
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
+        System.out.println(" ----------------------------------------- " + hql);
+        System.out.println(" ----------------------------------------- " + hql);
+        System.out.println(" ----------------------------------------- " + hql);
+        System.out.println(" ----------------------------------------- " + hql);
+        System.out.println(" ----------------------------------------- " + hql);
+        System.out.println(" ----------------------------------------- " + hql);
 
         List<FinanceOrder> totalList = query.getResultList();
 

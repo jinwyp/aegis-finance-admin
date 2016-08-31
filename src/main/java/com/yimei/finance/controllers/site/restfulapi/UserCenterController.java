@@ -92,6 +92,7 @@ public class UserCenterController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(FinanceOrderSearch orderSearch, Page page) {
         return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), orderSearch, page);
+//        return orderService.getFinanceOrderBySelect(1, orderSearch, page);
     }
 
     /**
