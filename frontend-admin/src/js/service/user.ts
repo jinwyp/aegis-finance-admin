@@ -159,7 +159,7 @@ class UserService {
             .catch(this.handleError);
     }
 
-    changePwd(user) {
+    updatePassword(user) {
         let headers = new Headers({'Content-Type': 'application/json'});
         // return this.http.post(API.users + '/changepwd' , JSON.stringify(user), {headers: headers}).toPromise()
         return this.http.post(API.users + '/changepwd' , {oldPassword: user.oldPassword, newPassword:user.newPassword}, {headers: headers}).toPromise()
