@@ -34,11 +34,13 @@ public class FinanceFlowMethodServiceImpl {
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
-    private FinanceOrderRepository financeOrderRepository;
+    private FinanceOrderRepository orderRepository;
     @Autowired
     private AdminUserServiceImpl userService;
     @Autowired
     private IdentityService identityService;
+    @Autowired
+    private FinanceOrderServiceImpl orderService;
 
     /**
      * 添加附件方法
@@ -83,9 +85,9 @@ public class FinanceFlowMethodServiceImpl {
      */
     @Transactional
     public Result updateFinanceOrderApproveState(Long financeId, EnumFinanceStatus status, String userId) {
-        FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
+        FinanceOrder financeOrder = orderRepository.findOne(financeId);
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
-        FinanceOrder order = financeOrderRepository.findOne(financeId);
+        FinanceOrder order = orderRepository.findOne(financeId);
         order.setApproveStateId(status.id);
         order.setApproveState(status.name);
         order.setLastUpdateTime(new Date());
@@ -93,8 +95,8 @@ public class FinanceFlowMethodServiceImpl {
         if (status.id == EnumFinanceStatus.AuditNotPass.id || status.id == EnumFinanceStatus.AuditPass.id) {
             order.setEndTime(new Date());
         }
-        financeOrderRepository.save(order);
-        return Result.success().setData(true);
+        orderRepository.save(order);
+        return Result.success().setData(orderService.findById(financeId));
     }
 
     /**
@@ -121,7 +123,7 @@ public class FinanceFlowMethodServiceImpl {
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
         if (processInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
         if (StringUtils.isEmpty(processInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
-        FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
+        FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
         taskObject.setApplyType(financeOrder.getApplyType());
@@ -156,7 +158,7 @@ public class FinanceFlowMethodServiceImpl {
         if (processInstance == null && historicProcessInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
         String businessKey = processInstance != null ? processInstance.getBusinessKey() : historicProcessInstance.getBusinessKey();
         if (StringUtils.isEmpty(businessKey)) return Result.error(EnumCommonError.Admin_System_Error);
-        FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(businessKey));
+        FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(businessKey));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
         taskObject.setApplyType(financeOrder.getApplyType());

@@ -76,7 +76,7 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     private String applyCompanyName;                                 //申请公司名称
     @Column(name = "coal_quantity_index", length = 500)
     private String coalQuantityIndex;                                //主要煤质指标
-    @Column(name = "end_time", nullable = true)
+    @Column(name = "end_time")
     private Date endTime;                                            //结束时间
     @Transient
     private List<AttachmentObject> attachmentList;                   //线上交易员上传表单列表

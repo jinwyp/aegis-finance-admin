@@ -33,7 +33,7 @@ public class MYDFinancingController {
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
-    private FinanceOrderRepository financeOrderRepository;
+    private FinanceOrderRepository orderRepository;
 
     @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
@@ -142,7 +142,7 @@ public class MYDFinancingController {
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
         if (processInstance == null || StringUtils.isEmpty(processInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
-        FinanceOrder financeOrder = financeOrderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
+        FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         if (!financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) return Result.error(EnumAdminFinanceError.此订单不是煤易融业务.toString());
         CombineObject<Task, Long> map = new CombineObject<>(task, Long.valueOf(processInstance.getBusinessKey()));

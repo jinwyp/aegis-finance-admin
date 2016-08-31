@@ -8,9 +8,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.util.List;
 
-/**
- * Created by liuxinjie on 16/8/19.
- */
 @ApiModel(value = "user", description = "用户对象")
 @Data
 @NoArgsConstructor
@@ -26,11 +23,4 @@ public class UserObject implements Serializable {
     private List<String> groupIds;              //用户组id数组
     private List<GroupObject> groupList;        //用户所在组列表
 
-    public String getUsername() {
-        return username;
-    }
-
-    public String getPassword() {
-        return password;
-    }
 }

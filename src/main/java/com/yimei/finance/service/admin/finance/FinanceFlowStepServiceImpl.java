@@ -4,7 +4,6 @@ import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.entity.common.result.TaskMap;
-import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +17,7 @@ public class FinanceFlowStepServiceImpl {
     @Autowired
     private TaskService taskService;
     @Autowired
-    private FinanceFlowMethodServiceImpl flowMethodService;
+    private FinanceFlowMethodServiceImpl methodService;
     @Autowired
     private FinanceOrderServiceImpl orderService;
 
@@ -30,16 +29,16 @@ public class FinanceFlowStepServiceImpl {
             return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
         orderService.updateFinanceOrderByOnlineTrader(financeOrder);
         if (taskMap.getSubmit() == 0) {
-            return Result.success();
+            return Result.success().setData(orderService.findById(financeOrder.getId()));
         } else {
             if (taskMap.getPass() != 0 && taskMap.getPass() != 1) return Result.error(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
             vars.put(EnumFinanceEventType.onlineTraderAudit.toString(), taskMap.getPass());
             taskService.complete(task.getId(), vars);
             if (taskMap.getPass() == 1) {
-                return Result.success();
+                return Result.success().setData(orderService.findById(financeOrder.getId()));
             } else {
-                return flowMethodService.updateFinanceOrderApproveState(financeOrder.getId(), EnumFinanceStatus.AuditNotPass, userId);
+                return methodService.updateFinanceOrderApproveState(financeOrder.getId(), EnumFinanceStatus.AuditNotPass, userId);
             }
         }
     }
@@ -60,7 +59,7 @@ public class FinanceFlowStepServiceImpl {
             if (taskMap.getPass() == 1) {
                 return Result.success();
             } else {
-                return flowMethodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
+                return methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
             }
         }
     }
@@ -75,11 +74,11 @@ public class FinanceFlowStepServiceImpl {
             return Result.success();
         } else {
             taskService.complete(task.getId());
-            Result result1 = flowMethodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
+            Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
             if (!result1.isSuccess()) return result1;
-            Result result = flowMethodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
+            Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
             if (!result.isSuccess()) return result;
-            return flowMethodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString(), String.valueOf(result.getData()));
+            return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString(), String.valueOf(result.getData()));
         }
     }
 
@@ -99,15 +98,15 @@ public class FinanceFlowStepServiceImpl {
             }
             taskService.complete(task.getId(), vars);
             if (taskMap.getNeed() == 1) {
-                Result result1 = flowMethodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
+                Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
                 if (!result1.isSuccess()) return result1;
-                Result result = flowMethodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
+                Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
                 if (!result.isSuccess()) return result;
-                return flowMethodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString(), String.valueOf(result.getData()));
+                return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString(), String.valueOf(result.getData()));
             } else if (taskMap.getPass() == 1) {
                 return Result.success();
             } else {
-                return flowMethodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
+                return methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
             }
         }
     }
@@ -122,11 +121,11 @@ public class FinanceFlowStepServiceImpl {
             return Result.success();
         } else {
             taskService.complete(task.getId());
-            Result result1 = flowMethodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
+            Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
             if (!result1.isSuccess()) return result1;
-            Result result = flowMethodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString());
+            Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString());
             if (!result.isSuccess()) return result;
-            return flowMethodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString(), String.valueOf(result.getData()));
+            return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString(), String.valueOf(result.getData()));
         }
     }
 
@@ -147,15 +146,15 @@ public class FinanceFlowStepServiceImpl {
             }
             taskService.complete(task.getId(), vars);
             if (taskMap.getNeed() == 1) {
-                Result result1 = flowMethodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
+                Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
                 if (!result1.isSuccess()) return result1;
-                Result result = flowMethodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
+                Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
                 if (!result.isSuccess()) return result;
-                return flowMethodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplySupervisionMaterial.toString(), String.valueOf(result.getData()));
+                return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplySupervisionMaterial.toString(), String.valueOf(result.getData()));
             } else if (taskMap.getPass() == 1) {
                 return Result.success();
             } else {
-                return flowMethodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
+                return methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
             }
         }
     }
@@ -167,11 +166,11 @@ public class FinanceFlowStepServiceImpl {
             return Result.success();
         } else {
             taskService.complete(task.getId());
-            Result result1 = flowMethodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
+            Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
             if (!result1.isSuccess()) return result1;
-            Result result = flowMethodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString());
+            Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString());
             if (!result.isSuccess()) return result;
-            return flowMethodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
+            return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
         }
     }
 
@@ -182,11 +181,11 @@ public class FinanceFlowStepServiceImpl {
             return Result.success();
         } else {
             taskService.complete(task.getId());
-            Result result1 = flowMethodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
+            Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
             if (!result1.isSuccess()) return result1;
-            Result result = flowMethodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString());
+            Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString());
             if (!result.isSuccess()) return result;
-            return flowMethodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
+            return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
         }
     }
 
@@ -205,15 +204,15 @@ public class FinanceFlowStepServiceImpl {
             }
             taskService.complete(task.getId(), vars);
             if (taskMap.getNeed() == 1) {
-                Result result1 = flowMethodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
+                Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
                 if (!result1.isSuccess()) return result1;
-                Result result = flowMethodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
+                Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
                 if (!result.isSuccess()) return result;
-                return flowMethodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorSupplyRiskMaterial.toString(), String.valueOf(result.getData()));
+                return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorSupplyRiskMaterial.toString(), String.valueOf(result.getData()));
             } else if (taskMap.getPass() == 1) {
-                return flowMethodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditPass, userId);
+                return methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditPass, userId);
             } else {
-                return flowMethodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
+                return methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
             }
         }
     }

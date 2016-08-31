@@ -5,20 +5,21 @@ import lombok.*;
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- * Created by liuxinjie on 16/8/20.
- */
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
 @AllArgsConstructor
 public class AttachmentObject implements Serializable {
-    @NonNull
     private String name;
-    @NonNull
     private String type;
-    @NonNull
     private String url;
+
+    public AttachmentObject(String name, String type, String url) {
+        this.name = name;
+        this.url = url;
+        this.type = type;
+    }
+
     private String description;
     private String taskId;
     private String processInstanceId;
