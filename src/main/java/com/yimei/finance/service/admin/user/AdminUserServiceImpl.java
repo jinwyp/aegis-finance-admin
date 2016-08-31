@@ -185,7 +185,7 @@ public class AdminUserServiceImpl {
                 page.setTotal((long) userObjList.size());
                 return Result.success().setData(userObjList).setMeta(page);
             } else {
-                page.setTotal(Long.valueOf(userObjList.size()));
+                page.setTotal(Long.valueOf(userObjectList.size()));
                 return Result.success().setData(userObjectList).setMeta(page);
             }
         }
