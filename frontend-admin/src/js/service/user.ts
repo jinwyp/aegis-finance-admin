@@ -178,6 +178,15 @@ class UserService {
             .catch(GlobalPromiseHttpCatch);
     }
 
+    edit(user: User) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.put(API.users + '/edit', JSON.stringify(user), {headers: headers}).toPromise()
+            .then(res => res.json() as HttpResponse )
+            .catch(GlobalPromiseHttpCatch);
+    }
+
     del(id: string) {
         let url = `${API.users}/${id}`;
         return this.http.delete(url).toPromise()
