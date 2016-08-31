@@ -1,6 +1,6 @@
 package com.yimei.finance.repository.admin.databook;
 
-import com.yimei.finance.entity.common.databook.DataBook;
+import com.yimei.finance.representation.common.databook.DataBook;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 

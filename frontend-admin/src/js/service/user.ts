@@ -160,6 +160,13 @@ class UserService {
             .catch(GlobalPromiseHttpCatch);
     }
 
+    resetPassword(id:string) {
+        let headers = new Headers({'Content-Type': 'application/json'});
+        return this.http.post(API.users + '/resetpwd/' + id, {headers: headers}).toPromise()
+            .then(res => res.json() as HttpResponse )
+            .catch(GlobalPromiseHttpCatch);
+    }
+
     update(user: User) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -167,6 +174,15 @@ class UserService {
         let url = `${API.users}/${user.id}`;
 
         return this.http.put(url, JSON.stringify(user), {headers: headers}).toPromise()
+            .then(res => res.json() as HttpResponse )
+            .catch(GlobalPromiseHttpCatch);
+    }
+
+    edit(user: User) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.put(API.users + '/edit', JSON.stringify(user), {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
             .catch(GlobalPromiseHttpCatch);
     }

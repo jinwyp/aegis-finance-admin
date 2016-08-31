@@ -21,15 +21,14 @@ export class UserDetailComponent {
     ) {}
 
     css = {
-        activeForRefresh : true,
+        isHiddenSaveText : true,
         isSubmitted :      false,
-        ajaxErrorHidden :  true,
-        ajaxSuccessHidden : true
+        activeForRefresh : true
     };
 
     currentUserSession : User = new User();
     departments  = [];
-    selectedItem = '请选择';
+    selectedItem = '';
 
     ngOnInit() {
         this.getCurrentUser();
@@ -43,6 +42,7 @@ export class UserDetailComponent {
                 if (result && result.success) {
                     this.currentUserSession = result.data;
                     this.selectedItem = this.currentUserSession.department;
+                    console.log(result);
                 } else {
 
                 }
@@ -52,19 +52,16 @@ export class UserDetailComponent {
     }
 
     saveUser() {
-        this.css.ajaxErrorHidden = true;
-        this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted     = true;
 
         this.currentUserSession.department = this.selectedItem;
-
-        this.userService.save(this.currentUserSession).then((result)=> {
+        this.userService.edit(this.currentUserSession).then((result)=> {
             if (result.success) {
-                this.css.ajaxSuccessHidden = false;
+                this.css.isHiddenSaveText = false;
+                setTimeout(() => this.css.isHiddenSaveText = true, 3000);
             } else {
-                this.css.ajaxErrorHidden = false;
-            }
 
+            }
             this.css.isSubmitted = false;
         });
     }

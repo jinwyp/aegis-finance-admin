@@ -1,10 +1,10 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.user.EnumAdminUserError;
-import com.yimei.finance.entity.admin.user.UserLoginObject;
 import com.yimei.finance.entity.admin.user.UserObject;
-import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.representation.admin.user.EnumAdminUserError;
+import com.yimei.finance.representation.admin.user.UserLoginObject;
+import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

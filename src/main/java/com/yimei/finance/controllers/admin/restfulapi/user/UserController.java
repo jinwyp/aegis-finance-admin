@@ -1,13 +1,18 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.user.*;
-import com.yimei.finance.entity.common.databook.EnumDataBookType;
-import com.yimei.finance.entity.common.enums.EnumCommonString;
-import com.yimei.finance.entity.common.result.Page;
-import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.entity.admin.user.GroupObject;
+import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.databook.DataBookRepository;
+import com.yimei.finance.representation.admin.user.AdminUserSearch;
+import com.yimei.finance.representation.admin.user.EnumAdminGroupError;
+import com.yimei.finance.representation.admin.user.EnumAdminUserError;
+import com.yimei.finance.representation.admin.user.UserPasswordObject;
+import com.yimei.finance.representation.common.databook.EnumDataBookType;
+import com.yimei.finance.representation.common.enums.EnumCommonString;
+import com.yimei.finance.representation.common.result.Page;
+import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.service.common.message.MailServiceImpl;
@@ -44,11 +49,14 @@ public class UserController {
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
-    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
-    public Result getAllUsersMethod(Page page) {
-        page.setTotal(identityService.createUserQuery().count());
-        List<UserObject> userObjectList = userService.changeUserObject(identityService.createUserQuery().listPage(page.getOffset(), page.getCount()));
-        return Result.success().setData(userObjectList).setMeta(page);
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "username", value = "用户账号", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "name", value = "用户姓名", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "groupName", value = "组名", required = false, dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
+    })
+    public Result getAllUsersMethod(AdminUserSearch userSearch, Page page) {
+        return userService.getUserListBySelect(userSearch, page);
     }
 
     @ApiOperation(value = "查询单个用户", notes = "根据id查询用户对象", response = UserObject.class)
@@ -85,10 +93,9 @@ public class UserController {
     @Transactional
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
-    public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
+    public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@Valid @RequestBody UserObject user) {
         Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
         if (!result.isSuccess()) return result;
-        if (StringUtils.isEmpty(user.getUsername())) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
         if (identityService.createUserQuery().userFirstName(user.getUsername()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
         if (identityService.createUserQuery().userEmail(user.getEmail()).singleResult() != null) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
         Result result1 = userService.checkUserPhone(user.getPhone());
@@ -125,15 +132,17 @@ public class UserController {
         return Result.success().setData(userObject);
     }
 
-    @ApiOperation(value = "修改用户", notes = "根据 User Id修改用户", response = UserObject.class)
+    @ApiOperation(value = "修改用户信息", notes = "根据 User Id修改用户", response = UserObject.class)
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    public Result updateUserMethod(@PathVariable("id") String id,
-                                   @ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
+    public Result updateUserInfoMethod(@PathVariable("id") String id,
+                                       @ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
         Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
         if (!result.isSuccess()) return result;
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());
-        if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());
+        if (StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户邮箱不能为空.toString());
+        User emailUser = identityService.createUserQuery().userEmail(user.getEmail()).singleResult();
+        if (emailUser != null && !emailUser.getId().equals(id)) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
         User oldUser = identityService.createUserQuery().userId(id).singleResult();
         if (oldUser == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         oldUser.setEmail(user.getEmail());
@@ -143,6 +152,24 @@ public class UserController {
         identityService.setUserInfo(oldUser.getId(), "department", user.getDepartment());
         addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
+    }
+
+    @ApiOperation(value = "用户自己修改信息", notes = "用户自己修改信息", response = UserObject.class)
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public Result updateUserSelfInfoMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
+        if (!StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户邮箱不能为空.toString());
+        User emailUser = identityService.createUserQuery().userEmail(user.getEmail()).singleResult();
+        if (emailUser != null && !emailUser.getId().equals(adminSession.getUser().getId())) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
+        User oldUser = identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult();
+        oldUser.setEmail(user.getEmail());
+        identityService.saveUser(oldUser);
+        identityService.setUserInfo(oldUser.getId(), "name", user.getName());
+        identityService.setUserInfo(oldUser.getId(), "phone", user.getPhone());
+        identityService.setUserInfo(oldUser.getId(), "department", user.getDepartment());
+        addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
+        UserObject userObject = userService.changeUserObject(identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult());
+        adminSession.login(userObject);
+        return Result.success().setData(userObject);
     }
 
     @ApiOperation(value = "管理员帮助用户重置密码", notes = "管理员帮助用户重置密码, 生成随机密码, 发送到用户邮箱.", response = Boolean.class)

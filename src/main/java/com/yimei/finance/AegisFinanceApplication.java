@@ -1,6 +1,6 @@
 package com.yimei.finance;
 
-import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
+import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;

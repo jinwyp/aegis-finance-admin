@@ -29,23 +29,23 @@ export class AddUserComponent {
     css = {
         activeForRefresh : true,
         isSubmitted :      false,
-        ajaxErrorHidden :  true
+        isHiddenSaveText : true,
+        isHiddenModal : true,
+        isAddStatus :  false
     };
-
-
-    isAddStatus : boolean = false;
 
     private sub:Subscription;
             currentUser = new User();
 
     groups       = [];
     departments  = [];
-    selectedItem = '请选择';
+    selectedItem = '';
+    modalShowText : string ='';
 
     ngOnInit() {
 
         if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
-            this.isAddStatus  = true;
+            this.css.isAddStatus  = true;
             this.getGroupList();
         } else {
             this.sub = this.activatedRoute.params.subscribe(params => {
@@ -67,14 +67,19 @@ export class AddUserComponent {
         this.groupService.getList().then((result)=> {
             if (result.success) {
                 this.groups = result.data;
-
-                this.groups.forEach((group)=> {
-                    if (this.currentUser.groupIds.indexOf(group.id) > -1) {
-                        group.selected = true;
-                    }
-                });
+                this.setCheckBoxStatus();
             } else {
 
+            }
+        });
+    }
+
+    setCheckBoxStatus(){
+        this.groups.forEach((group)=> {
+            if (this.currentUser.groupIds.indexOf(group.id) > -1) {
+                group.selected = true;
+            }else{
+                group.selected = false;
             }
         });
     }
@@ -96,7 +101,6 @@ export class AddUserComponent {
                 this.currentUser = result.data;
                 this.selectedItem = this.currentUser.department;
                 this.getGroupList();
-
             } else {
 
             }
@@ -105,31 +109,40 @@ export class AddUserComponent {
 
     changeSelectGroup (event){
         this.currentUser.groupIds = event.selectedIds;
+        console.log(this.currentUser.groupIds);
     }
 
 
     addUser() {
-        this.css.ajaxErrorHidden = true;
         this.css.isSubmitted     = true;
+        this.css.activeForRefresh = false;
         this.currentUser.department = this.selectedItem;
-        if (this.isAddStatus) {
-
+        console.log(this.currentUser);
+        if (this.css.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
+                this.css.isSubmitted     = false;
+                this.css.activeForRefresh = true;
                 if (result.success) {
-                    alert('添加用户成功');
+                    this.css.isHiddenSaveText=false;
                     this.clear();
+                    setTimeout(() => this.css.isHiddenSaveText = true, 6000);
                 } else {
-                    alert(result.error.message);
-                    this.css.ajaxErrorHidden = false;
+                    this.css.isHiddenModal=false;
+                    this.modalShowText=result.error.message;
+                    // alert(result.error.message);
                 }
             });
         } else {
             this.userService.update(this.currentUser).then((result)=> {
+                this.css.isSubmitted     = false;
+                this.css.activeForRefresh = true;
                 if (result.success) {
-                    alert('保存用户成功');
+                    this.css.isHiddenSaveText=false;
+                    setTimeout(() => this.css.isHiddenSaveText = true, 0);
                 } else {
-                    alert(result.error.message);
-                    this.css.ajaxErrorHidden = false;
+                    this.css.isHiddenModal=false;
+                    this.modalShowText=result.error.message;
+                    // alert(result.error.message);
                 }
             });
         }
@@ -143,7 +156,11 @@ export class AddUserComponent {
         this.currentUser.phone      = '';
         this.currentUser.department = '';
         this.currentUser.groupIds   = [];
+        this.setCheckBoxStatus();
         this.selectedItem     = '请选择';
+        console.log('--------clear--------');
+        console.log(this.groups);
+        console.log(this.currentUser);
     }
 
 

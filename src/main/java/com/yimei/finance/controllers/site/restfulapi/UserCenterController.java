@@ -1,17 +1,17 @@
 package com.yimei.finance.controllers.site.restfulapi;
 
 import com.yimei.finance.config.session.UserSession;
-import com.yimei.finance.entity.admin.finance.EnumAdminFinanceError;
-import com.yimei.finance.entity.admin.finance.EnumFinanceOrderType;
-import com.yimei.finance.entity.admin.finance.EnumFinanceStatus;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.entity.common.enums.EnumCommonError;
-import com.yimei.finance.entity.common.result.MapObject;
-import com.yimei.finance.entity.common.result.Page;
-import com.yimei.finance.entity.common.result.Result;
-import com.yimei.finance.entity.site.user.FinanceOrderSearch;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
+import com.yimei.finance.representation.admin.finance.EnumFinanceOrderType;
+import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.result.MapObject;
+import com.yimei.finance.representation.common.result.Page;
+import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.representation.site.user.FinanceOrderSearch;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.common.NumberServiceImpl;
 import io.swagger.annotations.*;
@@ -46,7 +46,7 @@ public class UserCenterController {
     * 供应链金融 - 发起融资申请
     */
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
-//    @LoginRequired
+    @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Valid @RequestBody FinanceOrder financeOrder) {
         System.out.println("Order Type:" + financeOrder.getApplyType());
@@ -90,8 +90,9 @@ public class UserCenterController {
             @ApiImplicitParam(name = "applyType", value = "业务类型", required = false, dataType = "String", paramType = "query")
     })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
-    public Result getFinancingApplyInfoList(FinanceOrderSearch orderSearch,  Page page) {
+    public Result getFinancingApplyInfoList(FinanceOrderSearch orderSearch, Page page) {
         return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), orderSearch, page);
+//        return orderService.getFinanceOrderBySelect(1, orderSearch, page);
     }
 
     /**

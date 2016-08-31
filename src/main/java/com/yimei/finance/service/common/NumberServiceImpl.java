@@ -1,6 +1,6 @@
 package com.yimei.finance.service.common;
 
-import com.yimei.finance.entity.common.number.Number;
+import com.yimei.finance.representation.common.number.Number;
 import com.yimei.finance.repository.common.NumberRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

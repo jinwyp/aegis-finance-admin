@@ -1,8 +1,8 @@
 package com.yimei.finance.controllers.admin.common;
 
-import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
+import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.admin.user.UserObject;
-import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;

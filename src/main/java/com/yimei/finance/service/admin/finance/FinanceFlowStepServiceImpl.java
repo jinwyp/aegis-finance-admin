@@ -1,9 +1,13 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.*;
-import com.yimei.finance.entity.common.enums.EnumCommonError;
-import com.yimei.finance.entity.common.result.Result;
-import com.yimei.finance.entity.common.result.TaskMap;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
+import com.yimei.finance.representation.admin.finance.EnumFinanceConditions;
+import com.yimei.finance.representation.admin.finance.EnumFinanceEventType;
+import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.representation.common.result.TaskMap;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;

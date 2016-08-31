@@ -3,7 +3,7 @@
  */
 
 
-import {Component, Output, EventEmitter, forwardRef} from '@angular/core';
+import {Component, Input, Output, EventEmitter, forwardRef} from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 declare var __moduleName:string;
@@ -28,6 +28,9 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 export class CustomModalComponent implements ControlValueAccessor{
 
     private isHidden : boolean = true;
+
+    @Input()
+    modalShowText = '';
 
     //Placeholders for the callbacks which are later provided by the Control Value Accessor
     private onTouchedCallback: () => {};

@@ -2,9 +2,11 @@ package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.entity.admin.user.UserObject;
-import com.yimei.finance.entity.common.enums.EnumCommonError;
-import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.entity.admin.finance.TaskObject;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.HistoryService;

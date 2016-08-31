@@ -1,7 +1,7 @@
 package com.yimei.finance.config;
 
-import com.yimei.finance.entity.common.enums.EnumCommonError;
-import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.exception.UnauthorizedException;

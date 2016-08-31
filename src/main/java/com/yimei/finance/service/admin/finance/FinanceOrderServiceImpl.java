@@ -1,10 +1,13 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.*;
-import com.yimei.finance.entity.common.result.Page;
-import com.yimei.finance.entity.common.result.Result;
-import com.yimei.finance.entity.site.user.FinanceOrderSearch;
+import com.yimei.finance.entity.admin.finance.AttachmentObject;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.representation.admin.finance.EnumFinanceEventType;
+import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;
+import com.yimei.finance.representation.common.result.Page;
+import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.representation.site.user.FinanceOrderSearch;
 import com.yimei.finance.utils.DozerUtils;
 import com.yimei.finance.utils.Where;
 import org.activiti.engine.HistoryService;
@@ -19,8 +22,9 @@ import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.Query;
 import javax.persistence.TypedQuery;
+import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service("financeOrderService")
@@ -64,13 +68,40 @@ public class FinanceOrderServiceImpl {
             if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
                 hql += " and o.createTime between :startDate and :endDate ";
             }
+
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
+            System.out.println(" --------------------------- " + order.toString());
             if (order.getApproveStateId() != 0) {
+                System.out.println(" ----------------------------------- approveState " + (order.getApproveStateId() != 0));
+                System.out.println(" ----------------------------------- approveState " + (order.getApproveStateId() != 0));
+                System.out.println(" ----------------------------------- approveState " + (order.getApproveStateId() != 0));
+                System.out.println(" ----------------------------------- approveState " + (order.getApproveStateId() != 0));
+                System.out.println(" ----------------------------------- approveState " + (order.getApproveStateId() != 0));
+                System.out.println(" ----------------------------------- approveState " + (order.getApproveStateId() != 0));
                 hql += " and o.approveStateId=:approveStateId ";
             }
             if (!StringUtils.isEmpty(order.getSourceId())) {
+                System.out.println(" ----------------------------------- sourceId " + (!StringUtils.isEmpty(order.getSourceId())));
+                System.out.println(" ----------------------------------- sourceId " + (!StringUtils.isEmpty(order.getSourceId())));
+                System.out.println(" ----------------------------------- sourceId " + (!StringUtils.isEmpty(order.getSourceId())));
+                System.out.println(" ----------------------------------- sourceId " + (!StringUtils.isEmpty(order.getSourceId())));
+                System.out.println(" ----------------------------------- sourceId " + (!StringUtils.isEmpty(order.getSourceId())));
                 hql += " and o.sourceId like :sourceId ";
             }
             if (!StringUtils.isEmpty(order.getApplyType())) {
+                System.out.println(" ----------------------------------- applyType " + (!StringUtils.isEmpty(order.getApplyType())));
+                System.out.println(" ----------------------------------- applyType " + (!StringUtils.isEmpty(order.getApplyType())));
+                System.out.println(" ----------------------------------- applyType " + (!StringUtils.isEmpty(order.getApplyType())));
+                System.out.println(" ----------------------------------- applyType " + (!StringUtils.isEmpty(order.getApplyType())));
+                System.out.println(" ----------------------------------- applyType " + (!StringUtils.isEmpty(order.getApplyType())));
+                System.out.println(" ----------------------------------- applyType " + (!StringUtils.isEmpty(order.getApplyType())));
                 hql += " and o.applyType=:applyType ";
             }
         }
@@ -79,8 +110,8 @@ public class FinanceOrderServiceImpl {
         query.setParameter("userId", userId);
         if (order != null) {
             if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
-                query.setParameter("startDate", order.getStartDate());
-                query.setParameter("endDate", order.getEndDate());
+                query.setParameter("startDate", Date.valueOf(order.getStartDate()));
+                query.setParameter("endDate", Date.valueOf(LocalDate.parse(order.getEndDate()).plusDays(1)));
             }
             if (order.getApproveStateId() != 0) {
                 query.setParameter("approveStateId", order.getApproveStateId());
@@ -92,18 +123,13 @@ public class FinanceOrderServiceImpl {
                 query.setParameter("applyType", order.getApplyType());
             }
         }
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
-
-        System.out.println(query.getResultList().get(0));
-
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
-        System.out.println(" ----------------------------------------- ");
+        System.out.println(" ----------------------------------------- " + hql);
+        System.out.println(" ----------------------------------------- " + hql);
+        System.out.println(" ----------------------------------------- " + hql);
+        System.out.println(" ----------------------------------------- " + hql);
+        System.out.println(" ----------------------------------------- " + hql);
+        System.out.println(" ----------------------------------------- " + hql);
+        System.out.println(" ----------------------------------------- " + hql);
 
         List<FinanceOrder> totalList = query.getResultList();
 

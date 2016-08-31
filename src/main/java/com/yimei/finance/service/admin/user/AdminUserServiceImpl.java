@@ -1,10 +1,12 @@
 package com.yimei.finance.service.admin.user;
 
-import com.yimei.finance.entity.admin.user.EnumAdminUserError;
-import com.yimei.finance.entity.admin.user.EnumSpecialGroup;
 import com.yimei.finance.entity.admin.user.GroupObject;
 import com.yimei.finance.entity.admin.user.UserObject;
-import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.representation.admin.user.AdminUserSearch;
+import com.yimei.finance.representation.admin.user.EnumAdminUserError;
+import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
+import com.yimei.finance.representation.common.result.Page;
+import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
@@ -122,8 +124,70 @@ public class AdminUserServiceImpl {
         if (StringUtils.isEmpty(phone)) return Result.success();
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().list());
         for (UserObject user : userObjectList) {
-            if (!StringUtils.isEmpty(user.getPhone()) && user.getPhone().equals(phone)) return Result.error(EnumAdminUserError.此手机号已经存在.toString());
+            if (!StringUtils.isEmpty(user.getPhone()) && user.getPhone().equals(phone))
+                return Result.error(EnumAdminUserError.此手机号已经存在.toString());
         }
         return Result.success();
+    }
+
+    public Result getUserListBySelect(AdminUserSearch userSearch, Page page) {
+        if (userSearch == null) {
+            page.setTotal(identityService.createUserQuery().count());
+            return Result.success().setData(identityService.createUserQuery().list()).setMeta(page);
+        } else {
+            List<User> userList = new ArrayList<>();
+            List<UserObject> userObjectList = new ArrayList<>();
+            List<UserObject> userObjList = new ArrayList<>();
+            if (!StringUtils.isEmpty(userSearch.getUsername()) && !StringUtils.isEmpty(userSearch.getGroupName())) {
+                List<Group> groupList = identityService.createGroupQuery().groupNameLike(userSearch.getGroupName()).list();
+                if (groupList != null && groupList.size() != 0) {
+                    List<String> groupIds = new ArrayList<>();
+                    for (Group group : groupList) {
+                        groupIds.add(group.getId());
+                    }
+                    for (String gid : groupIds) {
+                        List<User> users = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).memberOfGroup(gid).list();
+                        if (users != null && users.size() != 0) {
+                            userList.addAll(users);
+                        }
+                    }
+                } else {
+                    userList = identityService.createUserQuery().list();
+                }
+            } else if (!StringUtils.isEmpty(userSearch.getUsername())){
+                userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).list();
+            } else if (!StringUtils.isEmpty(userSearch.getGroupName())) {
+                List<Group> groupList = identityService.createGroupQuery().groupNameLike(userSearch.getGroupName()).list();
+                if (groupList != null && groupList.size() != 0) {
+                    List<String> groupIds = new ArrayList<>();
+                    for (Group group : groupList) {
+                        groupIds.add(group.getId());
+                    }
+                    for (String gid : groupIds) {
+                        List<User> users = identityService.createUserQuery().memberOfGroup(gid).list();
+                        if (users != null && users.size() != 0) {
+                            userList.addAll(users);
+                        }
+                    }
+                } else {
+                    userList = identityService.createUserQuery().list();
+                }
+            } else {
+                userList = identityService.createUserQuery().list();
+            }
+            userObjectList = changeUserObject(userList);
+            if (!StringUtils.isEmpty(userSearch.getName()) ) {
+                for (UserObject userObject : userObjectList) {
+                    if (userObject.getName().contains(userSearch.getName())) {
+                        userObjList.add(userObject);
+                    }
+                }
+                page.setTotal((long) userObjList.size());
+                return Result.success().setData(userObjList).setMeta(page);
+            } else {
+                page.setTotal(Long.valueOf(userObjectList.size()));
+                return Result.success().setData(userObjectList).setMeta(page);
+            }
+        }
     }
 }
