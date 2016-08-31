@@ -9,26 +9,24 @@
 <div class="item-margin">
     <table class="table table-striped mt-20 info-table">
         <tr class="head">
-            <th width="80">融资类型</th>
+            <th width="120">融资类型</th>
             <th width="80">申请时间</th>
-            <th width="150">申请公司名称</th>
+            <th >申请公司名称</th>
             <th width="100">拟融资总额状态<br/>(万元)</th>
-            <th width="100">当前处理人</th>
-            <th width="100">所属部门</th>
-            <th width="100">流程状态</th>
-            <th width="100">操作</th>
+            <th width="100">当前处理人 / 所属部门</th>
+            <th >流程状态</th>
+            <th width="120">操作</th>
         </tr>
         <tr class="item" *ngFor="let task of taskAssignList">
-            <td>{{task.processInstanceId}}
+            <td>{{task.sourceId }} <br/>
                 <span *ngIf="task.applyType==='MYR'">煤易融</span>
                 <span *ngIf="task.applyType==='MYG'">煤易购</span>
                 <span *ngIf="task.applyType==='MYD'">煤易贷</span>
             </td>
             <td>{{task.createTime | date:"yyyy/MM/dd"}}</td>
             <td>{{task.applyCompanyName}}</td>
-            <td>{{task.financingAmount||'--'}}</td>
-            <td>{{task.assigneeName||'--'}}</td>
-            <td>{{task.assigneeDepartment||'--'}}</td>
+            <td>{{task.financingAmount || '--'}}</td>
+            <td>{{task.assigneeName ||'--'}} <br/>{{task.assigneeDepartment||'--'}}</td>
             <td>
                 <span class="green">{{task.name}}</span> <br/>
                 <!--<span class="orange">(补充材料)</span><br/>-->
@@ -49,7 +47,7 @@
 
 
         <tr class="item" *ngFor="let task of taskPendingList">
-            <td>{{task.processInstanceId}}
+            <td>{{task.sourceId }} <br/>
                 <span *ngIf="task.applyType==='MYR'">煤易融</span>
                 <span *ngIf="task.applyType==='MYG'">煤易购</span>
                 <span *ngIf="task.applyType==='MYD'">煤易贷</span>
@@ -57,8 +55,7 @@
             <td>{{task.createTime | date:"yyyy/MM/dd"}}</td>
             <td>{{task.applyCompanyName}}</td>
             <td>{{task.financingAmount||'--'}}</td>
-            <td>{{task.assigneeName||'--'}}</td>
-            <td>{{task.assigneeDepartment||'--'}}</td>
+            <td>{{task.assigneeName ||'--'}} <br/>{{task.assigneeDepartment||'--'}}</td>
             <td>
                 <span class="green">{{task.name}}</span> <br/>
                 <!--<span class="orange">(补充材料)</span><br/>-->
