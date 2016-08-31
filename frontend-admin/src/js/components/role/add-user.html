@@ -4,25 +4,25 @@
         <li>&gt;</li>
         <li>用户管理</li>
         <li>&gt;</li>
-        <li class="active" *ngIf="isAddStatus">添加用户</li>
-        <li class="active" *ngIf="!isAddStatus">编辑用户</li>
+        <li class="active" *ngIf="css.isAddStatus">添加用户</li>
+        <li class="active" *ngIf="!css.isAddStatus">编辑用户</li>
     </ol>
 </div>
 
 <div class="item-margin">
-    <form class="form-horizontal" *ngIf="css.activeForRefresh" (ngSubmit)="addUser()" #addUserForm="ngForm">
+    <form class="form-horizontal" (ngSubmit)="addUser()" #addUserForm="ngForm">
         <div class="row mt-50 info-item">
             <label class="col-sm-2 info-label-input" for="usernameInput"><span class="orange">*</span>用户账号:</label>
             <div class="col-sm-10 info-val">
                 <input type="text" class="form-control" id="usernameInput" name="username" [(ngModel)]="currentUser.username" maxlength="16" #username="ngModel" required >
-                <span class="help-block" [class.hidden]="username.valid || username.pristine || ajaxErrorHidden">请填写用户账号!</span>
+                <span *ngIf="css.activeForRefresh" class="help-block" [class.hidden]="username.valid || username.pristine">请填写用户账号!</span>
             </div>
         </div>
         <div class="row info-item">
             <label class="col-sm-2 info-label-input" for="nameInput"><span class="orange">*</span>用户姓名:</label>
             <div class="col-sm-10 info-val">
                 <input type="text" class="form-control" id="nameInput" name="name" [(ngModel)]="currentUser.name" #name="ngModel" required>
-                <span class="help-block" [class.hidden]="name.valid || name.pristine">请填用户姓名!</span>
+                <span *ngIf="css.activeForRefresh" class="help-block" [class.hidden]="name.valid || name.pristine">请填用户姓名!</span>
             </div>
         </div>
         <div class="row info-item">
@@ -32,24 +32,24 @@
                     <span class="hint">(注:最多只能同时拥有<span class="orange">3个角色</span>)</span>
                 </div>
                 <div class="role user mt-10">
-                    <custom-checkbox [sourceData]="groups" [limitLength]="13" (onChange)="changeSelectGroup($event)"></custom-checkbox>
+                    <custom-checkbox [sourceData]="groups" [limitLength]="3" (onChange)="changeSelectGroup($event)"></custom-checkbox>
                 </div>
-                <span class="help-block" [class.hidden]="true">请选择角色!</span>
+                <span *ngIf="css.activeForRefresh" class="help-block" [class.hidden]="true">请选择角色!</span>
             </div>
         </div>
         <div class="row info-item">
             <label class="col-sm-2 info-label-input" for="emailInput"><span class="orange">*</span><span>公司邮箱:</span></label>
             <div class="col-sm-10 info-val">
-                <input type="text" class="form-control" id="emailInput" name="email" [(ngModel)]="currentUser.email" #email="ngModel" required >
-                <span class="help-block" [class.hidden]="email.valid || email.pristine">请填写公司邮箱!</span>
-                <button type="button" class="btn btn-default btn-return ml-20 btn-reset-pwd" [class.hidden]="isAddStatus">重置密码</button>
+                <input type="text" class="form-control" id="emailInput" name="email" pattern="^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$" [(ngModel)]="currentUser.email" #email="ngModel" required >
+                <span *ngIf="css.activeForRefresh" class="help-block" [class.hidden]="email.valid || email.pristine">请填写公司邮箱!</span>
+                <button type="button" class="btn btn-default btn-return ml-20 btn-reset-pwd" [class.hidden]="css.isAddStatus">重置密码</button>
             </div>
         </div>
         <div class="row info-item">
             <label class="col-sm-2 info-label-input" for="phoneInput"><span>手机号码:</span></label>
             <div class="col-sm-10 info-val">
-                <input type="text" class="form-control" id="phoneInput" name="phone" pattern="1[3|4|5|7|8]\d{9}" [(ngModel)]="currentUser.phone" #phone="ngModel" >
-                <span class="help-block" [class.hidden]="phone.valid || phone.pristine">请填写正确的手机号码!</span>
+                <input type="text" class="form-control" id="phoneInput" name="phone" pattern="^1[3|4|5|7|8]\d{9}$" [(ngModel)]="currentUser.phone" #phone="ngModel" >
+                <span *ngIf="css.activeForRefresh" class="help-block" [class.hidden]="phone.valid || phone.pristine">请填写正确的手机号码!</span>
             </div>
         </div>
         <div class="row info-item">
@@ -61,13 +61,12 @@
         <div class="row info-item">
             <label class="col-sm-2 info-label-input"></label>
             <div class="col-sm-10 info-val no-bottom-border">
-                <button type="submit" class="btn btn-default btn-lg btn-sure" [disabled]="!addUserForm.form.valid" >保存</button>
-                <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['/users']">返回</button>
+                <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" [disabled]="!addUserForm.form.valid || css.isSubmitted" >保存</button>
+                <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['/users']">返回</button>
+                <span class="ml-30 orange" [class.hidden]="css.isHiddenSaveText">保存成功!</span>
                 <div class="mt-20 fs-14"><span class="hint">注:确认保存后,该系统用户的密码将 <span class="orange">发送至填写的公司邮箱中。</span></span></div>
-                <custom-modal></custom-modal>
             </div>
         </div>
     </form>
-
-
 </div>
+<custom-modal [(ngModel)]="css.isHiddenModal" [modalShowText]="modalShowText"></custom-modal>

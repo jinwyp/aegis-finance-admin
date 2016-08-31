@@ -44,4 +44,4 @@
         </tr>
     </table>
 </div>
-<custom-modal [(ngModel)]="isHiddenModal" (cancel)="hiddenModal()" (confirm)="delUser()"></custom-modal>
+<custom-modal [(ngModel)]="isHiddenModal" [modalShowText]="'确认删除该用户吗?'" (cancel)="hiddenModal()" (confirm)="delUser()"></custom-modal>

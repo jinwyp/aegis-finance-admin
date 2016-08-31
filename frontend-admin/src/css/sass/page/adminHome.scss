@@ -1,6 +1,8 @@
 @import '../helpers/_variables.scss';
 
 .custom-select{
+  line-height: 40px;
+  height: 40px;
   display: inline-block;
   width:150px;
   border:1px solid #e1e1e1;
@@ -19,14 +21,14 @@
     overflow: auto;
     left: -1px;
     right: -1px;
-    top: 32px;
+    top: 38px;
     padding: 0;
     border: 1px solid #e1e1e1;
     border-bottom-width: 0;
     //display: none;
     li{
       cursor: pointer;
-      padding:8px 10px;
+      padding:0 10px;
       border-bottom: 1px solid #e1e1e1;
     }
     //li:last-child{border-bottom: none;}
@@ -502,11 +504,15 @@
     padding:0;
     overflow: hidden;
     .div-title{
+      background-color: #f7f7f7;
+      border-bottom:1px solid $border-color;
       padding:10px;
       .del-icon{
         float: right;
         margin-top:3px;
         cursor: pointer;
+        color:#b3b3b3;
+        &:hover{  color:#666;  }
       }
     }
     .div-main{
