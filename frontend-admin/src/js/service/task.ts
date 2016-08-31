@@ -8,7 +8,7 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
-import { HttpResponse, API } from './http';
+import {GlobalPromiseHttpCatch, HttpResponse, API } from './http';
 
 
 var taskStatusList = [
@@ -220,11 +220,6 @@ class Task {
 @Injectable()
 class TaskService {
 
-    private handleError(error: any): Promise<any> {
-        console.error('Http 任务 请求发生错误!! ', error);
-        return Promise.reject(error.message || error);
-    }
-
     private AllTaskListInfo = new BehaviorSubject<any>(null);
     private PendingTaskListInfo = new BehaviorSubject<any>(null);
     getAllTaskLengthObservable = this.AllTaskListInfo.asObservable();
@@ -242,25 +237,25 @@ class TaskService {
     getTaskList() {
         return this.http.get(API.tasks).toPromise()
             .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     getTaskHistoryList() {
         return this.http.get(API.tasks + '/history').toPromise()
             .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     getAdminTaskList() {
         return this.http.get(API.tasks + '/unclaimed').toPromise()
             .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     getTaskInfoById(taskId : string) {
         return this.http.get(API.tasks + '/' + taskId).toPromise()
             .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     assignPerson(taskId : string, userId : string) {
@@ -275,7 +270,7 @@ class TaskService {
                 }
             })
             .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
     audit(taskId : string, taskType : string, taskStep : string, body : any) {
@@ -299,7 +294,7 @@ class TaskService {
 
         return this.http.post(url, JSON.stringify(body), {headers: headers}).toPromise()
             .then(response => response.json() as HttpResponse)
-            .catch(this.handleError);
+            .catch(GlobalPromiseHttpCatch);
     }
 
 }

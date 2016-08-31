@@ -41,9 +41,7 @@ export class LoginComponent {
                 this.css.ajaxErrorHidden = false;
             }
         }).catch((error)=>{
-            if (!error.success){
-                this.css.ajaxErrorHidden = false;
-            }
+            this.css.ajaxErrorHidden = false;
         });
     }
 

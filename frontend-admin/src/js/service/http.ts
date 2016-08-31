@@ -34,4 +34,18 @@ class HttpResponse {
 }
 
 
-export {HttpResponse, API}
+
+
+var GlobalPromiseHttpCatch = (error: any) => {
+    if (error.status  == 401) {
+        window.location.href = '/finance/admin/login';
+        return
+    } else {
+        console.error('Http 用户 请求发生错误!! ', error);
+        return Promise.reject(error.message || error);
+    }
+};
+
+
+
+export {HttpResponse, API, GlobalPromiseHttpCatch}
