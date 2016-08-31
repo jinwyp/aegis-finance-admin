@@ -21,8 +21,9 @@ export class UserDetailComponent {
     ) {}
 
     css = {
-        activeForRefresh : true,
+        isHiddenSaveText : true,
         isSubmitted :      false,
+        activeForRefresh : true,
         ajaxErrorHidden :  true,
         ajaxSuccessHidden : true
     };
@@ -43,6 +44,7 @@ export class UserDetailComponent {
                 if (result && result.success) {
                     this.currentUserSession = result.data;
                     this.selectedItem = this.currentUserSession.department;
+                    console.log(result);
                 } else {
 
                 }
@@ -57,14 +59,12 @@ export class UserDetailComponent {
         this.css.isSubmitted     = true;
 
         this.currentUserSession.department = this.selectedItem;
-
         this.userService.save(this.currentUserSession).then((result)=> {
             if (result.success) {
                 this.css.ajaxSuccessHidden = false;
             } else {
                 this.css.ajaxErrorHidden = false;
             }
-
             this.css.isSubmitted = false;
         });
     }
