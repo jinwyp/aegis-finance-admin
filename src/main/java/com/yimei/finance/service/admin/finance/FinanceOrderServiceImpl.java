@@ -1,6 +1,9 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.*;
+import com.yimei.finance.entity.admin.finance.AttachmentObject;
+import com.yimei.finance.entity.admin.finance.EnumFinanceEventType;
+import com.yimei.finance.entity.admin.finance.EnumFinanceStatus;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
 import com.yimei.finance.entity.site.user.FinanceOrderSearch;
@@ -8,7 +11,6 @@ import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.utils.DozerUtils;
 import com.yimei.finance.utils.Where;
 import org.activiti.engine.HistoryService;
-import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Attachment;
@@ -26,7 +28,7 @@ import java.util.List;
 @Service("financeOrderService")
 public class FinanceOrderServiceImpl {
     @Autowired
-    private FinanceOrderRepository financeOrderRepository;
+    private FinanceOrderRepository orderRepository;
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired
@@ -39,7 +41,7 @@ public class FinanceOrderServiceImpl {
      */
     @Transactional
     public void updateFinanceOrderByOnlineTrader(FinanceOrder financeOrder) {
-        FinanceOrder order = financeOrderRepository.findOne(financeOrder.getId());
+        FinanceOrder order = orderRepository.findOne(financeOrder.getId());
         order.setFinancingAmount(financeOrder.getFinancingAmount());
         order.setExpectDate(financeOrder.getExpectDate());
         order.setBusinessAmount(financeOrder.getBusinessAmount());
@@ -52,18 +54,18 @@ public class FinanceOrderServiceImpl {
         order.setCoalQuantityIndex(financeOrder.getCoalQuantityIndex());
         order.setApproveStateId(EnumFinanceStatus.Auditing.id);
         order.setApproveState(EnumFinanceStatus.Auditing.name);
-        financeOrderRepository.save(order);
+        orderRepository.save(order);
     }
 
     /**
      * 查询金融单
      */
     public Result getFinanceOrderBySelect(int userId, FinanceOrderSearch order, Page page) {
-        String hql = " select o.id, o.sourceId, o.applyType, o.applyDateTime, o.financingAmount, o.expectDate, " +
+        String hql = " select o.id, o.sourceId, o.applyType, o.createTime, o.financingAmount, o.expectDate, " +
                 " o.approveState from FinanceOrder o where o.userId=:userId ";
         if (order != null) {
             if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
-                hql += " and o.applyStartDate between :startDate and :endDate ";
+                hql += " and o.createTime between :startDate and :endDate ";
             }
             if (order.getApproveStateId() != 0) {
                 hql += " and o.approveStateId=:approveStateId ";
@@ -96,8 +98,21 @@ public class FinanceOrderServiceImpl {
         List<FinanceOrder> totalList = query.getResultList();
         page.setTotal(Long.valueOf(totalList.size()));
         List<FinanceOrder> financeOrderList = totalList.subList(page.getOffset(), (int) (page.getOffset() + page.getPage() * page.getTotal()));
+        System.out.println(" ------------------------ " + financeOrderList.size());
+        System.out.println(" ------------------------ " + financeOrderList.size());
+        System.out.println(" ------------------------ " + financeOrderList.size());
+        System.out.println(" ------------------------ " + financeOrderList.size());
+        System.out.println(" ------------------------ " + financeOrderList.size());
+        System.out.println(" ------------------------ " + financeOrderList.toString());
+        System.out.println(" ------------------------ " + financeOrderList.toString());
+        System.out.println(" ------------------------ " + financeOrderList.toString());
+        System.out.println(" ------------------------ " + financeOrderList.toString());
+        System.out.println(" ------------------------ " + financeOrderList.toString());
+        System.out.println(" ------------------------ " + financeOrderList.toString());
+
         return Result.success().setData(financeOrderList).setMeta(page);
     }
+
 
     public List<AttachmentObject> getOnlineTraderAttachmentListByFinanceOrderId(Long financeId) {
         Task task = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(EnumFinanceEventType.onlineTraderAudit.toString()).singleResult();
@@ -107,5 +122,11 @@ public class FinanceOrderServiceImpl {
         List<Attachment> attachmentList = taskService.getTaskAttachments(taskId);
         if (attachmentList == null || attachmentList.size() == 0) return null;
         return DozerUtils.copy(attachmentList, AttachmentObject.class);
+    }
+
+    public FinanceOrder findById(Long id) {
+        FinanceOrder financeOrder = orderRepository.findOne(id);
+        financeOrder.setAttachmentList(null);
+        return financeOrder;
     }
 }

@@ -6,9 +6,11 @@ import com.yimei.finance.entity.admin.finance.EnumFinanceOrderType;
 import com.yimei.finance.entity.admin.finance.EnumFinanceStatus;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.common.enums.EnumCommonError;
+import com.yimei.finance.entity.common.result.CombineObject;
 import com.yimei.finance.entity.common.result.MapObject;
 import com.yimei.finance.entity.common.result.Page;
 import com.yimei.finance.entity.common.result.Result;
+import com.yimei.finance.entity.site.user.FinanceOrderSearch;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
@@ -18,7 +20,6 @@ import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import org.activiti.engine.RuntimeService;
-import org.activiti.engine.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,23 +36,21 @@ import java.util.List;
 @RestController("siteUserCenterController")
 public class UserCenterController {
     @Autowired
-    private FinanceOrderRepository financeOrderRepository;
+    private FinanceOrderRepository orderRepository;
     @Autowired
     private UserSession userSession;
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
-    private TaskService taskService;
-    @Autowired
     private NumberServiceImpl numberService;
     @Autowired
-    private FinanceOrderServiceImpl financeOrderService;
+    private FinanceOrderServiceImpl orderService;
 
     /**
     * 供应链金融 - 发起融资申请
     */
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
-    @LoginRequired
+//    @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Valid @RequestBody FinanceOrder financeOrder) {
         System.out.println("Order Type:" + financeOrder.getApplyType());
@@ -59,16 +58,16 @@ public class UserCenterController {
         financeOrder.setSourceId(numberService.getNextCode("JR"));
         financeOrder.setUserId(userSession.getUser().getId());
         financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
+        financeOrder.setCreateManId(String.valueOf(userSession.getUser().getId()));
+        financeOrder.setLastUpdateManId(String.valueOf(userSession.getUser().getId()));
+        financeOrder.setCreateTime(new Date());
+        financeOrder.setLastUpdateTime(new Date());
+        financeOrder.setEndTime(null);
 //        financeOrder.setUserId(1);
         financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
-        financeOrder.setCreateTime(new Date());
-        financeOrder.setCreateManId(String.valueOf(userSession.getUser().getId()));
-        financeOrder.setLastUpdateTime(new Date());
-        financeOrder.setLastUpdateManId(String.valueOf(userSession.getUser().getId()));
-        financeOrder.setEndTime(null);
-        financeOrderRepository.save(financeOrder);
-        financeOrder = financeOrderRepository.findBySourceId(financeOrder.getSourceId());
+        orderRepository.save(financeOrder);
+        financeOrder = orderRepository.findBySourceId(financeOrder.getSourceId());
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
             runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
         } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
@@ -78,19 +77,29 @@ public class UserCenterController {
         } else {
             return Result.error(EnumCommonError.Admin_System_Error);
         }
-        return Result.success().setData(financeOrderRepository.findBySourceId(financeOrder.getSourceId()));
+        return Result.success().setData(orderRepository.findBySourceId(financeOrder.getSourceId()));
     }
 
     /**
      * 供应链金融 - 用户中心 - 获取融资申请列表
      */
     @ApiOperation(value = "融资申请列表", notes = "用户查询融资申请列表", response = FinanceOrder.class, responseContainer = "List")
-    @LoginRequired
-    @RequestMapping(value = "/apply", method = RequestMethod.GET)
-//    public Result getFinancingApplyInfoList(@RequestBody CombineObject object) {
-    public Result getFinancingApplyInfoList(Page page) {
-//        return financeOrderService.getFinanceOrderBySelect(1, object.financeOrderSearch, object.page);
-        return Result.success().setData(financeOrderRepository.findByUserId(userSession.getUser().getId()));
+//    @LoginRequired
+    @RequestMapping(value = "/list", method = RequestMethod.POST)
+    public Result getFinancingApplyInfoList(@ApiParam(name = "map", value = "参数body对象", required = false) @RequestBody CombineObject<FinanceOrderSearch, Page> map) {
+        System.out.println(" ---------------------------- " + map.t.toString());
+        System.out.println(" ---------------------------- " + map.t.toString());
+        System.out.println(" ---------------------------- " + map.t.toString());
+        System.out.println(" ---------------------------- " + map.t.toString());
+
+        System.out.println(" ---------------------------- " + map.u.toString());
+        System.out.println(" ---------------------------- " + map.u.toString());
+        System.out.println(" ---------------------------- " + map.u.toString());
+        System.out.println(" ---------------------------- " + map.u.toString());
+        System.out.println(" ---------------------------- " + map.u.toString());
+//    public Result getFinancingApplyInfoList(Page page) {
+        return orderService.getFinanceOrderBySelect(1, map.t, map.u);
+//        return Result.success().setData(financeOrderRepository.findByUserId(userSession.getUser().getId()));
     }
 
     /**
@@ -101,10 +110,10 @@ public class UserCenterController {
     @LoginRequired
     @RequestMapping(value = "/apply/{id}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
-        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, userSession.getUser().getId());
+        FinanceOrder financeOrder = orderRepository.findByIdAndUserId(id, userSession.getUser().getId());
 //        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserId(id, 1);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        financeOrder.setAttachmentList(financeOrderService.getOnlineTraderAttachmentListByFinanceOrderId(financeOrder.getId()));
+        financeOrder.setAttachmentList(orderService.getOnlineTraderAttachmentListByFinanceOrderId(financeOrder.getId()));
         return Result.success().setData(financeOrder);
     }
 
