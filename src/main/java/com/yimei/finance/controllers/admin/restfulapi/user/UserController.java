@@ -153,6 +153,22 @@ public class UserController {
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
     }
 
+    @ApiOperation(value = "自己修改信息", notes = "用户自己修改信息", response = UserObject.class)
+    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    public Result updateUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
+        if (user == null) return Result.error(EnumAdminUserError.用户对象不能为空.toString());
+        User oldUser = identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult();
+        oldUser.setEmail(user.getEmail());
+        identityService.saveUser(oldUser);
+        identityService.setUserInfo(oldUser.getId(), "name", user.getName());
+        identityService.setUserInfo(oldUser.getId(), "phone", user.getPhone());
+        identityService.setUserInfo(oldUser.getId(), "department", user.getDepartment());
+        addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
+        UserObject userObject = userService.changeUserObject(identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult());
+        adminSession.login(userObject);
+        return Result.success().setData(userObject);
+    }
+
     @ApiOperation(value = "管理员帮助用户重置密码", notes = "管理员帮助用户重置密码, 生成随机密码, 发送到用户邮箱.", response = Boolean.class)
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/resetpwd/{id}", method = RequestMethod.POST)

@@ -24,6 +24,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @Service("financeOrderService")
@@ -83,7 +84,7 @@ public class FinanceOrderServiceImpl {
         if (order != null) {
             if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
                 query.setParameter("startDate", Date.valueOf(order.getStartDate()));
-                query.setParameter("endDate", Date.valueOf(order.getEndDate()));
+                query.setParameter("endDate", Date.valueOf(LocalDate.parse(order.getEndDate()).plusDays(1)));
             }
             if (order.getApproveStateId() != 0) {
                 query.setParameter("approveStateId", order.getApproveStateId());
