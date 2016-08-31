@@ -6,15 +6,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
-import java.util.Date;
 
 @ApiModel(value = "financeSearch", description = "金融申请搜索参数")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
 public class FinanceOrderSearch implements Serializable {
-    private Date startDate;
-    private Date endDate;
+    private String startDate;
+    private String endDate;
     private int approveStateId;
     private String applyType;
     private String sourceId;
