@@ -1,14 +1,17 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.EnumFinanceAssignType;
+import com.yimei.finance.representation.admin.finance.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.EnumFinanceEventType;
 import com.yimei.finance.representation.admin.user.EnumAdminUserError;
 import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
@@ -18,7 +21,6 @@ import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
-import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.StringUtils;
@@ -35,6 +37,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 @Api(tags = {"admin-api-flow"}, description = "金融公用接口")
@@ -55,6 +58,15 @@ public class FinancingCommonController {
     private IdentityService identityService;
     @Autowired
     private HistoryService historyService;
+    @Autowired
+    private FinanceOrderServiceImpl financeOrderService;
+
+    @RequestMapping(value = "/finance/{financeId}", method = RequestMethod.GET)
+    @ApiOperation(value = "通过 金融单id 查看金融详细信息", notes = "通过 金融单id 查看金融详细信息", response = FinanceOrder.class)
+    @ApiImplicitParam(name = "taskId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
+    public Result getFinanceOrderDetailByIdMethod(@PathVariable("financeId")Long financeId) {
+        return financeOrderService.findById(financeId, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.OnlineTraderAuditAttachment}));
+    }
 
     @RequestMapping(value = "/tasks/{taskId}/claim", method = RequestMethod.POST)
     @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作", response = Boolean.class)
@@ -64,9 +76,9 @@ public class FinancingCommonController {
         if (task == null) return Result.error(EnumAdminFinanceError.此任务不存在或者已经完成.toString());
         if (!StringUtils.isEmpty(task.getAssignee())) {
             if (task.getAssignee().equals(adminSession.getUser().getId())) {
-                return Result.error(EnumAdminFinanceError.你已经领取此任务.toString());
+                return Result.error(EnumAdminFinanceError.你已经处理此任务.toString());
             } else {
-                return Result.error(EnumAdminFinanceError.此任务已经被其他人领取.toString());
+                return Result.error(EnumAdminFinanceError.此任务已经被其他人处理.toString());
             }
         }
         List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
@@ -81,7 +93,6 @@ public class FinancingCommonController {
         }
         return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
     }
-
 
     @RequestMapping(value = "/tasks/{taskId}/person/{userId}", method = RequestMethod.PUT)
     @ApiOperation(value = "管理员分配人员", notes = "管理员分配人员操作")
@@ -118,14 +129,10 @@ public class FinancingCommonController {
         for (User u : userList) {
             if (u.getId().equals(userId)) {
                 taskService.complete(task.getId());
-                List<Task> taskList = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).active().orderByTaskId().desc().list();
-                for (Task t : taskList) {
-                    if (t.getTaskDefinitionKey().equals(financeEventType)) {
-                        taskService.setAssignee(t.getId(), userId);
-                        return Result.success().setData(true);
-                    }
-                }
-                return Result.error(EnumCommonError.Admin_System_Error);
+                Task t = taskService.createTaskQuery().taskDefinitionKey(financeEventType).active().singleResult();
+                if (t == null) return Result.error(EnumCommonError.Admin_System_Error);
+                taskService.setAssignee(t.getId(), userId);
+                return Result.success().setData(true);
             }
         }
         return Result.error(EnumAdminFinanceError.你没有处理此金融单的权限.toString());
@@ -137,13 +144,11 @@ public class FinancingCommonController {
     public void getProcessDiagramMethod(@PathVariable("processInstanceId") String processInstanceId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("image/gif");
         OutputStream out = response.getOutputStream();
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
-        HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
-        if (processInstance == null && historicProcessInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
-        String processDefinitionId = processInstance != null ? processInstance.getProcessDefinitionId() : historicProcessInstance.getProcessDefinitionId();
-        BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
+        HistoricProcessInstance processInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+        if (processInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(processInstance.getProcessDefinitionId());
         InputStream inputStream = null;
-        if (processInstance != null) {
+        if (processInstance.getEndTime() == null) {
             inputStream = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator()
                     .generateDiagram(bpmnModel, "png", runtimeService.getActiveActivityIds(processInstanceId));
         } else {

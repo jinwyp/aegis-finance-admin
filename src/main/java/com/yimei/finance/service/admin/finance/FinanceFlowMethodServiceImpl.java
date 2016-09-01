@@ -2,11 +2,10 @@ package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.entity.admin.user.UserObject;
-import com.yimei.finance.representation.common.enums.EnumCommonError;
-import com.yimei.finance.representation.common.result.Result;
-import com.yimei.finance.entity.admin.finance.TaskObject;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.HistoryService;
@@ -41,8 +40,6 @@ public class FinanceFlowMethodServiceImpl {
     private AdminUserServiceImpl userService;
     @Autowired
     private IdentityService identityService;
-    @Autowired
-    private FinanceOrderServiceImpl orderService;
 
     /**
      * 添加附件方法
@@ -54,15 +51,6 @@ public class FinanceFlowMethodServiceImpl {
                     taskService.createAttachment(attachmentObject.getType(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
                 }
             }
-        }
-    }
-
-    /**
-     * 添加备注信息
-     */
-    public void addComment(String taskId, String processInstanceId, String comment, String type) {
-        if (!StringUtils.isEmpty(comment)) {
-            taskService.addComment(taskId, processInstanceId, comment, type);
         }
     }
 
@@ -81,7 +69,6 @@ public class FinanceFlowMethodServiceImpl {
         return Result.error(EnumCommonError.Admin_System_Error);
     }
 
-
     /**
      * 更改金融单状态
      */
@@ -98,7 +85,7 @@ public class FinanceFlowMethodServiceImpl {
             order.setEndTime(new Date());
         }
         orderRepository.save(order);
-        return Result.success().setData(orderService.findById(financeId));
+        return Result.success();
     }
 
     /**
@@ -155,21 +142,21 @@ public class FinanceFlowMethodServiceImpl {
      */
     public Result changeHistoryTaskObject(HistoricTaskInstance task) {
         HistoryTaskObject taskObject = DozerUtils.copy(task, HistoryTaskObject.class);
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
         HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-        if (processInstance == null && historicProcessInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
-        String businessKey = processInstance != null ? processInstance.getBusinessKey() : historicProcessInstance.getBusinessKey();
-        if (StringUtils.isEmpty(businessKey)) return Result.error(EnumCommonError.Admin_System_Error);
-        FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(businessKey));
+        if (historicProcessInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
+        if (StringUtils.isEmpty(historicProcessInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
+        FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(historicProcessInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
         taskObject.setApplyType(financeOrder.getApplyType());
         taskObject.setApplyTypeName(financeOrder.getApplyTypeName());
         taskObject.setFinancingAmount(financeOrder.getFinancingAmount());
         taskObject.setSourceId(financeOrder.getSourceId());
-        UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
-        taskObject.setAssigneeName(user.getUsername());
-        taskObject.setAssigneeDepartment(user.getDepartment());
+        if (!StringUtils.isEmpty(task.getAssignee())) {
+            UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
+            taskObject.setAssigneeName(user.getUsername());
+            taskObject.setAssigneeDepartment(user.getDepartment());
+        }
         return Result.success().setData(taskObject);
     }
 
@@ -182,7 +169,5 @@ public class FinanceFlowMethodServiceImpl {
         }
         return Result.success().setData(taskObjectList);
     }
-
-
 
 }

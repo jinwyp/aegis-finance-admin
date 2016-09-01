@@ -44,27 +44,22 @@ public class UserCenterController {
     @ApiOperation(value = "通过 id 查询任务对象", notes = "通过 id 查询任务对象", response = TaskObject.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result getTaskByIdMethod(@PathVariable(value = "taskId") String taskId) {
-        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
-        HistoricTaskInstance historicTaskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
-        if (task == null && historicTaskInstance == null) return Result.error(EnumAdminFinanceError.不存在此任务.toString());
-        if (task != null) {
-            return workFlowService.changeTaskObject(task);
-        } else {
-            return workFlowService.changeHistoryTaskObject(historicTaskInstance);
-        }
+        HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
+        if (taskInstance == null) return Result.error(EnumAdminFinanceError.不存在此任务.toString());
+        return workFlowService.changeHistoryTaskObject(taskInstance);
     }
 
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "个人待办任务列表", notes = "个人待办任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
-        Result result = workFlowService.changeTaskObject(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()));
+        List<Task> taskList = taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByTaskCreateTime().desc().list();
+        Result result = workFlowService.changeTaskObject(taskList.subList(page.getOffset(), page.getPage() * page.getCount()));
         if (!result.isSuccess()) return result;
-        List<TaskObject> taskList = (List<TaskObject>) result.getData();
-        page.setTotal(taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).count());
-        return Result.success().setData(taskList).setMeta(page);
+        List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
+        page.setTotal((long) taskList.size());
+        return Result.success().setData(taskObjectList).setMeta(page);
     }
-
 
     @RequestMapping(value = "/unclaimed", method = RequestMethod.GET)
     @ApiOperation(value = "给分配管理员查看待领取任务列表", notes = "给线上交易员管理组, 业务员管理组, 尽调员管理组, 监管员管理组, 风控管理组, 查看待领取任务列表", response = TaskObject.class, responseContainer = "List")
@@ -76,11 +71,12 @@ public class UserCenterController {
             groupIds.add(group.getId());
         }
         if (groupIds != null && groupIds.size() != 0) {
-            page.setTotal(taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().count());
-            Result result = workFlowService.changeTaskObject(taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()));
+            List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByTaskCreateTime().desc().list();
+            page.setTotal(Long.valueOf(taskList.size()));
+            Result result = workFlowService.changeTaskObject(taskList.subList(page.getOffset(), page.getPage() * page.getCount()));
             if (!result.isSuccess()) return result;
-            List<TaskObject> taskList = (List<TaskObject>) result.getData();
-            return Result.success().setData(taskList).setMeta(page);
+            List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
+            return Result.success().setData(taskObjectList).setMeta(page);
         }
         return Result.success().setData(null).setMeta(page);
     }
@@ -89,9 +85,11 @@ public class UserCenterController {
     @ApiOperation(value = "个人已处理任务列表", notes = "个人已处理任务列表", response = HistoryTaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalHistoryTasksMethod(Page page) {
-        Result result = workFlowService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByTaskCreateTime().desc().listPage(page.getOffset(), page.getCount()));
+        List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByTaskCreateTime().desc().list();
+        Result result = workFlowService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), page.getPage() * page.getCount()));
         if (!result.isSuccess()) return result;
         List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
+        page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
         return Result.success().setData(taskList);
     }
 

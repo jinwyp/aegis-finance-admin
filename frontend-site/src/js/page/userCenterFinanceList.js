@@ -12,6 +12,20 @@ import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 
 var financeList = () => {
 
+    var applyTypeList = [
+        {'name' : 'all', text : '全部'},
+        {'name' : 'MYR', text : '煤易融'},
+        {'name' : 'MYG', text : '煤易购'},
+        {'name' : 'MYD', text : '煤易贷'},
+    ];
+    var statusList = [
+        {'name' : 'all', text : '全部'},
+        {'name' : '2', text : '待审核'},
+        {'name' : '4', text : '审核中'},
+        {'name' : '6', text : '审核中(补充材料)'},
+        {'name' : '8', text : '审核通过'},
+        {'name' : '10', text : '审核不通过'},
+    ];
     var vm = avalon.define({
         $id   : 'financeList',
         financeList : [],
@@ -20,9 +34,9 @@ var financeList = () => {
         },
         searchQuery : {
             // requestUsername : '',
-            status : '全部',
-            type : '全部',
-            businessId : '',
+            approveStateId : '全部',
+            applyType : '全部',
+            sourceId : '',
             startDate : '',
             endDate : '',
             page : 1
@@ -35,9 +49,9 @@ var financeList = () => {
 
                 getFinanceList({
                     // requestUsername : vm.searchQuery.requestUsername,
-                    status : vm.searchQuery.status,
-                    type : vm.searchQuery.type,
-                    businessId : vm.searchQuery.businessId,
+                    approveStateId : statusList.find(status => { return status.text === vm.searchQuery.approveStateId}).name,
+                    applyType : applyTypeList.find(type => { return type.text === vm.searchQuery.applyType}).name,
+                    sourceId : vm.searchQuery.sourceId,
                     startDate : vm.searchQuery.startDate,
                     endDate : vm.searchQuery.endDate,
                     page : vm.searchQuery.page
@@ -47,21 +61,23 @@ var financeList = () => {
         
 
         clickStatus : (value)=>{
-            vm.searchQuery.status = value;
+            vm.searchQuery.approveStateId = value;
             console.log(value);
         },
 
         clickType : (value)=>{
-            vm.searchQuery.type = value;
+            vm.searchQuery.applyType = value;
             console.log(value);
         },
 
         searchFinanceOrder : (event)=>{
-            getFinanceList({
+
+
+             getFinanceList({
                 // requestUsername : vm.searchQuery.requestUsername,
-                status : vm.searchQuery.status,
-                type : vm.searchQuery.type,
-                businessId : vm.searchQuery.businessId,
+                approveStateId : statusList.find(status => { return status.text === vm.searchQuery.approveStateId}).name,
+                applyType : applyTypeList.find(type => { return type.text === vm.searchQuery.applyType}).name,
+                sourceId : vm.searchQuery.sourceId,
                 startDate : vm.searchQuery.startDate,
                 endDate : vm.searchQuery.endDate
             });
@@ -131,36 +147,7 @@ var financeList = () => {
         location.href="/finance/user/financing/excel"
     })
 
-    // //分页相关
-    // var vm = {};
-    //
-    // var app = {
-    //     init : function(){
-    //         vm = avalon.define({
-    //             $id: "paginationController",
-    //
-    //             configPagination : {
-    //                 totalPages : 0,
-    //                 currentPage : 1,
-    //                 inputCurrentPages : 1,
-    //                 isShowPagination : true,
-    //                 changePageNo : function(page){
-    //                     $("#submitSearch").trigger("click",[page]);
-    //                 }
-    //             }
-    //         });
-    //     }
-    // };
-    //
-    // $( document ).ready( function() {
-    //     app.init();
-    //
-    //     vm.configPagination.currentPage = Number($("#page").val());
-    //     vm.configPagination.inputCurrentPages = Number($("#page").val());
-    //     vm.configPagination.totalPages = Math.ceil($("#count").val() / $("#pagesize").val());
-    //
-    //     if (Number($("#count").val()) < 10) {vm.configPagination.isShowPagination = false}
-    // });
+
 
 
 };
