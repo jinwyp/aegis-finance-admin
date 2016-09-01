@@ -28,7 +28,7 @@
 </head>
 <body>
 <!-- header start -->
-<#include "common/header.ftl" >
+<#include "../common/header.ftl" >
     <!-- header stop -->
 
 
@@ -41,7 +41,7 @@
     </div>
 
     <!--footer start-->
-    <#include "common/footer.ftl" >
+    <#include "../common/footer.ftl" >
         <!--footer stop-->
 
 
