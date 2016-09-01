@@ -258,6 +258,12 @@ class TaskService {
             .catch(GlobalPromiseHttpCatch);
     }
 
+    getOrderInfoById(orderId : string) {
+        return this.http.get(API.orders + '/' + orderId).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(GlobalPromiseHttpCatch);
+    }
+
     assignPerson(taskId : string, userId : string) {
 
         return this.http.post(API.tasks + '/' + taskId + '/claim', {}).toPromise()

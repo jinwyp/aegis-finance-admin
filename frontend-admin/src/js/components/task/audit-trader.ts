@@ -35,6 +35,7 @@ export class AuditTraderComponent {
 
     taskId : string = '';
     currentTask : Task = new Task();
+    currentOrder : Task = new Task();
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -74,6 +75,16 @@ export class AuditTraderComponent {
 
             }
         });
+
+        this.task.getOrderInfoById(id).then((result)=>{
+            if (result.success){
+                this.currentOrder = result.data;
+            }else{
+
+            }
+        });
+
+
     }
 
 

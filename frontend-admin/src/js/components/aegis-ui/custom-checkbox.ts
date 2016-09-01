@@ -37,15 +37,27 @@ export class CustomCheckboxComponent implements ControlValueAccessor{
     private onTouchedCallback: () => {};
     private onChangeCallback: (_: any) => {};
 
+
     //From ControlValueAccessor interface
     writeValue(value: any) {
         if (value !== this.selectedIds) {
+            // console.log('外面往组件里面更改数据', value, this.sourceData);
+
             this.selectedIds = value;
+            this.sourceData.forEach(group => {
+
+                if (this.selectedIds.indexOf(group.id) > -1) {
+                    group.selected = true;
+                }else{
+                    group.selected = false;
+                }
+            })
         }
     }
 
     //From ControlValueAccessor interface
     registerOnChange(fn: any) {
+        // console.log('从组件里面往外面更改数据');
         this.onChangeCallback = fn;
     }
 
@@ -56,11 +68,23 @@ export class CustomCheckboxComponent implements ControlValueAccessor{
 
 
 
-    ngOnChanges() {
-        this.sourceData.forEach(group => {
-            if (group.selected ) {this.selectedIds.push(group.id) }
-        })
+    ngOnChanges(changes) {
+        for (let propName in changes) {
+            // console.log(propName, changes[propName]);
+
+            if (propName === 'sourceData'){
+                this.sourceData.forEach(group => {
+
+                    if (this.selectedIds.indexOf(group.id) > -1) {
+                        group.selected = true;
+                    }else{
+                        group.selected = false;
+                    }
+                })
+            }
+        }
     }
+
 
     click (group){
 
@@ -73,7 +97,8 @@ export class CustomCheckboxComponent implements ControlValueAccessor{
             this.selectedIds.splice(this.selectedIds.indexOf(group.id), 1);
             group.selected = false;
         }
-        this.onChange.emit({selectedIds:this.selectedIds});
+        this.onChange.emit();
+        this.onChangeCallback(this.selectedIds);
     }
 
 
