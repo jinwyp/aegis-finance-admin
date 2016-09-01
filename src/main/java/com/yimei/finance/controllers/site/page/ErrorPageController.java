@@ -16,4 +16,12 @@ public class ErrorPageController {
         return "site/http/404";
     }
 
+
+    @ApiOperation(value = "网站 500 页面", notes = "网站 500 页面 System Error !")
+    @RequestMapping(value = "/500", method = RequestMethod.GET)
+    public String Page500() {
+        return "site/http/500";
+    }
+
+
 }

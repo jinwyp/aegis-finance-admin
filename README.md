@@ -35,6 +35,11 @@
 - 开发环境下 运行 gulp dev 进入监视 sass 文件改动自动编译css, 使用 gulp build 进行生产环境打包
 
 
+## 测试 
+
+- 安装 Karma 命令行 ``` npm install -g karma-cli --registry=https://registry.npm.taobao.org --phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs
+- 进入 frontend-site/src 下运行``` karma start karma.conf.js ``` 或 ``` npm test ```
+- 进入 frontend-admin/src 下运行``` karma start karma.conf.js ``` 或 ``` npm test ```
 
 
 
@@ -42,4 +47,4 @@
 
 
 ###Swagger文档查看
-http://localhost:8002/swagger-ui.html
+http://localhost:8002/swagger/swagger-ui.html

@@ -86,11 +86,11 @@ public class UserCenterController {
     @ApiOperation(value = "融资申请列表", notes = "用户查询融资申请列表", response = FinanceOrder.class, responseContainer = "List")
     @LoginRequired
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "页数", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "page", value = "页数", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "sourceId", value = "业务编号", required = false, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "startDate", value = "开始时间", required = false, dataType = "Date", paramType = "query"),
             @ApiImplicitParam(name = "endDate", value = "结束时间", required = false, dataType = "Date", paramType = "query"),
-            @ApiImplicitParam(name = "approveStateId", value = "审批状态id", required = false, dataType = "int", paramType = "query"),
+            @ApiImplicitParam(name = "approveStateId", value = "审批状态id", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "applyType", value = "业务类型", required = false, dataType = "String", paramType = "query")
     })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
