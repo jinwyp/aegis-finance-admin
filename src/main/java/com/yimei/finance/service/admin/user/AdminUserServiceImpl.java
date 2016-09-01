@@ -146,13 +146,13 @@ public class AdminUserServiceImpl {
                         groupIds.add(group.getId());
                     }
                     for (String gid : groupIds) {
-                        List<User> users = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).memberOfGroup(gid).list();
+                        List<User> users = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).memberOfGroup(gid).orderByUserId().list();
                         if (users != null && users.size() != 0) {
                             userList.addAll(users);
                         }
                     }
                 } else {
-                    userList = identityService.createUserQuery().list();
+                    userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).orderByUserId().list();
                 }
             } else if (!StringUtils.isEmpty(userSearch.getUsername())){
                 userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).list();
