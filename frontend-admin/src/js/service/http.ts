@@ -40,12 +40,18 @@ var GlobalPromiseHttpCatch = (error: any) => {
     if (error.status && error.status === 401) {
         window.location.href = '/finance/admin/login';
 
+    }else if (error && error.status === 400){
+        console.error('Http 400 请求发生错误!! ', error);
+        return Promise.resolve(error);
+
     }else if (error && error.status === 404){
         console.error('Http 404 请求发生错误!! ', error);
         return Promise.reject(error);
+
     }else if (error && error.status === 500){
         console.error('Http 500 请求发生错误!! ', error);
         return Promise.reject(error);
+
     }else {
         console.error('Http 请求发生错误!! ', error);
         return Promise.reject(error);

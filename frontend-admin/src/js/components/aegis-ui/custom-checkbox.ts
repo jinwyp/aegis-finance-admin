@@ -2,17 +2,25 @@
  * Created by helue on 16/8/30.
  */
 
-import {Component, Input, Output, EventEmitter} from '@angular/core';
+import {Component, Input, Output, EventEmitter, forwardRef} from '@angular/core';
+import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 declare var __moduleName:string;
+
+export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
+    provide: NG_VALUE_ACCESSOR,
+    useExisting: forwardRef(() => CustomCheckboxComponent),
+    multi: true
+};
 
 
 @Component({
     selector :    'custom-checkbox',
     moduleId :    __moduleName || module.id,
-    templateUrl : 'custom-checkbox.html'
+    templateUrl : 'custom-checkbox.html',
+    providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })
-export class CustomCheckboxComponent{
+export class CustomCheckboxComponent implements ControlValueAccessor{
 
     @Input()
     sourceData = [];
@@ -23,7 +31,29 @@ export class CustomCheckboxComponent{
     @Output()
     onChange:any = new EventEmitter();
 
-    selectedIds :string[] = [];
+    private selectedIds :string[] = [];
+
+    //Placeholders for the callbacks which are later provided by the Control Value Accessor
+    private onTouchedCallback: () => {};
+    private onChangeCallback: (_: any) => {};
+
+    //From ControlValueAccessor interface
+    writeValue(value: any) {
+        if (value !== this.selectedIds) {
+            this.selectedIds = value;
+        }
+    }
+
+    //From ControlValueAccessor interface
+    registerOnChange(fn: any) {
+        this.onChangeCallback = fn;
+    }
+
+    //From ControlValueAccessor interface
+    registerOnTouched(fn: any) {
+        this.onTouchedCallback = fn;
+    }
+
 
 
     ngOnChanges() {
