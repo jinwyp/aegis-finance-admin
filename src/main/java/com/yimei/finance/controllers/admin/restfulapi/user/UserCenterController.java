@@ -54,7 +54,8 @@ public class UserCenterController {
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
         List<Task> taskList = taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByTaskCreateTime().desc().list();
-        Result result = workFlowService.changeTaskObject(taskList.subList(page.getOffset(), page.getPage() * page.getCount()));
+        int toIndex = page.getPage() * page.getCount() < taskList.size() ? page.getPage() * page.getCount() : taskList.size();
+        Result result = workFlowService.changeTaskObject(taskList.subList(page.getOffset(), toIndex));
         if (!result.isSuccess()) return result;
         List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
         page.setTotal((long) taskList.size());
@@ -73,7 +74,8 @@ public class UserCenterController {
         if (groupIds != null && groupIds.size() != 0) {
             List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByTaskCreateTime().desc().list();
             page.setTotal(Long.valueOf(taskList.size()));
-            Result result = workFlowService.changeTaskObject(taskList.subList(page.getOffset(), page.getPage() * page.getCount()));
+            int toIndex = page.getPage() * page.getCount() < taskList.size() ? page.getPage() * page.getCount() : taskList.size();
+            Result result = workFlowService.changeTaskObject(taskList.subList(page.getOffset(), toIndex));
             if (!result.isSuccess()) return result;
             List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
             return Result.success().setData(taskObjectList).setMeta(page);
@@ -86,7 +88,8 @@ public class UserCenterController {
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalHistoryTasksMethod(Page page) {
         List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByTaskCreateTime().desc().list();
-        Result result = workFlowService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), page.getPage() * page.getCount()));
+        int toIndex = page.getPage() * page.getCount() < historicTaskInstanceList.size() ? page.getPage() * page.getCount() : historicTaskInstanceList.size();
+        Result result = workFlowService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), toIndex));
         if (!result.isSuccess()) return result;
         List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
         page.setTotal(Long.valueOf(historicTaskInstanceList.size()));

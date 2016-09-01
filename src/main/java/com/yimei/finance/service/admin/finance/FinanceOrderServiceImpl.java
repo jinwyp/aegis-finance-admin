@@ -101,7 +101,7 @@ public class FinanceOrderServiceImpl {
         }
         List<FinanceOrder> totalList = query.getResultList();
         page.setTotal(Long.valueOf(totalList.size()));
-        List<FinanceOrder> financeOrderList = totalList.subList(page.getOffset(), (int) (page.getOffset() + page.getPage() * page.getTotal()));
+        List<FinanceOrder> financeOrderList = totalList.subList(page.getOffset(), Math.toIntExact(page.getPage() * page.getTotal())));
         return Result.success().setData(financeOrderList).setMeta(page);
     }
 
