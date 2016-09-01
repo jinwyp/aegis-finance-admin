@@ -50,10 +50,10 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", value = "用户账号", required = false, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "name", value = "用户姓名", required = false, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "groupName", value = "组名", required = false, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
+            @ApiImplicitParam(name = "username", value = "用户账号", required = false, defaultValue = "", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "name", value = "用户姓名", required = false, defaultValue = "", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "groupName", value = "组名", required = false, defaultValue = "", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "page", value = "当前页数", required = false, defaultValue = "1", dataType = "int", paramType = "query")
     })
     public Result getAllUsersMethod(AdminUserSearch userSearch, Page page) {
         return userService.getUserListBySelect(userSearch, page);
