@@ -182,11 +182,19 @@ public class AdminUserServiceImpl {
                         userObjList.add(userObject);
                     }
                 }
-                page.setTotal((long) userObjList.size());
-                return Result.success().setData(userObjList).setMeta(page);
+                if (userObjList == null) {
+                    return Result.success();
+                } else {
+                    page.setTotal((long) userObjList.size());
+                    return Result.success().setData(userObjList).setMeta(page);
+                }
             } else {
-                page.setTotal(Long.valueOf(userObjectList.size()));
-                return Result.success().setData(userObjectList).setMeta(page);
+                if (userObjectList == null) {
+                    return Result.success();
+                } else {
+                    page.setTotal(Long.valueOf(userObjectList.size()));
+                    return Result.success().setData(userObjectList).setMeta(page);
+                }
             }
         }
     }
