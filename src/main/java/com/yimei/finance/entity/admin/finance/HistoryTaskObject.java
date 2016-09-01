@@ -1,6 +1,5 @@
 package com.yimei.finance.entity.admin.finance;
 
-import com.yimei.finance.entity.admin.user.UserObject;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -28,6 +27,8 @@ public class HistoryTaskObject {
     private String applyTypeName;                                   //融资类型Name
     private BigDecimal financingAmount;                             //融资金额
     private String sourceId;                                        //金融单业务编号
-    private UserObject currentAssignee;                             //当前处理人
+    private String currentAssignee;                                 //当前处理人id
+    private String currentAssigneeName;                             //当前处理人姓名
+    private String currentAssigneeDepartment;                       //当前处理人部门
     private String currentName;                                     //当前流程节点
 }
