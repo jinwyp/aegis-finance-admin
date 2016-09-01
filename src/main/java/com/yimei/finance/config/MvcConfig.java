@@ -19,6 +19,7 @@ import org.springframework.web.filter.CommonsRequestLoggingFilter;
 import org.springframework.web.servlet.HandlerExceptionResolver;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
+import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
 import javax.annotation.PostConstruct;
@@ -33,13 +34,25 @@ import java.util.List;
 @Configuration
 public class MvcConfig extends WebMvcConfigurerAdapter {
 
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addRedirectViewController("/swagger/v2/api-docs", "/v2/api-docs?group=restful-api");
+        registry.addRedirectViewController("/swagger/swagger-resources/configuration/ui", "/swagger-resources/configuration/ui");
+        registry.addRedirectViewController("/swagger/swagger-resources/configuration/security", "/swagger-resources/configuration/security");
+        registry.addRedirectViewController("/swagger/swagger-resources", "/swagger-resources");
+    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry.addResourceHandler("/static/admin/**").addResourceLocations("file:./frontend-admin/src/");
         registry.addResourceHandler("/static/site/**").addResourceLocations("file:./frontend-site/src/");
         registry.addResourceHandler("/files/**").addResourceLocations("file:../files/");
-//        registry.addResourceHandler("/swagger-ui.html/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+        registry.addResourceHandler("/swagger/swagger-ui.html**").addResourceLocations("classpath:/META-INF/resources/swagger-ui.html");
+        registry.addResourceHandler("/swagger/webjars/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
+
+
 
 
 //    @Autowired

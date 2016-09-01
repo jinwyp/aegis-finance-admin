@@ -11,7 +11,7 @@
 
 ### API 路由
 
-请使用 Swagger文档 查看 http://localhost:8002/swagger-ui.html
+请使用 Swagger文档 查看 http://localhost:8002/swagger/swagger-ui.html
 
 
 
@@ -35,7 +35,7 @@
 
 使用RESTfull 风格 [RESTfull参考文章](http://mherman.org/blog/2016/03/13/designing-a-restful-api-with-node-and-postgres)
 
-请使用 Swagger文档 查看 http://localhost:8002/swagger-ui.html
+请使用 Swagger文档 查看 http://localhost:8002/swagger/swagger-ui.html
 
 
 

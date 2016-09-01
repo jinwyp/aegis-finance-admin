@@ -40,7 +40,7 @@ export class TaskListComponent {
             this.routeData = data;
             if (this.routeData.routetype === 'pending'){
                 this.getAssignTaskList();
-                this.getAllTaskList();
+                // this.getAllTaskList();
             }else{
                 this.getAllTaskList();
             }
@@ -87,7 +87,9 @@ export class TaskListComponent {
     getAllTaskList () {
         this.task.getTaskHistoryList().then((result)=>{
             if (result.success){
-                this.taskPendingList = result.data;
+                if (this.routeData.routetype === 'all'){
+                    this.taskPendingList = result.data;
+                }
                 this.task.setAllTaskLengthObservable(this.taskPendingList.length);
             }else{
 

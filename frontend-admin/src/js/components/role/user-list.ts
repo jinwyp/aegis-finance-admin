@@ -21,6 +21,9 @@ export class UserListComponent {
         private user:UserService
     ) {}
 
+    name:string = '';
+    username:string = '';
+    groupName:string = '';
     userList : User[];
     isHiddenDelModal : boolean = true;
     isHiddenResetModal : boolean = true;
@@ -36,7 +39,7 @@ export class UserListComponent {
 
 
     getUserList() {
-        this.user.getList().then((result)=> {
+        this.user.getList(this.name,this.username,this.groupName).then((result)=> {
             if (result.success) {
                 this.userList = result.data;
             } else {
