@@ -67,9 +67,9 @@
                     <label for="endDate">到</label>
                     <div class="time"><input type="text" id="endDate" class="iIpt iIpt_sm endDate" placeholder="yyyy-mm-dd" ms-duplex="@searchQuery.endDate" /></div>
 
-                    <label for="status">审核状态:</label>
+                    <label for="approveStateId">审核状态:</label>
                     <div class="positionR selectDiv">
-                        <input type="text" value="全部" name="status" id="status" class="margin-l" ms-duplex="@searchQuery.status" readonly="readonly" />
+                        <input type="text" value="全部" name="approveStateId" id="approveStateId" class="margin-l" ms-duplex="@searchQuery.approveStateId" readonly="readonly" />
                         <ul class="select">
                             <li ms-click="@clickStatus('全部')">全部</li>
                             <li ms-click="@clickStatus('待审核')">待审核</li>
@@ -83,12 +83,12 @@
 
                     <br/>
 
-                    <label for="number">业务编号:</label>
-                    <input type="text" id="number" class="margin-l" ms-duplex="@searchQuery.businessId">
+                    <label for="sourceId">业务编号:</label>
+                    <input type="text" id="sourceId" class="margin-l" ms-duplex="@searchQuery.sourceId">
 
-                    <label for="type">业务类型:</label>
+                    <label for="applyType">业务类型:</label>
                     <div class="positionR selectDiv">
-                        <input type="text" value="全部" name="type" id="type" class="margin-l" readonly="readonly" ms-duplex="@searchQuery.type" />
+                        <input type="text" value="全部" name="applyType" id="applyType" class="margin-l" readonly="readonly" ms-duplex="@searchQuery.applyType" />
                         <ul class="select">
                             <li ms-click="@clickType('全部')">全部</li>
                             <li ms-click="@clickType('煤易融')">煤易融</li>
