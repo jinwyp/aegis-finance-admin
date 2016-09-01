@@ -103,7 +103,21 @@ public class FinanceOrderServiceImpl {
         List<FinanceOrder> totalList = query.getResultList();
         page.setTotal(Long.valueOf(totalList.size()));
         int toIndex = page.getPage() * page.getCount() < totalList.size() ? page.getPage() * page.getCount() : totalList.size();
+
+
+        System.out.println(" ---------------------------------------------------" + page.getOffset() + " ------ " + toIndex);
+        System.out.println(" ---------------------------------------------------" + page.getOffset() + " ------ " + toIndex);
+        System.out.println(" ---------------------------------------------------" + page.getOffset() + " ------ " + toIndex);
+        System.out.println(" ---------------------------------------------------" + page.getOffset() + " ------ " + toIndex);
+        System.out.println(" ---------------------------------------------------" + page.getOffset() + " ------ " + toIndex);
+        System.out.println(" ---------------------------------------------------" + page.getOffset() + " ------ " + toIndex);
         List<FinanceOrder> financeOrderList = totalList.subList(page.getOffset(), toIndex);
+        System.out.println(" ---------------------------------------------------" + financeOrderList.size());
+        System.out.println(" ---------------------------------------------------" + financeOrderList.size());
+        System.out.println(" ---------------------------------------------------" + financeOrderList.size());
+        System.out.println(" ---------------------------------------------------" + financeOrderList.size());
+        System.out.println(" ---------------------------------------------------" + financeOrderList.size());
+        System.out.println(" ---------------------------------------------------" + financeOrderList.size());
         return Result.success().setData(financeOrderList).setMeta(page);
     }
 
