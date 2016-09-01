@@ -5,7 +5,7 @@
 
 import {Component} from '@angular/core';
 
-import {User, UserService, UserGroup, UserGroupService} from '../../service/user';
+import {User, UserService, UserGroupService} from '../../service/user';
 
 
 declare var __moduleName:string;
@@ -18,12 +18,15 @@ declare var __moduleName:string;
 export class UserListComponent {
 
     constructor(
+        private groupService:UserGroupService,
         private user:UserService
     ) {}
 
     name:string = '';
     username:string = '';
     groupName:string = '';
+    selectedItem = '';
+    groups       = [];
     userList : User[];
     isHiddenDelModal : boolean = true;
     isHiddenResetModal : boolean = true;
@@ -35,10 +38,12 @@ export class UserListComponent {
 
     ngOnInit() {
         this.getUserList();
+        this.getGroupList();
     }
 
 
     getUserList() {
+        this.groupName=this.selectedItem;
         this.user.getList(this.name,this.username,this.groupName).then((result)=> {
             if (result.success) {
                 this.userList = result.data;
@@ -74,6 +79,16 @@ export class UserListComponent {
                 }
             });
         }
+    }
+
+    getGroupList() {
+        this.groupService.getList().then((result)=> {
+            if (result.success) {
+                this.groups = result.data;
+            } else {
+
+            }
+        });
     }
 
     resetPwd(){

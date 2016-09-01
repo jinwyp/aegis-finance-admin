@@ -217,6 +217,15 @@
           font-size:12px;
         }
       }
+      .custom-select{
+        height:34px;
+        line-height: 34px;
+        margin-left:10px;
+        ul{
+          max-height:176px;
+          top:32px;
+        }
+      }
     }
     .process-box{
       margin-top:20px;

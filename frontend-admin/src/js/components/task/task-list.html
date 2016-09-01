@@ -18,8 +18,6 @@
             <th width="120">操作</th>
         </tr>
 
-        <tr class="item" *ngIf="taskPendingList.length < 1|| taskAssignList.length < 1"><td colspan="7">暂无数据数据</td></tr>
-
         <tr class="item" *ngFor="let task of taskAssignList">
             <td>{{task.sourceId }} <br/>
                 <span *ngIf="task.applyType==='MYR'">煤易融</span>
