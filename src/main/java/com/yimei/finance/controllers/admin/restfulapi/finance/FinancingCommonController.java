@@ -61,7 +61,7 @@ public class FinancingCommonController {
     @Autowired
     private FinanceOrderServiceImpl financeOrderService;
 
-    @RequestMapping(value = "/finance/{financeId}", method = RequestMethod.POST)
+    @RequestMapping(value = "/finance/{financeId}", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看金融详细信息", notes = "通过 金融单id 查看金融详细信息", response = FinanceOrder.class)
     @ApiImplicitParam(name = "taskId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderDetailByIdMethod(@PathVariable("financeId")Long financeId) {
@@ -129,14 +129,10 @@ public class FinancingCommonController {
         for (User u : userList) {
             if (u.getId().equals(userId)) {
                 taskService.complete(task.getId());
-                List<Task> taskList = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).active().orderByTaskId().desc().list();
-                for (Task t : taskList) {
-                    if (t.getTaskDefinitionKey().equals(financeEventType)) {
-                        taskService.setAssignee(t.getId(), userId);
-                        return Result.success().setData(true);
-                    }
-                }
-                return Result.error(EnumCommonError.Admin_System_Error);
+                Task t = taskService.createTaskQuery().taskDefinitionKey(financeEventType).active().singleResult();
+                if (t == null) return Result.error(EnumCommonError.Admin_System_Error);
+                taskService.setAssignee(t.getId(), userId);
+                return Result.success().setData(true);
             }
         }
         return Result.error(EnumAdminFinanceError.你没有处理此金融单的权限.toString());
