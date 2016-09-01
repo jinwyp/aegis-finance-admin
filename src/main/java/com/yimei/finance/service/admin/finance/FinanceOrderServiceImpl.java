@@ -82,6 +82,7 @@ public class FinanceOrderServiceImpl {
                 hql += " and o.applyType=:applyType ";
             }
         }
+        hql += " order by o.id desc ";
         TypedQuery<FinanceOrder> query = entityManager.createQuery(hql, FinanceOrder.class);
         query.setParameter("userId", userId);
         if (order != null) {
@@ -101,7 +102,8 @@ public class FinanceOrderServiceImpl {
         }
         List<FinanceOrder> totalList = query.getResultList();
         page.setTotal(Long.valueOf(totalList.size()));
-        List<FinanceOrder> financeOrderList = totalList.subList(page.getOffset(), (int) (page.getOffset() + page.getPage() * page.getTotal()));
+        int toIndex = page.getPage() * page.getCount() < totalList.size() ? page.getPage() * page.getCount() : totalList.size();
+        List<FinanceOrder> financeOrderList = totalList.subList(page.getOffset(), toIndex);
         return Result.success().setData(financeOrderList).setMeta(page);
     }
 

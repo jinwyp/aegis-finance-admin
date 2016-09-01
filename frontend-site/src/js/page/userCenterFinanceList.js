@@ -13,13 +13,13 @@ import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 var financeList = () => {
 
     var applyTypeList = [
-        {'name' : 'all', text : '全部'},
+        {'name' : '', text : '全部'},
         {'name' : 'MYR', text : '煤易融'},
         {'name' : 'MYG', text : '煤易购'},
         {'name' : 'MYD', text : '煤易贷'},
     ];
     var statusList = [
-        {'name' : 'all', text : '全部'},
+        {'name' : '0', text : '全部'},
         {'name' : '2', text : '待审核'},
         {'name' : '4', text : '审核中'},
         {'name' : '6', text : '审核中(补充材料)'},
@@ -39,14 +39,12 @@ var financeList = () => {
             sourceId : '',
             startDate : '',
             endDate : '',
-            page : 1
+            page : ''
         },
-
         configPagination : {
-            totalPages : 1,
+            totalPages:1,
             changePageNo : function(page){
                 vm.searchQuery.page = page;
-
                 getFinanceList({
                     // requestUsername : vm.searchQuery.requestUsername,
                     approveStateId : statusList.find(status => { return status.text === vm.searchQuery.approveStateId}).name,
@@ -62,24 +60,21 @@ var financeList = () => {
 
         clickStatus : (value)=>{
             vm.searchQuery.approveStateId = value;
-            console.log(value);
         },
 
         clickType : (value)=>{
             vm.searchQuery.applyType = value;
-            console.log(value);
         },
 
         searchFinanceOrder : (event)=>{
-
-
              getFinanceList({
                 // requestUsername : vm.searchQuery.requestUsername,
                 approveStateId : statusList.find(status => { return status.text === vm.searchQuery.approveStateId}).name,
                 applyType : applyTypeList.find(type => { return type.text === vm.searchQuery.applyType}).name,
                 sourceId : vm.searchQuery.sourceId,
                 startDate : vm.searchQuery.startDate,
-                endDate : vm.searchQuery.endDate
+                endDate : vm.searchQuery.endDate,
+                 page : vm.searchQuery.page
             });
         }
 
@@ -99,7 +94,7 @@ var financeList = () => {
             success  : (data)=> {
                 if (data.success){
                     vm.financeList = data.data;
-                    // vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
+                    vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
                 }else{
 
                 }

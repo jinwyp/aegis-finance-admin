@@ -35,12 +35,21 @@ public class GroupController {
     @Autowired
     private AdminUserServiceImpl userService;
 
+    @ApiOperation(value = "查询当前用户可以操作的组列表", notes = "查询当前用户可以操作的组列表", response = GroupObject.class, responseContainer = "List")
+    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
+    @RequestMapping(value = "/handle", method = RequestMethod.GET)
+    public Result getHaveRightGroupListMethod(Page page) {
+        List<GroupObject> groupList = userService.getCanAddUserGroupList(adminSession.getUser().getId());
+        page.setTotal(Long.valueOf(groupList.size()));
+        return Result.success().setData(groupList).setMeta(page);
+    }
+
     @ApiOperation(value = "查询所有的用户组", notes = "查询所有用户组列表", response = GroupObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     @RequestMapping(method = RequestMethod.GET)
-    public Result getAllGroupsMethod(Page page) {
+    public Result getGroupListMethod(Page page) {
         page.setTotal(identityService.createGroupQuery().count());
-        List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().orderByGroupId().desc().listPage(page.getOffset(), 100));
+        List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().orderByGroupId().desc().listPage(page.getOffset(), page.getCount()));
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
