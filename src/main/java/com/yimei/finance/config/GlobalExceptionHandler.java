@@ -20,10 +20,9 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.io.OutputStream;
 
 @ControllerAdvice
-public class ExceptionTranslator {
+public class GlobalExceptionHandler {
 //    @Autowired
 //    private ObjectMapper om;
 //    @Autowired
@@ -52,7 +51,7 @@ public class ExceptionTranslator {
         }
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(ExceptionTranslator.class);
+    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(UnauthorizedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)

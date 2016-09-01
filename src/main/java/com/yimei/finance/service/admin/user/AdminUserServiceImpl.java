@@ -178,7 +178,7 @@ public class AdminUserServiceImpl {
             userObjectList = changeUserObject(userList);
             if (!StringUtils.isEmpty(userSearch.getName()) ) {
                 for (UserObject userObject : userObjectList) {
-                    if (userObject.getName().contains(userSearch.getName())) {
+                    if (userObject.getName() != null && userObject.getName().contains(userSearch.getName())) {
                         userObjList.add(userObject);
                     }
                 }
