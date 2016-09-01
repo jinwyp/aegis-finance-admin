@@ -39,8 +39,7 @@ var financeList = () => {
             sourceId : '',
             startDate : '',
             endDate : '',
-            page : '',
-            pageSize:10
+            page : ''
         },
         configPagination : {
             totalPages:1,
@@ -75,7 +74,7 @@ var financeList = () => {
                 sourceId : vm.searchQuery.sourceId,
                 startDate : vm.searchQuery.startDate,
                 endDate : vm.searchQuery.endDate,
-                page : vm.searchQuery.page
+                 page : vm.searchQuery.page
             });
         }
 
