@@ -15,6 +15,7 @@ import com.yimei.finance.representation.site.user.FinanceOrderSearch;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.common.NumberServiceImpl;
 import io.swagger.annotations.*;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -41,6 +42,8 @@ public class UserCenterController {
     private NumberServiceImpl numberService;
     @Autowired
     private FinanceOrderServiceImpl orderService;
+    @Autowired
+    private IdentityService identityService;
 
     /**
     * 供应链金融 - 发起融资申请
@@ -64,6 +67,7 @@ public class UserCenterController {
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
         orderRepository.save(financeOrder);
         financeOrder = orderRepository.findBySourceId(financeOrder.getSourceId());
+        identityService.setAuthenticatedUserId(String.valueOf(userSession.getUser().getId()));
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
             runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
         } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
