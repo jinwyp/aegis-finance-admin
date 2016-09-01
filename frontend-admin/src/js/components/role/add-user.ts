@@ -100,13 +100,11 @@ export class AddUserComponent {
 
     addUser() {
         this.css.isSubmitted     = true;
-        this.css.activeForRefresh = false;
         this.currentUser.department = this.selectedItem;
 
         if (this.css.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
                 this.css.isSubmitted     = false;
-                this.css.activeForRefresh = true;
                 if (result.success) {
                     this.css.ajaxSuccessHidden=false;
                     this.clear();
@@ -119,8 +117,8 @@ export class AddUserComponent {
         } else {
             this.userService.update(this.currentUser).then((result)=> {
                 this.css.isSubmitted     = false;
-                this.css.activeForRefresh = true;
                 if (result.success) {
+                    this.css.ajaxSuccessHidden=false;
                     // this.router.navigate(['/users']);
                 } else {
                     this.css.isHiddenModal=false;
