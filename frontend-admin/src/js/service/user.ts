@@ -118,8 +118,10 @@ class UserService {
     }
 
 
-    getList() {
-        return this.http.get(API.users).toPromise()
+    getList(name:string,username:string,groupName:string) {
+        let url = `${API.users}?name=${name||''}&username=${username||''}&groupName=${groupName||''}`;
+        console.log(url);
+        return this.http.get(url).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }
@@ -154,8 +156,8 @@ class UserService {
 
     updatePassword(user) {
         let headers = new Headers({'Content-Type': 'application/json'});
-        // return this.http.post(API.users + '/changepwd' , JSON.stringify(user), {headers: headers}).toPromise()
-        return this.http.post(API.users + '/changepwd' , {oldPassword: user.oldPassword, newPassword:user.newPassword}, {headers: headers}).toPromise()
+        return this.http.post(API.users + '/changepwd' , JSON.stringify(user), {headers: headers}).toPromise()
+        // return this.http.post(API.users + '/changepwd' , {oldPassword: user.oldPassword, newPassword:user.newPassword}, {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
             .catch(GlobalPromiseHttpCatch);
     }

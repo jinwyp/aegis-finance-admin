@@ -4,7 +4,7 @@
 
 
 import {Component} from '@angular/core';
-import {ActivatedRoute}      from '@angular/router';
+import {ActivatedRoute,Router}      from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 
 import {User, UserService, UserGroupService} from '../../service/user';
@@ -22,14 +22,16 @@ export class AddUserComponent {
 
     constructor(
         private activatedRoute: ActivatedRoute,
+        private router:Router,
         private userService: UserService,
         private groupService:UserGroupService
     ) {}
 
     css = {
+        ajaxSuccessHidden : true,
+        ajaxErrorHidden : true,
         activeForRefresh : true,
         isSubmitted :      false,
-        isHiddenSaveText : true,
         isHiddenModal : true,
         isAddStatus :  false
     };
@@ -88,6 +90,7 @@ export class AddUserComponent {
         this.userService.getDepartmentList().then((result)=> {
             if (result.success) {
                 this.departments = result.data;
+                this.departments.unshift({name:'请选择'});
             } else {
 
             }
@@ -109,27 +112,26 @@ export class AddUserComponent {
 
     changeSelectGroup (event){
         this.currentUser.groupIds = event.selectedIds;
-        console.log(this.currentUser.groupIds);
+        console.log(event.selectedIds);
     }
 
 
     addUser() {
         this.css.isSubmitted     = true;
         this.css.activeForRefresh = false;
-        this.currentUser.department = this.selectedItem;
+        this.currentUser.department = this.selectedItem==='请选择'?'':this.selectedItem;
         console.log(this.currentUser);
         if (this.css.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
                 this.css.isSubmitted     = false;
                 this.css.activeForRefresh = true;
                 if (result.success) {
-                    this.css.isHiddenSaveText=false;
+                    this.css.ajaxSuccessHidden=false;
                     this.clear();
-                    setTimeout(() => this.css.isHiddenSaveText = true, 6000);
+                    setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 } else {
                     this.css.isHiddenModal=false;
                     this.modalShowText=result.error.message;
-                    // alert(result.error.message);
                 }
             });
         } else {
@@ -137,12 +139,10 @@ export class AddUserComponent {
                 this.css.isSubmitted     = false;
                 this.css.activeForRefresh = true;
                 if (result.success) {
-                    this.css.isHiddenSaveText=false;
-                    setTimeout(() => this.css.isHiddenSaveText = true, 0);
+                    this.router.navigate(['/users']);
                 } else {
                     this.css.isHiddenModal=false;
                     this.modalShowText=result.error.message;
-                    // alert(result.error.message);
                 }
             });
         }
@@ -157,10 +157,8 @@ export class AddUserComponent {
         this.currentUser.department = '';
         this.currentUser.groupIds   = [];
         this.setCheckBoxStatus();
-        this.selectedItem     = '请选择';
-        console.log('--------clear--------');
         console.log(this.groups);
-        console.log(this.currentUser);
+        this.selectedItem     = '请选择';
     }
 
 

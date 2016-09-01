@@ -24,7 +24,8 @@ export class UserUpdatePasswordComponent {
         activeForRefresh : true,
         isSubmitted :      false,
         ajaxErrorHidden :  true,
-        ajaxSuccessHidden : true
+        ajaxSuccessHidden : true,
+        comfirmPwdError : true
     };
 
     user = {
@@ -35,17 +36,22 @@ export class UserUpdatePasswordComponent {
 
 
     checkPwd(){
-        // this.oldPassword===this.newPassword;
+        console.log(this.user);
+        if(this.user.confirmPassword===this.user.newPassword){
+            this.css.comfirmPwdError = true;
+        }else{
+            this.css.comfirmPwdError = false;
+        }
     }
 
     changePwd() {
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted     = true;
-
         this.userService.updatePassword(this.user).then((result)=> {
             if (result.success) {
                 this.css.ajaxSuccessHidden = false;
+                setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
             } else {
                 this.css.ajaxErrorHidden = false;
             }

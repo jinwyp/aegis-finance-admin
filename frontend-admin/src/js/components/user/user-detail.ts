@@ -21,11 +21,13 @@ export class UserDetailComponent {
     ) {}
 
     css = {
-        isHiddenSaveText : true,
+        ajaxSuccessHidden : true,
+        ajaxErrorHidden : true,
         isSubmitted :      false,
         activeForRefresh : true
     };
 
+    errorMsg = '';
     currentUserSession : User = new User();
     departments  = [];
     selectedItem = '';
@@ -53,14 +55,16 @@ export class UserDetailComponent {
 
     saveUser() {
         this.css.isSubmitted     = true;
-
-        this.currentUserSession.department = this.selectedItem;
+        this.css.ajaxSuccessHidden = true;
+        this.css.ajaxErrorHidden = true;
+        this.currentUserSession.department = this.selectedItem==='请选择'?'':this.selectedItem;
         this.userService.edit(this.currentUserSession).then((result)=> {
             if (result.success) {
-                this.css.isHiddenSaveText = false;
-                setTimeout(() => this.css.isHiddenSaveText = true, 3000);
+                this.css.ajaxSuccessHidden = false;
+                setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
             } else {
-
+                this.css.ajaxErrorHidden = false;
+                this.errorMsg = result.error.message;
             }
             this.css.isSubmitted = false;
         });
@@ -70,6 +74,7 @@ export class UserDetailComponent {
         this.userService.getDepartmentList().then((result)=> {
             if (result.success) {
                 this.departments = result.data;
+                this.departments.unshift({name:'请选择'});
             } else {
 
             }

@@ -3,6 +3,7 @@ package com.yimei.finance.service.admin.finance;
 import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.representation.admin.finance.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
@@ -44,11 +45,11 @@ public class FinanceFlowMethodServiceImpl {
     /**
      * 添加附件方法
      */
-    public void addAttachmentsMethod(AttachmentList attachmentList, String taskId, String processInstanceId) {
-        if (attachmentList != null && attachmentList.getAttachmentObjects() != null && attachmentList.getAttachmentObjects().size() != 0) {
-            for (AttachmentObject attachmentObject : attachmentList.getAttachmentObjects()) {
+    public void addAttachmentsMethod(List<AttachmentObject> attachmentList, String taskId, String processInstanceId, EnumFinanceAttachment type) {
+        if (attachmentList != null && attachmentList.size() != 0) {
+            for (AttachmentObject attachmentObject : attachmentList) {
                 if (!StringUtils.isEmpty(attachmentObject.getName()) && !StringUtils.isEmpty(attachmentObject.getUrl())) {
-                    taskService.createAttachment(attachmentObject.getType(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
+                    taskService.createAttachment(type.toString(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
                 }
             }
         }

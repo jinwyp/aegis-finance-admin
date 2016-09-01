@@ -1,6 +1,6 @@
 package com.yimei.finance.entity.admin.finance;
 
-import com.yimei.finance.representation.common.basic.BaseEntity;
+import com.yimei.finance.entity.common.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,9 +26,9 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;                                                 //主键
-    @Column(name = "user_id", length = 11, nullable = false)
+    @Column(name = "user_id", length = 11, nullable = false, updatable = false)
     private int userId;                                              //申请人用户id
-    @Column(name = "apply_type", length = 20)
+    @Column(name = "apply_type", length = 20, nullable = false, updatable = false)
     @Size(min = 3, max = 10, message = "申请类型字段应在3-10个字符之间")
     @NotBlank(message = "申请类型字段不能为空")
     private String applyType;                                        //申请类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
@@ -68,15 +68,15 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     private String approveState;                                     //审批状态
     @Column(name = "approve_state_id", length = 3, nullable = false)
     private int approveStateId;                                      //审批状态Id
-    @Column(name = "source_id", length = 100)
+    @Column(name = "source_id", length = 100, nullable = false, updatable = false, unique = true)
     private String sourceId;                                         //流水号，编号
     @Column(name = "apply_user_name", length = 50)
     private String applyUserName;                                    //申请人姓名
-    @Column(name = "apply_company_name", length = 50)
+    @Column(name = "apply_company_name", length = 50, nullable = false, updatable = false)
     private String applyCompanyName;                                 //申请公司名称
     @Column(name = "coal_quantity_index", length = 500)
     private String coalQuantityIndex;                                //主要煤质指标
-    @Column(name = "end_time")
+    @Column(name = "end_time", updatable = false)
     private Date endTime;                                            //结束时间
     @Transient
     private List<AttachmentObject> attachmentList;                   //附件列表

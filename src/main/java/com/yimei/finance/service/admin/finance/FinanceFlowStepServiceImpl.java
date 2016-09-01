@@ -1,10 +1,11 @@
 package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
-import com.yimei.finance.representation.admin.finance.EnumFinanceConditions;
-import com.yimei.finance.representation.admin.finance.EnumFinanceEventType;
-import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;
+import com.yimei.finance.entity.admin.finance.FinanceOrderInvestigatorInfo;
+import com.yimei.finance.entity.admin.finance.FinanceOrderSalesmanInfo;
+import com.yimei.finance.repository.admin.finance.FinanceOrderInvestigatorRepository;
+import com.yimei.finance.repository.admin.finance.FinanceOrderSalesmanRepository;
+import com.yimei.finance.representation.admin.finance.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.common.result.TaskMap;
@@ -13,6 +14,7 @@ import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -24,6 +26,10 @@ public class FinanceFlowStepServiceImpl {
     private FinanceFlowMethodServiceImpl methodService;
     @Autowired
     private FinanceOrderServiceImpl orderService;
+    @Autowired
+    private FinanceOrderSalesmanRepository salesmanRepository;
+    @Autowired
+    private FinanceOrderInvestigatorRepository investigatorRepository;
 
     /**
      * 线上交易员审核
@@ -32,7 +38,7 @@ public class FinanceFlowStepServiceImpl {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.onlineTraderAudit.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
         orderService.updateFinanceOrderByOnlineTrader(financeOrder);
-
+        methodService.addAttachmentsMethod(financeOrder.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.OnlineTraderAuditAttachment);
         if (taskMap.getSubmit() == 0) {
             return Result.success();
         } else {
@@ -51,9 +57,16 @@ public class FinanceFlowStepServiceImpl {
     /**
      * 业务员审核
      */
-    public Result salesmanAuditFinanceOrderMethod(String userId, TaskMap taskMap, Task task, Long financeId) {
+    public Result salesmanAuditFinanceOrderMethod(String userId, TaskMap taskMap, FinanceOrderSalesmanInfo salesmanInfo, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanAudit.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行业务员审核操作.toString());
+        salesmanInfo.setFinanceId(financeId);
+        salesmanInfo.setCreateManId(userId);
+        salesmanInfo.setCreateTime(new Date());
+        salesmanInfo.setLastUpdateManId(userId);
+        salesmanInfo.setLastUpdateTime(new Date());
+        orderService.saveFinanceOrderSalesmanInfo(salesmanInfo);
+        methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment);
         if (taskMap.getSubmit() == 0) {
             return Result.success();
         } else {
@@ -72,9 +85,10 @@ public class FinanceFlowStepServiceImpl {
     /**
      * 业务员补充尽调员材料
      */
-    public Result salesmanSupplyInvestigationMaterialFinanceOrderMethod(String userId, TaskMap taskMap, Task task, Long financeId) {
+    public Result salesmanSupplyInvestigationMaterialFinanceOrderMethod(String userId, TaskMap taskMap, FinanceOrderInvestigatorInfo investigatorInfo, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行业务员补充尽调员材料操作.toString());
+        investigatorRepository.save(investigatorInfo);
         if (taskMap.getSubmit() == 0) {
             return Result.success();
         } else {

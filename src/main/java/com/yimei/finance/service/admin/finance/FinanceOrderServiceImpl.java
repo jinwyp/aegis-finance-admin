@@ -1,9 +1,7 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.AttachmentObject;
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.entity.admin.finance.HistoryTaskObject;
-import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.entity.admin.finance.*;
+import com.yimei.finance.repository.admin.finance.*;
 import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;
@@ -33,6 +31,14 @@ import java.util.List;
 public class FinanceOrderServiceImpl {
     @Autowired
     private FinanceOrderRepository orderRepository;
+    @Autowired
+    private FinanceOrderSalesmanRepository salesmanRepository;
+    @Autowired
+    private FinanceOrderInvestigatorRepository investigatorRepository;
+    @Autowired
+    private FinanceOrderSupervisorRepository supervisorRepository;
+    @Autowired
+    private FinanceOrderRiskRepository riskRepository;
     @PersistenceContext
     private EntityManager entityManager;
     @Autowired
@@ -134,4 +140,50 @@ public class FinanceOrderServiceImpl {
         financeOrder.setAttachmentList(getAttachmentByProcessInstanceIdType(financeOrder.getTaskList(), typeList));
         return Result.success().setData(financeOrder);
     }
+
+    /**
+     * 保存,更新 业务员 填写的信息
+     */
+    public void saveFinanceOrderSalesmanInfo(FinanceOrderSalesmanInfo salesmanInfo) {
+        FinanceOrderSalesmanInfo salesmanOrder = salesmanRepository.findByFinanceId(salesmanInfo.getFinanceId());
+        if (salesmanOrder != null) {
+            salesmanInfo.setId(salesmanOrder.getId());
+        }
+        salesmanRepository.save(salesmanInfo);
+    }
+
+    /**
+     * 保存,更新 尽调员 填写的信息
+     */
+    public void saveFinanceOrderInvestigatorInfo(FinanceOrderInvestigatorInfo investigatorInfo) {
+        FinanceOrderInvestigatorInfo investigatorOrder = investigatorRepository.findByFinanceId(investigatorInfo.getFinanceId());
+        if (investigatorOrder != null) {
+            investigatorInfo.setId(investigatorOrder.getId());
+        }
+        investigatorRepository.save(investigatorInfo);
+    }
+
+    /**
+     * 保存,更新 监管员 填写的信息
+     */
+    public void saveFinanceOrderSupervisorInfo(FinanceOrderSupervisorInfo supervisorInfo) {
+        FinanceOrderSupervisorInfo supervisorOrder = supervisorRepository.findByFinanceId(supervisorInfo.getFinanceId());
+        if (supervisorInfo != null) {
+            supervisorInfo.setId(supervisorOrder.getId());
+        }
+        supervisorRepository.save(supervisorInfo);
+    }
+
+    /**
+     * 保存,更新 风控 填写的信息
+     */
+    public void saveFinanceOrderRiskManagerInfo(FinanceOrderRiskManagerInfo riskManagerInfo) {
+        FinanceOrderRiskManagerInfo riskManagerOrder = riskRepository.findByFinanceId(riskManagerInfo.getFinanceId());
+        if (riskManagerOrder != null) {
+            riskManagerInfo.setId(riskManagerOrder.getId());
+        }
+        riskRepository.save(riskManagerInfo);
+    }
+
+
 }

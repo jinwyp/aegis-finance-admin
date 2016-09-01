@@ -17,6 +17,9 @@
             <th >流程状态</th>
             <th width="120">操作</th>
         </tr>
+
+        <tr class="item" *ngIf="taskPendingList.length < 1|| taskAssignList.length < 1"><td colspan="7">暂无数据数据</td></tr>
+
         <tr class="item" *ngFor="let task of taskAssignList">
             <td>{{task.sourceId }} <br/>
                 <span *ngIf="task.applyType==='MYR'">煤易融</span>
@@ -34,7 +37,7 @@
             </td>
             <td>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80"  [routerLink]="['/tasks', task.id, 'assign']">
-                    <span> 分配</span>
+                    <span>分配</span>
                     <!--<span *ngIf="task.name==='分配线上交易员'" > 分配线上交易员</span>-->
                     <!--<span *ngIf="task.name==='分配业务员'" > 分配业务员</span>-->
                     <!--<span *ngIf="task.name==='分配尽调员'" > 分配尽调员</span>-->
@@ -44,7 +47,6 @@
                 <!--<button type="button" class="btn btn-xs btn-default btn-return w-80">补充材料</button>-->
             </td>
         </tr>
-
 
         <tr class="item" *ngFor="let task of taskPendingList">
             <td>{{task.sourceId }} <br/>

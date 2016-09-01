@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.common.basic;
+package com.yimei.finance.entity.common;
 
 import lombok.Data;
 
@@ -10,9 +10,9 @@ import java.util.Date;
 @MappedSuperclass
 @Data
 public class BaseEntity implements Serializable {
-    @Column(name = "create_man_id")
+    @Column(name = "create_man_id", updatable = false)
     private String createManId;                                      //创建人id
-    @Column(name = "create_time")
+    @Column(name = "create_time", updatable = false)
     private Date createTime;                                         //创建时间
     @Column(name = "last_update_man_id")
     private String lastUpdateManId;                                  //最后一次更新人id

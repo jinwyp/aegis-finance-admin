@@ -16,7 +16,7 @@
   }
   ul{
     position: absolute;
-    max-height: 232px;
+    max-height: 165px;
     background-color: white;
     overflow: auto;
     left: -1px;
@@ -215,6 +215,15 @@
         background-color: $err-color;
         .glyphicon{
           font-size:12px;
+        }
+      }
+      .custom-select{
+        height:34px;
+        line-height: 34px;
+        margin-left:10px;
+        ul{
+          max-height:176px;
+          top:32px;
         }
       }
     }
