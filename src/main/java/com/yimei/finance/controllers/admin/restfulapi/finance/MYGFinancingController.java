@@ -59,18 +59,18 @@ public class MYGFinancingController {
         Result result = checkMYGMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.salesmanAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, object.t, object.u);
+        return flowStepService.salesmanAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
     }
 
     @RequestMapping(value = "/salesman/supply/investigation/material/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mygSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody TaskMap taskMap) {
-        Result result = checkMYGMethod(taskId, taskMap);
+                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfo> map) {
+        Result result = checkMYGMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.salesmanSupplyInvestigationMaterialFinanceOrderMethod(adminSession.getUser().getId(), taskMap, object.t, object.u);
+        return flowStepService.salesmanSupplyInvestigationMaterialFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
     }
 
     @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)

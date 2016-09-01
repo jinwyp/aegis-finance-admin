@@ -1,12 +1,13 @@
 package com.yimei.finance.entity.admin.finance;
 
-import com.yimei.finance.representation.common.basic.BaseEntity;
+import com.yimei.finance.entity.common.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.List;
 
 @Table(name = "t_finance_order_salesman_info")
 @Entity
@@ -15,10 +16,10 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class FinanceOrderSalesmanInfo extends BaseEntity implements Serializable {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", updatable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;                                                 //主键
-    @Column(name = "finance_id", nullable = false)
+    @Column(name = "finance_id", nullable = false, updatable = false, unique = true)
     private Long financeId;                                          //金融单id
     @Column(name = "contract_companies_info_supply", length = 1000)
     private String contractCompaniesInfoSupply;                      //上下游签约单位信息补充
@@ -34,9 +35,7 @@ public class FinanceOrderSalesmanInfo extends BaseEntity implements Serializable
     private String supplyMaterialIntroduce;                          //补充材料说明
     @Column(name = "notice_apply_user")
     private boolean noticeApplyUser;                                 //通知申请用户 true: 通知, false: 不通知
-    @Column(name = "audit_status_id", length = 3)
-    private int auditStatusId;                                       //审核状态id
-    @Column(name = "audit_status", length = 50)
-    private String auditStatus;                                      //审核状态
+    @Transient
+    private List<AttachmentObject> attachmentList;                   //附件列表
 
 }

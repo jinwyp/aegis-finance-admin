@@ -1,6 +1,6 @@
 package com.yimei.finance.entity.admin.finance;
 
-import com.yimei.finance.representation.common.basic.BaseEntity;
+import com.yimei.finance.entity.common.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,7 +19,7 @@ public class FinanceOrderSupervisorInfo extends BaseEntity implements Serializab
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;                                                 //主键
-    @Column(name = "finance_id", nullable = false)
+    @Column(name = "finance_id", nullable = false, updatable = false, unique = true)
     private Long financeId;                                          //金融单id
     @Column(name = "storage_place_name", length = 100)
     private String storagePlaceName;                                 //仓储地名称
@@ -47,10 +47,6 @@ public class FinanceOrderSupervisorInfo extends BaseEntity implements Serializab
     private boolean noticeApplyUser;                                 //通知申请用户 true: 通知, false: 不通知
     @Column(name = "notice_salesman")
     private boolean noticeSalesman;                                  //通知业务员   true: 通知, false: 不通知
-    @Column(name = "audit_status_id", length = 3)
-    private int auditStatusId;                                       //审核状态id
-    @Column(name = "audit_status", length = 50)
-    private String auditStatus;                                      //审核状态
     @Transient
     List<AttachmentObject> attachmentList;                           //附件列表
 
