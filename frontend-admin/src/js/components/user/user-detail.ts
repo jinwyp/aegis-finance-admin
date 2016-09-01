@@ -57,7 +57,7 @@ export class UserDetailComponent {
         this.css.isSubmitted     = true;
         this.css.ajaxSuccessHidden = true;
         this.css.ajaxErrorHidden = true;
-        this.currentUserSession.department = this.selectedItem;
+        this.currentUserSession.department = this.selectedItem==='请选择'?'':this.selectedItem;
         this.userService.edit(this.currentUserSession).then((result)=> {
             if (result.success) {
                 this.css.ajaxSuccessHidden = false;
@@ -74,6 +74,7 @@ export class UserDetailComponent {
         this.userService.getDepartmentList().then((result)=> {
             if (result.success) {
                 this.departments = result.data;
+                this.departments.unshift({name:'请选择'});
             } else {
 
             }
