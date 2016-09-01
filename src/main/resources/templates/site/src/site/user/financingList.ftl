@@ -108,7 +108,6 @@
 
                 <table class="list">
                     <tr class="border">
-                        <th>序号</th>
                         <th>业务编号</th>
                         <th>业务类型</th>
                         <th>申请时间</th>
@@ -119,7 +118,6 @@
                         <th>操作</th>
                     </tr>
                     <tr class="borderB" ms-for="(index, order) in @financeList">
-                        <td>{{index+1}}</td>
                         <td>{{order.sourceId}}</td>
                         <td>
                             <span ms-visible="order.applyType==='MYR'">煤易融</span>
