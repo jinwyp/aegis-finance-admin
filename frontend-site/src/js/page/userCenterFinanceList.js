@@ -39,7 +39,7 @@ var financeList = () => {
             sourceId : '',
             startDate : '',
             endDate : '',
-            page : ''
+            page : 1,
         },
         configPagination : {
             totalPages:1,
