@@ -42,4 +42,4 @@
 
 
 ###Swagger文档查看
-http://localhost:8002/swagger-ui.html
+http://localhost:8002/swagger/swagger-ui.html
