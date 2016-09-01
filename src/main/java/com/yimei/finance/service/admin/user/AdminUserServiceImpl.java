@@ -8,6 +8,7 @@ import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.utils.DozerUtils;
+import com.yimei.finance.utils.Where;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
@@ -157,7 +158,7 @@ public class AdminUserServiceImpl {
             } else if (!StringUtils.isEmpty(userSearch.getUsername())){
                 userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).list();
             } else if (!StringUtils.isEmpty(userSearch.getGroupName())) {
-                List<Group> groupList = identityService.createGroupQuery().groupNameLike(userSearch.getGroupName()).list();
+                List<Group> groupList = identityService.createGroupQuery().groupNameLike(Where.$like$(userSearch.getGroupName())).list();
                 if (groupList != null && groupList.size() != 0) {
                     List<String> groupIds = new ArrayList<>();
                     for (Group group : groupList) {

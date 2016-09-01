@@ -50,13 +50,13 @@ export class UserListComponent {
 
     showDelModal(id:string, modalShowText:string) {
         this.isHiddenDelModal = false;
-        this.modalShowText =modalShowText;
+        this.modalShowText = modalShowText;
         this.userId = id;
     }
 
     showResetModal(id:string, modalShowText:string) {
         this.isHiddenResetModal = false;
-        this.modalShowText =modalShowText;
+        this.modalShowText = modalShowText;
         this.userId = id;
     }
 

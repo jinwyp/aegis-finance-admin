@@ -113,7 +113,7 @@ public class UserController {
         identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
         addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
         String subject = "开通账户通知邮件";
-        String content = "你好: 你的账号已开通, 用户名:" + user.getUsername() + ", 初始密码:123456, 请修改密码.";
+        String content = "你好: 你的账号已开通, 用户名:" + user.getUsername() + ", 初始密码:123456, 请修改密码. [易煤网金融系统]";
         mailService.sendSimpleMail(user.getEmail(), subject, content);
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(newUser.getId()).singleResult()));
     }
@@ -157,7 +157,7 @@ public class UserController {
     @ApiOperation(value = "用户自己修改信息", notes = "用户自己修改信息", response = UserObject.class)
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public Result updateUserSelfInfoMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        if (!StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户邮箱不能为空.toString());
+        if (StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户邮箱不能为空.toString());
         User emailUser = identityService.createUserQuery().userEmail(user.getEmail()).singleResult();
         if (emailUser != null && !emailUser.getId().equals(adminSession.getUser().getId())) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
         User oldUser = identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult();
@@ -181,7 +181,7 @@ public class UserController {
         String password = CodeUtils.CreateNumLetterCode();
         user.setPassword(password);
         identityService.saveUser(user);
-        String content = "你好: " + user.getFirstName() + ", 管理员为你重置密码, 新密码是: " + password;
+        String content = "你好: " + user.getFirstName() + ", 管理员为你重置密码, 新密码是: " + password + " . [易煤网金融系统]";
         mailService.sendSimpleMail(user.getEmail(), subject, content);
         return Result.success().setData(true);
     }
