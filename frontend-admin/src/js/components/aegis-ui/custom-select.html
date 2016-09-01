@@ -2,6 +2,7 @@
     <label (click)="toggleSelect()">{{value||'请选择'}}</label>
     <span class="caret" (click)="toggleSelect()"></span>
     <ul [class.hidden]="isClose">
+        <li (click)="hideClick()">请选择</li>
         <li *ngFor="let item of optionList" (click)="itemClick(item)">{{item.name}}</li>
     </ul>
 </div>

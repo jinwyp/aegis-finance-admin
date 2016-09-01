@@ -78,7 +78,6 @@ export class AddUserComponent {
         this.userService.getDepartmentList().then((result)=> {
             if (result.success) {
                 this.departments = result.data;
-                this.departments.unshift({name:'请选择'});
             } else {
 
             }
@@ -102,7 +101,7 @@ export class AddUserComponent {
     addUser() {
         this.css.isSubmitted     = true;
         this.css.activeForRefresh = false;
-        this.currentUser.department = this.selectedItem==='请选择'?'':this.selectedItem;
+        this.currentUser.department = this.selectedItem;
 
         if (this.css.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
@@ -140,7 +139,7 @@ export class AddUserComponent {
         this.currentUser.department = '';
         this.currentUser.groupIds   = [];
 
-        this.selectedItem     = '请选择';
+        this.selectedItem     = '';
     }
 
 

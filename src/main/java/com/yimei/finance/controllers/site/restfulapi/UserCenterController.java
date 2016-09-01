@@ -56,6 +56,8 @@ public class UserCenterController {
         financeOrder.setApplyType(financeOrder.getApplyType());
         financeOrder.setSourceId(numberService.getNextCode("JR"));
         financeOrder.setUserId(userSession.getUser().getId());
+        financeOrder.setApplyUserName(userSession.getUser().getNickname());
+        financeOrder.setApplyUserName(userSession.getUser().getSecurephone());
         financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
         financeOrder.setCreateManId(String.valueOf(userSession.getUser().getId()));
         financeOrder.setLastUpdateManId(String.valueOf(userSession.getUser().getId()));
