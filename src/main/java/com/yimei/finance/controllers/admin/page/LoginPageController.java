@@ -18,7 +18,6 @@ public class LoginPageController {
     /**
      * 跳转到管理登录页面
      */
-
     @ApiOperation(value = "管理后台首页跳转", notes = "管理后台首页跳转 没有登录调转到登录页面, 如果登录了跳转到管理员Home页面")
     @RequestMapping(value = "/finance/admin", method = RequestMethod.GET)
     public String indexPage() {
@@ -28,7 +27,6 @@ public class LoginPageController {
 
         return "redirect:/finance/admin/home";
     }
-
 
     /**
      * 管理登录页面
