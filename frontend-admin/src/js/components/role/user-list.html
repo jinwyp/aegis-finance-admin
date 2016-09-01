@@ -8,10 +8,10 @@
 
 <div class="item-margin">
     <div class="row-search">
-        <span>用户账号:</span><input type="text" value="">
-        <span>用户姓名:</span><input type="text" value="">
-        <span>角色名称:</span><input type="text" value="">
-        <button class="btn btn-default" type="button" >查询</button>
+        <span>用户账号:</span><input type="text" [(ngModel)]="username">
+        <span>用户姓名:</span><input type="text" [(ngModel)]="name">
+        <span>角色名称:</span><input type="text" [(ngModel)]="groupName">
+        <button class="btn btn-default" type="button" (click)="getUserList()">查询</button>
         <button type="button" class="btn btn-default btn-addrole" [routerLink]="['/users/add']">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加用户
         </button>
@@ -26,6 +26,7 @@
             <th width="150">最后一次登录</th>
             <th >操作</th>
         </tr>
+        <tr *ngIf="!userList||userList.length < 1"><td>暂无用户数据数据</td></tr>
         <tr class="item" *ngFor="let user of userList">
             <!--<td>{{user.id}}</td>-->
             <td>{{user.username}}</td>
