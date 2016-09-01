@@ -32,7 +32,7 @@
                     <span class="hint">(注:最多只能同时拥有<span class="orange">3个角色</span>)</span>
                 </div>
                 <div class="role user mt-10">
-                    <custom-checkbox [sourceData]="groups" [limitLength]="3" (onChange)="changeSelectGroup($event)"></custom-checkbox>
+                    <custom-checkbox [sourceData]="groups" [limitLength]="13" [(ngModel)]="this.currentUser.groupIds" [ngModelOptions]="{standalone: true}"></custom-checkbox>
                 </div>
                 <span *ngIf="css.activeForRefresh" class="help-block" [class.hidden]="true">请选择角色!</span>
             </div>
@@ -59,16 +59,16 @@
             </div>
         </div>
         <div class="row info-item">
-            <label class="col-sm-2 info-label-input"></label>
-            <div class="col-sm-4 info-val no-bottom-border">
+            <div class="col-sm-offset-2 col-sm-10 info-val no-bottom-border">
+                <span class="alert alert-success" role="alert" [class.hidden]="css.ajaxSuccessHidden">保存成功!</span>
+                <span class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</span>
+            </div>
+            <div class="col-sm-offset-2 col-sm-10 info-val no-bottom-border">
                 <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" [disabled]="!addUserForm.form.valid || css.isSubmitted" >保存</button>
                 <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['/users']">返回</button>
                 <div class="mt-20 fs-14"><span class="hint">注:确认保存后,该系统用户的密码将 <span class="orange">发送至填写的公司邮箱中。</span></span></div>
             </div>
-            <div class="col-sm-4 info-val no-bottom-border">
-                <div class="alert alert-success" role="alert" [class.hidden]="css.ajaxSuccessHidden">保存成功!</div>
-                <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
-            </div>
+
         </div>
     </form>
 </div>
