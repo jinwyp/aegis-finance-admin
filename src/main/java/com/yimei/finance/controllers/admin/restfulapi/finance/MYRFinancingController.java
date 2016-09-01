@@ -62,18 +62,18 @@ public class MYRFinancingController {
         Result result = checkMYRMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        return flowStepService.salesmanAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, object.t, Long.valueOf(object.u));
+        return flowStepService.salesmanAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, Long.valueOf(object.u));
     }
 
     @RequestMapping(value = "/salesman/supply/investigation/material/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody TaskMap taskMap) {
-        Result result = checkMYRMethod(taskId, taskMap);
+                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfo> map) {
+        Result result = checkMYRMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        return flowStepService.salesmanSupplyInvestigationMaterialFinanceOrderMethod(adminSession.getUser().getId(), taskMap, object.t, Long.valueOf(object.u));
+        return flowStepService.salesmanSupplyInvestigationMaterialFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, Long.valueOf(object.u));
     }
 
     @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
