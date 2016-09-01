@@ -38,7 +38,7 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         registry.addResourceHandler("/static/admin/**").addResourceLocations("file:./frontend-admin/src/");
         registry.addResourceHandler("/static/site/**").addResourceLocations("file:./frontend-site/src/");
         registry.addResourceHandler("/files/**").addResourceLocations("file:../files/");
-        registry.addResourceHandler("/swagger-ui.html/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
+//        registry.addResourceHandler("/swagger-ui.html/**").addResourceLocations("classpath:/META-INF/resources/webjars/");
     }
 
 
