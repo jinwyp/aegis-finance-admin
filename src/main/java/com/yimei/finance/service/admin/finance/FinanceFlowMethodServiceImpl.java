@@ -40,8 +40,6 @@ public class FinanceFlowMethodServiceImpl {
     private AdminUserServiceImpl userService;
     @Autowired
     private IdentityService identityService;
-    @Autowired
-    private FinanceOrderServiceImpl orderService;
 
     /**
      * 添加附件方法
@@ -144,21 +142,23 @@ public class FinanceFlowMethodServiceImpl {
      */
     public Result changeHistoryTaskObject(HistoricTaskInstance task) {
         HistoryTaskObject taskObject = DozerUtils.copy(task, HistoryTaskObject.class);
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
+//        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
         HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-        if (processInstance == null && historicProcessInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
-        String businessKey = processInstance != null ? processInstance.getBusinessKey() : historicProcessInstance.getBusinessKey();
-        if (StringUtils.isEmpty(businessKey)) return Result.error(EnumCommonError.Admin_System_Error);
-        FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(businessKey));
+        if (historicProcessInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
+//        String businessKey = processInstance != null ? processInstance.getBusinessKey() : historicProcessInstance.getBusinessKey();
+        if (StringUtils.isEmpty(historicProcessInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
+        FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(historicProcessInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
         taskObject.setApplyType(financeOrder.getApplyType());
         taskObject.setApplyTypeName(financeOrder.getApplyTypeName());
         taskObject.setFinancingAmount(financeOrder.getFinancingAmount());
         taskObject.setSourceId(financeOrder.getSourceId());
-        UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
-        taskObject.setAssigneeName(user.getUsername());
-        taskObject.setAssigneeDepartment(user.getDepartment());
+        if (!StringUtils.isEmpty(task.getAssignee())) {
+            UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
+            taskObject.setAssigneeName(user.getUsername());
+            taskObject.setAssigneeDepartment(user.getDepartment());
+        }
         return Result.success().setData(taskObject);
     }
 

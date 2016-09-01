@@ -15,7 +15,6 @@ import org.activiti.engine.IdentityService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.identity.Group;
-import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,14 +43,14 @@ public class UserCenterController {
     @ApiOperation(value = "通过 id 查询任务对象", notes = "通过 id 查询任务对象", response = TaskObject.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result getTaskByIdMethod(@PathVariable(value = "taskId") String taskId) {
-        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
+//        Task task = taskService.createTaskQuery().taskId(taskId).singleResult();
         HistoricTaskInstance historicTaskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
-        if (task == null && historicTaskInstance == null) return Result.error(EnumAdminFinanceError.不存在此任务.toString());
-        if (task != null) {
-            return workFlowService.changeTaskObject(task);
-        } else {
+        if (historicTaskInstance == null) return Result.error(EnumAdminFinanceError.不存在此任务.toString());
+//        if (task != null) {
+//            return workFlowService.changeTaskObject(task);
+//        } else {
             return workFlowService.changeHistoryTaskObject(historicTaskInstance);
-        }
+//        }
     }
 
     @RequestMapping(method = RequestMethod.GET)
