@@ -17,10 +17,10 @@ import java.util.List;
 @AllArgsConstructor
 public class UserObject implements Serializable {
     private String id;
-    @Size(min=3, max=20, message = "账号应在3-20个字符之间")
+    @Size(min=2, max=20, message = "账号应在2-20个字符之间")
     @NotBlank(message = "用户登录名不能为空")
     private String username;                    //账号
-    @Size(min=3, max=20, message = "姓名应在3-20个字符之间")
+    @Size(min=2, max=20, message = "姓名应在2-20个字符之间")
     @NotBlank(message = "姓名不能为空")
     private String name;                        //姓名
     private String phone;                       //手机号
