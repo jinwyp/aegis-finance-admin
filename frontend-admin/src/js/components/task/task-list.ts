@@ -77,7 +77,7 @@ export class TaskListComponent {
         this.task.getTaskList().then((result)=>{
             if (result.success){
                 this.taskPendingList = result.data;
-                this.task.setPendingTaskLengthObservable(this.taskPendingList.length + this.taskAssignList.length);
+                this.task.setPendingTaskLengthObservable(result.data.length + this.taskAssignList.length);
             }else{
 
             }
@@ -90,7 +90,7 @@ export class TaskListComponent {
                 if (this.routeData.routetype === 'all'){
                     this.taskPendingList = result.data;
                 }
-                this.task.setAllTaskLengthObservable(this.taskPendingList.length);
+                this.task.setAllTaskLengthObservable(result.data.length);
             }else{
 
             }

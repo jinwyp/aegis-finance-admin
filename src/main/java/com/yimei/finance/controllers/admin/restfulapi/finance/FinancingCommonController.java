@@ -63,7 +63,7 @@ public class FinancingCommonController {
 
     @RequestMapping(value = "/finance/{financeId}", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看金融详细信息", notes = "通过 金融单id 查看金融详细信息", response = FinanceOrder.class)
-    @ApiImplicitParam(name = "taskId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderDetailByIdMethod(@PathVariable("financeId")Long financeId) {
         return financeOrderService.findById(financeId, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.OnlineTraderAuditAttachment}));
     }
