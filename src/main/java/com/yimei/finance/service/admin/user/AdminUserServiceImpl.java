@@ -146,13 +146,13 @@ public class AdminUserServiceImpl {
                         groupIds.add(group.getId());
                     }
                     for (String gid : groupIds) {
-                        List<User> users = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).memberOfGroup(gid).list();
+                        List<User> users = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).memberOfGroup(gid).orderByUserId().list();
                         if (users != null && users.size() != 0) {
                             userList.addAll(users);
                         }
                     }
                 } else {
-                    userList = identityService.createUserQuery().list();
+                    userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).orderByUserId().list();
                 }
             } else if (!StringUtils.isEmpty(userSearch.getUsername())){
                 userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).list();
@@ -178,15 +178,23 @@ public class AdminUserServiceImpl {
             userObjectList = changeUserObject(userList);
             if (!StringUtils.isEmpty(userSearch.getName()) ) {
                 for (UserObject userObject : userObjectList) {
-                    if (userObject.getName().contains(userSearch.getName())) {
+                    if (userObject.getName() != null && userObject.getName().contains(userSearch.getName())) {
                         userObjList.add(userObject);
                     }
                 }
-                page.setTotal((long) userObjList.size());
-                return Result.success().setData(userObjList).setMeta(page);
+                if (userObjList == null) {
+                    return Result.success();
+                } else {
+                    page.setTotal((long) userObjList.size());
+                    return Result.success().setData(userObjList).setMeta(page);
+                }
             } else {
-                page.setTotal(Long.valueOf(userObjectList.size()));
-                return Result.success().setData(userObjectList).setMeta(page);
+                if (userObjectList == null) {
+                    return Result.success();
+                } else {
+                    page.setTotal(Long.valueOf(userObjectList.size()));
+                    return Result.success().setData(userObjectList).setMeta(page);
+                }
             }
         }
     }
