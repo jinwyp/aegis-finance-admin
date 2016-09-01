@@ -22,6 +22,7 @@ public class HistoryTaskObject {
     private Date startTime;
     private Date endTime;
     protected Date dueDate;
+    private Long financeId;                                         //金融单id
     private String applyCompanyName;                                //申请客户公司名称
     private String applyType;                                       //融资类型
     private String applyTypeName;                                   //融资类型Name
@@ -30,5 +31,6 @@ public class HistoryTaskObject {
     private String currentAssignee;                                 //当前处理人id
     private String currentAssigneeName;                             //当前处理人姓名
     private String currentAssigneeDepartment;                       //当前处理人部门
-    private String currentName;                                     //当前流程节点
+    private String currentName;                                     //当前流程节点name
+    private String currentTaskDefinitionKey;                        //当前流程节点id
 }
