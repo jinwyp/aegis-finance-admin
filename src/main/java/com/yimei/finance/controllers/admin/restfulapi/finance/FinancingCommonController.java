@@ -129,7 +129,7 @@ public class FinancingCommonController {
         for (User u : userList) {
             if (u.getId().equals(userId)) {
                 taskService.complete(task.getId());
-                Task t = taskService.createTaskQuery().taskDefinitionKey(financeEventType).active().singleResult();
+                Task t = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).taskDefinitionKey(financeEventType).active().singleResult();
                 if (t == null) return Result.error(EnumCommonError.Admin_System_Error);
                 taskService.setAssignee(t.getId(), userId);
                 return Result.success().setData(true);

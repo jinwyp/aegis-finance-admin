@@ -1,21 +1,24 @@
 package com.yimei.finance.service.admin.finance;
 
+import com.yimei.finance.entity.admin.finance.AttachmentObject;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.admin.finance.FinanceOrderInvestigatorInfo;
 import com.yimei.finance.entity.admin.finance.FinanceOrderSalesmanInfo;
-import com.yimei.finance.repository.admin.finance.FinanceOrderInvestigatorRepository;
-import com.yimei.finance.repository.admin.finance.FinanceOrderSalesmanRepository;
+import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.common.result.TaskMap;
+import com.yimei.finance.service.common.message.MessageServiceImpl;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @Service("financeFlowStepService")
@@ -27,9 +30,9 @@ public class FinanceFlowStepServiceImpl {
     @Autowired
     private FinanceOrderServiceImpl orderService;
     @Autowired
-    private FinanceOrderSalesmanRepository salesmanRepository;
+    private MessageServiceImpl messageService;
     @Autowired
-    private FinanceOrderInvestigatorRepository investigatorRepository;
+    private FinanceOrderRepository financeOrderRepository;
 
     /**
      * 线上交易员审核
@@ -67,6 +70,12 @@ public class FinanceFlowStepServiceImpl {
         salesmanInfo.setLastUpdateTime(new Date());
         orderService.saveFinanceOrderSalesmanInfo(salesmanInfo);
         methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment);
+        if (salesmanInfo.isNeedSupplyMaterial() && salesmanInfo.isNoticeApplyUser()) {
+            FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
+            if (!StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
+                messageService.sendSMS(financeOrder.getApplyUserPhone(), EnumAdminFinanceSMS.getUserNeedSupplyMaterialMessage(financeOrder.getSourceId(), EnumFinanceSupplyMaterialType.业务.toString()));
+            }
+        }
         if (taskMap.getSubmit() == 0) {
             return Result.success();
         } else {
@@ -85,10 +94,10 @@ public class FinanceFlowStepServiceImpl {
     /**
      * 业务员补充尽调员材料
      */
-    public Result salesmanSupplyInvestigationMaterialFinanceOrderMethod(String userId, TaskMap taskMap, FinanceOrderInvestigatorInfo investigatorInfo, Task task, Long financeId) {
+    public Result salesmanSupplyInvestigationMaterialFinanceOrderMethod(String userId, TaskMap taskMap, List<AttachmentObject> attachmentList, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行业务员补充尽调员材料操作.toString());
-        investigatorRepository.save(investigatorInfo);
+        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanSupplyAttachment_Investigator);
         if (taskMap.getSubmit() == 0) {
             return Result.success();
         } else {
@@ -104,8 +113,24 @@ public class FinanceFlowStepServiceImpl {
     /**
      * 尽调员审核
      */
-    public Result investigatorAuditFinanceOrderMethod(String userId, TaskMap taskMap, Task task, Long financeId) {
+    public Result investigatorAuditFinanceOrderMethod(String userId, TaskMap taskMap, FinanceOrderInvestigatorInfo investigatorInfo, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.investigatorAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行尽调员审核操作.toString());
+        investigatorInfo.setFinanceId(financeId);
+        investigatorInfo.setCreateManId(userId);
+        investigatorInfo.setCreateTime(new Date());
+        investigatorInfo.setLastUpdateManId(userId);
+        investigatorInfo.setLastUpdateTime(new Date());
+        orderService.saveFinanceOrderInvestigatorInfo(investigatorInfo);
+        methodService.addAttachmentsMethod(investigatorInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorAuditAttachment);
+        if (investigatorInfo.isNeedSupplyMaterial()) {
+            FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
+            if (investigatorInfo.isNoticeApplyUser() && !StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
+//                messageService.sendSMS();
+            }
+            if (investigatorInfo.isNoticeSalesman()) {
+
+            }
+        }
         if (taskMap.getSubmit() == 0) {
             return Result.success();
         } else {

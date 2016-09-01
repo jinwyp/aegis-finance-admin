@@ -23,6 +23,8 @@ import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Api(tags = "admin-api-flow-myg", description = "煤易购相关接口")
 @RequestMapping("/api/financing/admin/myg")
 @RestController("adminMYGFinancingController")
@@ -66,7 +68,7 @@ public class MYGFinancingController {
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mygSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfo> map) {
+                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, List<AttachmentObject>> map) {
         Result result = checkMYGMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
@@ -81,7 +83,7 @@ public class MYGFinancingController {
         Result result = checkMYGMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.investigatorAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, object.t, object.u);
+        return flowStepService.investigatorAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
     }
 
     @RequestMapping(value = "/salesman/supply/supervision/material/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)

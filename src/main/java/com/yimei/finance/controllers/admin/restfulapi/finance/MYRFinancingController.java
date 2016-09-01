@@ -1,10 +1,7 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.entity.admin.finance.FinanceOrderInvestigatorInfo;
-import com.yimei.finance.entity.admin.finance.FinanceOrderRiskManagerInfo;
-import com.yimei.finance.entity.admin.finance.FinanceOrderSalesmanInfo;
+import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.EnumFinanceOrderType;
@@ -25,6 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Api(tags = "admin-api-flow-myr", description = "煤易融相关接口")
 @RequestMapping("/api/financing/admin/myr")
@@ -69,7 +68,7 @@ public class MYRFinancingController {
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfo> map) {
+                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, List<AttachmentObject>> map) {
         Result result = checkMYRMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
@@ -84,7 +83,7 @@ public class MYRFinancingController {
         Result result = checkMYRMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        return flowStepService.investigatorAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, object.t, Long.valueOf(object.u));
+        return flowStepService.investigatorAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, Long.valueOf(object.u));
     }
 
     @RequestMapping(value = "/investigator/supply/riskmanager/material/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)

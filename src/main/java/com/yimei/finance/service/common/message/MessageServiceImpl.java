@@ -21,7 +21,7 @@ public class MessageServiceImpl {
      * @param content             内容
      */
     public void sendSimpleMail(String to, String subject, String content) {
-        mailService.sendSimpleMail(to, subject, content);
+        //mailService.sendSimpleMail(to, subject, content);
     }
 
 //    /**
