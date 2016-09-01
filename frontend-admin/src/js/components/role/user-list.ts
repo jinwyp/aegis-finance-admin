@@ -43,7 +43,7 @@ export class UserListComponent {
 
 
     getUserList() {
-        this.groupName=this.selectedItem==='请选择'?'':this.selectedItem;
+        this.groupName=this.selectedItem;
         this.user.getList(this.name,this.username,this.groupName).then((result)=> {
             if (result.success) {
                 this.userList = result.data;
@@ -85,7 +85,6 @@ export class UserListComponent {
         this.groupService.getList().then((result)=> {
             if (result.success) {
                 this.groups = result.data;
-                this.groups.unshift({name:'请选择'});
             } else {
 
             }
