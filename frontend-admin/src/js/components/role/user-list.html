@@ -26,7 +26,7 @@
             <th width="150">最后一次登录</th>
             <th >操作</th>
         </tr>
-        <tr *ngIf="!userList||userList.length < 1"><td>暂无用户数据数据</td></tr>
+        <tr class="item" *ngIf="!userList||userList.length < 1"><td colspan="6">暂无用户数据数据</td></tr>
         <tr class="item" *ngFor="let user of userList">
             <!--<td>{{user.id}}</td>-->
             <td>{{user.username}}</td>
