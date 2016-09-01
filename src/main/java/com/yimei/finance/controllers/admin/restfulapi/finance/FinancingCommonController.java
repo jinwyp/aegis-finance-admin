@@ -76,9 +76,9 @@ public class FinancingCommonController {
         if (task == null) return Result.error(EnumAdminFinanceError.此任务不存在或者已经完成.toString());
         if (!StringUtils.isEmpty(task.getAssignee())) {
             if (task.getAssignee().equals(adminSession.getUser().getId())) {
-                return Result.error(EnumAdminFinanceError.你已经领取此任务.toString());
+                return Result.error(EnumAdminFinanceError.你已经处理此任务.toString());
             } else {
-                return Result.error(EnumAdminFinanceError.此任务已经被其他人领取.toString());
+                return Result.error(EnumAdminFinanceError.此任务已经被其他人处理.toString());
             }
         }
         List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
@@ -93,7 +93,6 @@ public class FinancingCommonController {
         }
         return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
     }
-
 
     @RequestMapping(value = "/tasks/{taskId}/person/{userId}", method = RequestMethod.PUT)
     @ApiOperation(value = "管理员分配人员", notes = "管理员分配人员操作")
@@ -149,12 +148,11 @@ public class FinancingCommonController {
     public void getProcessDiagramMethod(@PathVariable("processInstanceId") String processInstanceId, HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("image/gif");
         OutputStream out = response.getOutputStream();
-        HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
-        if (historicProcessInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
-        String processDefinitionId = historicProcessInstance.getProcessDefinitionId();
-        BpmnModel bpmnModel = repositoryService.getBpmnModel(processDefinitionId);
+        HistoricProcessInstance processInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
+        if (processInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        BpmnModel bpmnModel = repositoryService.getBpmnModel(processInstance.getProcessDefinitionId());
         InputStream inputStream = null;
-        if (historicProcessInstance.getEndTime() == null) {
+        if (processInstance.getEndTime() == null) {
             inputStream = processEngine.getProcessEngineConfiguration().getProcessDiagramGenerator()
                     .generateDiagram(bpmnModel, "png", runtimeService.getActiveActivityIds(processInstanceId));
         } else {

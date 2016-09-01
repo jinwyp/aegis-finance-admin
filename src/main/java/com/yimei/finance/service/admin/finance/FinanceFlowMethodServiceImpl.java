@@ -142,10 +142,8 @@ public class FinanceFlowMethodServiceImpl {
      */
     public Result changeHistoryTaskObject(HistoricTaskInstance task) {
         HistoryTaskObject taskObject = DozerUtils.copy(task, HistoryTaskObject.class);
-//        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
         HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
         if (historicProcessInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
-//        String businessKey = processInstance != null ? processInstance.getBusinessKey() : historicProcessInstance.getBusinessKey();
         if (StringUtils.isEmpty(historicProcessInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
         FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(historicProcessInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
