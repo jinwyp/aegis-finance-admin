@@ -26,6 +26,11 @@ export class AuditTraderComponent {
 
     private sub: Subscription;
 
+    css = {
+        ajaxErrorHidden : true,
+        ajaxSuccessHidden : true
+    };
+
     currentUserSession : User = new User();
 
     taskId : string = '';
@@ -74,6 +79,10 @@ export class AuditTraderComponent {
 
     audit (isAudit : boolean, isApproved : boolean){
 
+        this.css.ajaxErrorHidden = true;
+        this.css.ajaxSuccessHidden = true;
+
+
         let auditType : string = '';
         let body : any = {
             t : {
@@ -91,9 +100,9 @@ export class AuditTraderComponent {
 
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
-                    alert('保存成功!!')
+                    this.css.ajaxSuccessHidden = false;
                 }else{
-                    alert('保存失败!')
+                    this.css.ajaxErrorHidden = false;
                 }
             });
         }
