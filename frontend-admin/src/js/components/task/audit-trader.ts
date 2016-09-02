@@ -27,7 +27,7 @@ export class AuditTraderComponent {
     private sub: Subscription;
 
     css = {
-        isSubmited : false,
+        isSubmitted : false,
         ajaxErrorHidden : true,
         ajaxSuccessHidden : true
     };
@@ -73,30 +73,28 @@ export class AuditTraderComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
-                this.getFinanceInfo(this.currentTask.financeId);
+
+                this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
+                    if (result.success){
+                        this.currentOrder = result.data;
+                    }else{
+
+                    }
+                });
+
             }else{
 
             }
         });
     }
 
-    getFinanceInfo(id : number){
-        this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
-            if (result.success){
-                this.currentOrder = result.data;
-                console.log(this.currentOrder);
-            }else{
-
-            }
-        });
-    }
 
 
     audit (isAudit : boolean, isApproved : boolean){
 
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
-        this.css.isSubmited = true;
+        this.css.isSubmitted = true;
 
 
         let auditType : string = '';
@@ -117,12 +115,12 @@ export class AuditTraderComponent {
             this.task.audit(this.taskId, this.currentOrder.applyType, auditType, body).then((result)=>{
                 if (result.success){
                     this.css.ajaxSuccessHidden = false;
-                    setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
+                    setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                 }else{
                     this.css.ajaxErrorHidden = false;
                     this.errorMsg = result.error.message;
                 }
-                this.css.isSubmited = false;
+                this.css.isSubmitted = false;
             });
         }
     }
