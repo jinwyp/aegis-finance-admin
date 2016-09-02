@@ -175,9 +175,10 @@ public class FinanceFlowStepServiceImpl {
     /**
      * 业务员补充监管员材料
      */
-    public Result salesmanSupplySupervisionMaterialFinanceOrderMethod(String userId, TaskMap taskMap, Task task, Long financeId) {
+    public Result salesmanSupplySupervisionMaterialFinanceOrderMethod(String userId, TaskMap taskMap, List<AttachmentObject> attachmentList, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanSupplySupervisionMaterial.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行业务员补充监管员材料操作.toString());
+        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanSupplyAttachment_Supervisor);
         if (taskMap.getSubmit() == 0) {
             return Result.success();
         } else {
@@ -193,8 +194,15 @@ public class FinanceFlowStepServiceImpl {
     /**
      * 监管员审核
      */
-    public Result supervisorAuditFinanceOrderMethod(String userId, TaskMap taskMap, Task task, Long financeId) {
+    public Result supervisorAuditFinanceOrderMethod(String userId, TaskMap taskMap, FinanceOrderSupervisorInfo supervisorInfo, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.supervisorAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行监管员审核操作.toString());
+        supervisorInfo.setFinanceId(financeId);
+        supervisorInfo.setCreateManId(userId);
+        supervisorInfo.setCreateTime(new Date());
+        supervisorInfo.setLastUpdateManId(userId);
+        supervisorInfo.setLastUpdateTime(new Date());
+        orderService.saveFinanceOrderSupervisorInfo(supervisorInfo);
+        methodService.addAttachmentsMethod(supervisorInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorAuditAttachment);
         if (taskMap.getSubmit() == 0) {
             return Result.success();
         } else {
@@ -220,24 +228,27 @@ public class FinanceFlowStepServiceImpl {
         }
     }
 
-    public Result investigatorSupplyRiskMaterialFinanceOrderMethod(String userId, TaskMap taskMap, Task task, Long financeId) {
+    /**
+     * 尽调员补充风控人员材料
+     */
+    public Result investigatorSupplyRiskMaterialFinanceOrderMethod(String userId, TaskMap taskMap, List<AttachmentObject> attachmentList, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.investigatorSupplyRiskMaterial.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行尽调员补充风控人员要求的材料操作.toString());
-        if (taskMap.getSubmit() == 0) {
-            return Result.success();
-        } else {
-            taskService.complete(task.getId());
-            Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
-            if (!result1.isSuccess()) return result1;
-            Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString());
-            if (!result.isSuccess()) return result;
-            return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
-        }
+        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorSupplyRiskAttachment);
+        return supplyRiskMaterialFinanceOrderMethod(userId, taskMap, task, financeId);
     }
 
-    public Result supervisorSupplyRiskMaterialFinanceOrderMethod(String userId, TaskMap taskMap, Task task, Long financeId) {
+    /**
+     * 监管员补充风控人员材料
+     */
+    public Result supervisorSupplyRiskMaterialFinanceOrderMethod(String userId, TaskMap taskMap, List<AttachmentObject> attachmentList, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.supervisorSupplyRiskMaterial.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行监管员补充风控人员要求的材料操作.toString());
+        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorSupplyRiskAttachment);
+        return supplyRiskMaterialFinanceOrderMethod(userId, taskMap, task, financeId);
+    }
+
+    private Result supplyRiskMaterialFinanceOrderMethod(String userId, TaskMap taskMap, Task task, Long financeId) {
         if (taskMap.getSubmit() == 0) {
             return Result.success();
         } else {
@@ -250,8 +261,18 @@ public class FinanceFlowStepServiceImpl {
         }
     }
 
-    public Result riskManagerAuditMYRFinanceOrderMethod(String userId, TaskMap taskMap, Task task, Long financeId) {
+    /**
+     * 风控人员审核
+     */
+    public Result riskManagerAuditFinanceOrderMethod(String userId, TaskMap taskMap, FinanceOrderRiskManagerInfo riskManagerInfo, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行风控人员审核操作.toString());
+        riskManagerInfo.setFinanceId(financeId);
+        riskManagerInfo.setCreateManId(userId);
+        riskManagerInfo.setCreateTime(new Date());
+        riskManagerInfo.setLastUpdateManId(userId);
+        riskManagerInfo.setLastUpdateTime(new Date());
+        orderService.saveFinanceOrderRiskManagerInfo(riskManagerInfo);
+        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment);
         if (taskMap.getSubmit() == 0) {
             return Result.success();
         } else {

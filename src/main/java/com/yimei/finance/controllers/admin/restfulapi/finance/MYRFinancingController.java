@@ -90,11 +90,11 @@ public class MYRFinancingController {
     @ApiOperation(value = "尽调员补充风控材料", notes = "尽调员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrInvestigatorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
-                                                                 @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody TaskMap taskMap) {
-        Result result = checkMYRMethod(taskId, taskMap);
+                                                                 @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, List<AttachmentObject>> map) {
+        Result result = checkMYRMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        return flowStepService.investigatorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), taskMap, object.t, Long.valueOf(object.u));
+        return flowStepService.investigatorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, Long.valueOf(object.u));
     }
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -105,7 +105,7 @@ public class MYRFinancingController {
         Result result = checkMYRMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        return flowStepService.riskManagerAuditMYRFinanceOrderMethod(adminSession.getUser().getId(), map.t, object.t, Long.valueOf(object.u));
+        return flowStepService.riskManagerAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, Long.valueOf(object.u));
     }
 
     private Result checkMYRMethod(String taskId, TaskMap taskMap) {
