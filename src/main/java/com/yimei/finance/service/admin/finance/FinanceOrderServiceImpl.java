@@ -14,6 +14,8 @@ import com.yimei.finance.utils.Where;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.task.Attachment;
+import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -99,7 +101,7 @@ public class FinanceOrderServiceImpl {
         if (order != null) {
             if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
                 query.setParameter("startDate", order.getStartDate());
-                query.setParameter("endDate", LocalDate.parse(order.getEndDate()).plusDays(1));
+                query.setParameter("endDate", java.sql.Date.valueOf(LocalDate.parse(order.getEndDate()).plusDays(1)));
             }
             if (order.getApproveStateId() != 0) {
                 query.setParameter("approveStateId", order.getApproveStateId());
@@ -118,32 +120,77 @@ public class FinanceOrderServiceImpl {
         return Result.success().setData(financeOrderList).setMeta(page);
     }
 
-    public List<AttachmentObject> getAttachmentByProcessInstanceIdType(List<HistoryTaskObject> taskList, List<EnumFinanceAttachment> typeList) {
+    public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, List<EnumFinanceAttachment> typeList) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
-        List<String> eventList = new ArrayList<>();
-        for (EnumFinanceAttachment attachment : typeList) {
-            eventList.add(attachment.type);
-        }
-        for (HistoryTaskObject task : taskList) {
-            if (eventList.contains(task.getTaskDefinitionKey())) {
-                attachmentList.addAll(DozerUtils.copy(taskService.getTaskAttachments(task.getId()), AttachmentObject.class));
+        for (EnumFinanceAttachment attachment: typeList) {
+            List<Task> tasks = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).list();
+            for (Task t : tasks) {
+                List<Attachment> attachments = taskService.getTaskAttachments(t.getId());
+                if (attachments != null && attachments.size() != 0) {
+                    attachmentList.addAll(DozerUtils.copy(taskService.getTaskAttachments(t.getId()), AttachmentObject.class));
+                }
             }
         }
         return attachmentList;
     }
 
-    public List<HistoryTaskObject> getAllTaskListByProcessInstanceId(String processInstanceId) {
-        return (List<HistoryTaskObject>) methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().taskId(processInstanceId).orderByTaskCreateTime().desc().list()).getData();
+    public List<HistoryTaskObject> getAllTaskListByFinanceId(Long financeId) {
+        return (List<HistoryTaskObject>) methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).orderByTaskCreateTime().desc().list()).getData();
     }
 
+    /**
+     * 获取金融申请单详细
+     */
     public Result findById(Long id, List<EnumFinanceAttachment> typeList) {
         FinanceOrder financeOrder = orderRepository.findOne(id);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        HistoricProcessInstance processInstance = historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(id)).singleResult();
-        if (processInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
-        financeOrder.setTaskList(getAllTaskListByProcessInstanceId(processInstance.getId()));
-        financeOrder.setAttachmentList(getAttachmentByProcessInstanceIdType(financeOrder.getTaskList(), typeList));
+        financeOrder.setTaskList(getAllTaskListByFinanceId(id));
+        financeOrder.setAttachmentList(getAttachmentByFinanceIdType(id, typeList));
         return Result.success().setData(financeOrder);
+    }
+
+    /**
+     * 获取业务员填写信息详细
+     */
+    public Result findSalesmanInfoByFinanceId(Long financeId, List<EnumFinanceAttachment> typeList) {
+        FinanceOrderSalesmanInfo salesmanInfo = salesmanRepository.findByFinanceId(financeId);
+        if (salesmanInfo != null) {
+            salesmanInfo.setAttachmentList(getAttachmentByFinanceIdType(financeId, typeList));
+        }
+        return Result.success().setData(salesmanInfo);
+    }
+
+    /**
+     * 获取尽调员填写信息详细
+     */
+    public Result findInvestigatorInfoByFinanceId(Long financeId, List<EnumFinanceAttachment> typeList) {
+        FinanceOrderInvestigatorInfo investigatorInfo = investigatorRepository.findByFinanceId(financeId);
+        if (investigatorInfo != null) {
+            investigatorInfo.setAttachmentList(getAttachmentByFinanceIdType(financeId, typeList));
+        }
+        return Result.success().setData(investigatorInfo);
+    }
+
+    /**
+     * 获取监管员填写信息详细
+     */
+    public Result findSupervisorInfoByFinanceId(Long financeId, List<EnumFinanceAttachment> typeList) {
+        FinanceOrderSupervisorInfo supervisorInfo = supervisorRepository.findByFinanceId(financeId);
+        if (supervisorInfo != null) {
+            supervisorInfo.setAttachmentList(getAttachmentByFinanceIdType(financeId, typeList));
+        }
+        return Result.success().setData(supervisorInfo);
+    }
+
+    /**
+     * 获取风控人员填写信息详细
+     */
+    public Result findRiskManagerInfoByFinanceId(Long financeId, List<EnumFinanceAttachment> typeList) {
+        FinanceOrderRiskManagerInfo riskManagerInfo = riskRepository.findByFinanceId(financeId);
+        if (riskManagerInfo != null) {
+            riskManagerInfo.setAttachmentList(getAttachmentByFinanceIdType(financeId, typeList));
+        }
+        return Result.success().setData(riskManagerInfo);
     }
 
     /**
@@ -189,6 +236,7 @@ public class FinanceOrderServiceImpl {
         }
         riskRepository.save(riskManagerInfo);
     }
+
 
 
 }

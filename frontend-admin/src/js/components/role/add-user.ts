@@ -29,7 +29,6 @@ export class AddUserComponent {
     css = {
         ajaxSuccessHidden : true,
         ajaxErrorHidden : true,
-        activeForRefresh : true,
         isSubmitted :      false,
         isHiddenResetModal : true,
         isHiddenMsgModal : true,
@@ -101,7 +100,7 @@ export class AddUserComponent {
     }
 
 
-    addUser() {
+    addUser(form) {
         this.css.isSubmitted     = true;
         this.currentUser.department = this.selectedItem;
 

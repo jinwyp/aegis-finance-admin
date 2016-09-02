@@ -23,7 +23,7 @@ export class AssignPersonComponent {
     private sub: Subscription;
 
     css = {
-        isSubmited : false,
+        isSubmitted : true,
         ajaxErrorHidden : true,
         ajaxSuccessHidden : true
     };
@@ -35,7 +35,7 @@ export class AssignPersonComponent {
 
     taskId : string = '';
     currentTask : Task = new Task();
-
+    currentOrder : Task = new Task();
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -70,6 +70,15 @@ export class AssignPersonComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
+
+                this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
+                    if (result.success) {
+                        this.currentOrder = result.data;
+                    }else{
+
+                    }
+                });
+
                 this.getUserList();
             }else{
 
@@ -97,25 +106,28 @@ export class AssignPersonComponent {
         }
     }
 
-
+    selectUserChange () {
+        if (this.selectedUser.id){
+            this.css.isSubmitted = false;
+        }
+    }
 
     assignPerson (){
 
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
-        this.css.isSubmited = true;
+        this.css.isSubmitted = true;
+
         if (this.selectedUser.id){
             this.task.assignPerson(this.taskId, this.selectedUser.id).then((result)=>{
                 if (result.success){
                     this.css.ajaxSuccessHidden = false;
                 }else{
-                    this.errorMsg=result.error.message;
+                    this.errorMsg = result.error.message;
                     this.css.ajaxErrorHidden = false;
                 }
-                this.css.isSubmited = false;
+                this.css.isSubmitted = false;
             });
-        }else{
-            this.css.ajaxErrorHidden = false;
         }
     }
 
