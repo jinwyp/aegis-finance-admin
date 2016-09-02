@@ -142,7 +142,7 @@ public class MYGFinancingController {
     }
 
     private Result checkMYGMethod(String taskId, TaskMap taskMap) {
-        if (taskMap.getSubmit() != 0 && taskMap.getSubmit() != 1) return Result.error(EnumCommonError.Admin_System_Error);
+        if (taskMap.submit != 0 && taskMap.submit != 1) return Result.error(EnumCommonError.Admin_System_Error);
         Task task = taskService.createTaskQuery().taskId(taskId).active().taskAssignee(adminSession.getUser().getId()).singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();

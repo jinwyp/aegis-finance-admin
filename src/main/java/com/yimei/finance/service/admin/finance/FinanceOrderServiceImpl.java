@@ -22,9 +22,9 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service("financeOrderService")
@@ -52,8 +52,11 @@ public class FinanceOrderServiceImpl {
      * 交易员补充材料
      */
     @Transactional
-    public void updateFinanceOrderByOnlineTrader(FinanceOrder financeOrder) {
+    public void updateFinanceOrderByOnlineTrader(String userId, FinanceOrder financeOrder) {
         FinanceOrder order = orderRepository.findOne(financeOrder.getId());
+        order.setMarketPrice(financeOrder.getMarketPrice());
+        order.setCoalSource(financeOrder.getCoalSource());
+        order.setStorageLocation(financeOrder.getStorageLocation());
         order.setFinancingAmount(financeOrder.getFinancingAmount());
         order.setExpectDate(financeOrder.getExpectDate());
         order.setBusinessAmount(financeOrder.getBusinessAmount());
@@ -66,6 +69,8 @@ public class FinanceOrderServiceImpl {
         order.setCoalQuantityIndex(financeOrder.getCoalQuantityIndex());
         order.setApproveStateId(EnumFinanceStatus.Auditing.id);
         order.setApproveState(EnumFinanceStatus.Auditing.name);
+        order.setLastUpdateManId(userId);
+        order.setLastUpdateTime(new Date());
         orderRepository.save(order);
     }
 
@@ -93,8 +98,8 @@ public class FinanceOrderServiceImpl {
         query.setParameter("userId", userId);
         if (order != null) {
             if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
-                query.setParameter("startDate", Date.valueOf(order.getStartDate()));
-                query.setParameter("endDate", Date.valueOf(LocalDate.parse(order.getEndDate()).plusDays(1)));
+                query.setParameter("startDate", order.getStartDate());
+                query.setParameter("endDate", java.sql.Date.valueOf(LocalDate.parse(order.getEndDate()).plusDays(1)));
             }
             if (order.getApproveStateId() != 0) {
                 query.setParameter("approveStateId", order.getApproveStateId());
@@ -128,7 +133,7 @@ public class FinanceOrderServiceImpl {
     }
 
     public List<HistoryTaskObject> getAllTaskListByProcessInstanceId(String processInstanceId) {
-        return (List<HistoryTaskObject>) methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().taskId(processInstanceId).orderByTaskCreateTime().list()).getData();
+        return (List<HistoryTaskObject>) methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().taskId(processInstanceId).orderByTaskCreateTime().desc().list()).getData();
     }
 
     public Result findById(Long id, List<EnumFinanceAttachment> typeList) {

@@ -8,9 +8,11 @@ import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;
+import com.yimei.finance.representation.admin.finance.FinanceSMSMessage;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
+import com.yimei.finance.service.common.message.MessageServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
@@ -45,6 +47,8 @@ public class FinanceFlowMethodServiceImpl {
     private AdminUserServiceImpl userService;
     @Autowired
     private IdentityService identityService;
+    @Autowired
+    private MessageServiceImpl messageService;
 
     /**
      * 添加附件方法
@@ -86,8 +90,17 @@ public class FinanceFlowMethodServiceImpl {
         order.setApproveState(status.name);
         order.setLastUpdateTime(new Date());
         order.setLastUpdateManId(userId);
-        if (status.id == EnumFinanceStatus.AuditNotPass.id || status.id == EnumFinanceStatus.AuditPass.id) {
+        if (status.id == EnumFinanceStatus.AuditPass.id) {
             order.setEndTime(new Date());
+            if (!StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
+                messageService.sendSMS(financeOrder.getApplyUserPhone(), FinanceSMSMessage.getUserAuditPassMessage(financeOrder.getSourceId()));
+            }
+        }
+        if (status.id == EnumFinanceStatus.AuditNotPass.id) {
+            order.setEndTime(new Date());
+            if (!StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
+                messageService.sendSMS(financeOrder.getApplyUserPhone(), FinanceSMSMessage.getUserAuditNotPassMessage(financeOrder.getSourceId()));
+            }
         }
         orderRepository.save(order);
         return Result.success();

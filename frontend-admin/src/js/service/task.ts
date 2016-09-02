@@ -110,6 +110,7 @@ taskStatusList.forEach( (status) => { TaskStatus[status.taskDefinitionKey] = sta
 class Task {
 
     id :string;
+    financeId :number;
     name :string;
 
     processInstanceId : string;
@@ -258,7 +259,7 @@ class TaskService {
             .catch(GlobalPromiseHttpCatch);
     }
 
-    getOrderInfoById(orderId : string) {
+    getOrderInfoById(orderId : number) {
         return this.http.get(API.orders + '/' + orderId).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);

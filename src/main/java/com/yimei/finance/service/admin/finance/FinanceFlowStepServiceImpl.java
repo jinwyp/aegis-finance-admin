@@ -9,10 +9,8 @@ import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.common.result.TaskMap;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.service.common.message.MessageServiceImpl;
-import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,8 +37,6 @@ public class FinanceFlowStepServiceImpl {
     private AdminUserServiceImpl userService;
     @Autowired
     private IdentityService identityService;
-    @Autowired
-    private HistoryService historyService;
 
     /**
      * 线上交易员审核
@@ -48,16 +44,16 @@ public class FinanceFlowStepServiceImpl {
     public Result onlineTraderAuditFinanceOrderMethod(String userId, TaskMap taskMap, Task task, FinanceOrder financeOrder) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.onlineTraderAudit.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
-        orderService.updateFinanceOrderByOnlineTrader(financeOrder);
+        orderService.updateFinanceOrderByOnlineTrader(userId, financeOrder);
         methodService.addAttachmentsMethod(financeOrder.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.OnlineTraderAuditAttachment);
-        if (taskMap.getSubmit() == 0) {
+        if (taskMap.submit == 0) {
             return Result.success();
         } else {
-            if (taskMap.getPass() != 0 && taskMap.getPass() != 1) return Result.error(EnumCommonError.Admin_System_Error);
+            if (taskMap.pass != 0 && taskMap.pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
-            vars.put(EnumFinanceEventType.onlineTraderAudit.toString(), taskMap.getPass());
+            vars.put(EnumFinanceEventType.onlineTraderAudit.toString(), taskMap.pass);
             taskService.complete(task.getId(), vars);
-            if (taskMap.getPass() == 1) {
+            if (taskMap.pass == 1) {
                 return Result.success();
             } else {
                 return methodService.updateFinanceOrderApproveState(financeOrder.getId(), EnumFinanceStatus.AuditNotPass, userId);
@@ -81,17 +77,17 @@ public class FinanceFlowStepServiceImpl {
         if (salesmanInfo.isNeedSupplyMaterial() && salesmanInfo.isNoticeApplyUser()) {
             FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
             if (!StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
-                messageService.sendSMS(financeOrder.getApplyUserPhone(), FinanceSendSMSUtils.getUserNeedSupplyMaterialMessage(financeOrder.getSourceId(), "业务"));
+                messageService.sendSMS(financeOrder.getApplyUserPhone(), FinanceSMSMessage.getUserNeedSupplyMaterialMessage(financeOrder.getSourceId(), "业务"));
             }
         }
-        if (taskMap.getSubmit() == 0) {
+        if (taskMap.submit == 0) {
             return Result.success();
         } else {
-            if (taskMap.getPass() != 0 && taskMap.getPass() != 1) return Result.error(EnumCommonError.Admin_System_Error);
+            if (taskMap.pass != 0 && taskMap.pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
-            vars.put(EnumFinanceConditions.salesmanAudit.toString(), taskMap.getPass());
+            vars.put(EnumFinanceConditions.salesmanAudit.toString(), taskMap.pass);
             taskService.complete(task.getId(), vars);
-            if (taskMap.getPass() == 1) {
+            if (taskMap.pass == 1) {
                 return Result.success();
             } else {
                 return methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
@@ -106,7 +102,7 @@ public class FinanceFlowStepServiceImpl {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行业务员补充尽调员材料操作.toString());
         methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanSupplyAttachment_Investigator);
-        if (taskMap.getSubmit() == 0) {
+        if (taskMap.submit == 0) {
             return Result.success();
         } else {
             taskService.complete(task.getId());
@@ -130,41 +126,26 @@ public class FinanceFlowStepServiceImpl {
         investigatorInfo.setLastUpdateTime(new Date());
         orderService.saveFinanceOrderInvestigatorInfo(investigatorInfo);
         methodService.addAttachmentsMethod(investigatorInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorAuditAttachment);
-        if (investigatorInfo.isNeedSupplyMaterial()) {
-            FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
-            if (investigatorInfo.isNoticeApplyUser() && !StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
-                messageService.sendSMS(financeOrder.getApplyUserPhone(), FinanceSendSMSUtils.getUserNeedSupplyMaterialMessage(financeOrder.getSourceId(), "尽调"));
-            }
-            if (investigatorInfo.isNoticeSalesman()) {
-                List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).finished().orderByTaskCreateTime().desc().list();
-                for (HistoricTaskInstance taskInstance : historicTaskInstanceList) {
-                    if (taskInstance.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanAudit.toString())) {
-                        UserObject userObject = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
-                        if (userObject == null) return Result.error(EnumCommonError.Admin_System_Error);
-                        if (!StringUtils.isEmpty(userObject.getPhone())) {
-                            messageService.sendSMS(userObject.getPhone(), FinanceSendSMSUtils.getAdminNeedSupplyMaterialMessage("尽调员", financeOrder.getSourceId(), "尽调"));
-                        }
-                    }
-                }
-            }
-        }
-        if (taskMap.getSubmit() == 0) {
+        if (taskMap.submit == 0) {
             return Result.success();
         } else {
-            if (taskMap.getNeed() != 0 && taskMap.getNeed() != 1 && taskMap.getPass() != 0 && taskMap.getPass() != 1) return Result.error(EnumCommonError.Admin_System_Error);
+            if (taskMap.need != 0 && taskMap.need != 1 && taskMap.pass != 0 && taskMap.pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
-            vars.put(EnumFinanceConditions.needSalesmanSupplyInvestigationMaterial.toString(), taskMap.getNeed());
-            if (taskMap.getNeed() == 0) {
-                vars.put(EnumFinanceConditions.investigatorAudit.toString(), taskMap.getPass());
+            vars.put(EnumFinanceConditions.needSalesmanSupplyInvestigationMaterial.toString(), taskMap.need);
+            if (taskMap.need == 0) {
+                vars.put(EnumFinanceConditions.investigatorAudit.toString(), taskMap.pass);
             }
             taskService.complete(task.getId(), vars);
-            if (taskMap.getNeed() == 1) {
+            if (taskMap.need == 1) {
                 Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
                 if (!result1.isSuccess()) return result1;
                 Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
                 if (!result.isSuccess()) return result;
+                FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
+                noticeUser(taskMap.need == 1, investigatorInfo.isNoticeApplyUser(), financeOrder.getApplyUserName(), financeOrder.getSourceId(), "尽调");
+                noticeAdmin(String.valueOf(result.getData()), "尽调员", financeOrder.getSourceId(), "尽调");
                 return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString(), String.valueOf(result.getData()));
-            } else if (taskMap.getPass() == 1) {
+            } else if (taskMap.pass == 1) {
                 return Result.success();
             } else {
                 return methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
@@ -179,7 +160,7 @@ public class FinanceFlowStepServiceImpl {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanSupplySupervisionMaterial.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行业务员补充监管员材料操作.toString());
         methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanSupplyAttachment_Supervisor);
-        if (taskMap.getSubmit() == 0) {
+        if (taskMap.submit == 0) {
             return Result.success();
         } else {
             taskService.complete(task.getId());
@@ -203,24 +184,27 @@ public class FinanceFlowStepServiceImpl {
         supervisorInfo.setLastUpdateTime(new Date());
         orderService.saveFinanceOrderSupervisorInfo(supervisorInfo);
         methodService.addAttachmentsMethod(supervisorInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorAuditAttachment);
-        if (taskMap.getSubmit() == 0) {
+        if (taskMap.submit == 0) {
             return Result.success();
         } else {
-            if (taskMap.getNeed() != 0 && taskMap.getNeed() != 1 && taskMap.getPass() != 0 && taskMap.getPass() != 1)
+            if (taskMap.need != 0 && taskMap.need != 1 && taskMap.pass != 0 && taskMap.pass != 1)
                 return Result.error(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
-            vars.put(EnumFinanceConditions.needSalesmanSupplySupervisionMaterial.toString(), taskMap.getNeed());
-            if (taskMap.getNeed() == 0) {
-                vars.put(EnumFinanceConditions.supervisorAudit.toString(), taskMap.getPass());
+            vars.put(EnumFinanceConditions.needSalesmanSupplySupervisionMaterial.toString(), taskMap.need);
+            if (taskMap.need == 0) {
+                vars.put(EnumFinanceConditions.supervisorAudit.toString(), taskMap.pass);
             }
             taskService.complete(task.getId(), vars);
-            if (taskMap.getNeed() == 1) {
+            if (taskMap.need == 1) {
                 Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
                 if (!result1.isSuccess()) return result1;
                 Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
                 if (!result.isSuccess()) return result;
+                FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
+                noticeUser(taskMap.need == 1, supervisorInfo.isNoticeApplyUser(), financeOrder.getApplyUserName(), financeOrder.getSourceId(), "尽调");
+                noticeAdmin(String.valueOf(result.getData()), "监管员", financeOrder.getSourceId(), "监管");
                 return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplySupervisionMaterial.toString(), String.valueOf(result.getData()));
-            } else if (taskMap.getPass() == 1) {
+            } else if (taskMap.pass == 1) {
                 return Result.success();
             } else {
                 return methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
@@ -249,7 +233,7 @@ public class FinanceFlowStepServiceImpl {
     }
 
     private Result supplyRiskMaterialFinanceOrderMethod(String userId, TaskMap taskMap, Task task, Long financeId) {
-        if (taskMap.getSubmit() == 0) {
+        if (taskMap.submit == 0) {
             return Result.success();
         } else {
             taskService.complete(task.getId());
@@ -273,25 +257,40 @@ public class FinanceFlowStepServiceImpl {
         riskManagerInfo.setLastUpdateTime(new Date());
         orderService.saveFinanceOrderRiskManagerInfo(riskManagerInfo);
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment);
-        if (taskMap.getSubmit() == 0) {
+        if (taskMap.submit == 0) {
             return Result.success();
         } else {
-            if (taskMap.getNeed() != 0 && taskMap.getNeed() != 1 && taskMap.getNeed2() != 0 && taskMap.getNeed2() != 1 && taskMap.getPass() != 0 && taskMap.getPass() != 1)
+            if (taskMap.need != 0 && taskMap.need != 1 && taskMap.need2 != 0 && taskMap.need2 != 1 && taskMap.pass != 0 && taskMap.pass != 1)
                 return Result.error(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
-            vars.put(EnumFinanceConditions.needInvestigatorSupplyRiskMaterial.toString(), taskMap.getNeed());
-            vars.put(EnumFinanceConditions.needSupervisorSupplyRiskMaterial.toString(), taskMap.getNeed2());
-            if (taskMap.getNeed() == 0 && taskMap.getNeed2() == 0) {
-                vars.put(EnumFinanceConditions.riskManagerAudit.toString(), taskMap.getPass());
+            vars.put(EnumFinanceConditions.needInvestigatorSupplyRiskMaterial.toString(), taskMap.need);
+            vars.put(EnumFinanceConditions.needSupervisorSupplyRiskMaterial.toString(), taskMap.need);
+            if (taskMap.need == 0 && taskMap.need2 == 0) {
+                vars.put(EnumFinanceConditions.riskManagerAudit.toString(), taskMap.pass);
             }
             taskService.complete(task.getId(), vars);
-            if (taskMap.getNeed() == 1) {
-                Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
-                if (!result1.isSuccess()) return result1;
-                Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
+            if (taskMap.need == 1 || taskMap.need2 == 1) {
+                FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
+                Result result = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
                 if (!result.isSuccess()) return result;
-                return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorSupplyRiskMaterial.toString(), String.valueOf(result.getData()));
-            } else if (taskMap.getPass() == 1) {
+                if (taskMap.need == 1) {
+                    Result result1 = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
+                    if (!result1.isSuccess()) return result1;
+                    noticeUser(true, riskManagerInfo.isNoticeApplyUser(), financeOrder.getApplyUserPhone(), financeOrder.getSourceId(), "尽调");
+                    noticeAdmin(String.valueOf(result1.getData()), "风控人员", financeOrder.getSourceId(), "尽调");
+                    Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorSupplyRiskMaterial.toString(), String.valueOf(result1.getData()));
+                    if (!result2.isSuccess()) return result2;
+                }
+                if (taskMap.need2 == 1) {
+                    Result result1 = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString());
+                    if (!result1.isSuccess()) return result1;
+                    noticeUser(true, riskManagerInfo.isNoticeApplyUser(), financeOrder.getApplyUserPhone(), financeOrder.getSourceId(), "监管");
+                    noticeAdmin(String.valueOf(result1.getData()), "风控人员", financeOrder.getSourceId(), "监管");
+                    Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.supervisorSupplyRiskMaterial.toString(), String.valueOf(result1.getData()));
+                    if (!result2.isSuccess()) return result2;
+                }
+                return Result.success();
+            } else if (taskMap.pass == 1) {
                 return methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditPass, userId);
             } else {
                 return methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
@@ -299,5 +298,25 @@ public class FinanceFlowStepServiceImpl {
         }
     }
 
+    /**
+     * 短信通知用户
+     */
+    public void noticeUser(boolean need, boolean noticeUser, String userPhone, String financeSourceId, String materialType) {
+        if (need) {
+            if (noticeUser && !StringUtils.isEmpty(userPhone)) {
+                messageService.sendSMS(userPhone, FinanceSMSMessage.getUserNeedSupplyMaterialMessage(financeSourceId, materialType));
+            }
+        }
+    }
+
+    /**
+     * 短信通知管理员
+     */
+    public void noticeAdmin(String userId, String adminName, String financeSourceId, String materialType) {
+        UserObject userObject = userService.changeUserObject(identityService.createUserQuery().userId(userId).singleResult());
+        if (!StringUtils.isEmpty(userObject.getPhone())) {
+            messageService.sendSMS(userObject.getPhone(), FinanceSMSMessage.getAdminNeedSupplyMaterialMessage(adminName, financeSourceId, materialType));
+        }
+    }
 
 }

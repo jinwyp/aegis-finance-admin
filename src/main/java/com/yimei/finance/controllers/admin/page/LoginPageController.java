@@ -14,9 +14,6 @@ public class LoginPageController {
     @Autowired
     private AdminSession adminSession;
 
-    /**
-     * 跳转到管理登录页面
-     */
     @ApiOperation(value = "管理后台首页跳转", notes = "管理后台首页跳转 没有登录调转到登录页面, 如果登录了跳转到管理员Home页面")
     @RequestMapping(value = "/finance/admin", method = RequestMethod.GET)
     public String indexPage() {
@@ -26,9 +23,6 @@ public class LoginPageController {
         return "redirect:/finance/admin/home";
     }
 
-    /**
-     * 管理登录页面
-     */
     @ApiOperation(value = "管理后台登陆页面", notes = "管理后台登陆页面 不需要登录就可以访问")
     @RequestMapping(value = "/finance/admin/login", method = RequestMethod.GET)
     public String loginPage() {
