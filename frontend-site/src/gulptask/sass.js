@@ -71,10 +71,10 @@ gulp.task('sass', ['sprite'], function() {
             outputStyle     : 'compact',
             errLogToConsole : true
         }).on('error', sass.logError))
-        //.pipe(autoprefixer({
-        //    browsers: ['> 1%', 'Last 2 versions', 'IE 8'],
-        //    cascade: false
-        //}))
+        .pipe(autoprefixer({
+           browsers: ['> 1%', 'Last 2 versions', 'IE 8'],
+           cascade: false
+        }))
         //.pipe(cleanCss({compatibility: 'ie8'}))
         .pipe(gulp.dest(sourcePath.css))
 });
