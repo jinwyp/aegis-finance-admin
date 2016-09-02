@@ -37,7 +37,7 @@ export class AddUserComponent {
     };
 
     private sub:Subscription;
-            currentUser = new User();
+    currentUser = new User();
 
     groups       = [];
     departments  = [];
@@ -69,22 +69,10 @@ export class AddUserComponent {
         this.groupService.getList().then((result)=> {
             if (result.success) {
                 this.groups = result.data;
-                this.setCheckBoxStatus();
-            } else {
-
             }
         });
     }
 
-    setCheckBoxStatus(){
-        this.groups.forEach((group)=> {
-            if (this.currentUser.groupIds.indexOf(group.id) > -1) {
-                group.selected = true;
-            }else{
-                group.selected = false;
-            }
-        });
-    }
 
     getDepartmentList() {
         this.userService.getDepartmentList().then((result)=> {
@@ -109,21 +97,14 @@ export class AddUserComponent {
         });
     }
 
-    changeSelectGroup (event){
-        this.currentUser.groupIds = event.selectedIds;
-        console.log(event.selectedIds);
-    }
-
 
     addUser() {
         this.css.isSubmitted     = true;
-        this.css.activeForRefresh = false;
         this.currentUser.department = this.selectedItem;
-        console.log(this.currentUser);
+
         if (this.css.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
                 this.css.isSubmitted     = false;
-                this.css.activeForRefresh = true;
                 if (result.success) {
                     this.css.ajaxSuccessHidden=false;
                     this.clear();
@@ -136,9 +117,9 @@ export class AddUserComponent {
         } else {
             this.userService.update(this.currentUser).then((result)=> {
                 this.css.isSubmitted     = false;
-                this.css.activeForRefresh = true;
                 if (result.success) {
-                    this.router.navigate(['/users']);
+                    this.css.ajaxSuccessHidden=false;
+                    // this.router.navigate(['/users']);
                 } else {
                     this.css.isHiddenModal=false;
                     this.modalShowText=result.error.message;
@@ -155,9 +136,8 @@ export class AddUserComponent {
         this.currentUser.phone      = '';
         this.currentUser.department = '';
         this.currentUser.groupIds   = [];
-        this.setCheckBoxStatus();
-        console.log(this.groups);
-        this.selectedItem     = '请选择';
+
+        this.selectedItem     = '';
     }
 
 
