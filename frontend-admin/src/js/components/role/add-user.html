@@ -14,7 +14,7 @@
         <div class="row mt-50 info-item">
             <label class="col-sm-2 info-label-input" for="usernameInput"><span class="orange">*</span>用户账号:</label>
             <div class="col-sm-10 info-val">
-                <input type="text" class="form-control" id="usernameInput" name="username" [(ngModel)]="currentUser.username" maxlength="16" #username="ngModel" required >
+                <input type="text" class="form-control" id="usernameInput" [disabled]="!css.isAddStatus" name="username" [(ngModel)]="currentUser.username" maxlength="16" #username="ngModel" required >
                 <span class="help-block" [class.hidden]="username.valid || username.pristine">请填写用户账号!</span>
             </div>
         </div>
@@ -41,8 +41,8 @@
             <label class="col-sm-2 info-label-input" for="emailInput"><span class="orange">*</span><span>公司邮箱:</span></label>
             <div class="col-sm-10 info-val">
                 <input type="text" class="form-control" id="emailInput" name="email" pattern="^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$" [(ngModel)]="currentUser.email" #email="ngModel" required >
+                <button type="button" class="btn btn-default btn-return ml-20 btn-reset-pwd" [class.hidden]="css.isAddStatus" (click)="showResetModal(currentUser.id,'确认重置用户密码吗?')">重置密码</button>
                 <span class="help-block" [class.hidden]="email.valid || email.pristine">请填写公司邮箱!</span>
-                <button type="button" class="btn btn-default btn-return ml-20 btn-reset-pwd" [class.hidden]="css.isAddStatus">重置密码</button>
             </div>
         </div>
         <div class="row info-item">
@@ -58,8 +58,8 @@
                 <custom-select  [optionList]="departments" [(ngModel)]="selectedItem" [ngModelOptions]="{standalone: true}"></custom-select>
             </div>
         </div>
-        <div class="row info-item">
-            <div class="col-sm-offset-2 col-sm-6 no-bottom-border">
+        <div class="row info-item mb-50">
+            <div class="col-sm-offset-2 col-sm-6 error-val no-bottom-border">
                 <div class="alert alert-success" role="alert" [class.hidden]="css.ajaxSuccessHidden">保存成功!</div>
                 <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">保存失败!</div>
             </div>
@@ -72,4 +72,5 @@
         </div>
     </form>
 </div>
-<custom-modal [(ngModel)]="css.isHiddenModal" [modalShowText]="modalShowText"></custom-modal>
+<custom-modal [(ngModel)]="css.isHiddenResetModal" [modalShowText]="modalShowText" (cancel)="hiddenModal()" (confirm)="resetPwd()"></custom-modal>
+<custom-modal [(ngModel)]="css.isHiddenMsgModal" [modalShowText]="modalShowText" (cancel)="hiddenModal()" (confirm)="hiddenModal()"></custom-modal>

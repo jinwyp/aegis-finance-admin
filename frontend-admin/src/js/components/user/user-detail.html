@@ -46,10 +46,10 @@
             <custom-select  [optionList]="departments"  [(ngModel)]="selectedItem" [ngModelOptions]="{standalone: true}"></custom-select>
         </div>
     </div>
-    <div class="row info-item">
-        <div class="col-sm-offset-2 col-sm-8 info-val no-bottom-border" [class.hidden]="css.ajaxSuccessHidden || css.ajaxErrorHidden">
-            <span class="alert alert-success" role="alert" [class.hidden]="css.ajaxSuccessHidden">保存成功!</span>
-            <span class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</span>
+    <div class="row info-item mb-50">
+        <div class="col-sm-offset-2 col-sm-6 error-val no-bottom-border">
+            <div class="alert alert-success" role="alert" [class.hidden]="css.ajaxSuccessHidden">保存成功!</div>
+            <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
         </div>
         <div class="col-sm-offset-2 col-sm-8 info-val no-bottom-border">
             <button type="submit" class="btn btn-default btn-lg btn-save" [disabled]="!saveUserForm.form.valid || css.isSubmitted">保存</button>

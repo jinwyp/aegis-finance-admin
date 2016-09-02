@@ -27,6 +27,7 @@ export class UserUpdatePasswordComponent {
         ajaxSuccessHidden : true,
         comfirmPwdError : true
     };
+    errorMsg = '';
 
     user = {
         oldPassword : '',
@@ -54,6 +55,7 @@ export class UserUpdatePasswordComponent {
                 setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
             } else {
                 this.css.ajaxErrorHidden = false;
+                this.errorMsg=result.error.message;
             }
             this.css.isSubmitted = false;
         });

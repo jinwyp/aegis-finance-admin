@@ -13,6 +13,11 @@
     padding-left:10px;
     line-height: 32px;
     cursor: pointer;
+    .caret{
+      float: right;
+      margin-top:12px;
+      margin-right:10px;
+    }
   }
   ul{
     position: absolute;
@@ -135,6 +140,7 @@
     .ml-70{ margin-left:70px;}
     .mr-20{ margin-right:20px;}
     .mb-20{ margin-bottom:20px;}
+    .mb-50{ margin-bottom:50px;}
     .fs-16{ font-size:16px;}
     .fs-14{ font-size:14px;}
     .fs-12{ font-size:12px;}
@@ -326,6 +332,7 @@
       margin-left:60px;
       margin-right:60px;
       font-size:16px;
+      .error-val{ padding:0;margin-top: 20px; }
       .info-label{
         padding:30px 0;
         color: $menu-text-color;
