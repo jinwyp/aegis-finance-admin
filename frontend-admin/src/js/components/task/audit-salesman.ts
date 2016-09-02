@@ -28,6 +28,8 @@ export class AuditSalesmanComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
+    isApprovedRadio : boolean = false;
+
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -78,7 +80,12 @@ export class AuditSalesmanComponent {
     }
 
 
-    audit (isAudit : boolean, isApproved : boolean){
+    audit (isAudit : boolean){
+
+        let isApproved : boolean = false;
+        if (isAudit) {
+            isApproved = this.isApprovedRadio;
+        }
 
         let auditType : string = '';
         let body : any = {
