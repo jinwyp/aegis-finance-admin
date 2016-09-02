@@ -50,8 +50,8 @@
             <td class="td-label" *ngIf="currentOrder.applyType==='MYR'||currentOrder.applyType==='MYG'">运输方式:</td>
             <td class="td-val" *ngIf="currentOrder.applyType==='MYR'||currentOrder.applyType==='MYG'">
                 <select [(ngModel)]="currentOrder.transportMode">
-                    <option value ="">请选择</option>
-                    <option value ="汽运">汽运</option>
+                    <option value="null">请选择</option>
+                    <option value="汽运">汽运</option>
                     <option value="海运">海运</option>
                     <option value="火运">火运</option>
                     <option value="其它">其它</option>
@@ -131,8 +131,8 @@
             <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
         </div>
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(false, false)" [disabled]="css.isSubmited">保存</button>
-            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(true, true)" [disabled]="css.isSubmited">保存并提交</button>
+            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(false, false)" [disabled]="css.isSubmitted">保存</button>
+            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(true, true)" [disabled]="css.isSubmitted">保存并提交</button>
             <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['tasks/pending']">返回</button>
         </div>
     </div>

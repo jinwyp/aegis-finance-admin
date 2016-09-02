@@ -26,7 +26,7 @@ export class TaskListComponent {
     ) {}
 
     routeData :any = {
-        routetype : '',
+        routeType : '',
         title : ''
     };
 
@@ -38,7 +38,7 @@ export class TaskListComponent {
     ngOnInit(){
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
-            if (this.routeData.routetype === 'pending'){
+            if (this.routeData.routeType === 'pending'){
                 this.getAssignTaskList();
                 this.getAllTaskList();
             }else{
@@ -87,7 +87,7 @@ export class TaskListComponent {
     getAllTaskList () {
         this.task.getTaskHistoryList().then((result)=>{
             if (result.success){
-                if (this.routeData.routetype === 'all'){
+                if (this.routeData.routeType === 'all'){
                     this.taskPendingList = result.data;
                 }
                 this.task.setAllTaskLengthObservable(result.data.length);

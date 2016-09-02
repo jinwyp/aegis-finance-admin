@@ -40,56 +40,56 @@ const routes: Routes = [
     {
         path: 'userroles',
         component: RoleListComponent,
-        data: { routetype : 'list', title: 'User Role List' }
+        data: { routeType : 'list', title: 'User Role List' }
     },
     {
         path: 'userroles/add',
         component: AddRoleComponent,
-        data: { routetype : 'add', title: 'User Role Add' }
+        data: { routeType : 'add', title: 'User Role Add' }
     },
     {
         path: 'userroles/:id',
         component: RoleInfoComponent,
-        data: { routetype : 'info', title: 'User Role Info'}
+        data: { routeType : 'info', title: 'User Role Info'}
     },
     {
         path: 'userroles/:id/edit',
         component: AddRoleComponent,
-        data: { routetype : 'update',  title: 'User Role Edit'}
+        data: { routeType : 'update',  title: 'User Role Edit'}
     },
 
     {
         path: 'users',
         component: UserListComponent,
-        data: { routetype : 'list', title: 'User List' }
+        data: { routeType : 'list', title: 'User List' }
     },
     {
         path: 'users/add',
         component: AddUserComponent,
-        data: { routetype : 'add', title: 'User Add' }
+        data: { routeType : 'add', title: 'User Add' }
     },
     {
         path: 'users/:id',
         component: UserInfoComponent,
-        data: { routetype : 'list', title: 'User Info'}
+        data: { routeType : 'list', title: 'User Info'}
     },
     {
         path: 'users/:id/edit',
         component: AddUserComponent,
-        data: { routetype : 'edit', title: 'User Edit' }
+        data: { routeType : 'edit', title: 'User Edit' }
     },
 
 
     {
         path: 'tasks/pending',
         component: TaskListComponent,
-        data: { routetype : 'pending', title: 'User Pending Tasks' }
+        data: { routeType : 'pending', title: 'User Pending Tasks' }
     },
 
     {
         path: 'tasks/all',
         component: TaskListComponent,
-        data: {routetype : 'all', title: 'User All Tasks' }
+        data: {routeType : 'all', title: 'User All Tasks' }
     },
 
     {

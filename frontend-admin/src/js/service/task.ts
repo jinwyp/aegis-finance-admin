@@ -268,13 +268,13 @@ class TaskService {
     assignPerson(taskId : string, userId : string) {
 
         return this.http.post(API.tasks + '/' + taskId + '/claim', {}).toPromise()
-            .then<HttpResponse | any>( (response) => {
-                var result = response.json();
+            .then<HttpResponse>( (response) => {
+                var result : HttpResponse = response.json();
                 if (result.success ){
                     return this.http.put(API.tasks + '/' + taskId + '/person/' + userId, {}).toPromise()
                         .then(response => response.json() as HttpResponse)
                 }else{
-                    return Promise.resolve(result)
+                    return result
                 }
             })
             .catch(GlobalPromiseHttpCatch);
