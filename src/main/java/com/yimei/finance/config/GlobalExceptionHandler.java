@@ -1,10 +1,10 @@
 package com.yimei.finance.config;
 
-import com.yimei.finance.representation.common.enums.EnumCommonError;
-import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.exception.UnauthorizedException;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.result.Result;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
@@ -23,12 +23,6 @@ import java.io.IOException;
 
 @ControllerAdvice
 public class GlobalExceptionHandler {
-//    @Autowired
-//    private ObjectMapper om;
-//    @Autowired
-//    private Queue mailQueue;
-//    @Value("${mail.to}")
-//    private String to;
 
     @ExceptionHandler({MethodArgumentNotValidException.class, TypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -117,7 +111,13 @@ public class GlobalExceptionHandler {
     }
 
 
-
+//    @Autowired
+//    private ObjectMapper om;
+//    @Autowired
+//    private Queue mailQueue;
+//    @Value("${mail.to}")
+//    private String to;
+//
 //    //获取header对象
 //    private String getHeadersInfo(HttpServletRequest request) throws JsonProcessingException {
 //        Map<String, String> map = new HashMap<String, String>();
@@ -138,7 +138,7 @@ public class GlobalExceptionHandler {
 //        throwable.printStackTrace(pw);
 //        return sw.getBuffer().toString();
 //    }
-
+//
 //    //获取application/json 数据
 //    public static String extractPostRequestBody(HttpServletRequest request) {
 //        if ("POST".equalsIgnoreCase(request.getMethod())) {

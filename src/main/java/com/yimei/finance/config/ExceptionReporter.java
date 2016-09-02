@@ -7,9 +7,6 @@ import org.springframework.stereotype.Service;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
-/**
- * Created by joe on 2/26/15.
- */
 @Service
 @Slf4j
 public class ExceptionReporter {

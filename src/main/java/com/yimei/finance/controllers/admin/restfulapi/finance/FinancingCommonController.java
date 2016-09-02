@@ -1,14 +1,12 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.EnumFinanceAssignType;
 import com.yimei.finance.representation.admin.finance.EnumFinanceAttachment;
-import com.yimei.finance.representation.admin.finance.EnumFinanceEventType;
 import com.yimei.finance.representation.admin.user.EnumAdminUserError;
-import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
@@ -68,6 +66,34 @@ public class FinancingCommonController {
         return financeOrderService.findById(financeId, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.OnlineTraderAuditAttachment}));
     }
 
+    @RequestMapping(value = "/finance/salesman/{financeId}", method = RequestMethod.GET)
+    @ApiOperation(value = "通过 金融单id 查看业务员填写表单详细信息", notes = "通过 金融单id 查看业务员填写表单详细信息", response = FinanceOrderSalesmanInfo.class)
+    @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
+    public Result getFinanceOrderSalesmanInfoByFinanceIdMethod(@PathVariable("financeId")Long financeId) {
+        return financeOrderService.findSalesmanInfoByFinanceId(financeId, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SalesmanAuditAttachment}));
+    }
+
+    @RequestMapping(value = "/finance/investigator/{financeId}", method = RequestMethod.GET)
+    @ApiOperation(value = "通过 金融单id 查看尽调员填写表单详细信息", notes = "通过 金融单id 查看尽调员填写表单详细信息", response = FinanceOrderInvestigatorInfo.class)
+    @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
+    public Result getFinanceOrderInvestigatorInfoByFinanceIdMethod(@PathVariable("financeId")Long financeId) {
+        return financeOrderService.findInvestigatorInfoByFinanceId(financeId, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.InvestigatorAuditAttachment, EnumFinanceAttachment.SalesmanSupplyAttachment_Investigator}));
+    }
+
+    @RequestMapping(value = "/finance/supervisor/{financeId}", method = RequestMethod.GET)
+    @ApiOperation(value = "通过 金融单id 查看监管员填写表单详细信息", notes = "通过 金融单id 查看监管员填写表单详细信息", response = FinanceOrderSupervisorInfo.class)
+    @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
+    public Result getFinanceOrderSupervisorInfoByFinanceIdMethod(@PathVariable("financeId")Long financeId) {
+        return financeOrderService.findSupervisorInfoByFinanceId(financeId, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SupervisorAuditAttachment, EnumFinanceAttachment.SalesmanSupplyAttachment_Supervisor}));
+    }
+
+    @RequestMapping(value = "/finance/riskmanager/{financeId}", method = RequestMethod.GET)
+    @ApiOperation(value = "通过 金融单id 查看风控人员填写表单详细信息", notes = "通过 金融单id 查看风控人员填写表单详细信息", response = FinanceOrderRiskManagerInfo.class)
+    @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
+    public Result getFinanceOrderRiskManagerInfoByFinanceIdMethod(@PathVariable("financeId")Long financeId) {
+        return financeOrderService.findRiskManagerInfoByFinanceId(financeId, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SalesmanAuditAttachment, EnumFinanceAttachment.InvestigatorSupplyRiskAttachment, EnumFinanceAttachment.SupervisorSupplyRiskAttachment}));
+    }
+
     @RequestMapping(value = "/tasks/{taskId}/claim", method = RequestMethod.POST)
     @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
@@ -108,24 +134,13 @@ public class FinancingCommonController {
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         List<User> userList = new ArrayList<>();
         String financeEventType = "";
-        if (task.getTaskDefinitionKey().equals(EnumFinanceAssignType.assignOnlineTrader.toString())) {
-            userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.OnlineTraderGroup.id).list();
-            financeEventType = EnumFinanceEventType.onlineTraderAudit.toString();
-        } else if (task.getTaskDefinitionKey().equals(EnumFinanceAssignType.assignSalesman.toString())) {
-            userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SalesmanGroup.id).list();
-            financeEventType = EnumFinanceEventType.salesmanAudit.toString();
-        } else if (task.getTaskDefinitionKey().equals(EnumFinanceAssignType.assignInvestigator.toString())) {
-            userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.InvestigatorGroup.id).list();
-            financeEventType = EnumFinanceEventType.investigatorAudit.toString();
-        } else if (task.getTaskDefinitionKey().equals(EnumFinanceAssignType.assignSupervisor.toString())) {
-            userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SupervisorGroup.id).list();
-            financeEventType = EnumFinanceEventType.supervisorAudit.toString();
-        } else if (task.getTaskDefinitionKey().equals(EnumFinanceAssignType.assignRiskManager.toString())) {
-            userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.RiskGroup.id).list();
-            financeEventType = EnumFinanceEventType.riskManagerAudit.toString();
-        } else {
-            return Result.error(EnumCommonError.Admin_System_Error);
+        for (EnumFinanceAssignType type : EnumFinanceAssignType.values()) {
+            if (task.getTaskDefinitionKey().equals(type.toString())) {
+                userList = identityService.createUserQuery().memberOfGroup(type.id).list();
+                financeEventType = type.nextStep;
+            }
         }
+        if (StringUtils.isEmpty(financeEventType)) return Result.error(EnumCommonError.Admin_System_Error);
         for (User u : userList) {
             if (u.getId().equals(userId)) {
                 taskService.complete(task.getId());
