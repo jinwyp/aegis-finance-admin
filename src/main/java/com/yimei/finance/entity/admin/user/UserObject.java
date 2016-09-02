@@ -28,7 +28,6 @@ public class UserObject implements Serializable {
     @Email
     private String email;                       //邮箱
     private String department;                  //部门
-    private String password;
     private List<String> groupIds;              //用户组id数组
     private List<GroupObject> groupList;        //用户所在组列表
 
