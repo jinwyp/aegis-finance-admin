@@ -229,7 +229,7 @@ class UserGroupService {
 
 
     getList() {
-        return this.http.get(API.groups).toPromise()
+        return this.http.get(API.groups+'/handle').toPromise()
             .then( response => {
                 var result = response.json() as HttpResponse;
                 if (result.data ){
