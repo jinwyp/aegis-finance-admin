@@ -1,16 +1,18 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.AttachmentObject;
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.entity.admin.finance.FinanceOrderInvestigatorInfo;
-import com.yimei.finance.entity.admin.finance.FinanceOrderSalesmanInfo;
+import com.yimei.finance.entity.admin.finance.*;
+import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.common.result.TaskMap;
+import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.service.common.message.MessageServiceImpl;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -33,6 +35,12 @@ public class FinanceFlowStepServiceImpl {
     private MessageServiceImpl messageService;
     @Autowired
     private FinanceOrderRepository financeOrderRepository;
+    @Autowired
+    private AdminUserServiceImpl userService;
+    @Autowired
+    private IdentityService identityService;
+    @Autowired
+    private HistoryService historyService;
 
     /**
      * 线上交易员审核
@@ -73,7 +81,7 @@ public class FinanceFlowStepServiceImpl {
         if (salesmanInfo.isNeedSupplyMaterial() && salesmanInfo.isNoticeApplyUser()) {
             FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
             if (!StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
-                messageService.sendSMS(financeOrder.getApplyUserPhone(), EnumAdminFinanceSMS.getUserNeedSupplyMaterialMessage(financeOrder.getSourceId(), EnumFinanceSupplyMaterialType.业务.toString()));
+                messageService.sendSMS(financeOrder.getApplyUserPhone(), FinanceSendSMSUtils.getUserNeedSupplyMaterialMessage(financeOrder.getSourceId(), "业务"));
             }
         }
         if (taskMap.getSubmit() == 0) {
@@ -125,10 +133,19 @@ public class FinanceFlowStepServiceImpl {
         if (investigatorInfo.isNeedSupplyMaterial()) {
             FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
             if (investigatorInfo.isNoticeApplyUser() && !StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
-//                messageService.sendSMS();
+                messageService.sendSMS(financeOrder.getApplyUserPhone(), FinanceSendSMSUtils.getUserNeedSupplyMaterialMessage(financeOrder.getSourceId(), "尽调"));
             }
             if (investigatorInfo.isNoticeSalesman()) {
-
+                List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).finished().orderByTaskCreateTime().desc().list();
+                for (HistoricTaskInstance taskInstance : historicTaskInstanceList) {
+                    if (taskInstance.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanAudit.toString())) {
+                        UserObject userObject = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
+                        if (userObject == null) return Result.error(EnumCommonError.Admin_System_Error);
+                        if (!StringUtils.isEmpty(userObject.getPhone())) {
+                            messageService.sendSMS(userObject.getPhone(), FinanceSendSMSUtils.getAdminNeedSupplyMaterialMessage("尽调员", financeOrder.getSourceId(), "尽调"));
+                        }
+                    }
+                }
             }
         }
         if (taskMap.getSubmit() == 0) {

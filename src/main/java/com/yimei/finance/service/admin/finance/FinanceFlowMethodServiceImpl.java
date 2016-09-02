@@ -1,6 +1,9 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.*;
+import com.yimei.finance.entity.admin.finance.AttachmentObject;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.entity.admin.finance.HistoryTaskObject;
+import com.yimei.finance.entity.admin.finance.TaskObject;
 import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.EnumFinanceAttachment;
@@ -13,6 +16,7 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.Execution;
@@ -115,6 +119,7 @@ public class FinanceFlowMethodServiceImpl {
         if (StringUtils.isEmpty(processInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
         FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
+        taskObject.setFinanceId(financeOrder.getId());
         taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
         taskObject.setApplyType(financeOrder.getApplyType());
         taskObject.setApplyTypeName(financeOrder.getApplyTypeName());
@@ -148,6 +153,7 @@ public class FinanceFlowMethodServiceImpl {
         if (StringUtils.isEmpty(historicProcessInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
         FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(historicProcessInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
+        taskObject.setFinanceId(financeOrder.getId());
         taskObject.setApplyCompanyName(financeOrder.getApplyCompanyName());
         taskObject.setApplyType(financeOrder.getApplyType());
         taskObject.setApplyTypeName(financeOrder.getApplyTypeName());
@@ -157,6 +163,23 @@ public class FinanceFlowMethodServiceImpl {
             UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
             taskObject.setAssigneeName(user.getUsername());
             taskObject.setAssigneeDepartment(user.getDepartment());
+        }
+        if (historicProcessInstance.getEndTime() == null) {
+            List<Task> taskList = taskService.createTaskQuery().processInstanceId(historicProcessInstance.getId()).active().list();
+            if (taskList == null || taskList.size() == 0) return Result.error(EnumCommonError.Admin_System_Error);
+            taskObject.setCurrentName(taskList.get(0).getName());
+            taskObject.setCurrentTaskDefinitionKey(taskList.get(0).getTaskDefinitionKey());
+            if (!StringUtils.isEmpty(taskList.get(0).getAssignee())) {
+                UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(taskList.get(0).getAssignee()).singleResult());
+                taskObject.setCurrentAssignee(user.getId());
+                taskObject.setCurrentAssigneeName(user.getUsername());
+                taskObject.setCurrentAssigneeDepartment(user.getDepartment());
+            }
+        } else {
+            List<HistoricActivityInstance> activityInstanceList = historyService.createHistoricActivityInstanceQuery().processInstanceId(historicProcessInstance.getId()).orderByHistoricActivityInstanceStartTime().desc().list();
+            if (activityInstanceList == null || activityInstanceList.size() == 0) return Result.error(EnumCommonError.Admin_System_Error);
+            taskObject.setCurrentName(activityInstanceList.get(0).getActivityName());
+            taskObject.setCurrentTaskDefinitionKey(activityInstanceList.get(0).getActivityId());
         }
         return Result.success().setData(taskObject);
     }
