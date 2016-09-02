@@ -1,7 +1,9 @@
 package com.yimei.finance.service.admin.user;
 
 import com.yimei.finance.entity.admin.user.GroupObject;
+import com.yimei.finance.entity.admin.user.UserLoginRecord;
 import com.yimei.finance.entity.admin.user.UserObject;
+import com.yimei.finance.repository.admin.user.AdminUserLoginRecordRepository;
 import com.yimei.finance.representation.admin.user.AdminUserSearch;
 import com.yimei.finance.representation.admin.user.EnumAdminUserError;
 import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
@@ -26,6 +28,8 @@ public class AdminUserServiceImpl {
     private IdentityService identityService;
     @Autowired
     private AdminGroupServiceImpl groupService;
+    @Autowired
+    private AdminUserLoginRecordRepository loginRecordRepository;
 
     /**
      * 获取可以查看
@@ -105,6 +109,10 @@ public class AdminUserServiceImpl {
         userObject.setName(identityService.getUserInfo(user.getId(), "name"));
         userObject.setDepartment(identityService.getUserInfo(user.getId(), "department"));
         userObject.setGroupList(DozerUtils.copy(identityService.createGroupQuery().groupMember(user.getId()).list(), GroupObject.class));
+        UserLoginRecord loginRecord = loginRecordRepository.findTopByUserId(user.getId());
+        if (loginRecord != null) {
+            userObject.setLastLoginTime(loginRecord.getCreateTime());
+        }
         return userObject;
     }
 

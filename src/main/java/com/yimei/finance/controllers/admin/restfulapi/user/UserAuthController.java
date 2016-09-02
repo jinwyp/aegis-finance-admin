@@ -1,7 +1,9 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.entity.admin.user.UserLoginRecord;
 import com.yimei.finance.entity.admin.user.UserObject;
+import com.yimei.finance.repository.admin.user.AdminUserLoginRecordRepository;
 import com.yimei.finance.representation.admin.user.EnumAdminUserError;
 import com.yimei.finance.representation.admin.user.UserLoginObject;
 import com.yimei.finance.representation.common.result.Result;
@@ -17,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
+import java.util.Date;
 
 @Api(tags = {"admin-api-user"}, description = "用户登陆验证接口")
 @RequestMapping("/api/financing/admin")
@@ -28,6 +31,8 @@ public class UserAuthController {
     private AdminUserServiceImpl adminService;
     @Autowired
     private IdentityService identityService;
+    @Autowired
+    private AdminUserLoginRecordRepository loginRecordRepository;
 
     /**
      * 管理员登陆
@@ -40,6 +45,7 @@ public class UserAuthController {
             UserObject userObject = adminService.changeUserObject(user);
             if (identityService.checkPassword(user.getId(), adminService.securePassword(userLoginObject.getPassword()))) {
                 adminSession.login(userObject);
+                loginRecordRepository.save(new UserLoginRecord(userObject.getId(), userObject.getUsername(), new Date()));
                 return Result.success().setData(userObject);
             } else {
                 return Result.error(401, EnumAdminUserError.用户名或者密码错误.toString());

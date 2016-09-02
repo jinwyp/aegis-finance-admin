@@ -7,9 +7,6 @@ import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 
-/**
- * Created by liuxinjie on 16/8/19.
- */
 @ApiModel(value = "group")
 @Data
 @NoArgsConstructor
