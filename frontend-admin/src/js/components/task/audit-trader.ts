@@ -38,6 +38,7 @@ export class AuditTraderComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
+    isApprovedRadio : boolean = false;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -90,13 +91,16 @@ export class AuditTraderComponent {
 
 
 
-    audit (isAudit : boolean, isApproved : boolean){
+    audit (isAudit : boolean){
 
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
 
-
+        let isApproved : boolean = false;
+        if (isAudit) {
+            isApproved = this.isApprovedRadio;
+        }
         let auditType : string = '';
         let body : any = {
             t : {

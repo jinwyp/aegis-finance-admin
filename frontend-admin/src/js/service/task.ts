@@ -122,6 +122,13 @@ class Task {
     assigneeDepartment : string;
     assigneeName : string;
 
+    currentAssignee : string;
+    currentAssigneeDepartment : string;
+    currentAssigneeName : string;
+    currentName : string;
+    currentTaskDefinitionKey : string;
+
+
     // finance Order 字段
     applyType : string;
     applyCompanyName : string;
