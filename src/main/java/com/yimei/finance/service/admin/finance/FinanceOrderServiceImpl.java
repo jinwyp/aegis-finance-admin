@@ -5,7 +5,6 @@ import com.yimei.finance.repository.admin.finance.*;
 import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;
-import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.site.user.FinanceOrderSearch;
@@ -13,7 +12,6 @@ import com.yimei.finance.utils.DozerUtils;
 import com.yimei.finance.utils.Where;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.task.Attachment;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,6 +54,7 @@ public class FinanceOrderServiceImpl {
     @Transactional
     public void updateFinanceOrderByOnlineTrader(String userId, FinanceOrder financeOrder) {
         FinanceOrder order = orderRepository.findOne(financeOrder.getId());
+        order.setSellingPrice(financeOrder.getSellingPrice());
         order.setMarketPrice(financeOrder.getMarketPrice());
         order.setCoalSource(financeOrder.getCoalSource());
         order.setStorageLocation(financeOrder.getStorageLocation());
