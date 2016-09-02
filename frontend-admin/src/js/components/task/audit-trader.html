@@ -123,6 +123,14 @@
                 <textarea class="form-control" rows="6" [(ngModel)]="currentOrder.comments"></textarea>
             </td>
         </tr>
+
+        <tr class="item-title">
+            <td colspan="4">
+                <span>审核意见:</span>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" value="true">通过</label>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" value="false">不通过</label>
+            </td>
+        </tr>
     </table>
 
     <div class="row info-item">
@@ -131,8 +139,8 @@
             <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
         </div>
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(false, false)" [disabled]="css.isSubmitted">保存</button>
-            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(true, true)" [disabled]="css.isSubmitted">保存并提交</button>
+            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(false)" [disabled]="css.isSubmitted">保存</button>
+            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(true)" [disabled]="css.isSubmitted">保存并提交</button>
             <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['tasks/pending']">返回</button>
         </div>
     </div>

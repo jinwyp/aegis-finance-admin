@@ -71,5 +71,27 @@
                 <!--<button type="button" class="btn btn-xs btn-default btn-return w-80">补充材料</button>-->
             </td>
         </tr>
+
+
+
+        <tr class="item" *ngFor="let task of taskHistoryList">
+            <td>{{task.sourceId }} <br/>
+                <span *ngIf="task.applyType==='MYR'">煤易融</span>
+                <span *ngIf="task.applyType==='MYG'">煤易购</span>
+                <span *ngIf="task.applyType==='MYD'">煤易贷</span>
+            </td>
+            <td>{{task.startTime | date:"yyyy/MM/dd"}}</td>
+            <td>{{task.applyCompanyName}}</td>
+            <td>{{task.financingAmount||'--'}}</td>
+            <td>{{task.currentAssigneeName ||'--'}} <br/>{{task.currentAssigneeDepartment||'--'}}</td>
+            <td>
+                <span class="green">{{task.currentName}}</span> <br/>
+                <!--<span class="orange">(补充材料)</span><br/>-->
+                <!--<span>已完成</span>-->
+            </td>
+            <td>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80"  > 查看详情 </button>
+            </td>
+        </tr>
     </table>
 </div>

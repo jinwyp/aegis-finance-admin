@@ -27,6 +27,7 @@ export class AuditSalesmanComponent {
 
     taskId : string = '';
     currentTask : Task = new Task();
+    currentOrder : Task = new Task();
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -63,6 +64,13 @@ export class AuditSalesmanComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
+                this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
+                    if (result.success){
+                        this.currentOrder = result.data;
+                    }else{
+
+                    }
+                });
             }else{
 
             }
