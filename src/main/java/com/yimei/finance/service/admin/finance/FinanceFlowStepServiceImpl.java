@@ -284,8 +284,9 @@ public class FinanceFlowStepServiceImpl {
                 if (taskMap.need2 == 1) {
                     Result result1 = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString());
                     if (!result1.isSuccess()) return result1;
-                    noticeUser(true, riskManagerInfo.isNoticeApplyUser(), financeOrder.getApplyUserPhone(), financeOrder.getSourceId(), "监管");
-                    noticeAdmin(String.valueOf(result1.getData()), "风控人员", financeOrder.getSourceId(), "监管");
+                    noticeUser(true, riskManagerInfo.isNoticeApplyUser(), financeOrder.getApplyUserPhone(), financeOrder.getSourceId(), "尽调");
+                    noticeAdmin(String.valueOf(result1.getData()), "风控人员", financeOrder.getSourceId(), "尽调");
+
                     Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.supervisorSupplyRiskMaterial.toString(), String.valueOf(result1.getData()));
                     if (!result2.isSuccess()) return result2;
                 }
