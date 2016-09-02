@@ -1,5 +1,6 @@
 package com.yimei.finance.controllers.admin.common;
 
+import com.yimei.finance.entity.admin.finance.AttachmentObject;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.repository.admin.databook.DataBookRepository;
 import com.yimei.finance.representation.admin.finance.EnumMYRFinanceAllSteps;
@@ -50,18 +51,14 @@ public class ToolsController {
         return Result.success().setData(stepList);
     }
 
-    /**
-     * 上传文件
-     */
     @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
+    @ApiOperation(value = "上传文件", notes = "上传文件", response = AttachmentObject.class)
     public Result uploadFileMethod(@RequestParam("file") MultipartFile file) throws IOException {
         return Result.success().setData(StoreUtils.save(localStorage, file, "finance"));
     }
 
-    /**
-     * 下载文件
-     */
     @RequestMapping(value = "/download/file", method = RequestMethod.GET)
+    @ApiOperation(value = "下载文件", notes = "下载文件")
     public void doDownloadFile(@RequestParam(value = "path", required = true) String path, HttpServletResponse response) {
         try {
             if (path != null && path.startsWith("/files/")) {
