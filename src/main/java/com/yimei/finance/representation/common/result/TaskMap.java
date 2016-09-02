@@ -1,10 +1,7 @@
 package com.yimei.finance.representation.common.result;
 
-import lombok.Data;
-
 import java.io.Serializable;
 
-@Data
 public class TaskMap implements Serializable {
     public int need;                            //是否需要补充材料1   0:不需要, 1:需要
     public int need2;                           //是否需要补充材料2
