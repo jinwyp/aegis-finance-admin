@@ -6,9 +6,7 @@ import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.EnumFinanceAssignType;
 import com.yimei.finance.representation.admin.finance.EnumFinanceAttachment;
-import com.yimei.finance.representation.admin.finance.EnumFinanceEventType;
 import com.yimei.finance.representation.admin.user.EnumAdminUserError;
-import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
@@ -136,24 +134,13 @@ public class FinancingCommonController {
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         List<User> userList = new ArrayList<>();
         String financeEventType = "";
-        if (task.getTaskDefinitionKey().equals(EnumFinanceAssignType.assignOnlineTrader.toString())) {
-            userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.OnlineTraderGroup.id).list();
-            financeEventType = EnumFinanceEventType.onlineTraderAudit.toString();
-        } else if (task.getTaskDefinitionKey().equals(EnumFinanceAssignType.assignSalesman.toString())) {
-            userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SalesmanGroup.id).list();
-            financeEventType = EnumFinanceEventType.salesmanAudit.toString();
-        } else if (task.getTaskDefinitionKey().equals(EnumFinanceAssignType.assignInvestigator.toString())) {
-            userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.InvestigatorGroup.id).list();
-            financeEventType = EnumFinanceEventType.investigatorAudit.toString();
-        } else if (task.getTaskDefinitionKey().equals(EnumFinanceAssignType.assignSupervisor.toString())) {
-            userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SupervisorGroup.id).list();
-            financeEventType = EnumFinanceEventType.supervisorAudit.toString();
-        } else if (task.getTaskDefinitionKey().equals(EnumFinanceAssignType.assignRiskManager.toString())) {
-            userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.RiskGroup.id).list();
-            financeEventType = EnumFinanceEventType.riskManagerAudit.toString();
-        } else {
-            return Result.error(EnumCommonError.Admin_System_Error);
+        for (EnumFinanceAssignType type : EnumFinanceAssignType.values()) {
+            if (task.getTaskDefinitionKey().equals(type.toString())) {
+                userList = identityService.createUserQuery().memberOfGroup(type.id).list();
+                financeEventType = type.nextStep;
+            }
         }
+        if (StringUtils.isEmpty(financeEventType)) return Result.error(EnumCommonError.Admin_System_Error);
         for (User u : userList) {
             if (u.getId().equals(userId)) {
                 taskService.complete(task.getId());
