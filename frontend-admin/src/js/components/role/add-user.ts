@@ -4,7 +4,7 @@
 
 
 import {Component} from '@angular/core';
-import {ActivatedRoute,Router}      from '@angular/router';
+import {ActivatedRoute}      from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 
 import {User, UserService, UserGroupService} from '../../service/user';
@@ -22,7 +22,6 @@ export class AddUserComponent {
 
     constructor(
         private activatedRoute: ActivatedRoute,
-        private router:Router,
         private userService: UserService,
         private groupService:UserGroupService
     ) {}
@@ -32,9 +31,13 @@ export class AddUserComponent {
         ajaxErrorHidden : true,
         activeForRefresh : true,
         isSubmitted :      false,
-        isHiddenModal : true,
+        isHiddenResetModal : true,
+        isHiddenMsgModal : true,
         isAddStatus :  false
     };
+    errorMsg = '';
+
+    userId : string ='';
 
     private sub:Subscription;
     currentUser = new User();
@@ -107,11 +110,10 @@ export class AddUserComponent {
                 this.css.isSubmitted     = false;
                 if (result.success) {
                     this.css.ajaxSuccessHidden=false;
-                    this.clear();
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
+                    this.clear();
                 } else {
-                    this.css.isHiddenModal=false;
-                    this.modalShowText=result.error.message;
+                    this.errorMsg=result.error.message;
                 }
             });
         } else {
@@ -119,11 +121,33 @@ export class AddUserComponent {
                 this.css.isSubmitted     = false;
                 if (result.success) {
                     this.css.ajaxSuccessHidden=false;
-                    // this.router.navigate(['/users']);
+                    setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 } else {
-                    this.css.isHiddenModal=false;
+                    this.errorMsg=result.error.message;
+                }
+            });
+        }
+    }
+
+    showResetModal(id:string, modalShowText:string) {
+        this.css.isHiddenResetModal = false;
+        this.modalShowText = modalShowText;
+        this.userId = id;
+    }
+
+    hiddenModal() {
+        this.userId = '';
+    }
+
+    resetPwd(){
+        if (this.userId){
+            this.userService.resetPassword(this.userId).then((result)=> {
+                if (result.success) {
+                    this.modalShowText='重置密码成功!';
+                } else {
                     this.modalShowText=result.error.message;
                 }
+                this.css.isHiddenMsgModal=false;
             });
         }
     }
@@ -136,8 +160,9 @@ export class AddUserComponent {
         this.currentUser.phone      = '';
         this.currentUser.department = '';
         this.currentUser.groupIds   = [];
-
         this.selectedItem     = '';
+        // this.css.activeForRefresh = false;
+        // setTimeout(() => this.css.activeForRefresh = true, 0);
     }
 
 
