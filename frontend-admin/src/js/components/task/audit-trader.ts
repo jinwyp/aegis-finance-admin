@@ -107,14 +107,14 @@ export class AuditTraderComponent {
                 need : 0,
                 need2 : 0
             },
-            u : this.currentTask
+            u : this.currentOrder
         };
 
         if (this.currentTask.taskDefinitionKey === TaskStatus.onlineTraderAudit) auditType = 'onlinetrader'; //线上交易员审核并填写材料
 
         if (this.currentTask.taskDefinitionKey && auditType) {
 
-            this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
+            this.task.audit(this.taskId, this.currentOrder.applyType, auditType, body).then((result)=>{
                 if (result.success){
                     this.css.ajaxSuccessHidden = false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
