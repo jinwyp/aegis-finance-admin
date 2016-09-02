@@ -23,9 +23,11 @@ export class AssignPersonComponent {
     private sub: Subscription;
 
     css = {
+        isSubmited : false,
         ajaxErrorHidden : true,
         ajaxSuccessHidden : true
     };
+    errorMsg = '';
 
     currentUserSession : User = new User();
     selectedUser : User = new User();
@@ -101,14 +103,16 @@ export class AssignPersonComponent {
 
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
-
+        this.css.isSubmited = true;
         if (this.selectedUser.id){
             this.task.assignPerson(this.taskId, this.selectedUser.id).then((result)=>{
                 if (result.success){
                     this.css.ajaxSuccessHidden = false;
                 }else{
+                    this.errorMsg=result.error.message;
                     this.css.ajaxErrorHidden = false;
                 }
+                this.css.isSubmited = false;
             });
         }else{
             this.css.ajaxErrorHidden = false;

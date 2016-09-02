@@ -27,9 +27,11 @@ export class AuditTraderComponent {
     private sub: Subscription;
 
     css = {
+        isSubmited : false,
         ajaxErrorHidden : true,
         ajaxSuccessHidden : true
     };
+    errorMsg : string ='';
 
     currentUserSession : User = new User();
 
@@ -71,19 +73,22 @@ export class AuditTraderComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
+                this.getFinanceInfo(this.currentTask.financeId);
             }else{
 
             }
         });
+    }
 
-        this.task.getOrderInfoById(id).then((result)=>{
+    getFinanceInfo(id : number){
+        this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
             if (result.success){
                 this.currentOrder = result.data;
+                console.log(this.currentOrder);
             }else{
 
             }
         });
-
     }
 
 
@@ -91,6 +96,7 @@ export class AuditTraderComponent {
 
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
+        this.css.isSubmited = true;
 
 
         let auditType : string = '';
@@ -101,19 +107,22 @@ export class AuditTraderComponent {
                 need : 0,
                 need2 : 0
             },
-            u : this.currentTask
+            u : this.currentOrder
         };
 
         if (this.currentTask.taskDefinitionKey === TaskStatus.onlineTraderAudit) auditType = 'onlinetrader'; //线上交易员审核并填写材料
 
         if (this.currentTask.taskDefinitionKey && auditType) {
 
-            this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
+            this.task.audit(this.taskId, this.currentOrder.applyType, auditType, body).then((result)=>{
                 if (result.success){
                     this.css.ajaxSuccessHidden = false;
+                    setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 }else{
                     this.css.ajaxErrorHidden = false;
+                    this.errorMsg = result.error.message;
                 }
+                this.css.isSubmited = false;
             });
         }
     }

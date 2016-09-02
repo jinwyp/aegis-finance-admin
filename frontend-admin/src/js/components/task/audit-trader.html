@@ -20,16 +20,16 @@
         <tr class="item-max">
             <td class="td-label">选择融资类型:</td>
             <td class="td-val finance-types" colspan="3">
-                <div class="finance-type" [class.selected]="currentTask.applyType==='MYR'">
-                    <div><label><input type="radio" disabled [checked]="currentTask.applyType==='MYR'" >煤易融</label></div>
+                <div class="finance-type" [class.selected]="currentOrder.applyType==='MYR'">
+                    <div><label><input type="radio" disabled [checked]="currentOrder.applyType==='MYR'" >煤易融</label></div>
                     <div class="introduce">我有煤，可发运至终端形成应收账款，需要实现资金的快速回流</div>
                 </div>
-                <div class="finance-type" [class.selected]="currentTask.applyType==='MYD'">
-                    <div><label><input type="radio" disabled [checked]="currentTask.applyType==='MYD'">煤易贷</label></div>
+                <div class="finance-type" [class.selected]="currentOrder.applyType==='MYD'">
+                    <div><label><input type="radio" disabled [checked]="currentOrder.applyType==='MYD'">煤易贷</label></div>
                     <div class="introduce">我有煤，可质押,想要实现快速融资</div>
                 </div>
-                <div class="finance-type" [class.selected]="currentTask.applyType==='MYG'">
-                    <div><label><input type="radio" disabled [checked]="currentTask.applyType==='MYG'">煤易购</label></div>
+                <div class="finance-type" [class.selected]="currentOrder.applyType==='MYG'">
+                    <div><label><input type="radio" disabled [checked]="currentOrder.applyType==='MYG'">煤易购</label></div>
                     <div class="introduce">我有采购订单，需要申请垫资采购，从而突破自身资金瓶颈</div>
                 </div>
             </td>
@@ -38,18 +38,18 @@
 
         <tr class="item-min">
             <td class="td-label">拟融资金额:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.financingAmount"><span>万元</span></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.financingAmount"><span>万元</span></td>
             <td class="td-label">拟使用资金时间:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.expectDate"><span>天</span></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.expectDate"><span>天</span></td>
         </tr>
 
         <tr class="item-min">
             <td class="td-label">预期此笔业务量:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.businessAmount" ><span>万吨</span></td>
-            <td colspan="2" *ngIf="currentTask.applyType==='MYD'"></td>
-            <td class="td-label" *ngIf="currentTask.applyType==='MYR'||currentTask.applyType==='MYG'">运输方式:</td>
-            <td class="td-val" *ngIf="currentTask.applyType==='MYR'||currentTask.applyType==='MYG'">
-                <select [(ngModel)]="currentTask.transportMode">
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.businessAmount" ><span>万吨</span></td>
+            <td colspan="2" *ngIf="currentOrder.applyType==='MYD'"></td>
+            <td class="td-label" *ngIf="currentOrder.applyType==='MYR'||currentOrder.applyType==='MYG'">运输方式:</td>
+            <td class="td-val" *ngIf="currentOrder.applyType==='MYR'||currentOrder.applyType==='MYG'">
+                <select [(ngModel)]="currentOrder.transportMode">
                     <option value ="">请选择</option>
                     <option value ="汽运">汽运</option>
                     <option value="海运">海运</option>
@@ -61,47 +61,47 @@
 
         <!--煤易融-->
 
-        <tr *ngIf="currentTask.applyType==='MYR'" class="item-min">
+        <tr *ngIf="currentOrder.applyType==='MYR'" class="item-min">
             <td class="td-label">预计单吨销售价:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.sellingPrice"><span>元/吨</span></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.sellingPrice"><span>元/吨</span></td>
             <td class="td-label">签约单位全称:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.contractor"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.contractor"></td>
         </tr>
-        <tr *ngIf="currentTask.applyType==='MYR'" class="item-min">
+        <tr *ngIf="currentOrder.applyType==='MYR'" class="item-min">
             <td class="td-label">下游签约单位全称:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.downstreamContractor"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.downstreamContractor"></td>
             <td class="td-label">用煤终端:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.terminalServer"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.terminalServer"></td>
         </tr>
 
 
         <!--煤易贷-->
-        <tr *ngIf="currentTask.applyType==='MYD'" class="item-min">
+        <tr *ngIf="currentOrder.applyType==='MYD'" class="item-min">
             <td class="td-label">煤炭仓储地:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.storageLocation"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.storageLocation"></td>
             <td class="td-label">煤炭来源:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.coalSource"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.coalSource"></td>
         </tr>
-        <tr *ngIf="currentTask.applyType==='MYD'" class="item-min">
+        <tr *ngIf="currentOrder.applyType==='MYD'" class="item-min">
             <td class="td-label">单吨市场报价:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.marketPrice"><span>元/吨</span></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.marketPrice"><span>元/吨</span></td>
             <td class="td-label">主要煤质指标:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.coalQuantityIndex"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.coalQuantityIndex"></td>
         </tr>
 
 
 
         <!--煤易购-->
 
-        <tr *ngIf="currentTask.applyType==='MYG'" class="item-min">
+        <tr *ngIf="currentOrder.applyType==='MYG'" class="item-min">
             <td class="td-label">单吨采购价:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.procurementPrice"><span>元/吨</span></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.procurementPrice"><span>元/吨</span></td>
             <td class="td-label">上游资源方全称:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.upstreamResource"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.upstreamResource"></td>
         </tr>
-        <tr *ngIf="currentTask.applyType==='MYG'" class="item-min">
+        <tr *ngIf="currentOrder.applyType==='MYG'" class="item-min">
             <td class="td-label">中转港口/地全称:</td>
-            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.transferPort"></td>
+            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentOrder.transferPort"></td>
         </tr>
 
         <!--煤易购 结束-->
@@ -120,22 +120,20 @@
         <tr class="item-max">
             <td class="td-label">备注说明:</td>
             <td class="td-val td-textarea" colspan="3">
-                <textarea class="form-control" rows="6" [(ngModel)]="currentTask.comments"></textarea>
+                <textarea class="form-control" rows="6" [(ngModel)]="currentOrder.comments"></textarea>
             </td>
         </tr>
     </table>
 
     <div class="row info-item">
-        <!--<span class="col-sm-4 info-label-input"></span>-->
-        <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(false, false)">保存</button>
-            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(true, true)">保存并提交</button>
-            <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['tasks/pending']">返回</button>
-        </div>
-
-        <div class="col-sm-offset-1 col-sm-6">
+        <div class="col-sm-offset-2 col-sm-6 mt-20">
             <div class="alert alert-success" role="alert" [class.hidden]="css.ajaxSuccessHidden">保存成功!</div>
-            <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">保存失败!</div>
+            <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
+        </div>
+        <div class="col-sm-12 info-val no-bottom-border center">
+            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(false, false)" [disabled]="css.isSubmited">保存</button>
+            <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(true, true)" [disabled]="css.isSubmited">保存并提交</button>
+            <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['tasks/pending']">返回</button>
         </div>
     </div>
 </div>
