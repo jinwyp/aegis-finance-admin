@@ -177,7 +177,7 @@ public class FinanceOrderServiceImpl {
         financeOrder.setApproveState(EnumFinanceStatus.Auditing.name);
         financeOrder.setLastUpdateManId(userId);
         financeOrder.setLastUpdateTime(new Date());
-        orderRepository.save(order);
+        orderRepository.save(financeOrder);
     }
 
     /**
