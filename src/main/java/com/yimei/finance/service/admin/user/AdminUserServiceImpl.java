@@ -32,10 +32,6 @@ public class AdminUserServiceImpl {
     private AdminUserLoginRecordRepository loginRecordRepository;
 
     /**
-     * 获取可以查看
-     */
-
-    /**
      * 判断一个用户是否有 向该组 添加用户的 权限
      */
     public Result checkAddUserToGroupAuthority(String userId, List<String> groupIds) {
@@ -97,6 +93,14 @@ public class AdminUserServiceImpl {
         }
         return groupIds;
     }
+
+    /**
+     * 判断 用户1 是否有权限操作 用户2
+     */
+    public boolean checkOperateRight(String userId1, String userId2) {
+
+    }
+
 
     /**
      * 封装 user, 从 User 到 UserObject
