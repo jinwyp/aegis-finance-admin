@@ -49,33 +49,6 @@ public class FinanceOrderServiceImpl {
     private FinanceFlowMethodServiceImpl methodService;
 
     /**
-     * 交易员补充材料
-     */
-    @Transactional
-    public void updateFinanceOrderByOnlineTrader(String userId, FinanceOrder financeOrder) {
-        FinanceOrder order = orderRepository.findOne(financeOrder.getId());
-        order.setSellingPrice(financeOrder.getSellingPrice());
-        order.setMarketPrice(financeOrder.getMarketPrice());
-        order.setCoalSource(financeOrder.getCoalSource());
-        order.setStorageLocation(financeOrder.getStorageLocation());
-        order.setFinancingAmount(financeOrder.getFinancingAmount());
-        order.setExpectDate(financeOrder.getExpectDate());
-        order.setBusinessAmount(financeOrder.getBusinessAmount());
-        order.setTransportMode(financeOrder.getTransportMode());
-        order.setProcurementPrice(financeOrder.getProcurementPrice());
-        order.setContractor(financeOrder.getContractor());
-        order.setDownstreamContractor(financeOrder.getDownstreamContractor());
-        order.setTerminalServer(financeOrder.getTerminalServer());
-        order.setComments(financeOrder.getComments());
-        order.setCoalQuantityIndex(financeOrder.getCoalQuantityIndex());
-        order.setApproveStateId(EnumFinanceStatus.Auditing.id);
-        order.setApproveState(EnumFinanceStatus.Auditing.name);
-        order.setLastUpdateManId(userId);
-        order.setLastUpdateTime(new Date());
-        orderRepository.save(order);
-    }
-
-    /**
      * 查询金融单
      */
     public Result getFinanceOrderBySelect(int userId, FinanceOrderSearch order, Page page) {
@@ -190,6 +163,21 @@ public class FinanceOrderServiceImpl {
             riskManagerInfo.setAttachmentList(getAttachmentByFinanceIdType(financeId, typeList));
         }
         return Result.success().setData(riskManagerInfo);
+    }
+
+
+    /**
+     * 交易员补充材料
+     */
+    @Transactional
+    public void updateFinanceOrderByOnlineTrader(String userId, FinanceOrder financeOrder) {
+        FinanceOrder order = orderRepository.findOne(financeOrder.getId());
+        financeOrder.setId(order.getId());
+        financeOrder.setApproveStateId(EnumFinanceStatus.Auditing.id);
+        financeOrder.setApproveState(EnumFinanceStatus.Auditing.name);
+        financeOrder.setLastUpdateManId(userId);
+        financeOrder.setLastUpdateTime(new Date());
+        orderRepository.save(order);
     }
 
     /**
