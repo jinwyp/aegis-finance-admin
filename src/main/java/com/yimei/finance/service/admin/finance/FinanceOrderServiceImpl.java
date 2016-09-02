@@ -99,7 +99,7 @@ public class FinanceOrderServiceImpl {
         if (order != null) {
             if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
                 query.setParameter("startDate", order.getStartDate());
-                query.setParameter("endDate", LocalDate.parse(order.getEndDate()).plusDays(1));
+                query.setParameter("endDate", java.sql.Date.valueOf(LocalDate.parse(order.getEndDate()).plusDays(1)));
             }
             if (order.getApproveStateId() != 0) {
                 query.setParameter("approveStateId", order.getApproveStateId());
