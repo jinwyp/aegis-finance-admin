@@ -109,16 +109,26 @@ taskStatusList.forEach( (status) => { TaskStatus[status.taskDefinitionKey] = sta
 
 class Task {
 
+    // Task 字段
     id :string;
     financeId :number;
     name :string;
 
     processInstanceId : string;
     taskDefinitionKey : string;
+    startTime : string;
 
+    assignee : string;
+    assigneeDepartment : string;
+    assigneeName : string;
+
+    // finance Order 字段
     applyType : string;
-    applyTime : string;
+    applyCompanyName : string;
     createTime : string;
+    lastUpdateTime : string;
+    taskList : Task[] ;
+
 
     //公用字段
     financingAmount : number;               //拟融资金额（单位：万元）
@@ -145,10 +155,7 @@ class Task {
 
     comments : string;                      //备注说明
 
-    applyCompanyName : string;
-    assignee : string;
-    assigneeDepartment : string;
-    assigneeName : string;
+
 
 
     //业务员表单字段
