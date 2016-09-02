@@ -30,6 +30,7 @@ public class UserObject implements Serializable {
     private String email;                       //邮箱
     private String department;                  //部门
     private Date lastLoginTime;                 //最后一次登录时间
+    private boolean operateAuthority;           //是否具有操作/更改此用户的权限, true: 有权限, false: 无
     private List<String> groupIds;              //用户组id数组
     private List<GroupObject> groupList;        //用户所在组列表
 

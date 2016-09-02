@@ -98,7 +98,23 @@ public class AdminUserServiceImpl {
      * 判断 用户1 是否有权限操作 用户2
      */
     public boolean checkOperateRight(String userId1, String userId2) {
-
+        List<String> user1GroupList = getUserGroupIdList(userId1);
+        if (user1GroupList.contains(EnumSpecialGroup.SuperAdminGroup.id)) return true;
+        List<String> user2GroupList = getUserGroupIdList(userId2);
+        for (String gid : user2GroupList) {
+            EnumSpecialGroup sonGroup = EnumSpecialGroup.getSonGroup(gid);
+            if (sonGroup != null) return false;
+        }
+        List<String> user1SonGroupList = new ArrayList<>();
+        for (String gid : user1GroupList) {
+            EnumSpecialGroup sonGroup = EnumSpecialGroup.getSonGroup(gid);
+            if (sonGroup != null) user1SonGroupList.add(sonGroup.id);
+        }
+        if (user1SonGroupList == null || user1SonGroupList.size() == 0) return false;
+        for (String gid : user2GroupList) {
+            if (user1SonGroupList.contains(gid)) return true;
+        }
+        return false;
     }
 
 
@@ -120,11 +136,36 @@ public class AdminUserServiceImpl {
         return userObject;
     }
 
+    public UserObject changeUserObject(User user, String operateUserId) {
+        UserObject userObject = new UserObject();
+        DozerUtils.copy(user, userObject);
+        userObject.setUsername(identityService.getUserInfo(user.getId(), "username"));
+        userObject.setPhone(identityService.getUserInfo(user.getId(), "phone"));
+        userObject.setName(identityService.getUserInfo(user.getId(), "name"));
+        userObject.setDepartment(identityService.getUserInfo(user.getId(), "department"));
+        userObject.setGroupList(DozerUtils.copy(identityService.createGroupQuery().groupMember(user.getId()).list(), GroupObject.class));
+        UserLoginRecord loginRecord = loginRecordRepository.findTopByUserId(user.getId());
+        if (loginRecord != null) {
+            userObject.setLastLoginTime(loginRecord.getCreateTime());
+        }
+        userObject.setOperateAuthority(checkOperateRight(operateUserId, user.getId()));
+        return userObject;
+    }
+
     public List<UserObject> changeUserObject(List<User> userList) {
         if (userList == null || userList.size() == 0) return null;
         List<UserObject> userObjectList = new ArrayList<>();
         for (User user : userList) {
             userObjectList.add(changeUserObject(user));
+        }
+        return userObjectList;
+    }
+
+    public List<UserObject> changeUserObject(List<User> userList, String operateUserId) {
+        if (userList == null || userList.size() == 0) return null;
+        List<UserObject> userObjectList = new ArrayList<>();
+        for (User user : userList) {
+            userObjectList.add(changeUserObject(user, operateUserId));
         }
         return userObjectList;
     }
@@ -143,7 +184,7 @@ public class AdminUserServiceImpl {
         return Result.success();
     }
 
-    public Result getUserListBySelect(AdminUserSearch userSearch, Page page) {
+    public Result getUserListBySelect(String operateUserId, AdminUserSearch userSearch, Page page) {
         if (userSearch == null) {
             page.setTotal(identityService.createUserQuery().count());
             return Result.success().setData(identityService.createUserQuery().list()).setMeta(page);
@@ -188,7 +229,7 @@ public class AdminUserServiceImpl {
             } else {
                 userList = identityService.createUserQuery().list();
             }
-            userObjectList = changeUserObject(userList);
+            userObjectList = changeUserObject(userList, operateUserId);
             if (!StringUtils.isEmpty(userSearch.getName()) ) {
                 for (UserObject userObject : userObjectList) {
                     if (userObject.getName() != null && userObject.getName().contains(userSearch.getName())) {

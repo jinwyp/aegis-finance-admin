@@ -56,7 +56,7 @@ public class UserController {
             @ApiImplicitParam(name = "page", value = "当前页数", required = false, defaultValue = "1", dataType = "int", paramType = "query")
     })
     public Result getAllUsersMethod(AdminUserSearch userSearch, Page page) {
-        return userService.getUserListBySelect(userSearch, page);
+        return userService.getUserListBySelect(adminSession.getUser().getId(), userSearch, page);
     }
 
     @ApiOperation(value = "查询单个用户", notes = "根据id查询用户对象", response = UserObject.class)
