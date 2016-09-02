@@ -30,7 +30,6 @@ export class AddUserComponent {
     css = {
         ajaxSuccessHidden : true,
         ajaxErrorHidden : true,
-        activeForRefresh : true,
         isSubmitted :      false,
         isHiddenModal : true,
         isAddStatus :  false
@@ -98,7 +97,7 @@ export class AddUserComponent {
     }
 
 
-    addUser() {
+    addUser(form) {
         this.css.isSubmitted     = true;
         this.currentUser.department = this.selectedItem;
 
@@ -108,10 +107,10 @@ export class AddUserComponent {
                 if (result.success) {
                     this.css.ajaxSuccessHidden=false;
                     this.clear();
-                    setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
+                    setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                 } else {
                     this.css.isHiddenModal=false;
-                    this.modalShowText=result.error.message;
+                    this.modalShowText = result.error.message;
                 }
             });
         } else {
