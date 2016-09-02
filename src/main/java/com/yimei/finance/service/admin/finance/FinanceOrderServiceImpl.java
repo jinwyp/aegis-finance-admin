@@ -128,7 +128,7 @@ public class FinanceOrderServiceImpl {
     }
 
     public List<HistoryTaskObject> getAllTaskListByProcessInstanceId(String processInstanceId) {
-        return (List<HistoryTaskObject>) methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().taskId(processInstanceId).orderByTaskCreateTime().list()).getData();
+        return (List<HistoryTaskObject>) methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().taskId(processInstanceId).orderByTaskCreateTime().desc().list()).getData();
     }
 
     public Result findById(Long id, List<EnumFinanceAttachment> typeList) {

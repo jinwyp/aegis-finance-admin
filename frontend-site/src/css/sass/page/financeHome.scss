@@ -16,12 +16,12 @@ $assetPath : "/static/site";
     &:hover{
       .link_light{
         animation:rotate 4s infinite linear;
-        -webkit-animation:rotate 4s infinite linear;
+        //-webkit-animation:rotate 4s infinite linear;
       }
 
       .link_trigle{
         animation:change 1.5s infinite linear;
-        -webkit-animation:change 1.5s infinite linear;
+        //-webkit-animation:change 1.5s infinite linear;
       }
     }
     .link_light{
@@ -53,15 +53,13 @@ $assetPath : "/static/site";
 
 }
 //旋转
-@keyframes rotate
-
-{
+@keyframes rotate {
   from {transform:rotate(0deg);}
   to {transform:rotate(360deg);}
 
 }
-@-webkit-keyframes rotate
 
+@-webkit-keyframes rotate
 {
   from {transform:rotate(0deg);}
   to {transform:rotate(360deg);}
@@ -69,22 +67,23 @@ $assetPath : "/static/site";
 }
 //渐变
 @keyframes change
-
 {
   0% {opacity: 1;}
   50% {opacity: 0.2;}
   100% {opacity: 1;}
 
 }
+
 @-webkit-keyframes change
-
-
 {
   0% {opacity: 1;}
   50% {opacity: 0.2;}
   100% {opacity: 1;}
 
 }
+
+
+
 //banner样式结束
 
 //申请流程图样式开始

@@ -89,11 +89,11 @@ public class MYDFinancingController {
     @ApiOperation(value = "业务员补充监管材料", notes = "业务员补充监管材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydSalesmanSupplySupervisionMaterialMethod(@PathVariable("taskId") String taskId,
-                                                             @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody TaskMap taskMap) {
-        Result result = checkMYDMethod(taskId, taskMap);
+                                                             @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, List<AttachmentObject>> map) {
+        Result result = checkMYDMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.salesmanSupplySupervisionMaterialFinanceOrderMethod(adminSession.getUser().getId(), taskMap, object.t, object.u);
+        return flowStepService.salesmanSupplySupervisionMaterialFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
     }
 
     @RequestMapping(value = "/supervisor/audit/{taskId}", method = RequestMethod.POST)
@@ -104,29 +104,29 @@ public class MYDFinancingController {
         Result result = checkMYDMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.supervisorAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, object.t, object.u);
+        return flowStepService.supervisorAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
     }
 
     @RequestMapping(value = "/investigator/supply/riskmanager/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "尽调员补充材料", notes = "尽调员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydInvestigatorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
-                                                                 @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody TaskMap taskMap) {
-        Result result = checkMYDMethod(taskId, taskMap);
+                                                                 @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, List<AttachmentObject>> map) {
+        Result result = checkMYDMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.investigatorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), taskMap, object.t, object.u);
+        return flowStepService.investigatorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
     }
 
     @RequestMapping(value = "/supervisor/supply/riskmanager/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "监管员补充材料", notes = "监管员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mydSupervisorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody TaskMap taskMap) {
-        Result result = checkMYDMethod(taskId, taskMap);
+                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, List<AttachmentObject>> map) {
+        Result result = checkMYDMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.supervisorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), taskMap, object.t, object.u);
+        return flowStepService.supervisorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
     }
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.POST)
@@ -137,7 +137,7 @@ public class MYDFinancingController {
         Result result = checkMYDMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.riskManagerAuditMYRFinanceOrderMethod(adminSession.getUser().getId(), map.t, object.t, object.u);
+        return flowStepService.riskManagerAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
     }
 
     private Result checkMYDMethod(String taskId, TaskMap taskMap) {
