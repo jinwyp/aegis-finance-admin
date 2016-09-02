@@ -261,7 +261,7 @@
 <script src="${staticPath}/js/page/userCenterFinanceInfo.bundle.js"></script>
 </#if>
 
-<!--<script src="${staticPath}/js/page2/userCenterFinanceInfo.bundle.js"></script>-->
+<!--<script src="${staticPath}/js/page-temp-bundle/userCenterFinanceInfo.bundle.js"></script>-->
 <script>
     System['import']('${staticPath}/js/page/userCenterFinanceInfo.js')
 </script>
