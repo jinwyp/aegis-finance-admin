@@ -33,6 +33,8 @@ class User {
     phone : string;
     email : string;
     department : string;
+    lastLoginTime : string;
+    operateAuthority : boolean;
     groupIds : string[];
     groupList : UserGroup[];
 

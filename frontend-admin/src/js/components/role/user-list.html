@@ -18,7 +18,6 @@
     </div>
     <table class="table table-striped mt-20 info-table">
         <tr class="head">
-            <!--<th width="60">序号</th>-->
             <th width="100">用户账号</th>
             <th width="70">用户姓名</th>
             <th width="120">所在部门</th>
@@ -28,19 +27,16 @@
         </tr>
         <tr class="item" *ngIf="!userList||userList.length < 1"><td colspan="6">暂无用户数据数据</td></tr>
         <tr class="item" *ngFor="let user of userList">
-            <!--<td>{{user.id}}</td>-->
             <td><a [routerLink]="['/users', user.id]">{{user.username}}</a></td>
             <td>{{user.name||'--'}}</td>
             <td>{{user.department||'--'}}</td>
-            <td>
-                <span *ngFor="let usergroup of user.groupList">{{usergroup.name}}&nbsp;</span>
-            </td>
-            <td>2016-12-01 23:22:00</td>
+            <td><span *ngFor="let usergroup of user.groupList">{{usergroup.name}}&nbsp;</span></td>
+            <td>{{user.lastLoginTime || '--'}}</td>
             <td class="operation">
-                <!--<span class="operate-forbid">无法操作</span>-->
-                <span class="right-border" (click)="showResetModal(user.id,'确认重置用户密码吗?')">重置密码</span>
-                <span class="right-border" [routerLink]="['/users', user.id, 'edit']">编辑</span>
-                <span (click)="showDelModal(user.id,'确认删除该用户吗?')">删除</span>
+                <span *ngIf="!user.operateAuthority" class="operate-forbid">无法操作</span>
+                <span *ngIf="user.operateAuthority" class="right-border" (click)="showResetModal(user.id,'确认重置用户密码吗?')">重置密码</span>
+                <span *ngIf="user.operateAuthority" class="right-border" [routerLink]="['/users', user.id, 'edit']">编辑</span>
+                <span *ngIf="user.operateAuthority" (click)="showDelModal(user.id,'确认删除该用户吗?')">删除</span>
             </td>
         </tr>
     </table>
