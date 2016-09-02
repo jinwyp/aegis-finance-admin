@@ -171,8 +171,6 @@ public class FinanceOrderServiceImpl {
      */
     @Transactional
     public void updateFinanceOrderByOnlineTrader(String userId, FinanceOrder financeOrder) {
-        FinanceOrder order = orderRepository.findOne(financeOrder.getId());
-        financeOrder.setId(order.getId());
         financeOrder.setApproveStateId(EnumFinanceStatus.Auditing.id);
         financeOrder.setApproveState(EnumFinanceStatus.Auditing.name);
         financeOrder.setLastUpdateManId(userId);
