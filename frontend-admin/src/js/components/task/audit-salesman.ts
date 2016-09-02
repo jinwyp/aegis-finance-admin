@@ -27,6 +27,9 @@ export class AuditSalesmanComponent {
 
     taskId : string = '';
     currentTask : Task = new Task();
+    currentOrder : Task = new Task();
+    isApprovedRadio : boolean = false;
+
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -63,6 +66,13 @@ export class AuditSalesmanComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
+                this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
+                    if (result.success){
+                        this.currentOrder = result.data;
+                    }else{
+
+                    }
+                });
             }else{
 
             }
@@ -70,7 +80,12 @@ export class AuditSalesmanComponent {
     }
 
 
-    audit (isAudit : boolean, isApproved : boolean){
+    audit (isAudit : boolean){
+
+        let isApproved : boolean = false;
+        if (isAudit) {
+            isApproved = this.isApprovedRadio;
+        }
 
         let auditType : string = '';
         let body : any = {

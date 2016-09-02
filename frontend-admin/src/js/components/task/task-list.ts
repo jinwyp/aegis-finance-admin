@@ -32,6 +32,7 @@ export class TaskListComponent {
 
     taskAssignList : Task[] = [];
     taskPendingList : Task[] = [];
+    taskHistoryList : Task[] = [];
     taskStatusStep : any = TaskStatus;
     currentUserSession : User = new User();
 
@@ -88,7 +89,7 @@ export class TaskListComponent {
         this.task.getTaskHistoryList().then((result)=>{
             if (result.success){
                 if (this.routeData.routeType === 'all'){
-                    this.taskPendingList = result.data;
+                    this.taskHistoryList = result.data;
                 }
                 this.task.setAllTaskLengthObservable(result.data.length);
             }else{
