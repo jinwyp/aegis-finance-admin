@@ -305,6 +305,7 @@
           border-right: 2px solid $border-color;
         }
         .operate-forbid {
+          cursor: default;
           padding: 1px 0 1px 16px;
           background: url("#{$assetPath}/css/images/stop_icon.png") no-repeat;
         }
