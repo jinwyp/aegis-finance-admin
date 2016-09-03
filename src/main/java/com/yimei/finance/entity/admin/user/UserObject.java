@@ -26,7 +26,7 @@ public class UserObject implements Serializable {
     private String name;                        //姓名
     private String phone;                       //手机号
     @NotBlank(message = "邮箱不能为空")
-    @Email
+    @Email(message = "邮箱格式不正确")
     private String email;                       //邮箱
     private String department;                  //部门
     private Date lastLoginTime;                 //最后一次登录时间
