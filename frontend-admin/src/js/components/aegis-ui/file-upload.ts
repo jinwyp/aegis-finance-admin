@@ -36,6 +36,7 @@ export class FileUploadComponent {
     addFile(): void {
         this.fileList = this.fileInput.nativeElement.files;
         console.log(this.fileInput.nativeElement, this.fileList);
+
         if (this.fileList && this.fileList[0]) {
             let file = this.fileList[0];
             console.log(file);
