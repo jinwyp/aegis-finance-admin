@@ -7,7 +7,6 @@ var API = {
     logout : '/api/financing/admin/logout',
     session : '/api/financing/admin/session',
     orders : '/api/financing/admin/finance',
-    salesman : '/api/financing/admin/finance/salesman',
     tasks : '/api/financing/admin/tasks',
     tasksMYR : '/api/financing/admin/myr',
     tasksMYG : '/api/financing/admin/myg',
@@ -48,15 +47,15 @@ var GlobalPromiseHttpCatch = (error: any) => {
 
     }else if (error && error.status === 404){
         console.error('Http 404 请求发生错误!! ', error);
-        return Promise.reject(error);
+        return Promise.resolve(error);
 
     }else if (error && error.status === 500){
         console.error('Http 500 请求发生错误!! ', error);
-        return Promise.reject(error);
+        return Promise.resolve(error);
 
     }else {
         console.error('Http 请求发生错误!! ', error);
-        return Promise.reject(error);
+        return Promise.resolve(error);
     }
 };
 
