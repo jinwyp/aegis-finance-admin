@@ -116,7 +116,6 @@ public class FinanceOrderServiceImpl {
     public Result findById(Long id, List<EnumFinanceAttachment> typeList) {
         FinanceOrder financeOrder = orderRepository.findOne(id);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        financeOrder.setTaskList(getAllTaskListByFinanceId(id));
         financeOrder.setAttachmentList(getAttachmentByFinanceIdType(id, typeList));
         return Result.success().setData(financeOrder);
     }

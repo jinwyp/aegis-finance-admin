@@ -82,8 +82,6 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     private Date endTime;                                            //结束时间
     @Transient
     private List<AttachmentObject> attachmentList;                   //附件列表
-    @Transient
-    private List<HistoryTaskObject> taskList;                        //此金融单管理所有任务列表
 
     public String getApplyTypeName() {
         if (StringUtils.isEmpty(applyType)) {
