@@ -14,8 +14,10 @@ import { InMemoryDataServiceOrder }          from '../mock/api/in-memory-data.se
 import { routing, homePageRouterProviders } from './home.routes';
 import { UserService, UserGroupService } from '../service/user';
 import { TaskService } from '../service/task';
+import { FileUploadService } from '../service/file-upload';
 
 
+import { FileUploadComponent } from '../components/aegis-ui/file-upload';
 import { headerComponent } from '../components/header/header';
 import { LeftMenuComponent } from '../components/left-menu/left-menu';
 
@@ -53,7 +55,7 @@ import { CustomCheckboxComponent } from '../components/aegis-ui/custom-checkbox'
 @NgModule({
     imports: [ BrowserModule, FormsModule, HttpModule, routing],
     declarations: [
-        headerComponent, LeftMenuComponent,
+        FileUploadComponent, headerComponent, LeftMenuComponent,
         HomeComponent, HomeDashboardComponent,
         UserDetailComponent, UserUpdatePasswordComponent,
         RoleListComponent, AddRoleComponent, RoleInfoComponent,
@@ -62,7 +64,7 @@ import { CustomCheckboxComponent } from '../components/aegis-ui/custom-checkbox'
         AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, SuperviseReportComponent, AuditRiskManagerComponent,
         CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent
     ],
-    providers: [ homePageRouterProviders, TaskService, UserService, UserGroupService ],
+    providers: [ FileUploadService, homePageRouterProviders, TaskService, UserService, UserGroupService ],
     bootstrap: [ HomeComponent ]
 })
 export class HomeModule { }

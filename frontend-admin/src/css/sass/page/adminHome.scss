@@ -40,6 +40,43 @@
   }
 }
 
+.file-upload {
+  position: relative;
+
+  .hidden-input {
+    width:180px;
+    height:36px;
+    position:absolute;
+    left:100px;
+    top:100px;
+    overflow:hidden;
+    filter: alpha(opacity=0);opacity:0;
+
+    input {
+      width:180px;
+      height:36px;
+      font-size:100px;
+    }
+  }
+
+  .file-btn-upload{
+    display: block;
+    width:180px;
+    border:1px solid $input-border-color;
+    text-align: center;
+    padding:20px 0;
+    text-decoration: none;
+
+    .upload-icon{
+      display: block;
+      width:46px;
+      height:46px;
+      background: url("#{$assetPath}/css/images/upload_btn_icon.png") no-repeat;
+    }
+  }
+}
+
+
 .form-control{
   display: inline-block;
   height: 40px;
@@ -458,20 +495,7 @@
             padding:10px 20px 0 20px;
             margin-bottom:20px;
           }
-          .btn-upload{
-            display: block;
-            width:260px;
-            border:1px solid $input-border-color;
-            text-align: center;
-            padding:30px 0;
-            text-decoration: none;
-            .upload-icon{
-              display: inline-block;
-              width:46px;
-              height:46px;
-              background: url("#{$assetPath}/css/images/upload_btn_icon.png") no-repeat;
-            }
-          }
+
         }
         .finance-types>div{  display: inline-block;  width: 230px; height:100px; vertical-align: middle;  }
         .finance-types label{
