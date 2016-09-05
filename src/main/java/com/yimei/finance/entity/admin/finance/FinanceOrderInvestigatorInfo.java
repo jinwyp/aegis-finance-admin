@@ -41,11 +41,11 @@ public class FinanceOrderInvestigatorInfo extends BaseEntity implements Serializ
     private String qualityInspectionUnit;                            //质量检验单位
     @Column(name = "quantity_inspection_unit", length = 100)
     private String quantityInspectionUnit;                           //数量检验单位
-    @Column(name = "financing_amount", length = 20)
+    @Column(name = "financing_amount", precision = 20, scale = 2)
     private BigDecimal financingAmount;                              //融资金额
     @Column(name = "financing_period", length = 5)
     private int financingPeriod;                                     //融资期限
-    @Column(name = "interest_rate", length = 5)
+    @Column(name = "interest_rate", precision = 5, scale = 2)
     private BigDecimal interestRate;                                 //利率
     @Column(name = "business_start_time")
     private Date businessStartTime;                                  //业务开始时间

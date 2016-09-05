@@ -6,7 +6,7 @@
     </ol>
 </div>
 
-<process-tab [processInstanceId]="currentTask.processInstanceId" [processList]="currentTask.taskList"></process-tab>
+<process-tab [processInstanceId]="currentTask.processInstanceId" [processList]="currentOrder.taskList"></process-tab>
 
 
 
@@ -67,14 +67,16 @@
                 <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
             </td>
         </tr>
+
         <tr class="item-title">
             <td colspan="4"><label (click)="changeNoticeApplyUserStatus()"><input type="checkbox" [checked]="currentOrder.noticeApplyUser===1">发送给用户</label></td>
         </tr>
+
         <tr class="item-title">
             <td colspan="4">
                 <span>审核意见:</span>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" value="true">通过</label>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" value="false">不通过</label>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="true">通过</label>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="false">不通过</label>
             </td>
         </tr>
     </table>
