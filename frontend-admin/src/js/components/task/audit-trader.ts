@@ -111,21 +111,21 @@ export class AuditTraderComponent {
             },
             u : this.currentOrder
         };
-
+        console.log(body);
         if (this.currentTask.taskDefinitionKey === TaskStatus.onlineTraderAudit) auditType = 'onlinetrader'; //线上交易员审核并填写材料
 
         if (this.currentTask.taskDefinitionKey && auditType) {
 
-            this.task.audit(this.taskId, this.currentOrder.applyType, auditType, body).then((result)=>{
-                if (result.success){
-                    this.css.ajaxSuccessHidden = false;
-                    setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
-                }else{
-                    this.css.ajaxErrorHidden = false;
-                    this.errorMsg = result.error.message;
-                }
-                this.css.isSubmitted = false;
-            });
+            // this.task.audit(this.taskId, this.currentOrder.applyType, auditType, body).then((result)=>{
+            //     if (result.success){
+            //         this.css.ajaxSuccessHidden = false;
+            //         setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
+            //     }else{
+            //         this.css.ajaxErrorHidden = false;
+            //         this.errorMsg = result.error.message;
+            //     }
+            //     this.css.isSubmitted = false;
+            // });
         }
     }
 

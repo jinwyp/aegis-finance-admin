@@ -110,7 +110,8 @@
                 <div class="hint mb-20">如: 下游签约单位合同模板、历史供煤信息，终端结算回款历史单据、自身企业信用、财务状况</div>
                 <a class="btn-upload">
                     <span class="upload-icon"></span>
-                    <div class="mt-10">点击上传</div>
+                    <input type="file" value="选择文件" (change)="fileEvent($event)" />
+                    <!--<div class="mt-10">点击上传</div>-->
                 </a>
             </td>
         </tr>
