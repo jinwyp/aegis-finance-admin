@@ -30,6 +30,12 @@ export class AuditSalesmanComponent {
     currentOrder : Task = new Task();
     isApprovedRadio : boolean = false;
 
+    css = {
+        ajaxSuccessHidden : true,
+        ajaxErrorHidden : true,
+    };
+    errorMsg : string ='';
+
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -66,9 +72,13 @@ export class AuditSalesmanComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
-                this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
+                console.log(this.currentTask);
+                this.task.getSalesmanInfoById(this.currentTask.financeId).then((result)=>{
                     if (result.success){
-                        this.currentOrder = result.data;
+                        if(result.data!==null){
+                            this.currentOrder = result.data;
+                        }
+                        console.log(this.currentOrder);
                     }else{
 
                     }
@@ -95,21 +105,38 @@ export class AuditSalesmanComponent {
                 need : 0,
                 need2 : 0
             },
-            u : this.currentTask
+            u : this.currentOrder
         };
-
         if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanAudit) auditType = 'salesman'; // 业务员审核并填写材料
 
         if (this.currentTask.taskDefinitionKey && auditType) {
+            console.log(this.currentTask);
+            console.log(this.currentOrder);
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
-                    alert('保存成功!!')
+                    this.css.ajaxSuccessHidden=false;
+                    setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 }else{
-                    alert('保存失败!')
+                    this.css.ajaxErrorHidden=false;
+                    this.errorMsg=result.error.message;
                 }
             });
         }
 
+    }
+    changeNoticeApplyUserStatus(){
+        if(this.currentOrder.noticeApplyUser===0){
+            this.currentOrder.noticeApplyUser=1;
+        }else{
+            this.currentOrder.noticeApplyUser=0;
+        }
+    }
+    changeNeedSupplyMaterialStatus(){
+        if(this.currentOrder.needSupplyMaterial===0){
+            this.currentOrder.needSupplyMaterial=1;
+        }else{
+            this.currentOrder.needSupplyMaterial=0;
+        }
     }
 }
 

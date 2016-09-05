@@ -6,7 +6,7 @@
     </ol>
 </div>
 
-<process-tab [processInstanceId]="currentTask.processInstanceId" [processList]="currentOrder.taskList"></process-tab>
+<process-tab [processInstanceId]="currentTask.processInstanceId" [processList]="currentTask.taskList"></process-tab>
 
 
 
@@ -16,23 +16,23 @@
 
     <div class="apply-title">业务审批
         <div>
-            <a>查看申请材料</a>
+            <a [routerLink]="['/tasks', currentTask.id, 'trader']">查看申请材料</a>
         </div>
     </div>
 
     <table class="table table-bordered apply-table">
         <tr class="item-max">
             <td class="td-label">业务类型:</td>
-            <td width="250" class="td-val">煤易融</td>
+            <td width="250" class="td-val">{{currentTask.applyTypeName}}</td>
             <td class="td-label">业务编号:</td>
-            <td width="250" class="td-val">7437234923748923749382</td>
+            <td width="250" class="td-val">{{currentTask.sourceId}}</td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span>上下游相关签约单位信息补充:</span></td>
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentTask.contractCompaniesInfoSupply"></textarea>
+                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentOrder.contractCompaniesInfoSupply"></textarea>
             </td>
         </tr>
         <tr class="item-title">
@@ -40,7 +40,7 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentTask.businessModelIntroduce"></textarea>
+                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentOrder.businessModelIntroduce"></textarea>
             </td>
         </tr>
         <tr class="item-title">
@@ -48,7 +48,7 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentTask.logisticsStorageInfoSupply"></textarea>
+                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentOrder.logisticsStorageInfoSupply"></textarea>
             </td>
         </tr>
         <tr class="item-title">
@@ -56,19 +56,19 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentTask.otherInfoSupply"></textarea>
+                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentOrder.otherInfoSupply"></textarea>
             </td>
         </tr>
         <tr class="item-title">
-            <td colspan="4"><span>需要补充材料:</span></td>
+            <td colspan="4"><span><label (click)="changeNeedSupplyMaterialStatus()"><input type="checkbox" class="mr-10" [checked]="currentOrder.needSupplyMaterial===1">需要补充材料</label></span></td>
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentTask.supplyMaterialIntroduce"></textarea>
+                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
             </td>
         </tr>
         <tr class="item-title">
-            <td colspan="4"><label><input type="checkbox">发送给用户</label></td>
+            <td colspan="4"><label (click)="changeNoticeApplyUserStatus()"><input type="checkbox" [checked]="currentOrder.noticeApplyUser===1">发送给用户</label></td>
         </tr>
         <tr class="item-title">
             <td colspan="4">
@@ -80,6 +80,10 @@
     </table>
 
     <div class="row info-item">
+        <div class="col-sm-offset-3 col-sm-6 mt-20">
+            <div class="alert alert-success" role="alert" [class.hidden]="css.ajaxSuccessHidden">保存成功!</div>
+            <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
+        </div>
         <div class="col-sm-12 info-val no-bottom-border center">
             <button type="button" class="btn btn-default btn-lg btn-save" (click)="audit(false)">保存</button>
             <button type="button" class="btn btn-default btn-lg btn-sure ml-20"  (click)="audit(true)">保存并提交</button>
