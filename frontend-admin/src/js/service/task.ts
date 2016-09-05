@@ -207,9 +207,9 @@ class Task {
     supervisionCooperateDetail : string;        //监管配合情况
     supervisionScheme : string;                 //监管方案
     // finalConclusion : string;                   //最终结论/综合意见
-    needSupplyMaterial : boolean;               //需要补充材料 true: 需要, false: 不需要
+    needSupplyMaterial : number;               //需要补充材料 true: 需要, false: 不需要
     // supplyMaterialIntroduce : string;           //补充材料说明
-    noticeApplyUser : boolean;                  //通知申请用户 true: 通知, false: 不通知
+    noticeApplyUser : number;                  //通知申请用户 true: 通知, false: 不通知
     noticeSalesman : boolean;                   //通知业务员   true: 通知, false: 不通知
 
     distributionAbilityEval : string;           //分销能力评估

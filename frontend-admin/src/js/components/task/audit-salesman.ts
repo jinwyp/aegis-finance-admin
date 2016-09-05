@@ -29,8 +29,6 @@ export class AuditSalesmanComponent {
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
     isApprovedRadio : boolean = false;
-    isNoticeApplyUser : boolean = false;
-    isNeedSupplyMaterial : boolean = false;
 
     css = {
         ajaxSuccessHidden : true,
@@ -77,7 +75,9 @@ export class AuditSalesmanComponent {
                 console.log(this.currentTask);
                 this.task.getSalesmanInfoById(this.currentTask.financeId).then((result)=>{
                     if (result.success){
-                        this.currentOrder = result.data;
+                        if(result.data!==null){
+                            this.currentOrder = result.data;
+                        }
                         console.log(this.currentOrder);
                     }else{
 
@@ -107,8 +107,6 @@ export class AuditSalesmanComponent {
             },
             u : this.currentOrder
         };
-        this.currentOrder.noticeApplyUser = this.isNoticeApplyUser;
-        this.currentOrder.needSupplyMaterial = this.isNeedSupplyMaterial;
         if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanAudit) auditType = 'salesman'; // 业务员审核并填写材料
 
         if (this.currentTask.taskDefinitionKey && auditType) {
@@ -120,16 +118,25 @@ export class AuditSalesmanComponent {
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 }else{
                     this.css.ajaxErrorHidden=false;
+                    this.errorMsg=result.error.message;
                 }
             });
         }
 
     }
     changeNoticeApplyUserStatus(){
-        this.isNoticeApplyUser = !this.isNoticeApplyUser;
+        if(this.currentOrder.noticeApplyUser===0){
+            this.currentOrder.noticeApplyUser=1;
+        }else{
+            this.currentOrder.noticeApplyUser=0;
+        }
     }
     changeNeedSupplyMaterialStatus(){
-        this.isNeedSupplyMaterial = !this.isNeedSupplyMaterial;
+        if(this.currentOrder.needSupplyMaterial===0){
+            this.currentOrder.needSupplyMaterial=1;
+        }else{
+            this.currentOrder.needSupplyMaterial=0;
+        }
     }
 }
 

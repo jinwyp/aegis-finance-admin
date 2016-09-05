@@ -14,20 +14,20 @@
             <th width="160">开始操作时间</th>
             <th width="160">完成操作时间</th>
             <th width="120">当前处理人</th>
-            <th >所属部门</th>
+            <th width="100">所属部门</th>
         </tr>
         <tr class="item" *ngFor="let task of processList; let taskIndex = index; let taskFirst = first; let taskLast = last">
             <td>
                 <!--<span class="icon" [class.processed]="taskFirst" [class.processing]="task.endTime" [class.process]="task.endTime"></span>-->
 
-                <span class="icon processing" *ngIf="taskFirst">{{taskIndex + 1}}</span>
-                <span class="icon process" *ngIf="!taskFirst">{{taskIndex + 1}}</span>
+                <span class="icon process" *ngIf="taskLast">{{taskIndex + 1}}</span>
+                <span class="icon processing" *ngIf="!taskLast">{{taskIndex + 1}}</span>
             </td>
             <td>{{task.name}}</td>
             <td>{{task.startTime}}</td>
-            <td>{{task.endTime}}</td>
-            <td>{{task.assigneeName}}</td>
-            <td>{{task.assigneeDepartment}}</td>
+            <td>{{task.endTime||'--'}}</td>
+            <td>{{task.assigneeName||'--'}}</td>
+            <td>{{task.assigneeDepartment||'--'}}</td>
         </tr>
 
     </table>
