@@ -23,6 +23,7 @@ import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
+import org.activiti.engine.task.Attachment;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -54,6 +55,12 @@ public class FinanceFlowMethodServiceImpl {
      * 添加附件方法
      */
     public void addAttachmentsMethod(List<AttachmentObject> attachmentList, String taskId, String processInstanceId, EnumFinanceAttachment type) {
+        List<Attachment> oldAttachmentList = taskService.getTaskAttachments(taskId);
+        if (oldAttachmentList != null && oldAttachmentList.size() != 0) {
+            for (Attachment attachment : oldAttachmentList) {
+                taskService.deleteAttachment(attachment.getId());
+            }
+        }
         if (attachmentList != null && attachmentList.size() != 0) {
             for (AttachmentObject attachmentObject : attachmentList) {
                 if (!StringUtils.isEmpty(attachmentObject.getName()) && !StringUtils.isEmpty(attachmentObject.getUrl())) {
