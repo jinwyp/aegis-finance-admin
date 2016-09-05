@@ -28,6 +28,7 @@ export class AuditTraderComponent {
 
     css = {
         isSubmitted : false,
+        isCommitted : false,
         ajaxErrorHidden : true,
         ajaxSuccessHidden : true
     };
@@ -132,7 +133,10 @@ export class AuditTraderComponent {
 
             this.task.audit(this.taskId, this.currentOrder.applyType, auditType, body).then((result)=>{
                 if (result.success){
-                    this.getTaskInfo(this.taskId);
+                    if(isAudit){
+                        this.css.isCommitted = true;
+                    }
+                    // this.getTaskInfo(this.taskId);
                     this.css.ajaxSuccessHidden = false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                 }else{

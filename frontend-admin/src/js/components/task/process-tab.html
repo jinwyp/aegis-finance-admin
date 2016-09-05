@@ -20,8 +20,8 @@
             <td>
                 <!--<span class="icon" [class.processed]="taskFirst" [class.processing]="task.endTime" [class.process]="task.endTime"></span>-->
 
-                <span class="icon process" *ngIf="taskLast">{{taskIndex + 1}}</span>
-                <span class="icon processing" *ngIf="!taskLast">{{taskIndex + 1}}</span>
+                <span class="icon process" *ngIf="!taskLast">{{taskIndex + 1}}</span>
+                <span class="icon processing" *ngIf="taskLast">{{taskIndex + 1}}</span>
             </td>
             <td>{{task.name}}</td>
             <td>{{task.assigneeName||'--'}}</td>
