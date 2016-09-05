@@ -93,7 +93,7 @@ export class AuditTraderComponent {
 
 
     finishedUpload (event) {
-        this.tempAttachmentList.push({
+        this.currentOrder.attachmentList.push({
             "url": event.value.url,
             "name": event.value.name,
             "type": event.value.type,
@@ -124,8 +124,6 @@ export class AuditTraderComponent {
             u : Object.assign({}, this.currentOrder)
         };
 
-        body.u.attachmentList = this.tempAttachmentList;
-        this.tempAttachmentList = [];
 
         if (this.currentTask.taskDefinitionKey === TaskStatus.onlineTraderAudit) auditType = 'onlinetrader'; //线上交易员审核并填写材料
 

@@ -112,10 +112,6 @@
                     <img *ngFor="let pic of currentOrder.attachmentList" [src]="pic.url" [alt]="pic.name">
                 </div>
 
-                <div class="attachment">
-                    <img *ngFor="let pic of tempAttachmentList" [src]="pic.url" [alt]="pic.name">
-                </div>
-
                 <file-upload (onFinished)="finishedUpload($event)"></file-upload>
             </td>
         </tr>
