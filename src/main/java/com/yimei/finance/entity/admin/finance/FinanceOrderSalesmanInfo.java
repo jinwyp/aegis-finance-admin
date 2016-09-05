@@ -29,12 +29,12 @@ public class FinanceOrderSalesmanInfo extends BaseEntity implements Serializable
     private String logisticsStorageInfoSupply;                       //物流仓储信息补充
     @Column(name = "other_info_supply", length = 1000)
     private String otherInfoSupply;                                  //其它补充说明
-    @Column(name = "need_supply_material", nullable = false)
-    private boolean needSupplyMaterial;                              //需要补充材料 true: 需要, false: 不需要
+    @Column(name = "need_supply_material", length = 1, nullable = false)
+    private int needSupplyMaterial;                                  //需要补充材料 1: 需要, 0: 不需要
     @Column(name = "supply_material_introduce", length = 500)
     private String supplyMaterialIntroduce;                          //补充材料说明
-    @Column(name = "notice_apply_user")
-    private boolean noticeApplyUser;                                 //通知申请用户 true: 通知, false: 不通知
+    @Column(name = "notice_apply_user", length = 1, nullable = false)
+    private int noticeApplyUser;                                     //通知申请用户 1: 通知, 0: 不通知
     @Transient
     private List<AttachmentObject> attachmentList;                   //附件列表
 

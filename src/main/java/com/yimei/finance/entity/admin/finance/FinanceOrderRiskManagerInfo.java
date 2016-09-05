@@ -31,16 +31,16 @@ public class FinanceOrderRiskManagerInfo extends BaseEntity implements Serializa
     private String riskControlScheme;                                //风险控制方案
     @Column(name = "final_conclusion", length = 1000)
     private String finalConclusion;                                  //风控结论/最终结论/综合意见
-    @Column(name = "need_supply_material", nullable = false)
-    private boolean needSupplyMaterial;                              //需要补充材料 true: 需要, false: 不需要
+    @Column(name = "need_supply_material", length = 1, nullable = false)
+    private int needSupplyMaterial;                                  //需要补充材料 1: 需要, 0: 不需要
     @Column(name = "supply_material_introduce", length = 500)
     private String supplyMaterialIntroduce;                          //补充材料说明
-    @Column(name = "notice_apply_user")
-    private boolean noticeApplyUser;                                 //通知申请用户 true: 通知, false: 不通知
-    @Column(name = "notice_salesman")
-    private boolean noticeSalesman;                                  //通知业务员   true: 通知, false: 不通知
-    @Column(name = "edit_contract")
-    private boolean editContract;                                    //编辑和他     true: 需要编辑, false: 不需要编辑
+    @Column(name = "notice_apply_user", length = 1, nullable = false)
+    private int noticeApplyUser;                                     //通知申请用户 1: 通知, 0: 不通知
+    @Column(name = "notice_salesman", length = 1, nullable = false)
+    private int noticeSalesman;                                      //通知业务员   1: 通知, 0: 不通知
+    @Column(name = "edit_contract", length = 1, nullable = false)
+    private int editContract;                                        //编辑合同     1: 需要编辑, 0: 不需要编辑
     @Transient
     List<AttachmentObject> attachmentList;                           //附件列表
 
