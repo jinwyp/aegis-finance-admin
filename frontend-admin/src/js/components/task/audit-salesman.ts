@@ -72,12 +72,10 @@ export class AuditSalesmanComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
-                console.log(this.currentTask);
-                this.task.getSalesmanInfoById(this.currentTask.financeId).then((result)=>{
-                    if (result.success){
-                        if(result.data!==null){
-                            this.currentOrder = result.data;
-                        }
+
+                this.task.getOrderInfoById(this.currentTask.financeId, 'salesman').then((result)=>{
+                    if (result.success && result.data){
+                        this.currentOrder = result.data;
                         console.log(this.currentOrder);
                     }else{
 
