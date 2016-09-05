@@ -68,18 +68,18 @@ public class MYGFinancingController {
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mygSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, List<AttachmentObject>> map) {
-        Result result = checkMYGMethod(taskId, map.t);
+                                                               @ApiParam(name = "attachmentList", value = "附件list", required = true) @RequestBody List<AttachmentObject> attachmentList) {
+        Result result = checkMYGMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.salesmanSupplyInvestigationMaterialFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
+        return flowStepService.salesmanSupplyInvestigationMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, object.u);
     }
 
     @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "尽调员审核", notes = "尽调员审核", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mygInvestigatorAuditMethod(@PathVariable("taskId") String taskId,
-                                             @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfo> map) {
+                                             @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfo> map) {
         Result result = checkMYGMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
@@ -90,18 +90,18 @@ public class MYGFinancingController {
     @ApiOperation(value = "业务员补充监管材料", notes = "业务员补充监管材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mygSalesmanSupplySupervisionMaterialMethod(@PathVariable("taskId") String taskId,
-                                                             @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, List<AttachmentObject>> map) {
-        Result result = checkMYGMethod(taskId, map.t);
+                                                             @ApiParam(name = "attachmentList", value = "附件list", required = true) @RequestBody List<AttachmentObject> attachmentList) {
+        Result result = checkMYGMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.salesmanSupplySupervisionMaterialFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
+        return flowStepService.salesmanSupplySupervisionMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, object.u);
     }
 
     @RequestMapping(value = "/supervisor/audit/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "监管员审核", notes = "监管员审核", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mygSupervisorAuditMethod(@PathVariable("taskId") String taskId,
-                                           @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, FinanceOrderSupervisorInfo> map) {
+                                           @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, FinanceOrderSupervisorInfo> map) {
         Result result = checkMYGMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
@@ -112,22 +112,22 @@ public class MYGFinancingController {
     @ApiOperation(value = "尽调员补充风控材料", notes = "尽调员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mygInvestigatorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
-                                                                 @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, List<AttachmentObject>> map) {
-        Result result = checkMYGMethod(taskId, map.t);
+                                                                 @ApiParam(name = "attachmentList", value = "附件list", required = true) @RequestBody List<AttachmentObject> attachmentList) {
+        Result result = checkMYGMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.investigatorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
+        return flowStepService.investigatorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, object.u);
     }
 
     @RequestMapping(value = "/supervisor/supply/riskmanager/material/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
     @ApiOperation(value = "监管员补充风控材料", notes = "监管员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mygSupervisorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, List<AttachmentObject>> map) {
-        Result result = checkMYGMethod(taskId, map.t);
+                                                               @ApiParam(name = "attachmentList", value = "附件list", required = true) @RequestBody List<AttachmentObject> attachmentList) {
+        Result result = checkMYGMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.supervisorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
+        return flowStepService.supervisorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, object.u);
     }
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -141,8 +141,7 @@ public class MYGFinancingController {
         return flowStepService.riskManagerAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, object.u);
     }
 
-    private Result checkMYGMethod(String taskId, TaskMap taskMap) {
-        if (taskMap.submit != 0 && taskMap.submit != 1) return Result.error(EnumCommonError.Admin_System_Error);
+    private Result checkMYGMethod(String taskId) {
         Task task = taskService.createTaskQuery().taskId(taskId).active().taskAssignee(adminSession.getUser().getId()).singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
@@ -152,6 +151,11 @@ public class MYGFinancingController {
         if (!financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) return Result.error(EnumAdminFinanceError.此订单不是煤易融业务.toString());
         CombineObject<Task, Long> map = new CombineObject<>(task, Long.valueOf(processInstance.getBusinessKey()));
         return Result.success().setData(map);
+    }
+
+    private Result checkMYGMethod(String taskId, TaskMap taskMap) {
+        if (taskMap.submit != 0 && taskMap.submit != 1) return Result.error(EnumCommonError.Admin_System_Error);
+        return checkMYGMethod(taskId);
     }
 
 

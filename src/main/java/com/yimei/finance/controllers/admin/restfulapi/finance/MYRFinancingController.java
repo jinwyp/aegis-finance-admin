@@ -68,11 +68,11 @@ public class MYRFinancingController {
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, List<AttachmentObject>> map) {
-        Result result = checkMYRMethod(taskId, map.t);
+                                                               @ApiParam(name = "attachmentList", value = "任务相关参数", required = true) @RequestBody List<AttachmentObject> attachmentList) {
+        Result result = checkMYRMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        return flowStepService.salesmanSupplyInvestigationMaterialFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, Long.valueOf(object.u));
+        return flowStepService.salesmanSupplyInvestigationMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, Long.valueOf(object.u));
     }
 
     @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -90,11 +90,11 @@ public class MYRFinancingController {
     @ApiOperation(value = "尽调员补充风控材料", notes = "尽调员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrInvestigatorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
-                                                                 @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, List<AttachmentObject>> map) {
-        Result result = checkMYRMethod(taskId, map.t);
+                                                                 @ApiParam(name = "attachmentList", value = "任务相关参数", required = true) @RequestBody List<AttachmentObject> attachmentList) {
+        Result result = checkMYRMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        return flowStepService.investigatorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, Long.valueOf(object.u));
+        return flowStepService.investigatorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, Long.valueOf(object.u));
     }
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
@@ -108,8 +108,7 @@ public class MYRFinancingController {
         return flowStepService.riskManagerAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, Long.valueOf(object.u));
     }
 
-    private Result checkMYRMethod(String taskId, TaskMap taskMap) {
-        if (taskMap.submit != 0 && taskMap.submit != 1) return Result.error(EnumCommonError.Admin_System_Error);
+    private Result checkMYRMethod(String taskId) {
         Task task = taskService.createTaskQuery().taskId(taskId).active().taskAssignee(adminSession.getUser().getId()).singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
@@ -119,6 +118,11 @@ public class MYRFinancingController {
         if (!financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) return Result.error(EnumAdminFinanceError.此订单不是煤易融业务.toString());
         CombineObject<Task, String> map = new CombineObject<>(task, processInstance.getBusinessKey());
         return Result.success().setData(map);
+    }
+
+    private Result checkMYRMethod(String taskId, TaskMap taskMap) {
+        if (taskMap.submit != 0 && taskMap.submit != 1) return Result.error(EnumCommonError.Admin_System_Error);
+        return checkMYRMethod(taskId);
     }
 
 
