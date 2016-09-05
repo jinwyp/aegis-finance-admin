@@ -35,17 +35,16 @@
             </td>
         </tr>
 
-
         <tr class="item-min">
-            <td class="td-label">拟融资金额:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.financingAmount"><span>万元</span></td>
-            <td class="td-label">拟使用资金时间:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.expectDate"><span>天</span></td>
+            <td class="td-label">拟融资金额(万元):</td>
+            <td class="td-val"><input class="" type="text" [(ngModel)]="currentOrder.financingAmount"></td>
+            <td class="td-label">拟使用资金时间(天):</td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.expectDate"></td>
         </tr>
 
         <tr class="item-min">
-            <td class="td-label">预期此笔业务量:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.businessAmount" ><span>万吨</span></td>
+            <td class="td-label">预期此笔业务量(万吨):</td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.businessAmount"></td>
             <td colspan="2" *ngIf="currentOrder.applyType==='MYD'"></td>
             <td class="td-label" *ngIf="currentOrder.applyType==='MYR'||currentOrder.applyType==='MYG'">运输方式:</td>
             <td class="td-val" *ngIf="currentOrder.applyType==='MYR'||currentOrder.applyType==='MYG'">
@@ -62,8 +61,8 @@
         <!--煤易融-->
 
         <tr *ngIf="currentOrder.applyType==='MYR'" class="item-min">
-            <td class="td-label">预计单吨销售价:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.sellingPrice"><span>元/吨</span></td>
+            <td class="td-label">预计单吨销售价(元/吨):</td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.sellingPrice"></td>
             <td class="td-label">签约单位全称:</td>
             <td class="td-val"><input type="text" [(ngModel)]="currentOrder.contractor"></td>
         </tr>
@@ -83,19 +82,17 @@
             <td class="td-val"><input type="text" [(ngModel)]="currentOrder.coalSource"></td>
         </tr>
         <tr *ngIf="currentOrder.applyType==='MYD'" class="item-min">
-            <td class="td-label">单吨市场报价:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.marketPrice"><span>元/吨</span></td>
+            <td class="td-label">单吨市场报价(元/吨):</td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.marketPrice"></td>
             <td class="td-label">主要煤质指标:</td>
             <td class="td-val"><input type="text" [(ngModel)]="currentOrder.coalQuantityIndex"></td>
         </tr>
 
-
-
         <!--煤易购-->
 
         <tr *ngIf="currentOrder.applyType==='MYG'" class="item-min">
-            <td class="td-label">单吨采购价:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.procurementPrice"><span>元/吨</span></td>
+            <td class="td-label">单吨采购价(元/吨):</td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.procurementPrice"></td>
             <td class="td-label">上游资源方全称:</td>
             <td class="td-val"><input type="text" [(ngModel)]="currentOrder.upstreamResource"></td>
         </tr>
@@ -133,8 +130,9 @@
         <tr class="item-title">
             <td colspan="4">
                 <span>审核意见:</span>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="true">通过</label>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="false">不通过</label>
+
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="true">类型正确,审核通过</label>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="false">类型错误,审核不通过</label>
             </td>
         </tr>
     </table>
