@@ -18,14 +18,13 @@ declare var __moduleName:string;
 })
 export class FileUploadComponent {
 
-    fileList = [];
-
-    @Input()
-    limitLength : number = 0;
+    fileList : FileList[] = [];
+    file  = {
+        url : ''
+    };
 
     @Output()
-    onChange:any = new EventEmitter();
-
+    onFinished:any = new EventEmitter();
 
     @ViewChild("fileInput") fileInput;
 
@@ -35,14 +34,16 @@ export class FileUploadComponent {
 
     addFile(): void {
         this.fileList = this.fileInput.nativeElement.files;
-        console.log(this.fileInput.nativeElement, this.fileList);
 
         if (this.fileList && this.fileList[0]) {
             let file = this.fileList[0];
-            console.log(file);
-            this.upload.upload(file).subscribe(res => {
-                console.log(res);
-            });
+
+            this.upload.upload(file).subscribe(
+                result => { if (result.success){
+                    this.file = result.data;
+                    this.onFinished.emit({value:result.data}) } },
+                error => console.error(error)
+            );
         }
     }
 

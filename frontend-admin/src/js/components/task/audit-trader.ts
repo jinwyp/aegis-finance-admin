@@ -38,6 +38,7 @@ export class AuditTraderComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
+    tempAttachmentList : Array<any> = [];
     isApprovedRadio : boolean = false;
 
     constructor(
@@ -90,6 +91,16 @@ export class AuditTraderComponent {
     }
 
 
+    finishedUpload (event) {
+        this.tempAttachmentList.push({
+            "url": event.value.url,
+            "name": event.value.name,
+            "type": event.value.type,
+            "processInstanceId": this.currentTask.processInstanceId,
+            "taskId": this.currentTask.id
+        })
+    }
+
 
     audit (isAudit : boolean){
 
@@ -104,13 +115,15 @@ export class AuditTraderComponent {
         let auditType : string = '';
         let body : any = {
             t : {
-                submit : isAudit === true ? 1 : 0,
+                submit :  0,
                 pass : isApproved === true ? 1 : 0,
                 need : 0,
                 need2 : 0
             },
             u : this.currentOrder
         };
+
+        body.u.attachmentList = this.tempAttachmentList;
 
         if (this.currentTask.taskDefinitionKey === TaskStatus.onlineTraderAudit) auditType = 'onlinetrader'; //线上交易员审核并填写材料
 

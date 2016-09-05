@@ -135,7 +135,7 @@ class Task {
     createTime : string;
     lastUpdateTime : string;
     taskList : Task[] ;
-
+    attachmentList : Array<any>;
 
     //公用字段
     financingAmount : number;               //拟融资金额（单位：万元）
