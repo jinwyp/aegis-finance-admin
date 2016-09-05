@@ -20,6 +20,7 @@ import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -43,7 +44,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydOnlineTraderAddMaterialMethod(@PathVariable("taskId") String taskId,
-                                                   @ApiParam(name = "map", value = "参数body对象", required = true) @RequestBody CombineObject<TaskMap, FinanceOrder> map) {
+                                                   @ApiParam(name = "map", value = "参数body对象", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrder> map) {
         Result result = checkMYDMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
@@ -56,7 +57,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "业务员审核并填写材料", notes = "业务员审核并填写材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydSalesmanAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
-                                                       @ApiParam(name = "map", value = "参数body对象", required = true) @RequestBody CombineObject<TaskMap, FinanceOrderSalesmanInfo> map) {
+                                                       @ApiParam(name = "map", value = "参数body对象", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderSalesmanInfo> map) {
         Result result = checkMYDMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
@@ -78,7 +79,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "尽调员审核", notes = "尽调员审核", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydInvestigatorAuditMethod(@PathVariable("taskId") String taskId,
-                                             @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfo> map) {
+                                             @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfo> map) {
         Result result = checkMYDMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
@@ -100,7 +101,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "监管员审核", notes = "监管员审核", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydSupervisorAuditMethod(@PathVariable("taskId") String taskId,
-                                           @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, FinanceOrderSupervisorInfo> map) {
+                                           @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderSupervisorInfo> map) {
         Result result = checkMYDMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
@@ -133,7 +134,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "风控人员审核", notes = "风控人员审核")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mydRiskManagerAuditMethod(@PathVariable("taskId") String taskId,
-                                            @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody CombineObject<TaskMap, FinanceOrderRiskManagerInfo> map) {
+                                            @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderRiskManagerInfo> map) {
         Result result = checkMYDMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
