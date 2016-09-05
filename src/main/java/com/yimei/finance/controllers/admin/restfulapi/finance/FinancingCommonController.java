@@ -138,6 +138,7 @@ public class FinancingCommonController {
             if (task.getTaskDefinitionKey().equals(type.toString())) {
                 userList = identityService.createUserQuery().memberOfGroup(type.id).list();
                 financeEventType = type.nextStep;
+                break;
             }
         }
         if (StringUtils.isEmpty(financeEventType)) return Result.error(EnumCommonError.Admin_System_Error);
