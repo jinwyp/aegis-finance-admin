@@ -30,7 +30,7 @@ var taskStatusList = [
     {
         'id': '8',
         'name': '线上交易员审核不通过',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'EndByOnlineTrader'
     },
     {
         'id': '10',
@@ -45,7 +45,7 @@ var taskStatusList = [
     {
         'id': '14',
         'name': '业务员审核不通过',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'EndBySalesman'
     },
     {
         'id': '16',

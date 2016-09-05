@@ -36,6 +36,7 @@ export class AssignPersonComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
+    taskStatusStep : any = TaskStatus;
 
     constructor(
         private activatedRoute: ActivatedRoute,
