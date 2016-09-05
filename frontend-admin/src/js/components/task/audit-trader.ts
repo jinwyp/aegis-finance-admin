@@ -115,7 +115,7 @@ export class AuditTraderComponent {
         let auditType : string = '';
         let body : any = {
             t : {
-                submit :  0,
+                submit : isAudit === true ? 1 : 0,
                 pass : isApproved === true ? 1 : 0,
                 need : 0,
                 need2 : 0
