@@ -74,7 +74,7 @@ public class FinanceFlowStepServiceImpl {
         salesmanInfo.setLastUpdateTime(new Date());
         orderService.saveFinanceOrderSalesmanInfo(salesmanInfo);
         methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment);
-        if (salesmanInfo.isNeedSupplyMaterial() && salesmanInfo.isNoticeApplyUser()) {
+        if (salesmanInfo.getNeedSupplyMaterial() == 1 && salesmanInfo.getNoticeApplyUser() == 1) {
             FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
             if (!StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
                 messageService.sendSMS(financeOrder.getApplyUserPhone(), FinanceSMSMessage.getUserNeedSupplyMaterialMessage(financeOrder.getSourceId(), "业务"));
@@ -135,7 +135,7 @@ public class FinanceFlowStepServiceImpl {
                 Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
                 if (!result.isSuccess()) return result;
                 FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
-                noticeUser(taskMap.need == 1, investigatorInfo.isNoticeApplyUser(), financeOrder.getApplyUserName(), financeOrder.getSourceId(), "尽调");
+                noticeUser(taskMap.need == 1, investigatorInfo.getNoticeApplyUser() == 1, financeOrder.getApplyUserName(), financeOrder.getSourceId(), "尽调");
                 noticeAdmin(String.valueOf(result.getData()), "尽调员", financeOrder.getSourceId(), "尽调");
                 return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString(), String.valueOf(result.getData()));
             } else {
@@ -185,7 +185,7 @@ public class FinanceFlowStepServiceImpl {
             Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
             if (!result.isSuccess()) return result;
             FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
-            noticeUser(taskMap.need == 1, supervisorInfo.isNoticeApplyUser(), financeOrder.getApplyUserName(), financeOrder.getSourceId(), "尽调");
+            noticeUser(taskMap.need == 1, supervisorInfo.getNoticeApplyUser() == 1, financeOrder.getApplyUserName(), financeOrder.getSourceId(), "尽调");
             noticeAdmin(String.valueOf(result.getData()), "监管员", financeOrder.getSourceId(), "监管");
             return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplySupervisionMaterial.toString(), String.valueOf(result.getData()));
         } else {
@@ -253,7 +253,7 @@ public class FinanceFlowStepServiceImpl {
                 if (taskMap.need == 1) {
                     Result result1 = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
                     if (!result1.isSuccess()) return result1;
-                    noticeUser(true, riskManagerInfo.isNoticeApplyUser(), financeOrder.getApplyUserPhone(), financeOrder.getSourceId(), "尽调");
+                    noticeUser(true, riskManagerInfo.getNoticeApplyUser() == 1, financeOrder.getApplyUserPhone(), financeOrder.getSourceId(), "尽调");
                     noticeAdmin(String.valueOf(result1.getData()), "风控人员", financeOrder.getSourceId(), "尽调");
                     Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorSupplyRiskMaterial.toString(), String.valueOf(result1.getData()));
                     if (!result2.isSuccess()) return result2;
@@ -261,7 +261,7 @@ public class FinanceFlowStepServiceImpl {
                 if (taskMap.need2 == 1) {
                     Result result1 = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString());
                     if (!result1.isSuccess()) return result1;
-                    noticeUser(true, riskManagerInfo.isNoticeApplyUser(), financeOrder.getApplyUserPhone(), financeOrder.getSourceId(), "尽调");
+                    noticeUser(true, riskManagerInfo.getNoticeApplyUser() == 1, financeOrder.getApplyUserPhone(), financeOrder.getSourceId(), "尽调");
                     noticeAdmin(String.valueOf(result1.getData()), "风控人员", financeOrder.getSourceId(), "尽调");
 
                     Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.supervisorSupplyRiskMaterial.toString(), String.valueOf(result1.getData()));

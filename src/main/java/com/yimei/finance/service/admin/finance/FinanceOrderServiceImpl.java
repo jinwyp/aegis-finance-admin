@@ -107,7 +107,7 @@ public class FinanceOrderServiceImpl {
     }
 
     public List<HistoryTaskObject> getAllTaskListByFinanceId(Long financeId) {
-        return (List<HistoryTaskObject>) methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).orderByTaskCreateTime().desc().list()).getData();
+        return (List<HistoryTaskObject>) methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).orderByTaskCreateTime().asc().list()).getData();
     }
 
     /**
