@@ -35,11 +35,6 @@
             </td>
         </tr>
 
-        <tr class="item-max">
-            <td class="td-label">判断类型是否选择正确:</td>
-            <td colspan="3"><label><input type="radio" name="pass">类型正确</label><label><input type="radio" name="pass">类型不正确</label></td>
-        </tr>
-
         <tr class="item-min">
             <td class="td-label">拟融资金额(万元):</td>
             <td class="td-val"><input class="" type="text" [(ngModel)]="currentOrder.financingAmount"></td>
@@ -129,8 +124,8 @@
         <tr class="item-title">
             <td colspan="4">
                 <span>审核意见:</span>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" value="true">通过</label>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" value="false">不通过</label>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" value="true">类型正确,审核通过</label>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" value="false">类型错误,审核不通过</label>
             </td>
         </tr>
     </table>

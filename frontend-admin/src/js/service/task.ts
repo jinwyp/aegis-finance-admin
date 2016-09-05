@@ -113,6 +113,7 @@ class Task {
     id :string;
     financeId :number;
     name :string;
+    sourceId :string;
 
     processInstanceId : string;
     taskDefinitionKey : string;
@@ -131,6 +132,7 @@ class Task {
 
     // finance Order 字段
     applyType : string;
+    applyTypeName :string;
     applyCompanyName : string;
     createTime : string;
     lastUpdateTime : string;
@@ -275,6 +277,12 @@ class TaskService {
 
     getOrderInfoById(orderId : number) {
         return this.http.get(API.orders + '/' + orderId).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(GlobalPromiseHttpCatch);
+    }
+
+    getSalesmanInfoById(financeId : number) {
+        return this.http.get(API.salesman + '/' + financeId).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }

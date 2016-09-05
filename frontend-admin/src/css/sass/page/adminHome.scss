@@ -44,7 +44,7 @@
   display: inline-block;
   height: 40px;
   line-height:40px;
-  width:300px;
+  //width:300px;
   border:1px solid $input-border-color;
   box-shadow: none;
   padding:0 10px;
@@ -138,6 +138,7 @@
     .ml-30{ margin-left:30px;}
     .ml-50{ margin-left:50px;}
     .ml-70{ margin-left:70px;}
+    .mr-10{ margin-right:10px;}
     .mr-20{ margin-right:20px;}
     .mb-20{ margin-bottom:20px;}
     .mb-50{ margin-bottom:50px;}
