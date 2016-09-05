@@ -98,7 +98,7 @@ public class FinancingCommonController {
     }
 
     @RequestMapping(value = "/tasks/step/{financeId}", method = RequestMethod.POST)
-    @ApiOperation(value = "获取金融单任务列表", notes = "获取金融单任务列表", response = Boolean.class)
+    @ApiOperation(value = "通过 金融单id 获取金任务列表", notes = "通过 金融单id 获取任务列表", response = Boolean.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "String", paramType = "path")
     public Result getAllTasksByFinanceIdMethod(@PathVariable(value = "financeId") Long financeId) {
         FinanceOrder financeOrder = orderRepository.findOne(financeId);
