@@ -275,17 +275,21 @@ class TaskService {
             .catch(GlobalPromiseHttpCatch);
     }
 
-    getOrderInfoById(orderId : number) {
-        return this.http.get(API.orders + '/' + orderId).toPromise()
+    getOrderInfoById(orderId : number, taskStep : string = 'onlinetrader') {
+
+        let auditStep = {
+            onlinetrader : '/',
+            salesman : '/salesman/',
+            investigator : '/investigator/',
+            riskmanager : '/riskmanager/',
+            supervisor : '/supervisor/'
+        };
+
+        return this.http.get(API.orders + auditStep[taskStep] + orderId).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }
 
-    getSalesmanInfoById(financeId : number) {
-        return this.http.get(API.salesman + '/' + financeId).toPromise()
-            .then(response => response.json() as HttpResponse)
-            .catch(GlobalPromiseHttpCatch);
-    }
 
     assignPerson(taskId : string, userId : string) {
 
