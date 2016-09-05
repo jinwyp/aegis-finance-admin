@@ -30,7 +30,7 @@ var taskStatusList = [
     {
         'id': '8',
         'name': '线上交易员审核不通过',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'EndByOnlineTrader'
     },
     {
         'id': '10',
@@ -45,7 +45,7 @@ var taskStatusList = [
     {
         'id': '14',
         'name': '业务员审核不通过',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'EndBySalesman'
     },
     {
         'id': '16',
@@ -60,13 +60,36 @@ var taskStatusList = [
     {
         'id': '20',
         'name': '待业务员补充尽调材料',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'salesmanSupplyInvestigationMaterial'
     },
     {
         'id': '22',
         'name': '尽调员审核不通过',
         'taskDefinitionKey' : 'assignOnlineTrader'
     },
+
+    {
+        'id': '50',
+        'name': '待分配监管员',
+        'taskDefinitionKey' : 'assignSupervisor'
+    },
+    {
+        'id': '52',
+        'name': '待监管员审核',
+        'taskDefinitionKey' : 'supervisorAudit'
+    },
+    {
+        'id': '54',
+        'name': '待业务员补充监管材料',
+        'taskDefinitionKey' : 'salesmanSupplySupervisionMaterial'
+    },
+    {
+        'id': '56',
+        'name': '监管员审核不通过',
+        'taskDefinitionKey' : 'assignOnlineTrader'
+    },
+
+
     {
         'id': '24',
         'name': '待分配风控人员',
@@ -80,12 +103,17 @@ var taskStatusList = [
     {
         'id': '26',
         'name': '待尽调员补充风控材料',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'investigatorSupplyRiskMaterial'
+    },
+    {
+        'id': '27',
+        'name': '待监管员补充风控材料',
+        'taskDefinitionKey' : 'supervisorSupplyRiskMaterial'
     },
     {
         'id': '28',
         'name': '风控人员审核不通过',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'EndByRiskManager'
     },
     {
         'id': '30',
@@ -95,7 +123,7 @@ var taskStatusList = [
     {
         'id': '32',
         'name': '审核通过,流程完成',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'completeWorkFlowSuccess'
     }
 ];
 
