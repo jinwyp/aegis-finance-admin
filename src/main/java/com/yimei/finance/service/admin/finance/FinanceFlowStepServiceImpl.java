@@ -117,7 +117,7 @@ public class FinanceFlowStepServiceImpl {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.investigatorAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行尽调员审核操作.toString());
         FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
         investigatorInfo.setFinanceId(financeId);
-        investigatorInfo.setFinancingParty(financeOrder.getApplyCompanyName());
+        investigatorInfo.setApplyCompanyName(financeOrder.getApplyCompanyName());
         investigatorInfo.setOurContractCompany(financeOrder.getOurContractCompany());
 
         investigatorInfo.setCreateManId(userId);
