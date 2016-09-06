@@ -267,8 +267,10 @@ class TaskService {
 
     private AllTaskListInfo = new BehaviorSubject<any>(null);
     private PendingTaskListInfo = new BehaviorSubject<any>(null);
+
     getAllTaskLengthObservable = this.AllTaskListInfo.asObservable();
     getPendingTaskLengthObservable = this.PendingTaskListInfo.asObservable();
+
     setAllTaskLengthObservable (allTaskLength : number){ this.AllTaskListInfo.next({allTaskLength : allTaskLength }) };
     setPendingTaskLengthObservable (pendingTaskLength : number ){ this.PendingTaskListInfo.next({pendingTaskLength : pendingTaskLength}) };
 
@@ -303,14 +305,20 @@ class TaskService {
             .catch(GlobalPromiseHttpCatch);
     }
 
+    getOrderStepsById(orderId : string) {
+        return this.http.get(API.orders + '/' + orderId + '/tasks').toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(GlobalPromiseHttpCatch);
+    }
+
     getOrderInfoById(orderId : number, taskStep : string = 'onlinetrader') {
 
         let auditStep = {
             onlinetrader : '/',
             salesman : '/salesman/',
             investigator : '/investigator/',
-            riskmanager : '/riskmanager/',
-            supervisor : '/supervisor/'
+            supervisor : '/supervisor/',
+            riskmanager : '/riskmanager/'
         };
 
         return this.http.get(API.orders + auditStep[taskStep] + orderId).toPromise()

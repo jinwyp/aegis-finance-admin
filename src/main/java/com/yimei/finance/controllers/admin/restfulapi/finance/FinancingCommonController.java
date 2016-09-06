@@ -64,42 +64,42 @@ public class FinancingCommonController {
     private FinanceOrderRepository orderRepository;
 
     @RequestMapping(value = "/finance/{financeId}", method = RequestMethod.GET)
-    @ApiOperation(value = "通过 金融单id 查看金融详细信息", notes = "通过 金融单id 查看金融详细信息", response = FinanceOrder.class)
+    @ApiOperation(value = "通过 金融单id 查看金融详细信息 线上业务员信息", notes = "通过 金融单id 查看金融详细信息 线上业务员信息", response = FinanceOrder.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderDetailByIdMethod(@PathVariable("financeId")Long financeId) {
         return orderService.findById(financeId, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.OnlineTraderAuditAttachment}));
     }
 
-    @RequestMapping(value = "/finance/salesman/{financeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/{financeId}/salesman", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看业务员填写表单详细信息", notes = "通过 金融单id 查看业务员填写表单详细信息", response = FinanceOrderSalesmanInfo.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderSalesmanInfoByFinanceIdMethod(@PathVariable("financeId")Long financeId) {
         return orderService.findSalesmanInfoByFinanceId(financeId, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SalesmanAuditAttachment}));
     }
 
-    @RequestMapping(value = "/finance/investigator/{financeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/{financeId}/investigator", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看尽调员填写表单详细信息", notes = "通过 金融单id 查看尽调员填写表单详细信息", response = FinanceOrderInvestigatorInfo.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderInvestigatorInfoByFinanceIdMethod(@PathVariable("financeId")Long financeId) {
         return orderService.findInvestigatorInfoByFinanceId(financeId, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.InvestigatorAuditAttachment, EnumFinanceAttachment.SalesmanSupplyAttachment_Investigator}));
     }
 
-    @RequestMapping(value = "/finance/supervisor/{financeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/{financeId}/supervisor", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看监管员填写表单详细信息", notes = "通过 金融单id 查看监管员填写表单详细信息", response = FinanceOrderSupervisorInfo.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderSupervisorInfoByFinanceIdMethod(@PathVariable("financeId")Long financeId) {
         return orderService.findSupervisorInfoByFinanceId(financeId, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SupervisorAuditAttachment, EnumFinanceAttachment.SalesmanSupplyAttachment_Supervisor}));
     }
 
-    @RequestMapping(value = "/finance/riskmanager/{financeId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/{financeId}/riskmanager", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看风控人员填写表单详细信息", notes = "通过 金融单id 查看风控人员填写表单详细信息", response = FinanceOrderRiskManagerInfo.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderRiskManagerInfoByFinanceIdMethod(@PathVariable("financeId")Long financeId) {
         return orderService.findRiskManagerInfoByFinanceId(financeId, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SalesmanAuditAttachment, EnumFinanceAttachment.InvestigatorSupplyRiskAttachment, EnumFinanceAttachment.SupervisorSupplyRiskAttachment}));
     }
 
-    @RequestMapping(value = "/tasks/step/{financeId}", method = RequestMethod.POST)
-    @ApiOperation(value = "通过 金融单id 获取金任务列表", notes = "通过 金融单id 获取任务列表", response = Boolean.class)
+    @RequestMapping(value = "/finance/{financeId}/tasks", method = RequestMethod.GET)
+    @ApiOperation(value = "通过 金融单id 获取所有任务步骤列表", notes = "通过 金融单id 获取所有任务步骤列表", response = Boolean.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "String", paramType = "path")
     public Result getAllTasksByFinanceIdMethod(@PathVariable(value = "financeId") Long financeId) {
         FinanceOrder financeOrder = orderRepository.findOne(financeId);
@@ -168,7 +168,7 @@ public class FinancingCommonController {
         return Result.error(EnumAdminFinanceError.你没有处理此金融单的权限.toString());
     }
 
-    @RequestMapping(value = "/process/{processInstanceId}/image", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/process/{processInstanceId}/image", method = RequestMethod.GET)
     @ApiOperation(value = "通过流程实例id获取流程图", notes = "通过流程实例id获取流程图")
     @ApiImplicitParam(name = "processInstanceId", value = "流程实例id", required = true, dataType = "String", paramType = "path")
     public void getProcessDiagramMethod(@PathVariable("processInstanceId") String processInstanceId, HttpServletRequest request, HttpServletResponse response) throws IOException {
