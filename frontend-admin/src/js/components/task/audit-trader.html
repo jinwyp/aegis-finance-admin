@@ -8,8 +8,6 @@
 
 <process-tab [processInstanceId]="currentTask.processInstanceId" [processList]="currentOrder.taskList"></process-tab>
 
-
-
 <div class="item-margin apply-box">
 
     <div class="table-title">融资申请</div>
@@ -110,9 +108,9 @@
                 <div class="hint mb-20">如: 下游签约单位合同模板、历史供煤信息，终端结算回款历史单据、自身企业信用、财务状况</div>
                 <div class="attachment">
                     <img *ngFor="let pic of currentOrder.attachmentList" [src]="pic.url" [alt]="pic.name">
+                    <file-upload (onFinished)="finishedUpload($event)"></file-upload>
                 </div>
 
-                <file-upload (onFinished)="finishedUpload($event)"></file-upload>
             </td>
         </tr>
         <tr class="item-max">
@@ -138,7 +136,7 @@
             <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
         </div>
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="submit" class="btn btn-default btn-lg btn-save" (click)="audit(false)" [disabled]="css.isSubmitted">保存</button>
+            <button type="submit" class="btn btn-default btn-lg btn-save mr-20" (click)="audit(false)" [disabled]="css.isSubmitted||css.isCommitted">保存</button>
             <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(true)" [disabled]="css.isSubmitted||css.isCommitted">保存并提交</button>
             <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['tasks/pending']">返回</button>
         </div>
