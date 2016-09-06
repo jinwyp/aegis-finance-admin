@@ -65,14 +65,14 @@ public class UserController {
     public Result getUserByIdMethod(@PathVariable("id") String id) {
         User user = identityService.createUserQuery().userId(id).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
-        UserObject userObject = userService.changeUserObject(user);
-        return Result.success().setData(userObject);
+        return Result.success().setData(userService.changeUserObject(user));
     }
 
     @ApiOperation(value = "查询用户所在的组", notes = "查询某个用户所在的组", response = GroupObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}/groups", method = RequestMethod.GET)
     public Result getUserGroupsMethod(@PathVariable("id") String id, Page page) {
+        if (identityService.createUserQuery().userId(id).singleResult() == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         page.setTotal(identityService.createGroupQuery().groupMember(id).count());
         List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().groupMember(id).list());
         return Result.success().setData(groupObjectList).setMeta(page);
@@ -94,12 +94,13 @@ public class UserController {
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@Valid @RequestBody UserObject user) {
-        Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
+        Result result = userService.checkAddUserGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
         if (!result.isSuccess()) return result;
         if (identityService.createUserQuery().userFirstName(user.getUsername()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
-        if (identityService.createUserQuery().userEmail(user.getEmail()).singleResult() != null) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
-        Result result1 = userService.checkUserPhone(user.getPhone());
+        Result result1 = userService.checkUserEmail(user.getEmail());
         if (!result1.isSuccess()) return result1;
+        Result result2 = userService.checkUserPhone(user.getPhone());
+        if (!result2.isSuccess()) return result2;
         User newUser = identityService.newUser("");
         DozerUtils.copy(user, newUser);
         newUser.setId(null);
@@ -122,11 +123,11 @@ public class UserController {
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Result deleteUserMethod(@PathVariable("id") String id) {
-        List<String> groupIds = userService.getUserGroupIdList(id);
-        Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), groupIds);
-        if (!result.isSuccess()) return result;
         User user = identityService.createUserQuery().userId(id).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
+        List<String> groupIds = userService.getUserGroupIdList(id);
+        Result result = userService.checkAddUserGroupAuthority(adminSession.getUser().getId(), groupIds);
+        if (!result.isSuccess()) return result;
         UserObject userObject = DozerUtils.copy(user, UserObject.class);
         identityService.deleteUser(id);
         return Result.success().setData(userObject);
@@ -137,14 +138,15 @@ public class UserController {
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateUserInfoMethod(@PathVariable("id") String id,
                                        @ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        Result result = userService.checkAddUserToGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
-        if (!result.isSuccess()) return result;
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());
-        if (StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户邮箱不能为空.toString());
-        User emailUser = identityService.createUserQuery().userEmail(user.getEmail()).singleResult();
-        if (emailUser != null && !emailUser.getId().equals(id)) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
         User oldUser = identityService.createUserQuery().userId(id).singleResult();
         if (oldUser == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
+        Result result = userService.checkAddUserGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
+        if (!result.isSuccess()) return result;
+        Result result1 = userService.checkUserEmail(user.getEmail(), id);
+        if (!result1.isSuccess()) return result1;
+        Result result2 = userService.checkUserPhone(user.getPhone(), oldUser.getId());
+        if (!result2.isSuccess()) return result2;
         oldUser.setEmail(user.getEmail());
         identityService.saveUser(oldUser);
         identityService.setUserInfo(oldUser.getId(), "name", user.getName());
@@ -157,9 +159,10 @@ public class UserController {
     @ApiOperation(value = "用户自己修改信息", notes = "用户自己修改信息", response = UserObject.class)
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
     public Result updateUserSelfInfoMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
-        if (StringUtils.isEmpty(user.getEmail())) return Result.error(EnumAdminUserError.用户邮箱不能为空.toString());
-        User emailUser = identityService.createUserQuery().userEmail(user.getEmail()).singleResult();
-        if (emailUser != null && !emailUser.getId().equals(adminSession.getUser().getId())) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
+        Result result1 = userService.checkUserEmail(user.getEmail(), adminSession.getUser().getId());
+        if (!result1.isSuccess()) return result1;
+        Result result2 = userService.checkUserPhone(user.getPhone(), adminSession.getUser().getId());
+        if (!result2.isSuccess()) return result2;
         User oldUser = identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult();
         oldUser.setEmail(user.getEmail());
         identityService.saveUser(oldUser);
@@ -179,7 +182,7 @@ public class UserController {
         User user = identityService.createUserQuery().userId(id).singleResult();
         String subject = "重置密码邮件";
         String password = CodeUtils.CreateNumLetterCode();
-        user.setPassword(password);
+        user.setPassword(userService.securePassword(password));
         identityService.saveUser(user);
         String content = "你好: " + user.getFirstName() + ", 管理员为你重置密码, 新密码是: " + password + " . [易煤网金融系统]";
         mailService.sendSimpleMail(user.getEmail(), subject, content);
