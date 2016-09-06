@@ -69,10 +69,11 @@ export class SuperviseReportComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
-
+                console.log(result.data+'-------------');
                 this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
+                        console.log(result.data+'++++++++++++++++++++');
                     }else{
 
                     }
