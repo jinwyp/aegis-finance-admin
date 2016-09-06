@@ -24,6 +24,7 @@ import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -138,6 +139,7 @@ public class FinancingCommonController {
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "userId", value = "被分配人userId", required = true, dataType = "String", paramType = "path")
     })
+    @Transactional
     public Result assignMYROnlineTraderMethod(@PathVariable(value = "taskId") String taskId,
                                               @PathVariable(value = "userId") String userId) {
         Task task = taskService.createTaskQuery().taskId(taskId).active().singleResult();
@@ -158,7 +160,7 @@ public class FinancingCommonController {
             if (u.getId().equals(userId)) {
                 taskService.complete(task.getId());
                 Task t = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).taskDefinitionKey(financeEventType).active().singleResult();
-                if (t == null) return Result.error(EnumCommonError.Admin_System_Error);
+                if (t == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
                 taskService.setAssignee(t.getId(), userId);
                 return Result.success().setData(true);
             }

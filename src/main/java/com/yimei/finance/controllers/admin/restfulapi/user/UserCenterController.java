@@ -7,6 +7,7 @@ import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
+import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -14,7 +15,6 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
-import org.activiti.engine.identity.Group;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -22,7 +22,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Api(tags = {"admin-api-flow"}, description = "金融公用接口")
@@ -39,6 +38,8 @@ public class UserCenterController {
     private HistoryService historyService;
     @Autowired
     private FinanceFlowMethodServiceImpl workFlowService;
+    @Autowired
+    private AdminUserServiceImpl userService;
 
     @RequestMapping(value = "/{taskId}", method = RequestMethod.GET)
     @ApiOperation(value = "通过 id 查询任务对象", notes = "通过 id 查询任务对象", response = TaskObject.class)
@@ -66,11 +67,7 @@ public class UserCenterController {
     @ApiOperation(value = "给分配管理员查看待领取任务列表", notes = "给线上交易员管理组, 业务员管理组, 尽调员管理组, 监管员管理组, 风控管理组, 查看待领取任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalWaitClaimTasksMethod(Page page) {
-        List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
-        List<String> groupIds = new ArrayList<>();
-        for (Group group : groupList) {
-            groupIds.add(group.getId());
-        }
+        List<String> groupIds = userService.getUserGroupIdList(adminSession.getUser().getId());
         if (groupIds != null && groupIds.size() != 0) {
             List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
             page.setTotal(Long.valueOf(taskList.size()));

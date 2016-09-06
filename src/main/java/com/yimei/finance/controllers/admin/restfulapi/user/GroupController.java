@@ -53,8 +53,8 @@ public class GroupController {
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
-    @ApiOperation(value = "查询用户组", notes = "根据 GroupId 查询该用户组信息", response = GroupObject.class)
-    @ApiImplicitParam(name = "groupId", value = "用户组 Group Id", required = true, dataType = "String", paramType = "path")
+    @ApiOperation(value = "通过 groupId 查询用户组", notes = "通过 groupId 查询该用户组信息", response = GroupObject.class)
+    @ApiImplicitParam(name = "groupId", value = "用户组 Id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{groupId}", method = RequestMethod.GET)
     public Result getGroupByIdMethod(@PathVariable("groupId") String groupId) {
         Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
@@ -63,7 +63,7 @@ public class GroupController {
         return Result.success().setData(groupObject);
     }
 
-    @ApiOperation(value = "查询用户组下的用户", notes = "根据 GroupId 查询该用户组下的用户", response = UserObject.class, responseContainer = "List")
+    @ApiOperation(value = "通过 groupId 查询用户组下的用户", notes = "通过 groupId 查询该用户组下的用户", response = UserObject.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "groupId", value = "GroupId", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
