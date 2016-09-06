@@ -9,7 +9,6 @@ import com.yimei.finance.representation.common.databook.EnumDataBookType;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.MapObject;
 import com.yimei.finance.representation.common.result.Result;
-import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
 import com.yimei.finance.service.common.file.LocalStorage;
 import com.yimei.finance.utils.DozerUtils;
 import com.yimei.finance.utils.StoreUtils;
@@ -39,8 +38,6 @@ public class ToolsController {
     private LocalStorage localStorage;
     @Autowired
     private TaskService taskService;
-    @Autowired
-    private FinanceFlowMethodServiceImpl financeFlowMethodService;
 
     @RequestMapping(value = "/transportmodes", method = RequestMethod.GET)
     @ApiOperation(value = "获取运输方式列表", notes = "获取运输方式列表数据", response = DataBook.class, responseContainer = "List")

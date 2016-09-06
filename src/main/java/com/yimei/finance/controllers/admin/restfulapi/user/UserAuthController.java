@@ -34,9 +34,6 @@ public class UserAuthController {
     @Autowired
     private AdminUserLoginRecordRepository loginRecordRepository;
 
-    /**
-     * 管理员登陆
-     */
     @ApiOperation(value = "登陆接口", notes = "需要输入用户名和密码登陆", response = UserLoginObject.class)
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Result authLoginWithPassword(@Valid @RequestBody UserLoginObject userLoginObject) {
@@ -55,16 +52,12 @@ public class UserAuthController {
         }
     }
 
-    /**
-     * 管理员退出登录
-     */
     @ApiOperation(value = "退出登录接口", notes = "退出登陆")
     @RequestMapping(value = "/logout", method = RequestMethod.GET)
     public Result logout() {
         adminSession.logout();
         return Result.success();
     }
-
 
     @ApiOperation(value = "获取session中当前用户对象", notes = "获取session中用户对象", response = UserObject.class)
     @RequestMapping(value = "/session", method = RequestMethod.GET)
