@@ -23,23 +23,33 @@
 
     <table class="table table-bordered apply-table">
         <tr class="item-max">
+            <td class="td-label">业务类型:</td>
+            <td width="250" class="td-val" *ngIf="currentTask.applyType==='MYD'">煤易贷</td>
+            <td width="250" class="td-val" *ngIf="currentTask.applyType==='MYR'">煤易融</td>
+            <td width="250" class="td-val" *ngIf="currentTask.applyType==='MYG'">煤易购</td>
             <td class="td-label">业务编号:</td>
             <td width="250" class="td-val">{{currentTask.sourceId}}</td>
-            <td class="td-label">仓储地名称:</td>
-            <td width="250" class="td-val">{{currentTask.storagePlaceName || '--'}}</td>
+
+
         </tr>
         <tr class="item-max">
+            <td class="td-label">仓储地名称:</td>
+            <td width="250" class="td-val">{{currentTask.storagePlaceName || '--'}}</td>
             <td class="td-label">仓库性质:</td>
             <td class="td-val">
                 <!--<input type="text" [(ngModel)]="currentTask.storageProperty">-->
                 {{currentTask.storageProperty || '--'}}
             </td>
+        </tr>
+        <tr class="item-max">
+
             <td class="td-label">仓库地址:</td>
-            <td class="td-val">
+            <td class="td-val" colspan="3">
                 <!--<input type="text" [(ngModel)]="currentTask.storageAddress">-->
                 {{currentTask.storageAddress || '--'}}
             </td>
         </tr>
+
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">我方与港口的历史合作状况</span></td>
         </tr>
