@@ -57,11 +57,11 @@ public class ToolsController {
 
 
     @RequestMapping(value = "/files", method = RequestMethod.GET)
-    @ApiOperation(value = "下载文件", notes = "下载文件")
-    public void doDownloadFile(@RequestParam(value = "path", required = true) String path, HttpServletResponse response) {
+    @ApiOperation(value = "下载文件", notes = "通过文件url路径下载文件")
+    public void doDownloadFile(@RequestParam(value = "url", required = true) String url, HttpServletResponse response) {
         try {
-            if (path != null && path.startsWith("/files/")) {
-                File file = new File(localStorage.getServerFileRootPath(), path.substring("/files/".length()));
+            if (url != null && url.startsWith("/files/")) {
+                File file = new File(localStorage.getServerFileRootPath(), url.substring("/files/".length()));
                 WebUtils.doDownloadFile(file, response);
             }
         } catch (IOException e) {

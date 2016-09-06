@@ -58,7 +58,7 @@ export class UserDetailComponent {
         this.css.ajaxSuccessHidden = true;
         this.css.ajaxErrorHidden = true;
         this.currentUserSession.department = this.selectedItem;
-        this.userService.edit(this.currentUserSession).then((result)=> {
+        this.userService.updateCurrentUserInfo(this.currentUserSession).then((result)=> {
             if (result.success) {
                 this.css.ajaxSuccessHidden = false;
                 setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
