@@ -1,0 +1,1 @@
+module.exports = require("npm:avalon2@2.1.11/dist/avalon.js");

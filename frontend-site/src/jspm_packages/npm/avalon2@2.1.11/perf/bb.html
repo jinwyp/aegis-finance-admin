@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <script src="../dist/avalon.js"></script>
+        <script src="http://cdn.bootcss.com/knockout/3.4.0/knockout-debug.js"></script>
+
+    </head>
+    <body ms-controller="test">
+    <xmp ms-widget="[{is:'ms-div',$id:'123'},@ddd]"></xmp>
+    <script>
+        avalon.component('ms-div', {
+            template: '<div></div>',
+            defaults: {
+                aaa: {},
+                ccc: 123,
+                onInit: function () {
+                    this.aaa = {
+                        a: 1
+                    };
+                    this.ccc = 456;
+                }
+            }
+        })
+
+        var vm = avalon.define({
+            $id: 'test',
+            ddd:{
+                aaa: {}
+            },
+            ccc: 123,
+        });
+        vm.$watch('onReady', function () {
+            console.log('00000')
+            console.log(vm.ccc)
+            console.log(vm.ddd.aaa)
+        })
+       
+    </script>
+</body>
+</html>
