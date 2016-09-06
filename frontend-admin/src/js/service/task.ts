@@ -321,9 +321,17 @@ class TaskService {
             riskmanager : '/riskmanager/'
         };
 
-        return this.http.get(API.orders + auditStep[taskStep] + orderId).toPromise()
-            .then(response => response.json() as HttpResponse)
-            .catch(GlobalPromiseHttpCatch);
+        return this.http.get(API.orders + auditStep[taskStep] + orderId).toPromise().then(response => {
+            var result = response.json() as HttpResponse;
+
+            return this.http.get(API.orders + '/' + orderId + '/tasks').toPromise().then( response2 => {
+                var result2 = response2.json() as HttpResponse;
+                result.data.taskList = result2.data;
+                return result;
+            }).catch(GlobalPromiseHttpCatch);
+
+        })
+        .catch(GlobalPromiseHttpCatch);
     }
 
 
