@@ -115,7 +115,11 @@ public class FinanceFlowStepServiceImpl {
      */
     public Result investigatorAuditFinanceOrderMethod(String userId, TaskMap taskMap, FinanceOrderInvestigatorInfo investigatorInfo, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.investigatorAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行尽调员审核操作.toString());
+        FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
         investigatorInfo.setFinanceId(financeId);
+        investigatorInfo.setFinancingParty(financeOrder.getApplyCompanyName());
+        investigatorInfo.setOurContractCompany(financeOrder.getOurContractCompany());
+
         investigatorInfo.setCreateManId(userId);
         investigatorInfo.setCreateTime(new Date());
         investigatorInfo.setLastUpdateManId(userId);
@@ -134,7 +138,6 @@ public class FinanceFlowStepServiceImpl {
                 if (!result1.isSuccess()) return result1;
                 Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
                 if (!result.isSuccess()) return result;
-                FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
                 noticeUser(taskMap.need == 1, investigatorInfo.getNoticeApplyUser() == 1, financeOrder.getApplyUserName(), financeOrder.getSourceId(), "尽调");
                 noticeAdmin(String.valueOf(result.getData()), "尽调员", financeOrder.getSourceId(), "尽调");
                 return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString(), String.valueOf(result.getData()));
