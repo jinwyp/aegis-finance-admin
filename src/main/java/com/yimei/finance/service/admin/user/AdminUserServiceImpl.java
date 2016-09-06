@@ -34,7 +34,7 @@ public class AdminUserServiceImpl {
     /**
      * 判断一个用户是否有 向该组 添加用户的 权限
      */
-    public Result checkAddUserToGroupAuthority(String userId, List<String> groupIds) {
+    public Result checkAddUserGroupAuthority(String userId, List<String> groupIds) {
         if (getUserGroupIdList(userId).contains(EnumSpecialGroup.SuperAdminGroup.id)) return Result.success();
         List<String> canGroupIds = getCanAddUserGroupIds(userId);
         for (String gid : groupIds) {
@@ -184,6 +184,42 @@ public class AdminUserServiceImpl {
         return Result.success();
     }
 
+    public Result checkUserPhone(String phone, String userId) {
+        if (StringUtils.isEmpty(phone)) return Result.success();
+        List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().list());
+        for (UserObject user : userObjectList) {
+            if (!StringUtils.isEmpty(user.getPhone()) && user.getPhone().equals(phone) && !user.getId().equals(userId))
+                return Result.error(EnumAdminUserError.此手机号已经存在.toString());
+        }
+        return Result.success();
+    }
+    public Result checkUserEmail(String email) {
+        if (StringUtils.isEmpty(email)) return Result.error(EnumAdminUserError.邮箱不能为空.toString());
+        User emailUser = identityService.createUserQuery().userEmail(email).singleResult();
+        if (emailUser != null) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
+        return Result.success();
+    }
+
+    public Result checkUserEmail(String email, String userId) {
+        if (StringUtils.isEmpty(email)) return Result.error(EnumAdminUserError.邮箱不能为空.toString());
+        User emailUser = identityService.createUserQuery().userEmail(email).singleResult();
+        if (emailUser != null && !emailUser.getId().equals(userId)) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
+        return Result.success();
+    }
+
+    /**
+     * 检查是否具有系统管理员权限
+     */
+    public Result checkSuperAdminRight(String userId) {
+        List<Group> groups = identityService.createGroupQuery().groupMember(userId).list();
+        for (Group group : groups) {
+            if (group.getId().equals(EnumSpecialGroup.SuperAdminGroup.id)) {
+                return Result.success();
+            }
+        }
+        return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
+    }
+
     public Result getUserListBySelect(String operateUserId, AdminUserSearch userSearch, Page page) {
         if (userSearch == null) {
             page.setTotal(identityService.createUserQuery().count());
@@ -252,4 +288,6 @@ public class AdminUserServiceImpl {
             }
         }
     }
+
+
 }

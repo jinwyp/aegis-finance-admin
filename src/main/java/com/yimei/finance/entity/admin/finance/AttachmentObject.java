@@ -9,6 +9,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AttachmentObject implements Serializable {
+    private String id;
     private String name;
     private String type;
     private String url;
