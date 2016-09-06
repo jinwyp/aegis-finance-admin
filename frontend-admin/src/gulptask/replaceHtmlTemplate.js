@@ -8,10 +8,12 @@ var gulp = require('gulp');
 var revCollector = require('gulp-rev-collector');
 
 
-
-var distPath = {
+var sourcePath = {
     'html'                             : '../../src/main/resources/templates/admin/dist/**/*',
     "manifest"                         : '../dist/rev/*.json'
+};
+var distPath = {
+    'html'                             : '../../src/main/resources/templates/admin/dist/'
 };
 
 
@@ -23,7 +25,7 @@ gulp.task('replaceTpl', ['sass-release', 'js-release'],  function () {
     //    .pipe( gulp.dest(distPaths.css) );
 
     // 替换Html模版文件
-    gulp.src([distPath.manifest, distPath.html])
+    gulp.src([sourcePath.manifest, sourcePath.html])
         .pipe( revCollector() )
         .pipe( gulp.dest(distPath.html) );
 });
