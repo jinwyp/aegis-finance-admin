@@ -113,13 +113,6 @@ class UserService {
     }
 
 
-    getTaskList() {
-        return this.http.get(API.tasks).toPromise()
-            .then(response => response.json() as HttpResponse)
-            .catch(GlobalPromiseHttpCatch);
-    }
-
-
     getList(name:string, username:string, groupName:string) {
         let url = `${API.users}?name=${name||''}&username=${username||''}&groupName=${groupName||''}`;
         return this.http.get(url).toPromise()
@@ -191,7 +184,7 @@ class UserService {
 
     updateCurrentUserPassword(user) {
         let headers = new Headers({'Content-Type': 'application/json'});
-        return this.http.put(API.session + '/password' , JSON.stringify(user), {headers: headers}).toPromise()
+        return this.http.put(API.users + '/self/password' , JSON.stringify(user), {headers: headers}).toPromise()
         // return this.http.post(API.users + '/changepwd' , {oldPassword: user.oldPassword, newPassword:user.newPassword}, {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
             .catch(GlobalPromiseHttpCatch);
@@ -201,7 +194,7 @@ class UserService {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
 
-        return this.http.put(API.session + '/info', JSON.stringify(user), {headers: headers}).toPromise()
+        return this.http.put(API.users + '/self', JSON.stringify(user), {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
             .catch(GlobalPromiseHttpCatch);
     }

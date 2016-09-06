@@ -80,11 +80,16 @@ public class UserController {
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
-    @ApiOperation(value = "查询当前用户有权限添加用户的组列表", notes = "查询当前用户有权限添加用户的组列表", response = GroupObject.class, responseContainer = "List")
-    @RequestMapping(value = "/session/rights", method = RequestMethod.GET)
-    public Result getHaveRightGroupListMethod() {
-        return Result.success().setData(userService.getCanAddUserGroupList(adminSession.getUser().getId()));
+
+    @ApiOperation(value = "查询当前用户有权限操作的组列表", notes = "查询当前用户有权限操作的组列表", response = GroupObject.class, responseContainer = "List")
+    @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
+    @RequestMapping(value = "/self/groups", method = RequestMethod.GET)
+    public Result getHaveRightGroupListMethod(Page page) {
+        List<GroupObject> groupList = userService.getCanAddUserGroupList(adminSession.getUser().getId());
+        page.setTotal(Long.valueOf(groupList.size()));
+        return Result.success().setData(groupList).setMeta(page);
     }
+
 
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     @ApiOperation(value = "获取所有部门列表", notes = "获取所有部门列表", response = String.class, responseContainer = "List")
@@ -191,8 +196,8 @@ public class UserController {
         return Result.success().setData(true);
     }
 
-    @ApiOperation(value = "用户修改密码", notes = "用户自己修改密码", response = Boolean.class)
-    @RequestMapping(value = "/changepwd", method = RequestMethod.POST)
+    @ApiOperation(value = "用户自己修改密码", notes = "用户自己修改密码", response = Boolean.class)
+    @RequestMapping(value = "/self/password", method = RequestMethod.PUT)
     public Result resetUserPasswordMethod(@ApiParam(name = "user", value = "用户密码") @Validated @RequestBody UserPasswordObject userObject) {
         if (!identityService.checkPassword(adminSession.getUser().getId(), userService.securePassword(userObject.getOldPassword()))) {
             return Result.error(EnumAdminUserError.原密码不正确.toString());
