@@ -357,6 +357,7 @@ class TaskService {
             onlinetrader : 'onlinetrader',
             salesman : 'salesman',
             investigator : 'investigator',
+            supervisor : 'supervisor',
             riskmanager : 'riskmanager'
         };
 

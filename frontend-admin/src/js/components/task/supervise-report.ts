@@ -35,7 +35,6 @@ export class SuperviseReportComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     isApprovedRadio : boolean = false;
-    messageTo : boolean = false;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -117,7 +116,7 @@ export class SuperviseReportComponent {
         };
 
 
-        if (this.currentTask.taskDefinitionKey === TaskStatus.onlineTraderAudit) auditType = 'onlinetrader'; //线上交易员审核并填写材料
+        if (this.currentTask.taskDefinitionKey === TaskStatus.supervisorAudit) auditType = 'supervisor'; //监管员审核并填写材料
 
         if (this.currentTask.taskDefinitionKey && auditType) {
 
