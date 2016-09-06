@@ -46,8 +46,10 @@ public class GroupController {
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     @RequestMapping(method = RequestMethod.GET)
     public Result getGroupListMethod(Page page) {
-        page.setTotal(identityService.createGroupQuery().count());
-        List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().orderByGroupId().desc().listPage(page.getOffset(), page.getCount()));
+        List<Group> groupList = identityService.createGroupQuery().orderByGroupId().desc().list();
+        page.setTotal(Long.valueOf(groupList.size()));
+        int toIndex = page.getPage() * page.getCount() < groupList.size() ? page.getPage() * page.getCount() : groupList.size();
+        List<GroupObject> groupObjectList = groupService.changeGroupObject(groupList.subList(page.getOffset(), toIndex));
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
