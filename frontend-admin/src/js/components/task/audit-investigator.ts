@@ -25,11 +25,18 @@ export class AuditInvestigatorComponent {
 
     private sub: Subscription;
 
+    css = {
+        isSubmitted : false,
+        isCommitted : false,
+        ajaxErrorHidden : true,
+        ajaxSuccessHidden : true
+    };
+
     currentUserSession : User = new User();
 
     taskId : string = '';
     currentTask : Task = new Task();
-
+    currentOrder : Task = new Task();
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -65,6 +72,13 @@ export class AuditInvestigatorComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
+                this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
+                    if (result.success){
+                        this.currentOrder = result.data;
+                    }else{
+
+                    }
+                });
             }else{
 
             }
@@ -73,6 +87,10 @@ export class AuditInvestigatorComponent {
 
 
     audit (isAudit : boolean, isApproved : boolean){
+
+        this.css.ajaxErrorHidden = true;
+        this.css.ajaxSuccessHidden = true;
+        this.css.isSubmitted = true;
 
         let auditType : string = '';
         let body : any = {
@@ -90,11 +108,15 @@ export class AuditInvestigatorComponent {
         if (this.currentTask.taskDefinitionKey && auditType) {
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
+                    if(isAudit){
+                        this.css.isCommitted = true;
+                    }
                     alert('保存成功!!')
 
                 }else{
                     alert('保存失败!')
                 }
+                this.css.isSubmitted = false;
             });
         }
 
