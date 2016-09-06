@@ -1,11 +1,10 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.finance.*;
-import com.yimei.finance.entity.admin.finance.validated.EditFinanceOrder;
+import com.yimei.finance.entity.admin.finance.AttachmentObject;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
-import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
-import com.yimei.finance.representation.admin.finance.EnumFinanceOrderType;
+import com.yimei.finance.representation.admin.finance.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.CombineObject;
 import com.yimei.finance.representation.common.result.Result;
@@ -20,7 +19,6 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -42,72 +40,164 @@ public class MYRFinancingController {
     @Autowired
     private FinanceOrderRepository orderRepository;
 
-    @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
+    @RequestMapping( value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
+    @ApiOperation(value = "线上交易员填写材料-保存", notes = "线上交易员填写材料-保存", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrOnlineTraderAddMaterialMethod(@PathVariable("taskId") String taskId,
-                                                   @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(EditFinanceOrder.class) @RequestBody CombineObject<TaskMap, FinanceOrder> map) {
-        Result result = checkMYRMethod(taskId, map.t);
-        if (!result.isSuccess()) return result;
-        CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        FinanceOrder order = map.u;
-        order.setId(Long.valueOf(object.getU()));
-        return flowStepService.onlineTraderAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, object.getT(), order);
+                                                   @ApiParam(name = "map", value = "参数body对象", required = true) @RequestBody FinanceOrderObject financeOrder) {
+        return onlineTraderAddMaterialMethod(taskId, null, financeOrder, false);
     }
 
-    @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "业务员审核并填写材料", notes = "业务员审核并填写材料", response = Boolean.class)
+    @RequestMapping( value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
+    @ApiOperation(value = "线上交易员填写材料-提交", notes = "线上交易员填写材料-提交", response = Boolean.class)
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    public Result myrOnlineTraderAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
+                                                           @ApiParam(name = "map", value = "参数body对象", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderObject> map) {
+        return onlineTraderAddMaterialMethod(taskId, map.t, map.u, true);
+    }
+
+    private Result onlineTraderAddMaterialMethod(String taskId, TaskMap taskMap, FinanceOrderObject financeOrder, boolean submit) {
+        Result result = checkMYRMethod(taskId);
+        if (!result.isSuccess()) return result;
+        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+        financeOrder.setId(object.u);
+        return flowStepService.onlineTraderAuditFinanceOrderMethod(adminSession.getUser().getId(), taskMap, object.t, financeOrder, submit);
+    }
+
+    @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
+    @ApiOperation(value = "业务员审核-保存", notes = "业务员审核-保存", response = Boolean.class)
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    public Result myrSalesmanAddMaterialMethod(@PathVariable("taskId") String taskId,
+                                               @ApiParam(name = "map", value = "参数body对象", required = true) @RequestBody FinanceOrderSalesmanInfoObject salesmanInfoObject) {
+        return salesmanAddMaterialAndAuditMethod(taskId, null, salesmanInfoObject, false);
+    }
+
+    @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
+    @ApiOperation(value = "业务员审核-提交", notes = "业务员审核-提交", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrSalesmanAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
-                                                       @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderSalesmanInfo> map) {
-        Result result = checkMYRMethod(taskId, map.t);
-        if (!result.isSuccess()) return result;
-        CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        return flowStepService.salesmanAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, Long.valueOf(object.u));
+                                                       @ApiParam(name = "map", value = "参数body对象", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderSalesmanInfoObject> map) {
+        return salesmanAddMaterialAndAuditMethod(taskId, map.t, map.u, true);
     }
 
-    @RequestMapping(value = "/salesman/supply/investigation/material/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    private Result salesmanAddMaterialAndAuditMethod(String taskId, TaskMap taskMap, FinanceOrderSalesmanInfoObject salesmanInfoObject, boolean submit) {
+        Result result = checkMYRMethod(taskId);
+        if (!result.isSuccess()) return result;
+        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+        return flowStepService.salesmanAuditFinanceOrderMethod(adminSession.getUser().getId(), taskMap, salesmanInfoObject, object.t, object.u, submit);
+    }
+
+    @RequestMapping(value = "/salesman/supply/investigation/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "attachmentList", value = "任务相关参数", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
+                                                               @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYRMethod(taskId);
         if (!result.isSuccess()) return result;
-        CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        return flowStepService.salesmanSupplyInvestigationMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, Long.valueOf(object.u));
+        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+        return flowStepService.salesmanSupplyInvestigationMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, object.u);
     }
 
-    @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "尽调员审核", notes = "尽调员审核", response = Boolean.class)
+    @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
+    @ApiOperation(value = "尽调员审核-保存", notes = "尽调员审核-保存", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
-    public Result myrInvestigatorAuditMethod(@PathVariable("taskId") String taskId,
-                                             @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfo> map) {
-        Result result = checkMYRMethod(taskId, map.t);
-        if (!result.isSuccess()) return result;
-        CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        return flowStepService.investigatorAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, Long.valueOf(object.u));
+    public Result myrInvestigatorAddMaterialMethod(@PathVariable("taskId") String taskId,
+                                                   @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody FinanceOrderInvestigatorInfoObject investigatorInfoObject) {
+        return investigatorAddMaterialAndAuditMethod(taskId, null, investigatorInfoObject, false);
     }
 
-    @RequestMapping(value = "/investigator/supply/riskmanager/material/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, params = {"type==1"})
+    @ApiOperation(value = "尽调员审核-提交", notes = "尽调员审核-提交", response = Boolean.class)
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    public Result myrInvestigatorAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
+                                                           @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfoObject> map) {
+        return investigatorAddMaterialAndAuditMethod(taskId, map.t, map.u, true);
+    }
+
+    private Result investigatorAddMaterialAndAuditMethod(String taskId, TaskMap taskMap, FinanceOrderInvestigatorInfoObject investigatorInfoObject, boolean submit) {
+        Result result = checkMYRMethod(taskId);
+        if (!result.isSuccess()) return result;
+        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+        return flowStepService.investigatorAuditFinanceOrderMethod(adminSession.getUser().getId(), taskMap, investigatorInfoObject, object.t, object.u, submit);
+    }
+
+    @RequestMapping(value = "/salesman/supply/supervision/material/{taskId}", method = RequestMethod.POST)
+    @ApiOperation(value = "业务员补充监管材料", notes = "业务员补充监管材料")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    public Result myrSalesmanSupplySupervisionMaterialMethod(@PathVariable("taskId") String taskId,
+                                                             @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
+        Result result = checkMYRMethod(taskId);
+        if (!result.isSuccess()) return result;
+        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+        return flowStepService.salesmanSupplySupervisionMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, object.u);
+    }
+
+    @RequestMapping(value = "/supervisor/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
+    @ApiOperation(value = "监管员审核-保存", notes = "监管员审核-保存", response = Boolean.class)
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    public Result myrSupervisorAndMaterialMethod(@PathVariable("taskId") String taskId,
+                                                 @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody FinanceOrderSupervisorInfoObject supervisorInfoObject) {
+        return supervisorAndMaterialAndAuditMethod(taskId, null, supervisorInfoObject, false);
+    }
+
+    @RequestMapping(value = "/supervisor/audit/{taskId}", method = RequestMethod.POST, params = "type=1")
+    @ApiOperation(value = "监管员审核-提交", notes = "监管员审核-提交", response = Boolean.class)
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    public Result myrSupervisorAndMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
+                                                         @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderSupervisorInfoObject> map) {
+        return supervisorAndMaterialAndAuditMethod(taskId, map.t, map.u, true);
+    }
+
+    private Result supervisorAndMaterialAndAuditMethod(String taskId, TaskMap taskMap, FinanceOrderSupervisorInfoObject supervisorInfoObject, boolean submit) {
+        Result result = checkMYRMethod(taskId);
+        if (!result.isSuccess()) return result;
+        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+        return flowStepService.supervisorAuditFinanceOrderMethod(adminSession.getUser().getId(), taskMap, supervisorInfoObject, object.t, object.u, submit);
+    }
+
+    @RequestMapping(value = "/investigator/supply/riskmanager/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "尽调员补充风控材料", notes = "尽调员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrInvestigatorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
-                                                                 @ApiParam(name = "attachmentList", value = "任务相关参数", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
+                                                                 @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYRMethod(taskId);
         if (!result.isSuccess()) return result;
-        CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        return flowStepService.investigatorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, Long.valueOf(object.u));
+        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+        return flowStepService.investigatorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, object.u);
     }
 
-    @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
-    @ApiOperation(value = "风控人员审核", notes = "风控人员审核")
+    @RequestMapping(value = "/supervisor/supply/riskmanager/material/{taskId}", method = RequestMethod.POST)
+    @ApiOperation(value = "监管员补充风控材料", notes = "监管员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
-    public Result myrRiskManagerAuditMethod(@PathVariable("taskId") String taskId,
-                                            @ApiParam(name = "taskMap", value = "任务相关参数", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderRiskManagerInfo> map) {
-        Result result = checkMYRMethod(taskId, map.t);
+    public Result myrSupervisorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
+                                                               @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
+        Result result = checkMYRMethod(taskId);
         if (!result.isSuccess()) return result;
-        CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
-        return flowStepService.riskManagerAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, map.u, object.t, Long.valueOf(object.u));
+        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+        return flowStepService.supervisorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, object.u);
+    }
+
+    @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
+    @ApiOperation(value = "风控人员审核-保存", notes = "风控人员审核-保存")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
+    public Result myrRiskManagerAddMaterialMethod(@PathVariable("taskId") String taskId,
+                                                  @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody FinanceOrderRiskManagerInfoObject riskManagerInfoObject) {
+        return riskManagerAddMaterialAndAuditMethod(taskId, null, riskManagerInfoObject, false);
+    }
+
+    @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
+    @ApiOperation(value = "风控人员审核-提交", notes = "风控人员审核-提交")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
+    public Result myrRiskManagerAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
+                                                          @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderRiskManagerInfoObject> map) {
+        return riskManagerAddMaterialAndAuditMethod(taskId, map.t, map.u, true);
+    }
+
+    private Result riskManagerAddMaterialAndAuditMethod(String taskId, TaskMap taskMap, FinanceOrderRiskManagerInfoObject riskManagerInfoObject, boolean submit) {
+        Result result = checkMYRMethod(taskId);
+        if (!result.isSuccess()) return result;
+        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+        return flowStepService.riskManagerAuditFinanceOrderMethod(adminSession.getUser().getId(), taskMap, riskManagerInfoObject, object.t, object.u, submit);
     }
 
     private Result checkMYRMethod(String taskId) {
@@ -122,10 +212,6 @@ public class MYRFinancingController {
         return Result.success().setData(map);
     }
 
-    private Result checkMYRMethod(String taskId, TaskMap taskMap) {
-        if (taskMap.submit != 0 && taskMap.submit != 1) return Result.error(EnumCommonError.Admin_System_Error);
-        return checkMYRMethod(taskId);
-    }
 
 
 }
