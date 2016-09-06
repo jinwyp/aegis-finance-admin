@@ -71,10 +71,10 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     private String transferPort;                                     //中转港口/地全称
     @Column(name = "comments", length = 1000)
     private String comments;                                         //备注说明
-    @Column(name = "contractor", length = 100)
-    private String contractor;                                       //签约单位全称
-    @Column(name = "downstream_contractor", length = 100)
-    private String downstreamContractor;                             //下游签约单位全称
+    @Column(name = "our_contract_company", length = 100)
+    private String ourContractCompany;                               //签约单位全称/我方签约公司
+    @Column(name = "downstream_contract_company", length = 100)
+    private String downstreamContractCompany;                        //下游签约单位
     @Column(name = "terminal_server", length = 100)
     private String terminalServer;                                   //用煤终端
     @Column(name = "selling_price", precision = 10, scale = 2)

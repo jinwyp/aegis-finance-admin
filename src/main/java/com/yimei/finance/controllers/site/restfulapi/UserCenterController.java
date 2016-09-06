@@ -123,6 +123,14 @@ public class UserCenterController {
         return Result.success().setData(mapList);
     }
 
+    @RequestMapping(value = "/test/123456", method = RequestMethod.GET)
+    public Object test() {
+        return "123456";
+    }
+    @RequestMapping(value = "/test/123456", method = RequestMethod.GET, params = {"type=save"})
+    public Object testSubmit() {
+        return "cccccc";
+    }
 
 }
 

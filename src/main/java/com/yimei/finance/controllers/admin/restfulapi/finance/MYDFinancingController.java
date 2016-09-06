@@ -40,7 +40,22 @@ public class MYDFinancingController {
     @Autowired
     private FinanceOrderRepository orderRepository;
 
-    @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST)
+//
+//    @RequestMapping( value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = { "!temp" })
+//    @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
+//    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+//    public Result mydOnlineTraderAddMaterialMethod1(@PathVariable("taskId") String taskId,
+//                                                   @ApiParam(name = "map", value = "参数body对象", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrder> map) {
+//        Result result = checkMYDMethod(taskId, map.t);
+//        if (!result.isSuccess()) return result;
+//        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+//        FinanceOrder order = map.u;
+//        order.setId(object.u);
+//        return flowStepService.onlineTraderAuditFinanceOrderMethod(adminSession.getUser().getId(), map.t, object.t, order);
+//    }
+
+
+    @RequestMapping( value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydOnlineTraderAddMaterialMethod(@PathVariable("taskId") String taskId,

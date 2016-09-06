@@ -90,7 +90,6 @@ public class UserController {
         return Result.success().setData(groupList).setMeta(page);
     }
 
-
     @RequestMapping(value = "/departments", method = RequestMethod.GET)
     @ApiOperation(value = "获取所有部门列表", notes = "获取所有部门列表", response = String.class, responseContainer = "List")
     public Result findAllDepartmentListMethod() {
