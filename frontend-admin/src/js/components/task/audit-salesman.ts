@@ -31,6 +31,8 @@ export class AuditSalesmanComponent {
     isApprovedRadio : boolean = false;
 
     css = {
+        isSubmitted : false,
+        isCommitted : false,
         ajaxSuccessHidden : true,
         ajaxErrorHidden : true,
     };
@@ -90,6 +92,10 @@ export class AuditSalesmanComponent {
 
     audit (isAudit : boolean){
 
+        this.css.isSubmitted = true;
+        this.css.ajaxErrorHidden = true;
+        this.css.ajaxSuccessHidden = true;
+
         let isApproved : boolean = false;
         if (isAudit) {
             isApproved = this.isApprovedRadio;
@@ -112,12 +118,16 @@ export class AuditSalesmanComponent {
             console.log(this.currentOrder);
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
+                    if(isAudit){
+                        this.css.isCommitted = true;
+                    }
                     this.css.ajaxSuccessHidden=false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 }else{
                     this.css.ajaxErrorHidden=false;
                     this.errorMsg=result.error.message;
                 }
+                this.css.isSubmitted = false;
             });
         }
 
