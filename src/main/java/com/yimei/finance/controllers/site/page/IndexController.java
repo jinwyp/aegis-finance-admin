@@ -1,10 +1,11 @@
 package com.yimei.finance.controllers.site.page;
 
 import com.yimei.finance.config.session.UserSession;
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.representation.common.result.MapObject;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.representation.admin.finance.FinanceOrderObject;
+import com.yimei.finance.representation.common.result.MapObject;
+import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -123,9 +124,9 @@ public class IndexController {
             cell.setCellStyle(style);
         }
         SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserId(userSession.getUser().getId());
+        List<FinanceOrderObject> financeOrderList = DozerUtils.copy(financeOrderRepository.findByUserId(userSession.getUser().getId()), FinanceOrderObject.class);
         for (int i = 0; i < financeOrderList.size(); i++) {
-            FinanceOrder order = financeOrderList.get(i);
+            FinanceOrderObject order = financeOrderList.get(i);
             row = sheet.createRow(i+1);
             row.createCell(0).setCellValue(String.valueOf(i + 1));
             row.createCell(1).setCellValue(String.valueOf(order.getSourceId()));

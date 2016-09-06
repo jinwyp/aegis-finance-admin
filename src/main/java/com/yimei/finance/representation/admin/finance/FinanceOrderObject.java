@@ -1,77 +1,88 @@
-package com.yimei.finance.entity.admin.finance;
+package com.yimei.finance.representation.admin.finance;
 
+import com.yimei.finance.entity.admin.finance.AttachmentObject;
+import com.yimei.finance.entity.admin.finance.validated.CreateFinanceOrder;
+import com.yimei.finance.entity.admin.finance.validated.EditFinanceOrder;
 import com.yimei.finance.entity.common.BaseEntity;
-import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
+import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
-@Entity
-@Table(name = "t_finance_order")
-@ApiModel(value = "financeOrder", description = "金融申请单对象")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FinanceOrder extends BaseEntity implements Serializable {
-    @Id
-    @Column(name = "id")
-    @GeneratedValue(strategy = GenerationType.AUTO)
+public class FinanceOrderObject extends BaseEntity implements Serializable {
     private Long id;                                                 //主键
-    @Column(name = "user_id", length = 11, nullable = false, updatable = false)
     private int userId;                                              //申请人用户id
-    @Column(name = "apply_type", length = 20, nullable = false, updatable = false)
+    @Size(min = 3, max = 10, message = "申请类型字段应在3-10个字符之间", groups = {CreateFinanceOrder.class})
+    @NotBlank(message = "申请类型字段不能为空", groups = {CreateFinanceOrder.class})
     private String applyType;                                        //申请类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
-    @Column(name = "financing_amount", precision = 20, scale = 2)
-    private BigDecimal financingAmount;                              //拟融资金额（单位：万元）
-    @Column(name = "expect_date", length = 10, nullable = false)
-    private int expectDate;                                          //拟使用资金时间（单位：天）
-    @Column(name = "business_amount", precision = 20, scale = 2)
-    private BigDecimal businessAmount;                               //预期此笔业务量（单位：万吨）
-    @Column(name = "transport_mode", length = 30)
-    private String transportMode;                                    //运输方式：海运\汽运\火运\其他
-    @Column(name = "procurement_price", precision = 10, scale = 2)
-    private BigDecimal procurementPrice;                             //单吨采购价 (元/吨)
-    @Column(name = "upstream_resource", length = 100)
-    private String upstreamResource;                                 //上游资源方全称
-    @Column(name = "transfer_port", length = 100)
-    private String transferPort;                                     //中转港口/地全称
-    @Column(name = "comments", length = 1000)
-    private String comments;                                         //备注说明
-    @Column(name = "our_contract_company", length = 100)
-    private String ourContractCompany;                               //签约单位全称/我方签约公司
-    @Column(name = "downstream_contract_company", length = 100)
-    private String downstreamContractCompany;                        //下游签约单位
-    @Column(name = "terminal_server", length = 100)
-    private String terminalServer;                                   //用煤终端
-    @Column(name = "selling_price", precision = 10, scale = 2)
-    private BigDecimal sellingPrice;                                 //预计单吨销售价 (元/吨)
-    @Column(name = "storage_location", length = 100)
-    private String storageLocation;                                  //煤炭仓储地
-    @Column(name = "coal_source", length = 100)
-    private String coalSource;                                       //煤炭来源
-    @Column(name = "market_price", precision = 10, scale = 2)
-    private BigDecimal marketPrice;                                  //单吨市场报价（元／吨）
-    @Column(name = "approve_state", length = 30, nullable = false)
-    private String approveState;                                     //审批状态
-    @Column(name = "approve_state_id", length = 3, nullable = false)
-    private int approveStateId;                                      //审批状态Id
-    @Column(name = "source_id", length = 100, nullable = false, updatable = false, unique = true)
-    private String sourceId;                                         //流水号，编号
-    @Column(name = "apply_user_name", length = 50)
-    private String applyUserName;                                    //申请人姓名
-    @Column(name = "apply_user_phone", length = 50)
-    private String applyUserPhone;                                   //申请人手机号
-    @Column(name = "apply_company_name", length = 50, nullable = false, updatable = false)
-    private String applyCompanyName;                                 //申请公司名称
-    @Column(name = "coal_quantity_index", length = 500)
-    private String coalQuantityIndex;                                //主要煤质指标
-    @Column(name = "end_time", updatable = false)
-    private Date endTime;                                            //结束时间
+    @Transient
+    private String applyTypeName;
 
+    @Digits(integer = 6, fraction = 2, message = "融资金额最大支持 {integer}位整数, {fraction}位小数", groups = {EditFinanceOrder.class})
+    @DecimalMin(value = "1", inclusive = true, message = "融资金额不能低于 {value} 万元", groups = {EditFinanceOrder.class})
+    @DecimalMax(value = "100000", inclusive = true, message = "融资金额不能超过 {value} 万元", groups = {EditFinanceOrder.class})
+    private BigDecimal financingAmount;                              //拟融资金额（单位：万元）
+
+    @Range(min = 1, max = 3650, message = "资金使用时间应在 {min}-{max} 天之间", groups = {EditFinanceOrder.class})
+    private int expectDate;                                          //拟使用资金时间（单位：天）
+
+    @Digits(integer = 6, fraction = 2, message = "业务量最大支持 {integer}位整数, {fraction}位小数", groups = {EditFinanceOrder.class})
+    @DecimalMin(value = "0.1", inclusive = true, message = "业务量不能低于 {value} 万吨", groups = {EditFinanceOrder.class})
+    @DecimalMax(value = "100000", inclusive = true, message = "业务量不能超过 {value} 万吨", groups = {EditFinanceOrder.class})
+    private BigDecimal businessAmount;                               //预期此笔业务量（单位：万吨）
+
+    @Size(min = 2, max = 10, message = "运输方式营造 {min}-{max} 个字符之间", groups = {EditFinanceOrder.class})
+    private String transportMode;                                    //运输方式：海运\汽运\火运\其他
+
+    @Digits(integer = 4, fraction = 2, message = "单吨采购价最大支持 {integer}位整数, {fraction}位小数", groups = {EditFinanceOrder.class})
+    private BigDecimal procurementPrice;                             //单吨采购价 (元/吨)
+    private String upstreamResource;                                 //上游资源方全称
+    private String transferPort;                                     //中转港口/地全称
+    private String comments;                                         //备注说明
+    private String ourContractCompany;                               //签约单位全称/我方签约公司
+    private String downstreamContractCompany;                        //下游签约单位
+    private String terminalServer;                                   //用煤终端
+    private BigDecimal sellingPrice;                                 //预计单吨销售价 (元/吨)
+    private String storageLocation;                                  //煤炭仓储地
+    private String coalSource;                                       //煤炭来源
+    private BigDecimal marketPrice;                                  //单吨市场报价（元／吨）
+    private String approveState;                                     //审批状态
+    private int approveStateId;                                      //审批状态Id
+    private String sourceId;                                         //流水号，编号
+    private String applyUserName;                                    //申请人姓名
+    private String applyUserPhone;                                   //申请人手机号
+    private String applyCompanyName;                                 //申请公司名称
+    private String coalQuantityIndex;                                //主要煤质指标
+    private Date endTime;                                            //结束时间
+    private List<AttachmentObject> attachmentList;                   //附件列表
+
+    public String getApplyTypeName() {
+        if (StringUtils.isEmpty(applyType)) {
+            return applyType;
+        } else if (applyType.equals("MYR")) {
+            return "煤易融";
+        } else if (applyType.equals("MYD")) {
+            return "煤易贷";
+        } else if (applyType.equals("MYG")) {
+            return "煤易购";
+        } else {
+            return applyType;
+        }
+    }
 
 }
