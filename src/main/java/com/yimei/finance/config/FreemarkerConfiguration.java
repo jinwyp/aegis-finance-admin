@@ -41,6 +41,12 @@ public class FreemarkerConfiguration extends FreeMarkerAutoConfiguration.FreeMar
     @Value("${info.page}")
     private String INFOPAGE;
 
+    @Value("${spring.profiles}")
+    private String ENV;
+
+
+
+
     @PostConstruct
     void FreeMarkerConfigurer() throws TemplateModelException, IOException {
 
@@ -52,6 +58,7 @@ public class FreemarkerConfiguration extends FreeMarkerAutoConfiguration.FreeMar
         configuration.setSharedVariable("logisticspage",LOGISTICSPAGE);
         configuration.setSharedVariable("infopage",INFOPAGE);
         configuration.setSharedVariable("session", sessionMethod);
+        configuration.setSharedVariable("env", ENV);
 
     }
 }

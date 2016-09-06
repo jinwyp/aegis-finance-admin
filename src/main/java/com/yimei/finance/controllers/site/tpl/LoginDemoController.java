@@ -30,4 +30,9 @@ public class LoginDemoController {
     private Object logout() {
         return userSession.getUser();
     }
+
+    @RequestMapping("/exceptiondemo")
+    public Object exceptiondemo() throws Exception {
+        throw new Exception("我的错");
+    }
 }

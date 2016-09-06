@@ -35,7 +35,7 @@ import java.util.Scanner;
  */
 @Service
 @Slf4j
-public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolver {
+public class KittHandlerExceptionResolver_deprecated extends AbstractHandlerExceptionResolver {
     @Autowired
     ExceptionReporter reporter;
     @Autowired
@@ -96,16 +96,7 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
     @Async
     private void handler500(HttpServletRequest request, Exception ex) {
         log.warn("开始发送邮件");
-        try {
-            if("application/json".equals(request.getContentType())){
-                reporter.handle(ex, request.getRequestURL().toString(), om.writeValueAsString(extractPostRequestBody(request)), getHeadersInfo(request), adminSession.getUser());
-            }else{
-                reporter.handle(ex, request.getRequestURL().toString(), om.writeValueAsString(request.getParameterMap()), getHeadersInfo(request), adminSession.getUser());
-            }
-        } catch (Exception e) {
-            log.warn("邮件发送失败", e);
-        }
-        log.warn("邮件发送结束");
+
     }
 
 
@@ -114,32 +105,13 @@ public class KittHandlerExceptionResolver extends AbstractHandlerExceptionResolv
 
     //获取header对象
     private String getHeadersInfo(HttpServletRequest request) throws JsonProcessingException {
-        Map<String, String> map = new HashMap<String, String>();
-        Enumeration headerNames = request.getHeaderNames();
-        while (headerNames.hasMoreElements()) {
-            String key = (String) headerNames.nextElement();
-            String value = request.getHeader(key);
-            map.put(key, value);
-        }
-        map.put("Request Method",request.getMethod());
-        map.put("requestURL", request.getRequestURL().toString());
-        return om.writeValueAsString(map);
+       return null;
     }
 
 
     //获取  application/json 数据
     public static String extractPostRequestBody(HttpServletRequest request) {
-        if ("POST".equalsIgnoreCase(request.getMethod())) {
-            Scanner s = null;
-            try {
-                s = new Scanner(request.getInputStream(), "UTF-8").useDelimiter("\\A");
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-            return s.hasNext() ? s.next() : "";
-        }else {
-            return "{}";
-        }
+       return null;
     }
 
     public static boolean isAjaxRequest(HttpServletRequest request) {

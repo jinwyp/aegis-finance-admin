@@ -58,10 +58,6 @@ public class IndexController {
     @ApiOperation(value = "网站供应链金融 页面", notes = "网站页面需要登录")
     @RequestMapping(value = "/finance", method = RequestMethod.GET)
     public String financeIndex(Model model) {
-        model.addAttribute("env", env.getProperty("spring.profiles"));
-        model.addAttribute("items", Arrays.asList("iPhone 6", "iPhone 6 Plus", "iPhone 6S", "iPhone 6S Plus"));
-        //System.out.println(" --------- " + tplService.test().toString());
-        //System.out.println(" --------- " + tplService.test().toString());
         return "site/index";
     }
 
@@ -73,8 +69,6 @@ public class IndexController {
     @LoginRequired
     @RequestMapping(value = "/finance/user/financing", method = RequestMethod.GET)
     public String personCenterFinancingList(Model model) {
-        model.addAttribute("env", env.getProperty("spring.profiles"));
-
         return "site/user/financingList";
     }
 
@@ -86,9 +80,6 @@ public class IndexController {
     @LoginRequired
     @RequestMapping(value = "/finance/user/financing/{id}", method = RequestMethod.GET)
     public String personCenterFinancingRequest(@PathVariable("id") int id, Model model) {
-
-        model.addAttribute("env", env.getProperty("spring.profiles"));
-
         return "site/user/financingInfo";
     }
 
