@@ -1,5 +1,6 @@
 package com.yimei.finance.representation.admin.user;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import org.hibernate.validator.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 
+@ApiModel(description = "用户登陆对象")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
