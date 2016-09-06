@@ -35,6 +35,7 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     @Transient
     private String applyTypeName;
     @Column(name = "financing_amount", precision = 20, scale = 2)
+    @NotBlank(message = "融资金额不能为空")
     private BigDecimal financingAmount;                              //拟融资金额（单位：万元）
     @Column(name = "expect_date", length = 10, nullable = false)
     private int expectDate;                                          //拟使用资金时间（单位：天）

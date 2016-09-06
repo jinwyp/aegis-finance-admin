@@ -1,6 +1,8 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.entity.admin.user.validated.CreateUser;
+import com.yimei.finance.entity.admin.user.validated.EditUser;
 import com.yimei.finance.entity.admin.user.GroupObject;
 import com.yimei.finance.entity.admin.user.UserObject;
 import com.yimei.finance.exception.BusinessException;
@@ -25,9 +27,9 @@ import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @Api(tags = {"admin-api-user"}, description = "用户增删改查接口")
@@ -93,7 +95,7 @@ public class UserController {
     @Transactional
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
-    public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@Valid @RequestBody UserObject user) {
+    public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true)@Validated(CreateUser.class) @RequestBody UserObject user) {
         Result result = userService.checkAddUserGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
         if (!result.isSuccess()) return result;
         if (identityService.createUserQuery().userFirstName(user.getUsername()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
@@ -137,7 +139,7 @@ public class UserController {
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateUserInfoMethod(@PathVariable("id") String id,
-                                       @ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
+                                       @ApiParam(name = "user", value = "用户对象", required = true) @Validated(EditUser.class) @RequestBody UserObject user) {
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());
         User oldUser = identityService.createUserQuery().userId(id).singleResult();
         if (oldUser == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
@@ -158,7 +160,7 @@ public class UserController {
 
     @ApiOperation(value = "用户自己修改信息", notes = "用户自己修改信息", response = UserObject.class)
     @RequestMapping(value = "/edit", method = RequestMethod.PUT)
-    public Result updateUserSelfInfoMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
+    public Result updateUserSelfInfoMethod(@ApiParam(name = "user", value = "用户对象", required = true) @Validated(EditUser.class) @RequestBody UserObject user) {
         Result result1 = userService.checkUserEmail(user.getEmail(), adminSession.getUser().getId());
         if (!result1.isSuccess()) return result1;
         Result result2 = userService.checkUserPhone(user.getPhone(), adminSession.getUser().getId());
@@ -191,7 +193,7 @@ public class UserController {
 
     @ApiOperation(value = "用户修改密码", notes = "用户自己修改密码", response = Boolean.class)
     @RequestMapping(value = "/changepwd", method = RequestMethod.POST)
-    public Result resetUserPasswordMethod(@ApiParam(name = "user", value = "用户密码") @Valid @RequestBody UserPasswordObject userObject) {
+    public Result resetUserPasswordMethod(@ApiParam(name = "user", value = "用户密码") @Validated @RequestBody UserPasswordObject userObject) {
         if (!identityService.checkPassword(adminSession.getUser().getId(), userService.securePassword(userObject.getOldPassword()))) {
             return Result.error(EnumAdminUserError.原密码不正确.toString());
         } else if (userService.securePassword(userObject.getNewPassword()).equals(identityService.createUserQuery().userId(adminSession.getUser().getId()).singleResult().getPassword())) {
