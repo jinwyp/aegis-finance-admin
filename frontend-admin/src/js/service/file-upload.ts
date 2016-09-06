@@ -34,7 +34,7 @@ class FileUploadService {
         let input = new FormData();
         input.append("file", fileToUpload, fileToUpload.name);
 
-        return this.http.post("/api/financing/admin/upload/file", input)
+        return this.http.post("/api/financing/admin/files", input)
             .map( response => {return response.json();} )
             .catch(this.handleError);
     }
