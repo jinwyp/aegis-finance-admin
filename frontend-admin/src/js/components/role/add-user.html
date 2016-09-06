@@ -14,14 +14,14 @@
         <div class="row mt-50 info-item">
             <label class="col-sm-2 info-label-input" for="usernameInput"><span class="orange">*</span>用户账号:</label>
             <div class="col-sm-10 info-val">
-                <input type="text" class="form-control" id="usernameInput" [disabled]="!css.isAddStatus" name="username" [(ngModel)]="currentUser.username" maxlength="16" #username="ngModel" required >
+                <input type="text" class="form-control wd-30" id="usernameInput" [disabled]="!css.isAddStatus" name="username" [(ngModel)]="currentUser.username" maxlength="16" #username="ngModel" required >
                 <span class="help-block" [class.hidden]="username.valid || username.pristine">请填写用户账号!</span>
             </div>
         </div>
         <div class="row info-item">
             <label class="col-sm-2 info-label-input" for="nameInput"><span class="orange">*</span>用户姓名:</label>
             <div class="col-sm-10 info-val">
-                <input type="text" class="form-control" id="nameInput" name="name" [(ngModel)]="currentUser.name" #name="ngModel" required>
+                <input type="text" class="form-control wd-30" id="nameInput" name="name" [(ngModel)]="currentUser.name" #name="ngModel" required>
                 <span class="help-block" [class.hidden]="name.valid || name.pristine">请填用户姓名!</span>
             </div>
         </div>
@@ -40,7 +40,7 @@
         <div class="row info-item">
             <label class="col-sm-2 info-label-input" for="emailInput"><span class="orange">*</span><span>公司邮箱:</span></label>
             <div class="col-sm-10 info-val">
-                <input type="text" class="form-control" id="emailInput" name="email" pattern="^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$" [(ngModel)]="currentUser.email" #email="ngModel" required >
+                <input type="text" class="form-control wd-30" id="emailInput" name="email" pattern="^(\w-*\.*)+@(\w-?)+(\.\w{2,})+$" [(ngModel)]="currentUser.email" #email="ngModel" required >
                 <button type="button" class="btn btn-default btn-return ml-20 btn-reset-pwd" [class.hidden]="css.isAddStatus" (click)="showResetModal(currentUser.id,'确认重置用户密码吗?')">重置密码</button>
                 <span class="help-block" [class.hidden]="email.valid || email.pristine">请填写公司邮箱!</span>
             </div>
@@ -48,7 +48,7 @@
         <div class="row info-item">
             <label class="col-sm-2 info-label-input" for="phoneInput"><span>手机号码:</span></label>
             <div class="col-sm-10 info-val">
-                <input type="text" class="form-control" id="phoneInput" name="phone" pattern="^1[3|4|5|7|8]\d{9}$" [(ngModel)]="currentUser.phone" #phone="ngModel" >
+                <input type="text" class="form-control wd-30" id="phoneInput" name="phone" pattern="^1[3|4|5|7|8]\d{9}$" [(ngModel)]="currentUser.phone" #phone="ngModel" >
                 <span class="help-block" [class.hidden]="phone.valid || phone.pristine">请填写正确的手机号码!</span>
             </div>
         </div>

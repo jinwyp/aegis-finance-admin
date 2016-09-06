@@ -36,6 +36,7 @@ export class AssignPersonComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
+    taskStatusStep : any = TaskStatus;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -92,6 +93,7 @@ export class AssignPersonComponent {
         if (this.currentTask.taskDefinitionKey === TaskStatus.assignOnlineTrader) groupId = GroupId.trader;  // 分配线上交易员
         if (this.currentTask.taskDefinitionKey === TaskStatus.assignSalesman) groupId = GroupId.salesman;  // 分配业务员
         if (this.currentTask.taskDefinitionKey === TaskStatus.assignInvestigator) groupId = GroupId.investigator; // 分配尽调员
+        if (this.currentTask.taskDefinitionKey === TaskStatus.assignSupervisor) groupId = GroupId.supervisor; // 分配尽调员
         if (this.currentTask.taskDefinitionKey === TaskStatus.assignRiskManager) groupId = GroupId.riskmanager; // 分配风控人员
 
         if (this.currentTask.taskDefinitionKey && groupId) {
@@ -122,11 +124,12 @@ export class AssignPersonComponent {
             this.task.assignPerson(this.taskId, this.selectedUser.id).then((result)=>{
                 if (result.success){
                     this.css.ajaxSuccessHidden = false;
+                    this.css.isSubmitted = true;
                 }else{
                     this.errorMsg = result.error.message;
                     this.css.ajaxErrorHidden = false;
+                    this.css.isSubmitted = false;
                 }
-                this.css.isSubmitted = false;
             });
         }
     }

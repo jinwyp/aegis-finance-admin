@@ -45,6 +45,10 @@
   height:100px;
 }
 .file-upload {
+  //display: inline-block;
+  //width:180px;
+  //height:120px;
+  //vertical-align: middle;
   position: relative;
 
   .hidden-input {
@@ -84,6 +88,7 @@
   }
 }
 
+.wd-30{width:30%;}
 
 .form-control{
   display: inline-block;
@@ -510,9 +515,11 @@
             margin-bottom:20px;
           }
           .attachment img{
-            width: 100px;
-            height: 100px;
+            width: 180px;
+            height: 120px;
             margin-right: 20px;
+            margin-bottom: 20px;
+            vertical-align: middle;
           }
 
         }
