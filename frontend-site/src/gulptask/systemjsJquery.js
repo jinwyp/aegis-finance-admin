@@ -85,10 +85,7 @@ gulp.task('js-release-dev', function(){
             //inject : true,
             minify : false
         }))
-        // .pipe(rev())
         .pipe(gulp.dest(distPath.jsPageDevTemp));
-        // .pipe(rev.manifest('rev-manifest-js.json'))
-        // .pipe(gulp.dest(distPath.manifest) );
 });
 
 

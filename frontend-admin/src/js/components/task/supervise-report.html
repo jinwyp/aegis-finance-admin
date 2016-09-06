@@ -23,23 +23,33 @@
 
     <table class="table table-bordered apply-table">
         <tr class="item-max">
+            <td class="td-label">业务类型:</td>
+            <td width="250" class="td-val" *ngIf="currentTask.applyType==='MYD'">煤易贷</td>
+            <td width="250" class="td-val" *ngIf="currentTask.applyType==='MYR'">煤易融</td>
+            <td width="250" class="td-val" *ngIf="currentTask.applyType==='MYG'">煤易购</td>
             <td class="td-label">业务编号:</td>
             <td width="250" class="td-val">{{currentTask.sourceId}}</td>
-            <td class="td-label">仓储地名称:</td>
-            <td width="250" class="td-val">{{currentTask.storagePlaceName || '--'}}</td>
+
+
         </tr>
         <tr class="item-max">
+            <td class="td-label">仓储地名称:</td>
+            <td width="250" class="td-val">{{currentTask.storagePlaceName || '--'}}</td>
             <td class="td-label">仓库性质:</td>
             <td class="td-val">
                 <!--<input type="text" [(ngModel)]="currentTask.storageProperty">-->
                 {{currentTask.storageProperty || '--'}}
             </td>
+        </tr>
+        <tr class="item-max">
+
             <td class="td-label">仓库地址:</td>
-            <td class="td-val">
+            <td class="td-val" colspan="3">
                 <!--<input type="text" [(ngModel)]="currentTask.storageAddress">-->
                 {{currentTask.storageAddress || '--'}}
             </td>
         </tr>
+
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">我方与港口的历史合作状况</span></td>
         </tr>
@@ -47,7 +57,7 @@
             <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
                 <!--<input type="text" [(ngModel)]="currentTask.historicalCooperationDetail">-->
-                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentTask.historicalCooperationDetail"></textarea>
+                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.historicalCooperationDetail"></textarea>
             </td>
         </tr>
         <tr class="item-title">
@@ -57,7 +67,7 @@
             <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
                 <!--<input type="text" [(ngModel)]="currentTask.operatingStorageDetail">-->
-                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentTask.operatingStorageDetail"></textarea>
+                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.operatingStorageDetail"></textarea>
 
             </td>
         </tr>
@@ -68,7 +78,7 @@
             <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
                 <!--<input type="text" [(ngModel)]="currentTask.portStandardDegree">-->
-                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentTask.portStandardDegree"></textarea>
+                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.portStandardDegree"></textarea>
 
             </td>
         </tr>
@@ -79,7 +89,7 @@
             <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
                 <!--<input type="text" [(ngModel)]="currentTask.supervisionCooperateDetail">-->
-                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentTask.supervisionCooperateDetail"></textarea>
+                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.supervisionCooperateDetail"></textarea>
 
             </td>
         </tr>
@@ -90,7 +100,7 @@
             <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
                 <!--<input type="text" [(ngModel)]="currentTask.supervisionScheme">-->
-                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentTask.supervisionScheme"></textarea>
+                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.supervisionScheme"></textarea>
 
             </td>
         </tr>
@@ -101,7 +111,7 @@
             <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
                 <!--<input type="text" [(ngModel)]="currentTask.finalConclusion">-->
-                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentTask.finalConclusion"></textarea>
+                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.finalConclusion"></textarea>
 
             </td>
         </tr>
@@ -110,10 +120,11 @@
         </tr>
         <tr class="item-max">
             <td class="td-val" colspan="4">
-                <a class="btn-upload">
-                    <span class="upload-icon"></span>
-                    <div class="mt-10">点击上传</div>
-                </a>
+                <div class="attachment">
+                    <img *ngFor="let pic of currentOrder.attachmentList" [src]="pic.url" [alt]="pic.name">
+                </div>
+
+                <file-upload (onFinished)="finishedUpload($event)"></file-upload>
             </td>
         </tr>
         <tr class="item-title">
@@ -121,15 +132,15 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentTask.supplyMaterialIntroduce"></textarea>
+                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
             </td>
         </tr>
-        <tr class="item-title">
-            <td colspan="4">
-                <label><input type="checkbox">发送给业务人员</label>
-                <label><input type="checkbox">发送给用户</label>
-            </td>
-        </tr>
+        <!--<tr class="item-title">-->
+            <!--<td colspan="4">-->
+                <!--<label><input type="checkbox">发送给业务人员</label>-->
+                <!--<label><input type="checkbox">发送给用户</label>-->
+            <!--</td>-->
+        <!--</tr>-->
         <tr class="item-title">
             <td colspan="4"><span>审核意见:</span>
                 <label><input type="radio" name="pass" [(ngModel)]="isApprovedRadio" [value]="true">通过</label>

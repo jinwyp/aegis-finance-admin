@@ -120,7 +120,6 @@
 
 </#if>
 
-
 <!--<script src="${staticPath}/js/page-temp-bundle/financeHome.bundle.js"></script>-->
 <script>
     System["import"]("${staticPath}/js/page/financeHome.js")

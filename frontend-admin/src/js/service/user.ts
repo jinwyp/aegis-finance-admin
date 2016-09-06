@@ -228,7 +228,7 @@ class UserGroupService {
 
 
     getList() {
-        return this.http.get(API.groups+'/handle').toPromise()
+        return this.http.get(API.users+'/self/groups').toPromise()
             .then( response => {
                 var result = response.json() as HttpResponse;
                 if (result.data ){
