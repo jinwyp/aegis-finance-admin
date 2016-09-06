@@ -156,7 +156,7 @@ public class GroupController {
         group.setName(groupObject.getName());
         group.setType(groupObject.getType());
         identityService.saveGroup(group);
-        return Result.success().setData(groupService.changeGroupObject(identityService.createGroupQuery().groupId(group.getId()).singleResult()));
+        return Result.success().setData(groupService.changeGroupObject(identityService.createGroupQuery().groupId(id).singleResult()));
     }
 
     @ApiOperation(value = "删除用户组", notes = "根据Group Id 删除用户组", response = GroupObject.class)
