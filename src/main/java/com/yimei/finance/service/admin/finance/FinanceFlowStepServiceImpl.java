@@ -179,7 +179,7 @@ public class FinanceFlowStepServiceImpl {
             vars.put(EnumFinanceConditions.supervisorAudit.toString(), taskMap.pass);
         }
         taskService.complete(task.getId(), vars);
-        if (taskMap.need == 1) {
+        if (taskMap.submit == 1) {
             Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
             if (!result1.isSuccess()) return result1;
             Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());

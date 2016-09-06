@@ -2,6 +2,7 @@ package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.finance.*;
+import com.yimei.finance.entity.admin.finance.validated.EditFinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.EnumFinanceOrderType;
@@ -45,7 +46,7 @@ public class MYRFinancingController {
     @ApiOperation(value = "线上交易员审核并填写材料", notes = "线上交易员审核并填写材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrOnlineTraderAddMaterialMethod(@PathVariable("taskId") String taskId,
-                                                   @ApiParam(name = "map", value = "参数body对象", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrder> map) {
+                                                   @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(EditFinanceOrder.class) @RequestBody CombineObject<TaskMap, FinanceOrder> map) {
         Result result = checkMYRMethod(taskId, map.t);
         if (!result.isSuccess()) return result;
         CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
@@ -69,7 +70,7 @@ public class MYRFinancingController {
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "attachmentList", value = "任务相关参数", required = true) @RequestBody List<AttachmentObject> attachmentList) {
+                                                               @ApiParam(name = "attachmentList", value = "任务相关参数", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYRMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
@@ -91,7 +92,7 @@ public class MYRFinancingController {
     @ApiOperation(value = "尽调员补充风控材料", notes = "尽调员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrInvestigatorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
-                                                                 @ApiParam(name = "attachmentList", value = "任务相关参数", required = true) @RequestBody List<AttachmentObject> attachmentList) {
+                                                                 @ApiParam(name = "attachmentList", value = "任务相关参数", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYRMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, String> object = (CombineObject<Task, String>) result.getData();
