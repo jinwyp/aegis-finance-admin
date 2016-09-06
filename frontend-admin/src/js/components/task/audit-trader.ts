@@ -28,6 +28,7 @@ export class AuditTraderComponent {
 
     css = {
         isSubmitted : false,
+        isCommitted : false,
         ajaxErrorHidden : true,
         ajaxSuccessHidden : true
     };
@@ -92,7 +93,7 @@ export class AuditTraderComponent {
 
 
     finishedUpload (event) {
-        this.tempAttachmentList.push({
+        this.currentOrder.attachmentList.push({
             "url": event.value.url,
             "name": event.value.name,
             "type": event.value.type,
@@ -123,8 +124,6 @@ export class AuditTraderComponent {
             u : Object.assign({}, this.currentOrder)
         };
 
-        body.u.attachmentList = this.tempAttachmentList;
-        this.tempAttachmentList = [];
 
         if (this.currentTask.taskDefinitionKey === TaskStatus.onlineTraderAudit) auditType = 'onlinetrader'; //线上交易员审核并填写材料
 
@@ -132,7 +131,10 @@ export class AuditTraderComponent {
 
             this.task.audit(this.taskId, this.currentOrder.applyType, auditType, body).then((result)=>{
                 if (result.success){
-                    this.getTaskInfo(this.taskId);
+                    if(isAudit){
+                        this.css.isCommitted = true;
+                    }
+                    // this.getTaskInfo(this.taskId);
                     this.css.ajaxSuccessHidden = false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                 }else{
