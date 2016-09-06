@@ -207,7 +207,7 @@ public class MYGFinancingController {
         if (processInstance == null || StringUtils.isEmpty(processInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
         FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
-        if (!financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) return Result.error(EnumAdminFinanceError.此订单不是煤易融业务.toString());
+        if (!financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) return Result.error(EnumAdminFinanceError.此订单不是煤易购业务.toString());
         CombineObject<Task, Long> map = new CombineObject<>(task, Long.valueOf(processInstance.getBusinessKey()));
         return Result.success().setData(map);
     }

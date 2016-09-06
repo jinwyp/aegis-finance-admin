@@ -1,8 +1,8 @@
 package com.yimei.finance.service.admin.user;
 
-import com.yimei.finance.entity.admin.user.GroupObject;
+import com.yimei.finance.representation.admin.user.GroupObject;
 import com.yimei.finance.entity.admin.user.UserLoginRecord;
-import com.yimei.finance.entity.admin.user.UserObject;
+import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.repository.admin.user.AdminUserLoginRecordRepository;
 import com.yimei.finance.representation.admin.user.AdminUserSearch;
 import com.yimei.finance.representation.admin.user.EnumAdminUserError;

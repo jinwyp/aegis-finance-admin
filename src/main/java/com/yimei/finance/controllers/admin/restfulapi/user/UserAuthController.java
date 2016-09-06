@@ -2,7 +2,7 @@ package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.user.UserLoginRecord;
-import com.yimei.finance.entity.admin.user.UserObject;
+import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.repository.admin.user.AdminUserLoginRecordRepository;
 import com.yimei.finance.representation.admin.user.EnumAdminUserError;
 import com.yimei.finance.representation.admin.user.UserLoginObject;

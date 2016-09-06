@@ -1,7 +1,8 @@
-package com.yimei.finance.entity.admin.user;
+package com.yimei.finance.representation.admin.user;
 
-import com.yimei.finance.entity.admin.user.validated.CreateUser;
-import com.yimei.finance.entity.admin.user.validated.EditUser;
+import com.yimei.finance.representation.admin.user.GroupObject;
+import com.yimei.finance.representation.admin.user.validated.CreateUser;
+import com.yimei.finance.representation.admin.user.validated.EditUser;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
