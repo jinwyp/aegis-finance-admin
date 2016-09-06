@@ -1,6 +1,5 @@
 package com.yimei.finance.representation.admin.user;
 
-import com.yimei.finance.representation.admin.user.GroupObject;
 import com.yimei.finance.representation.admin.user.validated.CreateUser;
 import com.yimei.finance.representation.admin.user.validated.EditUser;
 import io.swagger.annotations.ApiModel;
@@ -34,7 +33,7 @@ public class UserObject implements Serializable {
     @NotBlank(message = "邮箱不能为空", groups = {CreateUser.class, EditUser.class})
     @Email(message = "请输入正确的邮箱", groups = {CreateUser.class, EditUser.class})
     private String email;                       //邮箱
-    @Size(min = 1, max = 30, message = "部门名称应在1-30个字符之间", groups = {CreateUser.class, EditUser.class})
+    @Size(max = 30, message = "部门名称应在 {min}-{max} 个字符之间", groups = {CreateUser.class, EditUser.class})
     private String department;                  //部门
     private Date lastLoginTime;                 //最后一次登录时间
     private boolean operateAuthority;           //是否具有操作/更改此用户的权限, true: 有权限, false: 无

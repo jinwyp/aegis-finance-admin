@@ -1,6 +1,6 @@
 package com.yimei.finance.controllers.admin.common;
 
-import com.yimei.finance.entity.admin.finance.AttachmentObject;
+import com.yimei.finance.representation.admin.finance.AttachmentObject;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.repository.admin.databook.DataBookRepository;
 import com.yimei.finance.representation.admin.finance.EnumMYRFinanceAllSteps;

@@ -1,6 +1,5 @@
 package com.yimei.finance.representation.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.AttachmentObject;
 import com.yimei.finance.entity.common.BaseEntity;
 import com.yimei.finance.representation.admin.finance.validated.CreateFinanceOrder;
 import com.yimei.finance.representation.admin.finance.validated.EditFinanceOrder;
@@ -47,7 +46,7 @@ public class FinanceOrderObject extends BaseEntity implements Serializable {
     @NotBlank(message = "预期业务量不能为空", groups = {EditFinanceOrder.class})
     private BigDecimal businessAmount;                               //预期此笔业务量（单位：万吨）
 
-    @Size(min = 2, max = 10, message = "运输方式营造 {min}-{max} 个字符之间", groups = {EditFinanceOrder.class})
+    @Size(min = 2, max = 10, message = "运输方式应在 {min}-{max} 个字符之间", groups = {EditFinanceOrder.class})
     @NotBlank(message = "运输方式不能为空", groups = {EditFinanceOrder.class})
     private String transportMode;                                    //运输方式：海运\汽运\火运\其他
 
@@ -55,7 +54,7 @@ public class FinanceOrderObject extends BaseEntity implements Serializable {
     @NotBlank(message = "单吨采购价不能为空", groups = {EditFinanceOrder.class})
     private BigDecimal procurementPrice;                             //单吨采购价 (元/吨)
 
-    @Size(min = 1, message = "")
+    @Size(min = 1, max = 100, message = "上游资源方全称应在 {min}-{max} 个字符之间")
     private String upstreamResource;                                 //上游资源方全称
     private String transferPort;                                     //中转港口/地全称
     private String comments;                                         //备注说明

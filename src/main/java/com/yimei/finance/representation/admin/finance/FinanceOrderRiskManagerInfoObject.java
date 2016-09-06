@@ -1,6 +1,5 @@
 package com.yimei.finance.representation.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.AttachmentObject;
 import com.yimei.finance.entity.common.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
