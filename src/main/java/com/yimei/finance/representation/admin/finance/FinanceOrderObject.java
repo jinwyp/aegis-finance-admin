@@ -40,10 +40,9 @@ public class FinanceOrderObject extends BaseEntity implements Serializable {
     @NotBlank(message = "资金使用时间不能为空", groups = {EditFinanceOrder.class})
     private int expectDate;                                          //拟使用资金时间（单位：天）
 
-    @Digits(integer = 6, fraction = 2, message = "预期业务量最大支持 {integer}位整数, {fraction}位小数", groups = {EditFinanceOrder.class})
+    @Digits(integer = 6, fraction = 2, message = "预期业务量最多支持 {integer}位整数, {fraction}位小数", groups = {EditFinanceOrder.class})
     @DecimalMin(value = "0.1", inclusive = true, message = "预期业务量不能低于 {value} 万吨", groups = {EditFinanceOrder.class})
     @DecimalMax(value = "100000", inclusive = true, message = "预期业务量不能超过 {value} 万吨", groups = {EditFinanceOrder.class})
-    @NotBlank(message = "预期业务量不能为空", groups = {EditFinanceOrder.class})
     private BigDecimal businessAmount;                               //预期此笔业务量（单位：万吨）
 
     @Size(min = 2, max = 10, message = "运输方式应在 {min}-{max} 个字符之间", groups = {EditFinanceOrder.class})
@@ -51,27 +50,52 @@ public class FinanceOrderObject extends BaseEntity implements Serializable {
     private String transportMode;                                    //运输方式：海运\汽运\火运\其他
 
     @Digits(integer = 4, fraction = 2, message = "单吨采购价最大支持 {integer}位整数, {fraction}位小数", groups = {EditFinanceOrder.class})
-    @NotBlank(message = "单吨采购价不能为空", groups = {EditFinanceOrder.class})
+    @DecimalMin(value = "1", inclusive = true, message = "单吨采购价不能低于 {value} 元", groups = {EditFinanceOrder.class})
+    @DecimalMax(value = "100000", inclusive = true, message = "单吨采购价不能高于 {value} 元", groups = {EditFinanceOrder.class})
     private BigDecimal procurementPrice;                             //单吨采购价 (元/吨)
 
-    @Size(min = 1, max = 100, message = "上游资源方全称应在 {min}-{max} 个字符之间")
+    @Size(max = 100, message = "上游资源方全称不能超过 {max} 个字符")
     private String upstreamResource;                                 //上游资源方全称
+
+    @Size(max = 100, message = "中转港口不能超过 {max} 个字符")
     private String transferPort;                                     //中转港口/地全称
+
+    @Size(max = 1000, message = "备注说明不能超过 {max} 个字符")
     private String comments;                                         //备注说明
+
+    @Size(max = 100, message = "我方签约单位不能超过 {max} 个字符")
     private String ourContractCompany;                               //签约单位全称/我方签约公司
+
+    @Size(max = 100, message = "下游签约单位不能超过 {max} 个字符")
     private String downstreamContractCompany;                        //下游签约单位
+
+    @Size(max = 100, message = "用煤终端不能超过 {max} 个字符")
     private String terminalServer;                                   //用煤终端
+
+    @Digits(integer = 4, fraction = 2, message = "预计单吨采购价最多支持 {integer}位整数, {fraction}位小数", groups = {EditFinanceOrder.class})
+    @DecimalMin(value = "1", inclusive = true, message = "预计单吨采购价不能低于 {value} 元", groups = {EditFinanceOrder.class})
+    @DecimalMax(value = "100000", inclusive = true, message = "预计单吨采购价不能高于 {value} 元", groups = {EditFinanceOrder.class})
     private BigDecimal sellingPrice;                                 //预计单吨销售价 (元/吨)
+
+    @Size(max = 100, message = "煤炭仓储地不能超过 {max} 个字符")
     private String storageLocation;                                  //煤炭仓储地
+
+    @Size(max = 100, message = "煤炭来源不能超过 {max} 个字符")
     private String coalSource;                                       //煤炭来源
+
+    @Digits(integer = 4, fraction = 2, message = "单吨市场报价最多支持 {integer}位整数, {fraction}位小数", groups = {EditFinanceOrder.class})
+    @DecimalMin(value = "1", inclusive = true, message = "单吨市场报价不能低于 {value} 元", groups = {EditFinanceOrder.class})
+    @DecimalMax(value = "100000", inclusive = true, message = "单吨市场报价不能高于 {value} 元", groups = {EditFinanceOrder.class})
     private BigDecimal marketPrice;                                  //单吨市场报价（元／吨）
+
+    @Size(max = 500, message = "主要煤炭指标不能超过 {max} 个字符")
+    private String coalQuantityIndex;                                //主要煤质指标
     private String approveState;                                     //审批状态
     private int approveStateId;                                      //审批状态Id
     private String sourceId;                                         //流水号，编号
     private String applyUserName;                                    //申请人姓名
     private String applyUserPhone;                                   //申请人手机号
     private String applyCompanyName;                                 //申请公司名称
-    private String coalQuantityIndex;                                //主要煤质指标
     private Date endTime;                                            //结束时间
     private List<AttachmentObject> attachmentList;                   //附件列表
 
