@@ -6,7 +6,7 @@
     </ol>
 </div>
 
-<!--<process-tab></process-tab>-->
+<process-tab [processInstanceId]="currentTask.processInstanceId" [processList]="currentOrder.taskList"></process-tab>
 
 <div class="item-margin apply-box">
 
@@ -23,68 +23,108 @@
 
     <table class="table table-bordered apply-table">
         <tr class="item-max">
+            <td class="td-label">业务类型:</td>
+            <td width="250" class="td-val" *ngIf="currentTask.applyType==='MYD'">煤易贷</td>
+            <td width="250" class="td-val" *ngIf="currentTask.applyType==='MYR'">煤易融</td>
+            <td width="250" class="td-val" *ngIf="currentTask.applyType==='MYG'">煤易购</td>
             <td class="td-label">业务编号:</td>
-            <td width="250" class="td-val">煤易融</td>
+            <td width="250" class="td-val">{{currentTask.sourceId}}</td>
+
+
+        </tr>
+        <tr class="item-max">
             <td class="td-label">仓储地名称:</td>
-            <td width="250" class="td-val">7437234923748923749382</td>
-        </tr>
-        <tr class="item-min">
+            <td width="250" class="td-val">{{currentTask.storagePlaceName || '--'}}</td>
             <td class="td-label">仓库性质:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.storageProperty"></td>
-            <td class="td-label">仓库地址:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentTask.storageAddress"></td>
+            <td class="td-val">
+                <!--<input type="text" [(ngModel)]="currentTask.storageProperty">-->
+                {{currentTask.storageProperty || '--'}}
+            </td>
         </tr>
+        <tr class="item-max">
+
+            <td class="td-label">仓库地址:</td>
+            <td class="td-val" colspan="3">
+                <!--<input type="text" [(ngModel)]="currentTask.storageAddress">-->
+                {{currentTask.storageAddress || '--'}}
+            </td>
+        </tr>
+
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">我方与港口的历史合作状况</span></td>
         </tr>
         <tr class="item-min">
-            <td class="td-label">详细描述:</td>
-            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.historicalCooperationDetail"></td>
+            <!--<td class="td-label">详细描述:</td>-->
+            <td colspan="4" class="td-val td-textarea">
+                <!--<input type="text" [(ngModel)]="currentTask.historicalCooperationDetail">-->
+                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.historicalCooperationDetail"></textarea>
+            </td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">经营及堆存状况</span></td>
         </tr>
         <tr class="item-min">
-            <td class="td-label">详细描述:</td>
-            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.operatingStorageDetail"></td>
+            <!--<td class="td-label">详细描述:</td>-->
+            <td colspan="4" class="td-val td-textarea">
+                <!--<input type="text" [(ngModel)]="currentTask.operatingStorageDetail">-->
+                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.operatingStorageDetail"></textarea>
+
+            </td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">保管及进出库流程规范程度</span></td>
         </tr>
         <tr class="item-min">
-            <td class="td-label">详细描述:</td>
-            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.portStandardDegree"></td>
+            <!--<td class="td-label">详细描述:</td>-->
+            <td colspan="4" class="td-val td-textarea">
+                <!--<input type="text" [(ngModel)]="currentTask.portStandardDegree">-->
+                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.portStandardDegree"></textarea>
+
+            </td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">监管配合状况</span></td>
         </tr>
         <tr class="item-min">
-            <td class="td-label">详细描述:</td>
-            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.supervisionCooperateDetail"></td>
+            <!--<td class="td-label">详细描述:</td>-->
+            <td colspan="4" class="td-val td-textarea">
+                <!--<input type="text" [(ngModel)]="currentTask.supervisionCooperateDetail">-->
+                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.supervisionCooperateDetail"></textarea>
+
+            </td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">监管方案</span></td>
         </tr>
         <tr class="item-min">
-            <td class="td-label">详细描述:</td>
-            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.supervisionScheme"></td>
+            <!--<td class="td-label">详细描述:</td>-->
+            <td colspan="4" class="td-val td-textarea">
+                <!--<input type="text" [(ngModel)]="currentTask.supervisionScheme">-->
+                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.supervisionScheme"></textarea>
+
+            </td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">结论</span></td>
         </tr>
         <tr class="item-min">
-            <td class="td-label">详细描述:</td>
-            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentTask.finalConclusion"></td>
+            <!--<td class="td-label">详细描述:</td>-->
+            <td colspan="4" class="td-val td-textarea">
+                <!--<input type="text" [(ngModel)]="currentTask.finalConclusion">-->
+                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.finalConclusion"></textarea>
+
+            </td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">附件上传<span class="fs-14 hint">(详细的风控报告和相关单据材料等,<span class="orange">5M之内</span>)</span></span></td>
         </tr>
         <tr class="item-max">
             <td class="td-val" colspan="4">
-                <a class="btn-upload">
-                    <span class="upload-icon"></span>
-                    <div class="mt-10">点击上传</div>
-                </a>
+                <div class="attachment">
+                    <img *ngFor="let pic of currentOrder.attachmentList" [src]="pic.url" [alt]="pic.name">
+                </div>
+
+                <file-upload (onFinished)="finishedUpload($event)"></file-upload>
             </td>
         </tr>
         <tr class="item-title">
@@ -92,22 +132,32 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentTask.supplyMaterialIntroduce"></textarea>
+                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
             </td>
         </tr>
+        <!--<tr class="item-title">-->
+            <!--<td colspan="4">-->
+                <!--<label><input type="checkbox">发送给业务人员</label>-->
+                <!--<label><input type="checkbox">发送给用户</label>-->
+            <!--</td>-->
+        <!--</tr>-->
         <tr class="item-title">
-            <td colspan="4"><label><input type="checkbox">发送给业务人员</label><label><input type="checkbox">发送给用户</label></td>
-        </tr>
-        <tr class="item-title">
-            <td colspan="4"><span>审核意见:</span><label><input type="radio" name="pass">通过</label><label><input type="radio" name="pass">不通过</label></td>
+            <td colspan="4"><span>审核意见:</span>
+                <label><input type="radio" name="pass" [(ngModel)]="isApprovedRadio" [value]="true">通过</label>
+                <label><input type="radio" name="pass" [(ngModel)]="isApprovedRadio" [value]="false">不通过</label>
+            </td>
         </tr>
     </table>
 
     <div class="row info-item">
+        <div class="col-sm-offset-3 col-sm-6 mt-20">
+            <div class="alert alert-success" role="alert" [class.hidden]="css.ajaxSuccessHidden">保存成功!</div>
+            <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
+        </div>
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="button" class="btn btn-default btn-lg btn-save" [routerLink]="['/riskcontrolreport']">保存</button>
-            <button type="button" class="btn btn-default btn-lg btn-sure ml-20">保存并提交</button>
-            <button type="button" class="btn btn-default btn-lg btn-return ml-20">返回</button>
+            <button type="button" class="btn btn-default btn-lg btn-save" (click)="audit(false)" [disabled]="css.isSubmitted">保存</button>
+            <button type="button" class="btn btn-default btn-lg btn-sure ml-20" (click)="audit(true)" [disabled]="css.isSubmitted || css.isCommitted">保存并提交</button>
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/pending']">返回</button>
         </div>
     </div>
 

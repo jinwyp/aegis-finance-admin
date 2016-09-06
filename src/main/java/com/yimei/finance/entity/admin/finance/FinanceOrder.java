@@ -1,14 +1,20 @@
 package com.yimei.finance.entity.admin.finance;
 
+import com.yimei.finance.entity.admin.finance.validated.CreateFinanceOrder;
+import com.yimei.finance.entity.admin.finance.validated.EditFinanceOrder;
 import com.yimei.finance.entity.common.BaseEntity;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -28,20 +34,35 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     private Long id;                                                 //主键
     @Column(name = "user_id", length = 11, nullable = false, updatable = false)
     private int userId;                                              //申请人用户id
+
     @Column(name = "apply_type", length = 20, nullable = false, updatable = false)
-    @Size(min = 3, max = 10, message = "申请类型字段应在3-10个字符之间")
-    @NotBlank(message = "申请类型字段不能为空")
+    @Size(min = 3, max = 10, message = "申请类型字段应在3-10个字符之间", groups = {CreateFinanceOrder.class})
+    @NotBlank(message = "申请类型字段不能为空", groups = {CreateFinanceOrder.class})
     private String applyType;                                        //申请类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
     @Transient
     private String applyTypeName;
+
+    @Digits(integer = 6, fraction = 2, message = "融资金额最大支持 {integer}位整数, {fraction}位小数", groups = {EditFinanceOrder.class})
+    @DecimalMin(value = "1", inclusive = true, message = "融资金额不能低于 {value} 万元", groups = {EditFinanceOrder.class})
+    @DecimalMax(value = "100000", inclusive = true, message = "融资金额不能超过 {value} 万元", groups = {EditFinanceOrder.class})
     @Column(name = "financing_amount", precision = 20, scale = 2)
     private BigDecimal financingAmount;                              //拟融资金额（单位：万元）
+
+    @Range(min = 1, max = 3650, message = "资金使用时间应在 {min}-{max} 天之间", groups = {EditFinanceOrder.class})
     @Column(name = "expect_date", length = 10, nullable = false)
     private int expectDate;                                          //拟使用资金时间（单位：天）
+
+    @Digits(integer = 6, fraction = 2, message = "业务量最大支持 {integer}位整数, {fraction}位小数", groups = {EditFinanceOrder.class})
+    @DecimalMin(value = "0.1", inclusive = true, message = "业务量不能低于 {value} 万吨", groups = {EditFinanceOrder.class})
+    @DecimalMax(value = "100000", inclusive = true, message = "业务量不能超过 {value} 万吨", groups = {EditFinanceOrder.class})
     @Column(name = "business_amount", precision = 20, scale = 2)
     private BigDecimal businessAmount;                               //预期此笔业务量（单位：万吨）
+
+    @Size(min = 2, max = 10, message = "运输方式营造 {min}-{max} 个字符之间", groups = {EditFinanceOrder.class})
     @Column(name = "transport_mode", length = 30)
     private String transportMode;                                    //运输方式：海运\汽运\火运\其他
+
+    @Digits(integer = 4, fraction = 2, message = "单吨采购价最大支持 {integer}位整数, {fraction}位小数", groups = {EditFinanceOrder.class})
     @Column(name = "procurement_price", precision = 10, scale = 2)
     private BigDecimal procurementPrice;                             //单吨采购价 (元/吨)
     @Column(name = "upstream_resource", length = 100)
@@ -50,10 +71,10 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     private String transferPort;                                     //中转港口/地全称
     @Column(name = "comments", length = 1000)
     private String comments;                                         //备注说明
-    @Column(name = "contractor", length = 100)
-    private String contractor;                                       //签约单位全称
-    @Column(name = "downstream_contractor", length = 100)
-    private String downstreamContractor;                             //下游签约单位全称
+    @Column(name = "our_contract_company", length = 100)
+    private String ourContractCompany;                               //签约单位全称/我方签约公司
+    @Column(name = "downstream_contract_company", length = 100)
+    private String downstreamContractCompany;                        //下游签约单位
     @Column(name = "terminal_server", length = 100)
     private String terminalServer;                                   //用煤终端
     @Column(name = "selling_price", precision = 10, scale = 2)

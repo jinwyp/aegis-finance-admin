@@ -23,8 +23,8 @@ public class FinanceOrderInvestigatorInfo extends BaseEntity implements Serializ
     private Long id;                                                 //主键
     @Column(name = "finance_id", nullable = false, updatable = false, unique = true)
     private Long financeId;                                          //金融单id
-    @Column(name = "financing_party", length = 100)
-    private String financingParty;                                   //融资方
+    @Column(name = "apply_company_name", length = 100)
+    private String applyCompanyName;                                 //申请公司/融资方
     @Column(name = "our_contract_company", length = 100)
     private String ourContractCompany;                               //我方签约公司
     @Column(name = "upstream_contract_company", length = 100)

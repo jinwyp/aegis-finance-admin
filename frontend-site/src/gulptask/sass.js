@@ -90,10 +90,10 @@ gulp.task('sass-release', ['htmlTemplate', 'sprite'], function(done) {
                 outputStyle     : 'compressed',
                 errLogToConsole : true
             }).on('error', sass.logError))
-            //.pipe(autoprefixer({
-            //    browsers: ['> 1%', 'Last 2 versions', 'IE 8'],
-            //    cascade: false
-            //}))
+            .pipe(autoprefixer({
+               browsers: ['> 1%', 'Last 2 versions', 'IE 8'],
+               cascade: false
+            }))
             //.pipe(cleanCss({compatibility: 'ie8'}))
             .pipe(rev())
             .pipe(gulp.dest(distPath.css))

@@ -9,7 +9,6 @@ import com.yimei.finance.representation.common.databook.EnumDataBookType;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.MapObject;
 import com.yimei.finance.representation.common.result.Result;
-import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
 import com.yimei.finance.service.common.file.LocalStorage;
 import com.yimei.finance.utils.DozerUtils;
 import com.yimei.finance.utils.StoreUtils;
@@ -39,8 +38,6 @@ public class ToolsController {
     private LocalStorage localStorage;
     @Autowired
     private TaskService taskService;
-    @Autowired
-    private FinanceFlowMethodServiceImpl financeFlowMethodService;
 
     @RequestMapping(value = "/transportmodes", method = RequestMethod.GET)
     @ApiOperation(value = "获取运输方式列表", notes = "获取运输方式列表数据", response = DataBook.class, responseContainer = "List")
@@ -58,34 +55,37 @@ public class ToolsController {
         return Result.success().setData(stepList);
     }
 
-    @RequestMapping(value = "/upload/file", method = RequestMethod.POST)
-    @ApiOperation(value = "上传文件", notes = "上传文件", response = AttachmentObject.class)
-    public Result uploadFileMethod(@RequestParam("file") MultipartFile file) throws IOException {
-        return Result.success().setData(StoreUtils.save(localStorage, file, "finance"));
-    }
 
-    @RequestMapping(value = "/delete/file/{id}", method = RequestMethod.DELETE)
-    @ApiOperation(value = "删除文件", notes = "删除文件", response = AttachmentObject.class)
-    @ApiImplicitParam(name = "id", value = "文件id", required = true, dataType = "String", paramType = "path")
-    public Result deleteFileMethod(@PathVariable("id")String id) {
-        Attachment attachment = taskService.getAttachment(id);
-        if (attachment == null) return Result.error(EnumCommonError.此文件不存在.toString());
-        taskService.deleteAttachment(id);
-        return Result.success().setData(DozerUtils.copy(taskService.getAttachment(id), AttachmentObject.class));
-    }
-
-    @RequestMapping(value = "/download/file", method = RequestMethod.GET)
-    @ApiOperation(value = "下载文件", notes = "下载文件")
-    public void doDownloadFile(@RequestParam(value = "path", required = true) String path, HttpServletResponse response) {
+    @RequestMapping(value = "/files", method = RequestMethod.GET)
+    @ApiOperation(value = "下载文件", notes = "通过文件url路径下载文件")
+    public void doDownloadFile(@RequestParam(value = "url", required = true) String url, HttpServletResponse response) {
         try {
-            if (path != null && path.startsWith("/files/")) {
-                File file = new File(localStorage.getServerFileRootPath(), path.substring("/files/".length()));
+            if (url != null && url.startsWith("/files/")) {
+                File file = new File(localStorage.getServerFileRootPath(), url.substring("/files/".length()));
                 WebUtils.doDownloadFile(file, response);
             }
         } catch (IOException e) {
             throw new NotFoundException();
         }
     }
+
+    @RequestMapping(value = "/files", method = RequestMethod.POST)
+    @ApiOperation(value = "上传文件", notes = "上传文件", response = AttachmentObject.class)
+    public Result uploadFileMethod(@RequestParam("file") MultipartFile file) throws IOException {
+        return Result.success().setData(StoreUtils.save(localStorage, file, "finance"));
+    }
+
+    @RequestMapping(value = "/files/{attachmentId}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除文件", notes = "删除文件", response = AttachmentObject.class)
+    @ApiImplicitParam(name = "attachmentId", value = "文件id", required = true, dataType = "String", paramType = "path")
+    public Result deleteFileMethod(@PathVariable("attachmentId")String attachmentId) {
+        Attachment attachment = taskService.getAttachment(attachmentId);
+        if (attachment == null) return Result.error(EnumCommonError.此文件不存在.toString());
+        taskService.deleteAttachment(attachmentId);
+        return Result.success().setData(DozerUtils.copy(taskService.getAttachment(attachmentId), AttachmentObject.class));
+    }
+
+
 
 
 }

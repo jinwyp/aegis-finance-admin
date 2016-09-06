@@ -1,0 +1,6 @@
+MultipleErrors: /Users/tttt/.jspm/packages/npm/jquery@1.12.4/src/intro.js:45:1: Unexpected token End of File
+/Users/tttt/.jspm/packages/npm/jquery@1.12.4/src/intro.js:45:1: Unexpected token End of File
+/Users/tttt/.jspm/packages/npm/jquery@1.12.4/src/intro.js:45:1: Unexpected token End of File
+
+MultipleErrors: /Users/tttt/.jspm/packages/npm/jquery@1.12.4/src/outro.js:1:1: Illegal return statement
+/Users/tttt/.jspm/packages/npm/jquery@1.12.4/src/outro.js:2:1: Unexpected token }

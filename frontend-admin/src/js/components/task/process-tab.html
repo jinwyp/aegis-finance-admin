@@ -4,7 +4,7 @@
         <li role="presentation" [class.active]="currentTab.index===2" (click)="changeTab(2)"><a class="right">步骤详情</a></li>
     </ul>
     <div class="process-info process-img" *ngIf="currentTab.index===1">
-        <img [src]="'/api/financing/admin/process/' + processInstanceId + '/image'" alt="">
+        <img [src]="'/api/financing/admin/finance/process/' + processInstanceId + '/image'" alt="">
     </div>
 
     <table class="table info-table process-table" *ngIf="currentTab.index===2">

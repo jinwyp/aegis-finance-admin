@@ -204,7 +204,7 @@ public class FinanceOrderServiceImpl {
      */
     public void saveFinanceOrderSupervisorInfo(FinanceOrderSupervisorInfo supervisorInfo) {
         FinanceOrderSupervisorInfo supervisorOrder = supervisorRepository.findByFinanceId(supervisorInfo.getFinanceId());
-        if (supervisorInfo != null) {
+        if (supervisorOrder != null) {
             supervisorInfo.setId(supervisorOrder.getId());
         }
         supervisorRepository.save(supervisorInfo);
