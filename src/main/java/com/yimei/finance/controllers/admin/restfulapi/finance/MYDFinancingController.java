@@ -68,7 +68,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "attachmentList", value = "附件list", required = true) @RequestBody List<AttachmentObject> attachmentList) {
+                                                               @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYDMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
@@ -90,7 +90,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "业务员补充监管材料", notes = "业务员补充监管材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydSalesmanSupplySupervisionMaterialMethod(@PathVariable("taskId") String taskId,
-                                                             @ApiParam(name = "attachmentList", value = "附件list", required = true) @RequestBody List<AttachmentObject> attachmentList) {
+                                                             @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYDMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
@@ -112,7 +112,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "尽调员补充风控材料", notes = "尽调员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydInvestigatorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
-                                                                 @ApiParam(name = "attachmentList", value = "附件list", required = true) @RequestBody List<AttachmentObject> attachmentList) {
+                                                                 @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYDMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
@@ -123,7 +123,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "监管员补充风控材料", notes = "监管员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mydSupervisorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "attachmentList", value = "附件list", required = true) @RequestBody List<AttachmentObject> attachmentList) {
+                                                               @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYDMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
