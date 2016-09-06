@@ -1,14 +1,22 @@
 package com.yimei.finance.config;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.exception.UnauthorizedException;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.commons.logging.Log;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -20,15 +28,31 @@ import org.springframework.web.servlet.NoHandlerFoundException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Enumeration;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Scanner;
 
 @ControllerAdvice
+@Slf4j
 public class GlobalExceptionHandler {
+
+    @Autowired
+    ExceptionReporter reporter;
+    @Autowired
+    private ObjectMapper om;
+
+    @Autowired
+    private AdminSession adminSession;
+
+    @Autowired
+    private UserSession userSession;
 
     @ExceptionHandler({MethodArgumentNotValidException.class, TypeMismatchException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ResponseBody
     public Result process400Error(Exception ex) {
-        logger.error("400Exception:", ex);
+        log.error("400Exception:", ex);
         String flag1 = "default message [";
         String flag2 = "]";
         int startPlace = ex.getMessage().toString().lastIndexOf(flag1) + 17;
@@ -45,13 +69,12 @@ public class GlobalExceptionHandler {
         }
     }
 
-    private static final Logger logger = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     @ExceptionHandler(UnauthorizedException.class)
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ResponseBody
     public Result process401Error(UnauthorizedException ex) {
-        logger.error("401 Exception: " + ex);
+        log.error("401 Exception: " + ex);
         return Result.error(401, EnumCommonError.请您登录.toString());
     }
 
@@ -59,7 +82,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public Result process404Error(NotFoundException ex) {
-        logger.error("404 Exception: ",ex);
+        log.error("404 Exception: ",ex);
         return Result.error(404, ex.getMessage());
     }
 
@@ -67,7 +90,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(value= HttpStatus.NOT_FOUND)
     @ResponseBody
     public Result requestHandlingNoHandlerFound(NoHandlerFoundException ex, HttpServletRequest request,HttpServletResponse response) throws IOException {
-        logger.error("404 Exception: ",ex);
+        log.error("404 Exception: ",ex);
         String AJAX = request.getHeader("X-Requested-With");
         String currentUrl = request.getRequestURL().toString();
 
@@ -89,7 +112,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ResponseBody
     public Result process405Error(HttpRequestMethodNotSupportedException ex) {
-        logger.error("405 Exception: ",ex);
+        log.error("405 Exception: ",ex);
         return Result.error(405, ex.getMessage());
     }
 
@@ -97,7 +120,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
     public Result process409Error(BusinessException ex) {
-        logger.error("409 Exception: ",ex);
+        log.error("409 Exception: ",ex);
         return Result.error(409, ex.getMessage());
     }
 
@@ -105,92 +128,63 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public Result process500Error(HttpServletRequest request, Exception ex) {
-        logger.error("500 Exception: ",ex);
-        //this.sendAlarmQueueMessage(request, ex);
+        log.error("500 Exception: ",ex);
+        handler500(request, ex);
         return Result.error(500, ex.getMessage());
     }
 
+    @Async
+    private void handler500(HttpServletRequest request, Exception ex) {
+        log.warn("开始发送邮件");
+        Object user = userSession.getUser() == null ? userSession.getUser() : adminSession.getUser();
+        try {
+            if("application/json".equals(request.getContentType())){
+                reporter.handle(ex, request.getRequestURL().toString(), om.writeValueAsString(extractPostRequestBody(request)), getHeadersInfo(request), user);
+            }else{
+                reporter.handle(ex, request.getRequestURL().toString(), om.writeValueAsString(request.getParameterMap()), getHeadersInfo(request), user);
+            }
+        } catch (Exception e) {
+            log.warn("邮件发送失败", e);
+        }
+        log.warn("邮件发送结束");
+    }
 
-//    @Autowired
-//    private ObjectMapper om;
-//    @Autowired
-//    private Queue mailQueue;
-//    @Value("${mail.to}")
-//    private String to;
-//
-//    //获取header对象
-//    private String getHeadersInfo(HttpServletRequest request) throws JsonProcessingException {
-//        Map<String, String> map = new HashMap<String, String>();
-//        Enumeration headerNames = request.getHeaderNames();
-//        while (headerNames.hasMoreElements()) {
-//            String key = (String) headerNames.nextElement();
-//            String value = request.getHeader(key);
-//            map.put(key, value);
-//        }
-//        map.put("Request Method", request.getMethod());
-//        map.put("requestURL", request.getRequestURL().toString());
-//        return om.writeValueAsString(map);
-//    }
-//
-//    public static String getStackTrace(final Throwable throwable) {
-//        final StringWriter sw = new StringWriter();
-//        final PrintWriter pw = new PrintWriter(sw, true);
-//        throwable.printStackTrace(pw);
-//        return sw.getBuffer().toString();
-//    }
-//
-//    //获取application/json 数据
-//    public static String extractPostRequestBody(HttpServletRequest request) {
-//        if ("POST".equalsIgnoreCase(request.getMethod())) {
-//            Scanner s = null;
-//            try {
-//                s = new Scanner(request.getInputStream(), "UTF-8").useDelimiter("\\A");
-//            } catch (IOException e) {
-//                e.printStackTrace();
-//            }
-//            return s.hasNext() ? s.next() : "";
-//        } else {
-//            return "{}";
-//        }
-//    }
-//
-//    @Async
-//    private void sendAlarmQueueMessage(HttpServletRequest request, Exception ex) {
-//        MailMessage mailMessage = new MailMessage();
-//
-//        String[] mail_tos = to.split(";");
-//        for (int i = 0; i < mail_tos.length; i++) {
-//            mailMessage.setTo(mail_tos[i]);
-//            mailMessage.setFrom("auto_server@yimei180.com");
-//            mailMessage.setSubject(ZonedDateTime.now().toString() + " " + ex.getClass().getName());
-//            StringBuilder sb = new StringBuilder();
-//            try {
-//                sb.append("requestHeader:\t")
-//                        .append(getHeadersInfo(request))
-//                        .append("\nrequestUrl:\t")
-//                        .append(request.getRequestURL())
-//                        .append("\nformData:\t")
-//                        .append(om.writeValueAsString(request.getParameterMap()))
-//                        .append("\nrequestBody:\t")
-//                        .append(om.writeValueAsString(extractPostRequestBody(request)))
-//                        .append("\n").append(ex.getMessage())
-//                        .append(getStackTrace(ex));
-//            } catch (Exception e) {
-//                logger.error("mail content build failed!", e);
-//            }
-//            mailMessage.setBody(sb.toString());
-//
-//            ObjectMapper mapper = ObjectMapperUtil.getMapper();
-//            String mailJson = null;
-//            try {
-//                mailJson = mapper.writeValueAsString(mailMessage);
-//                logger.info("message to send : " + mailJson);
-//            } catch (Exception e) {
-//                logger.error("can not jsonify mail, error[{}]", e);
-//                continue;
-//            }
-//            mailQueue.sendMessage(mailJson, 0);
-//        }
-//    }
 
+
+
+
+    //获取header对象
+    private String getHeadersInfo(HttpServletRequest request) throws JsonProcessingException {
+        Map<String, String> map = new HashMap<String, String>();
+        Enumeration headerNames = request.getHeaderNames();
+        while (headerNames.hasMoreElements()) {
+            String key = (String) headerNames.nextElement();
+            String value = request.getHeader(key);
+            map.put(key, value);
+        }
+        map.put("Request Method",request.getMethod());
+        map.put("requestURL", request.getRequestURL().toString());
+        return om.writeValueAsString(map);
+    }
+
+
+    //获取  application/json 数据
+    public static String extractPostRequestBody(HttpServletRequest request) {
+        if ("POST".equalsIgnoreCase(request.getMethod())) {
+            Scanner s = null;
+            try {
+                s = new Scanner(request.getInputStream(), "UTF-8").useDelimiter("\\A");
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return s.hasNext() ? s.next() : "";
+        }else {
+            return "{}";
+        }
+    }
+
+    public static boolean isAjaxRequest(HttpServletRequest request) {
+        String requestedWith = request.getHeader("X-Requested-With");
+        return requestedWith != null ? "XMLHttpRequest".equals(requestedWith) : false;
+    }
 }

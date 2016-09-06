@@ -1,4 +1,5 @@
 include ../aegis-docker/bin/Makefile
 
 static:
-	@cd frontend && npm install && bower install && gulp build
+	@cd frontend-admin/src && npm install && gulp build
+	@cd frontend-site/src  && gulp build
