@@ -30,8 +30,8 @@ public class FinanceOrderInvestigatorInfo extends BaseEntity implements Serializ
     private String upstreamContractCompany;                          //上游签约单位
     @Column(name = "downstream_contract_company", length = 100)
     private String downstreamContractCompany;                        //下游签约单位
-    @Column(name = "end_user", length = 100)
-    private String endUser;                                          //终端用户
+    @Column(name = "terminal_server", length = 100)
+    private String terminalServer;                                   //用煤终端
     @Column(name = "transport_party", length = 100)
     private String transportParty;                                   //运输方
     @Column(name = "transit_port", length = 100)

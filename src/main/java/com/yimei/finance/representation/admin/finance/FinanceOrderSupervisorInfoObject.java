@@ -15,7 +15,7 @@ import java.util.List;
 public class FinanceOrderSupervisorInfoObject extends BaseEntity implements Serializable {
     private Long id;                                                 //主键
     private Long financeId;                                          //金融单id
-    private String storagePlaceName;                                 //仓储地名称
+    private String storageLocation;                                  //煤炭仓储地
     private String storageProperty;                                  //仓储性质
     private String storageAddress;                                   //仓储地地址
     private String historicalCooperationDetail;                      //历史合作情况

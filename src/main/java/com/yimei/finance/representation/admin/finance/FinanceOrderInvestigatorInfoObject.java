@@ -21,7 +21,7 @@ public class FinanceOrderInvestigatorInfoObject extends BaseEntity implements Se
     private String ourContractCompany;                               //我方签约公司
     private String upstreamContractCompany;                          //上游签约单位
     private String downstreamContractCompany;                        //下游签约单位
-    private String endUser;                                          //终端用户
+    private String terminalServer;                                   //终端用户
     private String transportParty;                                   //运输方
     private String transitPort;                                      //中转港口
     private String qualityInspectionUnit;                            //质量检验单位
