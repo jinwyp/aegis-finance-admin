@@ -1,20 +1,16 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.*;
-import com.yimei.finance.entity.admin.user.UserObject;
+import com.yimei.finance.entity.admin.finance.AttachmentObject;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.common.result.TaskMap;
-import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
-import com.yimei.finance.service.common.message.MessageServiceImpl;
-import org.activiti.engine.IdentityService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -30,13 +26,7 @@ public class FinanceFlowStepServiceImpl {
     @Autowired
     private FinanceOrderServiceImpl orderService;
     @Autowired
-    private MessageServiceImpl messageService;
-    @Autowired
     private FinanceOrderRepository financeOrderRepository;
-    @Autowired
-    private AdminUserServiceImpl userService;
-    @Autowired
-    private IdentityService identityService;
 
     /**
      * 线上交易员审核
@@ -126,8 +116,6 @@ public class FinanceFlowStepServiceImpl {
                 if (!result1.isSuccess()) return result1;
                 Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
                 if (!result.isSuccess()) return result;
-                noticeUser(taskMap.need == 1, investigatorInfo.getNoticeApplyUser() == 1, financeOrder.getApplyUserName(), financeOrder.getSourceId(), "尽调");
-                noticeAdmin(String.valueOf(result.getData()), "尽调员", financeOrder.getSourceId(), "尽调");
                 return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString(), String.valueOf(result.getData()));
             } else {
                 return Result.success();
@@ -174,9 +162,6 @@ public class FinanceFlowStepServiceImpl {
             if (!result1.isSuccess()) return result1;
             Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
             if (!result.isSuccess()) return result;
-            FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
-            noticeUser(taskMap.need == 1, supervisorInfo.getNoticeApplyUser() == 1, financeOrder.getApplyUserName(), financeOrder.getSourceId(), "尽调");
-            noticeAdmin(String.valueOf(result.getData()), "监管员", financeOrder.getSourceId(), "监管");
             return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplySupervisionMaterial.toString(), String.valueOf(result.getData()));
         } else {
             return Result.success();
@@ -235,23 +220,17 @@ public class FinanceFlowStepServiceImpl {
             }
             taskService.complete(task.getId(), vars);
             if (taskMap.need == 1 || taskMap.need2 == 1) {
-                FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
                 Result result = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
                 if (!result.isSuccess()) return result;
                 if (taskMap.need == 1) {
                     Result result1 = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
                     if (!result1.isSuccess()) return result1;
-                    noticeUser(true, riskManagerInfo.getNoticeApplyUser() == 1, financeOrder.getApplyUserPhone(), financeOrder.getSourceId(), "尽调");
-                    noticeAdmin(String.valueOf(result1.getData()), "风控人员", financeOrder.getSourceId(), "尽调");
                     Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorSupplyRiskMaterial.toString(), String.valueOf(result1.getData()));
                     if (!result2.isSuccess()) return result2;
                 }
                 if (taskMap.need2 == 1) {
                     Result result1 = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString());
                     if (!result1.isSuccess()) return result1;
-                    noticeUser(true, riskManagerInfo.getNoticeApplyUser() == 1, financeOrder.getApplyUserPhone(), financeOrder.getSourceId(), "尽调");
-                    noticeAdmin(String.valueOf(result1.getData()), "风控人员", financeOrder.getSourceId(), "尽调");
-
                     Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.supervisorSupplyRiskMaterial.toString(), String.valueOf(result1.getData()));
                     if (!result2.isSuccess()) return result2;
                 }
@@ -266,25 +245,5 @@ public class FinanceFlowStepServiceImpl {
         }
     }
 
-    /**
-     * 短信通知用户
-     */
-    public void noticeUser(boolean need, boolean noticeUser, String userPhone, String financeSourceId, String materialType) {
-        if (need) {
-            if (noticeUser && !StringUtils.isEmpty(userPhone)) {
-                messageService.sendSMS(userPhone, FinanceSMSMessage.getUserNeedSupplyMaterialMessage(financeSourceId, materialType));
-            }
-        }
-    }
-
-    /**
-     * 短信通知管理员
-     */
-    public void noticeAdmin(String userId, String adminName, String financeSourceId, String materialType) {
-        UserObject userObject = userService.changeUserObject(identityService.createUserQuery().userId(userId).singleResult());
-        if (!StringUtils.isEmpty(userObject.getPhone())) {
-            messageService.sendSMS(userObject.getPhone(), FinanceSMSMessage.getAdminNeedSupplyMaterialMessage(adminName, financeSourceId, materialType));
-        }
-    }
 
 }
