@@ -155,21 +155,6 @@ class UserService {
             .catch(GlobalPromiseHttpCatch);
     }
 
-    updatePassword(user) {
-        let headers = new Headers({'Content-Type': 'application/json'});
-        return this.http.post(API.users + '/changepwd' , JSON.stringify(user), {headers: headers}).toPromise()
-        // return this.http.post(API.users + '/changepwd' , {oldPassword: user.oldPassword, newPassword:user.newPassword}, {headers: headers}).toPromise()
-            .then(res => res.json() as HttpResponse )
-            .catch(GlobalPromiseHttpCatch);
-    }
-
-    resetPassword(id:string) {
-        let headers = new Headers({'Content-Type': 'application/json'});
-        return this.http.post(API.users + '/resetpwd/' + id, {headers: headers}).toPromise()
-            .then(res => res.json() as HttpResponse )
-            .catch(GlobalPromiseHttpCatch);
-    }
-
     update(user: User) {
         let headers = new Headers();
         headers.append('Content-Type', 'application/json');
@@ -181,11 +166,9 @@ class UserService {
             .catch(GlobalPromiseHttpCatch);
     }
 
-    edit(user: User) {
-        let headers = new Headers();
-        headers.append('Content-Type', 'application/json');
-
-        return this.http.put(API.users + '/edit', JSON.stringify(user), {headers: headers}).toPromise()
+    resetPassword(id:string) {
+        let headers = new Headers({'Content-Type': 'application/json'});
+        return this.http.post(API.users + '/' + id + '/password', {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
             .catch(GlobalPromiseHttpCatch);
     }
@@ -203,6 +186,27 @@ class UserService {
         }
         return this.add(user);
     }
+
+
+
+    updateCurrentUserPassword(user) {
+        let headers = new Headers({'Content-Type': 'application/json'});
+        return this.http.put(API.session + '/password' , JSON.stringify(user), {headers: headers}).toPromise()
+        // return this.http.post(API.users + '/changepwd' , {oldPassword: user.oldPassword, newPassword:user.newPassword}, {headers: headers}).toPromise()
+            .then(res => res.json() as HttpResponse )
+            .catch(GlobalPromiseHttpCatch);
+    }
+
+    updateCurrentUserInfo(user: User) {
+        let headers = new Headers();
+        headers.append('Content-Type', 'application/json');
+
+        return this.http.put(API.session + '/info', JSON.stringify(user), {headers: headers}).toPromise()
+            .then(res => res.json() as HttpResponse )
+            .catch(GlobalPromiseHttpCatch);
+    }
+
+
 
     joinGroup(userId:number, groupId:string) {
         let url = `${API.groups}/${groupId}/${userId}`;

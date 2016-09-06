@@ -49,7 +49,7 @@ export class UserUpdatePasswordComponent {
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted     = true;
-        this.userService.updatePassword(this.user).then((result)=> {
+        this.userService.updateCurrentUserPassword(this.user).then((result)=> {
             if (result.success) {
                 this.css.ajaxSuccessHidden = false;
                 setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
