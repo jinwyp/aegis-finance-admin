@@ -2,6 +2,11 @@
  * Created by tttt on 8/22/16.
  */
 
+
+import { Observable }     from 'rxjs/Observable';
+import 'rxjs/add/observable/throw';
+
+
 var API = {
     login : '/api/financing/admin/login',
     logout : '/api/financing/admin/logout',
@@ -60,5 +65,30 @@ var GlobalPromiseHttpCatch = (error: any) => {
 };
 
 
+var GlobalObservableHttpCatch = (error: any) => {
+    // In a real world app, we might use a remote logging infrastructure. We'd also dig deeper into the error to get a better message
 
-export {HttpResponse, API, GlobalPromiseHttpCatch}
+    if (error.status && error.status === 401) {
+        window.location.href = '/finance/admin/login';
+
+    }else if (error && error.status === 400){
+        console.error('Http 400 请求发生错误!! ', error);
+        return Observable.throw(error);
+
+    }else if (error && error.status === 404){
+        console.error('Http 404 请求发生错误!! ', error);
+        return Observable.throw(error);
+
+    }else if (error && error.status === 500){
+        console.error('Http 500 请求发生错误!! ', error);
+        return Observable.throw(error);
+
+    }else {
+        console.error('Http 请求发生错误!! ', error);
+        return Observable.throw(error);
+    }
+
+};
+
+
+export {HttpResponse, API, GlobalPromiseHttpCatch, GlobalObservableHttpCatch}

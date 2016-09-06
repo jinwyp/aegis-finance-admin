@@ -18,7 +18,7 @@ public enum EnumAdminUserError {
     此邮箱已经存在,
     此手机号已经存在,
     新密码和原密码一样,
-    用户邮箱不能为空,
+    邮箱不能为空,
     ;
     public static final String NewPasswordLengthError = "密码应该在6-16个字符之间";
 
