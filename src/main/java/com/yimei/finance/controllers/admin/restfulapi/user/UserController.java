@@ -79,7 +79,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "查询当前用户有权限添加用户的组列表", notes = "查询当前用户有权限添加用户的组列表", response = GroupObject.class, responseContainer = "List")
-    @RequestMapping(value = "/haveright", method = RequestMethod.GET)
+    @RequestMapping(value = "/session/rights", method = RequestMethod.GET)
     public Result getHaveRightGroupListMethod() {
         return Result.success().setData(userService.getCanAddUserGroupList(adminSession.getUser().getId()));
     }
@@ -156,8 +156,24 @@ public class UserController {
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
     }
 
+
+
+    @ApiOperation(value = "管理员帮助用户重置密码", notes = "管理员帮助用户重置密码, 生成随机密码, 发送到用户邮箱.", response = Boolean.class)
+    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
+    @RequestMapping(value = "/{id}/password", method = RequestMethod.POST)
+    public Result resetUserPasswordMethod(@PathVariable("id")String id) {
+        User user = identityService.createUserQuery().userId(id).singleResult();
+        String subject = "重置密码邮件";
+        String password = CodeUtils.CreateNumLetterCode();
+        user.setPassword(userService.securePassword(password));
+        identityService.saveUser(user);
+        String content = "你好: " + user.getFirstName() + ", 管理员为你重置密码, 新密码是: " + password + " . [易煤网金融系统]";
+        mailService.sendSimpleMail(user.getEmail(), subject, content);
+        return Result.success().setData(true);
+    }
+
     @ApiOperation(value = "用户自己修改信息", notes = "用户自己修改信息", response = UserObject.class)
-    @RequestMapping(value = "/edit", method = RequestMethod.PUT)
+    @RequestMapping(value = "/session/info", method = RequestMethod.PUT)
     public Result updateUserSelfInfoMethod(@ApiParam(name = "user", value = "用户对象", required = true)@RequestBody UserObject user) {
         Result result1 = userService.checkUserEmail(user.getEmail(), adminSession.getUser().getId());
         if (!result1.isSuccess()) return result1;
@@ -175,22 +191,8 @@ public class UserController {
         return Result.success().setData(userObject);
     }
 
-    @ApiOperation(value = "管理员帮助用户重置密码", notes = "管理员帮助用户重置密码, 生成随机密码, 发送到用户邮箱.", response = Boolean.class)
-    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
-    @RequestMapping(value = "/resetpwd/{id}", method = RequestMethod.POST)
-    public Result resetUserPasswordMethod(@PathVariable("id")String id) {
-        User user = identityService.createUserQuery().userId(id).singleResult();
-        String subject = "重置密码邮件";
-        String password = CodeUtils.CreateNumLetterCode();
-        user.setPassword(userService.securePassword(password));
-        identityService.saveUser(user);
-        String content = "你好: " + user.getFirstName() + ", 管理员为你重置密码, 新密码是: " + password + " . [易煤网金融系统]";
-        mailService.sendSimpleMail(user.getEmail(), subject, content);
-        return Result.success().setData(true);
-    }
-
-    @ApiOperation(value = "用户修改密码", notes = "用户自己修改密码", response = Boolean.class)
-    @RequestMapping(value = "/changepwd", method = RequestMethod.POST)
+    @ApiOperation(value = "用户自己修改密码", notes = "用户自己修改密码", response = Boolean.class)
+    @RequestMapping(value = "/session/password", method = RequestMethod.PUT)
     public Result resetUserPasswordMethod(@ApiParam(name = "user", value = "用户密码") @Valid @RequestBody UserPasswordObject userObject) {
         if (!identityService.checkPassword(adminSession.getUser().getId(), userService.securePassword(userObject.getOldPassword()))) {
             return Result.error(EnumAdminUserError.原密码不正确.toString());
