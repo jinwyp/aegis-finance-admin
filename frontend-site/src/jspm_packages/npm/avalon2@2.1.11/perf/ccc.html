@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Document</title>
+        <script src="../dist/avalon.js"></script>
+     
+    </head>
+    <body ms-controller="test">
+    <xmp ms-widget="[{is:'ms-div',$id:'aaa'},@s1]"></xmp>
+    <xmp ms-widget="[{is:'ms-div',$id:'bbb'}, @s2]"></xmp>
+    <script>
+        avalon.component('ms-div', {
+            template: '<div><input type="text" ms-duplex="@keyword" /></div>',
+            defaults: {
+                keyword: '',
+                onInit: function () {
+                    var _this = this;
+                   
+                    this.$watch("keyword", function (newVal, oldVal) {
+                        console.log(newVal, oldVal)
+                    });
+                }
+            }
+        })
+
+        var vm = avalon.define({
+            $id: 'test',
+            s1: {
+                keyword: ''
+            },
+            s2: {
+                keyword: ''
+            }
+        });
+        vm.$events.sss = 99
+        vm.$watch('keyword', function(aa,bb){
+            console.log(aa,bb)
+        })
+        
+        
+        //vm  aaa aaa.bbb ---> $event aaa aaa.bbb
+        //vm.aaa.bbb 先在它子级的$event中触发, 然后到顶层data中触发
+        
+        
+    </script>
+</body>
+</html>

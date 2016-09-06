@@ -1,0 +1,25 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <script type="text/javascript" src="../dist/avalon.js"></script>
+    <script type="text/javascript" src="/vendor/plug-in/jquery/jquery.js"></script>
+    <script>
+        avalon.define({
+            $id: "test",
+            data1: [1,2,3,4,5],
+            data2: [11,22,33,44,55]
+        })//
+    </script>
+</head>
+<body>
+<div ms-controller="test">
+    <div :for="item in @data1" aa='99'>{{item}}</div>
+    <div id='for15'>
+        <div :for="item in @data2">{{item}}</div>
+    </div>
+</div>
+
+</body>
+</html>

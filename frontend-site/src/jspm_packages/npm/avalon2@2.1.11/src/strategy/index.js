@@ -1,0 +1,23 @@
+/* */ 
+avalon.lexer = require('./lexer');
+avalon.diff = require('./diff');
+avalon.batch = require('./batch');
+var parseView = require('./parser/parseView');
+function render(vtree, local) {
+  var _body = Array.isArray(vtree) ? parseView(vtree) : vtree;
+  var _local = [];
+  if (local) {
+    for (var i in local) {
+      _local.push('var ' + i + ' = __local__[' + avalon.quote(i) + ']');
+    }
+  }
+  var body = '__local__ = __local__ || {};\n' + _local.join(';\n') + '\n' + _body;
+  try {
+    var fn = Function('__vmodel__', '__local__', body);
+  } catch (e) {
+    avalon.warn(_body, 'parse error');
+  }
+  return fn;
+}
+avalon.render = render;
+module.exports = avalon;
