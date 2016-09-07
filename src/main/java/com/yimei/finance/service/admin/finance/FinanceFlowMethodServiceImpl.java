@@ -1,15 +1,15 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.representation.admin.finance.object.HistoryTaskObject;
-import com.yimei.finance.representation.admin.finance.object.TaskObject;
-import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
-import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
 import com.yimei.finance.representation.admin.finance.enums.FinanceSMSMessage;
+import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
+import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
+import com.yimei.finance.representation.admin.finance.object.HistoryTaskObject;
+import com.yimei.finance.representation.admin.finance.object.TaskObject;
+import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
@@ -22,7 +22,6 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
-import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Attachment;
 import org.activiti.engine.task.Task;
@@ -76,10 +75,9 @@ public class FinanceFlowMethodServiceImpl {
      */
     public Result setAssignUserMethod(String processInstanceId, String financeEventType, String userId) {
         List<Task> taskList = taskService.createTaskQuery().processInstanceId(processInstanceId).active().list();
-        for (Task t : taskList) {
-            Execution exe = runtimeService.createExecutionQuery().executionId(t.getExecutionId()).singleResult();
-            if (exe.getActivityId().equals(financeEventType)) {
-                taskService.setAssignee(t.getId(), userId);
+        for (Task task : taskList) {
+            if (task.getTaskDefinitionKey().equals(financeEventType)) {
+                taskService.setAssignee(task.getId(), userId);
                 return Result.success().setData(true);
             }
         }
