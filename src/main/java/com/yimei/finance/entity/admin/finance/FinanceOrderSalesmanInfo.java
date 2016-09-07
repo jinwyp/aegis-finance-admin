@@ -32,7 +32,5 @@ public class FinanceOrderSalesmanInfo extends BaseEntity implements Serializable
     private int needSupplyMaterial;                                  //需要补充材料 1: 需要, 0: 不需要
     @Column(name = "supply_material_introduce", length = 520)
     private String supplyMaterialIntroduce;                          //补充材料说明
-    @Column(name = "notice_apply_user", length = 1, nullable = false)
-    private int noticeApplyUser;                                     //通知申请用户 1: 通知, 0: 不通知
 
 }

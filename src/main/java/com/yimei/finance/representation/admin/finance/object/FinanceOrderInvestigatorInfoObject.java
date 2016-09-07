@@ -60,8 +60,6 @@ public class FinanceOrderInvestigatorInfoObject extends BaseEntity implements Se
 
     @Size(max = 500, message = "补充材料说明不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     private String supplyMaterialIntroduce;                          //补充材料说明
-    private int noticeApplyUser;                                     //通知申请用户 1: 通知, 0: 不通知
-    private int noticeSalesman;                                      //通知业务员   1: 通知, 0: 不通知
     List<AttachmentObject> attachmentList;                           //附件列表
 
 }
