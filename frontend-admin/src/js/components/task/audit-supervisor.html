@@ -57,7 +57,8 @@
             <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
                 <!--<input type="text" [(ngModel)]="currentTask.historicalCooperationDetail">-->
-                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.historicalCooperationDetail"></textarea>
+                <textarea class="form-control" rows="2" placeholder="请输入"  *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.historicalCooperationDetail"></textarea>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.historicalCooperationDetail}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -67,8 +68,8 @@
             <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
                 <!--<input type="text" [(ngModel)]="currentTask.operatingStorageDetail">-->
-                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.operatingStorageDetail"></textarea>
-
+                <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.operatingStorageDetail"></textarea>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.operatingStorageDetail}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -78,8 +79,8 @@
             <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
                 <!--<input type="text" [(ngModel)]="currentTask.portStandardDegree">-->
-                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.portStandardDegree"></textarea>
-
+                <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.portStandardDegree"></textarea>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.portStandardDegree}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -89,8 +90,8 @@
             <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
                 <!--<input type="text" [(ngModel)]="currentTask.supervisionCooperateDetail">-->
-                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.supervisionCooperateDetail"></textarea>
-
+                <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.supervisionCooperateDetail"></textarea>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.supervisionCooperateDetail}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -100,8 +101,8 @@
             <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
                 <!--<input type="text" [(ngModel)]="currentTask.supervisionScheme">-->
-                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.supervisionScheme"></textarea>
-
+                <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.supervisionScheme"></textarea>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.supervisionScheme}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -111,8 +112,8 @@
             <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
                 <!--<input type="text" [(ngModel)]="currentTask.finalConclusion">-->
-                <textarea class="form-control" rows="2" placeholder="请输入" [(ngModel)]="currentOrder.finalConclusion"></textarea>
-
+                <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.finalConclusion"></textarea>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.finalConclusion}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -124,7 +125,7 @@
                     <img *ngFor="let pic of currentOrder.attachmentList" [src]="pic.url" [alt]="pic.name">
                 </div>
 
-                <file-upload (onFinished)="finishedUpload($event)"></file-upload>
+                <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
             </td>
         </tr>
         <tr class="item-title">
@@ -132,7 +133,8 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="4" placeholder="请输入" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
+                <textarea class="form-control" rows="4" *ngIf="!css.isReadOnly" placeholder="请输入" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.supplyMaterialIntroduce}}</span>
             </td>
         </tr>
         <!--<tr class="item-title">-->
@@ -149,7 +151,7 @@
         </tr>
     </table>
 
-    <div class="row info-item">
+    <div class="row info-item" *ngIf="!css.isReadOnly">
         <div class="col-sm-offset-3 col-sm-6 mt-20">
             <div class="alert alert-success" role="alert" [class.hidden]="css.ajaxSuccessHidden">保存成功!</div>
             <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
@@ -158,6 +160,11 @@
             <button type="button" class="btn btn-default btn-lg btn-save" (click)="audit(false)" [disabled]="css.isSubmitted">保存</button>
             <button type="button" class="btn btn-default btn-lg btn-sure ml-20" (click)="audit(true)" [disabled]="css.isSubmitted || css.isCommitted">保存并提交</button>
             <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/pending']">返回</button>
+        </div>
+    </div>
+    <div class="row info-item" *ngIf="css.isReadOnly">
+        <div class="col-sm-12 info-val no-bottom-border center">
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/all']">返回</button>
         </div>
     </div>
 

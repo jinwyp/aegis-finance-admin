@@ -34,7 +34,12 @@ export class AuditSalesmanComponent {
         isSubmitted : false,
         ajaxSuccessHidden : true,
         ajaxErrorHidden : true,
+        isReadOnly : false
 
+    };
+    routeData :any = {
+        routeType : '',
+        title : ''
     };
     errorMsg : string ='';
 
@@ -50,6 +55,13 @@ export class AuditSalesmanComponent {
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.taskId = params['id'];
             this.getTaskInfo(params['id']);
+        });
+
+        this.activatedRoute.data.subscribe( data => {
+            this.routeData = data;
+            if (this.routeData.routeType === 'info') {this.css.isReadOnly = true;}
+
+
         });
 
         this.getCurrentUser();
