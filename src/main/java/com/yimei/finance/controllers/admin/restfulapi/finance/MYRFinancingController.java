@@ -1,10 +1,14 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.representation.admin.finance.AttachmentObject;
+import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
+import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
-import com.yimei.finance.representation.admin.finance.*;
+import com.yimei.finance.representation.admin.finance.object.*;
+import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceOrder;
+import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceOrder;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.CombineObject;
 import com.yimei.finance.representation.common.result.Result;
@@ -44,7 +48,7 @@ public class MYRFinancingController {
     @ApiOperation(value = "线上交易员填写材料-保存", notes = "线上交易员填写材料-保存", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrOnlineTraderAddMaterialMethod(@PathVariable("taskId") String taskId,
-                                                   @ApiParam(name = "map", value = "参数body对象", required = true) @RequestBody FinanceOrderObject financeOrder) {
+                                                   @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(SaveFinanceOrder.class) @RequestBody FinanceOrderObject financeOrder) {
         return onlineTraderAddMaterialMethod(taskId, null, financeOrder, false);
     }
 
@@ -52,7 +56,7 @@ public class MYRFinancingController {
     @ApiOperation(value = "线上交易员填写材料-提交", notes = "线上交易员填写材料-提交", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrOnlineTraderAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
-                                                           @ApiParam(name = "map", value = "参数body对象", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderObject> map) {
+                                                           @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(SubmitFinanceOrder.class) @RequestBody CombineObject<TaskMap, FinanceOrderObject> map) {
         return onlineTraderAddMaterialMethod(taskId, map.t, map.u, true);
     }
 
