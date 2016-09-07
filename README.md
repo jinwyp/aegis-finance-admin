@@ -48,3 +48,21 @@
 
 ###Swagger文档查看
 http://localhost:8002/swagger/swagger-ui.html
+
+###docker环境准备
+1.拉代码:aegis-docker,docker-nginx,git@github.com:yimei180/docker-redis-finance.git
+2.进入docker-mysql,make start enter,然后进入数据库,创建financedb数据库
+
+
+
+
+
+
+
+
+
+
+
+
+
+
