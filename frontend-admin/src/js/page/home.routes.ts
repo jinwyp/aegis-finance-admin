@@ -18,7 +18,7 @@ import { AssignPersonComponent } from '../components/task/assign-person';
 import { AuditTraderComponent, } from '../components/task/audit-trader';
 import { AuditSalesmanComponent } from '../components/task/audit-salesman';
 import { AuditInvestigatorComponent } from '../components/task/audit-investigator';
-import { SuperviseReportComponent } from '../components/task/supervise-report';
+import { AuditSupervisorComponent } from '../components/task/audit-supervisor';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
 
 const routes: Routes = [
@@ -112,7 +112,7 @@ const routes: Routes = [
     },
     {
         path: 'tasks/:id/supervisor',
-        component: SuperviseReportComponent
+        component: AuditSupervisorComponent
     },
     {
         path: 'tasks/:id/riskmanager',
