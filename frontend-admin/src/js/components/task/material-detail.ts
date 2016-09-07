@@ -13,11 +13,11 @@ declare var __moduleName: string;
 
 
 @Component({
-    selector: 'task-detail',
+    selector: 'material-detail',
     moduleId: __moduleName || module.id,
-    templateUrl: 'task-detail.html'
+    templateUrl: 'material-detail.html'
 })
-export class TaskDetailComponent {
+export class MaterialDetailComponent {
 
     private sub: Subscription;
 

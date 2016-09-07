@@ -34,6 +34,7 @@ export class AuditSalesmanComponent {
         isSubmitted : false,
         ajaxSuccessHidden : true,
         ajaxErrorHidden : true,
+
     };
     errorMsg : string ='';
 
@@ -123,7 +124,7 @@ export class AuditSalesmanComponent {
                 }else{
                     this.css.isSubmitted = false;
                     this.css.ajaxErrorHidden=false;
-                    this.errorMsg = JSON.parse(result).error.message;
+                    this.errorMsg = result.error.message;
                 }
 
             });

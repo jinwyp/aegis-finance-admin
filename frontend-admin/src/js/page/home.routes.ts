@@ -18,9 +18,9 @@ import { AssignPersonComponent } from '../components/task/assign-person';
 import { AuditTraderComponent, } from '../components/task/audit-trader';
 import { AuditSalesmanComponent } from '../components/task/audit-salesman';
 import { AuditInvestigatorComponent } from '../components/task/audit-investigator';
-import { SuperviseReportComponent } from '../components/task/supervise-report';
+import { AuditSupervisorComponent } from '../components/task/audit-supervisor';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
-import {TaskDetailComponent} from "../components/task/task-detail";
+import {MaterialDetailComponent} from "../components/task/material-detail";
 
 const routes: Routes = [
     {
@@ -113,15 +113,41 @@ const routes: Routes = [
     },
     {
         path: 'tasks/:id/supervisor',
-        component: SuperviseReportComponent
+        component: AuditSupervisorComponent
     },
     {
         path: 'tasks/:id/riskmanager',
         component: AuditRiskManagerComponent
     },
     {
-        path: 'tasks/:id/taskdetail',
-        component: TaskDetailComponent
+        path: 'tasks/:id/investigator/material',
+        component: MaterialDetailComponent
+    },
+
+    {
+        path: 'tasks/:id/trader/info',
+        component: AuditTraderComponent,
+        data: { routeType : 'info' }
+    },
+    {
+        path: 'tasks/:id/salesman/info',
+        component: AuditSalesmanComponent,
+        data: { routeType : 'info' }
+    },
+    {
+        path: 'tasks/:id/investigator/info',
+        component: AuditInvestigatorComponent,
+        data: { routeType : 'info' }
+    },
+    {
+        path: 'tasks/:id/supervisor/info',
+        component: AuditSupervisorComponent,
+        data: { routeType : 'info' }
+    },
+    {
+        path: 'tasks/:id/riskmanager/info',
+        component: AuditRiskManagerComponent,
+        data: { routeType : 'info' }
     },
     {
         path: '**',
