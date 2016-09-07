@@ -1,9 +1,9 @@
 package com.yimei.finance.controllers.admin.common;
 
-import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.repository.admin.databook.DataBookRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumMYRFinanceAllSteps;
+import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
 import com.yimei.finance.representation.common.databook.DataBook;
 import com.yimei.finance.representation.common.databook.EnumDataBookType;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
@@ -54,7 +54,6 @@ public class ToolsController {
         }
         return Result.success().setData(stepList);
     }
-
 
     @RequestMapping(value = "/files", method = RequestMethod.GET)
     @ApiOperation(value = "下载文件", notes = "通过文件url路径下载文件")
