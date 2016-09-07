@@ -19,7 +19,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class FinanceOrder extends BaseEntity implements Serializable {
     @Id
-    @Column(name = "id", nullable = false, unique = true, updatable = false)
+    @Column(name = "id", unique = true, updatable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;                                                 //主键
     @Column(name = "source_id", length = 100, nullable = false, updatable = false, unique = true)
