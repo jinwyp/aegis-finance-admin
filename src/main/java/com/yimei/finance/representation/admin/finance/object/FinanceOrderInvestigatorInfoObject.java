@@ -3,6 +3,7 @@ package com.yimei.finance.representation.admin.finance.object;
 import com.yimei.finance.entity.common.BaseEntity;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceInvestigatorInfo;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceInvestigatorInfo;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+@ApiModel(description = "金融-尽调员填写表单信息对象")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

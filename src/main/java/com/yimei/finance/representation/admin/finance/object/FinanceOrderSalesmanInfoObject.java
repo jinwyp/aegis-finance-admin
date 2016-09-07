@@ -3,6 +3,7 @@ package com.yimei.finance.representation.admin.finance.object;
 import com.yimei.finance.entity.common.BaseEntity;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceSalesmanInfo;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceSalesmanInfo;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,6 +12,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.List;
 
+@ApiModel(description = "金融-业务员填写信息对象")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

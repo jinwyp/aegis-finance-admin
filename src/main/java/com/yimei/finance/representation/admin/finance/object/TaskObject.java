@@ -1,5 +1,6 @@
 package com.yimei.finance.representation.admin.finance.object;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@ApiModel(description = "任务对象")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
