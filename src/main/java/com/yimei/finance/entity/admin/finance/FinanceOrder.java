@@ -19,11 +19,19 @@ import java.util.Date;
 @AllArgsConstructor
 public class FinanceOrder extends BaseEntity implements Serializable {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", nullable = false, unique = true, updatable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;                                                 //主键
+    @Column(name = "source_id", length = 100, nullable = false, updatable = false, unique = true)
+    private String sourceId;                                         //流水号，编号
     @Column(name = "user_id", length = 11, nullable = false, updatable = false)
     private int userId;                                              //申请人用户id
+    @Column(name = "apply_user_name", length = 50, updatable = false)
+    private String applyUserName;                                    //申请人姓名
+    @Column(name = "apply_user_phone", length = 50, nullable = false, updatable = false)
+    private String applyUserPhone;                                   //申请人手机号
+    @Column(name = "apply_company_name", length = 60, nullable = false, updatable = false)
+    private String applyCompanyName;                                 //申请公司名称
     @Column(name = "apply_type", length = 20, nullable = false, updatable = false)
     private String applyType;                                        //申请类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
     @Column(name = "financing_amount", precision = 20, scale = 2)
@@ -60,14 +68,6 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     private String approveState;                                     //审批状态
     @Column(name = "approve_state_id", length = 3, nullable = false)
     private int approveStateId;                                      //审批状态Id
-    @Column(name = "source_id", length = 100, nullable = false, updatable = false, unique = true)
-    private String sourceId;                                         //流水号，编号
-    @Column(name = "apply_user_name", length = 50)
-    private String applyUserName;                                    //申请人姓名
-    @Column(name = "apply_user_phone", length = 50)
-    private String applyUserPhone;                                   //申请人手机号
-    @Column(name = "apply_company_name", length = 50, nullable = false, updatable = false)
-    private String applyCompanyName;                                 //申请公司名称
     @Column(name = "coal_quantity_index", length = 520)
     private String coalQuantityIndex;                                //主要煤质指标
     @Column(name = "end_time", updatable = false)
