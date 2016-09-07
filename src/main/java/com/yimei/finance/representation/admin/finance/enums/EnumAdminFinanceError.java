@@ -1,8 +1,8 @@
 package com.yimei.finance.representation.admin.finance.enums;
 
-/**
- * admin模块,金融单错误信息
- */
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(description = "金融单错误信息")
 public enum EnumAdminFinanceError {
     此金融单不存在,
     此流程不存在或已经结束,

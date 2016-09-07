@@ -21,6 +21,13 @@ export class MaterialDetailComponent {
 
     private sub: Subscription;
 
+    css = {
+        isSubmitted : false,
+        ajaxErrorHidden : true,
+        ajaxSuccessHidden : true,
+        isReadOnly : false
+    };
+
     taskId : string = '';
 
     currentTask : Task = new Task();
@@ -58,6 +65,38 @@ export class MaterialDetailComponent {
         });
     }
 
+
+
+    save ( isAudit : boolean) {
+
+        this.task.addMaterial(this.taskId, this.currentTask.applyType, 'salesman1', this.currentOrder.attachmentList).then((result)=>{
+            if (result.success){
+                // if(!isAudit){
+                //     this.css.isSubmitted = false;
+                // }
+                // this.css.ajaxSuccessHidden = false;
+                setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
+            }else{
+
+                // this.css.isSubmitted = false;
+                // this.css.ajaxErrorHidden=false;
+                // this.errorMsg = result.error.message;
+            }
+
+        });
+
+    }
+
+
+    finishedUpload (event) {
+        this.currentOrder.attachmentList.push({
+            "url": event.value.url,
+            "name": event.value.name,
+            "type": event.value.type,
+            "processInstanceId": this.currentTask.processInstanceId,
+            "taskId": this.currentTask.id
+        })
+    }
 
 }
 

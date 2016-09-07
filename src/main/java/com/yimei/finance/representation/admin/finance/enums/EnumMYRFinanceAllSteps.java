@@ -1,5 +1,8 @@
 package com.yimei.finance.representation.admin.finance.enums;
 
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(description = "金融单, 煤易融流程步骤")
 public enum EnumMYRFinanceAllSteps {
     Client_Apply(2, "客户发起申请"),
     Wait_Assign_OnlineTrader(4, "待分配线上交易员"),

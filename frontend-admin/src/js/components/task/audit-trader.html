@@ -35,14 +35,13 @@
 
         <tr class="item-min">
             <td class="td-label">拟融资金额(万元):</td>
-            <td class="td-val">
-                <input *ngIf="!css.isReadOnly" type="text" [(ngModel)]="currentOrder.financingAmount">
-                <span *ngIf="css.isReadOnly">{{currentOrder.financingAmount}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.financingAmount">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.financingAmount}}</span>
             </td>
             <td class="td-label">拟使用资金时间(天):</td>
             <td class="td-val">
-                <input *ngIf="!css.isReadOnly" type="text" [(ngModel)]="currentOrder.expectDate">
-                <span *ngIf="css.isReadOnly">{{currentOrder.expectDate}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.expectDate">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.expectDate}}</span>
             </td>
         </tr>
 
@@ -71,25 +70,25 @@
         <tr *ngIf="currentOrder.applyType==='MYR'" class="item-min">
             <td class="td-label">预计单吨销售价(元/吨):</td>
             <td class="td-val">
-                <input *ngIf="!css.isReadOnly" type="text" [(ngModel)]="currentOrder.sellingPrice">
-                <span *ngIf="css.isReadOnly">{{currentOrder.sellingPrice}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.sellingPrice">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.sellingPrice}}</span>
             </td>
             <td class="td-label">签约单位全称:</td>
             <td class="td-val">
-                <input *ngIf="!css.isReadOnly" type="text" [(ngModel)]="currentOrder.ourContractCompany">
-                <span *ngIf="css.isReadOnly">{{currentOrder.ourContractCompany}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.ourContractCompany">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.ourContractCompany}}</span>
             </td>
         </tr>
         <tr *ngIf="currentOrder.applyType==='MYR'" class="item-min">
             <td class="td-label">下游签约单位全称:</td>
             <td class="td-val">
-                <input *ngIf="!css.isReadOnly" type="text" [(ngModel)]="currentOrder.downstreamContractCompany">
-                <span *ngIf="css.isReadOnly">{{currentOrder.downstreamContractCompany}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.downstreamContractCompany">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.downstreamContractCompany}}</span>
             </td>
             <td class="td-label">用煤终端:</td>
             <td class="td-val">
-                <input *ngIf="!css.isReadOnly" type="text" [(ngModel)]="currentOrder.terminalServer">
-                <span *ngIf="css.isReadOnly">{{currentOrder.businessAmount}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.terminalServer">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.terminalServer}}</span>
             </td>
         </tr>
 
@@ -97,28 +96,49 @@
         <!--煤易贷-->
         <tr *ngIf="currentOrder.applyType==='MYD'" class="item-min">
             <td class="td-label">煤炭仓储地:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.storageLocation"></td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.storageLocation">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageLocation}}</span>
+            </td>
             <td class="td-label">煤炭来源:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.coalSource"></td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.coalSource">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.coalSource}}</span>
+            </td>
         </tr>
         <tr *ngIf="currentOrder.applyType==='MYD'" class="item-min">
             <td class="td-label">单吨市场报价(元/吨):</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.marketPrice"></td>
+            <td class="td-val">
+                <input type="text"  *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.marketPrice">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.marketPrice}}</span>
+            </td>
             <td class="td-label">主要煤质指标:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.coalQuantityIndex"></td>
+            <td class="td-val">
+                <input type="text"  *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.coalQuantityIndex">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.coalQuantityIndex}}</span>
+            </td>
         </tr>
 
         <!--煤易购-->
 
         <tr *ngIf="currentOrder.applyType==='MYG'" class="item-min">
             <td class="td-label">单吨采购价(元/吨):</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.procurementPrice"></td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.procurementPrice">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.procurementPrice}}</span>
+            </td>
             <td class="td-label">上游资源方全称:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.upstreamResource"></td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.upstreamResource">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.upstreamResource}}</span>
+            </td>
         </tr>
         <tr *ngIf="currentOrder.applyType==='MYG'" class="item-min">
             <td class="td-label">中转港口/地全称:</td>
-            <td colspan="3" class="td-val"><input type="text" [(ngModel)]="currentOrder.transferPort"></td>
+            <td colspan="3" class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.transferPort">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.transferPort}}</span>
+            </td>
         </tr>
 
         <!--煤易购 结束-->
@@ -130,7 +150,7 @@
                 <div class="hint mb-20">如: 下游签约单位合同模板、历史供煤信息，终端结算回款历史单据、自身企业信用、财务状况</div>
                 <div class="attachment">
                     <img *ngFor="let pic of currentOrder.attachmentList" [src]="pic.url" [alt]="pic.name">
-                    <file-upload (onFinished)="finishedUpload($event)"></file-upload>
+                    <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
                 </div>
 
             </td>
@@ -138,7 +158,8 @@
         <tr class="item-min">
             <td class="td-label">备注说明:</td>
             <td class="td-val td-textarea" colspan="3">
-                <textarea class="form-control" rows="4" [(ngModel)]="currentOrder.comments"></textarea>
+                <textarea class="form-control" rows="4" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.comments"></textarea>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.comments}}</span>
             </td>
         </tr>
 
@@ -151,7 +172,7 @@
         </tr>
     </table>
 
-    <div class="row info-item">
+    <div class="row info-item"  *ngIf="!css.isReadOnly">
         <div class="col-sm-offset-3 col-sm-6 mt-20">
             <div class="alert alert-success" role="alert" [class.hidden]="css.ajaxSuccessHidden">保存成功!</div>
             <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
@@ -160,6 +181,11 @@
             <button type="submit" class="btn btn-default btn-lg btn-save mr-20" (click)="audit(false)" [disabled]="css.isSubmitted || currentTask.endTime">保存</button>
             <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" (click)="audit(true)" [disabled]="css.isSubmitted || currentTask.endTime ">保存并提交</button>
             <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['tasks/pending']">返回</button>
+        </div>
+    </div>
+    <div class="row info-item" *ngIf="css.isReadOnly">
+        <div class="col-sm-12 info-val no-bottom-border center">
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/all']">返回</button>
         </div>
     </div>
 </div>

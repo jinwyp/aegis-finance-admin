@@ -1,8 +1,8 @@
 package com.yimei.finance.representation.admin.finance.enums;
 
-/**
- * Created by liuxinjie on 16/8/22.
- */
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(description = "金融单, 流程条件类型")
 public enum EnumFinanceConditions {
     salesmanAudit("业务员审核"),
     needSalesmanSupplyInvestigationMaterial("需要业务员补充尽调材料"),

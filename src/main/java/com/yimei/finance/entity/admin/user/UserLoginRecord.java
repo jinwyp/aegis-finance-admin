@@ -14,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 public class UserLoginRecord implements Serializable {
     @Id
-    @Column(name = "id")
+    @Column(name = "id", unique = true, updatable = false)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;                                                 //主键
     @NonNull

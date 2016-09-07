@@ -8,7 +8,7 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
-import {GlobalPromiseHttpCatch, HttpResponse, API } from './http';
+import {GlobalPromiseHttpCatch, Headers, HttpResponse, API } from './http';
 
 
 var taskStatusList = [
@@ -379,9 +379,32 @@ class TaskService {
             sendData = body.u;
         }
 
-        let headers = new Headers({'Content-Type': 'application/json'});
+        return this.http.post(url, JSON.stringify(sendData), {headers: Headers}).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(GlobalPromiseHttpCatch);
+    }
 
-        return this.http.post(url, JSON.stringify(sendData), {headers: headers}).toPromise()
+
+
+    addMaterial (taskId : string, taskType : string, taskStep : string, attachmentList : any){
+
+        let auditType = {
+            MYR : API.tasksMYR,
+            MYD : API.tasksMYD,
+            MYG : API.tasksMYG
+        };
+
+        let auditStep = {
+            salesman1 : '/salesman/supply/investigation/material/',
+            salesman2 : '/salesman/supply/supervision/material/',
+            investigator : '/investigator/supply/riskmanager/material/',
+            supervisor : '/supervisor/supply/riskmanager/material/'
+        };
+
+        let url = auditType[taskType] + auditStep[taskStep] + taskId;
+
+
+        return this.http.post(url, JSON.stringify(attachmentList), {headers: Headers}).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }
