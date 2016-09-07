@@ -71,9 +71,11 @@ export class AuditInvestigatorComponent {
     getTaskInfo (id) {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
+                console.log(result.data);
                 this.currentTask = result.data;
                 this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
                     if (result.success){
+                        console.log(result.data);
                         this.currentOrder = result.data;
                     }else{
 
@@ -106,7 +108,7 @@ export class AuditInvestigatorComponent {
         if (this.currentTask.taskDefinitionKey === TaskStatus.investigatorAudit) auditType = 'investigator'; // 尽调员审核
 
         if (this.currentTask.taskDefinitionKey && auditType) {
-            this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
+            this.task.audit(this.taskId, this.currentOrder.applyType, auditType, body).then((result)=>{
                 if (result.success){
                     if(isAudit){
                         this.css.isCommitted = true;
