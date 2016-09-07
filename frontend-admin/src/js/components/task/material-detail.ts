@@ -24,7 +24,8 @@ export class MaterialDetailComponent {
     css = {
         isSubmitted : false,
         ajaxErrorHidden : true,
-        ajaxSuccessHidden : true
+        ajaxSuccessHidden : true,
+        isReadOnly : false
     };
 
     taskId : string = '';
@@ -67,7 +68,8 @@ export class MaterialDetailComponent {
 
 
     save ( isAudit : boolean) {
-        this.task.addMaterial(this.taskId, this.currentTask.applyType, 'salesman1', this.currentOrder).then((result)=>{
+
+        this.task.addMaterial(this.taskId, this.currentTask.applyType, 'salesman1', this.currentOrder.attachmentList).then((result)=>{
             if (result.success){
                 // if(!isAudit){
                 //     this.css.isSubmitted = false;
@@ -83,6 +85,17 @@ export class MaterialDetailComponent {
 
         });
 
+    }
+
+
+    finishedUpload (event) {
+        this.currentOrder.attachmentList.push({
+            "url": event.value.url,
+            "name": event.value.name,
+            "type": event.value.type,
+            "processInstanceId": this.currentTask.processInstanceId,
+            "taskId": this.currentTask.id
+        })
     }
 
 }
