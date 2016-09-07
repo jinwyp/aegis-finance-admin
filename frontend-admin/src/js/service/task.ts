@@ -175,8 +175,8 @@ class Task {
 
     //煤易融
     sellingPrice : number;                  //预计单吨销售价 (元/吨)
-    contractor : string;                    //签约单位全称
-    downstreamContractor : string;          //下游签约单位全称
+    // contractor : string;                    //签约单位全称
+    // downstreamContractor : string;          //下游签约单位全称
     terminalServer : string;                //用煤终端
 
     //煤易贷
@@ -188,7 +188,7 @@ class Task {
     //煤易购
     procurementPrice : number;              //单吨采购价 (元/吨)
     upstreamResource : string;              //上游资源方全称
-    transferPort : string;                  //中转港口/地全称
+    transferPort : string;                  //中转港口全称
 
     comments : string;                      //备注说明
 
@@ -207,7 +207,7 @@ class Task {
     ourContractCompany : string;                //我方签约公司
     upstreamContractCompany : string;           //上游签约单位
     downstreamContractCompany : string;         //下游签约单位
-    endUser : string;                           //终端用户
+    // endUser : string;                           //终端用户
     transportParty : string;                    //运输方
     transitPort : string;                       //中转港口
     qualityInspectionUnit : string;             //质量检验单位
@@ -226,7 +226,7 @@ class Task {
     // supplyMaterialIntroduce : string;
 
     //监管员表单字段
-    storagePlaceName : string;                  //仓储地名称
+    // storagePlaceName : string;                  //仓储地名称
     storageProperty : string;                   //仓储性质
     storageAddress : string;                    //仓储地地址
     // historicalCooperationDetail : string;       //历史合作情况
@@ -249,7 +249,7 @@ class Task {
     // supplyMaterialIntroduce : string;           //补充材料说明
     // noticeApplyUser : boolean;                  //通知申请用户 true: 通知, false: 不通知
     // noticeSalesman : boolean;                   //通知业务员   true: 通知, false: 不通知
-    editContract : boolean;                     //编辑和他     true: 需要编辑, false: 不需要编辑
+    editContract : boolean;                     //编辑合同     true: 需要编辑, false: 不需要编辑
 
 
     constructor() {
@@ -314,14 +314,14 @@ class TaskService {
     getOrderInfoById(orderId : number, taskStep : string = 'onlinetrader') {
 
         let auditStep = {
-            onlinetrader : '/',
-            salesman : '/salesman/',
-            investigator : '/investigator/',
-            supervisor : '/supervisor/',
-            riskmanager : '/riskmanager/'
+            onlinetrader : '',
+            salesman : '/salesman',
+            investigator : '/investigator',
+            supervisor : '/supervisor',
+            riskmanager : '/riskmanager'
         };
 
-        return this.http.get(API.orders + auditStep[taskStep] + orderId).toPromise().then(response => {
+        return this.http.get(API.orders + '/' + orderId + auditStep[taskStep]).toPromise().then(response => {
             var result = response.json() as HttpResponse;
 
             return this.http.get(API.orders + '/' + orderId + '/tasks').toPromise().then( response2 => {
@@ -367,11 +367,19 @@ class TaskService {
             MYG : API.tasksMYG
         };
 
-        let url = auditType[taskType] + '/' + auditStep[taskStep] + '/audit/' + taskId;
+        let url = auditType[taskType] + '/' + auditStep[taskStep] + '/audit/' + taskId +'?type=' + body.t.submit;
+
+        let sendData : any = {};
+
+        if (body.t.submit){
+            sendData = body;
+        }else{
+            sendData = body.u;
+        }
 
         let headers = new Headers({'Content-Type': 'application/json'});
 
-        return this.http.post(url, JSON.stringify(body), {headers: headers}).toPromise()
+        return this.http.post(url, JSON.stringify(sendData), {headers: headers}).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }

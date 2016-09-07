@@ -39,7 +39,6 @@ export class AuditTraderComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
-    tempAttachmentList : Array<any> = [];
     isApprovedRadio : boolean = false;
 
     constructor(
@@ -76,10 +75,11 @@ export class AuditTraderComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
-
+                console.log(result.data);
                 this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
+                        console.log(result.data);
                     }else{
 
                     }
@@ -101,7 +101,6 @@ export class AuditTraderComponent {
             "taskId": this.currentTask.id
         })
     }
-
 
     audit (isAudit : boolean){
 
@@ -134,7 +133,6 @@ export class AuditTraderComponent {
                     if(isAudit){
                         this.css.isCommitted = true;
                     }
-                    // this.getTaskInfo(this.taskId);
                     this.css.ajaxSuccessHidden = false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                 }else{
