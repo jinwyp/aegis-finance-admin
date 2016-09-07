@@ -31,7 +31,13 @@ export class AuditRiskManagerComponent {
         isSubmitted : false,
         isCommitted : false,
         ajaxErrorHidden : true,
-        ajaxSuccessHidden : true
+        ajaxSuccessHidden : true,
+        isReadOnly : false
+    };
+
+    routeData :any = {
+        routeType : '',
+        title : ''
     };
 
     errorMsg = '';
@@ -51,6 +57,13 @@ export class AuditRiskManagerComponent {
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.taskId = params['id'];
             this.getTaskInfo(params['id']);
+        });
+
+        this.activatedRoute.data.subscribe( data => {
+            this.routeData = data;
+            if (this.routeData.routeType === 'info') {this.css.isReadOnly = true;}
+
+
         });
 
         this.getCurrentUser();
