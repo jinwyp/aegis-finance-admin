@@ -27,9 +27,14 @@ export class AuditInvestigatorComponent {
 
     css = {
         isSubmitted : false,
-        isCommitted : false,
         ajaxErrorHidden : true,
-        ajaxSuccessHidden : true
+        ajaxSuccessHidden : true,
+        isReadOnly : false
+    };
+
+    routeData :any = {
+        routeType : '',
+        title : ''
     };
 
     errorMsg = '';
@@ -40,7 +45,7 @@ export class AuditInvestigatorComponent {
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
 
-    isApprovedRadio : boolean = false;
+    isApprovedRadio : number;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -54,6 +59,14 @@ export class AuditInvestigatorComponent {
             this.taskId = params['id'];
             this.getTaskInfo(params['id']);
         });
+
+        this.activatedRoute.data.subscribe( data => {
+            this.routeData = data;
+            if (this.routeData.routeType === 'info') {this.css.isReadOnly = true;}
+
+
+        });
+
 
         this.getCurrentUser();
     }
@@ -75,11 +88,9 @@ export class AuditInvestigatorComponent {
     getTaskInfo (id) {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
-                console.log(result.data);
                 this.currentTask = result.data;
                 this.task.getOrderInfoById(this.currentTask.financeId, 'investigator').then((result)=>{
                     if (result.success){
-                        console.log(result.data);
                         this.currentOrder = result.data;
                     }else{
 
@@ -99,8 +110,9 @@ export class AuditInvestigatorComponent {
         this.css.isSubmitted = true;
 
         let isApproved : boolean = false;
-        if (isAudit) {
-            isApproved = this.isApprovedRadio;
+
+        if (this.isApprovedRadio === 1) {
+            isApproved = true;
         }
 
         let auditType : string = '';
@@ -108,27 +120,35 @@ export class AuditInvestigatorComponent {
             t : {
                 submit : isAudit === true ? 1 : 0,
                 pass : isApproved === true ? 1 : 0,
-                need : 0,
-                need2 : 0
+                need : this.isApprovedRadio === 2 ? 1 : 0,
+                need2 : this.isApprovedRadio === 3 ? 1 : 0
             },
             u : this.currentOrder
         };
+
+        if (this.isApprovedRadio === 4) {
+            body.t.need = 1;
+            body.t.need2 = 0;
+            this.currentOrder.needSupplyMaterial = 1;
+        }
 
         if (this.currentTask.taskDefinitionKey === TaskStatus.investigatorAudit) auditType = 'investigator'; // 尽调员审核
 
         if (this.currentTask.taskDefinitionKey && auditType) {
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
-                    if(isAudit){
-                        this.css.isCommitted = true;
+                    if(!isAudit){
+                        this.css.isSubmitted = false;
                     }
-                    this.css.ajaxSuccessHidden=false;
+                    this.css.ajaxSuccessHidden = false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 }else{
+
+                    this.css.isSubmitted = false;
                     this.css.ajaxErrorHidden=false;
-                    this.errorMsg = JSON.parse(result).error.message;
+                    this.errorMsg = result.error.message;
                 }
-                this.css.isSubmitted = false;
+
             });
         }
 
@@ -143,17 +163,6 @@ export class AuditInvestigatorComponent {
             "taskId": this.currentTask.id
         })
     }
-
-    changeNeedSupplyMaterialStatus(){
-        if(this.currentOrder.needSupplyMaterial===0){
-            this.currentOrder.needSupplyMaterial=1;
-        }else{
-            this.currentOrder.needSupplyMaterial=0;
-        }
-    }
-
-
-    reportType=1;
 
 }
 

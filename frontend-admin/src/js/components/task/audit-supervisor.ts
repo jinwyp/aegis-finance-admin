@@ -15,11 +15,11 @@ import { User, UserService } from '../../service/user';
 declare var __moduleName: string;
 
 @Component({
-    selector: 'supervise-report',
+    selector: 'audit-supervisor',
     moduleId: __moduleName || module.id,
-    templateUrl: 'supervise-report.html'
+    templateUrl: 'audit-supervisor.html'
 })
-export class SuperviseReportComponent {
+export class AuditSupervisorComponent {
 
     private sub: Subscription;
 
@@ -69,11 +69,9 @@ export class SuperviseReportComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
-                console.log(result.data+'-------------');
                 this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
-                        console.log(result.data+'++++++++++++++++++++');
                     }else{
 
                     }
