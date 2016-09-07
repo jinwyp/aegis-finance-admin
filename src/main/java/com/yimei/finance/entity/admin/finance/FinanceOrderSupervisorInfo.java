@@ -20,8 +20,8 @@ public class FinanceOrderSupervisorInfo extends BaseEntity implements Serializab
     private Long id;                                                 //主键
     @Column(name = "finance_id", nullable = false, updatable = false, unique = true)
     private Long financeId;                                          //金融单id
-    @Column(name = "storage_place_name", length = 120)
-    private String storagePlaceName;                                 //仓储地名称
+    @Column(name = "storage_location", length = 120)
+    private String storageLocation;                                  //仓储地名称
     @Column(name = "storage_property", length = 120)
     private String storageProperty;                                  //仓储性质
     @Column(name = "storage_address", length = 220)

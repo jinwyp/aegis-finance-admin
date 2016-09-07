@@ -36,13 +36,27 @@ public class FinanceOrderInvestigatorInfoObject extends BaseEntity implements Se
     private int financingPeriod;                                     //融资期限
     private BigDecimal interestRate;                                 //利率
     private Date businessStartTime;                                  //业务开始时间
+
+    @Size(max = 1000, message = "历史合作情况不能超过 {max} 个字符")
     private String historicalCooperationDetail;                      //历史合作情况
+
+    @Size(max = 1000, message = "业务主要信息不能超过 {max} 个字符")
     private String mainBusinessInfo;                                 //业务主要信息
+
+    @Size(max = 1000, message = "业务流转信息不能超过 {max} 个字符")
     private String businessTransferInfo;                             //业务流转信息
+
+    @Size(max = 1000, message = "业务风险点不能超过 {max} 个字符")
     private String businessRiskPoint;                                //业务风险点
+
+    @Size(max = 1000, message = "履约信用及能力评估不能超过 {max} 个字符")
     private String performanceCreditAbilityEval;                     //履约信用及能力评估
+
+    @Size(max = 1000, message = "综合意见不能超过 {max} 个字符")
     private String finalConclusion;                                  //综合意见/最终结论
     private int needSupplyMaterial;                                  //需要补充材料 1: 需要, 0: 不需要
+
+    @Size(max = 500, message = "补充材料说明不能超过 {max} 个字符")
     private String supplyMaterialIntroduce;                          //补充材料说明
     private int noticeApplyUser;                                     //通知申请用户 1: 通知, 0: 不通知
     private int noticeSalesman;                                      //通知业务员   1: 通知, 0: 不通知
