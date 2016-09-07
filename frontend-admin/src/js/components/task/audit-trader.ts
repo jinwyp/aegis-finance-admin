@@ -25,7 +25,6 @@ export class AuditTraderComponent {
 
     css = {
         isSubmitted : false,
-        isCommitted : false,
         ajaxErrorHidden : true,
         ajaxSuccessHidden : true
     };
@@ -36,7 +35,7 @@ export class AuditTraderComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
-    isApprovedRadio : boolean = false;
+    isApprovedRadio : boolean ;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -126,16 +125,18 @@ export class AuditTraderComponent {
 
             this.task.audit(this.taskId, this.currentOrder.applyType, auditType, body).then((result)=>{
                 if (result.success){
-                    if(isAudit){
-                        this.css.isCommitted = true;
+                    if(!isAudit){
+                        this.css.isSubmitted = false;
                     }
+
                     this.css.ajaxSuccessHidden = false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                 }else{
                     this.css.ajaxErrorHidden = false;
                     this.errorMsg = result.error.message;
+                    this.css.isSubmitted = false;
                 }
-                this.css.isSubmitted = false;
+
             });
         }
     }
