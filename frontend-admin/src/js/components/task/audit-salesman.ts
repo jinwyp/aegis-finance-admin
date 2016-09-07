@@ -73,11 +73,9 @@ export class AuditSalesmanComponent {
     getTaskInfo (id) {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
-                console.log(result.data);
                 this.currentTask = result.data;
                 this.task.getOrderInfoById(this.currentTask.financeId, 'salesman').then((result)=>{
                     if (result.success && result.data){
-                        console.log(result.data);
                         this.currentOrder = result.data;
                     }else{
 
@@ -120,7 +118,7 @@ export class AuditSalesmanComponent {
                         this.css.isSubmitted = false;
                     }
                     this.css.ajaxSuccessHidden=false;
-                    setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
+                    setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                 }else{
                     this.css.isSubmitted = false;
                     this.css.ajaxErrorHidden=false;

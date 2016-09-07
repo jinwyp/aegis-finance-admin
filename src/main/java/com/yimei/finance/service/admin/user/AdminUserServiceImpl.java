@@ -1,16 +1,11 @@
 package com.yimei.finance.service.admin.user;
 
-import com.yimei.finance.representation.admin.user.GroupObject;
 import com.yimei.finance.entity.admin.user.UserLoginRecord;
-import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.repository.admin.user.AdminUserLoginRecordRepository;
-import com.yimei.finance.representation.admin.user.AdminUserSearch;
-import com.yimei.finance.representation.admin.user.EnumAdminUserError;
-import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
+import com.yimei.finance.representation.admin.user.*;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.utils.DozerUtils;
-import com.yimei.finance.utils.Where;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
@@ -30,6 +25,19 @@ public class AdminUserServiceImpl {
     private AdminGroupServiceImpl groupService;
     @Autowired
     private AdminUserLoginRecordRepository loginRecordRepository;
+
+    /**
+     * 检查是否具有系统管理员权限
+     */
+    public Result checkSuperAdminRight(String userId) {
+        List<Group> groups = identityService.createGroupQuery().groupMember(userId).list();
+        for (Group group : groups) {
+            if (group.getId().equals(EnumSpecialGroup.SuperAdminGroup.id)) {
+                return Result.success();
+            }
+        }
+        return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
+    }
 
     /**
      * 判断一个用户是否有 向该组 添加用户的 权限
@@ -57,7 +65,6 @@ public class AdminUserServiceImpl {
         }
         return groupObjectList;
     }
-
 
     /**
      * 获取一个用户 有权限添加 用户的组id list
@@ -117,7 +124,6 @@ public class AdminUserServiceImpl {
         return false;
     }
 
-
     /**
      * 封装 user, 从 User 到 UserObject
      */
@@ -170,10 +176,9 @@ public class AdminUserServiceImpl {
         return userObjectList;
     }
 
-    public String securePassword(String password) {
-        return DigestUtils.md5Hex("$&*" + DigestUtils.md5Hex("@." + password + "$*************") + "!@#%……&");
-    }
-
+    /**
+     * 检查手机号
+     */
     public Result checkUserPhone(String phone) {
         if (StringUtils.isEmpty(phone)) return Result.success();
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().list());
@@ -193,6 +198,10 @@ public class AdminUserServiceImpl {
         }
         return Result.success();
     }
+
+    /**
+     * 检查邮箱
+     */
     public Result checkUserEmail(String email) {
         if (StringUtils.isEmpty(email)) return Result.error(EnumAdminUserError.邮箱不能为空.toString());
         User emailUser = identityService.createUserQuery().userEmail(email).singleResult();
@@ -203,23 +212,19 @@ public class AdminUserServiceImpl {
     public Result checkUserEmail(String email, String userId) {
         if (StringUtils.isEmpty(email)) return Result.error(EnumAdminUserError.邮箱不能为空.toString());
         User emailUser = identityService.createUserQuery().userEmail(email).singleResult();
-        if (emailUser != null && !emailUser.getId().equals(userId)) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
+        if (emailUser != null && !emailUser.getId().equals(userId))
+            return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
         return Result.success();
     }
 
-    /**
-     * 检查是否具有系统管理员权限
-     */
-    public Result checkSuperAdminRight(String userId) {
-        List<Group> groups = identityService.createGroupQuery().groupMember(userId).list();
-        for (Group group : groups) {
-            if (group.getId().equals(EnumSpecialGroup.SuperAdminGroup.id)) {
-                return Result.success();
-            }
-        }
-        return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
+    public String securePassword(String password) {
+        return DigestUtils.md5Hex("$&*" + DigestUtils.md5Hex("@." + password + "$*************") + "!@#%……&");
     }
 
+
+    /**
+     * 用户管理 - 搜索查询 列表
+     */
     public Result getUserListBySelect(String operateUserId, AdminUserSearch userSearch, Page page) {
         if (userSearch == null) {
             page.setTotal(identityService.createUserQuery().count());
@@ -228,48 +233,20 @@ public class AdminUserServiceImpl {
             List<User> userList = new ArrayList<>();
             List<UserObject> userObjectList = new ArrayList<>();
             List<UserObject> userObjList = new ArrayList<>();
-            if (!StringUtils.isEmpty(userSearch.getUsername()) && !StringUtils.isEmpty(userSearch.getGroupName())) {
-                List<Group> groupList = identityService.createGroupQuery().groupNameLike(userSearch.getGroupName()).list();
-                if (groupList != null && groupList.size() != 0) {
-                    List<String> groupIds = new ArrayList<>();
-                    for (Group group : groupList) {
-                        groupIds.add(group.getId());
-                    }
-                    for (String gid : groupIds) {
-                        List<User> users = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).memberOfGroup(gid).orderByUserId().list();
-                        if (users != null && users.size() != 0) {
-                            userList.addAll(users);
-                        }
-                    }
-                } else {
-                    userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).orderByUserId().list();
-                }
-            } else if (!StringUtils.isEmpty(userSearch.getUsername())){
+            if (!StringUtils.isEmpty(userSearch.getUsername()) && !StringUtils.isEmpty(userSearch.getGroupId())) {
+                userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).memberOfGroup(userSearch.getGroupId()).orderByUserId().list();
+            } else if (!StringUtils.isEmpty(userSearch.getUsername())) {
                 userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).list();
-            } else if (!StringUtils.isEmpty(userSearch.getGroupName())) {
-                List<Group> groupList = identityService.createGroupQuery().groupNameLike(Where.$like$(userSearch.getGroupName())).list();
-                if (groupList != null && groupList.size() != 0) {
-                    List<String> groupIds = new ArrayList<>();
-                    for (Group group : groupList) {
-                        groupIds.add(group.getId());
-                    }
-                    for (String gid : groupIds) {
-                        List<User> users = identityService.createUserQuery().memberOfGroup(gid).list();
-                        if (users != null && users.size() != 0) {
-                            userList.addAll(users);
-                        }
-                    }
-                } else {
-                    userList = identityService.createUserQuery().list();
-                }
+            } else if (!StringUtils.isEmpty(userSearch.getGroupId())) {
+                userList = identityService.createUserQuery().memberOfGroup(userSearch.getGroupId()).list();
             } else {
                 userList = identityService.createUserQuery().list();
             }
             userObjectList = changeUserObject(userList, operateUserId);
-            if (!StringUtils.isEmpty(userSearch.getName()) ) {
-                for (UserObject userObject : userObjectList) {
-                    if (userObject.getName() != null && userObject.getName().contains(userSearch.getName())) {
-                        userObjList.add(userObject);
+            if (!StringUtils.isEmpty(userSearch.getName())) {
+                for (UserObject user : userObjectList) {
+                    if (user.getName() != null && user.getName().contains(userSearch.getName())) {
+                        userObjList.add(user);
                     }
                 }
                 if (userObjList == null) {
@@ -288,6 +265,5 @@ public class AdminUserServiceImpl {
             }
         }
     }
-
 
 }
