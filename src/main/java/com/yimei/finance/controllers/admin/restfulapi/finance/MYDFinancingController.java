@@ -110,7 +110,7 @@ public class MYDFinancingController {
         return investigatorAddMaterialAndAuditMethod(taskId, null, investigatorInfoObject, false);
     }
 
-    @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, params = {"type==1"})
+    @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
     @ApiOperation(value = "尽调员审核-提交", notes = "尽调员审核-提交", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydInvestigatorAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
