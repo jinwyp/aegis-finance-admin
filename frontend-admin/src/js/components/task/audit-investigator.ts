@@ -122,6 +122,16 @@ export class AuditInvestigatorComponent {
 
     }
 
+    finishedUpload (event) {
+        this.currentOrder.attachmentList.push({
+            "url": event.value.url,
+            "name": event.value.name,
+            "type": event.value.type,
+            "processInstanceId": this.currentTask.processInstanceId,
+            "taskId": this.currentTask.id
+        })
+    }
+
 
     reportType=1;
 
