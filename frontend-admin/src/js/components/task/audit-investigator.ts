@@ -126,7 +126,7 @@ export class AuditInvestigatorComponent {
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 }else{
                     this.css.ajaxErrorHidden=false;
-                    this.errorMsg=result.error.message;
+                    this.errorMsg = JSON.parse(result).error.message;
                 }
                 this.css.isSubmitted = false;
             });

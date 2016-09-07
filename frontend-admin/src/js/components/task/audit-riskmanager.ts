@@ -111,7 +111,7 @@ export class AuditRiskManagerComponent {
             u : this.currentOrder
         };
 
-        if (this.currentTask.taskDefinitionKey === TaskStatus.investigatorAudit) auditType = 'riskmanager'; // 风控人员审核
+        if (this.currentTask.taskDefinitionKey === TaskStatus.riskManagerAudit) auditType = 'riskmanager'; // 风控人员审核
 
         if (this.currentTask.taskDefinitionKey && auditType) {
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
@@ -123,7 +123,7 @@ export class AuditRiskManagerComponent {
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 }else{
                     this.css.ajaxErrorHidden=false;
-                    this.errorMsg=result.error.message;
+                    this.errorMsg = JSON.parse(result).error.message;
                 }
                 this.css.isSubmitted = false;
             });
