@@ -49,24 +49,24 @@
             <td class="td-label">融资金额:</td>
             <td class="td-val">
                 <input type="text" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.financingAmount" placeholder="请输入">
-                <span *ngIf="css.isReadOnly===true">{{currentOrder.financingAmount}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.financingAmount}}</span>
             </td>
             <td class="td-label">融资期限:</td>
             <td class="td-val">
                 <input type="text" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.financingPeriod" placeholder="请输入">
-                <span *ngIf="css.isReadOnly===true">{{currentOrder.financingPeriod}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.financingPeriod}}</span>
             </td>
         </tr>
         <tr class="item-min">
             <td class="td-label">利率:</td>
             <td class="td-val">
                 <input type="text" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.interestRate" placeholder="请输入">
-                <span *ngIf="css.isReadOnly===true">{{currentOrder.interestRate}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.interestRate}}</span>
             </td>
             <td class="td-label">业务开展时间:</td>
             <td class="td-val">
                 <input type="text" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.businessStartTime" placeholder="请输入">
-                <span *ngIf="css.isReadOnly===true">{{currentOrder.businessStartTime}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.businessStartTime}}</span>
             </td>
         </tr>
         <!--仓押字段-->
@@ -99,7 +99,7 @@
             <td class="td-label">历史合作情况:</td>
             <td colspan="3" class="td-val">
                 <input type="text" *ngIf="css.isReadOnly===false" class="describe" [(ngModel)]="currentOrder.historicalCooperationDetail">
-                <span *ngIf="css.isReadOnly===true">{{currentOrder.historicalCooperationDetail}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.historicalCooperationDetail}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -109,14 +109,14 @@
             <td class="td-label">业务主要信息:</td>
             <td colspan="3" class="td-val">
                 <input type="text" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.mainBusinessInfo">
-                <span *ngIf="css.isReadOnly===true">{{currentOrder.mainBusinessInfo}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.mainBusinessInfo}}</span>
             </td>
         </tr>
         <tr class="item-min">
             <td class="td-label">业务流转:</td>
             <td colspan="3" class="td-val">
                 <input type="text" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.businessTransferInfo">
-                <span *ngIf="css.isReadOnly===true">{{currentOrder.businessTransferInfo}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.businessTransferInfo}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -125,7 +125,7 @@
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.businessRiskPoint"></textarea>
-                <span *ngIf="css.isReadOnly===true">{{currentOrder.businessRiskPoint}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.businessRiskPoint}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -134,7 +134,7 @@
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.performanceCreditAbilityEval"></textarea>
-                <span *ngIf="css.isReadOnly===true">{{currentOrder.performanceCreditAbilityEval}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.performanceCreditAbilityEval}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -143,7 +143,7 @@
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.finalConclusion"></textarea>
-                <span *ngIf="css.isReadOnly===true">{{currentOrder.finalConclusion}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.finalConclusion}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -153,7 +153,7 @@
             <td class="td-val" colspan="4">
                 <div class="attachment">
                     <img *ngFor="let pic of currentOrder.attachmentList" [src]="pic.url" [alt]="pic.name">
-                    <file-upload (onFinished)="finishedUpload($event)"></file-upload>
+                    <file-upload *ngIf="css.isReadOnly===false" (onFinished)="finishedUpload($event)"></file-upload>
                 </div>
             </td>
         </tr>
@@ -163,7 +163,7 @@
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
                 <textarea class="form-control" rows="3" placeholder="请输入" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
-                <span *ngIf="css.isReadOnly===true">{{currentOrder.supplyMaterialIntroduce}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.supplyMaterialIntroduce}}</span>
             </td>
         </tr>
         <!--<tr class="item-title">-->
