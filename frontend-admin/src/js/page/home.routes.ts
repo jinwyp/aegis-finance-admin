@@ -20,6 +20,7 @@ import { AuditSalesmanComponent } from '../components/task/audit-salesman';
 import { AuditInvestigatorComponent } from '../components/task/audit-investigator';
 import { AuditSupervisorComponent } from '../components/task/audit-supervisor';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
+import {MaterialDetailComponent} from "../components/task/material-detail";
 
 const routes: Routes = [
     {
@@ -118,11 +119,9 @@ const routes: Routes = [
         path: 'tasks/:id/riskmanager',
         component: AuditRiskManagerComponent
     },
-
-
     {
         path: 'tasks/:id/investigator/material',
-        component: AuditInvestigatorComponent
+        component: MaterialDetailComponent
     },
 
     {
@@ -150,7 +149,6 @@ const routes: Routes = [
         component: AuditRiskManagerComponent,
         data: { routeType : 'info' }
     },
-
     {
         path: '**',
         redirectTo: '/tasks/pending'
