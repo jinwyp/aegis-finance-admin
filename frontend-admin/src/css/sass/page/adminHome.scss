@@ -305,8 +305,8 @@
       .nav-tabs>li.active>a.right:hover{  border-left:1px solid $input-border-color;  }
 
       .process-table{
-        min-width:930px;
-        width:95%;
+        min-width:830px;
+        width:100%;
         margin:20px auto 0;
         border-bottom:none;
         tr.head>th{  height:30px; }
@@ -473,19 +473,20 @@
         margin:0 auto;
         font-size:14px;
         tr.item-max td{padding: 14px 20px;}
-        tr.item-min td{padding: 4px 20px;}
+        tr.item-min td{padding: 6px 20px;}
         tr.item-title td{  padding: 11px 20px 11px 0;  }
         td.td-label{ width:190px; background-color: #f7f7f7;  }
         td.td-val{ background-color: #fcfdfd;}
         td.td-textarea>textarea{ box-shadow: none;  border:none;  resize: none;  padding:4px 0; background-color: #fcfdfd; }
-        tr td>input{
+        tr td.td-val>span{  margin-left:10px;  }
+        tr>td>input,tr>td>span.span-read{
           height:36px;
           line-height:36px;
+          margin-left:0px;
           //width:228px;
           width:100%;
           border:none;
         }
-        tr td.td-val>span{  margin-left:10px;  }
         tr.item-max td>label,tr.item-title td>label{
           margin-left:20px;
           input{

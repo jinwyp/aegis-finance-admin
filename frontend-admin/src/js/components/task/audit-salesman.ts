@@ -28,11 +28,10 @@ export class AuditSalesmanComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
-    isApprovedRadio : boolean = false;
+    isApprovedRadio : boolean ;
 
     css = {
         isSubmitted : false,
-        isCommitted : false,
         ajaxSuccessHidden : true,
         ajaxErrorHidden : true,
 
@@ -117,16 +116,17 @@ export class AuditSalesmanComponent {
         if (this.currentTask.taskDefinitionKey && auditType) {
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
-                    if(isAudit){
-                        this.css.isCommitted = true;
+                    if(!isAudit){
+                        this.css.isSubmitted = false;
                     }
                     this.css.ajaxSuccessHidden=false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 }else{
+                    this.css.isSubmitted = false;
                     this.css.ajaxErrorHidden=false;
-                    this.errorMsg=result.error.message;
+                    this.errorMsg = result.error.message;
                 }
-                this.css.isSubmitted = false;
+
             });
         }
 

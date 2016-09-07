@@ -158,7 +158,7 @@
             </td>
         </tr>
         <tr class="item-title">
-            <td colspan="4"><span><label (click)="changeNeedSupplyMaterialStatus()"><input type="checkbox" class="mr-10" [checked]="currentOrder.needSupplyMaterial===1">需要补充材料</label></span></td>
+            <td colspan="4"><span>是否需要补充材料说明</span></td>
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
@@ -172,8 +172,11 @@
         <tr class="item-title">
             <td colspan="4">
                 <span>审核意见:</span>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="true">通过</label>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="false">不通过</label>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="1">通过</label>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="0">不通过</label>
+                <!--<label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="2">让业务员补充尽调报告</label>-->
+                <!--<label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="3">让业务员补充监管报告</label>-->
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="4">让业务员补充尽调报告和监管报告</label>
             </td>
         </tr>
     </table>
@@ -184,9 +187,9 @@
             <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
         </div>
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="button" class="btn btn-default btn-lg btn-save" (click)="audit(false)" [disabled]="css.isSubmitted||css.isCommitted">保存</button>
-            <button type="button" class="btn btn-default btn-lg btn-sure ml-20" (click)="audit(true)" [disabled]="css.isSubmitted||css.isCommitted">保存并提交</button>
-            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/pending']">返回</button>
+            <button type="button" class="btn btn-default btn-save" (click)="audit(false)" [disabled]="css.isSubmitted || currentTask.endTime">保存</button>
+            <button type="button" class="btn btn-default btn-sure ml-20" (click)="audit(true)" [disabled]="css.isSubmitted || currentTask.endTime">保存并提交</button>
+            <button type="button" class="btn btn-default btn-return ml-20" [routerLink]="['tasks/pending']">返回</button>
         </div>
     </div>
     <div class="row info-item" *ngIf="css.isReadOnly===true">

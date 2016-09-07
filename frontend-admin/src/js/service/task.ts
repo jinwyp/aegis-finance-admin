@@ -146,6 +146,7 @@ class Task {
     processInstanceId : string;
     taskDefinitionKey : string;
     startTime : string;
+    endTime : string;
 
     assignee : string;
     assigneeDepartment : string;
