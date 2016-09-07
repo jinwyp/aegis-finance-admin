@@ -326,6 +326,7 @@ class TaskService {
 
             return this.http.get(API.orders + '/' + orderId + '/tasks').toPromise().then( response2 => {
                 var result2 = response2.json() as HttpResponse;
+                if (!result.data) {result.data = {taskList:[]}}
                 result.data.taskList = result2.data;
                 return result;
             }).catch(GlobalPromiseHttpCatch);
