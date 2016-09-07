@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.admin.finance;
+package com.yimei.finance.representation.admin.finance.enums;
 
 /**
  * admin模块,金融单错误信息

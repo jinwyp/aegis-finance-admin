@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.admin.finance;
+package com.yimei.finance.representation.admin.finance.object;
 
 import lombok.*;
 import org.hibernate.validator.constraints.NotBlank;

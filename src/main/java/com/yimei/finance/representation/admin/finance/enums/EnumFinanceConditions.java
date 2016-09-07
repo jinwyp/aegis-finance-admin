@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.admin.finance;
+package com.yimei.finance.representation.admin.finance.enums;
 
 /**
  * Created by liuxinjie on 16/8/22.

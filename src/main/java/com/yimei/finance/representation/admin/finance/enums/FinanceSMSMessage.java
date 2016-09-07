@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.admin.finance;
+package com.yimei.finance.representation.admin.finance.enums;
 
 public class FinanceSMSMessage {
 

@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.admin.finance;
+package com.yimei.finance.representation.admin.finance.enums;
 
 public enum EnumFinanceEventType {
     onlineTraderAudit("线上交易员审核并填写材料"),

@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.admin.finance;
+package com.yimei.finance.representation.admin.finance.enums;
 
 import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
 
