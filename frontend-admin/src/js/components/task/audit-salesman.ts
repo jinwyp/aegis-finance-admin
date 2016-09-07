@@ -73,12 +73,12 @@ export class AuditSalesmanComponent {
     getTaskInfo (id) {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
+                console.log(result.data);
                 this.currentTask = result.data;
-
                 this.task.getOrderInfoById(this.currentTask.financeId, 'salesman').then((result)=>{
                     if (result.success && result.data){
+                        console.log(result.data);
                         this.currentOrder = result.data;
-                        console.log(this.currentOrder);
                     }else{
 
                     }
@@ -114,8 +114,6 @@ export class AuditSalesmanComponent {
         if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanAudit) auditType = 'salesman'; // 业务员审核并填写材料
 
         if (this.currentTask.taskDefinitionKey && auditType) {
-            console.log(this.currentTask);
-            console.log(this.currentOrder);
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
                     if(isAudit){
@@ -132,13 +130,14 @@ export class AuditSalesmanComponent {
         }
 
     }
-    changeNoticeApplyUserStatus(){
-        if(this.currentOrder.noticeApplyUser===0){
-            this.currentOrder.noticeApplyUser=1;
-        }else{
-            this.currentOrder.noticeApplyUser=0;
-        }
-    }
+    // changeNoticeApplyUserStatus(){
+    //     if(this.currentOrder.noticeApplyUser===0){
+    //         this.currentOrder.noticeApplyUser=1;
+    //     }else{
+    //         this.currentOrder.noticeApplyUser=0;
+    //     }
+    // }
+
     changeNeedSupplyMaterialStatus(){
         if(this.currentOrder.needSupplyMaterial===0){
             this.currentOrder.needSupplyMaterial=1;
