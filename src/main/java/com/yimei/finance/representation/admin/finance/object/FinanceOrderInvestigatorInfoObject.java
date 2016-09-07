@@ -6,7 +6,12 @@ import com.yimei.finance.representation.admin.finance.object.validated.SubmitFin
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.NotBlank;
+import org.hibernate.validator.constraints.Range;
 
+import javax.validation.constraints.DecimalMax;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
@@ -34,8 +39,19 @@ public class FinanceOrderInvestigatorInfoObject extends BaseEntity implements Se
 
     @Size(max = 100, message = "数量检验单位不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     private String quantityInspectionUnit;                           //数量检验单位
+
+    @Digits(integer = 6, fraction = 2, message = "融资金额最大支持 {integer}位整数, {fraction}位小数", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
+    @DecimalMin(value = "1", inclusive = true, message = "融资金额不能低于 {value} 万元", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
+    @DecimalMax(value = "100000", inclusive = true, message = "融资金额不能超过 {value} 万元", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
+    @NotBlank(message = "融资金额不能为空", groups = {SubmitFinanceInvestigatorInfo.class})
     private BigDecimal financingAmount;                              //融资金额
+
+    @Range(min = 1, max = 3650, message = "融资期限应在 {min}-{max} 天之间", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     private int financingPeriod;                                     //融资期限
+
+    @Digits(integer = 2, fraction = 4, message = "利率最大支持 {integer}位整数, {fraction}位小数", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
+    @DecimalMin(value = "0.0001", inclusive = true, message = "利率不能低于 {value} 万元", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
+    @DecimalMax(value = "100", inclusive = false, message = "利率不能超过 {value} 万元", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     private BigDecimal interestRate;                                 //利率
     private Date businessStartTime;                                  //业务开始时间
 
