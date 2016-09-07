@@ -24,6 +24,7 @@ export class AuditTraderComponent {
     private sub: Subscription;
 
     css = {
+        isReadOnly : false,
         isSubmitted : false,
         ajaxErrorHidden : true,
         ajaxSuccessHidden : true
@@ -37,6 +38,10 @@ export class AuditTraderComponent {
     currentOrder : Task = new Task();
     isApprovedRadio : boolean ;
 
+    routeData :any = {
+        routeType : ''
+    };
+
     constructor(
         private activatedRoute: ActivatedRoute,
         private task: TaskService,
@@ -45,6 +50,10 @@ export class AuditTraderComponent {
 
 
     ngOnInit(){
+        this.activatedRoute.data.subscribe( data => {
+            this.routeData = data;
+            this.css.isReadOnly = this.routeData.routeType==='info';
+        });
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.taskId = params['id'];
             this.getTaskInfo(params['id']);

@@ -478,11 +478,10 @@
         td.td-label{ width:190px; background-color: #f7f7f7;  }
         td.td-val{ background-color: #fcfdfd;}
         td.td-textarea>textarea{ box-shadow: none;  border:none;  resize: none;  padding:4px 0; background-color: #fcfdfd; }
-        tr td.td-val>span{  margin-left:10px;  }
+        //tr td.td-val>span{  margin-left:10px;  }
         tr>td>input,tr>td>span.span-read{
           height:36px;
           line-height:36px;
-          margin-left:0px;
           //width:228px;
           width:100%;
           border:none;

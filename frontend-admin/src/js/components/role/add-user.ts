@@ -102,6 +102,8 @@ export class AddUserComponent {
 
     addUser(form) {
         this.css.isSubmitted     = true;
+        this.css.ajaxErrorHidden     = true;
+        this.css.ajaxSuccessHidden     = true;
         this.currentUser.department = this.selectedItem;
 
         if (this.css.isAddStatus) {

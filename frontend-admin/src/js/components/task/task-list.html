@@ -13,7 +13,7 @@
             <th width="80">申请时间</th>
             <th >申请公司名称</th>
             <th width="100">拟融资总额状态<br/>(万元)</th>
-            <th width="100">当前处理人 / 所属部门</th>
+            <th width="100">当前处理人/所属部门</th>
             <th ><span *ngIf="routeData.routeType === 'all'"> 参与的流程状态 / </span><span> 当前流程状态 </span></th>
             <th width="120">操作</th>
         </tr>
@@ -42,7 +42,6 @@
                     <!--<span *ngIf="task.name==='分配尽调员'" > 分配尽调员</span>-->
                     <!--<span *ngIf="task.name==='分配风控人员'" > 分配风控人员</span>-->
                 </button>
-                <!--<button type="button" class="btn btn-xs btn-default btn-return w-80">补充材料</button>-->
             </td>
         </tr>
 
@@ -53,7 +52,7 @@
                 <span *ngIf="task.applyType==='MYG'">煤易购</span>
                 <span *ngIf="task.applyType==='MYD'">煤易贷</span>
             </td>
-            <td>{{task.createTime | date:"yyyy/MM/dd"}}</td>
+            <td>{{task.createTime | date:"yyyy-MM-dd"}}</td>
             <td>{{task.applyCompanyName}}</td>
             <td>{{task.financingAmount||'--'}}</td>
             <td>{{task.assigneeName ||'--'}} <br/>{{task.assigneeDepartment||'--'}}</td>
@@ -93,7 +92,13 @@
                 <!--<span>已完成</span>-->
             </td>
             <td>
-                <button type="button" class="btn btn-xs btn-default btn-sure w-80" [routerLink]="['/tasks', task.id, 'investigator','info']" > 查看详情 </button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.onlineTraderAudit" [routerLink]="['/tasks', task.id, 'trader', 'info']">查看详情</button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.salesmanAudit" [routerLink]="['/tasks', task.id, 'salesman', 'info']">查看详情</button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.investigatorAudit" [routerLink]="['/tasks', task.id, 'investigator', 'info']">查看详情</button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.supervisorAudit" [routerLink]="['/tasks', task.id, 'supervisor', 'info']">查看详情</button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.riskManagerAudit" [routerLink]="['/tasks', task.id, 'riskmanager', 'info']">查看详情</button>
+                <!--<button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.riskManagerAuditSuccess" [routerLink]="['/tasks', task.id, 'investigator', 'info']">查看详情</button>-->
+                <!--<button type="button" class="btn btn-xs btn-default btn-sure w-80" [routerLink]="['/tasks', task.id, 'investigator','info']" > 查看详情 </button>-->
             </td>
         </tr>
     </table>
