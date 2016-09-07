@@ -35,7 +35,8 @@
             <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
         </div>
         <div class="col-sm-offset-2 col-sm-8 info-val no-bottom-border">
-            <button type="button" class="btn btn-default btn-lg btn-sure" (click)="assignPerson()" [disabled]="css.isSubmitted">分配</button>
+            <button type="button" class="btn btn-default btn-lg btn-sure" (click)="save(false)" [disabled]="css.isSubmitted">保存</button>
+            <button type="button" class="btn btn-default btn-lg btn-sure" (click)="save(true)" [disabled]="css.isSubmitted">保存提交</button>
             <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/pending']">返回</button>
         </div>
     </div>
