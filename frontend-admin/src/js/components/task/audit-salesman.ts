@@ -34,6 +34,7 @@ export class AuditSalesmanComponent {
         isSubmitted : false,
         ajaxSuccessHidden : true,
         ajaxErrorHidden : true,
+
     };
     errorMsg : string ='';
 
