@@ -132,6 +132,7 @@ export class AuditTraderComponent {
                     this.css.ajaxSuccessHidden = false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                 }else{
+                    this.css.isSubmitted = false;
                     this.css.ajaxErrorHidden = false;
                     this.errorMsg = result.error.message;
                 }

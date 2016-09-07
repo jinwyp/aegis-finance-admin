@@ -15,11 +15,11 @@ import { User, UserService } from '../../service/user';
 declare var __moduleName: string;
 
 @Component({
-    selector: 'supervise-report',
+    selector: 'audit-supervisor',
     moduleId: __moduleName || module.id,
-    templateUrl: 'supervise-report.html'
+    templateUrl: 'audit-supervisor.html'
 })
-export class SuperviseReportComponent {
+export class AuditSupervisorComponent {
 
     private sub: Subscription;
 

@@ -79,9 +79,6 @@ public class UserCenterController {
         return Result.success().setData(orderRepository.findBySourceId(financeOrder.getSourceId()));
     }
 
-    /**
-     * 供应链金融 - 用户中心 - 获取融资申请列表
-     */
     @ApiOperation(value = "融资申请列表", notes = "用户查询融资申请列表", response = FinanceOrder.class, responseContainer = "List")
     @LoginRequired
     @ApiImplicitParams({

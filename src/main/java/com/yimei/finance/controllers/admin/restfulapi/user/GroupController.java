@@ -1,10 +1,10 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.representation.admin.user.GroupObject;
-import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.admin.user.EnumAdminGroupError;
 import com.yimei.finance.representation.admin.user.EnumAdminUserError;
+import com.yimei.finance.representation.admin.user.GroupObject;
+import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
@@ -72,19 +72,18 @@ public class GroupController {
 
     @ApiOperation(value = "创建用户组", notes = "根据Group对象创建用户组", response = GroupObject.class)
     @RequestMapping(method = RequestMethod.POST)
-    public Result addGroupMethod(@ApiParam(name = "group", value = "用户组对象", required = true) @Validated @RequestBody GroupObject group) {
+    public Result addGroupMethod(@ApiParam(name = "group", value = "用户组对象", required = true) @Validated @RequestBody GroupObject groupObject) {
         Result result = userService.checkSuperAdminRight(adminSession.getUser().getId());
         if (!result.isSuccess()) return result;
-        if (StringUtils.isEmpty(group.getName())) return Result.error(EnumAdminGroupError.组名称不能为空.toString());
-        if (identityService.createGroupQuery().groupName(group.getName()).singleResult() != null)
+        if (StringUtils.isEmpty(groupObject.getName())) return Result.error(EnumAdminGroupError.组名称不能为空.toString());
+        if (identityService.createGroupQuery().groupName(groupObject.getName()).singleResult() != null)
             return Result.error(EnumAdminGroupError.已经存在名称相同的组.toString());
-        Group g = identityService.newGroup("");
-        g.setId(null);
-        g.setName(group.getName());
-        g.setType(group.getType());
-        identityService.saveGroup(g);
-        GroupObject groupObject = groupService.changeGroupObject(identityService.createGroupQuery().groupId(g.getId()).singleResult());
-        return Result.success().setData(groupObject);
+        Group group = identityService.newGroup("");
+        group.setId(null);
+        group.setName(groupObject.getName());
+        group.setType(groupObject.getType());
+        identityService.saveGroup(group);
+        return Result.success().setData(groupService.changeGroupObject(identityService.createGroupQuery().groupId(group.getId()).singleResult()));
     }
 
     @ApiOperation(value = "将一个用户添加到指定的组", notes = "将一个用户添加到指定的组", response = UserObject.class)
@@ -162,8 +161,6 @@ public class GroupController {
         identityService.deleteGroup(id);
         return Result.success().setData(groupObject);
     }
-
-
 
 
 }

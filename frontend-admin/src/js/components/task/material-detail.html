@@ -1,0 +1,38 @@
+<div class="item-margin breadcrumb-box">
+    <ol class="breadcrumb">
+        <li>审核管理</li>
+        <li>&gt;</li>
+        <li>我的待办</li>
+        <li>&gt;</li>
+        <li class="active">待办详情</li>
+    </ol>
+</div>
+
+<process-tab [processInstanceId]="currentTask.processInstanceId" [processList]="currentOrder.taskList"></process-tab>
+
+
+<div class="item-margin distribution-box">
+
+    <div class="table-title">审批信息</div>
+
+    <div class="row info-item mt-50">
+        <span class="col-sm-2 info-label">审核状态:</span>
+        <div class="col-sm-10 info-val">
+            <span>待审核补充材料</span>
+        </div>
+    </div>
+
+    <div class="row info-item">
+        <span class="col-sm-2 info-label">补充材料说明:</span>
+        <div class="col-sm-10 info-val">
+            <span>待审核补充材料</span>
+        </div>
+    </div>
+
+    <div class="row info-item">
+        <div class="col-sm-offset-2 col-sm-8 info-val no-bottom-border">
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/all']">返回</button>
+        </div>
+    </div>
+
+</div>

@@ -14,7 +14,7 @@
             <th >申请公司名称</th>
             <th width="100">拟融资总额状态<br/>(万元)</th>
             <th width="100">当前处理人 / 所属部门</th>
-            <th >流程状态</th>
+            <th ><span *ngIf="routeData.routeType === 'all'"> 参与的流程状态 / </span><span> 当前流程状态 </span></th>
             <th width="120">操作</th>
         </tr>
 
@@ -66,6 +66,7 @@
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.onlineTraderAudit" [routerLink]="['/tasks', task.id, 'trader']" > 审核并填写材料 </button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.salesmanAudit" [routerLink]="['/tasks', task.id, 'salesman']" > 审核并填写材料 </button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.investigatorAudit" [routerLink]="['/tasks', task.id, 'investigator']" > 审核 </button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.salesmanSupplyInvestigationMaterial" [routerLink]="['/tasks', task.id, 'investigator', 'material']" > 填写材料 </button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.supervisorAudit" [routerLink]="['/tasks', task.id, 'supervisor']" > 审核 </button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.riskManagerAudit" [routerLink]="['/tasks', task.id, 'riskmanager']" > 审核 </button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.riskManagerAuditSuccess" [routerLink]="['/tasks', task.id, 'riskmanager']" > 填写合同 </button>
@@ -87,7 +88,7 @@
             <td>{{task.financingAmount||'--'}}</td>
             <td>{{task.currentAssigneeName ||'--'}} <br/>{{task.currentAssigneeDepartment||'--'}}</td>
             <td>
-                <span class="green">{{task.currentName}}</span> <br/>
+                <span class="green">{{task.name}} / {{task.currentName}}</span> <br/>
                 <!--<span class="orange">(补充材料)</span><br/>-->
                 <!--<span>已完成</span>-->
             </td>

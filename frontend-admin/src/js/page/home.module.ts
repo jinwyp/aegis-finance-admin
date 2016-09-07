@@ -44,11 +44,12 @@ import { ProcessTabComponent } from '../components/task/process-tab';
 import { AuditTraderComponent } from '../components/task/audit-trader';
 import { AuditSalesmanComponent } from '../components/task/audit-salesman';
 import { AuditInvestigatorComponent } from '../components/task/audit-investigator';
-import { SuperviseReportComponent } from '../components/task/supervise-report';
+import { AuditSupervisorComponent } from '../components/task/audit-supervisor';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
 import { CustomSelectComponent } from '../components/aegis-ui/custom-select';
 import { CustomModalComponent } from '../components/aegis-ui/custom-modal';
 import { CustomCheckboxComponent } from '../components/aegis-ui/custom-checkbox';
+import {MaterialDetailComponent} from "../components/task/material-detail";
 
 
 
@@ -61,8 +62,8 @@ import { CustomCheckboxComponent } from '../components/aegis-ui/custom-checkbox'
         RoleListComponent, AddRoleComponent, RoleInfoComponent,
         UserListComponent, AddUserComponent, UserInfoComponent,
         TaskListComponent, AssignPersonComponent, ProcessTabComponent,
-        AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, SuperviseReportComponent, AuditRiskManagerComponent,
-        CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent
+        AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, AuditSupervisorComponent, AuditRiskManagerComponent,
+        CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent, MaterialDetailComponent
     ],
     providers: [ FileUploadService, homePageRouterProviders, TaskService, UserService, UserGroupService ],
     bootstrap: [ HomeComponent ]
