@@ -386,6 +386,30 @@ class TaskService {
             .catch(GlobalPromiseHttpCatch);
     }
 
+
+
+    addMaterial (taskId : string, taskType : string, taskStep : string, body : any){
+
+        let auditType = {
+            MYR : API.tasksMYR,
+            MYD : API.tasksMYD,
+            MYG : API.tasksMYG
+        };
+
+        let auditStep = {
+            salesman1 : '/salesman/supply/investigation/material/',
+            salesman2 : '/salesman/supply/supervision/material/',
+            investigator : '/investigator/supply/riskmanager/material/',
+            supervisor : '/supervisor/supply/riskmanager/material/'
+        };
+
+        let url = auditType[taskType] + auditStep[taskStep] + taskId;
+
+        return this.http.post(url, JSON.stringify(body)).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(GlobalPromiseHttpCatch);
+    }
+
 }
 
 

@@ -21,6 +21,12 @@ export class MaterialDetailComponent {
 
     private sub: Subscription;
 
+    css = {
+        isSubmitted : false,
+        ajaxErrorHidden : true,
+        ajaxSuccessHidden : true
+    };
+
     taskId : string = '';
 
     currentTask : Task = new Task();
@@ -58,6 +64,26 @@ export class MaterialDetailComponent {
         });
     }
 
+
+
+    save ( isAudit : boolean) {
+        this.task.addMaterial(this.taskId, this.currentTask.applyType, 'salesman1', this.currentOrder).then((result)=>{
+            if (result.success){
+                // if(!isAudit){
+                //     this.css.isSubmitted = false;
+                // }
+                // this.css.ajaxSuccessHidden = false;
+                setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
+            }else{
+
+                // this.css.isSubmitted = false;
+                // this.css.ajaxErrorHidden=false;
+                // this.errorMsg = result.error.message;
+            }
+
+        });
+
+    }
 
 }
 
