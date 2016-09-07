@@ -1,8 +1,8 @@
 package com.yimei.finance.representation.admin.finance.enums;
 
-/**
- * Created by liuxinjie on 16/8/22.
- */
+import io.swagger.annotations.ApiModel;
+
+@ApiModel(description = "金融单状态")
 public enum EnumFinanceStatus {
 
     WaitForAudit(2, "待审核"),

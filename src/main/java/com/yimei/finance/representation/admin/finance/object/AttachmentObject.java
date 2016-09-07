@@ -1,5 +1,6 @@
 package com.yimei.finance.representation.admin.finance.object;
 
+import io.swagger.annotations.ApiModel;
 import lombok.*;
 import org.hibernate.validator.constraints.NotBlank;
 
@@ -7,6 +8,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.Date;
 
+@ApiModel(description = "附件对象")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
