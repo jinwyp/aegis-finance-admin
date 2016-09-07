@@ -107,12 +107,15 @@ export class AddUserComponent {
         if (this.css.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
                 this.css.isSubmitted = false;
+                console.log(result.error.message);
                 if (result.success) {
+                    console.log(result.error.message);
                     this.css.ajaxSuccessHidden=false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                     this.clear();
                 } else {
-                    this.errorMsg=result.error.message;
+                    this.css.ajaxErrorHidden = false;
+                    this.errorMsg = result.error.message;
                 }
             });
         } else {
@@ -122,7 +125,8 @@ export class AddUserComponent {
                     this.css.ajaxSuccessHidden=false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 } else {
-                    this.errorMsg=result.error.message;
+                    this.css.ajaxErrorHidden = false;
+                    this.errorMsg = result.error.message;
                 }
             });
         }
@@ -142,11 +146,11 @@ export class AddUserComponent {
         if (this.userId){
             this.userService.resetPassword(this.userId).then((result)=> {
                 if (result.success) {
-                    this.modalShowText='重置密码成功!';
+                    this.modalShowText = '重置密码成功!';
                 } else {
-                    this.modalShowText=result.error.message;
+                    this.modalShowText = result.error.message;
                 }
-                this.css.isHiddenMsgModal=false;
+                this.css.isHiddenMsgModal = false;
             });
         }
     }
