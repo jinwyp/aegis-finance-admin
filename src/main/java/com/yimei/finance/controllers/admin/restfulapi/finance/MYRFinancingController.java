@@ -1,11 +1,10 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
-import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
-import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.object.*;
 import com.yimei.finance.representation.admin.finance.object.validated.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
@@ -43,7 +42,7 @@ public class MYRFinancingController {
     @Autowired
     private FinanceOrderRepository orderRepository;
 
-    @RequestMapping( value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
+    @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "线上交易员填写材料-保存", notes = "线上交易员填写材料-保存", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrOnlineTraderAddMaterialMethod(@PathVariable("taskId") String taskId,
@@ -51,7 +50,7 @@ public class MYRFinancingController {
         return onlineTraderAddMaterialMethod(taskId, null, financeOrder, false);
     }
 
-    @RequestMapping( value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
+    @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
     @ApiOperation(value = "线上交易员填写材料-提交", notes = "线上交易员填写材料-提交", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result myrOnlineTraderAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
@@ -162,14 +161,15 @@ public class MYRFinancingController {
         Task task = taskService.createTaskQuery().taskId(taskId).active().taskAssignee(adminSession.getUser().getId()).singleResult();
         if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
         ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-        if (processInstance == null || StringUtils.isEmpty(processInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
+        if (processInstance == null || StringUtils.isEmpty(processInstance.getBusinessKey()))
+            return Result.error(EnumCommonError.Admin_System_Error);
         FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
-        if (!financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) return Result.error(EnumAdminFinanceError.此订单不是煤易融业务.toString());
+        if (!financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString()))
+            return Result.error(EnumAdminFinanceError.此订单不是煤易融业务.toString());
         CombineObject<Task, Long> map = new CombineObject<>(task, Long.valueOf(processInstance.getBusinessKey()));
         return Result.success().setData(map);
     }
-
 
 
 }
