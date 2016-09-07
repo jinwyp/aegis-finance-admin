@@ -1,9 +1,11 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.finance.*;
+import com.yimei.finance.representation.admin.finance.AttachmentObject;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.*;
+import com.yimei.finance.representation.admin.finance.validated.EditFinanceOrder;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.CombineObject;
 import com.yimei.finance.representation.common.result.Result;
@@ -52,7 +54,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "线上交易员填写材料-提交", notes = "线上交易员填写材料-提交", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydOnlineTraderAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
-                                                           @ApiParam(name = "map", value = "参数body对象", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderObject> map) {
+                                                           @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(EditFinanceOrder.class) @RequestBody CombineObject<TaskMap, FinanceOrderObject> map) {
         return onlineTraderAddMaterialMethod(taskId, map.t, map.u, true);
     }
 
@@ -208,7 +210,7 @@ public class MYDFinancingController {
         if (processInstance == null || StringUtils.isEmpty(processInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
         FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
-        if (!financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) return Result.error(EnumAdminFinanceError.此订单不是煤易融业务.toString());
+        if (!financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) return Result.error(EnumAdminFinanceError.此订单不是煤易贷业务.toString());
         CombineObject<Task, Long> map = new CombineObject<>(task, Long.valueOf(processInstance.getBusinessKey()));
         return Result.success().setData(map);
     }

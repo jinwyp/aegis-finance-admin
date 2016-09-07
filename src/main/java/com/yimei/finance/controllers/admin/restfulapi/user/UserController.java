@@ -1,10 +1,10 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.user.GroupObject;
-import com.yimei.finance.entity.admin.user.UserObject;
-import com.yimei.finance.entity.admin.user.validated.CreateUser;
-import com.yimei.finance.entity.admin.user.validated.EditUser;
+import com.yimei.finance.representation.admin.user.GroupObject;
+import com.yimei.finance.representation.admin.user.UserObject;
+import com.yimei.finance.representation.admin.user.validated.CreateUser;
+import com.yimei.finance.representation.admin.user.validated.EditUser;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.databook.DataBookRepository;
 import com.yimei.finance.representation.admin.user.AdminUserSearch;

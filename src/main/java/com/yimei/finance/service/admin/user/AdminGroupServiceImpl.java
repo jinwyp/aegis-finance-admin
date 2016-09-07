@@ -1,6 +1,6 @@
 package com.yimei.finance.service.admin.user;
 
-import com.yimei.finance.entity.admin.user.GroupObject;
+import com.yimei.finance.representation.admin.user.GroupObject;
 import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;

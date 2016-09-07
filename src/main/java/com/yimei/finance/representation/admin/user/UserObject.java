@@ -1,7 +1,7 @@
-package com.yimei.finance.entity.admin.user;
+package com.yimei.finance.representation.admin.user;
 
-import com.yimei.finance.entity.admin.user.validated.CreateUser;
-import com.yimei.finance.entity.admin.user.validated.EditUser;
+import com.yimei.finance.representation.admin.user.validated.CreateUser;
+import com.yimei.finance.representation.admin.user.validated.EditUser;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -30,10 +30,11 @@ public class UserObject implements Serializable {
     @Size(min = 11, max = 11, message = "请输入正确的手机号", groups = {CreateUser.class, EditUser.class})
     @Pattern(regexp = "^[1][3,4,5,7,8][0-9]{9}$", message = "请输入正确的手机号", groups = {CreateUser.class, EditUser.class})
     private String phone;                       //手机号
+    @Size(max = 50, message = "邮箱不能超过 {max} 个字符", groups = {CreateUser.class, EditUser.class})
     @NotBlank(message = "邮箱不能为空", groups = {CreateUser.class, EditUser.class})
     @Email(message = "请输入正确的邮箱", groups = {CreateUser.class, EditUser.class})
     private String email;                       //邮箱
-    @Size(min = 1, max = 30, message = "部门名称应在1-30个字符之间", groups = {CreateUser.class, EditUser.class})
+    @Size(max = 30, message = "部门名称应在 {min}-{max} 个字符之间", groups = {CreateUser.class, EditUser.class})
     private String department;                  //部门
     private Date lastLoginTime;                 //最后一次登录时间
     private boolean operateAuthority;           //是否具有操作/更改此用户的权限, true: 有权限, false: 无

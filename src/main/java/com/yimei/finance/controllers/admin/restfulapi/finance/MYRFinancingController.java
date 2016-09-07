@@ -1,7 +1,7 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.finance.AttachmentObject;
+import com.yimei.finance.representation.admin.finance.AttachmentObject;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.*;
@@ -208,7 +208,7 @@ public class MYRFinancingController {
         FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         if (!financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) return Result.error(EnumAdminFinanceError.此订单不是煤易融业务.toString());
-        CombineObject<Task, String> map = new CombineObject<>(task, processInstance.getBusinessKey());
+        CombineObject<Task, Long> map = new CombineObject<>(task, Long.valueOf(processInstance.getBusinessKey()));
         return Result.success().setData(map);
     }
 

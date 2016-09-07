@@ -1,8 +1,8 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.user.GroupObject;
-import com.yimei.finance.entity.admin.user.UserObject;
+import com.yimei.finance.representation.admin.user.GroupObject;
+import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.admin.user.EnumAdminGroupError;
 import com.yimei.finance.representation.admin.user.EnumAdminUserError;
 import com.yimei.finance.representation.common.result.Page;

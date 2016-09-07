@@ -1,10 +1,10 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.AttachmentObject;
+import com.yimei.finance.representation.admin.finance.AttachmentObject;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.entity.admin.finance.HistoryTaskObject;
-import com.yimei.finance.entity.admin.finance.TaskObject;
-import com.yimei.finance.entity.admin.user.UserObject;
+import com.yimei.finance.representation.admin.finance.HistoryTaskObject;
+import com.yimei.finance.representation.admin.finance.TaskObject;
+import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.EnumFinanceStatus;

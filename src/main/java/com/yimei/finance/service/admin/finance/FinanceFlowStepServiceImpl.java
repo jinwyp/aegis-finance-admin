@@ -1,6 +1,6 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.AttachmentObject;
+import com.yimei.finance.representation.admin.finance.AttachmentObject;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.*;
