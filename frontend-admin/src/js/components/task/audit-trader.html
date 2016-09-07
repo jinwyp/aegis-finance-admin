@@ -35,6 +35,7 @@
 
         <tr class="item-min">
             <td class="td-label">拟融资金额(万元):</td>
+            <td class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.financingAmount">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.financingAmount}}</span>
             </td>
@@ -49,19 +50,20 @@
             <td class="td-label">预期此笔业务量(万吨):</td>
             <td class="td-val">
                 <input *ngIf="!css.isReadOnly" type="text" [(ngModel)]="currentOrder.businessAmount">
-                <span *ngIf="css.isReadOnly">{{currentOrder.businessAmount}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.businessAmount}}</span>
             </td>
             <td colspan="2" *ngIf="currentOrder.applyType==='MYD'"></td>
 
             <td class="td-label" *ngIf="currentOrder.applyType==='MYR'||currentOrder.applyType==='MYG'">运输方式:</td>
             <td class="td-val" *ngIf="currentOrder.applyType==='MYR'||currentOrder.applyType==='MYG'">
-                <select [(ngModel)]="currentOrder.transportMode">
+                <select *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.transportMode">
                     <option value="null">请选择</option>
                     <option value="汽运">汽运</option>
                     <option value="海运">海运</option>
                     <option value="火运">火运</option>
                     <option value="其它">其它</option>
                 </select>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.transportMode}}</span>
             </td>
         </tr>
 
@@ -185,7 +187,7 @@
     </div>
     <div class="row info-item" *ngIf="css.isReadOnly">
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/all']">返回</button>
+            <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['tasks/all']">返回</button>
         </div>
     </div>
 </div>
