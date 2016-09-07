@@ -142,7 +142,7 @@ const routes: Routes = [
     },
     {
         path: 'tasks/:id/supervisor/info',
-        component: SuperviseReportComponent,
+        component: AuditSupervisorComponent,
         data: { routeType : 'info' }
     },
     {
