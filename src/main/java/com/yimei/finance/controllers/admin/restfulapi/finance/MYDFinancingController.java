@@ -7,8 +7,7 @@ import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.object.*;
-import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceOrder;
-import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceOrder;
+import com.yimei.finance.representation.admin.finance.object.validated.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.CombineObject;
 import com.yimei.finance.representation.common.result.Result;
@@ -49,7 +48,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "线上交易员填写材料-保存", notes = "线上交易员填写材料-保存", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydOnlineTraderAddMaterialMethod(@PathVariable("taskId") String taskId,
-                                                   @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(SaveFinanceOrder.class) @RequestBody FinanceOrderObject financeOrder) {
+                                                   @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SaveFinanceOrder.class}) @RequestBody FinanceOrderObject financeOrder) {
         return onlineTraderAddMaterialMethod(taskId, null, financeOrder, false);
     }
 
@@ -57,7 +56,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "线上交易员填写材料-提交", notes = "线上交易员填写材料-提交", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydOnlineTraderAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
-                                                           @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(SubmitFinanceOrder.class) @RequestBody CombineObject<TaskMap, FinanceOrderObject> map) {
+                                                           @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SubmitFinanceOrder.class}) @RequestBody CombineObject<TaskMap, FinanceOrderObject> map) {
         return onlineTraderAddMaterialMethod(taskId, map.t, map.u, true);
     }
 
@@ -73,7 +72,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "业务员审核-保存", notes = "业务员审核-保存", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydSalesmanAddMaterialMethod(@PathVariable("taskId") String taskId,
-                                               @ApiParam(name = "map", value = "参数body对象", required = true) @RequestBody FinanceOrderSalesmanInfoObject salesmanInfoObject) {
+                                               @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SaveFinanceSalesmanInfo.class}) @RequestBody FinanceOrderSalesmanInfoObject salesmanInfoObject) {
         return salesmanAddMaterialAndAuditMethod(taskId, null, salesmanInfoObject, false);
     }
 
@@ -81,7 +80,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "业务员审核-提交", notes = "业务员审核-提交", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydSalesmanAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
-                                                       @ApiParam(name = "map", value = "参数body对象", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderSalesmanInfoObject> map) {
+                                                       @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SubmitFinanceSalesmanInfo.class}) @RequestBody CombineObject<TaskMap, FinanceOrderSalesmanInfoObject> map) {
         return salesmanAddMaterialAndAuditMethod(taskId, map.t, map.u, true);
     }
 
@@ -107,7 +106,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "尽调员审核-保存", notes = "尽调员审核-保存", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydInvestigatorAddMaterialMethod(@PathVariable("taskId") String taskId,
-                                                   @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody FinanceOrderInvestigatorInfoObject investigatorInfoObject) {
+                                                   @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SaveFinanceInvestigatorInfo.class}) @RequestBody FinanceOrderInvestigatorInfoObject investigatorInfoObject) {
         return investigatorAddMaterialAndAuditMethod(taskId, null, investigatorInfoObject, false);
     }
 
@@ -115,7 +114,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "尽调员审核-提交", notes = "尽调员审核-提交", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydInvestigatorAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
-                                                           @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfoObject> map) {
+                                                           @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SubmitFinanceInvestigatorInfo.class}) @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfoObject> map) {
         return investigatorAddMaterialAndAuditMethod(taskId, map.t, map.u, true);
     }
 
@@ -141,7 +140,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "监管员审核-保存", notes = "监管员审核-保存", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydSupervisorAndMaterialMethod(@PathVariable("taskId") String taskId,
-                                           @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody FinanceOrderSupervisorInfoObject supervisorInfoObject) {
+                                           @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SaveFinanceSupervisorInfo.class}) @RequestBody FinanceOrderSupervisorInfoObject supervisorInfoObject) {
         return supervisorAndMaterialAndAuditMethod(taskId, null, supervisorInfoObject, false);
     }
 
@@ -149,7 +148,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "监管员审核-提交", notes = "监管员审核-提交", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydSupervisorAndMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
-                                                         @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderSupervisorInfoObject> map) {
+                                                         @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SubmitFinanceSupervisorInfo.class}) @RequestBody CombineObject<TaskMap, FinanceOrderSupervisorInfoObject> map) {
         return supervisorAndMaterialAndAuditMethod(taskId, map.t, map.u, true);
     }
 
@@ -186,7 +185,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "风控人员审核-保存", notes = "风控人员审核-保存")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mydRiskManagerAddMaterialMethod(@PathVariable("taskId") String taskId,
-                                                  @ApiParam(name = "map", value = "任务相关参数", required = true) @RequestBody FinanceOrderRiskManagerInfoObject riskManagerInfoObject) {
+                                                  @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SaveFinanceRiskManagerInfo.class}) @RequestBody FinanceOrderRiskManagerInfoObject riskManagerInfoObject) {
         return riskManagerAddMaterialAndAuditMethod(taskId, null, riskManagerInfoObject, false);
     }
 
@@ -194,7 +193,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "风控人员审核-提交", notes = "风控人员审核-提交")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mydRiskManagerAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
-                                                          @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated @RequestBody CombineObject<TaskMap, FinanceOrderRiskManagerInfoObject> map) {
+                                                          @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SubmitFinanceRiskManagerInfo.class}) @RequestBody CombineObject<TaskMap, FinanceOrderRiskManagerInfoObject> map) {
         return riskManagerAddMaterialAndAuditMethod(taskId, map.t, map.u, true);
     }
 
