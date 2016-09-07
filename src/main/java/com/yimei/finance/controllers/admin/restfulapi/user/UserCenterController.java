@@ -1,9 +1,9 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.object.HistoryTaskObject;
 import com.yimei.finance.representation.admin.finance.object.TaskObject;
-import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
@@ -12,7 +12,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.HistoryService;
-import org.activiti.engine.IdentityService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Task;
@@ -28,8 +27,6 @@ import java.util.List;
 @RequestMapping("/api/financing/admin/tasks")
 @RestController("adminUserCenterController")
 public class UserCenterController {
-    @Autowired
-    private IdentityService identityService;
     @Autowired
     private AdminSession adminSession;
     @Autowired
