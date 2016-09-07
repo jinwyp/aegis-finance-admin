@@ -119,8 +119,17 @@ const routes: Routes = [
         path: 'tasks/:id/riskmanager',
         component: AuditRiskManagerComponent
     },
+
     {
         path: 'tasks/:id/investigator/material',
+        component: MaterialDetailComponent
+    },
+    {
+        path: 'tasks/:id/riskmanager/material/investigator',
+        component: MaterialDetailComponent
+    },
+    {
+        path: 'tasks/:id/riskmanager/material/supervisor',
         component: MaterialDetailComponent
     },
 

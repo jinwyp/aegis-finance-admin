@@ -2,12 +2,12 @@
  * Created by tttt on 8/22/16.
  */
 
-
+import { Headers } from '@angular/http';
 import { Observable }     from 'rxjs/Observable';
 import 'rxjs/add/observable/throw';
 
 
-var API = {
+let API = {
     login : '/api/financing/admin/login',
     logout : '/api/financing/admin/logout',
     session : '/api/financing/admin/session',
@@ -42,7 +42,7 @@ class HttpResponse {
 
 
 
-var GlobalPromiseHttpCatch = (error: any) => {
+let GlobalPromiseHttpCatch = (error: any) => {
     if (error.status && error.status === 401) {
         window.location.href = '/finance/admin/login';
 
@@ -65,7 +65,7 @@ var GlobalPromiseHttpCatch = (error: any) => {
 };
 
 
-var GlobalObservableHttpCatch = (error: any) => {
+let GlobalObservableHttpCatch = (error: any) => {
     // In a real world app, we might use a remote logging infrastructure. We'd also dig deeper into the error to get a better message
 
     if (error.status && error.status === 401) {
@@ -91,4 +91,6 @@ var GlobalObservableHttpCatch = (error: any) => {
 };
 
 
-export {HttpResponse, API, GlobalPromiseHttpCatch, GlobalObservableHttpCatch}
+let headers = new Headers({'Content-Type': 'application/json'});
+
+export {HttpResponse, API, GlobalPromiseHttpCatch, GlobalObservableHttpCatch, headers}

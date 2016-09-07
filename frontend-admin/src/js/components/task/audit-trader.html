@@ -35,8 +35,7 @@
 
         <tr class="item-min">
             <td class="td-label">拟融资金额(万元):</td>
-            <td class="td-val">
-                <input class="" type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.financingAmount">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.financingAmount">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.financingAmount}}</span>
             </td>
             <td class="td-label">拟使用资金时间(天):</td>
@@ -48,8 +47,12 @@
 
         <tr class="item-min">
             <td class="td-label">预期此笔业务量(万吨):</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.businessAmount"></td>
+            <td class="td-val">
+                <input *ngIf="!css.isReadOnly" type="text" [(ngModel)]="currentOrder.businessAmount">
+                <span *ngIf="css.isReadOnly">{{currentOrder.businessAmount}}</span>
+            </td>
             <td colspan="2" *ngIf="currentOrder.applyType==='MYD'"></td>
+
             <td class="td-label" *ngIf="currentOrder.applyType==='MYR'||currentOrder.applyType==='MYG'">运输方式:</td>
             <td class="td-val" *ngIf="currentOrder.applyType==='MYR'||currentOrder.applyType==='MYG'">
                 <select [(ngModel)]="currentOrder.transportMode">
