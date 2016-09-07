@@ -119,6 +119,12 @@ const routes: Routes = [
         component: AuditRiskManagerComponent
     },
 
+
+    {
+        path: 'tasks/:id/investigator/material',
+        component: AuditInvestigatorComponent
+    },
+
     {
         path: '**',
         redirectTo: '/tasks/pending'
