@@ -19,9 +19,6 @@ declare var __moduleName: string;
     moduleId: __moduleName || module.id,
     templateUrl: 'audit-trader.html'
 })
-
-
-
 export class AuditTraderComponent {
 
     private sub: Subscription;
@@ -75,11 +72,9 @@ export class AuditTraderComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
-                console.log(result.data);
                 this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
-                        console.log(result.data);
                     }else{
 
                     }

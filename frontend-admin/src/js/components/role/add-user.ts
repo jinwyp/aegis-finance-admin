@@ -106,7 +106,7 @@ export class AddUserComponent {
 
         if (this.css.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
-                this.css.isSubmitted     = false;
+                this.css.isSubmitted = false;
                 if (result.success) {
                     this.css.ajaxSuccessHidden=false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);

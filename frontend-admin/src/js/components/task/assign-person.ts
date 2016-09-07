@@ -124,7 +124,6 @@ export class AssignPersonComponent {
             this.task.assignPerson(this.taskId, this.selectedUser.id).then((result)=>{
                 if (result.success){
                     this.css.ajaxSuccessHidden = false;
-                    this.css.isSubmitted = true;
                 }else{
                     this.errorMsg = result.error.message;
                     this.css.ajaxErrorHidden = false;
