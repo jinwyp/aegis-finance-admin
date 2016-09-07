@@ -37,21 +37,7 @@ export class MaterialDetailComponent {
             this.taskId = params['id'];
             this.getTaskInfo(params['id']);
         });
-        // this.getCurrentUser();
     }
-
-    // getCurrentUser() {
-    //     this.user.getUserSessionObservable.subscribe(
-    //         result => {
-    //             if (result && result.success) {
-    //                 this.currentUserSession = result.data;
-    //             } else {
-    //
-    //             }
-    //         },
-    //         error => console.error(error)
-    //     )
-    // }
 
     getTaskInfo (id) {
         this.task.getTaskInfoById(id).then((result)=>{
