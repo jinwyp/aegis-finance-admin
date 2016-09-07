@@ -1,16 +1,11 @@
 package com.yimei.finance.service.admin.user;
 
-import com.yimei.finance.representation.admin.user.GroupObject;
 import com.yimei.finance.entity.admin.user.UserLoginRecord;
-import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.repository.admin.user.AdminUserLoginRecordRepository;
-import com.yimei.finance.representation.admin.user.AdminUserSearch;
-import com.yimei.finance.representation.admin.user.EnumAdminUserError;
-import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
+import com.yimei.finance.representation.admin.user.*;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.utils.DozerUtils;
-import com.yimei.finance.utils.Where;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
@@ -228,48 +223,20 @@ public class AdminUserServiceImpl {
             List<User> userList = new ArrayList<>();
             List<UserObject> userObjectList = new ArrayList<>();
             List<UserObject> userObjList = new ArrayList<>();
-            if (!StringUtils.isEmpty(userSearch.getUsername()) && !StringUtils.isEmpty(userSearch.getGroupName())) {
-                List<Group> groupList = identityService.createGroupQuery().groupNameLike(userSearch.getGroupName()).list();
-                if (groupList != null && groupList.size() != 0) {
-                    List<String> groupIds = new ArrayList<>();
-                    for (Group group : groupList) {
-                        groupIds.add(group.getId());
-                    }
-                    for (String gid : groupIds) {
-                        List<User> users = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).memberOfGroup(gid).orderByUserId().list();
-                        if (users != null && users.size() != 0) {
-                            userList.addAll(users);
-                        }
-                    }
-                } else {
-                    userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).orderByUserId().list();
-                }
+            if (!StringUtils.isEmpty(userSearch.getUsername()) && !StringUtils.isEmpty(userSearch.getGroupId())) {
+                userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).memberOfGroup(userSearch.getGroupId()).orderByUserId().list();
             } else if (!StringUtils.isEmpty(userSearch.getUsername())){
                 userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).list();
-            } else if (!StringUtils.isEmpty(userSearch.getGroupName())) {
-                List<Group> groupList = identityService.createGroupQuery().groupNameLike(Where.$like$(userSearch.getGroupName())).list();
-                if (groupList != null && groupList.size() != 0) {
-                    List<String> groupIds = new ArrayList<>();
-                    for (Group group : groupList) {
-                        groupIds.add(group.getId());
-                    }
-                    for (String gid : groupIds) {
-                        List<User> users = identityService.createUserQuery().memberOfGroup(gid).list();
-                        if (users != null && users.size() != 0) {
-                            userList.addAll(users);
-                        }
-                    }
-                } else {
-                    userList = identityService.createUserQuery().list();
-                }
+            } else if (!StringUtils.isEmpty(userSearch.getGroupId())) {
+                userList = identityService.createUserQuery().memberOfGroup(userSearch.getGroupId()).list();
             } else {
                 userList = identityService.createUserQuery().list();
             }
             userObjectList = changeUserObject(userList, operateUserId);
             if (!StringUtils.isEmpty(userSearch.getName()) ) {
-                for (UserObject userObject : userObjectList) {
-                    if (userObject.getName() != null && userObject.getName().contains(userSearch.getName())) {
-                        userObjList.add(userObject);
+                for (UserObject user : userObjectList) {
+                    if (user.getName() != null && user.getName().contains(userSearch.getName())) {
+                        userObjList.add(user);
                     }
                 }
                 if (userObjList == null) {
