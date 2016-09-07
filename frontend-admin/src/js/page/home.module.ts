@@ -49,6 +49,7 @@ import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager'
 import { CustomSelectComponent } from '../components/aegis-ui/custom-select';
 import { CustomModalComponent } from '../components/aegis-ui/custom-modal';
 import { CustomCheckboxComponent } from '../components/aegis-ui/custom-checkbox';
+import {TaskDetailComponent} from "../components/task/task-detail";
 
 
 
@@ -62,7 +63,7 @@ import { CustomCheckboxComponent } from '../components/aegis-ui/custom-checkbox'
         UserListComponent, AddUserComponent, UserInfoComponent,
         TaskListComponent, AssignPersonComponent, ProcessTabComponent,
         AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, SuperviseReportComponent, AuditRiskManagerComponent,
-        CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent
+        CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent, TaskDetailComponent
     ],
     providers: [ FileUploadService, homePageRouterProviders, TaskService, UserService, UserGroupService ],
     bootstrap: [ HomeComponent ]

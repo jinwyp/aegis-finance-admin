@@ -20,6 +20,7 @@ import { AuditSalesmanComponent } from '../components/task/audit-salesman';
 import { AuditInvestigatorComponent } from '../components/task/audit-investigator';
 import { SuperviseReportComponent } from '../components/task/supervise-report';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
+import {TaskDetailComponent} from "../components/task/task-detail";
 
 const routes: Routes = [
     {
@@ -118,7 +119,10 @@ const routes: Routes = [
         path: 'tasks/:id/riskmanager',
         component: AuditRiskManagerComponent
     },
-
+    {
+        path: 'tasks/:id/taskdetail',
+        component: TaskDetailComponent
+    },
     {
         path: '**',
         redirectTo: '/tasks/pending'
