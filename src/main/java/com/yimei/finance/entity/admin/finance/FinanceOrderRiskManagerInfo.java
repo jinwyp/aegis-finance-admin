@@ -20,19 +20,19 @@ public class FinanceOrderRiskManagerInfo extends BaseEntity implements Serializa
     private Long id;                                                 //主键
     @Column(name = "finance_id", nullable = false, updatable = false, unique = true)
     private Long financeId;                                          //金融单id
-    @Column(name = "distribution_ability_eval", length = 1000)
+    @Column(name = "distribution_ability_eval", length = 1020)
     private String distributionAbilityEval;                          //分销能力评估
-    @Column(name = "payment_situation_eval", length = 1000)
+    @Column(name = "payment_situation_eval", length = 1020)
     private String paymentSituationEval;                             //预计回款情况
-    @Column(name = "business_risk_point", length = 1000)
+    @Column(name = "business_risk_point", length = 1020)
     private String businessRiskPoint;                                //业务风险点
-    @Column(name = "risk_control_scheme", length = 1000)
+    @Column(name = "risk_control_scheme", length = 1020)
     private String riskControlScheme;                                //风险控制方案
-    @Column(name = "final_conclusion", length = 1000)
+    @Column(name = "final_conclusion", length = 1020)
     private String finalConclusion;                                  //风控结论/最终结论/综合意见
     @Column(name = "need_supply_material", length = 1, nullable = false)
     private int needSupplyMaterial;                                  //需要补充材料 1: 需要, 0: 不需要
-    @Column(name = "supply_material_introduce", length = 500)
+    @Column(name = "supply_material_introduce", length = 520)
     private String supplyMaterialIntroduce;                          //补充材料说明
     @Column(name = "notice_apply_user", length = 1, nullable = false)
     private int noticeApplyUser;                                     //通知申请用户 1: 通知, 0: 不通知
