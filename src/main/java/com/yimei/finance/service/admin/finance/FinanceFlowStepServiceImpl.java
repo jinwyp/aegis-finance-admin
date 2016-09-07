@@ -34,6 +34,8 @@ public class FinanceFlowStepServiceImpl {
     public Result onlineTraderAuditFinanceOrderMethod(String userId, TaskMap taskMap, Task task, FinanceOrderObject financeOrder, boolean submit) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.onlineTraderAudit.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
+        financeOrder.setApproveStateId(EnumFinanceStatus.Auditing.id);
+        financeOrder.setApproveState(EnumFinanceStatus.Auditing.name);
         orderService.updateFinanceOrderByOnlineTrader(userId, financeOrder);
         methodService.addAttachmentsMethod(financeOrder.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.OnlineTraderAuditAttachment);
         if (submit) {
@@ -60,9 +62,7 @@ public class FinanceFlowStepServiceImpl {
         salesmanInfo.setFinanceId(financeId);
         salesmanInfo.setCreateManId(userId);
         salesmanInfo.setCreateTime(new Date());
-        salesmanInfo.setLastUpdateManId(userId);
-        salesmanInfo.setLastUpdateTime(new Date());
-        orderService.saveFinanceOrderSalesmanInfo(salesmanInfo);
+        orderService.saveFinanceOrderSalesmanInfo(userId, salesmanInfo);
         methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment);
         if (submit) {
             if (taskMap.pass != 0 && taskMap.pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
@@ -103,11 +103,11 @@ public class FinanceFlowStepServiceImpl {
         investigatorInfo.setFinanceId(financeId);
         investigatorInfo.setApplyCompanyName(financeOrder.getApplyCompanyName());
         investigatorInfo.setOurContractCompany(financeOrder.getOurContractCompany());
+        investigatorInfo.setDownstreamContractCompany(financeOrder.getDownstreamContractCompany());
+        investigatorInfo.setTerminalServer(financeOrder.getTerminalServer());
         investigatorInfo.setCreateManId(userId);
         investigatorInfo.setCreateTime(new Date());
-        investigatorInfo.setLastUpdateManId(userId);
-        investigatorInfo.setLastUpdateTime(new Date());
-        orderService.saveFinanceOrderInvestigatorInfo(investigatorInfo);
+        orderService.saveFinanceOrderInvestigatorInfo(userId, investigatorInfo);
         methodService.addAttachmentsMethod(investigatorInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorAuditAttachment);
         if (submit) {
             if (taskMap.need != 0 && taskMap.need != 1) return Result.error(EnumCommonError.Admin_System_Error);
@@ -151,9 +151,7 @@ public class FinanceFlowStepServiceImpl {
         supervisorInfo.setFinanceId(financeId);
         supervisorInfo.setCreateManId(userId);
         supervisorInfo.setCreateTime(new Date());
-        supervisorInfo.setLastUpdateManId(userId);
-        supervisorInfo.setLastUpdateTime(new Date());
-        orderService.saveFinanceOrderSupervisorInfo(supervisorInfo);
+        orderService.saveFinanceOrderSupervisorInfo(userId, supervisorInfo);
         methodService.addAttachmentsMethod(supervisorInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorAuditAttachment);
         if (submit) {
             if (taskMap.need != 0 && taskMap.need != 1)
@@ -161,11 +159,15 @@ public class FinanceFlowStepServiceImpl {
             Map<String, Object> vars = new HashMap<>();
             vars.put(EnumFinanceConditions.needSalesmanSupplySupervisionMaterial.toString(), taskMap.need);
             taskService.complete(task.getId(), vars);
-            Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
-            if (!result1.isSuccess()) return result1;
-            Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
-            if (!result.isSuccess()) return result;
-            return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplySupervisionMaterial.toString(), String.valueOf(result.getData()));
+            if (taskMap.need == 1) {
+                Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
+                if (!result1.isSuccess()) return result1;
+                Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
+                if (!result.isSuccess()) return result;
+                return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplySupervisionMaterial.toString(), String.valueOf(result.getData()));
+            } else {
+                return Result.success();
+            }
         } else {
             return Result.success();
         }
@@ -208,9 +210,7 @@ public class FinanceFlowStepServiceImpl {
         riskManagerInfo.setFinanceId(financeId);
         riskManagerInfo.setCreateManId(userId);
         riskManagerInfo.setCreateTime(new Date());
-        riskManagerInfo.setLastUpdateManId(userId);
-        riskManagerInfo.setLastUpdateTime(new Date());
-        orderService.saveFinanceOrderRiskManagerInfo(riskManagerInfo);
+        orderService.saveFinanceOrderRiskManagerInfo(userId, riskManagerInfo);
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.need2 != 0 && taskMap.need2 != 1) || (taskMap.pass != 0 && taskMap.pass != 1))

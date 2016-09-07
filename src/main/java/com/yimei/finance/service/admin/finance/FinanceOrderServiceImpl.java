@@ -168,8 +168,6 @@ public class FinanceOrderServiceImpl {
      */
     @Transactional
     public void updateFinanceOrderByOnlineTrader(String userId, FinanceOrderObject financeOrder) {
-        financeOrder.setApproveStateId(EnumFinanceStatus.Auditing.id);
-        financeOrder.setApproveState(EnumFinanceStatus.Auditing.name);
         financeOrder.setLastUpdateManId(userId);
         financeOrder.setLastUpdateTime(new Date());
         orderRepository.save(DozerUtils.copy(financeOrder, FinanceOrder.class));
@@ -178,44 +176,52 @@ public class FinanceOrderServiceImpl {
     /**
      * 保存,更新 业务员 填写的信息
      */
-    public void saveFinanceOrderSalesmanInfo(FinanceOrderSalesmanInfoObject salesmanInfo) {
+    public void saveFinanceOrderSalesmanInfo(String userId, FinanceOrderSalesmanInfoObject salesmanInfo) {
         FinanceOrderSalesmanInfo salesmanOrder = salesmanRepository.findByFinanceId(salesmanInfo.getFinanceId());
         if (salesmanOrder != null) {
             salesmanInfo.setId(salesmanOrder.getId());
         }
+        salesmanInfo.setLastUpdateManId(userId);
+        salesmanInfo.setLastUpdateTime(new Date());
         salesmanRepository.save(DozerUtils.copy(salesmanInfo, FinanceOrderSalesmanInfo.class));
     }
 
     /**
      * 保存,更新 尽调员 填写的信息
      */
-    public void saveFinanceOrderInvestigatorInfo(FinanceOrderInvestigatorInfoObject investigatorInfo) {
+    public void saveFinanceOrderInvestigatorInfo(String userId, FinanceOrderInvestigatorInfoObject investigatorInfo) {
         FinanceOrderInvestigatorInfo investigatorOrder = investigatorRepository.findByFinanceId(investigatorInfo.getFinanceId());
         if (investigatorOrder != null) {
             investigatorInfo.setId(investigatorOrder.getId());
         }
+        investigatorInfo.setLastUpdateManId(userId);
+        investigatorInfo.setLastUpdateTime(new Date());
         investigatorRepository.save(DozerUtils.copy(investigatorInfo, FinanceOrderInvestigatorInfo.class));
     }
 
     /**
      * 保存,更新 监管员 填写的信息
      */
-    public void saveFinanceOrderSupervisorInfo(FinanceOrderSupervisorInfoObject supervisorInfo) {
+    public void saveFinanceOrderSupervisorInfo(String userId, FinanceOrderSupervisorInfoObject supervisorInfo) {
         FinanceOrderSupervisorInfo supervisorOrder = supervisorRepository.findByFinanceId(supervisorInfo.getFinanceId());
         if (supervisorOrder != null) {
             supervisorInfo.setId(supervisorOrder.getId());
         }
+        supervisorInfo.setLastUpdateManId(userId);
+        supervisorInfo.setLastUpdateTime(new Date());
         supervisorRepository.save(DozerUtils.copy(supervisorInfo, FinanceOrderSupervisorInfo.class));
     }
 
     /**
      * 保存,更新 风控 填写的信息
      */
-    public void saveFinanceOrderRiskManagerInfo(FinanceOrderRiskManagerInfoObject riskManagerInfo) {
+    public void saveFinanceOrderRiskManagerInfo(String userId, FinanceOrderRiskManagerInfoObject riskManagerInfo) {
         FinanceOrderRiskManagerInfo riskManagerOrder = riskRepository.findByFinanceId(riskManagerInfo.getFinanceId());
         if (riskManagerOrder != null) {
             riskManagerInfo.setId(riskManagerOrder.getId());
         }
+        riskManagerInfo.setLastUpdateManId(userId);
+        riskManagerInfo.setLastUpdateTime(new Date());
         riskRepository.save(DozerUtils.copy(riskManagerInfo, FinanceOrderRiskManagerInfo.class));
     }
 
