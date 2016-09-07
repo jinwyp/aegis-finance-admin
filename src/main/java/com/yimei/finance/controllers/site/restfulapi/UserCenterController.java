@@ -46,9 +46,6 @@ public class UserCenterController {
     @Autowired
     private IdentityService identityService;
 
-    /**
-    * 供应链金融 - 发起融资申请
-    */
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
     @LoginRequired
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
@@ -100,9 +97,6 @@ public class UserCenterController {
         return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), orderSearch, page);
     }
 
-    /**
-     * 供应链金融 - 用户中心 - 获取融资申请详细信息
-     */
     @ApiOperation(value = "根据 id 查看金融申请单", notes = "根据 金融申请单id 查看金融申请单", response = FinanceOrder.class)
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Long", paramType = "path")
     @LoginRequired
