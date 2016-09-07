@@ -62,11 +62,11 @@
             <td class="td-label">预计单吨销售价(元/吨):</td>
             <td class="td-val"><input type="text" [(ngModel)]="currentOrder.sellingPrice"></td>
             <td class="td-label">签约单位全称:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.contractor"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.ourContractCompany"></td>
         </tr>
         <tr *ngIf="currentOrder.applyType==='MYR'" class="item-min">
             <td class="td-label">下游签约单位全称:</td>
-            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.downstreamContractor"></td>
+            <td class="td-val"><input type="text" [(ngModel)]="currentOrder.downstreamContractCompany"></td>
             <td class="td-label">用煤终端:</td>
             <td class="td-val"><input type="text" [(ngModel)]="currentOrder.terminalServer"></td>
         </tr>

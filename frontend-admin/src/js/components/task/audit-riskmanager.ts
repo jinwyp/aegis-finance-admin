@@ -25,8 +25,20 @@ export class AuditRiskManagerComponent {
 
     currentUserSession : User = new User();
 
+    isApprovedRadio : boolean = false;
+
+    css = {
+        isSubmitted : false,
+        isCommitted : false,
+        ajaxErrorHidden : true,
+        ajaxSuccessHidden : true
+    };
+
+    errorMsg = '';
+
     taskId : string = '';
     currentTask : Task = new Task();
+    currentOrder : Task = new Task();
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -61,15 +73,32 @@ export class AuditRiskManagerComponent {
     getTaskInfo (id) {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
+                console.log(result.data);
                 this.currentTask = result.data;
+                this.task.getOrderInfoById(this.currentTask.financeId, 'riskmanager').then((result)=>{
+                    if (result.success && result.data){
+                        console.log(result.data);
+                        this.currentOrder = result.data;
+                    }else{
+
+                    }
+                });
             }else{
 
             }
         });
     }
 
+    audit (isAudit : boolean){
+        console.log(this.currentOrder);
+        this.css.ajaxErrorHidden = true;
+        this.css.ajaxSuccessHidden = true;
+        this.css.isSubmitted = true;
 
-    audit (isAudit : boolean, isApproved : boolean){
+        let isApproved : boolean = false;
+        if (isAudit) {
+            isApproved = this.isApprovedRadio;
+        }
 
         let auditType : string = '';
         let body : any = {
@@ -79,22 +108,38 @@ export class AuditRiskManagerComponent {
                 need : 0,
                 need2 : 0
             },
-            u : this.currentTask
+            u : this.currentOrder
         };
 
-        if (this.currentTask.taskDefinitionKey === TaskStatus.riskManagerAudit) auditType = 'riskmanager'; // 风控人员审核
+        if (this.currentTask.taskDefinitionKey === TaskStatus.investigatorAudit) auditType = 'riskmanager'; // 风控人员审核
 
         if (this.currentTask.taskDefinitionKey && auditType) {
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
-                    alert('保存成功!!')
-
+                    if(isAudit){
+                        this.css.isCommitted = true;
+                    }
+                    this.css.ajaxSuccessHidden=false;
+                    setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 }else{
-                    alert('保存失败!')
+                    this.css.ajaxErrorHidden=false;
+                    this.errorMsg=result.error.message;
                 }
+                this.css.isSubmitted = false;
             });
         }
 
+    }
+
+
+    finishedUpload (event) {
+        this.currentOrder.attachmentList.push({
+            "url": event.value.url,
+            "name": event.value.name,
+            "type": event.value.type,
+            "processInstanceId": this.currentTask.processInstanceId,
+            "taskId": this.currentTask.id
+        })
     }
 
 
