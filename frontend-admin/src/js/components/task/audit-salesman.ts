@@ -114,8 +114,6 @@ export class AuditSalesmanComponent {
         if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanAudit) auditType = 'salesman'; // 业务员审核并填写材料
 
         if (this.currentTask.taskDefinitionKey && auditType) {
-            console.log(this.currentTask);
-            console.log(this.currentOrder);
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
                     if(isAudit){

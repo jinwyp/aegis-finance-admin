@@ -134,7 +134,7 @@
             </td>
         </tr>
         <tr class="item-title">
-            <td colspan="4"><span class="fs-16"><label><input type="checkbox" class="mr-10" [checked]="currentOrder.needSupplyMaterial===1">需要补充材料</label></span></td>
+            <td colspan="4"><span><label (click)="changeNeedSupplyMaterialStatus()"><input type="checkbox" class="mr-10" [checked]="currentOrder.needSupplyMaterial===1">需要补充材料</label></span></td>
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
@@ -145,7 +145,11 @@
             <!--<td colspan="4"><label><input type="checkbox">发送给业务人员</label><label><input type="checkbox">发送给用户</label></td>-->
         <!--</tr>-->
         <tr class="item-title">
-            <td colspan="4"><span>审核意见:</span><label><input type="radio" name="pass">通过</label><label><input type="radio" name="pass">不通过</label></td>
+            <td colspan="4">
+                <span>审核意见:</span>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="true">通过</label>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="false">不通过</label>
+            </td>
         </tr>
     </table>
 

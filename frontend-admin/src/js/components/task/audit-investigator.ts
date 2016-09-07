@@ -32,11 +32,15 @@ export class AuditInvestigatorComponent {
         ajaxSuccessHidden : true
     };
 
+    errorMsg = '';
+
     currentUserSession : User = new User();
 
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
+
+    isApprovedRadio : boolean = false;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -73,7 +77,7 @@ export class AuditInvestigatorComponent {
             if (result.success){
                 console.log(result.data);
                 this.currentTask = result.data;
-                this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
+                this.task.getOrderInfoById(this.currentTask.financeId, 'investigator').then((result)=>{
                     if (result.success){
                         console.log(result.data);
                         this.currentOrder = result.data;
@@ -88,11 +92,16 @@ export class AuditInvestigatorComponent {
     }
 
 
-    audit (isAudit : boolean, isApproved : boolean){
+    audit (isAudit : boolean){
 
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
+
+        let isApproved : boolean = false;
+        if (isAudit) {
+            isApproved = this.isApprovedRadio;
+        }
 
         let auditType : string = '';
         let body : any = {
@@ -102,21 +111,22 @@ export class AuditInvestigatorComponent {
                 need : 0,
                 need2 : 0
             },
-            u : this.currentTask
+            u : this.currentOrder
         };
 
         if (this.currentTask.taskDefinitionKey === TaskStatus.investigatorAudit) auditType = 'investigator'; // 尽调员审核
 
         if (this.currentTask.taskDefinitionKey && auditType) {
-            this.task.audit(this.taskId, this.currentOrder.applyType, auditType, body).then((result)=>{
+            this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
                 if (result.success){
                     if(isAudit){
                         this.css.isCommitted = true;
                     }
-                    alert('保存成功!!')
-
+                    this.css.ajaxSuccessHidden=false;
+                    setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 }else{
-                    alert('保存失败!')
+                    this.css.ajaxErrorHidden=false;
+                    this.errorMsg=result.error.message;
                 }
                 this.css.isSubmitted = false;
             });
@@ -132,6 +142,14 @@ export class AuditInvestigatorComponent {
             "processInstanceId": this.currentTask.processInstanceId,
             "taskId": this.currentTask.id
         })
+    }
+
+    changeNeedSupplyMaterialStatus(){
+        if(this.currentOrder.needSupplyMaterial===0){
+            this.currentOrder.needSupplyMaterial=1;
+        }else{
+            this.currentOrder.needSupplyMaterial=0;
+        }
     }
 
 

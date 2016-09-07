@@ -76,7 +76,7 @@ export class AuditTraderComponent {
             if (result.success){
                 this.currentTask = result.data;
                 console.log(result.data);
-                this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
+                this.task.getOrderInfoById(this.currentTask.financeId, 'onlinetrader').then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
                         console.log(result.data);
