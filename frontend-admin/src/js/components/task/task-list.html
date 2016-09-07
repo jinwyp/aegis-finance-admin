@@ -66,6 +66,7 @@
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.onlineTraderAudit" [routerLink]="['/tasks', task.id, 'trader']" > 审核并填写材料 </button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.salesmanAudit" [routerLink]="['/tasks', task.id, 'salesman']" > 审核并填写材料 </button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.investigatorAudit" [routerLink]="['/tasks', task.id, 'investigator']" > 审核 </button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.salesmanSupplyInvestigationMaterial" [routerLink]="['/tasks', task.id, 'investigator', 'material']" > 填写材料 </button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.supervisorAudit" [routerLink]="['/tasks', task.id, 'supervisor']" > 审核 </button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.riskManagerAudit" [routerLink]="['/tasks', task.id, 'riskmanager']" > 审核 </button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.riskManagerAuditSuccess" [routerLink]="['/tasks', task.id, 'riskmanager']" > 填写合同 </button>
