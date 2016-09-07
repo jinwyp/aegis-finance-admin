@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -21,9 +22,15 @@ public class FinanceOrderInvestigatorInfoObject extends BaseEntity implements Se
     private String upstreamContractCompany;                          //上游签约单位
     private String downstreamContractCompany;                        //下游签约单位
     private String terminalServer;                                   //终端用户
+
+    @Size(max = 100, message = "运输方不能超过 {max} 个字符")
     private String transportParty;                                   //运输方
     private String transitPort;                                      //中转港口
+
+    @Size(max = 100, message = "质量检验单位不能超过 {max} 个字符")
     private String qualityInspectionUnit;                            //质量检验单位
+
+    @Size(max = 100, message = "数量检验单位不能超过 {max} 个字符")
     private String quantityInspectionUnit;                           //数量检验单位
     private BigDecimal financingAmount;                              //融资金额
     private int financingPeriod;                                     //融资期限
