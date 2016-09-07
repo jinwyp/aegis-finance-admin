@@ -60,7 +60,12 @@
             </td>
         </tr>
         <tr class="item-title">
-            <td colspan="4"><span><label (click)="changeNeedSupplyMaterialStatus()"><input type="checkbox" class="mr-10" [checked]="currentOrder.needSupplyMaterial===1">需要补充材料</label></span></td>
+            <td colspan="4">
+                <span>
+                    <label (click)="changeNeedSupplyMaterialStatus()">
+                    <input type="checkbox" class="mr-10" [checked]="currentOrder.needSupplyMaterial===1">需要补充材料</label>
+                </span>
+            </td>
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
@@ -68,9 +73,6 @@
             </td>
         </tr>
 
-        <tr class="item-title">
-            <td colspan="4"><label (click)="changeNoticeApplyUserStatus()"><input type="checkbox" [checked]="currentOrder.noticeApplyUser===1">发送给用户</label></td>
-        </tr>
 
         <tr class="item-title">
             <td colspan="4">
