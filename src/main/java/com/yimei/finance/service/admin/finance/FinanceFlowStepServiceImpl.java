@@ -66,6 +66,9 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment);
         if (submit) {
             if (taskMap.pass != 0 && taskMap.pass != 1) return Result.error(EnumCommonError.Admin_System_Error);
+            Map<String, Object> vars = new HashMap<>();
+            vars.put(EnumFinanceEventType.salesmanAudit.toString(), taskMap.pass);
+            taskService.complete(task.getId(), vars);
             if (taskMap.pass == 1) {
                 return Result.success();
             } else {
