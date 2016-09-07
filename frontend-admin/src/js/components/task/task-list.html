@@ -92,7 +92,7 @@
                 <!--<span>已完成</span>-->
             </td>
             <td>
-                <button type="button" class="btn btn-xs btn-default btn-sure w-80"  > 查看详情 </button>
+                <button type="button" class="btn btn-xs btn-default btn-sure w-80" [routerLink]="['/tasks', task.id, 'investigator','info']" > 查看详情 </button>
             </td>
         </tr>
     </table>

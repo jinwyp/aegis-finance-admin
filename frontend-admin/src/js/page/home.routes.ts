@@ -120,6 +120,32 @@ const routes: Routes = [
     },
 
     {
+        path: 'tasks/:id/trader/info',
+        component: AuditTraderComponent,
+        data: { routeType : 'info' }
+    },
+    {
+        path: 'tasks/:id/salesman/info',
+        component: AuditSalesmanComponent,
+        data: { routeType : 'info' }
+    },
+    {
+        path: 'tasks/:id/investigator/info',
+        component: AuditInvestigatorComponent,
+        data: { routeType : 'info' }
+    },
+    {
+        path: 'tasks/:id/supervisor/info',
+        component: SuperviseReportComponent,
+        data: { routeType : 'info' }
+    },
+    {
+        path: 'tasks/:id/riskmanager/info',
+        component: AuditRiskManagerComponent,
+        data: { routeType : 'info' }
+    },
+
+    {
         path: '**',
         redirectTo: '/tasks/pending'
     }
