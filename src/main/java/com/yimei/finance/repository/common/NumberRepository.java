@@ -7,9 +7,6 @@ import org.springframework.data.repository.query.Param;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Created by liuxinjie on 16/8/23.
- */
 public interface NumberRepository extends JpaRepository<Number, Long> {
 
     List<Number> findByTypeAndCreateDateAndIdLessThan(@Param("type") String type,

@@ -1,11 +1,13 @@
 package com.yimei.finance.representation.admin.finance.result;
 
+import io.swagger.annotations.ApiModel;
 import lombok.Data;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@ApiModel(description = "金融申请单列表元素")
 @Data
 public class FinanceOrderResult implements Serializable {
     private Long id;
