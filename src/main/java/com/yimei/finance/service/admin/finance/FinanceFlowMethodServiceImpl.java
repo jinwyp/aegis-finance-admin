@@ -1,10 +1,8 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.exception.BusinessException;
+import com.yimei.finance.repository.admin.finance.*;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
-import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
-import com.yimei.finance.representation.admin.finance.enums.FinanceSMSMessage;
 import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
 import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
 import com.yimei.finance.representation.admin.finance.object.HistoryTaskObject;
@@ -31,7 +29,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 @Service("financeFlowMethodService")
@@ -50,6 +47,14 @@ public class FinanceFlowMethodServiceImpl {
     private IdentityService identityService;
     @Autowired
     private MessageServiceImpl messageService;
+    @Autowired
+    private FinanceOrderSalesmanRepository salesmanRepository;
+    @Autowired
+    private FinanceOrderInvestigatorRepository investigatorRepository;
+    @Autowired
+    private FinanceOrderSupervisorRepository supervisorRepository;
+    @Autowired
+    private FinanceOrderRiskRepository riskRepository;
 
     /**
      * 添加附件方法
@@ -73,6 +78,7 @@ public class FinanceFlowMethodServiceImpl {
     /**
      * 指派给人方法
      */
+    @Transactional
     public Result setAssignUserMethod(String processInstanceId, String financeEventType, String userId) {
         List<Task> taskList = taskService.createTaskQuery().processInstanceId(processInstanceId).active().list();
         for (Task task : taskList) {
@@ -81,35 +87,7 @@ public class FinanceFlowMethodServiceImpl {
                 return Result.success().setData(true);
             }
         }
-        return Result.error(EnumCommonError.Admin_System_Error);
-    }
-
-    /**
-     * 更改金融单状态
-     */
-    @Transactional
-    public Result updateFinanceOrderApproveState(Long financeId, EnumFinanceStatus status, String userId) {
-        FinanceOrder financeOrder = orderRepository.findOne(financeId);
-        if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
-        FinanceOrder order = orderRepository.findOne(financeId);
-        order.setApproveStateId(status.id);
-        order.setApproveState(status.name);
-        order.setLastUpdateTime(new Date());
-        order.setLastUpdateManId(userId);
-        if (status.id == EnumFinanceStatus.AuditPass.id) {
-            order.setEndTime(new Date());
-            if (!StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
-                messageService.sendSMS(financeOrder.getApplyUserPhone(), FinanceSMSMessage.getUserAuditPassMessage(financeOrder.getSourceId()));
-            }
-        }
-        if (status.id == EnumFinanceStatus.AuditNotPass.id) {
-            order.setEndTime(new Date());
-            if (!StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
-                messageService.sendSMS(financeOrder.getApplyUserPhone(), FinanceSMSMessage.getUserAuditNotPassMessage(financeOrder.getSourceId()));
-            }
-        }
-        orderRepository.save(order);
-        return Result.success();
+        throw new BusinessException(EnumCommonError.Admin_System_Error);
     }
 
     /**
@@ -117,14 +95,14 @@ public class FinanceFlowMethodServiceImpl {
      */
     public Result getLastCompleteTaskUserId(String processInstanceId, String financeEventType) {
         List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstanceId).taskDefinitionKey(financeEventType).orderByTaskCreateTime().desc().list();
-        if (taskList == null || taskList.size() == 0) return Result.error(EnumCommonError.Admin_System_Error);
+        if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
         String assignUserId = "";
         for (HistoricTaskInstance taskInstance : taskList) {
             if (!StringUtils.isEmpty(taskInstance.getAssignee())) {
                 assignUserId = taskInstance.getAssignee();
             }
         }
-        if (StringUtils.isEmpty(assignUserId)) return Result.error(EnumCommonError.Admin_System_Error);
+        if (StringUtils.isEmpty(assignUserId)) throw new BusinessException(EnumCommonError.Admin_System_Error);
         return Result.success().setData(assignUserId);
     }
 
@@ -212,5 +190,6 @@ public class FinanceFlowMethodServiceImpl {
         }
         return Result.success().setData(taskObjectList);
     }
+
 
 }

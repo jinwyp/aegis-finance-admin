@@ -2,6 +2,7 @@ package com.yimei.finance.controllers.site.restfulapi;
 
 import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.representation.admin.finance.object.validated.CreateFinanceOrder;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
@@ -19,6 +20,7 @@ import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
@@ -46,8 +48,9 @@ public class UserCenterController {
     @Autowired
     private IdentityService identityService;
 
-    @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
     @LoginRequired
+    @Transactional
+    @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Validated(CreateFinanceOrder.class) @RequestBody FinanceOrder financeOrder) {
         System.out.println("Order Type:" + financeOrder.getApplyType());
@@ -74,7 +77,7 @@ public class UserCenterController {
         } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
             runtimeService.startProcessInstanceByKey("financingMYDWorkFlow", String.valueOf(financeOrder.getId()));
         } else {
-            return Result.error(EnumCommonError.Admin_System_Error);
+            throw new BusinessException(EnumCommonError.Admin_System_Error);
         }
         return Result.success().setData(orderRepository.findBySourceId(financeOrder.getSourceId()));
     }
