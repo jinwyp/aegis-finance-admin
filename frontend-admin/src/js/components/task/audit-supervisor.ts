@@ -94,7 +94,7 @@ export class AuditSupervisorComponent {
     }
 
     finishedUpload (event) {
-        this.currentOrder.attachmentList.push({
+        this.currentOrder.attachmentList1.push({
             "url": event.value.url,
             "name": event.value.name,
             "type": event.value.type,
