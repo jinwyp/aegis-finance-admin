@@ -32,7 +32,7 @@
     <sequenceFlow id="flow8" sourceRef="assignInvestigator" targetRef="investigatorAudit"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow9" sourceRef="investigatorAudit" targetRef="exclusivegateway2"></sequenceFlow>
-    <userTask id="salesmanSupplyInvestigationMaterial" name="业务员补充材料">
+    <userTask id="salesmanSupplyInvestigationMaterial" name="业务员补充尽调材料">
       <documentation>业务员补充尽调材料。</documentation>
     </userTask>
     <sequenceFlow id="flow10" name="需要补充材料" sourceRef="exclusivegateway2" targetRef="salesmanSupplyInvestigationMaterial">
@@ -80,7 +80,7 @@
     <sequenceFlow id="flow31" sourceRef="parallelgateway1" targetRef="assignSupervisor"></sequenceFlow>
     <userTask id="supervisorAudit" name="监管员审核"></userTask>
     <sequenceFlow id="flow32" sourceRef="assignSupervisor" targetRef="supervisorAudit"></sequenceFlow>
-    <userTask id="salesmanSupplySupervisionMaterial" name="业务员补充材料"></userTask>
+    <userTask id="salesmanSupplySupervisionMaterial" name="业务员补充监管材料"></userTask>
     <exclusiveGateway id="exclusivegateway7" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow34" sourceRef="supervisorAudit" targetRef="exclusivegateway7"></sequenceFlow>
     <sequenceFlow id="flow35" name="需要补充材料" sourceRef="exclusivegateway7" targetRef="salesmanSupplySupervisionMaterial">

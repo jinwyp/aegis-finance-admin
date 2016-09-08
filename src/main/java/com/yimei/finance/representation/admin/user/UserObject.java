@@ -27,6 +27,7 @@ public class UserObject implements Serializable {
     @Size(min = 2, max = 20, message = "姓名应在2-20个字符之间", groups = {CreateUser.class, EditUser.class})
     @NotBlank(message = "姓名不能为空", groups = {CreateUser.class, EditUser.class})
     private String name;                        //姓名
+    @Size(max = 11, message = "请输入正确的手机号")
     @Pattern(regexp = "^[1][3,4,5,7,8][0-9]{9}$", message = "请输入正确的手机号", groups = {CreateUser.class, EditUser.class})
     private String phone;                       //手机号
     @Size(max = 50, message = "邮箱不能超过 {max} 个字符", groups = {CreateUser.class, EditUser.class})
