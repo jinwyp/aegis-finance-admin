@@ -20,7 +20,7 @@
 
         <tr class="item" *ngFor="let task of taskAssignList">
             <td>
-                <!--{{task.sourceId }} <br/>-->
+                {{task.sourceId }} <br/>
                 <span *ngIf="task.applyType==='MYR'">煤易融</span>
                 <span *ngIf="task.applyType==='MYG'">煤易购</span>
                 <span *ngIf="task.applyType==='MYD'">煤易贷</span>
@@ -47,7 +47,7 @@
 
         <tr class="item" *ngFor="let task of taskPendingList">
             <td>
-                <!--{{task.sourceId }} <br/>-->
+                {{task.sourceId }} <br/>
                 <span *ngIf="task.applyType==='MYR'">煤易融</span>
                 <span *ngIf="task.applyType==='MYG'">煤易购</span>
                 <span *ngIf="task.applyType==='MYD'">煤易贷</span>
