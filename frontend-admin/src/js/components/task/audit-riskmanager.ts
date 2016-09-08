@@ -25,7 +25,7 @@ export class AuditRiskManagerComponent {
 
     currentUserSession : User = new User();
 
-    isApprovedRadio : boolean = false;
+    isApprovedRadio : number;
 
     css = {
         isSubmitted : false,
@@ -102,19 +102,23 @@ export class AuditRiskManagerComponent {
     }
 
     audit (isAudit : boolean){
-        console.log(this.currentOrder);
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
 
-
         let body : any = {
             t : {
-                pass : this.isApprovedRadio === true ? 1 : 0,
-                need : 0
+                pass : this.isApprovedRadio,
+                need : this.isApprovedRadio === 2 ? 1 : 0
             },
             u : this.currentOrder
         };
+
+        if (this.isApprovedRadio === 2) {
+            this.currentOrder.needSupplyMaterial = 1;
+            body.t.pass = 0;
+        }
+
 
         let auditType : string = '';
         if (this.currentTask.taskDefinitionKey === TaskStatus.riskManagerAudit) auditType = 'riskmanager'; // 风控人员审核
