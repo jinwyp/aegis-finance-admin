@@ -80,14 +80,14 @@ export class AuditSupervisorComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
-                this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
+                this.task.getOrderInfoById(this.currentTask.financeId, 'supervisor').then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
                     }else{
 
                     }
                 });
-
+                
             }else{
 
             }
