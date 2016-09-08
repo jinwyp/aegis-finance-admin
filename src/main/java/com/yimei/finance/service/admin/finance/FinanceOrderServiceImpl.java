@@ -103,7 +103,7 @@ public class FinanceOrderServiceImpl {
     public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, List<EnumFinanceAttachment> typeList) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
         for (EnumFinanceAttachment attachment : typeList) {
-            List<Task> tasks = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).list();
+            List<Task> tasks = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type.toString()).list();
             for (Task t : tasks) {
                 List<Attachment> attachments = taskService.getTaskAttachments(t.getId());
                 if (attachments != null && attachments.size() != 0) {
