@@ -111,20 +111,20 @@ export class AuditSalesmanComponent {
             isApproved = this.isApprovedRadio;
         }
 
-        let auditType : string = '';
         let body : any = {
             t : {
-                submit : isAudit === true ? 1 : 0,
                 pass : isApproved === true ? 1 : 0,
                 need : 0,
                 need2 : 0
             },
             u : this.currentOrder
         };
+
+        let auditType : string = '';
         if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanAudit) auditType = 'salesman'; // 业务员审核并填写材料
 
         if (this.currentTask.taskDefinitionKey && auditType) {
-            this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
+            this.task.audit(this.taskId, this.currentTask.applyType, auditType, isAudit, body).then((result)=>{
                 if (result.success){
                     if(!isAudit){
                         this.css.isSubmitted = false;
