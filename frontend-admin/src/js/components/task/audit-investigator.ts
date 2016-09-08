@@ -91,14 +91,19 @@ export class AuditInvestigatorComponent {
                 this.currentTask = result.data;
                 this.task.getOrderInfoById(this.currentTask.financeId, 'investigator').then((result)=>{
                     if (result.success){
-                        this.currentOrder = result.data;
+                        if(result.data!=null){
+                            this.currentOrder = result.data;
+                        }
                     }else{
 
                     }
                 });
                 this.task.getOrder2InfoById(this.currentTask.financeId).then((result)=>{
                     if (result.success){
+                        console.log('------getOrder2InfoById--------'+result.data.applyCompanyName);
+                        console.log(result.data);
                         this.currentOrder.applyCompanyName=result.data.applyCompanyName
+                        console.log(this.currentOrder.applyCompanyName);
                         this.currentOrder.ourContractCompany=result.data.ourContractCompany
                         this.currentOrder.financingAmount=result.data.financingAmount
                         this.currentOrder.financingPeriod=result.data.financingPeriod

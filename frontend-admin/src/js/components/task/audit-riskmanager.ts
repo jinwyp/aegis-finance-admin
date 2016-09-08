@@ -127,7 +127,7 @@ export class AuditRiskManagerComponent {
         if (this.currentTask.taskDefinitionKey === TaskStatus.riskManagerAudit) auditType = 'riskmanager'; // 风控人员审核
 
         if (this.currentTask.taskDefinitionKey && auditType) {
-            this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
+            this.task.audit(this.taskId, this.currentTask.applyType, auditType, isAudit, body).then((result)=>{
                 if (result.success){
                     if(isAudit){
                         this.css.isCommitted = true;

@@ -130,7 +130,7 @@ export class AuditSupervisorComponent {
 
         if (this.currentTask.taskDefinitionKey && auditType) {
 
-            this.task.audit(this.taskId, this.currentOrder.applyType, auditType, body).then((result)=>{
+            this.task.audit(this.taskId, this.currentOrder.applyType, auditType, isAudit, body).then((result)=>{
                 if (result.success){
                     if(isAudit){
                         this.css.isCommitted = true;
