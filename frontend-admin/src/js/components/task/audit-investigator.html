@@ -25,81 +25,93 @@
     <table class="table table-bordered apply-table">
         <tr class="item-max">
             <td class="td-label">业务类型:</td>
-            <td width="250" class="td-val">{{currentTask.applyTypeName}}</td>
+            <td width="250" class="td-val">{{currentTask.applyTypeName||'--'}}</td>
             <td class="td-label">业务编号:</td>
-            <td width="250" class="td-val">{{currentTask.sourceId}}</td>
+            <td width="250" class="td-val">{{currentTask.sourceId||'--'}}</td>
         </tr>
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">项目主体信息</span></td>
         </tr>
         <tr class="item-max">
             <td class="td-label">融资方:</td>
-            <td class="td-val">{{forwardTask.applyCompanyName}}</td>
+            <td class="td-val">{{currentOrder.applyCompanyName||'--'}}</td>
             <td class="td-label">我方签约单位全称:</td>
-            <td class="td-val">{{forwardTask.ourContractCompany}}</td>
+            <td class="td-val">{{currentOrder.ourContractCompany||'--'}}</td>
         </tr>
         <!--应收字段-->
         <tr *ngIf="currentTask.applyType==='MYR'" class="item-max">
             <td class="td-label">下游签约单位:</td>
-            <td class="td-val">{{forwardTask.downstreamContractCompany}}</td>
+            <td class="td-val">{{currentOrder.downstreamContractCompany||'--'}}</td>
             <td class="td-label">终端用户:</td>
-            <td class="td-val">{{forwardTask.terminalServer}}</td>
+            <td class="td-val">{{currentOrder.terminalServer||'--'}}</td>
         </tr>
         <tr class="item-min">
             <td class="td-label">融资金额:</td>
             <td class="td-val">
-                <input type="text" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.financingAmount" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.financingAmount}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.financingAmount" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.financingAmount}}</span>
             </td>
             <td class="td-label">融资期限:</td>
             <td class="td-val">
-                <input type="text" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.financingPeriod" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.financingPeriod}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.financingPeriod" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.financingPeriod}}</span>
             </td>
         </tr>
         <tr class="item-min">
             <td class="td-label">利率:</td>
             <td class="td-val">
-                <input type="text" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.interestRate" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.interestRate}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.interestRate" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.interestRate}}</span>
             </td>
             <td class="td-label">业务开展时间:</td>
             <td class="td-val">
-                <input type="text" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.businessStartTime" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.businessStartTime}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.businessStartTime" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.businessStartTime}}</span>
             </td>
         </tr>
         <!--仓押字段-->
-        <tr *ngIf="currentTask.applyType!=='MYR'" class="item-max">
+        <tr *ngIf="currentTask.applyType!=='MYR'" class="item-min">
             <td class="td-label">上游签约单位:</td>
-            <!--<td class="td-val"><input type="text" [(ngModel)]="currentTask.upstreamContractCompany"></td>-->
-            <td class="td-val">{{currentTask.upstreamContractCompany}}</td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.upstreamContractCompany" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.upstreamContractCompany}}</span>
+            </td>
             <td class="td-label">下游签约单位:</td>
-            <!--<td class="td-val"><input type="text" [(ngModel)]="currentTask.downstreamContractCompany"></td>-->
-            <td class="td-val">{{currentTask.downstreamContractCompany}}</td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.downstreamContractCompany" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.downstreamContractCompany}}</span>
+            </td>
         </tr>
-        <tr *ngIf="currentTask.applyType!=='MYR'" class="item-max">
+        <tr *ngIf="currentTask.applyType!=='MYR'" class="item-min">
             <td class="td-label">运输方:</td>
-            <!--<td class="td-val"><input type="text" [(ngModel)]="currentTask.transportParty"></td>-->
-            <td class="td-val">{{currentTask.transportParty}}</td>
-            <td class="td-label">中转港口:</td>
-            <!--<td class="td-val"><input type="text" [(ngModel)]="currentTask.transitPort"></td>-->
-            <td class="td-val">{{currentTask.transitPort}}</td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.transportParty" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.transportParty}}</span>
+            </td>
+            <td class="td-label">中转港口全称:</td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.transitPort" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.transitPort}}</span>
+            </td>
         </tr>
-        <tr *ngIf="currentTask.applyType!=='MYR'" class="item-max">
+        <tr *ngIf="currentTask.applyType!=='MYR'" class="item-min">
             <td class="td-label">质量检验单位:</td>
-            <!--<td class="td-val"><input type="text" [(ngModel)]="currentTask.qualityInspectionUnit"></td>-->
-            <td class="td-val">{{currentTask.qualityInspectionUnit}}</td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.qualityInspectionUnit" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.qualityInspectionUnit}}</span>
+            </td>
             <td class="td-label">数量检验单位:</td>
-            <!--<td class="td-val"><input type="text" [(ngModel)]="currentTask.quantityInspectionUnit"></td>-->
-            <td class="td-val">{{currentTask.quantityInspectionUnit}}</td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.quantityInspectionUnit" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.quantityInspectionUnit}}</span>
+            </td>
         </tr>
 
         <tr class="item-min">
             <td class="td-label">历史合作情况:</td>
             <td colspan="3" class="td-val">
-                <input type="text" *ngIf="css.isReadOnly===false" class="describe" [(ngModel)]="currentOrder.historicalCooperationDetail" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.historicalCooperationDetail}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" class="describe" [(ngModel)]="currentOrder.historicalCooperationDetail" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.historicalCooperationDetail}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -108,15 +120,15 @@
         <tr class="item-min">
             <td class="td-label">业务主要信息:</td>
             <td colspan="3" class="td-val">
-                <input type="text" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.mainBusinessInfo" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.mainBusinessInfo}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.mainBusinessInfo" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.mainBusinessInfo}}</span>
             </td>
         </tr>
         <tr class="item-min">
             <td class="td-label">业务流转:</td>
             <td colspan="3" class="td-val">
-                <input type="text" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.businessTransferInfo" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.businessTransferInfo}}</span>
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.businessTransferInfo" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.businessTransferInfo}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -124,8 +136,7 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.businessRiskPoint"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.businessRiskPoint}}</span>
+                <textarea class="form-control" rows="2" placeholder="请输入" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.businessRiskPoint"></textarea>
             </td>
         </tr>
         <tr class="item-title">
@@ -133,8 +144,7 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.performanceCreditAbilityEval"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.performanceCreditAbilityEval}}</span>
+                <textarea class="form-control" rows="2" placeholder="请输入" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.performanceCreditAbilityEval"></textarea>
             </td>
         </tr>
         <tr class="item-title">
@@ -142,8 +152,7 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.finalConclusion"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.finalConclusion}}</span>
+                <textarea class="form-control" rows="2" placeholder="请输入" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.finalConclusion"></textarea>
             </td>
         </tr>
         <tr class="item-title">
@@ -152,8 +161,8 @@
         <tr class="item-max">
             <td class="td-val" colspan="4">
                 <div class="attachment">
-                    <img *ngFor="let pic of currentOrder.attachmentList1" [src]="pic.url" [alt]="pic.name">
-                    <file-upload *ngIf="css.isReadOnly===false" (onFinished)="finishedUpload($event)"></file-upload>
+                    <img *ngFor="let pic of currentOrder.attachmentList" [src]="pic.url" [alt]="pic.name">
+                    <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
                 </div>
             </td>
         </tr>
@@ -162,8 +171,7 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="3" placeholder="请输入" *ngIf="css.isReadOnly===false" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly===true">{{currentOrder.supplyMaterialIntroduce}}</span>
+                <textarea class="form-control" rows="3" placeholder="请输入" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
             </td>
         </tr>
         <!--<tr class="item-title">-->
@@ -179,18 +187,18 @@
         </tr>
     </table>
 
-    <div class="row info-item" *ngIf="css.isReadOnly===false">
+    <div class="row info-item" *ngIf="!css.isReadOnly">
         <div class="col-sm-offset-3 col-sm-6 mt-20">
             <div class="alert alert-success" role="alert" [class.hidden]="css.ajaxSuccessHidden">保存成功!</div>
             <div class="alert alert-danger" role="alert" [class.hidden]="css.ajaxErrorHidden">{{errorMsg}}!</div>
         </div>
         <div class="col-sm-12 info-val no-bottom-border center">
             <button type="button" class="btn btn-default btn-save" (click)="audit(false)" [disabled]="css.isSubmitted || currentTask.endTime">保存</button>
-            <button type="button" class="btn btn-default btn-sure ml-20" (click)="audit(true)" [disabled]="css.isSubmitted || currentTask.endTime">保存并提交</button>
+            <button type="button" class="btn btn-default btn-sure ml-20" (click)="audit(true)" [disabled]="css.isSubmitted || currentTask.endTime || isApprovedRadio===-1">保存并提交</button>
             <button type="button" class="btn btn-default btn-return ml-20" [routerLink]="['tasks/pending']">返回</button>
         </div>
     </div>
-    <div class="row info-item" *ngIf="css.isReadOnly===true">
+    <div class="row info-item" *ngIf="css.isReadOnly">
         <div class="col-sm-12 info-val no-bottom-border center">
             <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/all']">返回</button>
         </div>

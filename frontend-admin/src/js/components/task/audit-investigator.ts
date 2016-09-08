@@ -44,9 +44,8 @@ export class AuditInvestigatorComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
-    forwardTask : Task = new Task();
 
-    isApprovedRadio : number;
+    isApprovedRadio : number = -1;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -92,14 +91,30 @@ export class AuditInvestigatorComponent {
                 this.currentTask = result.data;
                 this.task.getOrderInfoById(this.currentTask.financeId, 'investigator').then((result)=>{
                     if (result.success){
-                        this.currentOrder = result.data;
-                    }else{
+                        if(result.data!=null){
+                            this.currentOrder = result.data;
+                        }
+                        this.task.getOrder2InfoById(this.currentTask.financeId).then((result)=>{
+                            if (result.success){
+                                console.log('------getOrder2InfoById--------'+result.data.applyCompanyName);
+                                console.log(result.data);
+                                this.currentOrder.applyCompanyName=result.data.applyCompanyName
+                                console.log(this.currentOrder.applyCompanyName);
+                                this.currentOrder.ourContractCompany=result.data.ourContractCompany
+                                this.currentOrder.financingAmount=result.data.financingAmount
+                                this.currentOrder.financingPeriod=result.data.financingPeriod
+                                this.currentOrder.interestRate=result.data.interestRate
+                                this.currentOrder.businessStartTime=result.data.businessStartTime
+                                this.currentOrder.upstreamContractCompany=result.data.upstreamContractCompany
+                                this.currentOrder.downstreamContractCompany=result.data.downstreamContractCompany
+                                this.currentOrder.transportParty=result.data.transportParty
+                                this.currentOrder.transitPort=result.data.transitPort
+                                this.currentOrder.qualityInspectionUnit=result.data.qualityInspectionUnit
+                                this.currentOrder.quantityInspectionUnit=result.data.quantityInspectionUnit
+                            }else{
 
-                    }
-                });
-                this.task.getOrder2InfoById(this.currentTask.financeId).then((result)=>{
-                    if (result.success){
-                        this.forwardTask = result.data;
+                            }
+                        });
                     }else{
 
                     }
