@@ -25,7 +25,6 @@ export class AuditSupervisorComponent {
 
     css = {
         isSubmitted : false,
-        isCommitted : false,
         ajaxErrorHidden : true,
         ajaxSuccessHidden : true,
         isReadOnly : false
@@ -39,7 +38,7 @@ export class AuditSupervisorComponent {
     currentOrder : Task = new Task();
     taskId : string = '';
     currentTask : Task = new Task();
-    isApprovedRadio : boolean = false;
+    isApprovedRadio : number;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -94,15 +93,7 @@ export class AuditSupervisorComponent {
         });
     }
 
-    finishedUpload (event) {
-        this.currentOrder.attachmentList.push({
-            "url": event.value.url,
-            "name": event.value.name,
-            "type": event.value.type,
-            "processInstanceId": this.currentTask.processInstanceId,
-            "taskId": this.currentTask.id
-        })
-    }
+
 
     audit (isAudit : boolean){
 
@@ -110,41 +101,53 @@ export class AuditSupervisorComponent {
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
 
-        let isApproved : boolean = false;
-        if (isAudit) {
-            isApproved = this.isApprovedRadio;
-        }
-        let auditType : string = '';
+
         let body : any = {
             t : {
-                submit : isAudit === true ? 1 : 0,
-                pass : isApproved === true ? 1 : 0,
-                need : 0,
-                need2 : 0
+                pass : this.isApprovedRadio,
+                need : 0
             },
             u : Object.assign({}, this.currentOrder)
         };
 
+        if (this.isApprovedRadio === 2) {
+            this.currentOrder.needSupplyMaterial = 1;
+            body.t.pass = 0;
+        }
 
+        let auditType : string = '';
         if (this.currentTask.taskDefinitionKey === TaskStatus.supervisorAudit) auditType = 'supervisor'; //监管员审核并填写材料
 
         if (this.currentTask.taskDefinitionKey && auditType) {
 
             this.task.audit(this.taskId, this.currentOrder.applyType, auditType, isAudit, body).then((result)=>{
                 if (result.success){
-                    if(isAudit){
-                        this.css.isCommitted = true;
+                    if(!isAudit){
+                        this.css.isSubmitted = false;
                     }
                     // this.getTaskInfo(this.taskId);
                     this.css.ajaxSuccessHidden = false;
                     setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                 }else{
+                    this.css.isSubmitted = false;
                     this.css.ajaxErrorHidden = false;
                     this.errorMsg = result.error.message;
                 }
-                this.css.isSubmitted = false;
+
             });
         }
+    }
+
+
+    finishedUpload (event) {
+        if (!this.currentOrder.attachmentList1) {this.currentOrder.attachmentList1 = []}
+        this.currentOrder.attachmentList1.push({
+            "url": event.value.url,
+            "name": event.value.name,
+            "type": event.value.type,
+            "processInstanceId": this.currentTask.processInstanceId,
+            "taskId": this.currentTask.id
+        })
     }
 
 

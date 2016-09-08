@@ -75,7 +75,7 @@ export class MaterialDetailComponent {
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
 
-        this.task.addMaterial(this.taskId, this.currentTask.applyType, 'salesman1', this.currentOrder.attachmentList).then((result)=>{
+        this.task.addMaterial(this.taskId, this.currentTask.applyType, 'salesman1', this.currentOrder.attachmentList1).then((result)=>{
             if (result.success){
 
                 this.css.ajaxSuccessHidden = false;
@@ -93,7 +93,7 @@ export class MaterialDetailComponent {
 
 
     finishedUpload (event) {
-        this.currentOrder.attachmentList.push({
+        this.currentOrder.attachmentList1.push({
             "url": event.value.url,
             "name": event.value.name,
             "type": event.value.type,

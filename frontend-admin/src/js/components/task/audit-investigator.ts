@@ -169,7 +169,8 @@ export class AuditInvestigatorComponent {
     }
 
     finishedUpload (event) {
-        this.currentOrder.attachmentList.push({
+        if (!this.currentOrder.attachmentList1) {this.currentOrder.attachmentList1 = []}
+        this.currentOrder.attachmentList1.push({
             "url": event.value.url,
             "name": event.value.name,
             "type": event.value.type,
