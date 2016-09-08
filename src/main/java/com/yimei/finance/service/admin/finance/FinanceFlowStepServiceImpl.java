@@ -39,7 +39,7 @@ public class FinanceFlowStepServiceImpl {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.onlineTraderAudit.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
         orderService.updateFinanceOrderByOnlineTrader(userId, financeOrder);
-        methodService.addAttachmentsMethod(financeOrder.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.OnlineTraderAuditAttachment);
+        methodService.addAttachmentsMethod(financeOrder.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.OnlineTraderAuditAttachment);
         if (submit) {
             if (taskMap.pass != 0 && taskMap.pass != 1) throw new BusinessException(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
@@ -66,7 +66,7 @@ public class FinanceFlowStepServiceImpl {
         salesmanInfo.setCreateManId(userId);
         salesmanInfo.setCreateTime(new Date());
         orderService.saveFinanceOrderSalesmanInfo(userId, salesmanInfo);
-        methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment);
+        methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment);
         if (submit) {
             if (taskMap.pass != 0 && taskMap.pass != 1) throw new BusinessException(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
