@@ -136,7 +136,7 @@
             </td>
         </tr>
         <tr *ngIf="currentOrder.applyType==='MYG'" class="item-min">
-            <td class="td-label">中转港口/地全称:</td>
+            <td class="td-label">中转港口全称:</td>
             <td colspan="3" class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.transferPort">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.transferPort}}</span>
