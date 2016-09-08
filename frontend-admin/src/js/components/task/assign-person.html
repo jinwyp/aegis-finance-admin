@@ -21,8 +21,8 @@
         <span class="col-sm-4 info-label-input" *ngIf="currentTask.taskDefinitionKey===taskStatusStep.assignInvestigator">选择你要分配的尽调员:</span>
         <span class="col-sm-4 info-label-input" *ngIf="currentTask.taskDefinitionKey===taskStatusStep.assignSupervisor">选择你要分配的监管员:</span>
         <span class="col-sm-4 info-label-input" *ngIf="currentTask.taskDefinitionKey===taskStatusStep.assignRiskManager">选择你要分配的风控员:</span>
-        <div class="col-sm-8 info-val">
-            <select class="form-control wd-30" [(ngModel)]="selectedUser" (ngModelChange)="selectUserChange()">
+        <div class="col-sm-4 info-val">
+            <select class="form-control" [(ngModel)]="selectedUser" (ngModelChange)="selectUserChange()">
                 <option *ngFor="let user of userList" [ngValue]="user">{{user.username}} - {{user.email}}</option>
             </select>
         </div>

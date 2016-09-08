@@ -28,6 +28,8 @@ export class MaterialDetailComponent {
         isReadOnly : false
     };
 
+    errorMsg = '';
+
     taskId : string = '';
 
     currentTask : Task = new Task();
@@ -69,18 +71,20 @@ export class MaterialDetailComponent {
 
     save ( isAudit : boolean) {
 
+        this.css.ajaxErrorHidden = true;
+        this.css.ajaxSuccessHidden = true;
+        this.css.isSubmitted = true;
+
         this.task.addMaterial(this.taskId, this.currentTask.applyType, 'salesman1', this.currentOrder.attachmentList).then((result)=>{
             if (result.success){
-                // if(!isAudit){
-                //     this.css.isSubmitted = false;
-                // }
-                // this.css.ajaxSuccessHidden = false;
-                setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
+
+                this.css.ajaxSuccessHidden = false;
+                setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
             }else{
 
-                // this.css.isSubmitted = false;
-                // this.css.ajaxErrorHidden=false;
-                // this.errorMsg = result.error.message;
+                this.css.isSubmitted = false;
+                this.css.ajaxErrorHidden = false;
+                this.errorMsg = result.error.message;
             }
 
         });
