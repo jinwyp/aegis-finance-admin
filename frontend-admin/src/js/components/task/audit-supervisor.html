@@ -15,9 +15,9 @@
     <div class="apply-title">
         <span>监管报告</span>
         <div>
-            <a>查看申请材料</a>
+            <a [routerLink]="['/tasks', currentTask.id, 'trader']">查看申请材料</a>
             <span class="line"></span>
-            <a>查看业务审批</a>
+            <a [routerLink]="['/tasks', currentTask.id, 'salesman']">查看审批业务</a>
         </div>
     </div>
 
