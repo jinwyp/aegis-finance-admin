@@ -51,19 +51,15 @@ export class AuditTraderComponent {
 
 
     ngOnInit(){
-        this.activatedRoute.data.subscribe( data => {
-            this.routeData = data;
-            this.css.isReadOnly = this.routeData.routeType==='info';
-        });
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.taskId = params['id'];
             this.getTaskInfo(params['id']);
         });
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
-            if (this.routeData.routeType === 'info') {this.css.isReadOnly = true;}
-
-
+            if (this.routeData.routeType === 'traderInfo') {
+                this.css.isReadOnly = true;
+            }
         });
 
         this.getCurrentUser();
@@ -122,6 +118,10 @@ export class AuditTraderComponent {
         let isApproved : boolean = false;
         if (isAudit) {
             isApproved = this.isApprovedRadio;
+            if(!isApproved){
+                this.css.ajaxErrorHidden = false;
+                this.errorMsg = '请勾选审核意见'
+            }
         }
         let auditType : string = '';
         let body : any = {

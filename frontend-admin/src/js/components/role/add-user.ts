@@ -4,7 +4,7 @@
 
 
 import {Component} from '@angular/core';
-import {ActivatedRoute}      from '@angular/router';
+import {ActivatedRoute, Router}      from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 
 import {User, UserService, UserGroupService} from '../../service/user';
@@ -20,7 +20,10 @@ declare var __moduleName:string;
 })
 export class AddUserComponent {
 
+    private sub:Subscription;
+
     constructor(
+        private router : Router,
         private activatedRoute: ActivatedRoute,
         private userService: UserService,
         private groupService:UserGroupService
@@ -37,8 +40,6 @@ export class AddUserComponent {
     errorMsg = '';
 
     userId : string ='';
-
-    private sub:Subscription;
     currentUser = new User();
 
     groups       = [];
@@ -123,7 +124,8 @@ export class AddUserComponent {
                 this.css.isSubmitted     = false;
                 if (result.success) {
                     this.css.ajaxSuccessHidden=false;
-                    setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
+                    this.router.navigate(['/users']);
+                    // setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 } else {
                     this.css.ajaxErrorHidden = false;
                     this.errorMsg = result.error.message;
