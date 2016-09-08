@@ -33,20 +33,22 @@
 
         </tr>
         <tr class="item-max">
-            <td class="td-label">仓储地名称:</td>
-            <td width="250" class="td-val">{{currentTask.storagePlaceName || '--'}}</td>
+            <td class="td-label">煤炭仓储地:</td>
+            <td width="250" class="td-val">{{currentOrder.storageLocation || '--'}}</td>
             <td class="td-label">仓库性质:</td>
             <td class="td-val">
-                <!--<input type="text" [(ngModel)]="currentTask.storageProperty">-->
-                {{currentTask.storageProperty || '--'}}
+                <input type="text" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentTask.storageProperty">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageProperty}}</span>
+                <!--{{currentTask.storageProperty || '&#45;&#45;'}}-->
             </td>
         </tr>
         <tr class="item-max">
 
             <td class="td-label">仓库地址:</td>
             <td class="td-val" colspan="3">
-                <!--<input type="text" [(ngModel)]="currentTask.storageAddress">-->
-                {{currentTask.storageAddress || '--'}}
+                <input type="text" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentTask.storageAddress">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageAddress}}</span>
+                <!--{{currentTask.storageAddress || '&#45;&#45;'}}-->
             </td>
         </tr>
 

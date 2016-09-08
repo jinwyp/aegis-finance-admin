@@ -102,13 +102,13 @@ var taskStatusList = [
     },
     {
         'id': '26',
-        'name': '待尽调员补充风控材料',
-        'taskDefinitionKey' : 'investigatorSupplyRiskMaterial'
+        'name': '待业务员补充风控材料',
+        'taskDefinitionKey' : 'salesmanSupplyRiskManagerMaterial'
     },
     {
         'id': '27',
-        'name': '待监管员补充风控材料',
-        'taskDefinitionKey' : 'supervisorSupplyRiskMaterial'
+        'name': '待业务员补充风控材料',
+        'taskDefinitionKey' : 'salesmanSupplyRiskManagerMaterial'
     },
     {
         'id': '28',

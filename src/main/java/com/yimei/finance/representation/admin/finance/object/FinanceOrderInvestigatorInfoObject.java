@@ -80,7 +80,8 @@ public class FinanceOrderInvestigatorInfoObject extends BaseEntity implements Se
     private String supplyMaterialIntroduce;                          //补充材料说明
     private String approveState;                                     //审批状态
     private Integer approveStateId;                                  //审批状态Id  0:审核不通过, 1:审核通过
-    List<AttachmentObject> attachmentList;                           //附件列表
+    List<AttachmentObject> attachmentList1;                          //附件列表
+    List<AttachmentObject> attachmentList2;                          //补充材料/附件列表
 
 
 }

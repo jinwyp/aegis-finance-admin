@@ -80,11 +80,11 @@
             </td>
         </tr>
         <tr class="item-title">
-            <td colspan="4"><span class="fs-16">需要补充材料:</span></td>
+            <td colspan="4"><span class="fs-16">是否需要补充材料的说明:</span></td>
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="3" placeholder="请输入" *ngIf="!css.isReadOnly"></textarea>
+                <textarea class="form-control" rows="3" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
                 <span class="span-read" *ngIf="css.isReadOnly"></span>
             </td>
         </tr>
@@ -94,8 +94,9 @@
         <tr class="item-title">
             <td colspan="4">
                 <span>审核意见:</span>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="true">通过</label>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="false">不通过</label>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="1">通过</label>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="0">不通过</label>
+                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="2">让业务员补充材料</label>
             </td>
         </tr>
     </table>

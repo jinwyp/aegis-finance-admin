@@ -102,12 +102,12 @@ public class FinanceOrderServiceImpl {
 
     public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, List<EnumFinanceAttachment> typeList) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
-        for (EnumFinanceAttachment attachment: typeList) {
-            List<Task> tasks = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).list();
+        for (EnumFinanceAttachment attachment : typeList) {
+            List<Task> tasks = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type.toString()).list();
             for (Task t : tasks) {
                 List<Attachment> attachments = taskService.getTaskAttachments(t.getId());
                 if (attachments != null && attachments.size() != 0) {
-                    attachmentList.addAll(DozerUtils.copy(taskService.getTaskAttachments(t.getId()), AttachmentObject.class));
+                    attachmentList.addAll(DozerUtils.copy(attachments, AttachmentObject.class));
                 }
             }
         }
@@ -124,7 +124,7 @@ public class FinanceOrderServiceImpl {
     public Result findById(Long id, List<EnumFinanceAttachment> typeList) {
         FinanceOrderObject financeOrderObject = DozerUtils.copy(orderRepository.findOne(id), FinanceOrderObject.class);
         if (financeOrderObject == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        financeOrderObject.setAttachmentList(getAttachmentByFinanceIdType(id, typeList));
+        financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdType(id, typeList));
         return Result.success().setData(financeOrderObject);
     }
 
@@ -134,7 +134,7 @@ public class FinanceOrderServiceImpl {
     public Result findSalesmanInfoByFinanceId(Long financeId, List<EnumFinanceAttachment> typeList) {
         FinanceOrderSalesmanInfoObject salesmanInfoObject = DozerUtils.copy(salesmanRepository.findByFinanceId(financeId), FinanceOrderSalesmanInfoObject.class);
         if (salesmanInfoObject != null) {
-            salesmanInfoObject.setAttachmentList(getAttachmentByFinanceIdType(financeId, typeList));
+            salesmanInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, typeList));
         }
         return Result.success().setData(salesmanInfoObject);
     }
@@ -142,10 +142,11 @@ public class FinanceOrderServiceImpl {
     /**
      * 获取尽调员填写信息详细
      */
-    public Result findInvestigatorInfoByFinanceId(Long financeId, List<EnumFinanceAttachment> typeList) {
+    public Result findInvestigatorInfoByFinanceId(Long financeId, List<EnumFinanceAttachment> typeList1, List<EnumFinanceAttachment> typeList2) {
         FinanceOrderInvestigatorInfoObject investigatorInfoObject = DozerUtils.copy(investigatorRepository.findByFinanceId(financeId), FinanceOrderInvestigatorInfoObject.class);
         if (investigatorInfoObject != null) {
-            investigatorInfoObject.setAttachmentList(getAttachmentByFinanceIdType(financeId, typeList));
+            investigatorInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, typeList1));
+            investigatorInfoObject.setAttachmentList2(getAttachmentByFinanceIdType(financeId, typeList2));
         }
         return Result.success().setData(investigatorInfoObject);
     }
@@ -153,10 +154,11 @@ public class FinanceOrderServiceImpl {
     /**
      * 获取监管员填写信息详细
      */
-    public Result findSupervisorInfoByFinanceId(Long financeId, List<EnumFinanceAttachment> typeList) {
+    public Result findSupervisorInfoByFinanceId(Long financeId, List<EnumFinanceAttachment> typeList1, List<EnumFinanceAttachment> typeList2) {
         FinanceOrderSupervisorInfoObject supervisorInfoObject = DozerUtils.copy(supervisorRepository.findByFinanceId(financeId), FinanceOrderSupervisorInfoObject.class);
         if (supervisorInfoObject != null) {
-            supervisorInfoObject.setAttachmentList(getAttachmentByFinanceIdType(financeId, typeList));
+            supervisorInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, typeList1));
+            supervisorInfoObject.setAttachmentList2(getAttachmentByFinanceIdType(financeId, typeList2));
         }
         return Result.success().setData(supervisorInfoObject);
     }
@@ -164,10 +166,11 @@ public class FinanceOrderServiceImpl {
     /**
      * 获取风控人员填写信息详细
      */
-    public Result findRiskManagerInfoByFinanceId(Long financeId, List<EnumFinanceAttachment> typeList) {
+    public Result findRiskManagerInfoByFinanceId(Long financeId, List<EnumFinanceAttachment> typeList1, List<EnumFinanceAttachment> typeList2) {
         FinanceOrderRiskManagerInfoObject riskManagerInfoObject = DozerUtils.copy(riskRepository.findByFinanceId(financeId), FinanceOrderRiskManagerInfoObject.class);
         if (riskManagerInfoObject != null) {
-            riskManagerInfoObject.setAttachmentList(getAttachmentByFinanceIdType(financeId, typeList));
+            riskManagerInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, typeList1));
+            riskManagerInfoObject.setAttachmentList2(getAttachmentByFinanceIdType(financeId, typeList2));
         }
         return Result.success().setData(riskManagerInfoObject);
     }
