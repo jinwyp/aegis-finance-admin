@@ -100,7 +100,7 @@ public class FinanceOrderObject extends BaseEntity implements Serializable {
     private String applyUserPhone;                                   //申请人手机号
     private String applyCompanyName;                                 //申请公司名称
     private Date endTime;                                            //结束时间
-    private List<AttachmentObject> attachmentList;                   //附件列表
+    private List<AttachmentObject> attachmentList1;                  //附件列表
 
     public String getApplyTypeName() {
         if (StringUtils.isEmpty(applyType)) {
