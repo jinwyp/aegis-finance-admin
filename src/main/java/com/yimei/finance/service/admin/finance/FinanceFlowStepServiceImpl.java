@@ -114,7 +114,7 @@ public class FinanceFlowStepServiceImpl {
         investigatorInfo.setCreateManId(userId);
         investigatorInfo.setCreateTime(new Date());
         orderService.saveFinanceOrderInvestigatorInfo(userId, investigatorInfo);
-        methodService.addAttachmentsMethod(investigatorInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorAuditAttachment);
+        methodService.addAttachmentsMethod(investigatorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
@@ -161,7 +161,7 @@ public class FinanceFlowStepServiceImpl {
         supervisorInfo.setCreateManId(userId);
         supervisorInfo.setCreateTime(new Date());
         orderService.saveFinanceOrderSupervisorInfo(userId, supervisorInfo);
-        methodService.addAttachmentsMethod(supervisorInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorAuditAttachment);
+        methodService.addAttachmentsMethod(supervisorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
@@ -208,7 +208,7 @@ public class FinanceFlowStepServiceImpl {
         riskManagerInfo.setCreateManId(userId);
         riskManagerInfo.setCreateTime(new Date());
         orderService.saveFinanceOrderRiskManagerInfo(userId, riskManagerInfo);
-        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment);
+        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();

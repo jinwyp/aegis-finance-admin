@@ -41,7 +41,8 @@ public class FinanceOrderRiskManagerInfoObject extends BaseEntity implements Ser
     private int editContract;                                        //编辑合同     1: 需要编辑, 0: 不需要编辑
     private Integer approveStateId;                                  //审批状态Id  0:审核不通过, 1:审核通过
     private String approveState;                                     //审批状态
-    List<AttachmentObject> attachmentList;                           //附件列表
+    List<AttachmentObject> attachmentList1;                          //附件列表
+    List<AttachmentObject> attachmentList2;                          //补充材料/附件列表
 
 
 }
