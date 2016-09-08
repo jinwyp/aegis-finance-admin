@@ -16,10 +16,9 @@ public enum EnumMYRFinanceAllSteps {
     Wait_SupplyMaterial_Salesman(20, "待业务员补充尽调材料"),
     Audit_NotPass_Investigator(22, "尽调员审核不通过"),
     Wait_Assign_RiskManager(24, "待分配风控人员"),
-    Wait_SupplyRiskMaterial_Investigator(26, "待尽调员补充风控材料"),
+    Wait_SupplyRiskMaterial_Salesman(26, "待业务员补充风控材料"),
     Audit_NotPass_RiskManager(28, "风控人员审核不通过"),
-    Audit_Pass_RiskManagerContract(30, "风控人员填写合同模板并通知用户"),
-    Complete_WorkFlow_Success(32, "审核通过,流程完成"),
+    Complete_WorkFlow_Success(30, "审核通过,流程完成"),
     ;
 
     public int id;

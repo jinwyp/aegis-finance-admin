@@ -43,7 +43,6 @@ public class MYDFinancingController {
     @Autowired
     private FinanceOrderRepository orderRepository;
 
-
     @RequestMapping( value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "线上交易员填写材料-保存", notes = "线上交易员填写材料-保存", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
@@ -158,26 +157,15 @@ public class MYDFinancingController {
         return flowStepService.supervisorAuditFinanceOrderMethod(adminSession.getUser().getId(), taskMap, supervisorInfoObject, object.t, object.u, submit);
     }
 
-    @RequestMapping(value = "/investigator/supply/riskmanager/material/{taskId}", method = RequestMethod.POST)
-    @ApiOperation(value = "尽调员补充风控材料", notes = "尽调员补充风控人员要求的材料")
+    @RequestMapping(value = "/salesman/supply/riskmanager/material/{taskId}", method = RequestMethod.POST)
+    @ApiOperation(value = "业务员补充风控材料", notes = "业务员补充风控人员要求的材料")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
-    public Result mydInvestigatorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
-                                                                 @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
+    public Result mydSalesmanSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
+                                                             @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYDMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.investigatorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, object.u);
-    }
-
-    @RequestMapping(value = "/supervisor/supply/riskmanager/material/{taskId}", method = RequestMethod.POST)
-    @ApiOperation(value = "监管员补充风控材料", notes = "监管员补充风控人员要求的材料")
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
-    public Result mydSupervisorSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
-                                                               @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
-        Result result = checkMYDMethod(taskId);
-        if (!result.isSuccess()) return result;
-        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        return flowStepService.supervisorSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, object.u);
+        return flowStepService.salesmanSupplyRiskMaterialFinanceOrderMethod(adminSession.getUser().getId(), attachmentList, object.t, object.u);
     }
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})

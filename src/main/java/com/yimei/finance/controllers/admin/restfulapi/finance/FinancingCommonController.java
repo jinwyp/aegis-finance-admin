@@ -95,7 +95,7 @@ public class FinancingCommonController {
     @ApiOperation(value = "通过 金融单id 查看风控人员填写表单详细信息", notes = "通过 金融单id 查看风控人员填写表单详细信息", response = FinanceOrderRiskManagerInfo.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderRiskManagerInfoByFinanceIdMethod(@PathVariable("financeId") Long financeId) {
-        return orderService.findRiskManagerInfoByFinanceId(financeId, Arrays.asList(new EnumFinanceAttachment[]{EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.InvestigatorSupplyRiskAttachment, EnumFinanceAttachment.SupervisorSupplyRiskAttachment}));
+        return orderService.findRiskManagerInfoByFinanceId(financeId, Arrays.asList(new EnumFinanceAttachment[]{EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.SalesmanSupplyAttachment_RiskManager}));
     }
 
     @RequestMapping(value = "/finance/{financeId}/tasks", method = RequestMethod.GET)

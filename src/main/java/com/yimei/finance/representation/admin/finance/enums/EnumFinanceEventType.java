@@ -11,9 +11,7 @@ public enum EnumFinanceEventType {
     supervisorAudit("监管员审核"),
     salesmanSupplySupervisionMaterial("业务员补充监管材料"),
     riskManagerAudit("风控人员审核"),
-    riskManagerAuditSuccess("风控审核通过,填写合同模板,通知用户"),
-    investigatorSupplyRiskMaterial("尽调员补充风控材料"),
-    supervisorSupplyRiskMaterial("监管员补充风控材料"),
+    salesmanSupplyRiskManagerMaterial("业务员补充风控材料"),
     ;
 
     public String name;

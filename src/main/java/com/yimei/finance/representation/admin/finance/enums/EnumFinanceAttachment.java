@@ -9,9 +9,8 @@ public enum EnumFinanceAttachment {
     SalesmanSupplyAttachment_Investigator(EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString(), "业务员补充尽调员材料"),
     SalesmanSupplyAttachment_Supervisor(EnumFinanceEventType.salesmanSupplySupervisionMaterial.toString(), "业务员补充监管员材料"),
     InvestigatorAuditAttachment(EnumFinanceEventType.investigatorAudit.toString(), "尽调员审核附件"),
-    InvestigatorSupplyRiskAttachment(EnumFinanceEventType.investigatorSupplyRiskMaterial.toString(), "尽调员补充风控材料"),
     SupervisorAuditAttachment(EnumFinanceEventType.supervisorAudit.toString(), "监管员审核附件"),
-    SupervisorSupplyRiskAttachment(EnumFinanceEventType.supervisorSupplyRiskMaterial.toString(), "监管员补充风控材料"),
+    SalesmanSupplyAttachment_RiskManager(EnumFinanceEventType.salesmanSupplyRiskManagerMaterial.toString(), "业务员补充风控材料"),
     RiskManagerAuditAttachment(EnumFinanceEventType.riskManagerAudit.toString(), "风控人员审核附件"),
 
     ;

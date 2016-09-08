@@ -175,26 +175,12 @@ public class FinanceFlowStepServiceImpl {
     }
 
     /**
-     * 尽调员补充风控人员材料
+     * 业务员补充风控人员材料
      */
-    public Result investigatorSupplyRiskMaterialFinanceOrderMethod(String userId, List<AttachmentObject> attachmentList, Task task, Long financeId) {
-        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.investigatorSupplyRiskMaterial.toString()))
+    public Result salesmanSupplyRiskMaterialFinanceOrderMethod(String userId, List<AttachmentObject> attachmentList, Task task, Long financeId) {
+        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanSupplyRiskManagerMaterial.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行尽调员补充风控人员要求的材料操作.toString());
-        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorSupplyRiskAttachment);
-        return supplyRiskMaterialFinanceOrderMethod(userId, task, financeId);
-    }
-
-    /**
-     * 监管员补充风控人员材料
-     */
-    public Result supervisorSupplyRiskMaterialFinanceOrderMethod(String userId, List<AttachmentObject> attachmentList, Task task, Long financeId) {
-        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.supervisorSupplyRiskMaterial.toString()))
-            return Result.error(EnumAdminFinanceError.此任务不能进行监管员补充风控人员要求的材料操作.toString());
-        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorSupplyRiskAttachment);
-        return supplyRiskMaterialFinanceOrderMethod(userId, task, financeId);
-    }
-
-    private Result supplyRiskMaterialFinanceOrderMethod(String userId, Task task, Long financeId) {
+        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanSupplyAttachment_RiskManager);
         taskService.complete(task.getId());
         Result result1 = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
         if (!result1.isSuccess()) return result1;
@@ -214,31 +200,20 @@ public class FinanceFlowStepServiceImpl {
         orderService.saveFinanceOrderRiskManagerInfo(userId, riskManagerInfo);
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment);
         if (submit) {
-            if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.need2 != 0 && taskMap.need2 != 1) || (taskMap.pass != 0 && taskMap.pass != 1))
+            if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1))
                 return Result.error(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
-            vars.put(EnumFinanceConditions.needInvestigatorSupplyRiskMaterial.toString(), taskMap.need);
-            vars.put(EnumFinanceConditions.needSupervisorSupplyRiskMaterial.toString(), taskMap.need2);
-            if (taskMap.need == 0 && taskMap.need2 == 0) {
-                vars.put(EnumFinanceConditions.riskManagerAudit.toString(), taskMap.pass);
+            vars.put(EnumFinanceConditions.needSalesmanSupplyRiskManagerMaterial.toString(), taskMap.need);
+            if (taskMap.need == 0) {
+                vars.put(EnumFinanceEventType.riskManagerAudit.toString(), taskMap.pass);
             }
             taskService.complete(task.getId(), vars);
-            if (taskMap.need == 1 || taskMap.need2 == 1) {
+            if (taskMap.need == 1) {
                 Result result = methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
                 if (!result.isSuccess()) return result;
-                if (taskMap.need == 1) {
-                    Result result1 = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
-                    if (!result1.isSuccess()) return result1;
-                    Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorSupplyRiskMaterial.toString(), String.valueOf(result1.getData()));
-                    if (!result2.isSuccess()) return result2;
-                }
-                if (taskMap.need2 == 1) {
-                    Result result1 = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString());
-                    if (!result1.isSuccess()) return result1;
-                    Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.supervisorSupplyRiskMaterial.toString(), String.valueOf(result1.getData()));
-                    if (!result2.isSuccess()) return result2;
-                }
-                return Result.success();
+                Result result1 = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
+                if (!result1.isSuccess()) return result1;
+                return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplyRiskManagerMaterial.toString(), String.valueOf(result1.getData()));
             } else if (taskMap.pass == 1) {
                 return methodService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditPass, userId);
             } else {
