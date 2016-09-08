@@ -144,6 +144,7 @@ export class AuditRiskManagerComponent {
 
 
     finishedUpload (event) {
+        if (!this.currentOrder.attachmentList1) {this.currentOrder.attachmentList1 = []}
         this.currentOrder.attachmentList1.push({
             "url": event.value.url,
             "name": event.value.name,
