@@ -336,6 +336,21 @@ class TaskService {
         .catch(GlobalPromiseHttpCatch);
     }
 
+    getOrder2InfoById(orderId : number, taskStep : string = 'onlinetrader') {
+
+        let auditStep = {
+            onlinetrader : '',
+            salesman : '/salesman',
+            investigator : '/investigator',
+            supervisor : '/supervisor',
+            riskmanager : '/riskmanager'
+        };
+
+        return this.http.get(API.orders + '/' + orderId + auditStep[taskStep]).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(GlobalPromiseHttpCatch);
+    }
+
 
     assignPerson(taskId : string, userId : string) {
 
