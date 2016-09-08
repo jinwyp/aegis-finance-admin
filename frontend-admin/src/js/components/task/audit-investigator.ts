@@ -44,6 +44,7 @@ export class AuditInvestigatorComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
+    forwardTask : Task = new Task();
 
     isApprovedRadio : number;
 
@@ -92,6 +93,13 @@ export class AuditInvestigatorComponent {
                 this.task.getOrderInfoById(this.currentTask.financeId, 'investigator').then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
+                    }else{
+
+                    }
+                });
+                this.task.getOrderInfoById(this.currentTask.financeId, 'onlinetrader').then((result)=>{
+                    if (result.success){
+                        this.forwardTask = result.data;
                     }else{
 
                     }
