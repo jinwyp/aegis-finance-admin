@@ -36,5 +36,9 @@ public class FinanceOrderRiskManagerInfo extends BaseEntity implements Serializa
     private String supplyMaterialIntroduce;                          //补充材料说明
     @Column(name = "edit_contract", length = 1, nullable = false)
     private int editContract;                                        //编辑合同     1: 需要编辑, 0: 不需要编辑
+    @Column(name = "approve_state", length = 30, nullable = false)
+    private String approveState;                                     //审批状态
+    @Column(name = "approve_state_id", length = 3, nullable = false)
+    private int approveStateId;                                      //审批状态Id
 
 }

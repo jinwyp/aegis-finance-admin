@@ -80,7 +80,6 @@ public class UserController {
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
-
     @ApiOperation(value = "查询当前用户有权限操作的组列表", notes = "查询当前用户有权限操作的组列表", response = GroupObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     @RequestMapping(value = "/self/groups", method = RequestMethod.GET)
@@ -96,9 +95,9 @@ public class UserController {
         return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.financedepartment.toString()));
     }
 
-    @Transactional
     @ApiOperation(value = "创建用户", notes = "根据User对象创建用户", response = UserObject.class)
     @RequestMapping(method = RequestMethod.POST)
+    @Transactional
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true) @Validated(value = {CreateUser.class}) @RequestBody UserObject user) {
         Result result = userService.checkAddUserGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
         if (!result.isSuccess()) return result;
@@ -142,6 +141,7 @@ public class UserController {
     @ApiOperation(value = "修改用户信息", notes = "根据 User Id修改用户", response = UserObject.class)
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
+    @Transactional
     public Result updateUserInfoMethod(@PathVariable("id") String id,
                                        @ApiParam(name = "user", value = "用户对象", required = true) @Validated(value = {EditUser.class}) @RequestBody UserObject user) {
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());

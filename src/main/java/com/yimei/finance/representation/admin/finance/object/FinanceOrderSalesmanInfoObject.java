@@ -34,6 +34,8 @@ public class FinanceOrderSalesmanInfoObject extends BaseEntity implements Serial
 
     @Size(max = 500, message = "补充材料说明不能超过 {max} 个字符", groups = {SaveFinanceSalesmanInfo.class, SubmitFinanceSalesmanInfo.class})
     private String supplyMaterialIntroduce;                          //补充材料说明
+    private String approveState;                                     //审批状态
+    private Integer approveStateId;                                  //审批状态Id  0:审核不通过, 1:审核通过
     private List<AttachmentObject> attachmentList;                   //附件列表
 
 }
