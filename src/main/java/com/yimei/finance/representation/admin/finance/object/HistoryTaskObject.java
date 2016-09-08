@@ -1,5 +1,6 @@
 package com.yimei.finance.representation.admin.finance.object;
 
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -7,6 +8,7 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 import java.util.Date;
 
+@ApiModel(description = "历史任务对象")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

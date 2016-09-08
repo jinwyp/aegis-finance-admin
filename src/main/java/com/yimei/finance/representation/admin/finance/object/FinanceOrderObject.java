@@ -4,6 +4,7 @@ import com.yimei.finance.entity.common.BaseEntity;
 import com.yimei.finance.representation.admin.finance.object.validated.CreateFinanceOrder;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceOrder;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceOrder;
+import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,6 +21,7 @@ import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
 
+@ApiModel(description = "金融单对象")
 @Data
 @NoArgsConstructor
 @AllArgsConstructor

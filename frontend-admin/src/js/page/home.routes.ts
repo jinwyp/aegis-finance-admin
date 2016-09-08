@@ -41,56 +41,56 @@ const routes: Routes = [
     {
         path: 'userroles',
         component: RoleListComponent,
-        data: { routeType : 'list', title: 'User Role List' }
+        data: { routeType : 'list', title: '用户角色列表' }
     },
     {
         path: 'userroles/add',
         component: AddRoleComponent,
-        data: { routeType : 'add', title: 'User Role Add' }
+        data: { routeType : 'add', title: '用户角色 - 添加' }
     },
     {
         path: 'userroles/:id',
         component: RoleInfoComponent,
-        data: { routeType : 'info', title: 'User Role Info'}
+        data: { routeType : 'info', title: '用户角色 - 查看角色信息'}
     },
     {
         path: 'userroles/:id/edit',
         component: AddRoleComponent,
-        data: { routeType : 'update',  title: 'User Role Edit'}
+        data: { routeType : 'update',  title: '用户角色 - 编辑'}
     },
 
     {
         path: 'users',
         component: UserListComponent,
-        data: { routeType : 'list', title: 'User List' }
+        data: { routeType : 'list', title: '用户列表' }
     },
     {
         path: 'users/add',
         component: AddUserComponent,
-        data: { routeType : 'add', title: 'User Add' }
+        data: { routeType : 'add', title: '用户 - 添加' }
     },
     {
         path: 'users/:id',
         component: UserInfoComponent,
-        data: { routeType : 'list', title: 'User Info'}
+        data: { routeType : 'list', title: '用户 - 查看信息'}
     },
     {
         path: 'users/:id/edit',
         component: AddUserComponent,
-        data: { routeType : 'edit', title: 'User Edit' }
+        data: { routeType : 'edit', title: '用户 - 编辑' }
     },
 
 
     {
         path: 'tasks/pending',
         component: TaskListComponent,
-        data: { routeType : 'pending', title: 'User Pending Tasks' }
+        data: { routeType : 'pending', title: '待办任务' }
     },
 
     {
         path: 'tasks/all',
         component: TaskListComponent,
-        data: {routeType : 'all', title: 'User All Tasks' }
+        data: {routeType : 'all', title: '全部任务' }
     },
 
     {
@@ -136,27 +136,27 @@ const routes: Routes = [
     {
         path: 'tasks/:id/trader/info',
         component: AuditTraderComponent,
-        data: { routeType : 'info' }
+        data: { routeType : 'traderInfo', title: '任务 - 查看详情' }
     },
     {
         path: 'tasks/:id/salesman/info',
         component: AuditSalesmanComponent,
-        data: { routeType : 'info' }
+        data: { routeType : 'salesmanInfo', title: '任务 - 查看详情' }
     },
     {
         path: 'tasks/:id/investigator/info',
         component: AuditInvestigatorComponent,
-        data: { routeType : 'info' }
+        data: { routeType : 'investigatorInfo', title: '任务 - 查看详情' }
     },
     {
         path: 'tasks/:id/supervisor/info',
         component: AuditSupervisorComponent,
-        data: { routeType : 'info' }
+        data: { routeType : 'supervisorInfo', title: '任务 - 查看详情' }
     },
     {
         path: 'tasks/:id/riskmanager/info',
         component: AuditRiskManagerComponent,
-        data: { routeType : 'info' }
+        data: { routeType : 'riskmanagerInfo', title: '任务 - 查看详情' }
     },
     {
         path: '**',
