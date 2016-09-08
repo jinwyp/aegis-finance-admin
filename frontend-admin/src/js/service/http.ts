@@ -91,6 +91,6 @@ let GlobalObservableHttpCatch = (error: any) => {
 };
 
 
-let headers = new Headers({'Content-Type': 'application/json'});
+let GlobalHeaders = new Headers({'Content-Type': 'application/json'});
 
-export {HttpResponse, API, GlobalPromiseHttpCatch, GlobalObservableHttpCatch, headers}
+export {HttpResponse, API, GlobalPromiseHttpCatch, GlobalObservableHttpCatch, GlobalHeaders}

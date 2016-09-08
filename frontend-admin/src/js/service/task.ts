@@ -8,7 +8,7 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
 
-import {GlobalPromiseHttpCatch, Headers, HttpResponse, API } from './http';
+import {GlobalPromiseHttpCatch, GlobalHeaders, HttpResponse, API } from './http';
 
 
 var taskStatusList = [
@@ -379,7 +379,7 @@ class TaskService {
             sendData = body.u;
         }
 
-        return this.http.post(url, JSON.stringify(sendData), {headers: Headers}).toPromise()
+        return this.http.post(url, JSON.stringify(sendData), {headers: GlobalHeaders}).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }
@@ -404,7 +404,7 @@ class TaskService {
         let url = auditType[taskType] + auditStep[taskStep] + taskId;
 
 
-        return this.http.post(url, JSON.stringify(attachmentList), {headers: Headers}).toPromise()
+        return this.http.post(url, JSON.stringify(attachmentList), {headers: GlobalHeaders}).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }

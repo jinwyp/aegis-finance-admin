@@ -27,8 +27,7 @@ export class AuditTraderComponent {
         isReadOnly : false,
         isSubmitted : false,
         ajaxErrorHidden : true,
-        ajaxSuccessHidden : true,
-        isReadOnly : false
+        ajaxSuccessHidden : true
     };
     routeData :any = {
         routeType : '',
@@ -43,9 +42,6 @@ export class AuditTraderComponent {
     currentOrder : Task = new Task();
     isApprovedRadio : boolean ;
 
-    routeData :any = {
-        routeType : ''
-    };
 
     constructor(
         private activatedRoute: ActivatedRoute,
