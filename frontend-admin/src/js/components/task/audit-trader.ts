@@ -118,7 +118,6 @@ export class AuditTraderComponent {
         let auditType : string = '';
         let body : any = {
             t : {
-                submit : isAudit === true ? 1 : 0,
                 pass : this.isApprovedRadio,
                 need : 0,
                 need2 : 0
@@ -131,7 +130,7 @@ export class AuditTraderComponent {
 
         if (this.currentTask.taskDefinitionKey && auditType) {
 
-            this.task.audit(this.taskId, this.currentOrder.applyType, auditType, body).then((result)=>{
+            this.task.audit(this.taskId, this.currentOrder.applyType, auditType, isAudit, body).then((result)=>{
                 if (result.success){
                     if(!isAudit){
                         this.css.isSubmitted = false;

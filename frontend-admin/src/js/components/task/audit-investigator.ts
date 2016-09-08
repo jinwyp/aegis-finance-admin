@@ -96,7 +96,7 @@ export class AuditInvestigatorComponent {
 
                     }
                 });
-                this.task.getOrderInfoById(this.currentTask.financeId, 'onlinetrader').then((result)=>{
+                this.task.getOrder2InfoById(this.currentTask.financeId).then((result)=>{
                     if (result.success){
                         this.currentOrder.applyCompanyName=result.data.applyCompanyName
                         this.currentOrder.ourContractCompany=result.data.ourContractCompany
@@ -127,46 +127,37 @@ export class AuditInvestigatorComponent {
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
 
-        let isApproved : boolean = false;
 
-        if (this.isApprovedRadio === 1) {
-            isApproved = true;
-        }
-
-        let auditType : string = '';
         let body : any = {
             t : {
-                submit : isAudit === true ? 1 : 0,
-                pass : isApproved === true ? 1 : 0,
-                need : this.isApprovedRadio === 2 ? 1 : 0,
-                need2 : this.isApprovedRadio === 3 ? 1 : 0
+                pass : this.isApprovedRadio,
+                need : this.isApprovedRadio === 2 ? 1 : 0
             },
             u : this.currentOrder
         };
 
-        if (this.isApprovedRadio === 4) {
-            body.t.need = 1;
-            body.t.need2 = 0;
+        if (this.isApprovedRadio === 2) {
             this.currentOrder.needSupplyMaterial = 1;
+            body.t.pass = 0;
         }
 
+        let auditType : string = '';
         if (this.currentTask.taskDefinitionKey === TaskStatus.investigatorAudit) auditType = 'investigator'; // 尽调员审核
 
         if (this.currentTask.taskDefinitionKey && auditType) {
-            this.task.audit(this.taskId, this.currentTask.applyType, auditType, body).then((result)=>{
+            this.task.audit(this.taskId, this.currentTask.applyType, auditType, isAudit, body).then((result)=>{
                 if (result.success){
                     if(!isAudit){
                         this.css.isSubmitted = false;
                     }
                     this.css.ajaxSuccessHidden = false;
-                    setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
+                    setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                 }else{
 
                     this.css.isSubmitted = false;
                     this.css.ajaxErrorHidden=false;
                     this.errorMsg = result.error.message;
                 }
-
             });
         }
 
