@@ -59,7 +59,6 @@ public class MYDFinancingController {
                                                            @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SubmitFinanceOrder.class}) @RequestBody CombineObject<TaskMap, FinanceOrderObject> map) {
         return onlineTraderAddMaterialMethod(taskId, map.t, map.u, true);
     }
-
     private Result onlineTraderAddMaterialMethod(String taskId, TaskMap taskMap, FinanceOrderObject financeOrder, boolean submit) {
         Result result = checkMYDMethod(taskId);
         if (!result.isSuccess()) return result;

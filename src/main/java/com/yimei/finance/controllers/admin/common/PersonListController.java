@@ -17,9 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("adminPersonListController")
 public class PersonListController {
     @Autowired
-    IdentityService identityService;
+    private IdentityService identityService;
     @Autowired
-    AdminUserServiceImpl userService;
+    private AdminUserServiceImpl userService;
 
     @RequestMapping(value = "/trader", method = RequestMethod.GET)
     @ApiOperation(value = "获取交易员列表", notes = "获取交易员列表数据", response = UserObject.class, responseContainer = "List")
