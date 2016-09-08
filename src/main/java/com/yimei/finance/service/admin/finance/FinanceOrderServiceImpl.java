@@ -124,7 +124,7 @@ public class FinanceOrderServiceImpl {
     public Result findById(Long id, List<EnumFinanceAttachment> typeList) {
         FinanceOrderObject financeOrderObject = DozerUtils.copy(orderRepository.findOne(id), FinanceOrderObject.class);
         if (financeOrderObject == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        financeOrderObject.setAttachmentList(getAttachmentByFinanceIdType(id, typeList));
+        financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdType(id, typeList));
         return Result.success().setData(financeOrderObject);
     }
 
@@ -134,7 +134,7 @@ public class FinanceOrderServiceImpl {
     public Result findSalesmanInfoByFinanceId(Long financeId, List<EnumFinanceAttachment> typeList) {
         FinanceOrderSalesmanInfoObject salesmanInfoObject = DozerUtils.copy(salesmanRepository.findByFinanceId(financeId), FinanceOrderSalesmanInfoObject.class);
         if (salesmanInfoObject != null) {
-            salesmanInfoObject.setAttachmentList(getAttachmentByFinanceIdType(financeId, typeList));
+            salesmanInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, typeList));
         }
         return Result.success().setData(salesmanInfoObject);
     }
