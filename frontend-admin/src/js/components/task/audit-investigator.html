@@ -13,12 +13,12 @@
     <div class="table-title">融资申请</div>
 
     <div class="apply-title">
-        <span *ngIf="reportType==1">尽调报告-(应收)</span>
-        <span *ngIf="reportType==2">尽调报告-(订单、仓押)</span>
+        <span *ngIf="currentTask.applyType==='MYR'">尽调报告-(应收)</span>
+        <span *ngIf="currentTask.applyType=='MYD'||currentTask.applyType==='MYG'">尽调报告-(订单、仓押)</span>
         <div>
-            <a [routerLink]="['/tasks', currentTask.id, 'trader']">查看申请材料</a>
+            <a [routerLink]="['/tasks', currentTask.id, 'trader', 'info']">查看申请材料</a>
             <span class="line"></span>
-            <a [routerLink]="['/tasks', currentTask.id, 'salesman']">查看审批业务</a>
+            <a [routerLink]="['/tasks', currentTask.id, 'salesman', 'info']">查看审批业务</a>
         </div>
     </div>
 
@@ -39,7 +39,7 @@
             <td class="td-val">{{currentOrder.ourContractCompany}}</td>
         </tr>
         <!--应收字段-->
-        <tr *ngIf="reportType==1" class="item-max">
+        <tr *ngIf="currentTask.applyType==='MYR'" class="item-max">
             <td class="td-label">下游签约单位:</td>
             <td class="td-val">{{currentOrder.downstreamContractCompany}}</td>
             <td class="td-label">终端用户:</td>
@@ -70,7 +70,7 @@
             </td>
         </tr>
         <!--仓押字段-->
-        <tr *ngIf="reportType==2" class="item-max">
+        <tr *ngIf="currentTask.applyType!=='MYR'" class="item-max">
             <td class="td-label">上游签约单位:</td>
             <!--<td class="td-val"><input type="text" [(ngModel)]="currentTask.upstreamContractCompany"></td>-->
             <td class="td-val">{{currentTask.upstreamContractCompany}}</td>
@@ -78,7 +78,7 @@
             <!--<td class="td-val"><input type="text" [(ngModel)]="currentTask.downstreamContractCompany"></td>-->
             <td class="td-val">{{currentTask.downstreamContractCompany}}</td>
         </tr>
-        <tr *ngIf="reportType==2" class="item-max">
+        <tr *ngIf="currentTask.applyType!=='MYR'" class="item-max">
             <td class="td-label">运输方:</td>
             <!--<td class="td-val"><input type="text" [(ngModel)]="currentTask.transportParty"></td>-->
             <td class="td-val">{{currentTask.transportParty}}</td>
@@ -86,7 +86,7 @@
             <!--<td class="td-val"><input type="text" [(ngModel)]="currentTask.transitPort"></td>-->
             <td class="td-val">{{currentTask.transitPort}}</td>
         </tr>
-        <tr *ngIf="reportType==2" class="item-max">
+        <tr *ngIf="currentTask.applyType!=='MYR'" class="item-max">
             <td class="td-label">质量检验单位:</td>
             <!--<td class="td-val"><input type="text" [(ngModel)]="currentTask.qualityInspectionUnit"></td>-->
             <td class="td-val">{{currentTask.qualityInspectionUnit}}</td>
