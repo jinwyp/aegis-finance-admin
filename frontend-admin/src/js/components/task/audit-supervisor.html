@@ -15,7 +15,7 @@
     <div class="apply-title">
         <span>监管报告</span>
         <div>
-            <a [routerLink]="['/tasks', currentTask.id, 'trader', 'info']">查看申请材料</a>
+            <a [routerLink]="['/tasks', currentTask.id, 'supervisor', 'info']">查看申请材料</a>
             <span class="line"></span>
             <a [routerLink]="['/tasks', currentTask.id, 'salesman', 'info']">查看审批业务</a>
         </div>
@@ -143,7 +143,7 @@
                 <!--<label><input type="checkbox">发送给用户</label>-->
             <!--</td>-->
         <!--</tr>-->
-        <tr class="item-title">
+        <tr class="item-title" *ngIf="!css.isReadOnly">
             <td colspan="4"><span>审核意见:</span>
                 <label><input type="radio" name="pass" [(ngModel)]="isApprovedRadio" [value]="true">通过</label>
                 <label><input type="radio" name="pass" [(ngModel)]="isApprovedRadio" [value]="false">不通过</label>

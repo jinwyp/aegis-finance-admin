@@ -28,7 +28,7 @@ export class AuditSalesmanComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
-    isApprovedRadio : boolean ;
+    isApprovedRadio : number = -1;
 
     css = {
         isSubmitted : false,
@@ -106,14 +106,10 @@ export class AuditSalesmanComponent {
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
 
-        let isApproved : boolean = false;
-        if (isAudit) {
-            isApproved = this.isApprovedRadio;
-        }
 
         let body : any = {
             t : {
-                pass : isApproved === true ? 1 : 0,
+                pass : this.isApprovedRadio,
                 need : 0,
                 need2 : 0
             },
