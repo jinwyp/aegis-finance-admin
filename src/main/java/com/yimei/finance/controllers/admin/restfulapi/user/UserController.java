@@ -158,7 +158,7 @@ public class UserController {
         identityService.setUserInfo(oldUser.getId(), "name", user.getName());
         identityService.setUserInfo(oldUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(oldUser.getId(), "department", user.getDepartment());
-//        addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
+        addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
     }
 
