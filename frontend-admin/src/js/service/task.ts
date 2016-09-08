@@ -353,7 +353,7 @@ class TaskService {
     }
 
 
-    audit(taskId : string, taskType : string, taskStep : string, body : any) {
+    audit(taskId : string, taskType : string, taskStep : string, isSubmit : boolean, body : any) {
 
         let auditStep = {
             onlinetrader : 'onlinetrader',
@@ -369,11 +369,13 @@ class TaskService {
             MYG : API.tasksMYG
         };
 
-        let url = auditType[taskType] + '/' + auditStep[taskStep] + '/audit/' + taskId +'?type=' + body.t.submit;
+        let type :number = isSubmit ? 1 : 0;
+
+        let url = auditType[taskType] + '/' + auditStep[taskStep] + '/audit/' + taskId +'?type=' + type;
 
         let sendData : any = {};
 
-        if (body.t.submit){
+        if (isSubmit){
             sendData = body;
         }else{
             sendData = body.u;
