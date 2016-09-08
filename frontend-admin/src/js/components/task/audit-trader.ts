@@ -40,7 +40,7 @@ export class AuditTraderComponent {
     taskId : string = '';
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
-    isApprovedRadio : boolean ;
+    isApprovedRadio : number =-1;
 
 
     constructor(
@@ -115,19 +115,11 @@ export class AuditTraderComponent {
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
 
-        let isApproved : boolean = false;
-        if (isAudit) {
-            isApproved = this.isApprovedRadio;
-            if(!isApproved){
-                this.css.ajaxErrorHidden = false;
-                this.errorMsg = '请勾选审核意见'
-            }
-        }
         let auditType : string = '';
         let body : any = {
             t : {
                 submit : isAudit === true ? 1 : 0,
-                pass : isApproved === true ? 1 : 0,
+                pass : this.isApprovedRadio,
                 need : 0,
                 need2 : 0
             },
