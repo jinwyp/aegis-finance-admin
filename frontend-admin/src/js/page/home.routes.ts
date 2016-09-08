@@ -136,27 +136,27 @@ const routes: Routes = [
     {
         path: 'tasks/:id/trader/info',
         component: AuditTraderComponent,
-        data: { routeType : 'traderInfo', title: '任务 - 查看详情' }
+        data: { routeType : 'info', title: '任务 - 查看详情' }
     },
     {
         path: 'tasks/:id/salesman/info',
         component: AuditSalesmanComponent,
-        data: { routeType : 'salesmanInfo', title: '任务 - 查看详情' }
+        data: { routeType : 'info', title: '任务 - 查看详情' }
     },
     {
         path: 'tasks/:id/investigator/info',
         component: AuditInvestigatorComponent,
-        data: { routeType : 'investigatorInfo', title: '任务 - 查看详情' }
+        data: { routeType : 'info', title: '任务 - 查看详情' }
     },
     {
         path: 'tasks/:id/supervisor/info',
         component: AuditSupervisorComponent,
-        data: { routeType : 'supervisorInfo', title: '任务 - 查看详情' }
+        data: { routeType : 'info', title: '任务 - 查看详情' }
     },
     {
         path: 'tasks/:id/riskmanager/info',
         component: AuditRiskManagerComponent,
-        data: { routeType : 'riskmanagerInfo', title: '任务 - 查看详情' }
+        data: { routeType : 'info', title: '任务 - 查看详情' }
     },
     {
         path: '**',

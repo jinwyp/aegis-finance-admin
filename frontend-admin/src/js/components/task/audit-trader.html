@@ -166,6 +166,7 @@
         </tr>
 
         <tr *ngIf="!css.isReadOnly" class="item-title">
+        <tr class="item-title" *ngIf="!css.isReadOnly">
             <td class="td-label"><span>审核意见:</span></td>
             <td colspan="3">
                 <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" required [value]="1">审核通过</label>
@@ -187,7 +188,7 @@
     </div>
     <div class="row info-item" *ngIf="css.isReadOnly">
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['tasks/all']">返回</button>
+            <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['/tasks/all']">返回</button>
         </div>
     </div>
 </div>
