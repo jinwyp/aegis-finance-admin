@@ -39,6 +39,9 @@ public class FinanceOrderRiskManagerInfoObject extends BaseEntity implements Ser
     @Size(max = 500, message = "补充材料说明不能超过 {max} 个字符", groups = {SaveFinanceRiskManagerInfo.class, SubmitFinanceRiskManagerInfo.class})
     private String supplyMaterialIntroduce;                          //补充材料说明
     private int editContract;                                        //编辑合同     1: 需要编辑, 0: 不需要编辑
+    private Integer approveStateId;                                  //审批状态Id  0:审核不通过, 1:审核通过
+    private String approveState;                                     //审批状态
     List<AttachmentObject> attachmentList;                           //附件列表
+
 
 }

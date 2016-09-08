@@ -1,15 +1,21 @@
 package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.entity.admin.finance.*;
+import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.*;
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
+import com.yimei.finance.representation.admin.finance.enums.FinanceSMSMessage;
 import com.yimei.finance.representation.admin.finance.object.*;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.site.user.FinanceOrderSearch;
+import com.yimei.finance.service.common.message.MessageServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import com.yimei.finance.utils.Where;
+import org.activiti.bpmn.model.Message;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Attachment;
@@ -47,6 +53,8 @@ public class FinanceOrderServiceImpl {
     private TaskService taskService;
     @Autowired
     private FinanceFlowMethodServiceImpl methodService;
+    @Autowired
+    private MessageServiceImpl messageService;
 
     /**
      * 查询金融单
@@ -168,7 +176,6 @@ public class FinanceOrderServiceImpl {
     /**
      * 交易员补充材料
      */
-    @Transactional
     public void updateFinanceOrderByOnlineTrader(String userId, FinanceOrderObject financeOrder) {
         financeOrder.setLastUpdateManId(userId);
         financeOrder.setLastUpdateTime(new Date());
@@ -227,6 +234,109 @@ public class FinanceOrderServiceImpl {
         riskRepository.save(DozerUtils.copy(riskManagerInfo, FinanceOrderRiskManagerInfo.class));
     }
 
+    /**
+     * 更改金融单状态
+     */
+    @Transactional
+    public Result updateFinanceOrderApproveState(Long financeId, EnumFinanceStatus status, String userId) {
+        FinanceOrder financeOrder = orderRepository.findOne(financeId);
+        if (financeOrder == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        FinanceOrder order = orderRepository.findOne(financeId);
+        order.setApproveStateId(status.id);
+        order.setApproveState(status.name);
+        order.setLastUpdateTime(new Date());
+        order.setLastUpdateManId(userId);
+        if (status.id == EnumFinanceStatus.AuditPass.id) {
+            order.setEndTime(new Date());
+            if (!StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
+                messageService.sendSMS(financeOrder.getApplyUserPhone(), FinanceSMSMessage.getUserAuditPassMessage(financeOrder.getSourceId()));
+            }
+        }
+        if (status.id == EnumFinanceStatus.AuditNotPass.id) {
+            order.setEndTime(new Date());
+            if (!StringUtils.isEmpty(financeOrder.getApplyUserPhone())) {
+                messageService.sendSMS(financeOrder.getApplyUserPhone(), FinanceSMSMessage.getUserAuditNotPassMessage(financeOrder.getSourceId()));
+            }
+        }
+        orderRepository.save(order);
+        return Result.success();
+    }
 
+    /**
+     * 更改业务员信息状态
+     */
+    public Result updateFinanceOrderSalesmanInfoApproveState(Long financeId, int pass) {
+        FinanceOrderSalesmanInfo salesmanInfo = salesmanRepository.findByFinanceId(financeId);
+        if (salesmanInfo == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        if (pass == 0) {
+            salesmanInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
+            salesmanInfo.setApproveState(EnumFinanceStatus.AuditNotPass.name);
+        } else if (pass == 1) {
+            salesmanInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
+            salesmanInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
+        }
+        salesmanRepository.save(salesmanInfo);
+        return Result.success();
+    }
+
+    /**
+     * 更改尽调员信息状态
+     */
+    public Result updateFinanceOrderInvestigatorInfoApproveState(Long financeId, int pass, int need) {
+        FinanceOrderInvestigatorInfo investigatorInfo = investigatorRepository.findByFinanceId(financeId);
+        if (investigatorInfo == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        if (need == 1) {
+            investigatorInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
+            investigatorInfo.setApproveState(EnumFinanceStatus.SupplyMaterial.name);
+        } else if (pass == 0) {
+            investigatorInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
+            investigatorInfo.setApproveState(EnumFinanceStatus.AuditNotPass.name);
+        } else if (pass == 1) {
+            investigatorInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
+            investigatorInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
+        }
+        investigatorRepository.save(investigatorInfo);
+        return Result.success();
+    }
+
+    /**
+     * 更改监管员信息状态
+     */
+    public Result updateFinanceOrderSupervisorInfoApproveState(Long financeId, int pass, int need) {
+        FinanceOrderSupervisorInfo supervisorInfo = supervisorRepository.findByFinanceId(financeId);
+        if (supervisorInfo == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        if (need == 1) {
+            supervisorInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
+            supervisorInfo.setApproveState(EnumFinanceStatus.SupplyMaterial.name);
+        } else if (pass == 0) {
+            supervisorInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
+            supervisorInfo.setApproveState(EnumFinanceStatus.AuditNotPass.name);
+        } else if (pass == 1) {
+            supervisorInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
+            supervisorInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
+        }
+        supervisorRepository.save(supervisorInfo);
+        return Result.success();
+    }
+
+    /**
+     * 更改风控人员信息状态
+     */
+    public Result updateFinanceOrderRiskManagerInfoApproveState(Long financeId, int pass, int need) {
+        FinanceOrderRiskManagerInfo riskManagerInfo = riskRepository.findByFinanceId(financeId);
+        if (riskManagerInfo == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        if (need == 1) {
+            riskManagerInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
+            riskManagerInfo.setApproveState(EnumFinanceStatus.SupplyMaterial.name);
+        } else if (pass == 0) {
+            riskManagerInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
+            riskManagerInfo.setApproveState(EnumFinanceStatus.AuditNotPass.name);
+        } else if (pass == 1) {
+            riskManagerInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
+            riskManagerInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
+        }
+        riskRepository.save(riskManagerInfo);
+        return Result.success();
+    }
 
 }

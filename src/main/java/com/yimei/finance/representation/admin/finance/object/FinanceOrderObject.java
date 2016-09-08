@@ -94,7 +94,7 @@ public class FinanceOrderObject extends BaseEntity implements Serializable {
     @Size(max = 500, message = "主要煤炭指标不能超过 {max} 个字符", groups = {SaveFinanceOrder.class, SubmitFinanceOrder.class})
     private String coalQuantityIndex;                                //主要煤质指标
     private String approveState;                                     //审批状态
-    private int approveStateId;                                      //审批状态Id
+    private Integer approveStateId;                                  //审批状态Id
     private String sourceId;                                         //流水号，编号
     private String applyUserName;                                    //申请人姓名
     private String applyUserPhone;                                   //申请人手机号
@@ -115,5 +115,6 @@ public class FinanceOrderObject extends BaseEntity implements Serializable {
             return applyType;
         }
     }
+
 
 }

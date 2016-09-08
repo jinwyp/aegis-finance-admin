@@ -22,4 +22,5 @@ public enum EnumFinanceStatus {
         this.id = id;
         this.name = name;
     }
+
 }
