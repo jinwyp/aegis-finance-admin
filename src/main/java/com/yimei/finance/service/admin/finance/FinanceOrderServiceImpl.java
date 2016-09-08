@@ -102,12 +102,12 @@ public class FinanceOrderServiceImpl {
 
     public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, List<EnumFinanceAttachment> typeList) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
-        for (EnumFinanceAttachment attachment: typeList) {
+        for (EnumFinanceAttachment attachment : typeList) {
             List<Task> tasks = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).list();
             for (Task t : tasks) {
                 List<Attachment> attachments = taskService.getTaskAttachments(t.getId());
                 if (attachments != null && attachments.size() != 0) {
-                    attachmentList.addAll(DozerUtils.copy(taskService.getTaskAttachments(t.getId()), AttachmentObject.class));
+                    attachmentList.addAll(DozerUtils.copy(attachments, AttachmentObject.class));
                 }
             }
         }
