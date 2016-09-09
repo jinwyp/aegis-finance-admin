@@ -148,7 +148,7 @@
                             <tr>
                                 <th>主要煤质指标:</th>
                                 <!--------------------------------------------字段无------------------------->
-                                <td>{{@financeInfo.transportMode || '--'}}</td>
+                                <td>{{@financeInfo.coalQuantityIndex || '--'}}</td>
                                 <th>单吨市场报价:</th>
                                 <td>{{@financeInfo.marketPrice || '--'}}&nbsp;元/吨</td>
                             </tr>
