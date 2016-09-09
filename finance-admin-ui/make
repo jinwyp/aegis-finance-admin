@@ -1,0 +1,30 @@
+#!/bin/bash
+
+source ../../aegis-docker/bin/aegis-config
+export container_name="finance-admin-ui"
+export project_name=docker-finance-admin-ui
+export image_name=aegis-finance-admin-ui
+
+mkdir -p site
+mkdir -p admin
+rm -rf site/dist
+rm -rf admin/dist
+cp -rf ../frontend-admin/dist  admin
+cp -rf ../frontend-site/dist  site
+
+# 重写mbt!!!!!
+mbt_rewrite;
+create()      { echo "ERROR: target not supported" | color red bold; }
+stop()        { echo "ERROR: target not supported" | color red bold; }
+start()       { 
+    docker run -d --name finance-admin-ui aegis-finance-admin-ui echo "finance-admin-ui created";
+}
+publish()     { echo "ERROR: target not supported" | color red bold; }
+devPublish()  { echo "ERROR: target not supported" | color red bold; }
+enter()       { echo "ERROR: target not supported" | color red bold; }
+log()         { echo "ERROR: target not supported" | color red bold; }
+local()       { echo "ERROR: target not supported" | color red bold; }
+debug()       { echo "ERROR: target not supported" | color red bold; }
+
+eval "$@"
+
