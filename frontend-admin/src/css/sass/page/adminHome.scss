@@ -246,6 +246,10 @@
       border-color: $menu-text-color;
       border-radius: 2px;
       color: $white;
+
+      &:hover{
+        opacity: 0.8;
+      }
     }
 
     .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td,
