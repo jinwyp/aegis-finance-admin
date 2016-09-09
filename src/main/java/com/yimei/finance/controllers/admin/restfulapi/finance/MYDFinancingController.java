@@ -105,18 +105,6 @@ public class MYDFinancingController {
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydInvestigatorAddMaterialMethod(@PathVariable("taskId") String taskId,
                                                    @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SaveFinanceInvestigatorInfo.class}) @RequestBody FinanceOrderInvestigatorInfoObject investigatorInfoObject) {
-        System.out.println(" --------------------------------- " + investigatorInfoObject.getBusinessStartTime());
-        System.out.println(" --------------------------------- " + investigatorInfoObject.getBusinessStartTime());
-        System.out.println(" --------------------------------- " + investigatorInfoObject.getBusinessStartTime());
-        System.out.println(" --------------------------------- " + investigatorInfoObject.getBusinessStartTime());
-        System.out.println(" --------------------------------- " + investigatorInfoObject.getBusinessStartTime());
-        System.out.println(" --------------------------------- " + investigatorInfoObject.getBusinessStartTime());
-        System.out.println(" --------------------------------- " + investigatorInfoObject.getBusinessStartTime());
-        System.out.println(" --------------------------------- " + investigatorInfoObject.getBusinessStartTime());
-        System.out.println(" --------------------------------- " + investigatorInfoObject.getBusinessStartTime());
-        System.out.println(" --------------------------------- " + investigatorInfoObject.getBusinessStartTime());
-        System.out.println(" --------------------------------- " + investigatorInfoObject.getBusinessStartTime());
-        System.out.println(" --------------------------------- " + investigatorInfoObject.getBusinessStartTime());
         return investigatorAddMaterialAndAuditMethod(taskId, null, investigatorInfoObject, false);
     }
 

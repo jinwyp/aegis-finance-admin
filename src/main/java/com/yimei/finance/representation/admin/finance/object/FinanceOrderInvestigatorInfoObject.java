@@ -9,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -55,6 +56,10 @@ public class FinanceOrderInvestigatorInfoObject extends BaseEntity implements Se
     @DecimalMin(value = "0.0001", inclusive = true, message = "利率不能低于 {value} 万元", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     @DecimalMax(value = "100", inclusive = false, message = "利率不能超过 {value} 万元", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     private BigDecimal interestRate;                                 //利率
+
+//    @DateTimeFormat(pattern = "yyyy-MM-dd"
+//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date businessStartTime;                                  //业务开始时间
 
     @Size(max = 1000, message = "历史合作情况不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
