@@ -42,7 +42,7 @@
         <div class="finance_sideBar">
             <h3>融资管理</h3>
             <ul>
-                <li class="active"><a href="#">我的申请 </a><span class="trigle"></span></li>
+                <li class="active"><a href="/finance/user/financing">我的申请 </a><span class="trigle"></span></li>
                 <!--<li><a href="#">我的申请</a><span class="trigle"></span></li>-->
             </ul>
         </div>
