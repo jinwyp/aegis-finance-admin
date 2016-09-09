@@ -44,7 +44,6 @@ export class UserDetailComponent {
                 if (result && result.success) {
                     this.currentUserSession = result.data;
                     this.selectedItem = this.currentUserSession.department;
-                    console.log(result);
                 } else {
 
                 }

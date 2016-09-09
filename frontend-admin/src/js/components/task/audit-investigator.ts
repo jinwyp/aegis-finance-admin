@@ -85,37 +85,19 @@ export class AuditInvestigatorComponent {
         )
     }
 
+
     getTaskInfo (id) {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
                 this.task.getOrderInfoById(this.currentTask.financeId, 'investigator').then((result)=>{
-                    if (result.success){
-                        if(result.data!=null){
-                            this.currentOrder = result.data;
-                        }
-                        this.task.getOrder2InfoById(this.currentTask.financeId).then((result)=>{
-                            if (result.success){
-                                this.currentOrder.applyCompanyName=result.data.applyCompanyName;
-                                this.currentOrder.ourContractCompany=result.data.ourContractCompany;
-                                this.currentOrder.financingAmount=result.data.financingAmount;
-                                this.currentOrder.financingPeriod=result.data.financingPeriod;
-                                this.currentOrder.interestRate=result.data.interestRate;
-                                this.currentOrder.businessStartTime=result.data.businessStartTime;
-                                this.currentOrder.upstreamContractCompany=result.data.upstreamContractCompany;
-                                this.currentOrder.downstreamContractCompany=result.data.downstreamContractCompany;
-                                this.currentOrder.transportParty=result.data.transportParty;
-                                this.currentOrder.transitPort=result.data.transitPort;
-                                this.currentOrder.qualityInspectionUnit=result.data.qualityInspectionUnit;
-                                this.currentOrder.quantityInspectionUnit=result.data.quantityInspectionUnit
-                            }else{
-
-                            }
-                        });
+                    if (result.success && result.data ){
+                        this.currentOrder = result.data;
                     }else{
 
                     }
                 });
+
             }else{
 
             }
@@ -174,6 +156,19 @@ export class AuditInvestigatorComponent {
             "processInstanceId": this.currentTask.processInstanceId,
             "taskId": this.currentTask.id
         })
+    }
+
+    delAttachmentList1(file, isAttachmentList2 : boolean = false){
+        let index = this.currentOrder.attachmentList1.indexOf(file);
+
+        if (isAttachmentList2) { index = this.currentOrder.attachmentList2.indexOf(file);}
+        if (index > -1){
+            if (isAttachmentList2){
+                this.currentOrder.attachmentList2.splice(index, 1);
+            }else {
+                this.currentOrder.attachmentList1.splice(index, 1);
+            }
+        }
     }
 
 }

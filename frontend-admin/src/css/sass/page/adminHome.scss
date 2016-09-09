@@ -96,6 +96,21 @@
   vertical-align: middle;
 }
 
+.attachment-list{
+  margin-right: 20px;
+  margin-bottom: 8px;
+
+  span{
+
+  }
+
+  a {
+    font-size: 16px;
+  }
+
+
+}
+
 
 .wd-30{width:30%;}
 
@@ -231,6 +246,10 @@
       border-color: $menu-text-color;
       border-radius: 2px;
       color: $white;
+
+      &:hover{
+        opacity: 0.8;
+      }
     }
 
     .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td,
@@ -295,7 +314,7 @@
     }
     .process-box{
       margin-top:20px;
-      overflow: hidden;
+      overflow: scroll;
       border:1px solid $input-border-color;
       .nav-tabs>li{margin-top: -1px;  cursor: pointer;}
       .nav-tabs>li>a{  border-radius: 0px;  margin-right:0px;  color: #333; }

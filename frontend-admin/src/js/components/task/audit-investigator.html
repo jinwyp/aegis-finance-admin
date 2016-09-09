@@ -2,23 +2,24 @@
     <ol class="breadcrumb">
         <li>审核管理</li>
         <li>&gt;</li>
-        <li class="active">我的待办</li>
+        <li *ngIf="!css.isReadOnly" class="active">我的待办</li>
+        <li *ngIf="css.isReadOnly" class="active">我的审核</li>
     </ol>
 </div>
 
-<process-tab [processInstanceId]="currentTask.processInstanceId" [processList]="currentOrder.taskList"></process-tab>
+<process-tab [processInstanceId]="currentTask.processInstanceId" [financeId]="currentTask.financeId"></process-tab>
 
 <div class="item-margin apply-box">
 
     <div class="table-title">融资申请</div>
 
     <div class="apply-title">
-        <span *ngIf="currentTask.applyType==='MYR'">尽调报告-(应收)</span>
-        <span *ngIf="currentTask.applyType=='MYD'||currentTask.applyType==='MYG'">尽调报告-(订单、仓押)</span>
+        <span *ngIf="currentTask.applyType==='MYR'">尽调报告(应收)</span>
+        <span *ngIf="currentTask.applyType=='MYD'||currentTask.applyType==='MYG'">尽调报告(订单、仓押)</span>
         <div>
             <a [routerLink]="['/tasks', currentTask.id, 'trader', 'info']">查看申请材料</a>
             <span class="line"></span>
-            <a [routerLink]="['/tasks', currentTask.id, 'salesman', 'info']">查看审批业务</a>
+            <a [routerLink]="['/tasks', currentTask.id, 'salesman', 'info']">查看业务审批</a>
         </div>
     </div>
 
@@ -110,7 +111,7 @@
         <tr class="item-min">
             <td class="td-label">历史合作情况:</td>
             <td colspan="3" class="td-val">
-                <input type="text" *ngIf="!css.isReadOnly" class="describe" [(ngModel)]="currentOrder.historicalCooperationDetail" placeholder="请输入">
+                <input type="text" *ngIf="!css.isReadOnly" class="describe" [(ngModel)]="currentOrder.historicalCooperationDetail" placeholder="包含第几次合作,往期合作业务量,目前占压资金额,往期账期、有无违约等状况描述">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.historicalCooperationDetail}}</span>
             </td>
         </tr>
@@ -120,14 +121,14 @@
         <tr class="item-min">
             <td class="td-label">业务主要信息:</td>
             <td colspan="3" class="td-val">
-                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.mainBusinessInfo" placeholder="请输入">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.mainBusinessInfo" placeholder="单价、煤种、总吨位、运输交货方式、回款周期、履约地">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.mainBusinessInfo}}</span>
             </td>
         </tr>
         <tr class="item-min">
             <td class="td-label">业务流转:</td>
             <td colspan="3" class="td-val">
-                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.businessTransferInfo" placeholder="请输入">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.businessTransferInfo" placeholder="物流资金等流转信息">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.businessTransferInfo}}</span>
             </td>
         </tr>
@@ -140,7 +141,7 @@
             </td>
         </tr>
         <tr class="item-title">
-            <td colspan="4"><span class="fs-16">履约信用及能力评估<span class="fs-14 hint">(结合相关签约主体的企业资信和实际煤炭贸易操作能力,对上下游相关方的<span class="orange">履约信用和能力描绘和评估</span>)</span></span></td>
+            <td colspan="4"><span class="fs-16">履约信用及能力评估<span class="fs-14 hint">(结合相关签约主体的企业资信和实际煤炭贸易操作能力,对上下游相关方的<span class="orange">履约信用和能力描述和评估</span>)</span></span></td>
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
@@ -161,7 +162,10 @@
         <tr class="item-max">
             <td class="td-val" colspan="4">
                 <div class="attachment">
-                    <img *ngFor="let pic of currentOrder.attachmentList1" [src]="pic.url" [alt]="pic.name">
+                    <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList1">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic)" *ngIf="!css.isReadOnly"></span>
+                        <a  [href]="pic.url">{{pic.name}}</a>
+                    </div>
                     <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
                 </div>
             </td>
@@ -180,14 +184,17 @@
         <tr class="item-max" *ngIf="currentOrder.attachmentList2">
             <td class="td-val" colspan="4">
                 <div class="attachment">
-                    <img *ngFor="let pic of currentOrder.attachmentList2" [src]="pic.url" [alt]="pic.name">
+                    <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList2">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" *ngIf="!css.isReadOnly"></span>
+                        <a  [href]="pic.url">{{pic.name}}</a>
+                    </div>
                 </div>
             </td>
         </tr>
         <!--<tr class="item-title">-->
             <!--<td colspan="4"><label><input type="checkbox">发送给业务人员</label><label><input type="checkbox">发送给用户</label></td>-->
         <!--</tr>-->
-        <tr class="item-title">
+        <tr class="item-title" *ngIf="!css.isReadOnly">
             <td colspan="4">
                 <span>审核意见:</span>
                 <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="1">通过</label>
@@ -205,12 +212,12 @@
         <div class="col-sm-12 info-val no-bottom-border center">
             <button type="button" class="btn btn-default btn-save" (click)="audit(false)" [disabled]="css.isSubmitted || currentTask.endTime">保存</button>
             <button type="button" class="btn btn-default btn-sure ml-20" (click)="audit(true)" [disabled]="css.isSubmitted || currentTask.endTime || isApprovedRadio===-1">保存并提交</button>
-            <button type="button" class="btn btn-default btn-return ml-20" [routerLink]="['tasks/pending']">返回</button>
+            <button type="button" class="btn btn-default btn-return ml-20" [routerLink]="['/tasks/pending']">返回</button>
         </div>
     </div>
     <div class="row info-item" *ngIf="css.isReadOnly">
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/all']">返回</button>
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['/tasks/all']">返回</button>
         </div>
     </div>
 

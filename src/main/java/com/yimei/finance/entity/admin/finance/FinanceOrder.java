@@ -67,7 +67,7 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     @Column(name = "approve_state", length = 30, nullable = false)
     private String approveState;                                     //审批状态
     @Column(name = "approve_state_id", length = 3, nullable = false)
-    private int approveStateId;                                      //审批状态Id
+    private Integer approveStateId;                                  //审批状态Id
     @Column(name = "coal_quantity_index", length = 520)
     private String coalQuantityIndex;                                //主要煤质指标
     @Column(name = "end_time", updatable = false)

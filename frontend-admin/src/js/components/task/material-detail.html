@@ -8,7 +8,7 @@
     </ol>
 </div>
 
-<process-tab [processInstanceId]="currentTask.processInstanceId" [processList]="currentOrder.taskList"></process-tab>
+<process-tab [processInstanceId]="currentTask.processInstanceId" [financeId]="currentTask.financeId"></process-tab>
 
 
 <div class="item-margin distribution-box">
@@ -26,7 +26,11 @@
         <span class="col-sm-2 info-label">补充材料:</span>
         <div class="col-sm-10 info-val">
             <div class="attachment">
-                <img *ngFor="let pic of attachmentList" [src]="pic.url" [alt]="pic.name">
+                <div class="attachment-list" *ngFor="let pic of attachmentList">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic)" ></span>
+                    <a  [href]="pic.url">{{pic.name}}</a>
+                </div>
+
                 <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
             </div>
         </div>
@@ -41,7 +45,7 @@
         <div class="col-sm-offset-2 col-sm-8 info-val no-bottom-border">
             <!--<button type="button" class="btn btn-default btn-lg btn-sure" (click)="save(false)" [disabled]="css.isSubmitted">保存</button>-->
             <button type="button" class="btn btn-default btn-lg btn-sure" (click)="save(true)" [disabled]="css.isSubmitted">保存提交</button>
-            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/pending']">返回</button>
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['/tasks/pending']">返回</button>
         </div>
     </div>
 
