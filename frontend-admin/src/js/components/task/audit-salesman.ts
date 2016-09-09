@@ -5,6 +5,7 @@
 
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -45,6 +46,7 @@ export class AuditSalesmanComponent {
 
 
     constructor(
+        private location: Location,
         private activatedRoute: ActivatedRoute,
         private task: TaskService,
         private user: UserService
@@ -60,8 +62,6 @@ export class AuditSalesmanComponent {
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
             if (this.routeData.routeType === 'info') {this.css.isReadOnly = true;}
-
-
         });
 
         this.getCurrentUser();
@@ -135,7 +135,6 @@ export class AuditSalesmanComponent {
 
             });
         }
-
     }
     // changeNoticeApplyUserStatus(){
     //     if(this.currentOrder.noticeApplyUser===0){
@@ -146,11 +145,15 @@ export class AuditSalesmanComponent {
     // }
 
     changeNeedSupplyMaterialStatus(){
-        if(this.currentOrder.needSupplyMaterial===0){
+        if(this.currentOrder.needSupplyMaterial!==1){
             this.currentOrder.needSupplyMaterial=1;
         }else{
             this.currentOrder.needSupplyMaterial=0;
         }
+    }
+
+    goBack() {
+        this.location.back();
     }
 }
 

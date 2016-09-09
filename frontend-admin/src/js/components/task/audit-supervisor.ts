@@ -5,6 +5,8 @@
 
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
 import { Subscription } from 'rxjs/Subscription';
 
 
@@ -38,9 +40,10 @@ export class AuditSupervisorComponent {
     currentOrder : Task = new Task();
     taskId : string = '';
     currentTask : Task = new Task();
-    isApprovedRadio : number;
+    isApprovedRadio : number = -1;
 
     constructor(
+        private location: Location,
         private activatedRoute: ActivatedRoute,
         private task: TaskService,
         private user: UserService
@@ -79,9 +82,13 @@ export class AuditSupervisorComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
+                console.log(this.currentTask);
                 this.task.getOrderInfoById(this.currentTask.financeId, 'supervisor').then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
+                        // console.log(this.currentOrder);
+                        // this.currentOrder.storageLocation=this.currentTask.storageLocation;
+                        // console.log(this.currentOrder);
                     }else{
 
                     }
@@ -163,6 +170,9 @@ export class AuditSupervisorComponent {
         }
     }
 
+    goBack() {
+        this.location.back();
+    }
 
 }
 
