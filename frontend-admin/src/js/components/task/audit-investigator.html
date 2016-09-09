@@ -33,18 +33,27 @@
         <tr class="item-title">
             <td colspan="4"><span class="fs-16">项目主体信息</span></td>
         </tr>
-        <tr class="item-max">
+        <tr class="item-min">
             <td class="td-label">融资方:</td>
             <td class="td-val">{{currentOrder.applyCompanyName||'--'}}</td>
             <td class="td-label">我方签约单位全称:</td>
-            <td class="td-val">{{currentOrder.ourContractCompany||'--'}}</td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.ourContractCompany" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.ourContractCompany}}</span>
+            </td>
         </tr>
         <!--应收字段-->
-        <tr *ngIf="currentTask.applyType==='MYR'" class="item-max">
+        <tr *ngIf="currentTask.applyType==='MYR'" class="item-min">
             <td class="td-label">下游签约单位:</td>
-            <td class="td-val">{{currentOrder.downstreamContractCompany||'--'}}</td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.downstreamContractCompany" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.downstreamContractCompany}}</span>
+            </td>
             <td class="td-label">终端用户:</td>
-            <td class="td-val">{{currentOrder.terminalServer||'--'}}</td>
+            <td class="td-val">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.terminalServer" placeholder="请输入">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.terminalServer}}</span>
+            </td>
         </tr>
         <tr class="item-min">
             <td class="td-label">融资金额:</td>
