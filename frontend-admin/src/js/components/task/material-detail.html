@@ -26,7 +26,11 @@
         <span class="col-sm-2 info-label">补充材料:</span>
         <div class="col-sm-10 info-val">
             <div class="attachment">
-                <a *ngFor="let pic of attachmentList" [href]="pic.url">{{pic.url}}<br/></a>
+                <div class="attachment-list" *ngFor="let pic of attachmentList">
+                    <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic)" ></span>
+                    <a  [href]="pic.url">{{pic.name}}</a>
+                </div>
+
                 <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
             </div>
         </div>

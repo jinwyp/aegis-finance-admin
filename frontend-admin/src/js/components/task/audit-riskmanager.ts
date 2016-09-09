@@ -152,6 +152,18 @@ export class AuditRiskManagerComponent {
         })
     }
 
+    delAttachmentList1(file, isAttachmentList2 : boolean = false){
+        let index = this.currentOrder.attachmentList1.indexOf(file);
+
+        if (isAttachmentList2) { index = this.currentOrder.attachmentList2.indexOf(file);}
+        if (index > -1){
+            if (isAttachmentList2){
+                this.currentOrder.attachmentList2.splice(index, 1);
+            }else {
+                this.currentOrder.attachmentList1.splice(index, 1);
+            }
+        }
+    }
 
 }
 

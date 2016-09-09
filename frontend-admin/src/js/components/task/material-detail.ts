@@ -109,5 +109,12 @@ export class MaterialDetailComponent {
         })
     }
 
+    delAttachmentList1(file){
+        let index = this.attachmentList.indexOf(file);
+        if (index > -1){
+            this.attachmentList.splice(index, 1);
+        }
+    }
+
 }
 
