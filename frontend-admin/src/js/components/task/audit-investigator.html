@@ -193,6 +193,7 @@
         </tr>
         <tr class="item-max" *ngIf="currentOrder.attachmentList2">
             <td class="td-val" colspan="4">
+                <span *ngIf="!currentOrder.attachmentList2">无</span>
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList2">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" *ngIf="!css.isReadOnly"></span>
