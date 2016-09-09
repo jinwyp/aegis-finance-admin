@@ -307,6 +307,12 @@ class TaskService {
             .catch(GlobalPromiseHttpCatch);
     }
 
+    getTaskListByOrderId(orderId : number) {
+        return this.http.get(API.orders + '/' + orderId + '/tasks').toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(GlobalPromiseHttpCatch);
+    }
+
     getOrderStepsById(orderId : string) {
         return this.http.get(API.orders + '/' + orderId + '/tasks').toPromise()
             .then(response => response.json() as HttpResponse)
@@ -323,33 +329,34 @@ class TaskService {
             riskmanager : '/riskmanager'
         };
 
+
         return this.http.get(API.orders + '/' + orderId + auditStep[taskStep]).toPromise().then(response => {
             var result = response.json() as HttpResponse;
 
-            return this.http.get(API.orders + '/' + orderId + '/tasks').toPromise().then( response2 => {
-                var result2 = response2.json() as HttpResponse;
-                if (!result.data) {result.data = {taskList:[]}}
-                result.data.taskList = result2.data;
+            if (taskStep !== 'onlinetrader'){
+                return this.http.get(API.orders + '/' + orderId + auditStep.onlinetrader).toPromise().then( response2 => {
+                    var orderInfo = response2.json() as HttpResponse;
+                    if (orderInfo.data) {
+                        result.data.applyCompanyName          = orderInfo.data.applyCompanyName;
+                        result.data.ourContractCompany        = orderInfo.data.ourContractCompany;
+                        result.data.financingAmount           = orderInfo.data.financingAmount;
+                        result.data.financingPeriod           = orderInfo.data.financingPeriod;
+                        result.data.interestRate              = orderInfo.data.interestRate;
+                        result.data.businessStartTime         = orderInfo.data.businessStartTime;
+                        result.data.upstreamContractCompany   = orderInfo.data.upstreamContractCompany;
+                        result.data.downstreamContractCompany = orderInfo.data.downstreamContractCompany;
+                        result.data.transportParty            = orderInfo.data.transportParty;
+                        result.data.transitPort               = orderInfo.data.transitPort;
+                        result.data.qualityInspectionUnit     = orderInfo.data.qualityInspectionUnit;
+                        result.data.quantityInspectionUnit    = orderInfo.data.quantityInspectionUnit
+                    }
+                    return result;
+                }).catch(GlobalPromiseHttpCatch);
+            }else{
                 return result;
-            }).catch(GlobalPromiseHttpCatch);
-
+            }
         })
         .catch(GlobalPromiseHttpCatch);
-    }
-
-    getOrder2InfoById(orderId : number, taskStep : string = 'onlinetrader') {
-
-        let auditStep = {
-            onlinetrader : '',
-            salesman : '/salesman',
-            investigator : '/investigator',
-            supervisor : '/supervisor',
-            riskmanager : '/riskmanager'
-        };
-
-        return this.http.get(API.orders + '/' + orderId + auditStep[taskStep]).toPromise()
-            .then(response => response.json() as HttpResponse)
-            .catch(GlobalPromiseHttpCatch);
     }
 
 

@@ -12,7 +12,7 @@
             <th width="120">融资类型</th>
             <th width="80">申请时间</th>
             <th >申请公司名称</th>
-            <th width="100">拟融资总额状态<br/>(万元)</th>
+            <th width="100">拟融资总额<br/>(万元)</th>
             <th width="100">当前处理人/所属部门</th>
             <th ><span *ngIf="routeData.routeType === 'all'"> 参与的流程状态 / </span><span> 当前流程状态 </span></th>
             <th width="120">操作</th>
@@ -83,7 +83,7 @@
                 <span *ngIf="task.applyType==='MYG'">煤易购</span>
                 <span *ngIf="task.applyType==='MYD'">煤易贷</span>
             </td>
-            <td>{{task.startTime | date:"yyyy/MM/dd"}}</td>
+            <td>{{task.startTime | date:"yyyy-MM-dd"}}</td>
             <td>{{task.applyCompanyName}}</td>
             <td>{{task.financingAmount||'--'}}</td>
             <td>{{task.currentAssigneeName ||'--'}} <br/>{{task.currentAssigneeDepartment||'--'}}</td>
