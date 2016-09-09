@@ -139,12 +139,18 @@
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.supplyMaterialIntroduce}}</span>
             </td>
         </tr>
-        <!--<tr class="item-title">-->
-            <!--<td colspan="4">-->
-                <!--<label><input type="checkbox">发送给业务人员</label>-->
-                <!--<label><input type="checkbox">发送给用户</label>-->
-            <!--</td>-->
-        <!--</tr>-->
+
+        <tr class="item-title" *ngFor="currentOrder.attachmentList2">
+            <td colspan="4"><span>业务员补充材料:</span></td>
+        </tr>
+        <tr class="item-max" *ngFor="currentOrder.attachmentList2">
+            <td class="td-val" colspan="4">
+                <div class="attachment">
+                    <img *ngFor="let pic of currentOrder.attachmentList2" [src]="pic.url" [alt]="pic.name">
+                </div>
+            </td>
+        </tr>
+
         <tr class="item-title" *ngIf="!css.isReadOnly">
             <td colspan="4">
                 <span>审核意见:</span>
