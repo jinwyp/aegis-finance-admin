@@ -188,12 +188,11 @@
                 <textarea class="form-control" rows="3" placeholder="请输入您要求用户/业务人员需要补充的材料及说明" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
             </td>
         </tr>
-        <tr class="item-title" *ngIf="currentOrder.attachmentList2">
+        <tr class="item-title" *ngIf="currentOrder.attachmentList2.length > 0">
             <td colspan="4"><span>业务员补充材料:</span></td>
         </tr>
-        <tr class="item-max" *ngIf="currentOrder.attachmentList2">
+        <tr class="item-max" *ngIf="currentOrder.attachmentList2.length > 0">
             <td class="td-val" colspan="4">
-                <span *ngIf="!currentOrder.attachmentList2">无</span>
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList2">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" *ngIf="!css.isReadOnly"></span>

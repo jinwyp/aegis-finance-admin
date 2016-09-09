@@ -62,8 +62,6 @@ export class AuditSalesmanComponent {
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
             if (this.routeData.routeType === 'info') {this.css.isReadOnly = true;}
-
-
         });
 
         this.getCurrentUser();
@@ -137,7 +135,6 @@ export class AuditSalesmanComponent {
 
             });
         }
-
     }
     // changeNoticeApplyUserStatus(){
     //     if(this.currentOrder.noticeApplyUser===0){

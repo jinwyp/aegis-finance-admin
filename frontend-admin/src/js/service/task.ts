@@ -353,6 +353,9 @@ class TaskService {
                         // result.data.qualityInspectionUnit     = orderInfo.data.qualityInspectionUnit;
                         // result.data.quantityInspectionUnit    = orderInfo.data.quantityInspectionUnit
                     }
+
+                    if (!result.data.attachmentList1){result.data.attachmentList1 = []}
+                    if (!result.data.attachmentList2){result.data.attachmentList2 = []}
                     return result;
                 }).catch(GlobalPromiseHttpCatch);
             }else{
