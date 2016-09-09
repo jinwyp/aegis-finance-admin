@@ -7,7 +7,7 @@ import { Component } from '@angular/core';
 import { Subscription } from 'rxjs/Subscription';
 import { ActivatedRoute } from '@angular/router';
 
-import { Task, TaskService } from '../../service/task';
+import { Task, TaskService, TaskStatus } from '../../service/task';
 
 declare var __moduleName: string;
 
@@ -34,6 +34,7 @@ export class MaterialDetailComponent {
 
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
+    attachmentList : Array<any> = [];
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -75,9 +76,14 @@ export class MaterialDetailComponent {
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
 
-        this.task.addMaterial(this.taskId, this.currentTask.applyType, 'salesman1', this.currentOrder.attachmentList1).then((result)=>{
-            if (result.success){
+        let auditType : string = '';
+        if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanSupplyInvestigationMaterial) auditType = 'salesmanInvestigation'; // 业务员补充尽调资料
+        if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanSupplyRiskManagerMaterial) auditType = 'salesmanSupervision'; // 业务员补充监管资料
+        if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanSupplyRiskManagerMaterial) auditType = 'salesmanRiskmanager'; // 业务员补充风控资料
 
+
+        this.task.addMaterial(this.taskId, this.currentTask.applyType, auditType, this.attachmentList).then((result)=>{
+            if (result.success){
                 this.css.ajaxSuccessHidden = false;
                 setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
             }else{
@@ -93,7 +99,8 @@ export class MaterialDetailComponent {
 
 
     finishedUpload (event) {
-        this.currentOrder.attachmentList1.push({
+        if (!this.attachmentList) {this.attachmentList = []}
+        this.attachmentList.push({
             "url": event.value.url,
             "name": event.value.name,
             "type": event.value.type,

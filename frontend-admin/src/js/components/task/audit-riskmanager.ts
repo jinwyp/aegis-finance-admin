@@ -85,11 +85,9 @@ export class AuditRiskManagerComponent {
     getTaskInfo (id) {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
-                console.log(result.data);
                 this.currentTask = result.data;
                 this.task.getOrderInfoById(this.currentTask.financeId, 'riskmanager').then((result)=>{
                     if (result.success && result.data){
-                        console.log(result.data);
                         this.currentOrder = result.data;
                     }else{
 

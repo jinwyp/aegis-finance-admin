@@ -1,7 +1,7 @@
 package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.exception.BusinessException;
-import com.yimei.finance.repository.admin.finance.*;
+import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
 import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
@@ -11,7 +11,6 @@ import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
-import com.yimei.finance.service.common.message.MessageServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
@@ -45,16 +44,6 @@ public class FinanceFlowMethodServiceImpl {
     private AdminUserServiceImpl userService;
     @Autowired
     private IdentityService identityService;
-    @Autowired
-    private MessageServiceImpl messageService;
-    @Autowired
-    private FinanceOrderSalesmanRepository salesmanRepository;
-    @Autowired
-    private FinanceOrderInvestigatorRepository investigatorRepository;
-    @Autowired
-    private FinanceOrderSupervisorRepository supervisorRepository;
-    @Autowired
-    private FinanceOrderRiskRepository riskRepository;
 
     /**
      * 添加附件方法

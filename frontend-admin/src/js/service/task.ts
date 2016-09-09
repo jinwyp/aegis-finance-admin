@@ -108,7 +108,7 @@ var taskStatusList = [
     {
         'id': '27',
         'name': '待业务员补充风控材料',
-        'taskDefinitionKey' : 'salesmanSupplyRiskManagerMaterial'
+        'taskDefinitionKey' : 'salesmanSupplyRiskManagerMaterial2'
     },
     {
         'id': '28',
@@ -413,10 +413,9 @@ class TaskService {
         };
 
         let auditStep = {
-            salesman1 : '/salesman/supply/investigation/material/',
-            salesman2 : '/salesman/supply/supervision/material/',
-            investigator : '/investigator/supply/riskmanager/material/',
-            supervisor : '/supervisor/supply/riskmanager/material/'
+            salesmanInvestigation : '/salesman/supply/investigation/material/',
+            salesmanSupervision : '/salesman/supply/supervision/material/',
+            salesmanRiskmanager : '/salesman/supply/riskmanager/material/'
         };
 
         let url = auditType[taskType] + auditStep[taskStep] + taskId;

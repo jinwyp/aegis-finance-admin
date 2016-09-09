@@ -18,6 +18,7 @@ import com.yimei.finance.utils.Where;
 import org.activiti.bpmn.model.Message;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Attachment;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -103,8 +104,8 @@ public class FinanceOrderServiceImpl {
     public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, List<EnumFinanceAttachment> typeList) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
         for (EnumFinanceAttachment attachment : typeList) {
-            List<Task> tasks = taskService.createTaskQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type.toString()).list();
-            for (Task t : tasks) {
+            List<HistoricTaskInstance> tasks = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type.toString()).list();
+            for (HistoricTaskInstance t : tasks) {
                 List<Attachment> attachments = taskService.getTaskAttachments(t.getId());
                 if (attachments != null && attachments.size() != 0) {
                     attachmentList.addAll(DozerUtils.copy(attachments, AttachmentObject.class));
