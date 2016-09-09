@@ -14,8 +14,8 @@ declare var __moduleName: string;
 })
 export class ProcessTabComponent {
 
-    currentTab = {
-        index : 2
+    css = {
+        currentIndex : 2
     };
 
     @Input()
@@ -25,7 +25,7 @@ export class ProcessTabComponent {
     processList = [];
 
     changeTab = (currentTab)=>{
-        this.currentTab.index = currentTab;
+        this.css.currentIndex = currentTab;
     }
 }
 

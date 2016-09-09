@@ -96,17 +96,17 @@ export class AuditInvestigatorComponent {
                         }
                         this.task.getOrder2InfoById(this.currentTask.financeId).then((result)=>{
                             if (result.success){
-                                this.currentOrder.applyCompanyName=result.data.applyCompanyName
-                                this.currentOrder.ourContractCompany=result.data.ourContractCompany
-                                this.currentOrder.financingAmount=result.data.financingAmount
-                                this.currentOrder.financingPeriod=result.data.financingPeriod
-                                this.currentOrder.interestRate=result.data.interestRate
-                                this.currentOrder.businessStartTime=result.data.businessStartTime
-                                this.currentOrder.upstreamContractCompany=result.data.upstreamContractCompany
-                                this.currentOrder.downstreamContractCompany=result.data.downstreamContractCompany
-                                this.currentOrder.transportParty=result.data.transportParty
-                                this.currentOrder.transitPort=result.data.transitPort
-                                this.currentOrder.qualityInspectionUnit=result.data.qualityInspectionUnit
+                                this.currentOrder.applyCompanyName=result.data.applyCompanyName;
+                                this.currentOrder.ourContractCompany=result.data.ourContractCompany;
+                                this.currentOrder.financingAmount=result.data.financingAmount;
+                                this.currentOrder.financingPeriod=result.data.financingPeriod;
+                                this.currentOrder.interestRate=result.data.interestRate;
+                                this.currentOrder.businessStartTime=result.data.businessStartTime;
+                                this.currentOrder.upstreamContractCompany=result.data.upstreamContractCompany;
+                                this.currentOrder.downstreamContractCompany=result.data.downstreamContractCompany;
+                                this.currentOrder.transportParty=result.data.transportParty;
+                                this.currentOrder.transitPort=result.data.transitPort;
+                                this.currentOrder.qualityInspectionUnit=result.data.qualityInspectionUnit;
                                 this.currentOrder.quantityInspectionUnit=result.data.quantityInspectionUnit
                             }else{
 

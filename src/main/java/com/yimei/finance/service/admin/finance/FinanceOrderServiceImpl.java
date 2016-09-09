@@ -11,16 +11,15 @@ import com.yimei.finance.representation.admin.finance.object.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
-import com.yimei.finance.representation.site.user.FinanceOrderSearch;
+import com.yimei.finance.representation.site.finance.result.FinanceOrderResult;
+import com.yimei.finance.representation.site.finance.result.FinanceOrderSearch;
 import com.yimei.finance.service.common.message.MessageServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import com.yimei.finance.utils.Where;
-import org.activiti.bpmn.model.Message;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Attachment;
-import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -52,8 +51,6 @@ public class FinanceOrderServiceImpl {
     private HistoryService historyService;
     @Autowired
     private TaskService taskService;
-    @Autowired
-    private FinanceFlowMethodServiceImpl methodService;
     @Autowired
     private MessageServiceImpl messageService;
 
@@ -97,7 +94,7 @@ public class FinanceOrderServiceImpl {
         List<FinanceOrder> totalList = query.getResultList();
         page.setTotal(Long.valueOf(totalList.size()));
         int toIndex = page.getPage() * page.getCount() < totalList.size() ? page.getPage() * page.getCount() : totalList.size();
-        List<FinanceOrder> financeOrderList = totalList.subList(page.getOffset(), toIndex);
+        List<FinanceOrderResult> financeOrderList = DozerUtils.copy(totalList.subList(page.getOffset(), toIndex), FinanceOrderResult.class);
         return Result.success().setData(financeOrderList).setMeta(page);
     }
 
@@ -113,10 +110,6 @@ public class FinanceOrderServiceImpl {
             }
         }
         return attachmentList;
-    }
-
-    public List<HistoryTaskObject> getAllTaskListByFinanceId(Long financeId) {
-        return (List<HistoryTaskObject>) methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).orderByTaskCreateTime().asc().list()).getData();
     }
 
     /**
@@ -175,7 +168,6 @@ public class FinanceOrderServiceImpl {
         }
         return Result.success().setData(riskManagerInfoObject);
     }
-
 
     /**
      * 交易员补充材料
