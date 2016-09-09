@@ -163,7 +163,7 @@
             <td class="td-val" colspan="4">
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList1">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic)" ></span>
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic)" *ngIf="!css.isReadOnly"></span>
                         <a  [href]="pic.url">{{pic.name}}</a>
                     </div>
                     <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
@@ -185,7 +185,7 @@
             <td class="td-val" colspan="4">
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList2">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" ></span>
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" *ngIf="!css.isReadOnly"></span>
                         <a  [href]="pic.url">{{pic.name}}</a>
                     </div>
                 </div>
@@ -194,7 +194,7 @@
         <!--<tr class="item-title">-->
             <!--<td colspan="4"><label><input type="checkbox">发送给业务人员</label><label><input type="checkbox">发送给用户</label></td>-->
         <!--</tr>-->
-        <tr class="item-title">
+        <tr class="item-title" *ngIf="!css.isReadOnly">
             <td colspan="4">
                 <span>审核意见:</span>
                 <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="1">通过</label>
@@ -212,12 +212,12 @@
         <div class="col-sm-12 info-val no-bottom-border center">
             <button type="button" class="btn btn-default btn-save" (click)="audit(false)" [disabled]="css.isSubmitted || currentTask.endTime">保存</button>
             <button type="button" class="btn btn-default btn-sure ml-20" (click)="audit(true)" [disabled]="css.isSubmitted || currentTask.endTime || isApprovedRadio===-1">保存并提交</button>
-            <button type="button" class="btn btn-default btn-return ml-20" [routerLink]="['tasks/pending']">返回</button>
+            <button type="button" class="btn btn-default btn-return ml-20" [routerLink]="['/tasks/pending']">返回</button>
         </div>
     </div>
     <div class="row info-item" *ngIf="css.isReadOnly">
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['tasks/all']">返回</button>
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['/tasks/all']">返回</button>
         </div>
     </div>
 

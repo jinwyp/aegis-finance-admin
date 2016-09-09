@@ -126,7 +126,7 @@
             <td class="td-val" colspan="4">
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList1">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" ></span>
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" *ngIf="!css.isReadOnly"></span>
                         <a  [href]="pic.url">{{pic.name}}</a>
                     </div>
                 </div>
@@ -151,7 +151,7 @@
             <td class="td-val" colspan="4">
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList2">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" ></span>
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" *ngIf="!css.isReadOnly"></span>
                         <a  [href]="pic.url">{{pic.name}}</a>
                     </div>
                 </div>
