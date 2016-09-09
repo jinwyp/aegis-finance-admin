@@ -110,7 +110,7 @@
         <tr class="item-min">
             <td class="td-label">历史合作情况:</td>
             <td colspan="3" class="td-val">
-                <input type="text" *ngIf="!css.isReadOnly" class="describe" [(ngModel)]="currentOrder.historicalCooperationDetail" placeholder="请输入">
+                <input type="text" *ngIf="!css.isReadOnly" class="describe" [(ngModel)]="currentOrder.historicalCooperationDetail" placeholder="包含第几次合作,往期合作业务量,目前占压资金额,往期账期、有无违约等状况描述">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.historicalCooperationDetail}}</span>
             </td>
         </tr>
@@ -120,14 +120,14 @@
         <tr class="item-min">
             <td class="td-label">业务主要信息:</td>
             <td colspan="3" class="td-val">
-                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.mainBusinessInfo" placeholder="请输入">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.mainBusinessInfo" placeholder="单价、煤种、总吨位、运输交货方式、回款周期、履约地">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.mainBusinessInfo}}</span>
             </td>
         </tr>
         <tr class="item-min">
             <td class="td-label">业务流转:</td>
             <td colspan="3" class="td-val">
-                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.businessTransferInfo" placeholder="请输入">
+                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.businessTransferInfo" placeholder="物流资金等流转信息">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.businessTransferInfo}}</span>
             </td>
         </tr>
