@@ -48,6 +48,7 @@ public class FinanceFlowMethodServiceImpl {
     /**
      * 添加附件方法
      */
+    @Transactional
     public void addAttachmentsMethod(List<AttachmentObject> attachmentList, String taskId, String processInstanceId, EnumFinanceAttachment type) {
         List<Attachment> oldAttachmentList = taskService.getTaskAttachments(taskId);
         if (oldAttachmentList != null && oldAttachmentList.size() != 0) {
