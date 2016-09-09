@@ -139,7 +139,7 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="4" *ngIf="!css.isReadOnly" placeholder="请输入" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
+                <textarea class="form-control" rows="4" *ngIf="!css.isReadOnly" placeholder="请输入您要求用户/业务人员需要补充的材料及说明" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.supplyMaterialIntroduce}}</span>
             </td>
         </tr>
