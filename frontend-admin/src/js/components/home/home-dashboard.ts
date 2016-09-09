@@ -34,7 +34,6 @@ export class HomeDashboardComponent implements OnInit {
     }
 
     gotoDetail(hero: Order) {
-        console.log(hero);
         let link = ['/orders', hero.id];
         this.router.navigate(link);
     }

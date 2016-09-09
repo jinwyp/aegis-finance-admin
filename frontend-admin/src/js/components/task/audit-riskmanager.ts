@@ -61,7 +61,6 @@ export class AuditRiskManagerComponent {
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
             if (this.routeData.routeType === 'info') {this.css.isReadOnly = true;}
-            console.log(data)
         });
 
         this.getCurrentUser();
