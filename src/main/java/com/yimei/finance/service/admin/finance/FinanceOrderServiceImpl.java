@@ -216,7 +216,8 @@ public class FinanceOrderServiceImpl {
         }
         investigatorInfo.setLastUpdateManId(userId);
         investigatorInfo.setLastUpdateTime(new Date());
-        investigatorRepository.save(DozerUtils.copy(investigatorInfo, FinanceOrderInvestigatorInfo.class));
+        investigatorOrder = DozerUtils.copy(investigatorInfo, FinanceOrderInvestigatorInfo.class);
+        investigatorRepository.save(investigatorOrder);
     }
 
     /**
