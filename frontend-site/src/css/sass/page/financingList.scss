@@ -322,3 +322,15 @@ $borderColor:#e4e4e4;
   }
 }
 
+.loading{
+  position: absolute;
+  top: 300px;
+  z-index: 0;
+  width: 1020px;
+  height: 180px;
+  background: #ffffff;
+  text-align: center;
+  img{
+    margin-top: 100px;
+  }
+}
