@@ -4,6 +4,7 @@ import com.yimei.finance.entity.common.BaseEntity;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -46,6 +47,7 @@ public class FinanceOrderInvestigatorInfo extends BaseEntity implements Serializ
     private int financingPeriod;                                     //融资期限
     @Column(name = "interest_rate", precision = 5, scale = 2)
     private BigDecimal interestRate;                                 //利率
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "business_start_time")
     private Date businessStartTime;                                  //业务开始时间
     @Column(name = "historical_cooperation_detail", length = 1020)
