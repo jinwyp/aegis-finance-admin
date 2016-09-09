@@ -13,7 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class Page implements Serializable {
     private int page = 1;
-    private int count = 10;
+    private int count = 20;
     //开始检索的地方
     private Long offset = 0L;
     private Long total = 0L;                 //总条数

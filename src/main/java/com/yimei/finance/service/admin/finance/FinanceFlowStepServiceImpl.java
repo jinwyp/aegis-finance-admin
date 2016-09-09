@@ -108,9 +108,6 @@ public class FinanceFlowStepServiceImpl {
         FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
         investigatorInfo.setFinanceId(financeId);
         investigatorInfo.setApplyCompanyName(financeOrder.getApplyCompanyName());
-        investigatorInfo.setOurContractCompany(financeOrder.getOurContractCompany());
-        investigatorInfo.setDownstreamContractCompany(financeOrder.getDownstreamContractCompany());
-        investigatorInfo.setTerminalServer(financeOrder.getTerminalServer());
         investigatorInfo.setCreateManId(userId);
         investigatorInfo.setCreateTime(new Date());
         orderService.saveFinanceOrderInvestigatorInfo(userId, investigatorInfo);
