@@ -176,7 +176,6 @@ public class FinanceOrderServiceImpl {
         return Result.success().setData(riskManagerInfoObject);
     }
 
-
     /**
      * 交易员补充材料
      */
