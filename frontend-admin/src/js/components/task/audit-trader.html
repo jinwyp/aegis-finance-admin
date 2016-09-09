@@ -2,7 +2,8 @@
     <ol class="breadcrumb">
         <li>审核管理</li>
         <li>&gt;</li>
-        <li class="active">我的待办</li>
+        <li *ngIf="!css.isReadOnly" class="active">我的待办</li>
+        <li *ngIf="css.isReadOnly" class="active">我的审核</li>
     </ol>
 </div>
 

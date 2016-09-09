@@ -2,7 +2,8 @@
     <ol class="breadcrumb">
         <li>审核管理</li>
         <li>&gt;</li>
-        <li class="active">我的待办</li>
+        <li *ngIf="!css.isReadOnly" class="active">我的待办</li>
+        <li *ngIf="css.isReadOnly" class="active">我的审核</li>
     </ol>
 </div>
 
@@ -13,12 +14,12 @@
     <div class="table-title">融资申请</div>
 
     <div class="apply-title">
-        <span *ngIf="currentTask.applyType==='MYR'">尽调报告-(应收)</span>
-        <span *ngIf="currentTask.applyType=='MYD'||currentTask.applyType==='MYG'">尽调报告-(订单、仓押)</span>
+        <span *ngIf="currentTask.applyType==='MYR'">尽调报告(应收)</span>
+        <span *ngIf="currentTask.applyType=='MYD'||currentTask.applyType==='MYG'">尽调报告(订单、仓押)</span>
         <div>
             <a [routerLink]="['/tasks', currentTask.id, 'trader', 'info']">查看申请材料</a>
             <span class="line"></span>
-            <a [routerLink]="['/tasks', currentTask.id, 'salesman', 'info']">查看审批业务</a>
+            <a [routerLink]="['/tasks', currentTask.id, 'salesman', 'info']">查看业务审批</a>
         </div>
     </div>
 
@@ -140,7 +141,7 @@
             </td>
         </tr>
         <tr class="item-title">
-            <td colspan="4"><span class="fs-16">履约信用及能力评估<span class="fs-14 hint">(结合相关签约主体的企业资信和实际煤炭贸易操作能力,对上下游相关方的<span class="orange">履约信用和能力描绘和评估</span>)</span></span></td>
+            <td colspan="4"><span class="fs-16">履约信用及能力评估<span class="fs-14 hint">(结合相关签约主体的企业资信和实际煤炭贸易操作能力,对上下游相关方的<span class="orange">履约信用和能力描述和评估</span>)</span></span></td>
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">

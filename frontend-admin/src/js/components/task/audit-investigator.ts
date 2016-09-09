@@ -90,16 +90,13 @@ export class AuditInvestigatorComponent {
             if (result.success){
                 this.currentTask = result.data;
                 this.task.getOrderInfoById(this.currentTask.financeId, 'investigator').then((result)=>{
-                    if (result.success){
-                        if(result.data!=null){
-                            this.currentOrder = result.data;
-                        }else {
-
-                        }
+                    if (result.success && result.data ){
+                        this.currentOrder = result.data;
                     }else{
 
                     }
                 });
+
             }else{
 
             }
