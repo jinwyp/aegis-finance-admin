@@ -87,6 +87,9 @@ export class AuditTraderComponent {
                 this.task.getOrderInfoById(this.currentTask.financeId, 'onlinetrader').then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
+                        if(this.currentOrder.expectDate===0){
+                            this.currentOrder.expectDate=null;
+                        }
                     }else{
 
                     }
