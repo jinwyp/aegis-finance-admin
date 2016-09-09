@@ -101,7 +101,7 @@ public class FinanceOrderServiceImpl {
     public List<AttachmentObject> getAttachmentByFinanceIdTypeOnce(Long financeId, List<EnumFinanceAttachment> typeList) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
         for (EnumFinanceAttachment attachment : typeList) {
-            List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type.toString()).orderByTaskCreateTime().desc().list();
+            List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().finished().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type.toString()).orderByTaskCreateTime().desc().list();
             if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
             HistoricTaskInstance task = taskList.get(0);
             List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
