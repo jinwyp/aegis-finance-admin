@@ -22,7 +22,7 @@
             <span class="line"></span>
             <a [routerLink]="['/tasks', currentTask.id, 'investigator', 'info']">查看尽调报告</a>
             <span class="line"></span>
-            <a [routerLink]="['/tasks', currentTask.id, 'supervisor', 'info']">查看监管报告</a>
+            <a *ngIf="currentTask.applyTypeName!=='MYR'" [routerLink]="['/tasks', currentTask.id, 'supervisor', 'info']">查看监管报告</a>
         </div>
     </div>
 
