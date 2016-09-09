@@ -46,9 +46,9 @@
             <id>nexus</id>
             <name>Team Nexus Repository</name>
             <url>http://maven.yimei180.com/content/groups/public</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <!--<snapshots>-->
+                <!--<enabled>false</enabled>-->
+            <!--</snapshots>-->
         </pluginRepository>
     </pluginRepositories>
 
