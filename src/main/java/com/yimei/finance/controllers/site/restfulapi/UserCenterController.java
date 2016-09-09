@@ -104,7 +104,7 @@ public class UserCenterController {
         return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), orderSearch, page);
     }
 
-    @ApiOperation(value = "根据 id 查看金融申请单", notes = "根据 金融申请单id 查看金融申请单", response = FinanceOrder.class)
+    @ApiOperation(value = "根据 id 查看金融申请单", notes = "根据 金融申请单id 查看金融申请单", response = FinanceOrderObject.class)
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Long", paramType = "path")
     @LoginRequired
     @RequestMapping(value = "/apply/{id}", method = RequestMethod.GET)
@@ -113,7 +113,7 @@ public class UserCenterController {
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         FinanceOrderObject financeOrderObject = DozerUtils.copy(financeOrder, FinanceOrderObject.class);
         financeOrderObject.setAttachmentList1(orderService.getAttachmentByFinanceIdType(id, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.OnlineTraderAuditAttachment})));
-        return Result.success().setData(financeOrder);
+        return Result.success().setData(financeOrderObject);
     }
 
     @RequestMapping(value = "/status", method = RequestMethod.GET)
