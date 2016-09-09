@@ -36,6 +36,8 @@ export class TaskListComponent {
     taskStatusStep : any = TaskStatus;
     currentUserSession : User = new User();
 
+    isPending : boolean = true;
+
     ngOnInit(){
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;

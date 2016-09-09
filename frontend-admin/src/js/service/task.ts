@@ -148,6 +148,7 @@ class Task {
     startTime : string;
     endTime : string;
 
+    approveState : string;
     assignee : string;
     assigneeDepartment : string;
     assigneeName : string;
@@ -338,7 +339,7 @@ class TaskService {
 
                     if (!result.data){result.data = {}}
                     if (orderInfo.data) {
-                        result.data = Object.assign({}, result.data, orderInfo.data );
+                        result.data = Object.assign({}, orderInfo.data, result.data  );
                         // result.data.applyCompanyName          = orderInfo.data.applyCompanyName;
                         // result.data.ourContractCompany        = orderInfo.data.ourContractCompany;
                         // result.data.financingAmount           = orderInfo.data.financingAmount;
