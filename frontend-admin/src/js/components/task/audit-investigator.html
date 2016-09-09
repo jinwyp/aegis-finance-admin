@@ -56,7 +56,7 @@
             </td>
         </tr>
         <tr class="item-min">
-            <td class="td-label">融资金额:</td>
+            <td class="td-label">融资金额(万元):</td>
             <td class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.financingAmount" placeholder="请输入">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.financingAmount}}</span>
@@ -136,7 +136,7 @@
             </td>
         </tr>
         <tr class="item-min">
-            <td class="td-label">业务流转:</td>
+            <td class="td-label">货物流转:</td>
             <td colspan="3" class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.businessTransferInfo" placeholder="物流资金等流转信息">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.businessTransferInfo}}</span>
@@ -185,7 +185,7 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="3" placeholder="请输入" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
+                <textarea class="form-control" rows="3" placeholder="请输入您要求用户/业务人员需要补充的材料及说明" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
             </td>
         </tr>
         <tr class="item-title" *ngIf="currentOrder.attachmentList2">
@@ -193,6 +193,7 @@
         </tr>
         <tr class="item-max" *ngIf="currentOrder.attachmentList2">
             <td class="td-val" colspan="4">
+                <span *ngIf="!currentOrder.attachmentList2">无</span>
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList2">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" *ngIf="!css.isReadOnly"></span>
