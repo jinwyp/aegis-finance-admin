@@ -30,6 +30,7 @@ export class AddUserComponent {
     ) {}
 
     css = {
+        formActiveForRefresh : true,
         ajaxSuccessHidden : true,
         ajaxErrorHidden : true,
         isSubmitted :      false,
@@ -112,7 +113,7 @@ export class AddUserComponent {
                 this.css.isSubmitted = false;
                 if (result.success) {
                     this.css.ajaxSuccessHidden=false;
-                    setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
+                    setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                     this.clear();
                 } else {
                     this.css.ajaxErrorHidden = false;
@@ -166,8 +167,8 @@ export class AddUserComponent {
         this.currentUser.department = '';
         this.currentUser.groupIds   = [];
         this.selectedItem     = '';
-        // this.css.activeForRefresh = false;
-        // setTimeout(() => this.css.activeForRefresh = true, 0);
+        this.css.formActiveForRefresh = false;
+        setTimeout(() => this.css.formActiveForRefresh = true, 0);
     }
 
 
