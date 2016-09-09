@@ -332,14 +332,13 @@ class TaskService {
 
         return this.http.get(API.orders + '/' + orderId + auditStep[taskStep]).toPromise().then(response => {
             var result = response.json() as HttpResponse;
-
             if (taskStep !== 'onlinetrader'){
                 return this.http.get(API.orders + '/' + orderId + auditStep.onlinetrader).toPromise().then( response2 => {
                     var orderInfo = response2.json() as HttpResponse;
 
                     if (!result.data){result.data = {}}
                     if (orderInfo.data) {
-                        result.data = Object.assign(result.data, orderInfo.data);
+                        result.data = Object.assign({}, result.data, orderInfo.data );
                         // result.data.applyCompanyName          = orderInfo.data.applyCompanyName;
                         // result.data.ourContractCompany        = orderInfo.data.ourContractCompany;
                         // result.data.financingAmount           = orderInfo.data.financingAmount;

@@ -18,6 +18,11 @@ import { FileUploadService } from '../service/file-upload';
 
 
 import { FileUploadComponent } from '../components/aegis-ui/file-upload';
+import { CustomSelectComponent } from '../components/aegis-ui/custom-select';
+import { CustomModalComponent } from '../components/aegis-ui/custom-modal';
+import { CustomCheckboxComponent } from '../components/aegis-ui/custom-checkbox';
+import { DatePickerComponent } from '../components/aegis-ui/ng2-datepicker/ng2-datepicker';
+
 import { headerComponent } from '../components/header/header';
 import { LeftMenuComponent } from '../components/left-menu/left-menu';
 
@@ -46,17 +51,14 @@ import { AuditSalesmanComponent } from '../components/task/audit-salesman';
 import { AuditInvestigatorComponent } from '../components/task/audit-investigator';
 import { AuditSupervisorComponent } from '../components/task/audit-supervisor';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
-import { CustomSelectComponent } from '../components/aegis-ui/custom-select';
-import { CustomModalComponent } from '../components/aegis-ui/custom-modal';
-import { CustomCheckboxComponent } from '../components/aegis-ui/custom-checkbox';
-import {MaterialDetailComponent} from "../components/task/material-detail";
+import { MaterialDetailComponent} from "../components/task/material-detail";
 
 
 
 @NgModule({
     imports: [ BrowserModule, FormsModule, HttpModule, routing],
     declarations: [
-        FileUploadComponent, headerComponent, LeftMenuComponent,
+        DatePickerComponent, FileUploadComponent, headerComponent, LeftMenuComponent,
         HomeComponent, HomeDashboardComponent,
         UserDetailComponent, UserUpdatePasswordComponent,
         RoleListComponent, AddRoleComponent, RoleInfoComponent,

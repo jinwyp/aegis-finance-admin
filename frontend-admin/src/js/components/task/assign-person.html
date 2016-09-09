@@ -30,25 +30,25 @@
     <div class="row info-item">
         <span class="col-sm-4 info-label">线上交易员姓名:</span>
         <div class="col-sm-8 info-val">
-            <span>{{selectedUser.name}}</span>
+            <span>{{selectedUser.name||'--'}}</span>
         </div>
     </div>
     <div class="row info-item">
         <span class="col-sm-4 info-label">联系方式:</span>
         <div class="col-sm-8 info-val">
-            <span>{{selectedUser.phone}}</span>
+            <span>{{selectedUser.phone||'--'}}</span>
         </div>
     </div>
     <div class="row info-item">
         <span class="col-sm-4 info-label">角色名称:</span>
         <div class="col-sm-8 info-val">
-            <span *ngFor="let group of selectedUser.groupList">{{group.name}} <br/></span>
+            <span *ngFor="let group of selectedUser.groupList">{{group.name||'--'}} <br/></span>
         </div>
     </div>
     <div class="row info-item">
         <span class="col-sm-4 info-label">所属部门:</span>
         <div class="col-sm-8 info-val">
-            <span>{{selectedUser.department}}</span>
+            <span>{{selectedUser.department||'--'}}</span>
         </div>
     </div>
     <div class="row info-item">
