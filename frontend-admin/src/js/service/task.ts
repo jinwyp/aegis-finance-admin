@@ -171,7 +171,7 @@ class Task {
 
     //公用字段
     financingAmount : number;               //拟融资金额（单位：万元）
-    expectDate : string;                    //拟使用资金时间（单位：天）
+    expectDate : number;                    //拟使用资金时间（单位：天）
     businessAmount : number;                //预期此笔业务量（单位：万吨）
     transportMode : string;                 //运输方式：海运\汽运\火运\其他
 

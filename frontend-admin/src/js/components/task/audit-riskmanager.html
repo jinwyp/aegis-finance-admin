@@ -21,8 +21,8 @@
             <a [routerLink]="['/tasks', currentTask.id, 'salesman', 'info']">查看业务审批</a>
             <span class="line"></span>
             <a [routerLink]="['/tasks', currentTask.id, 'investigator', 'info']">查看尽调报告</a>
-            <span class="line"></span>
-            <a [routerLink]="['/tasks', currentTask.id, 'supervisor', 'info']">查看监管报告</a>
+            <span *ngIf="currentTask.applyType!=='MYR'" class="line"></span>
+            <a *ngIf="currentTask.applyType!=='MYR'" [routerLink]="['/tasks', currentTask.id, 'supervisor', 'info']">查看监管报告</a>
         </div>
     </div>
 
