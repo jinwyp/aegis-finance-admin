@@ -87,6 +87,16 @@
   }
 }
 
+
+.attachment img{
+  width: 180px;
+  height: 120px;
+  margin-right: 20px;
+  margin-bottom: 20px;
+  vertical-align: middle;
+}
+
+
 .wd-30{width:30%;}
 
 .form-control{
@@ -512,13 +522,7 @@
             padding:10px 20px 0 20px;
             margin-bottom:20px;
           }
-          .attachment img{
-            width: 180px;
-            height: 120px;
-            margin-right: 20px;
-            margin-bottom: 20px;
-            vertical-align: middle;
-          }
+
 
         }
         .finance-types>div{  display: inline-block;  width: 230px; height:100px; vertical-align: middle;  }

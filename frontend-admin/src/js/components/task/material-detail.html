@@ -23,10 +23,10 @@
     </div>
 
     <div class="row info-item">
-        <span class="col-sm-2 info-label">补充材料说明:</span>
+        <span class="col-sm-2 info-label">补充材料:</span>
         <div class="col-sm-10 info-val">
             <div class="attachment">
-                <img *ngFor="let pic of currentOrder.attachmentList1" [src]="pic.url" [alt]="pic.name">
+                <img *ngFor="let pic of attachmentList" [src]="pic.url" [alt]="pic.name">
                 <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
             </div>
         </div>
