@@ -88,10 +88,10 @@
                 <span class="span-read" *ngIf="css.isReadOnly"></span>
             </td>
         </tr>
-        <tr class="item-title">
+        <tr class="item-title" *ngIf="currentOrder.attachmentList2">
             <td colspan="4"><span>业务员补充材料:</span></td>
         </tr>
-        <tr class="item-max">
+        <tr class="item-max" *ngIf="currentOrder.attachmentList2">
             <td class="td-val" colspan="4">
                 <div class="attachment">
                     <img *ngFor="let pic of currentOrder.attachmentList2" [src]="pic.url" [alt]="pic.name">
