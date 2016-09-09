@@ -29,7 +29,13 @@
             <td>{{task.createTime | date:"yyyy-MM-dd"}}</td>
             <td>{{task.applyCompanyName}}</td>
             <td>{{task.financingAmount || '--'}}</td>
-            <td>{{task.assigneeName ||'--'}} <br/>{{task.assigneeDepartment||'--'}}</td>
+            <td>{{task.assigneeName}}
+                <span *ngIf="task.taskDefinitionKey===taskStatusStep.assignOnlineTrader"> 线上交易员管理组</span>
+                <span *ngIf="task.taskDefinitionKey===taskStatusStep.assignSalesman"> 业务员管理组</span>
+                <span *ngIf="task.taskDefinitionKey===taskStatusStep.assignInvestigator"> 尽调员管理组</span>
+                <span *ngIf="task.taskDefinitionKey===taskStatusStep.assignSupervisor"> 监管员管理组</span>
+                <span *ngIf="task.taskDefinitionKey===taskStatusStep.assignRiskManager"> 风控管理组</span>
+                <br/>{{task.assigneeDepartment||'--'}}</td>
             <td>
                 <span class="green">{{task.name}}</span> <br/>
                 <!--<span class="orange">(补充材料)</span><br/>-->

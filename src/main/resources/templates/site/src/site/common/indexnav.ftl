@@ -18,7 +18,7 @@
                 </li>
                 <li class=" slideDl-right"><a href="${sitepage}/tender" class="navFist">阳光采购</a></li>
                 <li class=" normalLi"><a href="${sitepage}/coalzone" class="navFist">煤矿专区</a></li>
-                <li class="g-nav-finance  slideDl-left active" ><a href="${sitepage}/finance" class="navFist">金融</a></li>
+                <li class="g-nav-finance  slideDl-left active" ><a href="/finance" class="navFist">金融</a></li>
                 <li  class="slideDl">
                     <a href="javascript:void(0);" class="navFist">资讯 <i class="ico_down"></i></a>
                     <dl class="slide">
