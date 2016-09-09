@@ -24,11 +24,6 @@
 			<name>Team Nexus Repository</name>
 			<url>http://maven.yimei180.com/content/groups/public</url>
 		</repository>
-		<repository>
-			<id>nexus-snapshots</id>
-			<name>Team Nexus Repository</name>
-			<url>http://maven.yimei180.com/content/repositories/snapshots</url>
-		</repository>
 	</repositories>
 
 	<properties>
@@ -51,9 +46,9 @@
             <id>nexus</id>
             <name>Team Nexus Repository</name>
             <url>http://maven.yimei180.com/content/groups/public</url>
-            <!--<snapshots>-->
-                <!--<enabled>false</enabled>-->
-            <!--</snapshots>-->
+            <snapshots>
+                <enabled>false</enabled>
+            </snapshots>
         </pluginRepository>
     </pluginRepositories>
 
