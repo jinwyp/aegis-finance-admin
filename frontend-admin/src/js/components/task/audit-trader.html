@@ -151,7 +151,7 @@
             <td class="td-val finance-type" colspan="3">
                 <div class="hint mb-20">如: 下游签约单位合同模板、历史供煤信息，终端结算回款历史单据、自身企业信用、财务状况</div>
                 <div class="attachment">
-                    <a *ngFor="let pic of currentOrder.attachmentList1" [href]="pic.url" [alt]="pic.name">{{pic.name}}.{{pic.type}}</a>
+                    <a *ngFor="let pic of currentOrder.attachmentList1" [href]="pic.url">{{pic.url}}.{{pic.type}}</a>
                     <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
                 </div>
 

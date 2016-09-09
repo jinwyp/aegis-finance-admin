@@ -26,7 +26,7 @@
         <span class="col-sm-2 info-label">补充材料:</span>
         <div class="col-sm-10 info-val">
             <div class="attachment">
-                <a *ngFor="let pic of attachmentList" [href]="pic.url" [alt]="pic.name">{{pic.name}}.{{pic.type}}</a>
+                <a *ngFor="let pic of attachmentList" [href]="pic.url">{{pic.url}}.{{pic.type}}</a>
                 <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
             </div>
         </div>

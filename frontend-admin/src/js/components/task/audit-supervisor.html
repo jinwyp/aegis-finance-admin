@@ -124,7 +124,7 @@
         <tr class="item-max">
             <td class="td-val" colspan="4">
                 <div class="attachment">
-                    <a *ngFor="let pic of currentOrder.attachmentList1" [href]="pic.url" [alt]="pic.name">{{pic.name}}.{{pic.type}}</a>
+                    <a *ngFor="let pic of currentOrder.attachmentList1" [href]="pic.url" >{{pic.url}}.{{pic.type}}</a>
                 </div>
 
                 <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
@@ -146,7 +146,7 @@
         <tr class="item-max" *ngIf="currentOrder.attachmentList2">
             <td class="td-val" colspan="4">
                 <div class="attachment">
-                    <a *ngFor="let pic of currentOrder.attachmentList2" [href]="pic.url" [alt]="pic.name">{{pic.name}}.{{pic.type}}</a>
+                    <a *ngFor="let pic of currentOrder.attachmentList2" [href]="pic.url" >{{pic.url}}.{{pic.type}}</a>
                 </div>
             </td>
         </tr>
