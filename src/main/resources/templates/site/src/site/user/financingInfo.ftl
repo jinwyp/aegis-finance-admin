@@ -87,9 +87,15 @@
                         <table>
                             <tr>
                                 <th>拟使用资金时间:</th>
-                                <td>{{@financeInfo.expectDate || '--'}}&nbsp;天</td>
+                                <td >
+                                    <span ms-visible="@financeInfo.expectDate!=0">{{@financeInfo.expectDate}}&nbsp;天</span>
+                                    <span ms-visible="@financeInfo.expectDate===0">--</span>
+                                </td>
                                 <th colspan="2">预期此笔业务量:</th>
-                                <td>{{@financeInfo.businessAmount || '--'}}&nbsp;万吨</td>
+                                <td>
+                                    <span ms-visible="@financeInfo.businessAmount!=null">{{@financeInfo.businessAmount}}&nbsp;万吨</span>
+                                    <span ms-visible="@financeInfo.businessAmount===null">--</span>
+                                </td>
                             </tr>
                             <tr>
                                 <th>拟融资金额:</th>
@@ -119,7 +125,10 @@
                             </tr>
                             <tr>
                                 <th>预计单吨销售价:</th>
-                                <td colspan="2">{{@financeInfo.sellingPrice || '--'}}&nbsp;元/吨</td>
+                                <td colspan="2">
+                                    <span ms-visible="@financeInfo.sellingPrice!=null">{{@financeInfo.sellingPrice}}&nbsp;元/吨</span>
+                                    <span ms-visible="@financeInfo.sellingPrice===null">--</span>
+                                </td>
                             </tr>
                         </table>
                         <!--购-->
@@ -134,7 +143,10 @@
                                 <th>运输方式:</th>
                                 <td>{{@financeInfo.transportMode || '--'}}</td>
                                 <th>单吨采购价:</th>
-                                <td>{{@financeInfo.procurementPrice || '--'}}&nbsp;元/吨</td>
+                                <td>
+                                    <span ms-visible="@financeInfo.procurementPrice!=null">{{@financeInfo.procurementPrice}}&nbsp;元/吨</span>
+                                    <span ms-visible="@financeInfo.procurementPrice===null">--</span>
+                                </td>
                             </tr>
                         </table>
                         <!--贷-->
@@ -150,7 +162,10 @@
                                 <!--------------------------------------------字段无------------------------->
                                 <td>{{@financeInfo.coalQuantityIndex || '--'}}</td>
                                 <th>单吨市场报价:</th>
-                                <td>{{@financeInfo.marketPrice || '--'}}&nbsp;元/吨</td>
+                                <td>
+                                    <span ms-visible="@financeInfo.marketPrice!=null">{{@financeInfo.marketPrice}}&nbsp;元/吨</span>
+                                    <span ms-visible="@financeInfo.marketPrice===null">--</span>
+                                </td>
                             </tr>
                         </table>
                     </div>
@@ -204,7 +219,7 @@
                             </tr>
                             <tr>
                                 <th>备注说明:</th>
-                                <td>{{@financeInfo.comments}}</td>
+                                <td>{{@financeInfo.comments || '--'}}</td>
                             </tr>
                         </table>
                     </div>
