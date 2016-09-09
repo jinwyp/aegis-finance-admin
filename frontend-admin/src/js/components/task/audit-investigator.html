@@ -161,7 +161,7 @@
         <tr class="item-max">
             <td class="td-val" colspan="4">
                 <div class="attachment">
-                    <img *ngFor="let pic of currentOrder.attachmentList" [src]="pic.url" [alt]="pic.name">
+                    <img *ngFor="let pic of currentOrder.attachmentList1" [src]="pic.url" [alt]="pic.name">
                     <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
                 </div>
             </td>
