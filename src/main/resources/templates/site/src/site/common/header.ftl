@@ -31,7 +31,7 @@
                     <li>您好！<a href="${ssoMemberUrl}/login"  class="blue">请登录</a></li>
                     <li><a href="${ssoMemberUrl}/register">免费注册</a></li>
                 </#if>
-                <li><a href="">我的易煤网</a></li>
+                <li><a href="${sitepage}/account/order/buy">我的易煤网</a></li>
                 <li class="hoverDiv">
                     <a href="javascript:void(0);" class="hoverTitle">网站导航</a>
                     <div class="Nav hideMenu">
