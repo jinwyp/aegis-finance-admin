@@ -123,6 +123,12 @@ export class AuditInvestigatorComponent {
             this.css.isSubmitted = false;
             return;
         }
+        if(isNaN(Number(this.currentOrder.interestRate))){
+            this.css.ajaxErrorHidden = false;
+            this.errorMsg = '利率应输入大于0的数字';
+            this.css.isSubmitted = false;
+            return;
+        }
 
         let body : any = {
             t : {

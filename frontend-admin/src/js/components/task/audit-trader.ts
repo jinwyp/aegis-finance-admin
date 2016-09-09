@@ -110,6 +110,47 @@ export class AuditTraderComponent {
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
 
+        if(isNaN(Number(this.currentOrder.financingAmount))){
+            this.css.ajaxErrorHidden = false;
+            this.errorMsg = '拟融资金额应输入1-100000之间的数字';
+            this.css.isSubmitted = false;
+            return;
+        }
+        if(isNaN(Number(this.currentOrder.expectDate))||(Number(this.currentOrder.expectDate)<0||Number(this.currentOrder.expectDate)>365)){
+            this.css.ajaxErrorHidden = false;
+            this.errorMsg = '拟使用资金时间应输入1-365之间的整数';
+            this.css.isSubmitted = false;
+            return;
+        }
+        if(isNaN(Number(this.currentOrder.businessAmount))){
+            this.css.ajaxErrorHidden = false;
+            this.errorMsg = '预期此笔业务量应输入1-100000之间的数字';
+            this.css.isSubmitted = false;
+            return;
+        }
+        if(this.currentOrder.applyType==='MYR'){
+            if(isNaN(Number(this.currentOrder.sellingPrice))){
+                this.css.ajaxErrorHidden = false;
+                this.errorMsg = '预计单吨销售价应输入大于0的数字';
+                this.css.isSubmitted = false;
+                return;
+            }
+        }else if(this.currentOrder.applyType==='MYD'){
+            if(isNaN(Number(this.currentOrder.marketPrice))){
+                this.css.ajaxErrorHidden = false;
+                this.errorMsg = '单吨市场报价应输入大于0的数字';
+                this.css.isSubmitted = false;
+                return;
+            }
+        }else if(this.currentOrder.applyType==='MYG'){
+            if(isNaN(Number(this.currentOrder.procurementPrice))){
+                this.css.ajaxErrorHidden = false;
+                this.errorMsg = '单吨采购价应输入大于0的数字';
+                this.css.isSubmitted = false;
+                return;
+            }
+        }
+
         let auditType : string = '';
         let body : any = {
             t : {
