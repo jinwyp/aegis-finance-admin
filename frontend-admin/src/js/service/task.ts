@@ -258,6 +258,8 @@ class Task {
     constructor() {
         this.id  = '';
         this.processInstanceId  = '';
+        this.attachmentList1  = [];
+        this.attachmentList2  = [];
     }
 }
 
