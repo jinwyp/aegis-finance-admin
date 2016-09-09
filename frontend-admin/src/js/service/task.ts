@@ -339,18 +339,19 @@ class TaskService {
 
                     if (!result.data){result.data = {}}
                     if (orderInfo.data) {
-                        result.data.applyCompanyName          = orderInfo.data.applyCompanyName;
-                        result.data.ourContractCompany        = orderInfo.data.ourContractCompany;
-                        result.data.financingAmount           = orderInfo.data.financingAmount;
-                        result.data.financingPeriod           = orderInfo.data.financingPeriod;
-                        result.data.interestRate              = orderInfo.data.interestRate;
-                        result.data.businessStartTime         = orderInfo.data.businessStartTime;
-                        result.data.upstreamContractCompany   = orderInfo.data.upstreamContractCompany;
-                        result.data.downstreamContractCompany = orderInfo.data.downstreamContractCompany;
-                        result.data.transportParty            = orderInfo.data.transportParty;
-                        result.data.transitPort               = orderInfo.data.transitPort;
-                        result.data.qualityInspectionUnit     = orderInfo.data.qualityInspectionUnit;
-                        result.data.quantityInspectionUnit    = orderInfo.data.quantityInspectionUnit
+                        result.data = Object.assign(result.data, orderInfo.data);
+                        // result.data.applyCompanyName          = orderInfo.data.applyCompanyName;
+                        // result.data.ourContractCompany        = orderInfo.data.ourContractCompany;
+                        // result.data.financingAmount           = orderInfo.data.financingAmount;
+                        // result.data.financingPeriod           = orderInfo.data.financingPeriod;
+                        // result.data.interestRate              = orderInfo.data.interestRate;
+                        // result.data.businessStartTime         = orderInfo.data.businessStartTime;
+                        // result.data.upstreamContractCompany   = orderInfo.data.upstreamContractCompany;
+                        // result.data.downstreamContractCompany = orderInfo.data.downstreamContractCompany;
+                        // result.data.transportParty            = orderInfo.data.transportParty;
+                        // result.data.transitPort               = orderInfo.data.transitPort;
+                        // result.data.qualityInspectionUnit     = orderInfo.data.qualityInspectionUnit;
+                        // result.data.quantityInspectionUnit    = orderInfo.data.quantityInspectionUnit
                     }
                     return result;
                 }).catch(GlobalPromiseHttpCatch);

@@ -37,7 +37,6 @@ export class UserUpdatePasswordComponent {
 
 
     checkPwd(){
-        console.log(this.user);
         if(this.user.confirmPassword===this.user.newPassword){
             this.css.comfirmPwdError = true;
         }else{
