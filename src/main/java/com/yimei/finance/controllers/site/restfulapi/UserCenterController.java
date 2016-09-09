@@ -6,16 +6,20 @@ import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
+import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
 import com.yimei.finance.representation.admin.finance.object.validated.CreateFinanceOrder;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.MapObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.site.finance.result.FinanceOrderSearch;
+import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.common.NumberServiceImpl;
+import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
@@ -25,6 +29,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -47,6 +52,8 @@ public class UserCenterController {
     private FinanceOrderServiceImpl orderService;
     @Autowired
     private IdentityService identityService;
+    @Autowired
+    private FinanceFlowMethodServiceImpl methodService;
 
     @LoginRequired
     @Transactional
@@ -104,6 +111,8 @@ public class UserCenterController {
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
         FinanceOrder financeOrder = orderRepository.findByIdAndUserId(id, userSession.getUser().getId());
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
+        FinanceOrderObject financeOrderObject = DozerUtils.copy(financeOrder, FinanceOrderObject.class);
+        financeOrderObject.setAttachmentList1(orderService.getAttachmentByFinanceIdType(id, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.OnlineTraderAuditAttachment})));
         return Result.success().setData(financeOrder);
     }
 
