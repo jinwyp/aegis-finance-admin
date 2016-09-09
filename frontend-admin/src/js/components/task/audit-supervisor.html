@@ -33,23 +33,25 @@
 
 
         </tr>
-        <tr class="item-max">
+        <tr class="item-min">
             <td class="td-label">煤炭仓储地:</td>
-            <td width="250" class="td-val">{{currentOrder.storageLocation || '--'}}</td>
+            <!--<td width="250" class="td-val">{{currentOrder.storageLocation || '&#45;&#45;'}}</td>-->
+            <td class="td-val">
+                <input type="text" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.storageLocation">
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageLocation}}</span>
+            </td>
             <td class="td-label">仓库性质:</td>
             <td class="td-val">
-                <input type="text" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentTask.storageProperty">
+                <input type="text" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.storageProperty">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageProperty}}</span>
-                <!--{{currentTask.storageProperty || '&#45;&#45;'}}-->
             </td>
         </tr>
-        <tr class="item-max">
+        <tr class="item-min">
 
             <td class="td-label">仓库地址:</td>
             <td class="td-val" colspan="3">
-                <input type="text" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentTask.storageAddress">
+                <input type="text" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.storageAddress">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageAddress}}</span>
-                <!--{{currentTask.storageAddress || '&#45;&#45;'}}-->
             </td>
         </tr>
 
@@ -57,9 +59,7 @@
             <td colspan="4"><span class="fs-16">我方与港口的历史合作状况</span></td>
         </tr>
         <tr class="item-min">
-            <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
-                <!--<input type="text" [(ngModel)]="currentTask.historicalCooperationDetail">-->
                 <textarea class="form-control" rows="2" placeholder="请输入"  *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.historicalCooperationDetail"></textarea>
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.historicalCooperationDetail}}</span>
             </td>
@@ -68,9 +68,7 @@
             <td colspan="4"><span class="fs-16">经营及堆存状况</span></td>
         </tr>
         <tr class="item-min">
-            <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
-                <!--<input type="text" [(ngModel)]="currentTask.operatingStorageDetail">-->
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.operatingStorageDetail"></textarea>
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.operatingStorageDetail}}</span>
             </td>
@@ -79,9 +77,7 @@
             <td colspan="4"><span class="fs-16">保管及进出库流程规范程度</span></td>
         </tr>
         <tr class="item-min">
-            <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
-                <!--<input type="text" [(ngModel)]="currentTask.portStandardDegree">-->
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.portStandardDegree"></textarea>
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.portStandardDegree}}</span>
             </td>
@@ -90,9 +86,7 @@
             <td colspan="4"><span class="fs-16">监管配合状况</span></td>
         </tr>
         <tr class="item-min">
-            <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
-                <!--<input type="text" [(ngModel)]="currentTask.supervisionCooperateDetail">-->
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.supervisionCooperateDetail"></textarea>
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.supervisionCooperateDetail}}</span>
             </td>
@@ -101,9 +95,7 @@
             <td colspan="4"><span class="fs-16">监管方案</span></td>
         </tr>
         <tr class="item-min">
-            <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
-                <!--<input type="text" [(ngModel)]="currentTask.supervisionScheme">-->
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.supervisionScheme"></textarea>
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.supervisionScheme}}</span>
             </td>
@@ -112,9 +104,7 @@
             <td colspan="4"><span class="fs-16">结论</span></td>
         </tr>
         <tr class="item-min">
-            <!--<td class="td-label">详细描述:</td>-->
             <td colspan="4" class="td-val td-textarea">
-                <!--<input type="text" [(ngModel)]="currentTask.finalConclusion">-->
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.finalConclusion"></textarea>
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.finalConclusion}}</span>
             </td>
@@ -144,12 +134,11 @@
             </td>
         </tr>
 
-        <tr class="item-title" *ngIf="currentOrder.attachmentList2">
+        <tr class="item-title" *ngIf="currentOrder.attachmentList2.length > 0">
             <td colspan="4"><span>业务员补充材料:</span></td>
         </tr>
-        <tr class="item-max" *ngIf="currentOrder.attachmentList2">
+        <tr class="item-max" *ngIf="currentOrder.attachmentList2.length > 0">
             <td class="td-val" colspan="4">
-                <span *ngIf="!currentOrder.attachmentList2">无</span>
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList2">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" *ngIf="!css.isReadOnly"></span>
@@ -182,12 +171,12 @@
         <div class="col-sm-12 info-val no-bottom-border center">
             <button type="button" class="btn btn-default btn-lg btn-save" (click)="audit(false)" [disabled]="css.isSubmitted || currentTask.endTime">保存</button>
             <button type="button" class="btn btn-default btn-lg btn-sure ml-20" (click)="audit(true)" [disabled]="css.isSubmitted || currentTask.endTime || isApprovedRadio===-1">保存并提交</button>
-            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['/tasks/pending']">返回</button>
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20" (click)="goBack()">返回</button>
         </div>
     </div>
     <div class="row info-item" *ngIf="css.isReadOnly">
         <div class="col-sm-12 info-val no-bottom-border center">
-            <button type="button" class="btn btn-default btn-lg btn-return ml-20" [routerLink]="['/tasks/all']">返回</button>
+            <button type="button" class="btn btn-default btn-lg btn-return ml-20" (click)="goBack()">返回</button>
         </div>
     </div>
 

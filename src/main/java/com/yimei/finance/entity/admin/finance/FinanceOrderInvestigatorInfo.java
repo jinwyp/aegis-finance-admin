@@ -47,8 +47,7 @@ public class FinanceOrderInvestigatorInfo extends BaseEntity implements Serializ
     private int financingPeriod;                                     //融资期限
     @Column(name = "interest_rate", precision = 5, scale = 2)
     private BigDecimal interestRate;                                 //利率
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-@DateTimeFormat(pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "business_start_time")
     private Date businessStartTime;                                  //业务开始时间
     @Column(name = "historical_cooperation_detail", length = 1020)

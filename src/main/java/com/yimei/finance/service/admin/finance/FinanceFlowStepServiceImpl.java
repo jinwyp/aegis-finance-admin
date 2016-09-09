@@ -1,14 +1,14 @@
 package com.yimei.finance.service.admin.finance;
 
-import com.yimei.finance.exception.BusinessException;
-import com.yimei.finance.representation.admin.finance.enums.*;
-import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.representation.admin.finance.enums.*;
 import com.yimei.finance.representation.admin.finance.object.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.common.result.TaskMap;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +30,8 @@ public class FinanceFlowStepServiceImpl {
     private FinanceOrderServiceImpl orderService;
     @Autowired
     private FinanceOrderRepository financeOrderRepository;
+    @Autowired
+    private HistoryService historyService;
 
     /**
      * 线上交易员审核
@@ -96,7 +98,10 @@ public class FinanceFlowStepServiceImpl {
         if (!result1.isSuccess()) return result1;
         Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString());
         if (!result.isSuccess()) return result;
-        return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString(), String.valueOf(result.getData()));
+        Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString(), String.valueOf(result.getData()));
+        if (!result2.isSuccess()) return result2;
+        String newTaskId = String.valueOf(result2.getData());
+        return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.investigatorAudit, EnumFinanceAttachment.InvestigatorAuditAttachment);
     }
 
     /**
@@ -145,7 +150,9 @@ public class FinanceFlowStepServiceImpl {
         if (!result1.isSuccess()) return result1;
         Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString());
         if (!result.isSuccess()) return result;
-        return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString(), String.valueOf(result.getData()));
+        Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString(), String.valueOf(result.getData()));
+        String newTaskId = String.valueOf(result2.getData());
+        return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.supervisorAudit, EnumFinanceAttachment.SupervisorAuditAttachment);
     }
 
     /**
@@ -192,7 +199,9 @@ public class FinanceFlowStepServiceImpl {
         if (!result1.isSuccess()) return result1;
         Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString());
         if (!result.isSuccess()) return result;
-        return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
+        Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
+        String newTaskId = String.valueOf(result2.getData());
+        return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.riskManagerAudit, EnumFinanceAttachment.RiskManagerAuditAttachment);
     }
 
     /**

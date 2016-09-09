@@ -3,6 +3,7 @@ package com.yimei.finance.service.admin.finance;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEventType;
 import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
 import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
 import com.yimei.finance.representation.admin.finance.object.HistoryTaskObject;
@@ -74,10 +75,26 @@ public class FinanceFlowMethodServiceImpl {
         for (Task task : taskList) {
             if (task.getTaskDefinitionKey().equals(financeEventType)) {
                 taskService.setAssignee(task.getId(), userId);
-                return Result.success().setData(true);
+                return Result.success().setData(task.getId());
             }
         }
         throw new BusinessException(EnumCommonError.Admin_System_Error);
+    }
+
+    /**
+     * 将原附件添加到新任务上
+     */
+    @Transactional
+    public Result addAttachmentListToNewTask(String processInstanceId, String newTaskId, EnumFinanceEventType eventType, EnumFinanceAttachment attachmentType) {
+        List<HistoricTaskInstance> historyTaskList = historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstanceId).taskDefinitionKey(eventType.toString()).finished().orderByTaskCreateTime().desc().list();
+        if (historyTaskList == null || historyTaskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        List<Attachment> oldAttachmentList = taskService.getTaskAttachments(historyTaskList.get(0).getId());
+        if (oldAttachmentList != null && oldAttachmentList.size() != 0) {
+            for (Attachment attachment : oldAttachmentList) {
+                taskService.createAttachment(attachmentType.toString(), newTaskId, processInstanceId, attachment.getName(), attachment.getDescription(), attachment.getUrl());
+            }
+        }
+        return Result.success();
     }
 
     /**
