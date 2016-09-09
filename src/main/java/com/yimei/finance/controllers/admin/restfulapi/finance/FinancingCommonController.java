@@ -11,6 +11,7 @@ import com.yimei.finance.representation.admin.finance.object.*;
 import com.yimei.finance.representation.admin.user.EnumAdminUserError;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -63,6 +64,8 @@ public class FinancingCommonController {
     private FinanceOrderServiceImpl orderService;
     @Autowired
     private FinanceOrderRepository orderRepository;
+    @Autowired
+    private FinanceFlowMethodServiceImpl methodService;
 
     @RequestMapping(value = "/finance/{financeId}", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看金融详细信息 线上业务员信息", notes = "通过 金融单id 查看金融详细信息 线上业务员信息", response = FinanceOrderObject.class)
@@ -105,7 +108,7 @@ public class FinancingCommonController {
     public Result getAllTasksByFinanceIdMethod(@PathVariable(value = "financeId") Long financeId) {
         FinanceOrder financeOrder = orderRepository.findOne(financeId);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        return Result.success().setData(orderService.getAllTaskListByFinanceId(financeId));
+        return methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).orderByTaskCreateTime().asc().list());
     }
 
     @RequestMapping(value = "/tasks/{taskId}/claim", method = RequestMethod.POST)
