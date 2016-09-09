@@ -38,7 +38,7 @@ export class AuditSupervisorComponent {
     currentOrder : Task = new Task();
     taskId : string = '';
     currentTask : Task = new Task();
-    isApprovedRadio : number;
+    isApprovedRadio : number = -1;
 
     constructor(
         private activatedRoute: ActivatedRoute,
@@ -79,9 +79,13 @@ export class AuditSupervisorComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
+                console.log(this.currentTask);
                 this.task.getOrderInfoById(this.currentTask.financeId, 'supervisor').then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
+                        // console.log(this.currentOrder);
+                        // this.currentOrder.storageLocation=this.currentTask.storageLocation;
+                        // console.log(this.currentOrder);
                     }else{
 
                     }
