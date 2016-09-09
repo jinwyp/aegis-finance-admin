@@ -102,11 +102,12 @@ public class FinanceOrderServiceImpl {
         List<AttachmentObject> attachmentList = new ArrayList<>();
         for (EnumFinanceAttachment attachment : typeList) {
             List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().finished().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type.toString()).orderByTaskCreateTime().desc().list();
-            if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
-            HistoricTaskInstance task = taskList.get(0);
-            List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
-            if (attachments != null && attachments.size() != 0) {
-                attachmentList.addAll(DozerUtils.copy(attachments, AttachmentObject.class));
+            if (taskList != null || taskList.size() != 0) {
+                HistoricTaskInstance task = taskList.get(0);
+                List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
+                if (attachments != null && attachments.size() != 0) {
+                    attachmentList.addAll(DozerUtils.copy(attachments, AttachmentObject.class));
+                }
             }
         }
         return attachmentList;
