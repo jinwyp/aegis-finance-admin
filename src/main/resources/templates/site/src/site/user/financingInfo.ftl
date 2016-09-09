@@ -95,7 +95,7 @@
                                 <th>拟融资金额:</th>
                                 <td colspan="2" ms-visible="@financeInfo.financingAmount===null">--</td>
                                 <td colspan="2" ms-visible="@financeInfo.financingAmount!=null">
-                                    <span class="red">{{@financeInfo.financingAmount | number(2)}}</span>&nbsp;万元
+                                    <span class="red">{{@financeInfo.financingAmount}}</span>&nbsp;万元
 
                                     <p class="gray">({{@financeInfo.financingAmount | switchTxt}})</p>
                                 </td>
