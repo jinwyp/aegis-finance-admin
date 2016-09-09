@@ -55,7 +55,7 @@ public class IndexController {
      * 网站供应链金融 页面
      */
     @ApiOperation(value = "网站供应链金融 页面", notes = "网站页面需要登录")
-    @RequestMapping(value = "/finance", method = RequestMethod.GET)
+    @RequestMapping(value = {"/finance","/"}, method = RequestMethod.GET)
     public String financeIndex(Model model) {
         return "site/index";
     }
