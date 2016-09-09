@@ -90,7 +90,7 @@
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
                 <textarea class="form-control" rows="3" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly"></span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.supplyMaterialIntroduce}}</span>
             </td>
         </tr>
         <tr class="item-title" *ngIf="currentOrder.attachmentList2">
