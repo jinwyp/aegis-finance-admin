@@ -5,6 +5,8 @@
 
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
+
 import { Subscription } from 'rxjs/Subscription';
 
 
@@ -41,6 +43,7 @@ export class AuditSupervisorComponent {
     isApprovedRadio : number;
 
     constructor(
+        private location: Location,
         private activatedRoute: ActivatedRoute,
         private task: TaskService,
         private user: UserService
@@ -163,6 +166,9 @@ export class AuditSupervisorComponent {
         }
     }
 
+    goBack() {
+        this.location.back();
+    }
 
 }
 

@@ -5,6 +5,7 @@
 
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { Location } from '@angular/common';
 
 import { Subscription } from 'rxjs/Subscription';
 
@@ -45,6 +46,7 @@ export class AuditSalesmanComponent {
 
 
     constructor(
+        private location: Location,
         private activatedRoute: ActivatedRoute,
         private task: TaskService,
         private user: UserService
@@ -151,6 +153,10 @@ export class AuditSalesmanComponent {
         }else{
             this.currentOrder.needSupplyMaterial=0;
         }
+    }
+
+    goBack() {
+        this.location.back();
     }
 }
 
