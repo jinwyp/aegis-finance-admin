@@ -63,8 +63,8 @@
         <tr class="item-title">
             <td colspan="4">
                 <span>
-                    <label (click)="changeNeedSupplyMaterialStatus()">
-                    <input type="checkbox" class="mr-10" [readonly]="css.isReadOnly" [checked]="currentOrder.needSupplyMaterial===1">需要补充材料</label>
+                    <label>
+                    <input type="checkbox" (click)="changeNeedSupplyMaterialStatus()" class="mr-10" [readonly]="css.isReadOnly" [checked]="currentOrder.needSupplyMaterial===1">需要补充材料</label>
                 </span>
             </td>
         </tr>

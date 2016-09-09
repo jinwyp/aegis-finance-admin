@@ -146,7 +146,7 @@ export class AuditSalesmanComponent {
     // }
 
     changeNeedSupplyMaterialStatus(){
-        if(this.currentOrder.needSupplyMaterial===0){
+        if(this.currentOrder.needSupplyMaterial!==1){
             this.currentOrder.needSupplyMaterial=1;
         }else{
             this.currentOrder.needSupplyMaterial=0;
