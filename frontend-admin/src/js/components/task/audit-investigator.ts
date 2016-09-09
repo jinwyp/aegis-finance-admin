@@ -10,6 +10,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Task, TaskService, TaskStatus } from '../../service/task';
 import { User, UserService } from '../../service/user';
+import {isNumber} from "@angular/core/testing/facade/lang";
 
 
 
@@ -110,7 +111,18 @@ export class AuditInvestigatorComponent {
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
-
+        if(isNaN(Number(this.currentOrder.financingAmount))){
+            this.css.ajaxErrorHidden = false;
+            this.errorMsg = '融资金额应输入1-100000之间的数字';
+            this.css.isSubmitted = false;
+            return;
+        }
+        if(isNaN(Number(this.currentOrder.financingPeriod))||(Number(this.currentOrder.financingPeriod)<0||Number(this.currentOrder.financingPeriod)>365)){
+            this.css.ajaxErrorHidden = false;
+            this.errorMsg = '融资期限应输入1-365之间的整数';
+            this.css.isSubmitted = false;
+            return;
+        }
 
         let body : any = {
             t : {
