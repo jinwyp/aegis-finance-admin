@@ -17,4 +17,6 @@ public class FinanceOrderResult implements Serializable {
     private Date createTime;
     private BigDecimal financingAmount;
     private int expectDate;
+    private String approveState;
+    private Integer approveStateId;
 }
