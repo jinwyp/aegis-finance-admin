@@ -161,7 +161,7 @@
         <tr class="item-max">
             <td class="td-val" colspan="4">
                 <div class="attachment">
-                    <img *ngFor="let pic of currentOrder.attachmentList" [src]="pic.url" [alt]="pic.name">
+                    <img *ngFor="let pic of currentOrder.attachmentList1" [src]="pic.url" [alt]="pic.name">
                     <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
                 </div>
             </td>
@@ -172,6 +172,16 @@
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
                 <textarea class="form-control" rows="3" placeholder="请输入" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
+            </td>
+        </tr>
+        <tr class="item-title">
+            <td colspan="4"><span>业务员补充材料:</span></td>
+        </tr>
+        <tr class="item-max">
+            <td class="td-val" colspan="4">
+                <div class="attachment">
+                    <img *ngFor="let pic of currentOrder.attachmentList2" [src]="pic.url" [alt]="pic.name">
+                </div>
             </td>
         </tr>
         <!--<tr class="item-title">-->
