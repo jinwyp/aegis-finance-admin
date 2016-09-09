@@ -148,6 +148,7 @@ class Task {
     startTime : string;
     endTime : string;
 
+    approveState : string;
     assignee : string;
     assigneeDepartment : string;
     assigneeName : string;

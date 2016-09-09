@@ -117,6 +117,12 @@
                 <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="2">让业务员补充材料</label>
             </td>
         </tr>
+        <tr class="item-title" *ngIf="css.isReadOnly">
+            <td colspan="4">
+                <span>审核意见:</span>
+                <span>{{currentTask.approveState}}</span>
+            </td>
+        </tr>
     </table>
 
     <div class="row info-item" *ngIf="!css.isReadOnly">
