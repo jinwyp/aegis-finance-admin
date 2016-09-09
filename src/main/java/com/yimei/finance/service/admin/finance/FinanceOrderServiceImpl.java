@@ -100,7 +100,7 @@ public class FinanceOrderServiceImpl {
 
     public List<AttachmentObject> getAttachmentByFinanceIdTypeOnce(Long financeId, EnumFinanceAttachment attachmentType) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
-        List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachmentType.toString()).orderByTaskCreateTime().desc().list();
+        List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachmentType.type).orderByTaskCreateTime().desc().list();
         if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
         HistoricTaskInstance task = taskList.get(0);
         List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
@@ -113,7 +113,7 @@ public class FinanceOrderServiceImpl {
     public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, List<EnumFinanceAttachment> typeList) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
         for (EnumFinanceAttachment attachment : typeList) {
-            List<HistoricTaskInstance> tasks = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type.toString()).list();
+            List<HistoricTaskInstance> tasks = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).list();
             for (HistoricTaskInstance t : tasks) {
                 List<Attachment> attachments = taskService.getTaskAttachments(t.getId());
                 if (attachments != null && attachments.size() != 0) {
