@@ -40,10 +40,15 @@ export class CustomCheckboxComponent implements ControlValueAccessor{
 
     //From ControlValueAccessor interface
     writeValue(value: any) {
-        if (value !== this.selectedIds) {
+        if (value !== this.selectedIds ) {
             // console.log('外面往组件里面更改数据', value, this.sourceData);
 
-            this.selectedIds = value;
+            if (Array.isArray(value)){
+                this.selectedIds = value;
+            }else {
+                this.selectedIds = [];
+            }
+
             this.sourceData.forEach(group => {
 
                 if (this.selectedIds.indexOf(group.id) > -1) {

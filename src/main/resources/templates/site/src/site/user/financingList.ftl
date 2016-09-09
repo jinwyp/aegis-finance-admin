@@ -130,7 +130,7 @@
                         <!--<td>{{order.applyUserName || '/'}}</td>-->
                         <td>
                             <span ms-visible="order.financingAmount===null">/</span>
-                            <span ms-visible="order.financingAmount!=null">{{order.financingAmount | number(2)}}</span>
+                            <span ms-visible="order.financingAmount!=null">{{order.financingAmount}}</span>
 
                         </td>
                         <td>{{order.expectDate || '/'}}</td>
