@@ -6,13 +6,13 @@
       <documentation>分配线上交易员。</documentation>
     </userTask>
     <sequenceFlow id="flow1" sourceRef="startWorkFlow" targetRef="assignOnlineTrader"></sequenceFlow>
-    <userTask id="onlineTraderAudit" name="线上交易员审核并填写材料">
+    <userTask id="onlineTraderAudit" name="线上交易员审核">
       <documentation>线上交易员填写材料。</documentation>
     </userTask>
     <userTask id="assignSalesman" name="分配业务员" activiti:candidateGroups="GROUP00003">
       <documentation>分配业务员</documentation>
     </userTask>
-    <userTask id="salesmanAudit" name="业务员审核并填写材料">
+    <userTask id="salesmanAudit" name="业务员审核">
       <documentation>业务员审核并填写材料。</documentation>
     </userTask>
     <sequenceFlow id="flow4" sourceRef="assignSalesman" targetRef="salesmanAudit"></sequenceFlow>
@@ -36,7 +36,7 @@
     <sequenceFlow id="flow8" sourceRef="assignInvestigator" targetRef="investigatorAudit"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
     <sequenceFlow id="flow9" sourceRef="investigatorAudit" targetRef="exclusivegateway2"></sequenceFlow>
-    <userTask id="salesmanSupplyInvestigationMaterial" name="业务员补充尽调员材料">
+    <userTask id="salesmanSupplyInvestigationMaterial" name="业务员补充尽调材料">
       <documentation>业务员补充尽调材料。</documentation>
     </userTask>
     <sequenceFlow id="flow10" name="需要补充材料" sourceRef="exclusivegateway2" targetRef="salesmanSupplyInvestigationMaterial">
@@ -211,7 +211,7 @@
         <omgdi:waypoint x="955.0" y="312.0"></omgdi:waypoint>
         <omgdi:waypoint x="895.0" y="312.0"></omgdi:waypoint>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="100.0" x="919.0" y="342.0"></omgdc:Bounds>
+          <omgdc:Bounds height="16.0" width="66.0" x="919.0" y="342.0"></omgdc:Bounds>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
       <bpmndi:BPMNEdge bpmnElement="flow18" id="BPMNEdge_flow18">
