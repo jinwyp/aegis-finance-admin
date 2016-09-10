@@ -1,5 +1,6 @@
 @import '../helpers/_variables.scss';
 @import '../components/_ng2datepicker.scss';
+@import '../components/_pagination_finalcial.scss';
 
 .custom-select{
   line-height: 40px;
@@ -255,6 +256,7 @@
 
     .table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td,
     .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th{border-top: none;padding: 0;}
+    .table>tbody>tr.no-data>td{  padding:20px 0;}
 
     .item-margin{ margin:0 15px;overflow: hidden; }
 
