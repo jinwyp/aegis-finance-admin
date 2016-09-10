@@ -113,6 +113,13 @@
                 <!--<button type="button" class="btn btn-xs btn-default btn-sure w-80" [routerLink]="['/tasks', task.id, 'investigator','info']" > 查看详情 </button>-->
             </td>
         </tr>
+
+        <tr class="no-data" *ngIf="routeData.routeType === 'pending' && taskAssignList.length<1 && taskPendingList.length<1">
+            <td colspan="7">您暂无待办事项</td>
+        </tr>
+        <tr class="no-data" *ngIf="routeData.routeType === 'all' && taskHistoryList.length<1">
+            <td colspan="8">您无审核历史记录</td>
+        </tr>
     </table>
     <!--<pagination [pageObj]="pageObj" ></pagination>-->
 </div>
