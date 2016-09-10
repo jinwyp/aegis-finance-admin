@@ -120,6 +120,7 @@ export class AuditSupervisorComponent {
         if (this.isApprovedRadio === 2) {
             this.currentOrder.needSupplyMaterial = 1;
             body.t.pass = 0;
+            body.t.need = 1;
         }
 
         let auditType : string = '';

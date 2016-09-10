@@ -50,7 +50,7 @@
 
 
         <!--右侧主内容开始-->
-        <div class="financeCon" ms-controller="financeList">
+        <div class="financeCon ms-controller" ms-controller="financeList">
             <div class="application ">
                 <div class="borderB clearfix">
                     <h4><span></span>融资详情</h4>
@@ -104,7 +104,7 @@
                     <input type="button" value="导出Excel" id="excel" class="excel">
                 </form>
 
-                <div class="loading" ms-visible="@financeList.length===0"><img src="${staticPath}/css/images/finance/loading.gif" alt="loading"></div>
+                <!--<div class="loading" ms-visible="@financeList.length===0"><img src="${staticPath}/css/images/finance/loading.gif" alt="loading"></div>-->
 
 
                 <table class="list">
@@ -157,6 +157,9 @@
                             <!--审核中(补充材料)-->
                             <a  class="detailA orangeA" ms-visible="order.approveStateId===6" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
                         </td>
+                    </tr>
+                    <tr ms-visible="@financeList.length===0">
+                        <td colspan="7">无当前融资记录!</td>
                     </tr>
 
                 </table>
