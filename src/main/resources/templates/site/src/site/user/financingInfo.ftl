@@ -88,19 +88,19 @@
                             <tr>
                                 <th>拟使用资金时间:</th>
                                 <td >
-                                    <span ms-visible="@financeInfo.expectDate!=0">{{@financeInfo.expectDate}}&nbsp;天</span>
-                                    <span ms-visible="@financeInfo.expectDate===0">--</span>
+                                    <span ms-visible="@financeInfo.expectDate">{{@financeInfo.expectDate}}&nbsp;天</span>
+                                    <span ms-visible="!@financeInfo.expectDate">--</span>
                                 </td>
                                 <th colspan="2">预期此笔业务量:</th>
                                 <td>
-                                    <span ms-visible="@financeInfo.businessAmount!=null">{{@financeInfo.businessAmount}}&nbsp;万吨</span>
-                                    <span ms-visible="@financeInfo.businessAmount===null">--</span>
+                                    <span ms-visible="@financeInfo.businessAmount">{{@financeInfo.businessAmount}}&nbsp;万吨</span>
+                                    <span ms-visible="!@financeInfo.businessAmount">--</span>
                                 </td>
                             </tr>
                             <tr>
                                 <th>拟融资金额:</th>
-                                <td colspan="2" ms-visible="@financeInfo.financingAmount===null">--</td>
-                                <td colspan="2" ms-visible="@financeInfo.financingAmount!=null">
+                                <td colspan="2" ms-visible="!@financeInfo.financingAmount">--</td>
+                                <td colspan="2" ms-visible="@financeInfo.financingAmount">
                                     <span class="red">{{@financeInfo.financingAmount}}</span>&nbsp;万元
 
                                     <p class="gray">({{@financeInfo.financingAmount | switchTxt}})</p>
@@ -126,8 +126,8 @@
                             <tr>
                                 <th>预计单吨销售价:</th>
                                 <td colspan="2">
-                                    <span ms-visible="@financeInfo.sellingPrice!=null">{{@financeInfo.sellingPrice}}&nbsp;元/吨</span>
-                                    <span ms-visible="@financeInfo.sellingPrice===null">--</span>
+                                    <span ms-visible="@financeInfo.sellingPrice">{{@financeInfo.sellingPrice}}&nbsp;元/吨</span>
+                                    <span ms-visible="!@financeInfo.sellingPrice">--</span>
                                 </td>
                             </tr>
                         </table>
@@ -144,8 +144,8 @@
                                 <td>{{@financeInfo.transportMode || '--'}}</td>
                                 <th>单吨采购价:</th>
                                 <td>
-                                    <span ms-visible="@financeInfo.procurementPrice!=null">{{@financeInfo.procurementPrice}}&nbsp;元/吨</span>
-                                    <span ms-visible="@financeInfo.procurementPrice===null">--</span>
+                                    <span ms-visible="@financeInfo.procurementPrice">{{@financeInfo.procurementPrice}}&nbsp;元/吨</span>
+                                    <span ms-visible="!@financeInfo.procurementPrice">--</span>
                                 </td>
                             </tr>
                         </table>
@@ -163,8 +163,8 @@
                                 <td>{{@financeInfo.coalQuantityIndex || '--'}}</td>
                                 <th>单吨市场报价:</th>
                                 <td>
-                                    <span ms-visible="@financeInfo.marketPrice!=null">{{@financeInfo.marketPrice}}&nbsp;元/吨</span>
-                                    <span ms-visible="@financeInfo.marketPrice===null">--</span>
+                                    <span ms-visible="@financeInfo.marketPrice">{{@financeInfo.marketPrice}}&nbsp;元/吨</span>
+                                    <span ms-visible="!@financeInfo.marketPrice">--</span>
                                 </td>
                             </tr>
                         </table>
@@ -174,13 +174,14 @@
                             <tr>
                                 <th>已上传单据:</th>
                                 <td colspan="3">
-                                    <ul>
-                                        <li class="paddingL0" ms-visible="@financeInfo.attachmentList1!=null"  ms-for="(index, bill) in @financeInfo.attachmentList1">
+                                    <ul ms-visible="@financeInfo.attachmentList1">
+                                        <li class="paddingL0" ms-for="(index, bill) in @financeInfo.attachmentList1">
                                             <a ms-attr="{href: bill.url}">{{bill.name}}</a>
                                             <!--<img  ms-attr="{src: bill.url}">-->
                                         </li>
-                                        <li ms-visible="@financeInfo.attachmentList1===null">--</li>
+
                                     </ul>
+                                    <span ms-visible="!@financeInfo.attachmentList1">--</span>
                                 </td>
 
                             </tr>
