@@ -2,7 +2,8 @@
     <ol class="breadcrumb">
         <li>审核管理</li>
         <li>&gt;</li>
-        <li class="active">我的待办({{this.taskPendingList.length + this.taskAssignList.length}})</li>
+        <li class="active" *ngIf="routeData.routeType==='pending'">我的待办({{this.taskPendingList.length + this.taskAssignList.length}})</li>
+        <li class="active" *ngIf="routeData.routeType==='all'">我的审核({{this.taskHistoryList.length}})</li>
     </ol>
 </div>
 
@@ -113,4 +114,5 @@
             </td>
         </tr>
     </table>
+    <!--<pagination [pageObj]="pageObj" ></pagination>-->
 </div>
