@@ -4,6 +4,7 @@ import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
 
@@ -12,7 +13,9 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FinanceOrderSearch implements Serializable {
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String startDate;
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private String endDate;
     private int approveStateId;
     private String applyType;
