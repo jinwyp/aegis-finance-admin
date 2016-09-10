@@ -15,6 +15,6 @@ public class FinanceSMSMessage {
     }
 
     public static String getUserAuditPassMessage(String code) {
-        return "您好: 您的金融申请单: " + code + " 已经申请通过.";
+        return "您好: 您的金融申请单: " + code + " 已经审核通过.";
     }
 }
