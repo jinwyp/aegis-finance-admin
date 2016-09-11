@@ -6,6 +6,7 @@ import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
 import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
@@ -15,7 +16,6 @@ import com.yimei.finance.representation.common.result.MapObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.site.finance.result.FinanceOrderSearch;
-import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.common.NumberServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
@@ -112,8 +112,8 @@ public class UserCenterController {
         FinanceOrder financeOrder = orderRepository.findByIdAndUserId(id, userSession.getUser().getId());
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         FinanceOrderObject financeOrderObject = DozerUtils.copy(financeOrder, FinanceOrderObject.class);
-        financeOrderObject.setAttachmentList1(orderService.getAttachmentByFinanceIdTypeOnce(id, E));
-        return Result.success().setData(financeOrder);
+        financeOrderObject.setAttachmentList1(orderService.getAttachmentByFinanceIdTypeOnce(id, EnumFinanceAttachment.OnlineTraderAuditAttachment));
+        return Result.success().setData(financeOrderObject);
     }
 
     @RequestMapping(value = "/status", method = RequestMethod.GET)
