@@ -28,7 +28,6 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,7 +59,7 @@ public class FinanceOrderServiceImpl {
     public Result getFinanceOrderBySelect(int userId, FinanceOrderSearch order, Page page) {
         String hql = " select o from FinanceOrder o where o.userId=:userId ";
         if (order != null) {
-            if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
+            if (order.getStartDate() != null && order.getEndDate() != null) {
                 hql += " and o.createTime between :startDate and :endDate ";
             }
             if (order.getApproveStateId() != 0) {
@@ -77,9 +76,9 @@ public class FinanceOrderServiceImpl {
         TypedQuery<FinanceOrder> query = entityManager.createQuery(hql, FinanceOrder.class);
         query.setParameter("userId", userId);
         if (order != null) {
-            if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
-                query.setParameter("startDate", order.getStartDate());
-                query.setParameter("endDate", java.sql.Date.valueOf(LocalDate.parse(order.getEndDate()).plusDays(1)));
+            if (order.getStartDate() != null && order.getEndDate() != null) {
+                query.setParameter("startDate", java.sql.Date.valueOf(order.getStartDate()));
+                query.setParameter("endDate", java.sql.Date.valueOf(order.getEndDate().plusDays(1)));
             }
             if (order.getApproveStateId() != 0) {
                 query.setParameter("approveStateId", order.getApproveStateId());

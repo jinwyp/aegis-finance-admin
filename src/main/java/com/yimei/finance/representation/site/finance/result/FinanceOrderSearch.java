@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import java.io.Serializable;
+import java.time.LocalDate;
 
 @ApiModel(value = "financeSearch", description = "金融申请搜索参数")
 @Data
@@ -14,9 +15,9 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class FinanceOrderSearch implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private String startDate;
+    private LocalDate startDate;
     @DateTimeFormat(pattern = "yyyy-MM-dd")
-    private String endDate;
+    private LocalDate endDate;
     private int approveStateId;
     private String applyType;
     private String sourceId;
