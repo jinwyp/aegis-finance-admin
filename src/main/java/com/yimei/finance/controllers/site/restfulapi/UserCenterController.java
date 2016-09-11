@@ -51,7 +51,7 @@ public class UserCenterController {
     @Autowired
     private IdentityService identityService;
 
-//    @LoginRequired
+    @LoginRequired
     @Transactional
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
@@ -59,13 +59,13 @@ public class UserCenterController {
         System.out.println("Order Type:" + financeOrder.getApplyType());
         financeOrder.setApplyType(financeOrder.getApplyType());
         financeOrder.setSourceId(numberService.getNextCode("JR"));
-//        financeOrder.setUserId(userSession.getUser().getId());
-//        financeOrder.setApplyUserName(userSession.getUser().getNickname());
-//        financeOrder.setApplyUserPhone(userSession.getUser().getSecurephone());
-//        financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
-//        financeOrder.setCreateManId(String.valueOf(userSession.getUser().getId()));
-//        financeOrder.setLastUpdateManId(String.valueOf(userSession.getUser().getId()));
-        financeOrder.setUserId(1);
+        financeOrder.setUserId(userSession.getUser().getId());
+        financeOrder.setApplyUserName(userSession.getUser().getNickname());
+        financeOrder.setApplyUserPhone(userSession.getUser().getSecurephone());
+        financeOrder.setApplyCompanyName(userSession.getUser().getCompanyName());
+        financeOrder.setCreateManId(String.valueOf(userSession.getUser().getId()));
+        financeOrder.setLastUpdateManId(String.valueOf(userSession.getUser().getId()));
+//        financeOrder.setUserId(1);
         financeOrder.setApplyUserPhone("15618177577");
         financeOrder.setApplyCompanyName("易煤网");
         financeOrder.setCreateTime(new Date());
@@ -75,7 +75,7 @@ public class UserCenterController {
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
         orderRepository.save(financeOrder);
         financeOrder = orderRepository.findBySourceId(financeOrder.getSourceId());
-//        identityService.setAuthenticatedUserId(String.valueOf(userSession.getUser().getId()));
+        identityService.setAuthenticatedUserId(String.valueOf(userSession.getUser().getId()));
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
             runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
         } else if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYG.toString())) {
@@ -89,7 +89,7 @@ public class UserCenterController {
     }
 
     @ApiOperation(value = "融资申请列表", notes = "用户查询融资申请列表", response = FinanceOrder.class, responseContainer = "List")
-//    @LoginRequired
+    @LoginRequired
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页数", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "sourceId", value = "业务编号", required = false, dataType = "String", paramType = "query"),
@@ -100,8 +100,8 @@ public class UserCenterController {
     })
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(FinanceOrderSearch orderSearch, Page page) {
-//        return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), orderSearch, page);
-        return orderService.getFinanceOrderBySelect(1, orderSearch, page);
+        return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), orderSearch, page);
+//        return orderService.getFinanceOrderBySelect(1, orderSearch, page);
     }
 
     @ApiOperation(value = "根据 id 查看金融申请单", notes = "根据 金融申请单id 查看金融申请单", response = FinanceOrder.class)
