@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("adminErrorPageController")
 public class ErrorPageController {
 
-    @RequestMapping(value = "/admin/404", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/admin/404", method = RequestMethod.GET)
     public String Page404() {
         return "admin/http/404";
     }
