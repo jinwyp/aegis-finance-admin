@@ -30,7 +30,7 @@ var financeHome = () => {
                         $('#md_ok_2').click(()=>{ $('.modal_2').modal('hide') });
                     }, 500);
                 } else {
-                    if(data.error.code = 1501){
+                    if(data.error.code == 1501){
                         $('.modal_1').modal();
                         setTimeout(()=>{
                             $('#modalImg_1').removeClass('question').addClass('attention');
@@ -42,8 +42,15 @@ var financeHome = () => {
                             });
                         },500)
 
-                    }else if(data.error.code = 1502){
-                        $('.modal_2').modal();
+                    }else if(data.error.code == 1601){
+                        $('.modal_1').modal('hide');
+                        setTimeout(()=>{
+                            $('.modal_2').modal();
+                            $('#md_ok_2').click(()=>{
+                                $('.modal_2').modal('hide');
+                            })
+                        },500)
+
                     }
                     // window.location.href = data.error.message;
                 }
