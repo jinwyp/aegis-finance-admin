@@ -35,15 +35,14 @@
         </tr>
         <tr class="item-min">
             <td class="td-label">煤炭仓储地:</td>
-            <!--<td width="250" class="td-val">{{currentOrder.storageLocation || '&#45;&#45;'}}</td>-->
             <td class="td-val">
                 <input type="text" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.storageLocation">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageLocation}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageLocation||'--'}}</span>
             </td>
             <td class="td-label">仓库性质:</td>
             <td class="td-val">
                 <input type="text" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.storageProperty">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageProperty}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageProperty||'--'}}</span>
             </td>
         </tr>
         <tr class="item-min">
@@ -51,7 +50,7 @@
             <td class="td-label">仓库地址:</td>
             <td class="td-val" colspan="3">
                 <input type="text" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.storageAddress">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageAddress}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageAddress||'--'}}</span>
             </td>
         </tr>
 
@@ -61,7 +60,7 @@
         <tr class="item-min">
             <td colspan="4" class="td-val td-textarea">
                 <textarea class="form-control" rows="2" placeholder="请输入"  *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.historicalCooperationDetail"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.historicalCooperationDetail}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.historicalCooperationDetail||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -70,7 +69,7 @@
         <tr class="item-min">
             <td colspan="4" class="td-val td-textarea">
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.operatingStorageDetail"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.operatingStorageDetail}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.operatingStorageDetail||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -79,7 +78,7 @@
         <tr class="item-min">
             <td colspan="4" class="td-val td-textarea">
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.portStandardDegree"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.portStandardDegree}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.portStandardDegree||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -88,7 +87,7 @@
         <tr class="item-min">
             <td colspan="4" class="td-val td-textarea">
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.supervisionCooperateDetail"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.supervisionCooperateDetail}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.supervisionCooperateDetail||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -97,7 +96,7 @@
         <tr class="item-min">
             <td colspan="4" class="td-val td-textarea">
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.supervisionScheme"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.supervisionScheme}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.supervisionScheme||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -106,7 +105,7 @@
         <tr class="item-min">
             <td colspan="4" class="td-val td-textarea">
                 <textarea class="form-control" rows="2" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.finalConclusion"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.finalConclusion}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.finalConclusion||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -117,7 +116,7 @@
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList1">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic)" *ngIf="!css.isReadOnly"></span>
-                        <a [href]="'/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
+                        <a [href]="'/finance/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
                     </div>
                 </div>
 
@@ -130,19 +129,19 @@
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
                 <textarea class="form-control" rows="4" *ngIf="!css.isReadOnly" placeholder="请输入您要求用户/业务人员需要补充的材料及说明" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.supplyMaterialIntroduce}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.supplyMaterialIntroduce||'无'}}</span>
             </td>
         </tr>
 
         <tr class="item-title" *ngIf="currentOrder.attachmentList2.length > 0">
-            <td colspan="4"><span>业务员补充材料:</span></td>
+            <td colspan="4"><span>业务员补充材料:<span *ngIf="currentOrder.attachmentList2.length < 1">无</span></span></td>
         </tr>
         <tr class="item-max" *ngIf="currentOrder.attachmentList2.length > 0">
             <td class="td-val" colspan="4">
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList2">
                         <!--<span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" *ngIf="!css.isReadOnly"></span>-->
-                        <a [href]="'/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
+                        <a [href]="'/finance/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
                     </div>
                 </div>
             </td>

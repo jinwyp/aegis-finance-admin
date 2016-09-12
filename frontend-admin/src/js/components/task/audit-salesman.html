@@ -33,7 +33,8 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="3" placeholder="请输入" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.contractCompaniesInfoSupply"></textarea>
+                <textarea class="form-control" rows="3" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.contractCompaniesInfoSupply" placeholder="请输入"></textarea>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.contractCompaniesInfoSupply||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -41,7 +42,8 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="3" placeholder="请输入" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.businessModelIntroduce"></textarea>
+                <textarea class="form-control" rows="3" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.businessModelIntroduce" placeholder="请输入"></textarea>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.businessModelIntroduce ||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -49,7 +51,8 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="3" placeholder="请输入" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.logisticsStorageInfoSupply"></textarea>
+                <textarea class="form-control" rows="3" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.logisticsStorageInfoSupply" placeholder="请输入"></textarea>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.logisticsStorageInfoSupply ||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -57,7 +60,8 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="3" placeholder="请输入您要求用户需要补充的材料及说明" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.otherInfoSupply"></textarea>
+                <textarea class="form-control" rows="3" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.otherInfoSupply" placeholder="请输入您要求用户需要补充的材料及说明"></textarea>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.otherInfoSupply||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -70,7 +74,8 @@
         </tr>
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
-                <textarea class="form-control" rows="3" placeholder="请输入" [readonly]="css.isReadOnly" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
+                <textarea class="form-control" rows="3" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.supplyMaterialIntroduce" placeholder="请输入"></textarea>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.supplyMaterialIntroduce||'无'}}</span>
             </td>
         </tr>
 

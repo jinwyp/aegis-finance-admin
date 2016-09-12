@@ -82,7 +82,6 @@ export class AuditSupervisorComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
-                console.log(this.currentTask);
                 this.task.getOrderInfoById(this.currentTask.financeId, 'supervisor').then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
