@@ -23,9 +23,6 @@ export class LeftMenuComponent {
         pendingTaskListInfo : 0,
     };
 
-    taskAssignList : Task[] = [];
-    taskPendingList : Task[] = [];
-    taskHistoryList : Task[] = [];
 
     constructor(
         private task: TaskService
@@ -53,7 +50,6 @@ export class LeftMenuComponent {
                 }
             }
         });
-
     }
 
     changeMenu = (menu)=>{

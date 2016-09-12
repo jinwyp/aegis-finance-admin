@@ -42,6 +42,7 @@ export class TaskListComponent {
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
             this.getTaskList();
+
         });
 
         this.getCurrentUser();
@@ -62,18 +63,28 @@ export class TaskListComponent {
 
     getTaskList () {
 
-        this.task.getTaskObservable.subscribe(
-            result => {
-                this.taskAssignList = result.assignTaskList;
-                this.taskPendingList = result.pendingTaskList;
-                if (this.routeData.routeType === 'all'){
-                    this.taskHistoryList = result.allTaskList;
-                }
-            },
-            error => console.error(error)
-        );
+        Promise.all([
+            this.task.getAdminAssignTaskList(),
+            this.task.getPendingTaskList(),
+            this.task.getHistoryTaskList()
 
+        ]).then(resultList => {
+            if (resultList.length === 3){
+                if (resultList[0].success && resultList[1].success && resultList[2].success ){
+
+                    this.taskAssignList = resultList[0].data;
+                    this.taskPendingList = resultList[1].data;
+                    if (this.routeData.routeType === 'all'){
+                        this.taskHistoryList = resultList[2].data;
+                    }
+
+                    this.task.setTaskObservable(resultList[0].data, resultList[1].data, resultList[2].data);
+
+                }
+            }
+        });
     }
+
 
 }
 
