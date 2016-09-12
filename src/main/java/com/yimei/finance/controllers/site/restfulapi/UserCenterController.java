@@ -66,8 +66,8 @@ public class UserCenterController {
         financeOrder.setCreateManId(String.valueOf(userSession.getUser().getId()));
         financeOrder.setLastUpdateManId(String.valueOf(userSession.getUser().getId()));
 //        financeOrder.setUserId(1);
-        financeOrder.setApplyUserPhone("15618177577");
-        financeOrder.setApplyCompanyName("易煤网");
+//        financeOrder.setApplyUserPhone("15618177577");
+//        financeOrder.setApplyCompanyName("易煤网");
         financeOrder.setCreateTime(new Date());
         financeOrder.setLastUpdateTime(new Date());
         financeOrder.setEndTime(null);
