@@ -12,4 +12,8 @@ public enum EnumFinanceOrderType {
     EnumFinanceOrderType(String name) {
         this.name = name;
     }
+
+    public static String getName(EnumFinanceOrderType status) {
+        return status.name;
+    }
 }

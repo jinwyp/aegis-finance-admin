@@ -1,7 +1,7 @@
 package com.yimei.finance.representation.admin.finance.object;
 
 import com.yimei.finance.entity.common.BaseEntity;
-import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.object.validated.CreateFinanceOrder;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceOrder;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceOrder;
@@ -103,7 +103,7 @@ public class FinanceOrderObject extends BaseEntity implements Serializable {
     private List<AttachmentObject> attachmentList1;                  //附件列表
 
     public String getApplyTypeName() {
-        return EnumFinanceStatus.getName(EnumFinanceStatus.valueOf(applyType));
+        return EnumFinanceOrderType.getName(EnumFinanceOrderType.valueOf(applyType));
     }
 
 
