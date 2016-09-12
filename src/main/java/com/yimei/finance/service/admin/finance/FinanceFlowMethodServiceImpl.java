@@ -170,9 +170,14 @@ public class FinanceFlowMethodServiceImpl {
             taskObject.setAssigneeDepartment(user.getDepartment());
         }
         if (historicProcessInstance.getEndTime() == null) {
-            List<Task> taskList = taskService.createTaskQuery().processInstanceId(historicProcessInstance.getId()).active().list();
+            List<Task> taskList = taskService.createTaskQuery().active().processInstanceId(historicProcessInstance.getId()).orderByTaskCreateTime().desc().list();
             if (taskList == null || taskList.size() == 0) return Result.error(EnumCommonError.Admin_System_Error);
-            taskObject.setCurrentName(taskList.get(0).getName());
+            String currentName = "";
+            for (Task t : taskList) {
+                currentName += t.getName() + ",";
+            }
+            currentName = currentName.substring(0, currentName.length() - 1);
+            taskObject.setCurrentName(currentName);
             taskObject.setCurrentTaskDefinitionKey(taskList.get(0).getTaskDefinitionKey());
             if (!StringUtils.isEmpty(taskList.get(0).getAssignee())) {
                 UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(taskList.get(0).getAssignee()).singleResult());
