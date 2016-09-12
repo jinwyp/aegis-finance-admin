@@ -1,8 +1,5 @@
 package com.yimei.finance.representation.admin.finance.enums;
 
-import io.swagger.annotations.ApiModel;
-
-@ApiModel(description = "金融单类型")
 public enum EnumFinanceOrderType {
     MYR("煤易融"),
     MYG("煤易购"),

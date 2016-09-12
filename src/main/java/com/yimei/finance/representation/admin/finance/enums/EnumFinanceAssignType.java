@@ -1,9 +1,7 @@
 package com.yimei.finance.representation.admin.finance.enums;
 
 import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
-import io.swagger.annotations.ApiModel;
 
-@ApiModel(description = "金融单, 指派事件类型")
 public enum EnumFinanceAssignType {
     assignOnlineTrader(EnumSpecialGroup.OnlineTraderGroup.id, EnumFinanceEventType.onlineTraderAudit.toString(), "分配线上交易员"),
     assignSalesman(EnumSpecialGroup.SalesmanGroup.id, EnumFinanceEventType.salesmanAudit.toString(), "分配业务员"),
