@@ -159,7 +159,7 @@
                         </td>
                     </tr>
                     <tr ms-visible="@financeList.length===0">
-                        <td colspan="7">无当前融资记录!</td>
+                        <td colspan="7">当前无融资申请记录！</td>
                     </tr>
 
                 </table>
