@@ -11,6 +11,7 @@ import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
 import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
 import com.yimei.finance.representation.admin.finance.object.validated.CreateFinanceOrder;
+import com.yimei.finance.representation.admin.user.EnumAdminUserError;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.MapObject;
 import com.yimei.finance.representation.common.result.Page;
@@ -57,6 +58,7 @@ public class UserCenterController {
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
     public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Validated(CreateFinanceOrder.class) @RequestBody FinanceOrder financeOrder) {
         System.out.println("Order Type:" + financeOrder.getApplyType());
+        if (!userSession.getUser().getVerifystatus().equals("审核通过")) return Result.error(1501, EnumAdminUserError.您的企业信息未认证.toString());
         financeOrder.setApplyType(financeOrder.getApplyType());
         financeOrder.setSourceId(numberService.getNextCode("JR"));
         financeOrder.setUserId(userSession.getUser().getId());
