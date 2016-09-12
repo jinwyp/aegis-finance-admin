@@ -48,6 +48,10 @@ public class Result<T> implements Serializable {
         return new  Result().setSuccess(false).setError(new Error(1000, error, null));
     }
 
+    public static Result error(ErrorMessage errorMessage) {
+        return new Result().setSuccess(false).setError(new Error(errorMessage.code, errorMessage.error, null));
+    }
+
     public static Result error(Integer code, String error){
         return new  Result().setSuccess(false).setError(new Error(code, error, null));
     }

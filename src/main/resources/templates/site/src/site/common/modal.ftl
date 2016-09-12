@@ -16,7 +16,7 @@
                                 <span id="modalInfo_1" >确定提交该融资申请？</span>
                             </div>
                             <div class="tip">
-                                <em>
+                                <em class="modalEm_1">
                                     *申请完成后,我们的服务人员将会与您联系,并帮您完成<br>&nbsp;&nbsp;申请材料的填写.
                                 </em>
                                 <!--企业信息不完善!  img-attention-->

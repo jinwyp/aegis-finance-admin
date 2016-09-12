@@ -35,7 +35,7 @@
     <div class="text-center">
         <div class="error-404">
             <img src="${staticPath}/css/images/error/error500.png"/>
-            <a id="goBack" href="<%= sitepage %>" class="btn btn-primary btn-customer">返回</a>
+            <a id="goBack" href="${sitepage}/" class="btn btn-primary btn-customer">返回</a>
         </div>
     </div>
 

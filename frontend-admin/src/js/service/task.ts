@@ -67,7 +67,7 @@ var taskStatusList = [
     {
         'id': '22',
         'name': '尽调员审核不通过',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'EndByInvestigator'
     },
 
     {
@@ -88,7 +88,7 @@ var taskStatusList = [
     {
         'id': '56',
         'name': '监管员审核不通过',
-        'taskDefinitionKey' : 'assignOnlineTrader'
+        'taskDefinitionKey' : 'EndBySupervisor'
     },
 
 
