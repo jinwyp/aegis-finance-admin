@@ -10,9 +10,6 @@ import com.yimei.finance.exception.UnauthorizedException;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.logging.Log;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.TypeMismatchException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -98,9 +95,9 @@ public class GlobalExceptionHandler {
             return Result.error(404, ex.getMessage());
         } else {
             if (currentUrl.contains("/admin")) {
-                response.sendRedirect("/admin/404");
+                response.sendRedirect("/finance/admin/404");
             } else {
-                response.sendRedirect("/404");
+                response.sendRedirect("/finance/404");
             }
 
         }

@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 
-@RequestMapping("/admin")
+@RequestMapping("/finance/admin")
 @Controller("adminCommonPageController")
 public class CommonPageController {
     @Autowired

@@ -19,7 +19,7 @@ public class CommonPageController {
     @Autowired
     private LocalStorage localStorage;
 
-    @RequestMapping(value = "/files", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/files", method = RequestMethod.GET)
     @ApiOperation(value = "下载文件", notes = "通过文件url路径下载文件")
     public void siteDownloadFile(@RequestParam(value = "url", required = true) String url, HttpServletResponse response) {
         try {
