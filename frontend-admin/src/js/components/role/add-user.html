@@ -32,7 +32,7 @@
                     <span class="hint">(注:最多只能同时拥有<span class="orange">3个角色</span>)</span>
                 </div>
                 <div class="role user mt-10">
-                    <custom-checkbox [sourceData]="groups" [limitLength]="13" [(ngModel)]="this.currentUser.groupIds" [ngModelOptions]="{standalone: true}"></custom-checkbox>
+                    <custom-checkbox [sourceData]="groups" [limitLength]="3" [(ngModel)]="this.currentUser.groupIds" [ngModelOptions]="{standalone: true}"></custom-checkbox>
                 </div>
                 <span class="help-block" [class.hidden]="true">请选择角色!</span>
             </div>
