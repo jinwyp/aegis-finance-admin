@@ -15,7 +15,9 @@
             <th width="120">申请公司名称</th>
             <th width="80">拟融资总额<br/>(万元)</th>
             <th width="120">当前处理人 / <br/> 所属部门</th>
-            <th ><span *ngIf="routeData.routeType === 'all'"> 参与的流程状态 / </span> <br/> <span> 当前流程状态 </span></th>
+            <th >
+                <span *ngIf="routeData.routeType === 'all'"> 参与的流程状态 / <br/> 当前流程状态</span>
+                <span *ngIf="routeData.routeType === 'pending'"> 当前任务 </span></th>
             <th width="80" *ngIf="routeData.routeType === 'all'"><span>操作完成时间</span></th>
             <th >操作</th>
         </tr>
