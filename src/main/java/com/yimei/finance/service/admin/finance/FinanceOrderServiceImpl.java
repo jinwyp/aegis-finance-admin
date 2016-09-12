@@ -28,7 +28,6 @@ import org.springframework.util.StringUtils;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -60,7 +59,7 @@ public class FinanceOrderServiceImpl {
     public Result getFinanceOrderBySelect(int userId, FinanceOrderSearch order, Page page) {
         String hql = " select o from FinanceOrder o where o.userId=:userId ";
         if (order != null) {
-            if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
+            if (order.getStartDate() != null && order.getEndDate() != null) {
                 hql += " and o.createTime between :startDate and :endDate ";
             }
             if (order.getApproveStateId() != 0) {
@@ -77,9 +76,9 @@ public class FinanceOrderServiceImpl {
         TypedQuery<FinanceOrder> query = entityManager.createQuery(hql, FinanceOrder.class);
         query.setParameter("userId", userId);
         if (order != null) {
-            if (!StringUtils.isEmpty(order.getStartDate()) && !StringUtils.isEmpty(order.getEndDate())) {
-                query.setParameter("startDate", order.getStartDate());
-                query.setParameter("endDate", java.sql.Date.valueOf(LocalDate.parse(order.getEndDate()).plusDays(1)));
+            if (order.getStartDate() != null && order.getEndDate() != null) {
+                query.setParameter("startDate", java.sql.Date.valueOf(order.getStartDate()));
+                query.setParameter("endDate", java.sql.Date.valueOf(order.getEndDate().plusDays(1)));
             }
             if (order.getApproveStateId() != 0) {
                 query.setParameter("approveStateId", order.getApproveStateId());
@@ -271,81 +270,6 @@ public class FinanceOrderServiceImpl {
         return Result.success();
     }
 
-    /**
-     * 更改业务员信息状态
-     */
-    public Result updateFinanceOrderSalesmanInfoApproveState(Long financeId, int pass) {
-        FinanceOrderSalesmanInfo salesmanInfo = salesmanRepository.findByFinanceId(financeId);
-        if (salesmanInfo == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
-        if (pass == 0) {
-            salesmanInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
-            salesmanInfo.setApproveState(EnumFinanceStatus.AuditNotPass.name);
-        } else if (pass == 1) {
-            salesmanInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
-            salesmanInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
-        }
-        salesmanRepository.save(salesmanInfo);
-        return Result.success();
-    }
 
-    /**
-     * 更改尽调员信息状态
-     */
-    public Result updateFinanceOrderInvestigatorInfoApproveState(Long financeId, int pass, int need) {
-        FinanceOrderInvestigatorInfo investigatorInfo = investigatorRepository.findByFinanceId(financeId);
-        if (investigatorInfo == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
-        if (need == 1) {
-            investigatorInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
-            investigatorInfo.setApproveState(EnumFinanceStatus.SupplyMaterial.name);
-        } else if (pass == 0) {
-            investigatorInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
-            investigatorInfo.setApproveState(EnumFinanceStatus.AuditNotPass.name);
-        } else if (pass == 1) {
-            investigatorInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
-            investigatorInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
-        }
-        investigatorRepository.save(investigatorInfo);
-        return Result.success();
-    }
-
-    /**
-     * 更改监管员信息状态
-     */
-    public Result updateFinanceOrderSupervisorInfoApproveState(Long financeId, int pass, int need) {
-        FinanceOrderSupervisorInfo supervisorInfo = supervisorRepository.findByFinanceId(financeId);
-        if (supervisorInfo == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
-        if (need == 1) {
-            supervisorInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
-            supervisorInfo.setApproveState(EnumFinanceStatus.SupplyMaterial.name);
-        } else if (pass == 0) {
-            supervisorInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
-            supervisorInfo.setApproveState(EnumFinanceStatus.AuditNotPass.name);
-        } else if (pass == 1) {
-            supervisorInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
-            supervisorInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
-        }
-        supervisorRepository.save(supervisorInfo);
-        return Result.success();
-    }
-
-    /**
-     * 更改风控人员信息状态
-     */
-    public Result updateFinanceOrderRiskManagerInfoApproveState(Long financeId, int pass, int need) {
-        FinanceOrderRiskManagerInfo riskManagerInfo = riskRepository.findByFinanceId(financeId);
-        if (riskManagerInfo == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
-        if (need == 1) {
-            riskManagerInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
-            riskManagerInfo.setApproveState(EnumFinanceStatus.SupplyMaterial.name);
-        } else if (pass == 0) {
-            riskManagerInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
-            riskManagerInfo.setApproveState(EnumFinanceStatus.AuditNotPass.name);
-        } else if (pass == 1) {
-            riskManagerInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
-            riskManagerInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
-        }
-        riskRepository.save(riskManagerInfo);
-        return Result.success();
-    }
 
 }

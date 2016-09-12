@@ -67,20 +67,25 @@ public class FinanceFlowStepServiceImpl {
         salesmanInfo.setFinanceId(financeId);
         salesmanInfo.setCreateManId(userId);
         salesmanInfo.setCreateTime(new Date());
-        orderService.saveFinanceOrderSalesmanInfo(userId, salesmanInfo);
         methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment);
         if (submit) {
             if (taskMap.pass != 0 && taskMap.pass != 1) throw new BusinessException(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
             vars.put(EnumFinanceEventType.salesmanAudit.toString(), taskMap.pass);
             taskService.complete(task.getId(), vars);
-            orderService.updateFinanceOrderSalesmanInfoApproveState(financeId, taskMap.pass);
             if (taskMap.pass == 1) {
+                salesmanInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
+                salesmanInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
+                orderService.saveFinanceOrderSalesmanInfo(userId, salesmanInfo);
                 return Result.success();
             } else {
+                salesmanInfo.setApproveState(EnumFinanceStatus.AuditNotPass.name);
+                salesmanInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
+                orderService.saveFinanceOrderSalesmanInfo(userId, salesmanInfo);
                 return orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
             }
         } else {
+            orderService.saveFinanceOrderSalesmanInfo(userId, salesmanInfo);
             return Result.success();
         }
     }
@@ -115,24 +120,34 @@ public class FinanceFlowStepServiceImpl {
         investigatorInfo.setApplyCompanyName(financeOrder.getApplyCompanyName());
         investigatorInfo.setCreateManId(userId);
         investigatorInfo.setCreateTime(new Date());
-        orderService.saveFinanceOrderInvestigatorInfo(userId, investigatorInfo);
         methodService.addAttachmentsMethod(investigatorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
             vars.put(EnumFinanceConditions.needSalesmanSupplyInvestigationMaterial.toString(), taskMap.need);
             taskService.complete(task.getId(), vars);
-            orderService.updateFinanceOrderInvestigatorInfoApproveState(financeId, taskMap.pass, taskMap.need);
             if (taskMap.need == 1) {
+                investigatorInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
+                investigatorInfo.setApproveState(EnumFinanceStatus.SupplyMaterial.name);
+                orderService.saveFinanceOrderInvestigatorInfo(userId, investigatorInfo);
                 Result result1 = orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
                 if (!result1.isSuccess()) return result1;
                 Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
                 if (!result.isSuccess()) return result;
                 return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString(), String.valueOf(result.getData()));
             } else {
+                if (taskMap.pass == 0) {
+                    investigatorInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
+                    investigatorInfo.setApproveState(EnumFinanceStatus.AuditNotPass.name);
+                } else if (taskMap.pass == 1) {
+                    investigatorInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
+                    investigatorInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
+                }
+                orderService.saveFinanceOrderInvestigatorInfo(userId, investigatorInfo);
                 return Result.success();
             }
         } else {
+            orderService.saveFinanceOrderInvestigatorInfo(userId, investigatorInfo);
             return Result.success();
         }
     }
@@ -164,24 +179,34 @@ public class FinanceFlowStepServiceImpl {
         supervisorInfo.setFinanceId(financeId);
         supervisorInfo.setCreateManId(userId);
         supervisorInfo.setCreateTime(new Date());
-        orderService.saveFinanceOrderSupervisorInfo(userId, supervisorInfo);
         methodService.addAttachmentsMethod(supervisorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
             Map<String, Object> vars = new HashMap<>();
             vars.put(EnumFinanceConditions.needSalesmanSupplySupervisionMaterial.toString(), taskMap.need);
             taskService.complete(task.getId(), vars);
-            orderService.updateFinanceOrderSupervisorInfoApproveState(financeId, taskMap.pass, taskMap.need);
             if (taskMap.need == 1) {
+                supervisorInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
+                supervisorInfo.setApproveState(EnumFinanceStatus.SupplyMaterial.name);
+                orderService.saveFinanceOrderSupervisorInfo(userId, supervisorInfo);
                 Result result1 = orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
                 if (!result1.isSuccess()) return result1;
                 Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
                 if (!result.isSuccess()) return result;
                 return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplySupervisionMaterial.toString(), String.valueOf(result.getData()));
             } else {
+                if (taskMap.pass == 0) {
+                    supervisorInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
+                    supervisorInfo.setApproveState(EnumFinanceStatus.AuditNotPass.name);
+                } else if (taskMap.pass == 1) {
+                    supervisorInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
+                    supervisorInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
+                }
+                orderService.saveFinanceOrderSupervisorInfo(userId, supervisorInfo);
                 return Result.success();
             }
         } else {
+            orderService.saveFinanceOrderSupervisorInfo(userId, supervisorInfo);
             return Result.success();
         }
     }
@@ -213,7 +238,6 @@ public class FinanceFlowStepServiceImpl {
         riskManagerInfo.setFinanceId(financeId);
         riskManagerInfo.setCreateManId(userId);
         riskManagerInfo.setCreateTime(new Date());
-        orderService.saveFinanceOrderRiskManagerInfo(userId, riskManagerInfo);
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
@@ -223,19 +247,27 @@ public class FinanceFlowStepServiceImpl {
                 vars.put(EnumFinanceEventType.riskManagerAudit.toString(), taskMap.pass);
             }
             taskService.complete(task.getId(), vars);
-            orderService.updateFinanceOrderRiskManagerInfoApproveState(financeId, taskMap.pass, taskMap.need);
             if (taskMap.need == 1) {
+                riskManagerInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
+                riskManagerInfo.setApproveState(EnumFinanceStatus.SupplyMaterial.name);
+                orderService.saveFinanceOrderRiskManagerInfo(userId, riskManagerInfo);
                 Result result = orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.SupplyMaterial, userId);
                 if (!result.isSuccess()) return result;
                 Result result1 = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.salesmanAudit.toString());
                 if (!result1.isSuccess()) return result1;
                 return methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.salesmanSupplyRiskManagerMaterial.toString(), String.valueOf(result1.getData()));
             } else if (taskMap.pass == 1) {
+                riskManagerInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
+                riskManagerInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
                 return orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditPass, userId);
             } else {
+                riskManagerInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
+                riskManagerInfo.setApproveState(EnumFinanceStatus.AuditNotPass.name);
+                orderService.saveFinanceOrderRiskManagerInfo(userId, riskManagerInfo);
                 return orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditNotPass, userId);
             }
         } else {
+            orderService.saveFinanceOrderRiskManagerInfo(userId, riskManagerInfo);
             return Result.success();
         }
     }
