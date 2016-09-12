@@ -134,6 +134,12 @@ taskStatusList.forEach( (status) => { TaskStatus[status.taskDefinitionKey] = sta
 
 
 
+class Page{
+    page : number = 1;
+    count : number = 20;
+    total : number = 0
+}
+
 
 
 
@@ -458,4 +464,4 @@ class TaskService {
 
 
 
-export {Task, TaskService, TaskStatus}
+export {Task, Page, TaskService, TaskStatus}
