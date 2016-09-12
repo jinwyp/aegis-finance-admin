@@ -218,10 +218,10 @@
                                     <span class="green" ms-visible="@financeInfo.approveStateId===8"><em></em>审核通过</span>
                                 </td>
                             </tr>
-                            <tr>
-                                <th>备注说明:</th>
-                                <td>{{@financeInfo.comments || '--'}}</td>
-                            </tr>
+                            <!--<tr>-->
+                                <!--<th>备注说明:</th>-->
+                                <!--<td>{{@financeInfo.comments || '&#45;&#45;'}}</td>-->
+                            <!--</tr>-->
                         </table>
                     </div>
                     <!--若已上传补充材料 显示 开始-->
