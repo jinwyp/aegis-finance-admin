@@ -34,8 +34,8 @@ var financeHome = () => {
                         $('.modal_1').modal();
                         setTimeout(()=>{
                             $('#modalImg_1').removeClass('question').addClass('attention');
-                            $('#modalInfo_1').html('企业信息不完善!');
-                            $('.modalEm_1').html('您需要先完善企业信息后才能做融资申请哦～');
+                            $('#modalInfo_1').html('企业信息认证未通过!');
+                            $('.modalEm_1').html('企业信息认证通过后才能做融资申请哦～');
                             $('#md_ok_1').val('马上完善');
                             $('#md_ok_1').click(()=>{
                                 location.href=memberUrl+"/account/companyLicence";
