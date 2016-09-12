@@ -41,12 +41,7 @@ export class TaskListComponent {
     ngOnInit(){
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
-            if (this.routeData.routeType === 'pending'){
-                this.getAssignTaskList();
-                this.getAllTaskList();
-            }else{
-                this.getAllTaskList();
-            }
+            this.getTaskList();
         });
 
         this.getCurrentUser();
@@ -65,39 +60,19 @@ export class TaskListComponent {
         )
     }
 
-    getAssignTaskList () {
-        this.task.getAdminTaskList().then((result)=>{
-            if (result.success){
-                this.taskAssignList = result.data;
-                this.getPendingTaskList();
-            }else{
+    getTaskList () {
 
-            }
-        });
-    }
-
-    getPendingTaskList () {
-        this.task.getTaskList().then((result)=>{
-            if (result.success){
-                this.taskPendingList = result.data;
-                this.task.setPendingTaskLengthObservable(result.data.length + this.taskAssignList.length);
-            }else{
-
-            }
-        });
-    }
-
-    getAllTaskList () {
-        this.task.getTaskHistoryList().then((result)=>{
-            if (result.success){
+        this.task.getTaskObservable.subscribe(
+            result => {
+                this.taskAssignList = result.assignTaskList;
+                this.taskPendingList = result.pendingTaskList;
                 if (this.routeData.routeType === 'all'){
-                    this.taskHistoryList = result.data;
+                    this.taskHistoryList = result.allTaskList;
                 }
-                this.task.setAllTaskLengthObservable(result.data.length);
-            }else{
+            },
+            error => console.error(error)
+        );
 
-            }
-        });
     }
 
 }

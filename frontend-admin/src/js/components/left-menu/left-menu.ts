@@ -16,10 +16,6 @@ declare var __moduleName: string;
 })
 export class LeftMenuComponent {
 
-    constructor(
-        private task: TaskService
-    ) {}
-
     css = {
         currentTab : 1,
         currentMenu : 1,
@@ -27,21 +23,37 @@ export class LeftMenuComponent {
         pendingTaskListInfo : 0,
     };
 
+    taskAssignList : Task[] = [];
+    taskPendingList : Task[] = [];
+    taskHistoryList : Task[] = [];
+
+    constructor(
+        private task: TaskService
+    ) {}
+
+
     ngOnInit() {
         this.getTaskInfo();
     }
 
     getTaskInfo() {
 
-        this.task.getAllTaskLengthObservable.subscribe(
-            result => { if (result) {this.css.allTaskListInfo = result.allTaskLength} },
-            error => console.error(error)
-        );
+        Promise.all([
+            this.task.getAdminAssignTaskList(),
+            this.task.getPendingTaskList(),
+            this.task.getHistoryTaskList()
 
-        this.task.getPendingTaskLengthObservable.subscribe(
-            result => { if (result) {this.css.pendingTaskListInfo = result.pendingTaskLength} },
-            error => console.error(error)
-        )
+        ]).then(resultList => {
+            if (resultList.length === 3){
+                if (resultList[0].success && resultList[1].success && resultList[2].success ){
+                    this.css.pendingTaskListInfo = resultList[0].data.length + resultList[1].data.length;
+                    this.css.allTaskListInfo = resultList[2].data.length;
+
+                    this.task.setTaskObservable(resultList[0].data, resultList[1].data, resultList[2].data);
+                }
+            }
+        });
+
     }
 
     changeMenu = (menu)=>{
