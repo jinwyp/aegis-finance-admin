@@ -176,7 +176,7 @@
                                 <td colspan="3">
                                     <ul ms-visible="@financeInfo.attachmentList1">
                                         <li class="paddingL0" ms-for="(index, bill) in @financeInfo.attachmentList1">
-                                            <a ms-attr="{href: '/files?url=' + bill.url}" target="_blank">{{bill.name}}</a>
+                                            <a ms-attr="{href: '/finance/files?url=' + bill.url}" target="_blank">{{bill.name}}</a>
                                             <!--<img  ms-attr="{src: bill.url}">-->
                                         </li>
 
