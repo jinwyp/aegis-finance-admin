@@ -1,8 +1,5 @@
 package com.yimei.finance.representation.admin.finance.enums;
 
-import io.swagger.annotations.ApiModel;
-
-@ApiModel(description = "金融单, 流程事件类型")
 public enum EnumFinanceEventType {
     onlineTraderAudit("线上交易员审核并填写材料"),
     salesmanAudit("业务员审核并填写材料"),
