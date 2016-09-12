@@ -62,8 +62,8 @@ $color_border: #e4e4e4;
           padding: 0px 18px;
           position: relative;
           .Nav{
-            width: 553px!important;
-            height: 208px;
+            width: 580px!important;
+            //height: 208px;
             background-color: white;
             position: absolute;
             top:35px;
@@ -72,16 +72,19 @@ $color_border: #e4e4e4;
             border-right:1px solid $color_border;
             border-bottom:1px solid $color_border;
             border-left:1px solid $color_border;
-            padding: 25px 28px 25px 25px;
+            padding: 20px 40px;
             display: none;
             div{
               h2{
-                font-size: 14px;
+                font-size: 12px;
+                line-height: 12px;
                 color: #333333;
                 font-weight: bold;
+                margin-bottom: 11px;
+                font-weight: normal;
                 .headBg{
-                  width:4px;
-                  height: 16px;
+                  width:2px;
+                  height: 12px;
                   display: inline-block;
                   background-color: $hoverColor;
                   margin-right: 8px;
@@ -89,17 +92,22 @@ $color_border: #e4e4e4;
                 }
               }
               table{
-                margin:10px 0 0 12px;
+                margin-left:10px;
                 border-right:1px solid $color_border;
                 td{
-                  padding-right:36px ;
+                  padding-right:50px ;
+                  height: 30px;
                   a{
                     color: #666;
-                    font-size: 14px;
+                    font-size: 12px;
+                    line-height: 30px;
                     &:hover{
                       color: $hoverColor;
                     }
                   }
+                }
+                .padding40{
+                  padding-right:40px ;
                 }
                 .paddingRight0{
                   padding-right: 0px;
@@ -118,7 +126,7 @@ $color_border: #e4e4e4;
           }
           .phoneHelper{
             width: 385px!important;
-            height: 210px;
+            //height: 210px;
             background-color: white;
             position: absolute;
             top:35px;
@@ -127,7 +135,7 @@ $color_border: #e4e4e4;
             border-right:1px solid $color_border;
             border-bottom:1px solid $color_border;
             border-left:1px solid $color_border;
-            padding: 9px 30px 0 30px;
+            padding: 25px 30px 20px 30px;
             display: none;
             div{
               width: 160px;
@@ -148,6 +156,8 @@ $color_border: #e4e4e4;
         }
         li.hoverDiv:hover{
           background-color: white;
+          margin-left: -2px;
+          padding: 0px 19px;
           a.hoverTitle{
             color:$hoverColor ;
           }

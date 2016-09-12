@@ -29,7 +29,9 @@ export class TaskListComponent {
         routeType : '',
         title : ''
     };
+
     pageObj : Page = new Page();
+
     taskAssignList : Task[] = [];
     taskPendingList : Task[] = [];
     taskHistoryList : Task[] = [];
@@ -41,12 +43,8 @@ export class TaskListComponent {
     ngOnInit(){
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
-            if (this.routeData.routeType === 'pending'){
-                this.getAssignTaskList();
-                this.getAllTaskList();
-            }else{
-                this.getAllTaskList();
-            }
+            this.getTaskList();
+
         });
 
         this.getCurrentUser();
@@ -68,40 +66,33 @@ export class TaskListComponent {
         )
     }
 
-    getAssignTaskList () {
-        this.task.getAdminTaskList().then((result)=>{
-            if (result.success){
-                this.taskAssignList = result.data;
-                this.getPendingTaskList();
-            }else{
+    getTaskList () {
 
-            }
-        });
-    }
+        Promise.all([
+            this.task.getAdminAssignTaskList(),
+            this.task.getPendingTaskList(),
+            this.task.getHistoryTaskList()
 
-    getPendingTaskList () {
-        this.task.getTaskList().then((result)=>{
-            if (result.success){
-                this.taskPendingList = result.data;
-                this.task.setPendingTaskLengthObservable(result.data.length + this.taskAssignList.length);
-            }else{
+        ]).then(resultList => {
+            if (resultList.length === 3){
+                if (resultList[0].success && resultList[1].success && resultList[2].success ){
 
-            }
-        });
-    }
+                    if (!resultList[0].data){resultList[0].data = []}
 
-    getAllTaskList () {
-        this.task.getTaskHistoryList().then((result)=>{
-            if (result.success){
-                if (this.routeData.routeType === 'all'){
-                    this.taskHistoryList = result.data;
+                    if (this.routeData.routeType === 'pending'){
+                        this.taskAssignList = resultList[0].data;
+                        this.taskPendingList = resultList[1].data;
+                    }else{
+                        this.taskHistoryList = resultList[2].data;
+                    }
+
+                    this.task.setTaskObservable(resultList[0].data, resultList[1].data, resultList[2].data);
+
                 }
-                this.task.setAllTaskLengthObservable(result.data.length);
-            }else{
-
             }
         });
     }
+
 
 }
 

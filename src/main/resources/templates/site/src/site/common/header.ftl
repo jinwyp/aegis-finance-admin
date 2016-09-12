@@ -41,17 +41,17 @@
                                 <tr>
                                     <td><a href="${sitepage}/mall">商城</a></td>
                                     <td><a href="${sitepage}/buy">供应专区</a></td>
-                                    <td><a href="${sitepage}/sell">需求专区</a></td>
+                                    <td class="padding40"><a href="${sitepage}/sell">需求专区</a></td>
                                 </tr>
                                 <tr>
                                     <td><a href="/finance">金融</a></td>
                                     <td><a href="${sitepage}/tender">阳光采购</a></td>
-                                    <td><a href="${sitepage}/coalzone">煤矿专区</a></td>
+                                    <td class="padding40"><a href="${sitepage}/coalzone">煤矿专区</a></td>
                                 </tr>
                                 <tr>
                                     <td><a href="${sitepage}/news">资讯</a></td>
                                     <td><a href="${sitepage}/logistics/toLogistics">物流</a></td>
-                                    <td><a href="${sitepage}/dataCenter">数据中心</a></td>
+                                    <td class="padding40"><a href="${sitepage}/dataCenter">数据中心</a></td>
                                 </tr>
                                 <!--<tr>-->
                                 <!--<td colspan="3"><a href="#">易煤指数</a></td>-->

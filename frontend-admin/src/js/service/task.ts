@@ -6,7 +6,9 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+
 
 import {GlobalPromiseHttpCatch, GlobalHeaders, HttpResponse, API } from './http';
 
@@ -276,14 +278,23 @@ class Task {
 @Injectable()
 class TaskService {
 
-    private AllTaskListInfo = new BehaviorSubject<any>(null);
-    private PendingTaskListInfo = new BehaviorSubject<any>(null);
+    private _TaskListInfo = new BehaviorSubject<any>({
+        assignTaskList : [],
+        allTaskList : [],
+        pendingTaskList : []
+    });
 
-    getAllTaskLengthObservable = this.AllTaskListInfo.asObservable();
-    getPendingTaskLengthObservable = this.PendingTaskListInfo.asObservable();
+    getTaskObservable = this._TaskListInfo.asObservable();
 
-    setAllTaskLengthObservable (allTaskLength : number){ this.AllTaskListInfo.next({allTaskLength : allTaskLength }) };
-    setPendingTaskLengthObservable (pendingTaskLength : number ){ this.PendingTaskListInfo.next({pendingTaskLength : pendingTaskLength}) };
+
+    setTaskObservable (assignTaskList : Array<Task>, pendingTaskList : Array<Task>, allTaskList : Array<Task>){
+        this._TaskListInfo.next({
+            assignTaskList : assignTaskList,
+            allTaskList : allTaskList,
+            pendingTaskList : pendingTaskList
+        })
+    };
+
 
 
 
@@ -292,19 +303,19 @@ class TaskService {
     ) { }
 
 
-    getTaskList() {
+    getPendingTaskList() {
         return this.http.get(API.tasks).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }
 
-    getTaskHistoryList() {
+    getHistoryTaskList() {
         return this.http.get(API.tasks + '/history').toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }
 
-    getAdminTaskList() {
+    getAdminAssignTaskList() {
         return this.http.get(API.tasks + '/unclaimed').toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
