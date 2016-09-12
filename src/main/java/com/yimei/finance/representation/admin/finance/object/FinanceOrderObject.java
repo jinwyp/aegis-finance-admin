@@ -1,6 +1,7 @@
 package com.yimei.finance.representation.admin.finance.object;
 
 import com.yimei.finance.entity.common.BaseEntity;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
 import com.yimei.finance.representation.admin.finance.object.validated.CreateFinanceOrder;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceOrder;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceOrder;
@@ -10,7 +11,6 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -103,17 +103,7 @@ public class FinanceOrderObject extends BaseEntity implements Serializable {
     private List<AttachmentObject> attachmentList1;                  //附件列表
 
     public String getApplyTypeName() {
-        if (StringUtils.isEmpty(applyType)) {
-            return applyType;
-        } else if (applyType.equals("MYR")) {
-            return "煤易融";
-        } else if (applyType.equals("MYD")) {
-            return "煤易贷";
-        } else if (applyType.equals("MYG")) {
-            return "煤易购";
-        } else {
-            return applyType;
-        }
+        return EnumFinanceStatus.getName(EnumFinanceStatus.valueOf(applyType));
     }
 
 
