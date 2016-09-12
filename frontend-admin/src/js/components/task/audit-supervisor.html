@@ -141,7 +141,7 @@
             <td class="td-val" colspan="4">
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList2">
-                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" *ngIf="!css.isReadOnly"></span>
+                        <!--<span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" *ngIf="!css.isReadOnly"></span>-->
                         <a [href]="'/api/financing/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
                     </div>
                 </div>
