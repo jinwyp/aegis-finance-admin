@@ -309,8 +309,8 @@ class TaskService {
             .catch(GlobalPromiseHttpCatch);
     }
 
-    getHistoryTaskList() {
-        return this.http.get(API.tasks + '/history').toPromise()
+    getHistoryTaskList(page : number = 1) {
+        return this.http.get(API.tasks + '/history?page=' + page).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }
