@@ -41,13 +41,13 @@ public class AegisFinanceApplication {
 						identityService.saveGroup(group);
 					}
 				}
-				if (identityService.createUserQuery().userFirstName("admin").singleResult() == null) {
+				if (identityService.createUserQuery().userFirstName("adminfinance").singleResult() == null) {
 					User user = identityService.newUser("");
 					user.setId(null);
-					user.setFirstName("admin");
-					user.setPassword("1f71bc155f2f42aba0c4e95464b5df02");
+					user.setFirstName("adminfinance");
+					user.setPassword("961e37962ed659bf4eb45a6f074981a0");
 					identityService.saveUser(user);
-					identityService.setUserInfo(user.getId(), "username", "admin");
+					identityService.setUserInfo(user.getId(), "username", "adminfinance");
 					identityService.createMembership(user.getId(), EnumSpecialGroup.SuperAdminGroup.id);
 				}
             }
