@@ -14,14 +14,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 
-@Controller
+@Controller("siteCommonPageController")
 public class CommonPageController {
     @Autowired
     private LocalStorage localStorage;
 
     @RequestMapping(value = "/files", method = RequestMethod.GET)
     @ApiOperation(value = "下载文件", notes = "通过文件url路径下载文件")
-    public void doDownloadFile(@RequestParam(value = "url", required = true) String url, HttpServletResponse response) {
+    public void siteDownloadFile(@RequestParam(value = "url", required = true) String url, HttpServletResponse response) {
         try {
             if (url != null && url.startsWith("/files/")) {
                 File file = new File(localStorage.getServerFileRootPath(), url.substring("/files/".length()));
