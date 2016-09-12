@@ -55,18 +55,7 @@ public class ToolsController {
         return Result.success().setData(stepList);
     }
 
-    @RequestMapping(value = "/files", method = RequestMethod.GET)
-    @ApiOperation(value = "下载文件", notes = "通过文件url路径下载文件")
-    public void doDownloadFile(@RequestParam(value = "url", required = true) String url, HttpServletResponse response) {
-        try {
-            if (url != null && url.startsWith("/files/")) {
-                File file = new File(localStorage.getServerFileRootPath(), url.substring("/files/".length()));
-                WebUtils.doDownloadFile(file, response);
-            }
-        } catch (IOException e) {
-            throw new NotFoundException();
-        }
-    }
+
 
     @RequestMapping(value = "/files", method = RequestMethod.POST)
     @ApiOperation(value = "上传文件", notes = "上传文件", response = AttachmentObject.class)
