@@ -87,7 +87,7 @@ public class UserCenterController {
         if (!result.isSuccess()) return result;
         List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
         page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
-        return Result.success().setData(taskList);
+        return Result.success().setData(taskList).setMeta(page);
     }
 
 
