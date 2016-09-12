@@ -1,32 +1,27 @@
-<div [class]="class">
-  <input type="hidden" [(ngModel)]="viewDate">
-  <div class="ui-kit-calendar-input" [class.opened]="opened || expanded" (click)="toggle()">
-    <!--<span class="glyphicon glyphicon-calendar"></span>-->
-    <span [class.opened]="opened || expanded">{{ viewDate }}</span>
-    <i class="ion-ios-calendar-outline"></i>
+<div class="custom-pagination">
+  <div class="pagination-previous">
+    <a (click)="previous()" *ngIf="pageObj.page!==1">上一页</a>
+    <span class="css-disabled" *ngIf="pageObj.page===1">上一页</span>
   </div>
-  <div class="ui-kit-calendar-cal-container" [class.opened]="opened">
-    <div class="ui-kit-calendar-cal-top">
-      <i class="ion-arrow-left-b" (click)="prevMonth()"></i>
-      <span>{{ date.format('MMMM YYYY') }}</span>
-      <i class="ion-arrow-right-b" (click)="nextMonth()"></i>
+
+  <!--<div class="page-item" *ngFor="let item of pageItems">-->
+    <!--<div class="basic" *ngIf="item===pageObj.page">-->
+      <!--<span class="css-disabled">{{item}}</span>-->
+    <!--</div>-->
+    <!--<div class="basic" *ngIf="item!==pageObj.page">-->
+      <!--<a (click)="itemClick(item)">{{item}}</a>-->
+    <!--</div>-->
+  <!--</div>-->
+
+  <div class="page-item" *ngFor="let item of pageItems">
+    <div class="basic">
+      <a *ngIf="!item.isdisabled&&item.value!==pageObj.page" (click)="itemClick(item.value)">{{item.value}}</a>
+      <span *ngIf="item.isdisabled||item.value===pageObj.page" class="css-disabled">{{item.value}}</span>
     </div>
-    <div class="ui-kit-calendar-day-names">
-      <span>Mon</span>
-      <span>Tue</span>
-      <span>Wed</span>
-      <span>Thu</span>
-      <span>Fri</span>
-      <span>Sat</span>
-      <span>Sun</span>
-    </div>
-    <div class="ui-kit-calendar-days">
-      <span *ngFor="let d of days; let i = index;" 
-            (click)="selectDate($event, i)"
-            [class.today]="d.today"
-            [class.is-active]="d.selected">
-        {{ d.day }}
-      </span>
-    </div>
+  </div>
+
+  <div class="pagination-next">
+    <a (click)="next()" *ngIf="pageObj.page!==totalPage">下一页</a>
+    <span class="css-disabled" *ngIf="pageObj.page===totalPage">下一页</span>
   </div>
 </div>

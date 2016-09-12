@@ -122,5 +122,5 @@
             <td colspan="8">您无审核历史记录</td>
         </tr>
     </table>
-    <!--<pagination [pageObj]="pageObj" ></pagination>-->
+    <pagination *ngIf="routeData.routeType === 'all'" [(pageObj)]="pageObj" ></pagination>
 </div>

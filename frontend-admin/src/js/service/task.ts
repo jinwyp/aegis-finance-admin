@@ -6,7 +6,9 @@ import { Injectable } from '@angular/core';
 import { Headers, Http } from '@angular/http';
 
 import 'rxjs/add/operator/toPromise';
+
 import {BehaviorSubject} from 'rxjs/BehaviorSubject';
+
 
 import {GlobalPromiseHttpCatch, GlobalHeaders, HttpResponse, API } from './http';
 
@@ -131,6 +133,12 @@ var TaskStatus : any = {};
 taskStatusList.forEach( (status) => { TaskStatus[status.taskDefinitionKey] = status.taskDefinitionKey });
 
 
+
+class Page{
+    page : number = 1;
+    count : number = 20;
+    total : number = 0
+}
 
 
 
@@ -456,4 +464,4 @@ class TaskService {
 
 
 
-export {Task, TaskService, TaskStatus}
+export {Task, Page, TaskService, TaskStatus}

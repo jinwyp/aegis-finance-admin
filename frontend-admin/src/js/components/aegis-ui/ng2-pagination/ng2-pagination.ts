@@ -1,170 +1,137 @@
-import { Component, ViewContainerRef, forwardRef, OnInit, Input } from '@angular/core';
-import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
-import * as moment_ from 'moment';
+/**
+ * Created by liushengbin on 16/8/15.
+ */
+
+
+import {Component, Input, forwardRef} from '@angular/core';
+import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
+import {Page} from '../../../service/task';
 
 declare var __moduleName:string;
 
-const moment: any = (<any>moment_).default || moment_;
 
-interface CalendarDate {
-  day: number;
-  month: number;
-  year: number;
-  enabled: boolean;
-  today: boolean;
-  selected: boolean;
-}
-
-export const CALENDAR_VALUE_ACCESSOR: any = {
-  provide: NG_VALUE_ACCESSOR,
-  useExisting: forwardRef(() => DatePickerComponent),
-  multi: true
+export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR:any = {
+    provide :     NG_VALUE_ACCESSOR,
+    useExisting : forwardRef(() => PaginationComponent),
+    multi :       true
 };
 
+
 @Component({
-  selector: 'datepicker',
-  moduleId :    __moduleName || module.id,
-  templateUrl: 'ng2-datepicker.component.html',
-  providers: [CALENDAR_VALUE_ACCESSOR]
+    selector :    'pagination',
+    moduleId :    __moduleName || module.id,
+    templateUrl : 'ng2-pagination.component.html',
+    providers :   [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
+
 })
-export class DatePickerComponent implements ControlValueAccessor, OnInit {
-  @Input() class: string;
-  @Input() expanded: boolean;
-  @Input() opened: boolean;
-  @Input() format: string;
-  @Input() viewFormat: string;
-  @Input() firstWeekdaySunday: boolean;
 
-  private date: any = moment();
-  private onChange: Function;
-  private onTouched: Function;
-  private el: Element;
-  private viewDate: string = null;
-  private days: CalendarDate[] = [];
+export class PaginationComponent implements ControlValueAccessor {
 
-  private onTouchedCallback: () => void = () => { };
-  private onChangeCallback: (_: any) => void = () => { };
+    @Input()
+    private pageObj : Page;
 
-  constructor(viewContainerRef: ViewContainerRef) {
-    this.el = viewContainerRef.element.nativeElement;
-  }
 
-  get value(): any {
-    return this.viewDate;
-  }
+    private totalPage:number   = 1;
+            pageItems:any[] = [];
 
-  set value(value: any) {
-    let date = (value instanceof moment) ? value : moment(value, this.format);
-    this.viewDate = date.format(this.viewFormat);
-    this.onChangeCallback(value);
-  }
+    private paginationSize : number = 5;
 
-  ngOnInit() {
-    this.class = `ui-kit-calendar-container ${this.class}`;
-    this.opened = this.opened || false;
-    this.format = this.format || 'YYYY-MM-DD';
-    this.viewFormat = this.viewFormat || 'YYYY-MM-DD';
-    this.firstWeekdaySunday = this.firstWeekdaySunday || false; 
-    setTimeout(() => {
-      if (!this.viewDate) {
-        let value = moment();
-        this.value = value;
-        this.onChangeCallback(value.format(this.format));
-      }
-      this.generateCalendar();
-    });
 
-    let body = document.querySelector('body');
-    body.addEventListener('click', e => {
-      if (!this.opened || !e.target) { return; };
-      if (this.el !== e.target && !this.el.contains((<any>e.target))) {
-        this.close();
-      }
-    }, false);
-  }
+//Placeholders for the callbacks which are later provided by the Control Value Accessor
+    private onTouchedCallback:() => {};
+    private onChangeCallback:(_:any) => {};
 
-  generateCalendar() {
-    let date = moment(this.date);
-    let month = date.month();
-    let year = date.year();
-    let n: number = 1;
-    let firstWeekDay: number = (this.firstWeekdaySunday) ? date.date(2).day() : date.date(1).day();
+    //get accessor
+    get value():any {
+        return this.pageObj;
+    };
 
-    if (firstWeekDay !== 1) {
-      n -= (firstWeekDay + 6) % 7;
+    //set accessor including call the onchange callback
+    set value(v:any) {
+        if (v !== this.pageObj) {
+            this.pageObj = v;
+            this.onChangeCallback(v);
+        }
     }
 
-    this.days = [];
-    let selectedDate = moment(this.value, this.viewFormat);
-    for (let i = n; i <= date.endOf('month').date(); i += 1) {
-      let currentDate = moment(`${i}.${month + 1}.${year}`, 'DD.MM.YYYY');
-      let today = (moment().isSame(currentDate, 'day') && moment().isSame(currentDate, 'month')) ? true : false;
-      let selected = (selectedDate.isSame(currentDate, 'day')) ? true : false; 
-
-      if (i > 0) {
-        this.days.push({ 
-          day: i,
-          month: month + 1,
-          year: year,
-          enabled: true,
-          today: today,
-          selected: selected
-        });
-      } else {
-        this.days.push({ 
-          day: null,
-          month: null,
-          year: null,
-          enabled:false,
-          today: false,
-          selected: selected 
-        });
-      }
+    constructor() {
     }
-  }
 
-  selectDate(e: MouseEvent, i: number) {
-    e.preventDefault();
+    ngOnInit() {
+        this.getPaginationData();
+    }
 
-    let date: CalendarDate = this.days[i];
-    let selectedDate = moment(`${date.day}.${date.month}.${date.year}`, 'DD.MM.YYYY');
-    this.value = selectedDate.format(this.format);
-    this.viewDate = selectedDate.format(this.viewFormat);
-    this.close();
-    this.generateCalendar();
-  }
+    writeValue(obj:any):void {
+        if (obj !== this.pageObj) {
+            this.pageObj = obj;
+        }
+    }
 
-  prevMonth() {
-    this.date = this.date.subtract(1, 'month');
-    this.generateCalendar();
-  }
+    registerOnChange(fn:any):void {
+        this.onChangeCallback = fn;
+    }
 
-  nextMonth() {
-    this.date = this.date.add(1, 'month');
-    this.generateCalendar();
-  }
+    registerOnTouched(fn:any):void {
+        this.onTouchedCallback = fn;
+    }
 
-  writeValue(value: any) {
-    this.viewDate = value;
-  }
+    itemClick(arg:number) {
+        this.pageObj.page = arg;
+        this.getPaginationData();
+    }
 
-  registerOnChange(fn: any) {
-    this.onChangeCallback = fn;
-  }
+    previous() {
+        this.pageObj.page--;
+        this.getPaginationData();
+    }
 
-  registerOnTouched(fn: any) {
-    this.onTouchedCallback = fn;
-  }
+    next() {
+        this.pageObj.page++;
+        this.getPaginationData();
+    }
 
-  toggle() {
-    this.opened = !this.opened; 
-  }
+    getPaginationData() {
+        this.pageItems.splice(0,this.pageItems.length);
+        if (this.pageObj.total % this.pageObj.count === 0) {
+            this.totalPage = this.pageObj.total / this.pageObj.count;
+        } else {
+            this.totalPage = (this.pageObj.total - this.pageObj.total % this.pageObj.count) / this.pageObj.count + 1;
+        }
+        // for (let i = 1; i <= this.totalPage; i++) {
+        //     this.pageItems.push(i);
+        // }
+        if(this.pageObj.page < this.paginationSize + 1){
+            this.pageItems.push({value:1,isdisabled:false});
+            this.pageItems.push({value:2,isdisabled:false});
+            this.pageItems.push({value:3,isdisabled:false});
+            this.pageItems.push({value:4,isdisabled:false});
+            this.pageItems.push({value:5,isdisabled:false});
+            this.pageItems.push({value:6,isdisabled:false});
+            this.pageItems.push({value:7,isdisabled:false});
+            this.pageItems.push({value:'...',isdisabled:true});
+            this.pageItems.push({value:this.totalPage,isdisabled:false});
+        }else if(this.pageObj.page < this.totalPage-this.paginationSize){
+            this.pageItems.push({value:1,isdisabled:false});
+            this.pageItems.push({value:'...',isdisabled:true});
+            this.pageItems.push({value:this.pageObj.page-2,isdisabled:false});
+            this.pageItems.push({value:this.pageObj.page-1,isdisabled:false});
+            this.pageItems.push({value:this.pageObj.page,isdisabled:false});
+            this.pageItems.push({value:this.pageObj.page+1,isdisabled:false});
+            this.pageItems.push({value:this.pageObj.page+2,isdisabled:false});
+            this.pageItems.push({value:'...',isdisabled:true});
+            this.pageItems.push({value:this.totalPage,isdisabled:false});
+        }else{
+            this.pageItems.push({value:1,isdisabled:false});
+            this.pageItems.push({value:'...',isdisabled:true});
+            this.pageItems.push({value:this.totalPage-6,isdisabled:false});
+            this.pageItems.push({value:this.totalPage-5,isdisabled:false});
+            this.pageItems.push({value:this.totalPage-4,isdisabled:false});
+            this.pageItems.push({value:this.totalPage-3,isdisabled:false});
+            this.pageItems.push({value:this.totalPage-2,isdisabled:false});
+            this.pageItems.push({value:this.totalPage-1,isdisabled:false});
+            this.pageItems.push({value:this.totalPage,isdisabled:false});
+        }
+    }
 
-  open() {
-    this.opened = true;
-  }
-
-  close() {
-    this.opened = false;
-  }
 }
+

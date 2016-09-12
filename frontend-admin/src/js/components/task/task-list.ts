@@ -6,7 +6,7 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 
-import { Task, TaskService, TaskStatus } from '../../service/task';
+import { Task, Page, TaskService, TaskStatus } from '../../service/task';
 import { User, UserService } from '../../service/user';
 
 declare var __moduleName: string;
@@ -29,6 +29,9 @@ export class TaskListComponent {
         routeType : '',
         title : ''
     };
+
+    pageObj : Page = new Page();
+
     taskAssignList : Task[] = [];
     taskPendingList : Task[] = [];
     taskHistoryList : Task[] = [];
@@ -45,6 +48,9 @@ export class TaskListComponent {
         });
 
         this.getCurrentUser();
+        this.pageObj.page=1;
+        this.pageObj.count=10;
+        this.pageObj.total=201;
     }
 
     getCurrentUser() {
@@ -71,9 +77,12 @@ export class TaskListComponent {
             if (resultList.length === 3){
                 if (resultList[0].success && resultList[1].success && resultList[2].success ){
 
-                    this.taskAssignList = resultList[0].data;
-                    this.taskPendingList = resultList[1].data;
-                    if (this.routeData.routeType === 'all'){
+                    if (!resultList[0].data){resultList[0].data = []}
+
+                    if (this.routeData.routeType === 'pending'){
+                        this.taskAssignList = resultList[0].data;
+                        this.taskPendingList = resultList[1].data;
+                    }else{
                         this.taskHistoryList = resultList[2].data;
                     }
 

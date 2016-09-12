@@ -1,6 +1,6 @@
 .ui-kit-calendar-container {
   position: relative;
-  width: 170px;
+  width: 200px;
   margin: 0 10px 0 0;
   display: block;
   float: left;
@@ -13,12 +13,12 @@
   z-index: 99; }
 .ui-kit-calendar-container .ui-kit-calendar-input {
   border: 1px solid #aec9de;
-  border-radius: 10px;
+  //border-radius: 10px;
   display: flex;
   justify-content: center;
   align-items: center;
   width: 70px;
-  height: 40px;
+  height: 36px;
   background: #fcfcff;
   cursor: pointer;
   text-align: center;

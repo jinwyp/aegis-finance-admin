@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
 
 import { Task, TaskService, TaskStatus } from '../../service/task';
 
-
 declare var __moduleName: string;
 
 
@@ -35,21 +34,32 @@ export class LeftMenuComponent {
 
     getTaskInfo() {
 
-        Promise.all([
-            this.task.getAdminAssignTaskList(),
-            this.task.getPendingTaskList(),
-            this.task.getHistoryTaskList()
+        this.task.getTaskObservable.subscribe(
+            result => {
+                if (result.allTaskList.length > 0 ) {
+                    this.css.pendingTaskListInfo = result.assignTaskList.length + result.pendingTaskList.length;
+                    this.css.allTaskListInfo = result.allTaskList.length;
+                }else{
+                    Promise.all([
+                        this.task.getAdminAssignTaskList(),
+                        this.task.getPendingTaskList(),
+                        this.task.getHistoryTaskList()
 
-        ]).then(resultList => {
-            if (resultList.length === 3){
-                if (resultList[0].success && resultList[1].success && resultList[2].success ){
-                    this.css.pendingTaskListInfo = resultList[0].data.length + resultList[1].data.length;
-                    this.css.allTaskListInfo = resultList[2].data.length;
+                    ]).then(resultList => {
+                        if (resultList.length === 3){
+                            if (resultList[0].success && resultList[1].success && resultList[2].success ){
 
-                    this.task.setTaskObservable(resultList[0].data, resultList[1].data, resultList[2].data);
+                                if (!resultList[0].data){resultList[0].data = []}
+                                this.css.pendingTaskListInfo = resultList[0].data.length + resultList[1].data.length;
+                                this.css.allTaskListInfo = resultList[2].data.length;
+                            }
+                        }
+                    });
                 }
-            }
-        });
+            },
+            error => console.error(error)
+        );
+
     }
 
     changeMenu = (menu)=>{
