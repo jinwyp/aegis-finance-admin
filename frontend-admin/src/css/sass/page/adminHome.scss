@@ -511,11 +511,15 @@
         td.td-textarea>textarea{ box-shadow: none;  border:none;  resize: none;  padding:4px 0; background-color: #fcfdfd; }
         //tr td.td-val>span{  margin-left:10px;  }
         tr>td>input,tr>td>span.span-read{
+          display: block;
           height:36px;
           line-height:36px;
           //width:228px;
           width:100%;
           border:none;
+        }
+        tr>td>span.span-read.span-textarea{
+          height:100px;
         }
         tr.item-max td>label,tr.item-title td>label{
           margin-left:20px;
