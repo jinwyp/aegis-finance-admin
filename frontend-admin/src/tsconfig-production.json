@@ -1,0 +1,22 @@
+{
+  "compilerOptions": {
+    "target": "ES5",
+    "module": "system",
+    "moduleResolution": "node",
+    "sourceMap": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "removeComments": false,
+    "noImplicitAny": false,
+    "outFile": "./jsoutput/main.bundle.js",
+    "rootDir": "./js"
+  },
+  "exclude": [
+    ".git",
+    "node_modules",
+    "typings/browser.d.ts",
+    "typings/browser",
+    "typings/main.d.ts",
+    "typings/main"
+  ]
+}
