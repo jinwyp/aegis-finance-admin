@@ -36,7 +36,7 @@
         <div class="error-404">
             <img src="${staticPath}/css/images/error/error404.png"/>
             <p>对不起，您访问的页面不见了...</p>
-            <a id="goBack" href="<%= sitepage %>" class="btn btn-primary btn-customer">返回</a>
+            <a id="goBack" href="${sitepage}/" class="btn btn-primary btn-customer">返回</a>
         </div>
     </div>
 

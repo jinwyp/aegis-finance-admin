@@ -11,7 +11,7 @@ var financeHome = () => {
     slider();
 
     var postApplyInfo = (query) => {
-
+        var memberUrl = $("#memberUrl").val();
         var params = $.extend({}, query);
         $.ajax({
             url         : '/api/financing/apply',
@@ -30,7 +30,22 @@ var financeHome = () => {
                         $('#md_ok_2').click(()=>{ $('.modal_2').modal('hide') });
                     }, 500);
                 } else {
-                    window.location.href = data.error.message;
+                    if(data.error.code = 1501){
+                        $('.modal_1').modal();
+                        setTimeout(()=>{
+                            $('#modalImg_1').removeClass('question').addClass('attention');
+                            $('#modalInfo_1').html('企业信息不完善!');
+                            $('.modalEm_1').html('您需要先完善企业信息后才能做融资申请哦～');
+                            $('#md_ok_1').val('马上完善');
+                            $('#md_ok_1').click(()=>{
+                                location.href=memberUrl+"/account/companyLicence";
+                            });
+                        },500)
+
+                    }else if(data.error.code = 1502){
+                        $('.modal_2').modal();
+                    }
+                    // window.location.href = data.error.message;
                 }
             }
         });
@@ -43,6 +58,7 @@ var financeHome = () => {
     //modal
     $('#slide .type-buy').click(()=>{
         $('.modal_1').modal();
+        $('#modalImg_1').removeClass('attention').addClass('question');
         $('#modalInfo_1').html('确定提交申请"煤易购"?');
         $('#md_ok_1').off();
         $('#md_ok_1').click(()=> {
@@ -53,6 +69,7 @@ var financeHome = () => {
     });
     $('#slide .type-melt').click(()=>{
         $('.modal_1').modal();
+        $('#modalImg_1').removeClass('attention').addClass('question');
         $('#modalInfo_1').html('确定提交申请"煤易融"?');
         $('#md_ok_1').off();
         $('#md_ok_1').click(()=>{
@@ -63,6 +80,7 @@ var financeHome = () => {
     });
     $('#slide .type-loan').click(()=>{
         $('.modal_1').modal();
+        $('#modalImg_1').removeClass('attention').addClass('question');
         $('#modalInfo_1').html('确定提交申请"煤易贷"?');
         $('#md_ok_1').off();
         $('#md_ok_1').click(()=>{

@@ -92,7 +92,7 @@
             <span class="leftNav"></span>
             <span class="rightNav"></span>
         </div>
-
+        <input type="hidden" id="memberUrl" value="${ssoMemberUrl!}">
         <!--<div id="posterTvGrid86804" style="margin:40px auto 0 auto;"></div>-->
     </div>
 </div>
