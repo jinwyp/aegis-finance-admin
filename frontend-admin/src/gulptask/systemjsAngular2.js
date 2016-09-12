@@ -88,7 +88,7 @@ gulp.task('componentsTemplate', function() {
 
 gulp.task('js-release', ['componentsTemplate', 'ts', 'libs'], function(){
     return gulp.src(sourcePath.tsOutput)
-        .pipe(rev())
+        //.pipe(rev())
         .pipe(gulp.dest(distPath.js))
         .pipe(rev.manifest('rev-manifest-js.json'))
         .pipe(gulp.dest(distPath.manifest) );
