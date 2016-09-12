@@ -21,6 +21,7 @@ var distPath = {
     'js'                 : '../dist/jsoutput/',
     'jsConfig'           : '../dist/js/',
     'componentsTemplate' : 'jsoutput/components/',
+    'componentsTemplateDist' : '../dist/jsoutput/components/',
     'libs'               : '../dist/node_modules/',
     "manifest"           : "../dist/rev/"
 };
@@ -83,12 +84,14 @@ gulp.task('libs', function() {
 gulp.task('componentsTemplate', function() {
     gulp.src(sourcePath.componentsTemplate)
         .pipe(gulp.dest(distPath.componentsTemplate));
+    gulp.src(sourcePath.componentsTemplate)
+        .pipe(gulp.dest(distPath.componentsTemplateDist));
 });
 
 
 gulp.task('js-release', ['componentsTemplate', 'ts', 'libs'], function(){
     return gulp.src(sourcePath.tsOutput)
-        .pipe(rev())
+        //.pipe(rev())
         .pipe(gulp.dest(distPath.js))
         .pipe(rev.manifest('rev-manifest-js.json'))
         .pipe(gulp.dest(distPath.manifest) );
