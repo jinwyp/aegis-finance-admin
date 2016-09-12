@@ -60,7 +60,9 @@ public class UserCenterController {
     public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Validated(CreateFinanceOrder.class) @RequestBody FinanceOrder financeOrder) {
         System.out.println("Order Type:" + financeOrder.getApplyType());
         if (!userSession.getUser().getVerifystatus().equals("审核通过")) return Result.error(ErrorMessage.User_Company_Not_AuditSuccess);
-        List<FinanceOrder> financeOrderList = orderRepository.findByUserIdAndCreateTimeGreaterThan(userSession.getUser().getId(), LocalDate.now());
+        Date createTime = new Date();
+        createTime.setTime(0);
+        List<FinanceOrder> financeOrderList = orderRepository.findByUserIdAndCreateTimeGreaterThan(userSession.getUser().getId(), java.sql.Date.valueOf(LocalDate.now()));
         if (financeOrderList != null && financeOrderList.size() >= 2) return Result.error(ErrorMessage.User_Finance_Times);
         financeOrder.setApplyType(financeOrder.getApplyType());
         financeOrder.setSourceId(numberService.getNextCode("JR"));
