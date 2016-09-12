@@ -2,6 +2,7 @@
 @import '../components/_ng2datepicker.scss';
 @import '../components/pagination';
 
+
 .custom-select{
   line-height: 40px;
   height: 40px;
@@ -618,4 +619,8 @@
       margin-bottom:30px;
     }
   }
+}
+
+.glyphicon{
+  right: -25px;
 }
