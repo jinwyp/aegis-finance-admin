@@ -125,11 +125,11 @@ const routes: Routes = [
         component: MaterialDetailComponent
     },
     {
-        path: 'tasks/:id/riskmanager/material/investigator',
+        path: 'tasks/:id/supervisor/material',
         component: MaterialDetailComponent
     },
     {
-        path: 'tasks/:id/riskmanager/material/supervisor',
+        path: 'tasks/:id/riskmanager/material/investigator',
         component: MaterialDetailComponent
     },
 

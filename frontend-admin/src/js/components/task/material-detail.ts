@@ -78,7 +78,7 @@ export class MaterialDetailComponent {
 
         let auditType : string = '';
         if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanSupplyInvestigationMaterial) auditType = 'salesmanInvestigation'; // 业务员补充尽调资料
-        if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanSupplyRiskManagerMaterial) auditType = 'salesmanSupervision'; // 业务员补充监管资料
+        if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanSupplySupervisionMaterial) auditType = 'salesmanSupervision'; // 业务员补充监管资料
         if (this.currentTask.taskDefinitionKey === TaskStatus.salesmanSupplyRiskManagerMaterial) auditType = 'salesmanRiskmanager'; // 业务员补充风控资料
 
 
