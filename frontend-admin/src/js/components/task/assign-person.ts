@@ -35,7 +35,6 @@ export class AssignPersonComponent {
 
     taskId : string = '';
     currentTask : Task = new Task();
-    currentOrder : Task = new Task();
     taskStatusStep : any = TaskStatus;
 
     constructor(
@@ -71,14 +70,6 @@ export class AssignPersonComponent {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
                 this.currentTask = result.data;
-
-                this.task.getOrderInfoById(this.currentTask.financeId).then((result)=>{
-                    if (result.success) {
-                        this.currentOrder = result.data;
-                    }else{
-
-                    }
-                });
 
                 this.getUserList();
             }else{

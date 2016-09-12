@@ -70,11 +70,13 @@ export class TaskListComponent {
         ]).then(resultList => {
             if (resultList.length === 3){
                 if (resultList[0].success && resultList[1].success && resultList[2].success ){
+
                     if (!resultList[0].data){resultList[0].data = []}
-                    
-                    this.taskAssignList = resultList[0].data;
-                    this.taskPendingList = resultList[1].data;
-                    if (this.routeData.routeType === 'all'){
+
+                    if (this.routeData.routeType === 'pending'){
+                        this.taskAssignList = resultList[0].data;
+                        this.taskPendingList = resultList[1].data;
+                    }else{
                         this.taskHistoryList = resultList[2].data;
                     }
 
