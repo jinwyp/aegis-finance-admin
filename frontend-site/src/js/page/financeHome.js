@@ -51,8 +51,10 @@ var financeHome = () => {
                             })
                         },500)
 
+                    }else if(data.error.code == 401){
+                        window.location.href = data.error.message;
                     }
-                    // window.location.href = data.error.message;
+
                 }
             }
         });
