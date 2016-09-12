@@ -29,7 +29,6 @@ export class TaskListComponent {
         routeType : '',
         title : ''
     };
-
     taskAssignList : Task[] = [];
     taskPendingList : Task[] = [];
     taskHistoryList : Task[] = [];
