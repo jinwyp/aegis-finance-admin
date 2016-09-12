@@ -39,7 +39,7 @@
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
                 <textarea class="form-control" rows="3" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.distributionAbilityEval"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.distributionAbilityEval}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.distributionAbilityEval||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -48,7 +48,7 @@
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
                 <textarea class="form-control" rows="3" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.businessRiskPoint"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.businessRiskPoint}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.businessRiskPoint||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -57,7 +57,7 @@
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
                 <textarea class="form-control" rows="3" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.riskControlScheme"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.riskControlScheme}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.riskControlScheme||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -66,7 +66,7 @@
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
                 <textarea class="form-control" rows="3" placeholder="请输入" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.finalConclusion"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.finalConclusion}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.finalConclusion||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title">
@@ -77,7 +77,7 @@
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList1">
                         <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic)" *ngIf="!css.isReadOnly"></span>
-                        <a [href]="'/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
+                        <a [href]="'/finance/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
                     </div>
 
                     <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
@@ -90,18 +90,18 @@
         <tr class="item-min">
             <td class="td-val td-textarea" colspan="4">
                 <textarea class="form-control" rows="3" placeholder="请输入您要求用户/业务人员需要补充的材料及说明" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.supplyMaterialIntroduce"></textarea>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.supplyMaterialIntroduce}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.supplyMaterialIntroduce||'无'}}</span>
             </td>
         </tr>
         <tr class="item-title" *ngIf="currentOrder.attachmentList2.length > 0">
-            <td colspan="4"><span>业务员补充材料:</span></td>
+            <td colspan="4"><span>业务员补充材料:<span *ngIf="currentOrder.attachmentList2.length < 1">无</span></span></td>
         </tr>
         <tr class="item-max" *ngIf="currentOrder.attachmentList2.length > 0">
             <td class="td-val" colspan="4">
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList2">
                         <!--<span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic, true)" *ngIf="!css.isReadOnly" ></span>-->
-                        <a [href]="'/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
+                        <a [href]="'/finance/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
                     </div>
                 </div>
             </td>
