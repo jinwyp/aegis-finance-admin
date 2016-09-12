@@ -28,7 +28,7 @@ gulp.task('replaceTpl', ['sass-release', 'js-release'],  function () {
 
     // 替换Html模版文件
     gulp.src([sourcePath.manifest, sourcePath.html])
-        //.pipe( revCollector() )
+        .pipe( revCollector() )
         .pipe( gulp.dest(distPath.html) );
 
 });

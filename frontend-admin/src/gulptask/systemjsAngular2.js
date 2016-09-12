@@ -21,6 +21,7 @@ var distPath = {
     'js'                 : '../dist/jsoutput/',
     'jsConfig'           : '../dist/js/',
     'componentsTemplate' : 'jsoutput/components/',
+    'componentsTemplateDist' : '../dist/jsoutput/components/',
     'libs'               : '../dist/node_modules/',
     "manifest"           : "../dist/rev/"
 };
@@ -83,6 +84,8 @@ gulp.task('libs', function() {
 gulp.task('componentsTemplate', function() {
     gulp.src(sourcePath.componentsTemplate)
         .pipe(gulp.dest(distPath.componentsTemplate));
+    gulp.src(sourcePath.componentsTemplate)
+        .pipe(gulp.dest(distPath.componentsTemplateDist));
 });
 
 
