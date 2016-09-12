@@ -357,6 +357,9 @@ class TaskService {
                     var orderInfo = response2.json() as HttpResponse;
 
                     if (!result.data){result.data = {}}
+                    if (!result.data.attachmentList1){result.data.attachmentList1 = []}
+                    if (!result.data.attachmentList2){result.data.attachmentList2 = []}
+
                     if (orderInfo.data) {
                         result.data = Object.assign({}, orderInfo.data, result.data  );
                         // result.data.applyCompanyName          = orderInfo.data.applyCompanyName;
@@ -373,8 +376,7 @@ class TaskService {
                         // result.data.quantityInspectionUnit    = orderInfo.data.quantityInspectionUnit
                     }
 
-                    if (!result.data.attachmentList1){result.data.attachmentList1 = []}
-                    if (!result.data.attachmentList2){result.data.attachmentList2 = []}
+
                     return result;
                 }).catch(GlobalPromiseHttpCatch);
             }else{

@@ -1,6 +1,5 @@
 package com.yimei.finance.controllers.admin.common;
 
-import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.repository.admin.databook.DataBookRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumMYRFinanceAllSteps;
 import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
@@ -12,7 +11,6 @@ import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.common.file.LocalStorage;
 import com.yimei.finance.utils.DozerUtils;
 import com.yimei.finance.utils.StoreUtils;
-import com.yimei.finance.utils.WebUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
@@ -22,8 +20,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -53,19 +49,6 @@ public class ToolsController {
             stepList.add(new MapObject(String.valueOf(step.id), step.name));
         }
         return Result.success().setData(stepList);
-    }
-
-    @RequestMapping(value = "/files", method = RequestMethod.GET)
-    @ApiOperation(value = "下载文件", notes = "通过文件url路径下载文件")
-    public void doDownloadFile(@RequestParam(value = "url", required = true) String url, HttpServletResponse response) {
-        try {
-            if (url != null && url.startsWith("/files/")) {
-                File file = new File(localStorage.getServerFileRootPath(), url.substring("/files/".length()));
-                WebUtils.doDownloadFile(file, response);
-            }
-        } catch (IOException e) {
-            throw new NotFoundException();
-        }
     }
 
     @RequestMapping(value = "/files", method = RequestMethod.POST)

@@ -26,7 +26,7 @@ import java.io.PrintWriter;
  */
 
 @Api(tags = {"example"})
-@Controller
+@Controller("siteCommonController")
 public class CommonController {
     public static final String passportCookieName = "passport";
 
