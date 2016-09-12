@@ -43,14 +43,10 @@ export class TaskListComponent {
     ngOnInit(){
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
-            this.getTaskList();
-
+            this.getTaskList(this.pageObj.page);
         });
 
         this.getCurrentUser();
-        this.pageObj.page=1;
-        this.pageObj.count=10;
-        this.pageObj.total=201;
     }
 
     getCurrentUser() {
@@ -66,12 +62,12 @@ export class TaskListComponent {
         )
     }
 
-    getTaskList () {
+    getTaskList (page:number) {
 
         Promise.all([
             this.task.getAdminAssignTaskList(),
             this.task.getPendingTaskList(),
-            this.task.getHistoryTaskList()
+            this.task.getHistoryTaskList(page)
 
         ]).then(resultList => {
             if (resultList.length === 3){
@@ -82,8 +78,13 @@ export class TaskListComponent {
                     if (this.routeData.routeType === 'pending'){
                         this.taskAssignList = resultList[0].data;
                         this.taskPendingList = resultList[1].data;
-                    }else{
+                    }else {
                         this.taskHistoryList = resultList[2].data;
+                        if (resultList[2].meta) {
+                            this.pageObj.page  = resultList[2].meta.page;
+                            this.pageObj.count = resultList[2].meta.count;
+                            this.pageObj.total = resultList[2].meta.total;
+                        }
                     }
 
                     this.task.setTaskObservable(resultList[0].data, resultList[1].data, resultList[2].data);
