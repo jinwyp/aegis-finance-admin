@@ -126,7 +126,7 @@ $color_border: #e4e4e4;
           }
           .phoneHelper{
             width: 385px!important;
-            height: 210px;
+            //height: 210px;
             background-color: white;
             position: absolute;
             top:35px;
@@ -135,7 +135,7 @@ $color_border: #e4e4e4;
             border-right:1px solid $color_border;
             border-bottom:1px solid $color_border;
             border-left:1px solid $color_border;
-            padding: 9px 30px 0 30px;
+            padding: 25px 30px 20px 30px;
             display: none;
             div{
               width: 160px;
