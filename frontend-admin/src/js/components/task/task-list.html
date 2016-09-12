@@ -103,7 +103,7 @@
                 <!--<span class="orange">(补充材料)</span><br/>-->
                 <!--<span>已完成</span>-->
             </td>
-            <td *ngIf="routeData.routeType === 'all'">{{task.endTime | date:"yyyy-MM-dd" ||'--'}}</td>
+            <td *ngIf="routeData.routeType === 'all'">{{task.endTime | date:"yyyy-MM-dd HH:mm:ss" ||'--'}}</td>
             <td>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.onlineTraderAudit" [routerLink]="['/tasks', task.id, 'trader', 'info']">查看详情</button>
                 <button type="button" class="btn btn-xs btn-default btn-sure w-80" *ngIf="task.taskDefinitionKey===taskStatusStep.salesmanAudit" [routerLink]="['/tasks', task.id, 'salesman', 'info']">查看详情</button>

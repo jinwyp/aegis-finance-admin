@@ -124,8 +124,8 @@ public class IndexController {
             if (order.getCreateTime() != null && !StringUtils.isEmpty(String.valueOf(order.getCreateTime()))) {
                 row.createCell(3).setCellValue(String.valueOf(myFmt.format(order.getCreateTime())));
             }
-            row.createCell(4).setCellValue(String.valueOf(order.getFinancingAmount() == null ? 0 : order.getFinancingAmount()));
-            row.createCell(5).setCellValue(String.valueOf(order.getExpectDate() == 0 ? "" : order.getExpectDate()));
+            row.createCell(4).setCellValue(String.valueOf(order.getFinancingAmount() == null ? "/" : order.getFinancingAmount()));
+            row.createCell(5).setCellValue(String.valueOf(order.getExpectDate() == 0 ? "/" : order.getExpectDate()));
             row.createCell(6).setCellValue(String.valueOf(order.getApproveState()));
         }
         response.setCharacterEncoding("UTF-8");

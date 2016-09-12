@@ -38,12 +38,12 @@
             <td class="td-label">拟融资金额(万元):</td>
             <td class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.financingAmount" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.financingAmount}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.financingAmount||'--'}}</span>
             </td>
             <td class="td-label">拟使用资金时间(天):</td>
             <td class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.expectDate" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.expectDate}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.expectDate||'--'}}</span>
             </td>
         </tr>
 
@@ -51,7 +51,7 @@
             <td class="td-label">预期此笔业务量(万吨):</td>
             <td class="td-val">
                 <input *ngIf="!css.isReadOnly" type="text" [(ngModel)]="currentOrder.businessAmount" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.businessAmount}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.businessAmount||'--'}}</span>
             </td>
             <td colspan="2" *ngIf="currentOrder.applyType==='MYD'"></td>
 
@@ -64,7 +64,7 @@
                     <option value="火运">火运</option>
                     <option value="其它">其它</option>
                 </select>
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.transportMode}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.transportMode||'--'}}</span>
             </td>
         </tr>
 
@@ -74,24 +74,24 @@
             <td class="td-label">预计单吨销售价(元/吨):</td>
             <td class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.sellingPrice" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.sellingPrice}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.sellingPrice||'--'}}</span>
             </td>
             <td class="td-label">我方签约单位全称:</td>
             <td class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.ourContractCompany" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.ourContractCompany}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.ourContractCompany||'--'}}</span>
             </td>
         </tr>
         <tr *ngIf="currentOrder.applyType==='MYR'" class="item-min">
             <td class="td-label">下游签约单位全称:</td>
             <td class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.downstreamContractCompany" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.downstreamContractCompany}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.downstreamContractCompany||'--'}}</span>
             </td>
             <td class="td-label">用煤终端:</td>
             <td class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.terminalServer" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.terminalServer}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.terminalServer||'--'}}</span>
             </td>
         </tr>
 
@@ -101,24 +101,24 @@
             <td class="td-label">煤炭仓储地:</td>
             <td class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.storageLocation" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageLocation}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.storageLocation||'--'}}</span>
             </td>
             <td class="td-label">煤炭来源:</td>
             <td class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.coalSource" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.coalSource}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.coalSource||'--'}}</span>
             </td>
         </tr>
         <tr *ngIf="currentOrder.applyType==='MYD'" class="item-min">
             <td class="td-label">单吨市场报价(元/吨):</td>
             <td class="td-val">
                 <input type="text"  *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.marketPrice" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.marketPrice}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.marketPrice||'--'}}</span>
             </td>
             <td class="td-label">主要煤质指标:</td>
             <td class="td-val">
                 <input type="text"  *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.coalQuantityIndex" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.coalQuantityIndex}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.coalQuantityIndex||'--'}}</span>
             </td>
         </tr>
 
@@ -128,19 +128,19 @@
             <td class="td-label">单吨采购价(元/吨):</td>
             <td class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.procurementPrice" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.procurementPrice}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.procurementPrice||'--'}}</span>
             </td>
             <td class="td-label">上游资源方全称:</td>
             <td class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.upstreamResource" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.upstreamResource}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.upstreamResource||'--'}}</span>
             </td>
         </tr>
         <tr *ngIf="currentOrder.applyType==='MYG'" class="item-min">
             <td class="td-label">中转港口全称:</td>
             <td colspan="3" class="td-val">
                 <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.transferPort" placeholder="请输入">
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.transferPort}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.transferPort||'--'}}</span>
             </td>
         </tr>
 
@@ -166,7 +166,7 @@
             <td class="td-label">备注说明:</td>
             <td class="td-val td-textarea" colspan="3">
                 <textarea class="form-control" rows="4" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.comments" placeholder="请输入"></textarea>
-                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.comments}}</span>
+                <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.comments||'无'}}</span>
             </td>
         </tr>
 
