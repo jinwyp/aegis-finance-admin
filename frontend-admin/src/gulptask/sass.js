@@ -71,10 +71,13 @@ gulp.task('sass', ['sprite'], function() {
             outputStyle     : 'compact',
             errLogToConsole : true
         }).on('error', sass.logError))
-        //.pipe(autoprefixer({
-        //    browsers: ['> 1%', 'Last 2 versions', 'IE 8'],
-        //    cascade: false
-        //}))
+        .pipe(autoprefixer({
+            browsers: ['> 5%', 'Last 2 versions'],
+            cascade: true, //是否美化属性值 默认：true 像这样：
+            //-webkit-transform: rotate(45deg);
+            //        transform: rotate(45deg);
+            remove:true //是否去掉不必要的前缀 默认：true
+        }))
         //.pipe(cleanCss({compatibility: 'ie8'}))
         .pipe(gulp.dest(sourcePath.css))
 });
@@ -90,10 +93,10 @@ gulp.task('sass-release', ['htmlTemplate', 'sprite'], function(done) {
                 outputStyle     : 'compressed',
                 errLogToConsole : true
             }).on('error', sass.logError))
-            //.pipe(autoprefixer({
-            //    browsers: ['> 1%', 'Last 2 versions', 'IE 8'],
-            //    cascade: false
-            //}))
+            .pipe(autoprefixer({
+               browsers: ['> 5%', 'Last 2 versions'],
+               cascade: false
+            }))
             //.pipe(cleanCss({compatibility: 'ie8'}))
             .pipe(rev())
             .pipe(gulp.dest(distPath.css))

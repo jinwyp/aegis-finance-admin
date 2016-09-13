@@ -16,7 +16,6 @@ declare var __moduleName: string;
     moduleId    : __moduleName || module.id,
     templateUrl : 'home-dashboard.html'
 })
-
 export class HomeDashboardComponent implements OnInit {
     heroes: Order[] = [];
 

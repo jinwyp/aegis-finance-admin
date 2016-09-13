@@ -1,8 +1,0 @@
-<div class="custom-select">
-    <label (click)="toggleSelect()">{{value ||'请选择'}} <span class="caret" ></span></label>
-
-    <ul [class.hidden]="isClose">
-        <li (click)="hideClick()">请选择</li>
-        <li *ngFor="let item of optionList" (click)="itemClick(item)">{{item.name}}</li>
-    </ul>
-</div>
