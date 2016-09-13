@@ -8,8 +8,8 @@
     "experimentalDecorators": true,
     "removeComments": false,
     "noImplicitAny": false,
-    "outFile": "./jsoutput/main.bundle.js",
-    "rootDir": "./js"
+    "outDir": "./jsoutput",
+    "rootDir": "./tssource"
   },
   "exclude": [
     ".git",

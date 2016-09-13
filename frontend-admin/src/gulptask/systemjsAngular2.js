@@ -8,6 +8,8 @@ var eslint = require('gulp-eslint');
 var exec   = require('child_process').exec;
 var rev    = require('gulp-rev');
 
+var ng2Templates = require('gulp-angular-embed-templates');
+var minify = require('html-minifier').minify;
 
 var sourcePath = {
     'ts'                 : 'js/**/*.ts',
@@ -18,6 +20,7 @@ var sourcePath = {
 };
 
 var distPath = {
+    'ts'                 : 'tssource-temp/',
     'js'                 : '../dist/jsoutput/',
     'jsConfig'           : '../dist/js/',
     'componentsTemplate' : 'jsoutput/components/',
@@ -84,9 +87,52 @@ gulp.task('libs', function() {
 gulp.task('componentsTemplate', function() {
     gulp.src(sourcePath.componentsTemplate)
         .pipe(gulp.dest(distPath.componentsTemplate));
-    gulp.src(sourcePath.componentsTemplate)
-        .pipe(gulp.dest(distPath.componentsTemplateDist));
 });
+
+
+gulp.task('injectTemplate', function() {
+
+    function minifyTemplate(path, ext, file, cb) {
+        try {
+            var minifiedFile = minify(file, {
+                collapseWhitespace: true,
+                caseSensitive: true,
+                removeComments: true,
+                removeRedundantAttributes: true
+            });
+            cb(null, minifiedFile);
+        }
+        catch (err) {
+            cb(err);
+        }
+    }
+
+    function customFilePath(ext, file) {
+        console.log("22222----: " ,ext, file)
+        return file;
+    }
+
+    var defaultOptions = {
+        base: '/js',                  // Angular2 application base folder
+        target: 'es6',              // Can swap to es5
+        indent: 4,                  // Indentation (spaces)
+        useRelativePaths: false,     // Use components relative assset paths
+        removeLineBreaks: false,     // Content will be included as one line
+        templateExtension: '.html', // Update according to your file extension
+        templateFunction: false,    // If using a function instead of a string for `templateUrl`, pass a reference to that function here
+        // templateProcessor: minifyTemplate,
+        // styleProcessor: function (path, ext, file, callback) {/* ... */},
+        customFilePath: customFilePath,
+        supportNonExistentFiles: false // If html or css file do not exist just return empty content
+    };
+
+    return gulp.src(sourcePath.ts)
+        .pipe(inlineNg2Template(defaultOptions))
+        .pipe(gulp.dest(distPath.ts));
+
+});
+
+
 
 
 gulp.task('js-release', ['componentsTemplate', 'ts', 'libs'], function(){
