@@ -80,13 +80,9 @@ export class TaskListComponent {
                         this.taskPendingList = resultList[1].data;
                     }else {
                         this.taskHistoryList = resultList[2].data;
-                        console.log(resultList[2]);
                         if (resultList[2].meta) {
-                            this.pageObj.page  = resultList[2].meta.page;
-                            this.pageObj.count = resultList[2].meta.count;
-                            this.pageObj.total = resultList[2].meta.total;
+                            this.pageObj=resultList[2].meta;
                         }
-                        console.log(this.pageObj);
                     }
 
                     this.task.setTaskObservable(resultList[0].data, resultList[1].data, resultList[2].data);
@@ -94,6 +90,10 @@ export class TaskListComponent {
                 }
             }
         });
+    }
+
+    getPageData(pageObj:Page){
+        this.getTaskList(pageObj.page);
     }
 
 
