@@ -151,12 +151,13 @@
 
     .left-menu{
       margin-right: 0px;
-
+      min-height:700px;
+      //border-bottom: 1px solid $input-border-color;
       .menu-item {
         padding-top: 20px;
         padding-bottom:20px;
         padding-right: 0px;
-        border-right: 1px solid $input-border-color;
+        //border-right: 1px solid $input-border-color;
         a{
           span.pr-10{  padding-right:10px; }
         }
@@ -196,10 +197,13 @@
       .menu-selected{
         background-color: $white;
         //border-top: 1px solid #e0e0e0;
-        border-bottom: 1px solid $input-border-color;
+        //border-bottom: 1px solid $input-border-color;
         border-right: none;
       }
     }
+    //.left-menu .menu-item:last-child{
+    //  height:400px;
+    //}
   }
 
   .right-main-box{
