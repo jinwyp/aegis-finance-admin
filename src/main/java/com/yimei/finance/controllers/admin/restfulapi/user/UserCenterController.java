@@ -83,8 +83,8 @@ public class UserCenterController {
     public Result getPersonalHistoryTasksMethod(Page page) {
         List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByProcessDefinitionId().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
         page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
-        int toIndex = page.getPage() * page.getCount() < historicTaskInstanceList.size() ? page.getPage() * page.getCount() : historicTaskInstanceList.size();
-        Result result = workFlowService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), toIndex));
+        Long toIndex = page.getPage() * page.getCount() < page.getTotal() ? page.getPage() * page.getCount() : page.getTotal();
+        Result result = workFlowService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), Math.toIntExact(toIndex)));
         if (!result.isSuccess()) return result;
         List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
 
