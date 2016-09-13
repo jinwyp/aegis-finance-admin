@@ -151,7 +151,9 @@
                             <!--审核通过-->
                             <a  class="detailA orangeA" ms-visible="order.approveStateId===8" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
                             <!--待审核-->
-                            <a  class="detailA grayA" ms-visible="order.approveStateId===2">查看详情</a>
+                            <a  class="detailA grayA" ms-visible="order.approveStateId===2">查看详情
+                                <!--<span class="btnTips">等待我们帮您完善材料</span>-->
+                            </a>
                             <!--审核中-->
                             <a  class="detailA orangeA" ms-visible="order.approveStateId===4" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
                             <!--审核中(补充材料)-->
