@@ -81,32 +81,12 @@ public class UserCenterController {
     @ApiOperation(value = "个人已处理任务列表", notes = "个人已处理任务列表", response = HistoryTaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalHistoryTasksMethod(Page page) {
-
-        System.out.println(" ------------------------------ 1111111111 " + page.getPage());
-        System.out.println(" ------------------------------ 1111111111 " + page.getPage());
-        System.out.println(" ------------------------------ 1111111111 " + page.getPage());
-        System.out.println(" ------------------------------ 1111111111 " + page.getPage());
-        System.out.println(" ------------------------------ 1111111111 " + page.getPage());
-        System.out.println(" ------------------------------ 1111111111 " + page.getPage());
-        System.out.println(" ------------------------------ 1111111111 " + page.getPage());
-        System.out.println(" ------------------------------ 1111111111 " + page.getPage());
-        System.out.println(" ------------------------------ 1111111111 " + page.getPage());
-
         List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByProcessDefinitionId().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
+        page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
         int toIndex = page.getPage() * page.getCount() < historicTaskInstanceList.size() ? page.getPage() * page.getCount() : historicTaskInstanceList.size();
         Result result = workFlowService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), toIndex));
         if (!result.isSuccess()) return result;
         List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
-        page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
-
-
-        System.out.println(" ------------------------------ 22222222222222 " + page.getPage());
-        System.out.println(" ------------------------------ 22222222222222 " + page.getPage());
-        System.out.println(" ------------------------------ 22222222222222 " + page.getPage());
-        System.out.println(" ------------------------------ 22222222222222 " + page.getPage());
-        System.out.println(" ------------------------------ 22222222222222 " + page.getPage());
-        System.out.println(" ------------------------------ 22222222222222 " + page.getPage());
-        System.out.println(" ------------------------------ 22222222222222 " + page.getPage());
 
         return Result.success().setData(taskList).setMeta(page);
     }
