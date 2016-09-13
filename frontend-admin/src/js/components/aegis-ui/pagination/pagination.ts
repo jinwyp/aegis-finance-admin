@@ -16,6 +16,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR:any = {
     multi :       true
 };
 
+//通过 setter 截听输入属性值的变化
 
 @Component({
     selector :    'pagination',
@@ -25,9 +26,8 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR:any = {
 
 })
 
-export class PaginationComponent implements ControlValueAccessor {
+export class PaginationComponent {
 
-    @Input()
     private pageObj : Page;
 
     @Output()
@@ -62,20 +62,6 @@ export class PaginationComponent implements ControlValueAccessor {
 
     ngOnInit() {
         this.getPaginationData();
-    }
-
-    writeValue(obj:any):void {
-        if (obj !== this.pageObj) {
-            this.pageObj = obj;
-        }
-    }
-
-    registerOnChange(fn:any):void {
-        this.onChangeCallback = fn;
-    }
-
-    registerOnTouched(fn:any):void {
-        this.onTouchedCallback = fn;
     }
 
     itemClick(arg:number) {
@@ -140,6 +126,9 @@ export class PaginationComponent implements ControlValueAccessor {
                 this.pageItems.push({value:this.totalPage,isdisabled:false});
             }
         }
+        console.log(this.pageObj);
+        console.log(this.totalPage);
+        console.log(this.pageItems);
     }
 
 }
