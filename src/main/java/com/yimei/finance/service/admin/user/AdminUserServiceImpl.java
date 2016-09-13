@@ -228,7 +228,7 @@ public class AdminUserServiceImpl {
     public Result getUserListBySelect(String operateUserId, AdminUserSearch userSearch, Page page) {
         if (userSearch == null) {
             page.setTotal(identityService.createUserQuery().count());
-            return Result.success().setData(identityService.createUserQuery().list()).setMeta(page);
+            return Result.success().setData(identityService.createUserQuery().listPage(page.getOffset(), page.getCount())).setMeta(page);
         } else {
             List<User> userList = new ArrayList<>();
             List<UserObject> userObjectList = new ArrayList<>();
@@ -253,14 +253,16 @@ public class AdminUserServiceImpl {
                     return Result.success();
                 } else {
                     page.setTotal((long) userObjList.size());
-                    return Result.success().setData(userObjList).setMeta(page);
+                    int toIndex = page.getPage() * page.getCount() < userObjList.size() ? page.getPage() * page.getCount() : userObjList.size();
+                    return Result.success().setData(userObjList.subList(page.getOffset(), toIndex)).setMeta(page);
                 }
             } else {
                 if (userObjectList == null) {
                     return Result.success();
                 } else {
                     page.setTotal(Long.valueOf(userObjectList.size()));
-                    return Result.success().setData(userObjectList).setMeta(page);
+                    int toIndex = page.getPage() * page.getCount() < userObjectList.size() ? page.getPage() * page.getCount() : userObjectList.size();
+                    return Result.success().setData(userObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
                 }
             }
         }

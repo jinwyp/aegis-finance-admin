@@ -52,11 +52,11 @@ public class UserCenterController {
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
         List<Task> taskList = taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
+        page.setTotal((long) taskList.size());
         int toIndex = page.getPage() * page.getCount() < taskList.size() ? page.getPage() * page.getCount() : taskList.size();
         Result result = workFlowService.changeTaskObject(taskList.subList(page.getOffset(), toIndex));
         if (!result.isSuccess()) return result;
         List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
-        page.setTotal((long) taskList.size());
         return Result.success().setData(taskObjectList).setMeta(page);
     }
 
@@ -87,7 +87,6 @@ public class UserCenterController {
         Result result = workFlowService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), Math.toIntExact(toIndex)));
         if (!result.isSuccess()) return result;
         List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
-
         return Result.success().setData(taskList).setMeta(page);
     }
 
