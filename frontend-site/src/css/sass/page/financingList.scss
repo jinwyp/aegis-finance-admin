@@ -290,9 +290,22 @@ $borderColor:#e4e4e4;
                 text-decoration: none;
                 line-height: 27px;
                 transition: all 0.3s;
+                position: relative;
+                .btnTips{
+                  display: none;
+                  position: absolute;
+                  top:-32px;
+                  right: -29px;
+                  font-size: 12px;
+                  width: 140px;
+                  line-height: 30px;
+                  background: #00b7ec;
+                  color: #ffffff;
+                  border-radius: 2px;
+                  transition: all 0.5s;
+                }
               }
               .orangeA{
-
                 border:1px solid #fd6e35;
                 color: #fd6e35;
                 &:hover{
@@ -313,6 +326,14 @@ $borderColor:#e4e4e4;
               .grayA{
                 border:1px solid #999999;
                 color: #999999;
+                transition: all 0.5s;
+                &:hover{
+                  transition: all 0.5s;
+                  .btnTips{
+                    display: block;
+                    transition: all 0.5s;
+                  }
+                }
               }
             }
           }

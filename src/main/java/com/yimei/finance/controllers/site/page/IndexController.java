@@ -107,7 +107,7 @@ public class IndexController {
         sheet.setColumnWidth(4, 3000);
         sheet.setColumnWidth(5, 5000);
         sheet.setColumnWidth(6, 6000);
-        String[] excelHeader = {"序号", "业务编号", "业务类型", "申请时间", "拟融资总金额", "使用天数", "审核状态"};
+        String[] excelHeader = {"序号", "业务编号", "业务类型", "申请时间", "拟融资总金额（万元）", "使用天数", "审核状态"};
         for (int i=0; i <excelHeader.length; i++) {
             HSSFCell cell = row.createCell(i);
             cell.setCellValue(excelHeader[i]);

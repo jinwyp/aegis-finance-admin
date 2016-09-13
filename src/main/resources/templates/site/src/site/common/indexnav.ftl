@@ -2,7 +2,7 @@
 <div class="g-logo-bar-wrap">
     <div class="g-logo-bar" >
         <div class="g-logo">
-            <a href="/finance" ><img src="${staticPath}/css/images/header/logo.png" width="365" height="45" /></a>
+            <a href="${sitepage}/" ><img src="${staticPath}/css/images/header/logo.png" width="365" height="45" /></a>
         </div>
 
         <div class="g-nav">
