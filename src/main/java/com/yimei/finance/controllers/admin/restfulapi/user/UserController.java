@@ -120,7 +120,7 @@ public class UserController {
         addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
         String subject = "开通账户通知邮件";
         String content = "你好: 你的账号已开通, 用户名:" + user.getUsername() + ", 初始密码:123456, 请修改密码. [易煤网金融系统]";
-//        mailService.sendSimpleMail(user.getEmail(), subject, content);
+        mailService.sendSimpleMail(user.getEmail(), subject, content);
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(newUser.getId()).singleResult()));
     }
 

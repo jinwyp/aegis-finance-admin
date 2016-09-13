@@ -93,10 +93,10 @@
                 <span class="span-read span-textarea" *ngIf="css.isReadOnly">{{currentOrder.supplyMaterialIntroduce||'无'}}</span>
             </td>
         </tr>
-        <tr class="item-title" *ngIf="currentOrder.attachmentList2.length > 0">
+        <tr class="item-title" *ngIf="currentOrder.needSupplyMaterial==1">
             <td colspan="4"><span>业务员补充材料:<span *ngIf="currentOrder.attachmentList2.length < 1">无</span></span></td>
         </tr>
-        <tr class="item-max" *ngIf="currentOrder.attachmentList2.length > 0">
+        <tr class="item-max" *ngIf="currentOrder.needSupplyMaterial==1&&currentOrder.attachmentList2.length >0">
             <td class="td-val" colspan="4">
                 <div class="attachment">
                     <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList2">
