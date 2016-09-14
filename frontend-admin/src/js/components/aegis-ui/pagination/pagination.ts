@@ -3,32 +3,23 @@
  */
 
 
-import {Component, Input, Output, EventEmitter, forwardRef} from '@angular/core';
-import {NG_VALUE_ACCESSOR, ControlValueAccessor} from '@angular/forms';
+import {Component, Input, Output, EventEmitter} from '@angular/core';
+
 import {Page} from '../../../service/task';
 
 declare var __moduleName:string;
 
 
-export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR:any = {
-    provide :     NG_VALUE_ACCESSOR,
-    useExisting : forwardRef(() => PaginationComponent),
-    multi :       true
-};
-
+//通过 setter 截听输入属性值的变化
 
 @Component({
     selector :    'pagination',
     moduleId :    __moduleName || module.id,
     templateUrl : 'pagination.component.html',
-    providers :   [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 
 })
 
-export class PaginationComponent implements ControlValueAccessor {
-
-    @Input()
-    private pageObj : Page;
+export class PaginationComponent {
 
     @Output()
     pageClick:any = new EventEmitter();
@@ -39,76 +30,47 @@ export class PaginationComponent implements ControlValueAccessor {
 
     private paginationSize : number = 5;
 
+    _pageObj: Page = new Page;
 
-//Placeholders for the callbacks which are later provided by the Control Value Accessor
-    private onTouchedCallback:() => {};
-    private onChangeCallback:(_:any) => {};
-
-    //get accessor
-    get value():any {
-        return this.pageObj;
-    };
-
-    //set accessor including call the onchange callback
-    set value(v:any) {
-        if (v !== this.pageObj) {
-            this.pageObj = v;
-            this.onChangeCallback(v);
-        }
-    }
-
-    constructor() {
-    }
-
-    ngOnInit() {
+    @Input()
+    set pageObj(obj: Page) {
+        this._pageObj = obj;
         this.getPaginationData();
     }
+    get pageObj() { return this._pageObj; }
 
-    writeValue(obj:any):void {
-        if (obj !== this.pageObj) {
-            this.pageObj = obj;
-        }
-    }
-
-    registerOnChange(fn:any):void {
-        this.onChangeCallback = fn;
-    }
-
-    registerOnTouched(fn:any):void {
-        this.onTouchedCallback = fn;
-    }
 
     itemClick(arg:number) {
-        this.pageObj.page = arg;
+        this._pageObj.page = arg;
         this.getPaginationData();
-        this.pageClick.emit();
+        this.pageClick.emit(this._pageObj);
     }
 
     previous() {
-        this.pageObj.page--;
+        this._pageObj.page--;
         this.getPaginationData();
-        this.pageClick.emit();
+        this.pageClick.emit(this._pageObj);
     }
 
     next() {
-        this.pageObj.page++;
+        this._pageObj.page++;
         this.getPaginationData();
-        this.pageClick.emit();
+        this.pageClick.emit(this._pageObj);
     }
 
     getPaginationData() {
         this.pageItems.splice(0,this.pageItems.length);
-        if (this.pageObj.total % this.pageObj.count === 0) {
-            this.totalPage = this.pageObj.total / this.pageObj.count;
+        if (this._pageObj.total % this._pageObj.count === 0) {
+            this.totalPage = this._pageObj.total / this._pageObj.count;
         } else {
-            this.totalPage = (this.pageObj.total - this.pageObj.total % this.pageObj.count) / this.pageObj.count + 1;
+            this.totalPage = (this._pageObj.total - this._pageObj.total % this._pageObj.count) / this._pageObj.count + 1;
         }
         if(this.totalPage < 10){
             for (let i = 1; i <= this.totalPage; i++) {
                 this.pageItems.push({value:i,isdisabled:false});
             }
         }else{
-            if(this.pageObj.page < this.paginationSize + 1){
+            if(this._pageObj.page < this.paginationSize + 1){
                 this.pageItems.push({value:1,isdisabled:false});
                 this.pageItems.push({value:2,isdisabled:false});
                 this.pageItems.push({value:3,isdisabled:false});
@@ -118,14 +80,14 @@ export class PaginationComponent implements ControlValueAccessor {
                 this.pageItems.push({value:7,isdisabled:false});
                 this.pageItems.push({value:'...',isdisabled:true});
                 this.pageItems.push({value:this.totalPage,isdisabled:false});
-            }else if(this.pageObj.page < this.totalPage-this.paginationSize){
+            }else if(this._pageObj.page < this.totalPage-this.paginationSize){
                 this.pageItems.push({value:1,isdisabled:false});
                 this.pageItems.push({value:'...',isdisabled:true});
-                this.pageItems.push({value:this.pageObj.page-2,isdisabled:false});
-                this.pageItems.push({value:this.pageObj.page-1,isdisabled:false});
-                this.pageItems.push({value:this.pageObj.page,isdisabled:false});
-                this.pageItems.push({value:this.pageObj.page+1,isdisabled:false});
-                this.pageItems.push({value:this.pageObj.page+2,isdisabled:false});
+                this.pageItems.push({value:this._pageObj.page-2,isdisabled:false});
+                this.pageItems.push({value:this._pageObj.page-1,isdisabled:false});
+                this.pageItems.push({value:this._pageObj.page,isdisabled:false});
+                this.pageItems.push({value:this._pageObj.page+1,isdisabled:false});
+                this.pageItems.push({value:this._pageObj.page+2,isdisabled:false});
                 this.pageItems.push({value:'...',isdisabled:true});
                 this.pageItems.push({value:this.totalPage,isdisabled:false});
             }else{

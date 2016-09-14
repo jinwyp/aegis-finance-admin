@@ -81,9 +81,7 @@ export class TaskListComponent {
                     }else {
                         this.taskHistoryList = resultList[2].data;
                         if (resultList[2].meta) {
-                            this.pageObj.page  = resultList[2].meta.page;
-                            this.pageObj.count = resultList[2].meta.count;
-                            this.pageObj.total = resultList[2].meta.total;
+                            this.pageObj=resultList[2].meta;
                         }
                     }
 
@@ -92,6 +90,10 @@ export class TaskListComponent {
                 }
             }
         });
+    }
+
+    getPageData(pageObj:Page){
+        this.getTaskList(pageObj.page);
     }
 
 

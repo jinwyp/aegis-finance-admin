@@ -52,11 +52,11 @@ public class UserCenterController {
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
         List<Task> taskList = taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
+        page.setTotal((long) taskList.size());
         int toIndex = page.getPage() * page.getCount() < taskList.size() ? page.getPage() * page.getCount() : taskList.size();
         Result result = workFlowService.changeTaskObject(taskList.subList(page.getOffset(), toIndex));
         if (!result.isSuccess()) return result;
         List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
-        page.setTotal((long) taskList.size());
         return Result.success().setData(taskObjectList).setMeta(page);
     }
 
@@ -82,11 +82,11 @@ public class UserCenterController {
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalHistoryTasksMethod(Page page) {
         List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByProcessDefinitionId().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
-        int toIndex = page.getPage() * page.getCount() < historicTaskInstanceList.size() ? page.getPage() * page.getCount() : historicTaskInstanceList.size();
-        Result result = workFlowService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), toIndex));
+        page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
+        Long toIndex = page.getPage() * page.getCount() < page.getTotal() ? page.getPage() * page.getCount() : page.getTotal();
+        Result result = workFlowService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), Math.toIntExact(toIndex)));
         if (!result.isSuccess()) return result;
         List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
-        page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
         return Result.success().setData(taskList).setMeta(page);
     }
 

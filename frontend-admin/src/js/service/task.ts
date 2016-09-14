@@ -226,7 +226,7 @@ class Task {
     // financingAmount : number;
     financingPeriod : number;                   //融资期限
     interestRate : number;                      //利率
-    businessStartTime : string;                 //业务开始时间
+    businessStartTime : Date;                 //业务开始时间
 
     historicalCooperationDetail : string;       //历史合作情况
     mainBusinessInfo : string;                  //业务主要信息
