@@ -54,7 +54,8 @@ frontend-site/src/js/page-temp-bundle
 
 src/main/resources/templates/admin/dist
 frontend-admin/dist
-frontend-admin/src/tssource-temp
+frontend-admin/src/tssource-temp-prodution
+frontend-admin/src/jsoutput-temp-prodution
 frontend-admin/src/jsoutput
 frontend-admin/src/css/stylesheets
 

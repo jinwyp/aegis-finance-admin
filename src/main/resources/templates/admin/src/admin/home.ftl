@@ -29,6 +29,15 @@
     <script src="/static/admin/node_modules/systemjs/dist/system.src.js"></script>
     <script src="/static/admin/node_modules/ng2-bootstrap/bundles/ng2-bootstrap.min.js"></script>
 
+
+<#if env == 'dev' || env == 'staging' || env == 'prod' >
+<!-- Remove this statement if you want to run the on the fly transpiler -->
+<!-- 生产环境使用 bundle.js 文件 -->
+<script src="/static/admin/jsoutput/page/home.bundle.js"></script>
+
+</#if>
+
+
     <!-- 2. Configure SystemJS -->
     <script src="/static/admin/js/systemjs.config.js"></script>
     <script>

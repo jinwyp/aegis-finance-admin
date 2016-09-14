@@ -9,23 +9,19 @@ var exec   = require('child_process').exec;
 var rev    = require('gulp-rev');
 
 var ng2Templates = require('gulp-angular-embed-templates');
-var minify = require('html-minifier').minify;
+var SystemJS = require('systemjs-builder');
 
 var sourcePath = {
     'ts'                 : 'js/**/*.ts',
-    'tsOutput'           : 'jsoutput/**/*.js',
-    'jsConfig'           : 'js/systemjs.config.js',
-    'componentsTemplate' : 'js/components/**/*.html',
-    'libs'         : 'node_modules/**/*'
+    'tsOutput'           : '../dist/jsoutput/**/*.js',
+    'componentsTemplate' : 'js/components/**/*.html'
 };
 
 var distPath = {
-    'ts'                 : 'tssource-temp/',
+    'tsSourceWithHtmlTpl': 'tssource-temp-prodution/',
+    'tsTemp'             : 'jsoutput-temp-prodution/',
     'js'                 : '../dist/jsoutput/',
-    'jsConfig'           : '../dist/js/',
     'componentsTemplate' : 'jsoutput/components/',
-    'componentsTemplateDist' : '../dist/jsoutput/components/',
-    'libs'               : '../dist/node_modules/',
     "manifest"           : "../dist/rev/"
 };
 
@@ -76,28 +72,26 @@ gulp.task("ts", function (cb) {
     });
 });
 
-
-gulp.task('libs', function() {
-    gulp.src(sourcePath.libs)
-        .pipe(gulp.dest(distPath.libs));
-    gulp.src(sourcePath.jsConfig)
-        .pipe(gulp.dest(distPath.jsConfig));
-});
-
 gulp.task('componentsTemplate', function() {
     gulp.src(sourcePath.componentsTemplate)
         .pipe(gulp.dest(distPath.componentsTemplate));
 });
 
 
+
+
+
+
 gulp.task('injectTemplate', function() {
     return gulp.src(sourcePath.ts)
         .pipe(ng2Templates({sourceType:'ts'}))
-        .pipe(gulp.dest(distPath.ts));
+        .pipe(gulp.dest(distPath.tsSourceWithHtmlTpl));
+
 });
 
+
 gulp.task("ts-release", ['injectTemplate'], function (cb) {
-    exec('tsc -p tsconfig-production.json', function (err, stdout, stderr) {
+    exec('tsc --project tsconfig-build.json', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
@@ -105,14 +99,58 @@ gulp.task("ts-release", ['injectTemplate'], function (cb) {
 });
 
 
-gulp.task('js-release', ['componentsTemplate', 'ts', 'libs'], function(){
+
+
+gulp.task('js-bundle', [ 'ts-release'], function () {
+    var builder = new SystemJS(distPath.tsTemp,
+        {
+            paths    : {
+                '*'    : '*.js',
+                'npm:' : './node_modules/'
+            },
+            map      : {
+                // angular bundles
+                '@angular/core'                     : 'npm:@angular/core/bundles/core.umd.js',
+                '@angular/common'                   : 'npm:@angular/common/bundles/common.umd.js',
+                '@angular/compiler'                 : 'npm:@angular/compiler/bundles/compiler.umd.js',
+                '@angular/platform-browser'         : 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
+                '@angular/platform-browser-dynamic' : 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+                '@angular/http'                     : 'npm:@angular/http/bundles/http.umd.js',
+                '@angular/router'                   : 'npm:@angular/router/bundles/router.umd.js',
+                '@angular/forms'                    : 'npm:@angular/forms/bundles/forms.umd.js',
+
+                // other libraries
+                'rxjs'                       : 'npm:rxjs',
+                'angular2-in-memory-web-api' : 'npm:angular2-in-memory-web-api',
+                'moment'                     : 'npm:moment'
+            },
+            packages : {
+                'rxjs'                       : {defaultExtension : 'js'},
+                'angular2-in-memory-web-api' : {main : './index.js', defaultExtension : 'js'},
+                'moment'                     : {main : 'moment.js', defaultExtension : 'js'}
+            }
+        });
+
+    return Promise.all([
+        builder.buildStatic('page/login', distPath.js + 'page/login.bundle.js', { minify: true, sourceMaps: true }),
+        builder.buildStatic('page/home', distPath.js + 'page/home.bundle.js', { minify: true, sourceMaps: true })
+    ]).then(function() {
+        console.log('Js-release Build complete !!');
+    }).catch(function(err) {
+        console.log('Js-release Build error !! ');
+        console.log(err);
+    });
+
+});
+
+
+gulp.task('js-release', [ 'js-bundle'], function(){
     return gulp.src(sourcePath.tsOutput)
-        //.pipe(rev())
+        .pipe(rev())
         .pipe(gulp.dest(distPath.js))
         .pipe(rev.manifest('rev-manifest-js.json'))
         .pipe(gulp.dest(distPath.manifest) );
 });
-
 
 
 gulp.task('watchJs', ['componentsTemplate', 'ts' ], function() {

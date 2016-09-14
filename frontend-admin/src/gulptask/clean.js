@@ -12,10 +12,12 @@ var distPath = {
     'stylesheets' : './css/stylesheets/**/*',
     'autoSprite' : './css/images/sprite/auto-sprite.*',
     'tsCompileJs' : './jsoutput/**/*',
-    'tsSourceTemp' : './tssource-temp/**/*'
+    'tsSourceWithHtmlTpl' : './tssource-temp-prodution/**/*',
+    'tsCompileJsBuild' : './jsoutput-temp-prodution/**/*'
 };
 
 gulp.task('clean', function() {
-    del.sync([distPath.all, distPath.html, distPath.stylesheets, distPath.autoSprite, distPath.tsCompileJs, distPath.tsSourceTemp], {force:true});
+    del.sync([distPath.all, distPath.html, distPath.stylesheets, distPath.autoSprite,
+        distPath.tsCompileJs, distPath.tsCompileJsBuild, distPath.tsSourceWithHtmlTpl], {force:true});
 });
 
