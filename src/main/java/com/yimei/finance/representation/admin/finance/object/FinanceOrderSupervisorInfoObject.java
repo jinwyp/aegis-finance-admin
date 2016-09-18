@@ -1,8 +1,8 @@
 package com.yimei.finance.representation.admin.finance.object;
 
-import com.yimei.finance.entity.common.BaseEntity;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceSupervisorInfo;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceSupervisorInfo;
+import com.yimei.finance.representation.common.base.BaseObject;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FinanceOrderSupervisorInfoObject extends BaseEntity implements Serializable {
+public class FinanceOrderSupervisorInfoObject extends BaseObject implements Serializable {
     private Long id;                                                 //主键
     private Long financeId;                                          //金融单id
 

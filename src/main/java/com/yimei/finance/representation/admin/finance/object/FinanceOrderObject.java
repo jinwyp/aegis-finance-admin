@@ -1,10 +1,11 @@
 package com.yimei.finance.representation.admin.finance.object;
 
-import com.yimei.finance.entity.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.object.validated.CreateFinanceOrder;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceOrder;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceOrder;
+import com.yimei.finance.representation.common.base.BaseObject;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -26,7 +27,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FinanceOrderObject extends BaseEntity implements Serializable {
+public class FinanceOrderObject extends BaseObject implements Serializable {
     private Long id;                                                 //主键
     private int userId;                                              //申请人用户id
     @Size(min = 3, max = 10, message = "申请类型字段应在3-10个字符之间", groups = {CreateFinanceOrder.class})
@@ -101,6 +102,7 @@ public class FinanceOrderObject extends BaseEntity implements Serializable {
     private String applyUserPhone;                                   //申请人手机号
     private String applyCompanyName;                                 //申请公司名称
     @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;                                            //结束时间
     private List<AttachmentObject> attachmentList1;                  //附件列表
 

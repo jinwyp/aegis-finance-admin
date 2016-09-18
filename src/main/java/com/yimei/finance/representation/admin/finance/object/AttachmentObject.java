@@ -1,5 +1,6 @@
 package com.yimei.finance.representation.admin.finance.object;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import io.swagger.annotations.ApiModel;
 import lombok.*;
 import org.hibernate.validator.constraints.NotBlank;
@@ -25,6 +26,7 @@ public class AttachmentObject implements Serializable {
     private String taskId;
     private String processInstanceId;
     private String userId;
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date time;
 
     public AttachmentObject(String name, String type, String url) {

@@ -1,5 +1,6 @@
 package com.yimei.finance.representation.admin.user;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yimei.finance.representation.admin.user.validated.CreateUser;
 import com.yimei.finance.representation.admin.user.validated.EditUser;
 import io.swagger.annotations.ApiModel;
@@ -35,6 +36,7 @@ public class UserObject implements Serializable {
     private String email;                       //邮箱
     @Size(max = 30, message = "部门名称应在 {min}-{max} 个字符之间", groups = {CreateUser.class, EditUser.class})
     private String department;                  //部门
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastLoginTime;                 //最后一次登录时间
     private boolean operateAuthority;           //是否具有操作/更改此用户的权限, true: 有权限, false: 无
     private List<String> groupIds;              //用户组id数组

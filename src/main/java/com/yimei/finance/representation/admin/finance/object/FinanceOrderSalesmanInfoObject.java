@@ -1,8 +1,8 @@
 package com.yimei.finance.representation.admin.finance.object;
 
-import com.yimei.finance.entity.common.BaseEntity;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceSalesmanInfo;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceSalesmanInfo;
+import com.yimei.finance.representation.common.base.BaseObject;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -16,7 +16,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FinanceOrderSalesmanInfoObject extends BaseEntity implements Serializable {
+public class FinanceOrderSalesmanInfoObject extends BaseObject implements Serializable {
     private Long id;                                                 //主键
     private Long financeId;                                          //金融单id
     @Size(max = 1000, message = "上下游签约单位补充信息不能超过 {max} 个字符", groups = {SaveFinanceSalesmanInfo.class, SubmitFinanceSalesmanInfo.class})
