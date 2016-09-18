@@ -19,6 +19,6 @@ public class GroupObject implements Serializable {
     @NotBlank(message = "组名不能为空")
     private String name;
     private String type;
-    private int memberNums;
+    private Integer memberNums;
 
 }
