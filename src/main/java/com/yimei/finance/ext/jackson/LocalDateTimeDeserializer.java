@@ -10,9 +10,6 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
-/**
- * Created by joe on 1/14/15.
- */
 public class LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
     protected static final DateTimeFormatter dateTimeformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
     protected static final DateTimeFormatter dateTimeWithHmformatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");
@@ -22,10 +19,10 @@ public class LocalDateTimeDeserializer extends JsonDeserializer<LocalDateTime> {
         String str = jp.getText().trim();
         if (str.length() == 0)
             return null;
-        try{
+        try {
             return LocalDateTime.parse(str, dateTimeformatter);
-        }catch (DateTimeParseException e){
-            return LocalDateTime.parse(str,dateTimeWithHmformatter);
+        } catch (DateTimeParseException e) {
+            return LocalDateTime.parse(str, dateTimeWithHmformatter);
         }
     }
 

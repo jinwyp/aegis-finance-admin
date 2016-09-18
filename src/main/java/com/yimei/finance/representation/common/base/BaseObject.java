@@ -1,23 +1,21 @@
-package com.yimei.finance.entity.common;
+package com.yimei.finance.representation.common.base;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Column;
-import javax.persistence.MappedSuperclass;
 import java.io.Serializable;
 import java.util.Date;
 
-@MappedSuperclass
 @Data
 @NoArgsConstructor
-public class BaseEntity implements Serializable {
-    @Column(name = "create_man_id", updatable = false)
+public class BaseObject implements Serializable {
     private String createManId;                                      //创建人id
-    @Column(name = "create_time", updatable = false)
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;                                         //创建时间
     @Column(name = "last_update_man_id")
     private String lastUpdateManId;                                  //最后一次更新人id
-    @Column(name = "last_update_time")
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date lastUpdateTime;                                     //最后一次更新时间
 }

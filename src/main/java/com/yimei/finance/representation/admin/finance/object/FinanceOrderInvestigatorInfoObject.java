@@ -1,8 +1,9 @@
 package com.yimei.finance.representation.admin.finance.object;
 
-import com.yimei.finance.entity.common.BaseEntity;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceInvestigatorInfo;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceInvestigatorInfo;
+import com.yimei.finance.representation.common.base.BaseObject;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -24,7 +25,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class FinanceOrderInvestigatorInfoObject extends BaseEntity implements Serializable {
+public class FinanceOrderInvestigatorInfoObject extends BaseObject implements Serializable {
     private Long id;                                                 //主键
     private Long financeId;                                          //金融单id
     private String applyCompanyName;                                 //申请公司/融资方
@@ -57,9 +58,8 @@ public class FinanceOrderInvestigatorInfoObject extends BaseEntity implements Se
     @DecimalMax(value = "100", inclusive = false, message = "利率不能超过 {value} 万元", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     private BigDecimal interestRate;                                 //利率
 
-//    @DateTimeFormat(pattern = "yyyy-MM-dd"
-//    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
     private Date businessStartTime;                                  //业务开始时间
 
     @Size(max = 1000, message = "历史合作情况不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
