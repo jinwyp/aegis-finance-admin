@@ -26,7 +26,7 @@ var financeHome = () => {
                         $('.modal_2').modal();
                         $('#modalImg_2').removeClass('attention').addClass('yes');
                         $('#modalInfo_2').html('申请成功!');
-                        $('#md_ok_2').val('确定').modal('hide');
+                        $('#md_ok_2').val('确定');
                         $('#md_ok_2').click(()=>{ $('.modal_2').modal('hide') });
                     }, 500);
                 } else {
@@ -46,6 +46,9 @@ var financeHome = () => {
                         $('.modal_1').modal('hide');
                         setTimeout(()=>{
                             $('.modal_2').modal();
+                            $('#modalImg_2').removeClass('yes').addClass('attention');
+                            $('#modalInfo_2').html('您当天的申请已超过限定次数!');
+                            $('#md_ok_2').val('我知道了');
                             $('#md_ok_2').click(()=>{
                                 $('.modal_2').modal('hide');
                             })
