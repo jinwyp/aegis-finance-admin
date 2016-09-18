@@ -5,9 +5,6 @@ import lombok.*;
 import javax.persistence.*;
 import java.io.Serializable;
 
-/**
- * Created by jack on 6/10/15.
- */
 @Entity
 @Table(name = "t_finance_databook")
 @Data

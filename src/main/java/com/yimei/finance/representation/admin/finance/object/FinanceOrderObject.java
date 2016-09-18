@@ -11,6 +11,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.DecimalMax;
 import javax.validation.constraints.DecimalMin;
@@ -99,6 +100,7 @@ public class FinanceOrderObject extends BaseEntity implements Serializable {
     private String applyUserName;                                    //申请人姓名
     private String applyUserPhone;                                   //申请人手机号
     private String applyCompanyName;                                 //申请公司名称
+    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date endTime;                                            //结束时间
     private List<AttachmentObject> attachmentList1;                  //附件列表
 

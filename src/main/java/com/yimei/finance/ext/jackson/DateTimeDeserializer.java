@@ -10,9 +10,6 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-/**
- * Created by joe on 1/14/15.
- */
 public class DateTimeDeserializer extends JsonDeserializer<Date> {
     protected static final SimpleDateFormat dateTimeformatter = new SimpleDateFormat("yyyy-MM-dd");
 
