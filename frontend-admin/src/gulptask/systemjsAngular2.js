@@ -65,7 +65,7 @@ gulp.task('esLint', function() {
 
 
 gulp.task("ts", function (cb) {
-    exec('tsc', function (err, stdout, stderr) {
+    exec('./node_modules/typescript/bin/tsc', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
@@ -91,7 +91,7 @@ gulp.task('injectTemplate', function() {
 
 
 gulp.task("ts-release", ['injectTemplate'], function (cb) {
-    exec('tsc --project tsconfig-build.json', function (err, stdout, stderr) {
+    exec('./node_modules/typescript/bin/tsc --project tsconfig-build.json', function (err, stdout, stderr) {
         console.log(stdout);
         console.log(stderr);
         cb(err);
