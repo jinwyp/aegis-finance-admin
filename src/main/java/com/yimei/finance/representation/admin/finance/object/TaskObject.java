@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Map;
 
 @ApiModel(description = "任务对象")
 @Data
@@ -30,8 +29,6 @@ public class TaskObject implements Serializable {
     @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     private Date createTime;
     @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
-    protected Date dueDate;
-    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     protected Date claimTime;
     private Long financeId;                                         //金融单id
     private String applyCompanyName;                                //申请客户公司名称
@@ -39,6 +36,5 @@ public class TaskObject implements Serializable {
     private String applyTypeName;                                   //融资类型Name
     private BigDecimal financingAmount;                             //融资金额
     private String sourceId;                                        //金融单业务编号
-    private Map<String, Object> taskLocalVariables;
 
 }

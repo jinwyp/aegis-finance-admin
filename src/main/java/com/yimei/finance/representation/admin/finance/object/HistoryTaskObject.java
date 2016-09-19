@@ -9,7 +9,6 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Map;
 
 @ApiModel(description = "历史任务对象")
 @Data
@@ -33,8 +32,6 @@ public class HistoryTaskObject {
     @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     private Date endTime;
     @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
-    protected Date dueDate;
-    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     protected Date claimTime;
     private Long financeId;                                         //金融单id
     private String applyCompanyName;                                //申请客户公司名称
@@ -47,5 +44,4 @@ public class HistoryTaskObject {
     private String currentAssigneeDepartment;                       //当前处理人部门
     private String currentName;                                     //当前流程节点name
     private String currentTaskDefinitionKey;                        //当前流程节点id
-    private Map<String, Object> taskLocalVariables;
 }
