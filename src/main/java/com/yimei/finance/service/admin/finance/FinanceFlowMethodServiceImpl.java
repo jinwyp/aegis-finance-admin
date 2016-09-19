@@ -5,10 +5,7 @@ import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEndType;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEventType;
-import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
-import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
-import com.yimei.finance.representation.admin.finance.object.HistoryTaskObject;
-import com.yimei.finance.representation.admin.finance.object.TaskObject;
+import com.yimei.finance.representation.admin.finance.object.*;
 import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
@@ -18,9 +15,7 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.history.HistoricActivityInstance;
-import org.activiti.engine.history.HistoricProcessInstance;
-import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.history.*;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Attachment;
 import org.activiti.engine.task.Task;
@@ -199,6 +194,7 @@ public class FinanceFlowMethodServiceImpl {
                 }
             }
         }
+        taskObject.setTaskLocalVariables(DozerUtils.copy(historyService.createHistoricVariableInstanceQuery().taskId(task.getId()).list(), HistoryVariableObject.class));
         return Result.success().setData(taskObject);
     }
 

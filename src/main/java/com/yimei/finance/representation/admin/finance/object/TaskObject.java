@@ -10,6 +10,7 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
 @ApiModel(description = "任务对象")
 @Data
@@ -36,5 +37,6 @@ public class TaskObject implements Serializable {
     private String applyTypeName;                                   //融资类型Name
     private BigDecimal financingAmount;                             //融资金额
     private String sourceId;                                        //金融单业务编号
+    private Map<String, Object> taskLocalVariables;
 
 }

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(description = "历史任务对象")
 @Data
@@ -44,4 +45,6 @@ public class HistoryTaskObject {
     private String currentAssigneeDepartment;                       //当前处理人部门
     private String currentName;                                     //当前流程节点name
     private String currentTaskDefinitionKey;                        //当前流程节点id
+    private List<HistoryVariableObject> taskLocalVariables;
+
 }
