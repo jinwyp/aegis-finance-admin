@@ -26,7 +26,7 @@
     <script src="/static/admin/node_modules/core-js/client/shim.min.js"></script>
     <script src="/static/admin/node_modules/zone.js/dist/zone.min.js"></script>
     <script src="/static/admin/node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="/static/admin/node_modules/systemjs/dist/system.src.js"></script>
+    <script src="/static/admin/node_modules/systemjs/dist/system.js"></script>
 
 
 <#if env == 'dev' || env == 'staging' || env == 'prod' >

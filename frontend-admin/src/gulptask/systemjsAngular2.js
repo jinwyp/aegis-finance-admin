@@ -82,6 +82,7 @@ gulp.task('componentsTemplate', function() {
 
 
 gulp.task('libs', function() {
+    gulp.src('node_modules/bootstrap/**/*').pipe(gulp.dest('../dist/node_modules/bootstrap/'));
     gulp.src('node_modules/core-js/**/*').pipe(gulp.dest('../dist/node_modules/core-js/'));
     gulp.src('node_modules/zone.js/**/*').pipe(gulp.dest('../dist/node_modules/zone.js/'));
     gulp.src('node_modules/reflect-metadata/**/*').pipe(gulp.dest('../dist/node_modules/reflect-metadata/'));
