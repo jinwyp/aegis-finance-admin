@@ -20,7 +20,6 @@ public class HistoryTaskObject {
     private String processInstanceId;                               //流程id
     private String taskDefinitionKey;                               //任务id(流程图中定义的id)
     private String owner;
-    private String parentTaskId;
     private String assignee;                                        //处理人
     private String assigneeName;                                    //处理人姓名
     private String assigneeDepartment;                              //处理人部门

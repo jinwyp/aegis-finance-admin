@@ -10,7 +10,6 @@ import lombok.NoArgsConstructor;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
-import java.util.Map;
 
 @ApiModel(description = "任务对象")
 @Data
@@ -21,7 +20,6 @@ public class TaskObject implements Serializable {
     private String processInstanceId;                               //流程id
     private String taskDefinitionKey;                               //任务id(流程图中定义的id)
     private String owner;
-    private String parentTaskId;
     private String assignee;                                        //处理人id
     private String assigneeName;                                    //处理人姓名
     private String assigneeDepartment;                              //处理人部门
@@ -37,6 +35,5 @@ public class TaskObject implements Serializable {
     private String applyTypeName;                                   //融资类型Name
     private BigDecimal financingAmount;                             //融资金额
     private String sourceId;                                        //金融单业务编号
-    private Map<String, Object> taskLocalVariables;
 
 }
