@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceInvestigatorInfo;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceInvestigatorInfo;
 import com.yimei.finance.representation.common.base.BaseObject;
+import com.yimei.finance.representation.common.enums.EnumCommonString;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -58,8 +59,8 @@ public class FinanceOrderInvestigatorInfoObject extends BaseObject implements Se
     @DecimalMax(value = "100", inclusive = false, message = "利率不能超过 {value} 万元", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     private BigDecimal interestRate;                                 //利率
 
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = EnumCommonString.LocalDate_Pattern)
+    @JsonFormat(pattern = EnumCommonString.LocalDate_Pattern, timezone = EnumCommonString.GMT_8)
     private Date businessStartTime;                                  //业务开始时间
 
     @Size(max = 1000, message = "历史合作情况不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})

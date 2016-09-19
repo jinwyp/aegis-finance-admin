@@ -194,6 +194,7 @@ public class FinanceOrderServiceImpl {
      */
     public void saveFinanceOrderSalesmanInfo(String userId, FinanceOrderSalesmanInfoObject salesmanInfo) {
         FinanceOrderSalesmanInfo salesmanOrder = salesmanRepository.findByFinanceId(salesmanInfo.getFinanceId());
+        salesmanInfo.setId(null);
         if (salesmanOrder != null) {
             salesmanInfo.setId(salesmanOrder.getId());
         }
@@ -207,6 +208,7 @@ public class FinanceOrderServiceImpl {
      */
     public void saveFinanceOrderInvestigatorInfo(String userId, FinanceOrderInvestigatorInfoObject investigatorInfo) {
         FinanceOrderInvestigatorInfo investigatorOrder = investigatorRepository.findByFinanceId(investigatorInfo.getFinanceId());
+        investigatorInfo.setId(null);
         if (investigatorOrder != null) {
             investigatorInfo.setId(investigatorOrder.getId());
         }
@@ -221,6 +223,7 @@ public class FinanceOrderServiceImpl {
      */
     public void saveFinanceOrderSupervisorInfo(String userId, FinanceOrderSupervisorInfoObject supervisorInfo) {
         FinanceOrderSupervisorInfo supervisorOrder = supervisorRepository.findByFinanceId(supervisorInfo.getFinanceId());
+        supervisorInfo.setId(null);
         if (supervisorOrder != null) {
             supervisorInfo.setId(supervisorOrder.getId());
         }
@@ -234,6 +237,7 @@ public class FinanceOrderServiceImpl {
      */
     public void saveFinanceOrderRiskManagerInfo(String userId, FinanceOrderRiskManagerInfoObject riskManagerInfo) {
         FinanceOrderRiskManagerInfo riskManagerOrder = riskRepository.findByFinanceId(riskManagerInfo.getFinanceId());
+        riskManagerInfo.setId(null);
         if (riskManagerOrder != null) {
             riskManagerInfo.setId(riskManagerOrder.getId());
         }

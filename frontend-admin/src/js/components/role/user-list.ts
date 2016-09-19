@@ -6,6 +6,7 @@
 import {Component} from '@angular/core';
 
 import {User, UserService, UserGroupService} from '../../service/user';
+import { Page } from '../../service/task';
 
 
 declare var __moduleName:string;
@@ -22,6 +23,7 @@ export class UserListComponent {
         private user:UserService
     ) {}
 
+    pageObj: Page;
     name:string = '';
     username:string = '';
     groupName:string = '';
@@ -37,16 +39,20 @@ export class UserListComponent {
 
 
     ngOnInit() {
-        this.getUserList();
+        this.pageObj = new Page();
+        this.getUserList(this.pageObj.page);
         this.getGroupList();
     }
 
 
-    getUserList() {
+    getUserList(page:number) {
         this.groupName=this.selectedItem;
-        this.user.getList(this.name,this.username,this.groupName).then((result)=> {
+        this.user.getList(this.name,this.username,this.groupName,page).then((result)=> {
             if (result.success) {
                 this.userList = result.data;
+                if(result.meta){
+                    this.pageObj=result.meta;
+                }
             } else {
 
             }
@@ -73,7 +79,8 @@ export class UserListComponent {
         if (this.userId){
             this.user.del(this.userId).then((result)=> {
                 if (result.success) {
-                    this.getUserList();
+                    // this.pageObj=new Page();
+                    this.getUserList(this.pageObj.page);
                 } else {
 
                 }
@@ -102,6 +109,10 @@ export class UserListComponent {
                 this.isHiddenMsgModal=false;
             });
         }
+    }
+
+    getPageData(pageObj:Page){
+        this.getUserList(pageObj.page);
     }
 
 }

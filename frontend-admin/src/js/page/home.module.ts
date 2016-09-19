@@ -8,8 +8,6 @@ import { FormsModule }   from '@angular/forms';
 import { HttpModule }    from '@angular/http';
 
 
-import { InMemoryBackendService, SEED_DATA } from 'angular2-in-memory-web-api';
-import { InMemoryDataServiceOrder }          from '../mock/api/in-memory-data.service';
 
 import { routing, homePageRouterProviders } from './home.routes';
 import { UserService, UserGroupService } from '../service/user';
@@ -32,8 +30,6 @@ import { LeftMenuComponent } from '../components/left-menu/left-menu';
 import { HomeComponent } from '../components/home/home-index';
 import { HomeDashboardComponent } from '../components/home/home-dashboard';
 
-import { OrderListComponent } from '../components/order/order-list';
-import { OrderDetailComponent } from '../components/order/order-detail';
 
 import { UserDetailComponent } from '../components/user/user-detail';
 import { UserUpdatePasswordComponent } from '../components/user/user-update-password';

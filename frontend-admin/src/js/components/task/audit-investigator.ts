@@ -27,6 +27,18 @@ export class AuditInvestigatorComponent {
 
     private sub: Subscription;
 
+    myDatePickerOptions = {
+        todayBtnTxt: 'Today',
+        dateFormat: 'yyyy-mm-dd',
+        firstDayOfWeek: 'mo',
+        sunHighlight: true,
+        height: '34px',
+        width: '260px',
+        inline: false,
+        disableUntil: {year: 2016, month: 8, day: 10},
+        selectionTxtFontSize: '16px'
+    };
+
     css = {
         isSubmitted : false,
         ajaxErrorHidden : true,
@@ -193,6 +205,10 @@ export class AuditInvestigatorComponent {
 
     goBack() {
         this.location.back();
+    }
+
+    onDateChanged(event:any) {
+        console.log('onDateChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
     }
 
 }
