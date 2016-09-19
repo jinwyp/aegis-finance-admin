@@ -101,7 +101,7 @@ public class FinanceOrderObject extends BaseObject implements Serializable {
     private String applyUserName;                                    //申请人姓名
     private String applyUserPhone;                                   //申请人手机号
     private String applyCompanyName;                                 //申请公司名称
-    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern)
+    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     private Date endTime;                                            //结束时间
     private List<AttachmentObject> attachmentList1;                  //附件列表
 

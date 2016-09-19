@@ -27,7 +27,7 @@ public class AttachmentObject implements Serializable {
     private String taskId;
     private String processInstanceId;
     private String userId;
-    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern)
+    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     private Date time;
 
     public AttachmentObject(String name, String type, String url) {

@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.Map;
 
 @ApiModel(description = "历史任务对象")
 @Data
@@ -18,17 +19,23 @@ public class HistoryTaskObject {
     protected String id;
     private String processInstanceId;                               //流程id
     private String taskDefinitionKey;                               //任务id(流程图中定义的id)
+    private String owner;
+    private String parentTaskId;
     private String assignee;                                        //处理人
     private String assigneeName;                                    //处理人姓名
     private String assigneeDepartment;                              //处理人部门
     private String name;                                            //任务名称
     private String description;                                     //任务描述
-    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern)
+    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
+    private Date createTime;
+    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     private Date startTime;
-    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern)
+    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     private Date endTime;
-    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern)
+    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     protected Date dueDate;
+    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
+    protected Date claimTime;
     private Long financeId;                                         //金融单id
     private String applyCompanyName;                                //申请客户公司名称
     private String applyType;                                       //融资类型
@@ -40,4 +47,5 @@ public class HistoryTaskObject {
     private String currentAssigneeDepartment;                       //当前处理人部门
     private String currentName;                                     //当前流程节点name
     private String currentTaskDefinitionKey;                        //当前流程节点id
+    private Map<String, Object> taskLocalVariables;
 }

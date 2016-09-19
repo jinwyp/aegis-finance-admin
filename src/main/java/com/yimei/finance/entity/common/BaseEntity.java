@@ -1,5 +1,6 @@
 package com.yimei.finance.entity.common;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -11,6 +12,7 @@ import java.util.Date;
 @MappedSuperclass
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 public class BaseEntity implements Serializable {
     @Column(name = "create_man_id", updatable = false)
     private String createManId;                                      //创建人id

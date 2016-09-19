@@ -8,7 +8,6 @@ import com.yimei.finance.representation.admin.finance.object.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.common.result.TaskMap;
-import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,9 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Service("financeFlowStepService")
 public class FinanceFlowStepServiceImpl {
@@ -30,8 +27,6 @@ public class FinanceFlowStepServiceImpl {
     private FinanceOrderServiceImpl orderService;
     @Autowired
     private FinanceOrderRepository financeOrderRepository;
-    @Autowired
-    private HistoryService historyService;
 
     /**
      * 线上交易员审核
@@ -44,9 +39,8 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(financeOrder.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.OnlineTraderAuditAttachment);
         if (submit) {
             if (taskMap.pass != 0 && taskMap.pass != 1) throw new BusinessException(EnumCommonError.Admin_System_Error);
-            Map<String, Object> vars = new HashMap<>();
-            vars.put(EnumFinanceEventType.onlineTraderAudit.toString(), taskMap.pass);
-            taskService.complete(task.getId(), vars);
+            taskService.setVariable(task.getId(), EnumFinanceEventType.onlineTraderAudit.toString(), taskMap.pass);
+            taskService.complete(task.getId());
             if (taskMap.pass == 1) {
                 return orderService.updateFinanceOrderApproveState(financeOrder.getId(), EnumFinanceStatus.Auditing, userId);
             } else {
@@ -70,9 +64,8 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment);
         if (submit) {
             if (taskMap.pass != 0 && taskMap.pass != 1) throw new BusinessException(EnumCommonError.Admin_System_Error);
-            Map<String, Object> vars = new HashMap<>();
-            vars.put(EnumFinanceEventType.salesmanAudit.toString(), taskMap.pass);
-            taskService.complete(task.getId(), vars);
+            taskService.setVariable(task.getId(), EnumFinanceEventType.salesmanAudit.toString(), taskMap.pass);
+            taskService.complete(task.getId());
             if (taskMap.pass == 1) {
                 salesmanInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
                 salesmanInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
@@ -123,9 +116,8 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(investigatorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
-            Map<String, Object> vars = new HashMap<>();
-            vars.put(EnumFinanceConditions.needSalesmanSupplyInvestigationMaterial.toString(), taskMap.need);
-            taskService.complete(task.getId(), vars);
+            taskService.setVariable(task.getId(), EnumFinanceConditions.needSalesmanSupplyInvestigationMaterial.toString(), taskMap.need);
+            taskService.complete(task.getId());
             if (taskMap.need == 1) {
                 investigatorInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
                 investigatorInfo.setApproveState(EnumFinanceStatus.SupplyMaterial.name);
@@ -182,9 +174,8 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(supervisorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
-            Map<String, Object> vars = new HashMap<>();
-            vars.put(EnumFinanceConditions.needSalesmanSupplySupervisionMaterial.toString(), taskMap.need);
-            taskService.complete(task.getId(), vars);
+            taskService.setVariable(task.getId(), EnumFinanceConditions.needSalesmanSupplySupervisionMaterial.toString(), taskMap.need);
+            taskService.complete(task.getId());
             if (taskMap.need == 1) {
                 supervisorInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
                 supervisorInfo.setApproveState(EnumFinanceStatus.SupplyMaterial.name);
@@ -241,12 +232,11 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
-            Map<String, Object> vars = new HashMap<>();
-            vars.put(EnumFinanceConditions.needSalesmanSupplyRiskManagerMaterial.toString(), taskMap.need);
+            taskService.setVariable(task.getId(), EnumFinanceConditions.needSalesmanSupplyRiskManagerMaterial.toString(), taskMap.need);
             if (taskMap.need == 0) {
-                vars.put(EnumFinanceEventType.riskManagerAudit.toString(), taskMap.pass);
+                taskService.setVariable(task.getId(), EnumFinanceEventType.riskManagerAudit.toString(), taskMap.pass);
             }
-            taskService.complete(task.getId(), vars);
+            taskService.complete(task.getId());
             if (taskMap.need == 1) {
                 riskManagerInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
                 riskManagerInfo.setApproveState(EnumFinanceStatus.SupplyMaterial.name);

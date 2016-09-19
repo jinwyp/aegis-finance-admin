@@ -1,6 +1,7 @@
 package com.yimei.finance.representation.site.finance.result;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.yimei.finance.representation.common.enums.EnumCommonString;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -17,7 +18,7 @@ public class FinanceOrderResult implements Serializable {
     private String userId;
     private String sourceId;
     private String applyType;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     private Date createTime;
     private BigDecimal financingAmount;
     private int expectDate;
