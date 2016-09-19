@@ -63,6 +63,14 @@ public class FinanceFlowMethodServiceImpl {
     }
 
     /**
+     * 添加变量
+     */
+    public void setTaskVariableMethod(String taskId, String variableName, Object variableValue) {
+        taskService.setVariable(taskId, variableName, variableValue);
+        taskService.setVariableLocal(taskId, variableName, variableValue);
+    }
+
+    /**
      * 指派给人方法
      */
     @Transactional
@@ -207,6 +215,7 @@ public class FinanceFlowMethodServiceImpl {
         }
         return Result.success().setData(taskObjectList);
     }
+
 
 
 }
