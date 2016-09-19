@@ -1,8 +1,5 @@
 package com.yimei.finance.representation.common.enums;
 
-/**
- * Created by liuxinjie on 16/8/23.
- */
 public enum EnumCommonString {
     AdminUser_InitPwd("123456"),
     ;
@@ -14,4 +11,7 @@ public enum EnumCommonString {
     EnumCommonString(String name) {
         this.name = name;
     }
+
+    public static final String LocalDate_Pattern = "yyyy-MM-dd";
+    public static final String LocalDateTime_Pattern = "yyyy-MM-dd HH:mm:ss";
 }

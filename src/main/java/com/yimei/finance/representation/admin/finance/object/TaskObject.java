@@ -1,6 +1,7 @@
 package com.yimei.finance.representation.admin.finance.object;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.yimei.finance.representation.common.enums.EnumCommonString;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -23,9 +24,9 @@ public class TaskObject implements Serializable {
     private String assigneeDepartment;                              //处理人部门
     private String name;                                            //任务名称
     private String description;                                     //任务描述
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern)
     private Date createTime;
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern)
     private Date dueDate;
     private Long financeId;                                         //金融单id
     private String applyCompanyName;                                //申请客户公司名称

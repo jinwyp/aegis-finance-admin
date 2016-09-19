@@ -3,17 +3,16 @@ package com.yimei.finance.representation.admin.user;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yimei.finance.representation.admin.user.validated.CreateUser;
 import com.yimei.finance.representation.admin.user.validated.EditUser;
+import com.yimei.finance.representation.common.enums.EnumCommonString;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDateTime;
 import java.util.Date;
 import java.util.List;
 
@@ -29,9 +28,7 @@ public class UserObject implements Serializable {
     @Size(min = 2, max = 20, message = "姓名应在2-20个字符之间", groups = {CreateUser.class, EditUser.class})
     @NotBlank(message = "姓名不能为空", groups = {CreateUser.class, EditUser.class})
     private String name;                        //姓名
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private LocalDateTime registertime;
+    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern)
     @Size(max = 11, message = "请输入正确的手机号")
 //    @Pattern(regexp = "^[1][3,4,5,7,8][0-9]{9}$", message = "请输入正确的手机号", groups = {CreateUser.class, EditUser.class})
     private String phone;                       //手机号
@@ -41,7 +38,7 @@ public class UserObject implements Serializable {
     private String email;                       //邮箱
     @Size(max = 30, message = "部门名称应在 {min}-{max} 个字符之间", groups = {CreateUser.class, EditUser.class})
     private String department;                  //部门
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern)
     private Date lastLoginTime;                 //最后一次登录时间
     private boolean operateAuthority;           //是否具有操作/更改此用户的权限, true: 有权限, false: 无
     private List<String> groupIds;              //用户组id数组
