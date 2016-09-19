@@ -24,7 +24,7 @@
     <!-- 1. Load libraries -->
     <!-- Polyfill(s) for older browsers -->
     <script src="/static/admin/node_modules/core-js/client/shim.min.js"></script>
-    <script src="/static/admin/node_modules/zone.js/dist/zone.js"></script>
+    <script src="/static/admin/node_modules/zone.js/dist/zone.min.js"></script>
     <script src="/static/admin/node_modules/reflect-metadata/Reflect.js"></script>
     <script src="/static/admin/node_modules/systemjs/dist/system.src.js"></script>
 
@@ -34,14 +34,17 @@
 <!-- 生产环境使用 bundle.js 文件 -->
 <script src="/static/admin/jsoutput/page/login.bundle.js"></script>
 
+<#else>
+<!-- 2. Configure SystemJS -->
+<script src="/static/admin/js/systemjs.config.js"></script>
+<script>
+    System.import('jsoutput/page/login.js').catch(function(err){ console.error(err); });
+</script>
+
 </#if>
 
 
-    <!-- 2. Configure SystemJS -->
-    <script src="/static/admin/js/systemjs.config.js"></script>
-    <script>
-      System.import('jsoutput/page/login.js').catch(function(err){ console.error(err); });
-    </script>
+
 
 </body>
 </html>

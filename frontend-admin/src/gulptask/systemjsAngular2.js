@@ -23,6 +23,7 @@ var distPath = {
     'js'                 : '../dist/jsoutput/',
     'componentsTemplate' : 'jsoutput/components/',
     "manifest"           : "../dist/rev/"
+
 };
 
 
@@ -80,13 +81,18 @@ gulp.task('componentsTemplate', function() {
 
 
 
+gulp.task('libs', function() {
+    gulp.src('node_modules/core-js/**/*').pipe(gulp.dest('../dist/node_modules/core-js/'));
+    gulp.src('node_modules/zone.js/**/*').pipe(gulp.dest('../dist/node_modules/zone.js/'));
+    gulp.src('node_modules/reflect-metadata/**/*').pipe(gulp.dest('../dist/node_modules/reflect-metadata/'));
+    return gulp.src('node_modules/systemjs/**/*').pipe(gulp.dest('../dist/node_modules/systemjs/'));
+});
 
 
 gulp.task('injectTemplate', function() {
     return gulp.src(sourcePath.ts)
         .pipe(ng2Templates({sourceType:'ts'}))
         .pipe(gulp.dest(distPath.tsSourceWithHtmlTpl));
-
 });
 
 
@@ -101,7 +107,7 @@ gulp.task("ts-release", ['injectTemplate'], function (cb) {
 
 
 
-gulp.task('js-bundle', [ 'ts-release'], function () {
+gulp.task('js-bundle', ['libs', 'ts-release'], function () {
     var builder = new SystemJS(distPath.tsTemp,
         {
             paths    : {
