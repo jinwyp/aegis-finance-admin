@@ -11,7 +11,7 @@ declare var __moduleName: string;
 
 @Component({
     selector: 'user-password',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'user-update-password.html'
 })
 export class UserUpdatePasswordComponent {

@@ -12,7 +12,7 @@ declare var __moduleName: string;
 
 @Component({
     selector: 'order-list',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'order-list.html'
 })
 

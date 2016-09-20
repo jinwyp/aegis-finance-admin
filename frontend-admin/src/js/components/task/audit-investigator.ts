@@ -20,7 +20,7 @@ declare var __moduleName: string;
 
 @Component({
     selector: 'audit-investigator',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'audit-investigator.html'
 })
 export class AuditInvestigatorComponent {

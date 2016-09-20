@@ -20,7 +20,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 
 @Component({
     selector :    'custom-modal',
-    moduleId :    __moduleName || module.id,
+    moduleId :    module.id,
     templateUrl : 'custom-modal.html',
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 

@@ -14,7 +14,7 @@ declare var __moduleName: string;
 
 @Component({
     selector: 'material-detail',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'material-detail.html'
 })
 export class MaterialDetailComponent {

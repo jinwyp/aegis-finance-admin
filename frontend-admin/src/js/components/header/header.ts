@@ -10,7 +10,7 @@ declare var __moduleName: string;
 
 @Component({
     selector: 'header',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'header.html'
 })
 export class headerComponent {

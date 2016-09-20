@@ -10,7 +10,7 @@ declare var __moduleName: string;
 
 @Component({
     selector: 'add-role',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'add-role.html'
 })
 

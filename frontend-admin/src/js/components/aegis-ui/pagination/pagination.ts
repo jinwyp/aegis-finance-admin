@@ -14,7 +14,7 @@ declare var __moduleName:string;
 
 @Component({
     selector :    'pagination',
-    moduleId :    __moduleName || module.id,
+    moduleId :    module.id,
     templateUrl : 'pagination.component.html',
 
 })

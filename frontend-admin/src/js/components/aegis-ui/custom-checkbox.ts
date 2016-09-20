@@ -16,7 +16,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 
 @Component({
     selector :    'custom-checkbox',
-    moduleId :    __moduleName || module.id,
+    moduleId :    module.id,
     templateUrl : 'custom-checkbox.html',
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })

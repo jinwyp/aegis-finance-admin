@@ -7,7 +7,7 @@ declare var __moduleName: string;
 
 @Component({
     selector    : 'page-login',
-    moduleId    : __moduleName || module.id,
+    moduleId    : module.id,
     templateUrl : 'login-index.html'
 })
 export class LoginComponent {

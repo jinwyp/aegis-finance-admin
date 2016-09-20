@@ -19,7 +19,6 @@ import { FileUploadComponent } from '../components/aegis-ui/file-upload';
 import { CustomSelectComponent } from '../components/aegis-ui/custom-select';
 import { CustomModalComponent } from '../components/aegis-ui/custom-modal';
 import { CustomCheckboxComponent } from '../components/aegis-ui/custom-checkbox';
-import { DatePickerComponent } from '../components/aegis-ui/ng2-datepicker/ng2-datepicker';
 import { PaginationComponent } from '../components/aegis-ui/pagination/pagination';
 
 import { headerComponent } from '../components/header/header';
@@ -56,7 +55,7 @@ import { MaterialDetailComponent} from "../components/task/material-detail";
     imports: [ BrowserModule, FormsModule, HttpModule, routing],
     declarations: [
         PaginationComponent,
-        DatePickerComponent, FileUploadComponent, headerComponent, LeftMenuComponent,
+        FileUploadComponent, headerComponent, LeftMenuComponent,
         HomeComponent, HomeDashboardComponent,
         UserDetailComponent, UserUpdatePasswordComponent,
         RoleListComponent, AddRoleComponent, RoleInfoComponent,

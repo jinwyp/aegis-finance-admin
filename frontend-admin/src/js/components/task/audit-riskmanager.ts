@@ -17,7 +17,7 @@ declare var __moduleName: string;
 
 @Component({
     selector: 'audit-riskmanager',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'audit-riskmanager.html'
 })
 export class AuditRiskManagerComponent {
