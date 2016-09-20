@@ -78,6 +78,7 @@ public class FinanceFlowMethodServiceImpl {
         List<Task> taskList = taskService.createTaskQuery().processInstanceId(processInstanceId).active().list();
         for (Task task : taskList) {
             if (task.getTaskDefinitionKey().equals(financeEventType)) {
+                taskService.setOwner(task.getId(), userId);
                 taskService.setAssignee(task.getId(), userId);
                 return Result.success().setData(task.getId());
             }

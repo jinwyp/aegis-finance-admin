@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.common.number;
+package com.yimei.finance.entity.common;
 
 import lombok.*;
 

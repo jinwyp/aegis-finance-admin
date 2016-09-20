@@ -1,32 +1,23 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.finance.*;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
-import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAssignType;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.object.*;
-import com.yimei.finance.representation.admin.user.EnumAdminUserError;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricProcessInstance;
-import org.activiti.engine.identity.Group;
-import org.activiti.engine.identity.User;
-import org.activiti.engine.task.IdentityLink;
-import org.activiti.engine.task.Task;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -38,9 +29,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 @Api(tags = {"admin-api-flow"}, description = "金融公用接口")
 @RequestMapping("/api/financing/admin")
@@ -109,67 +98,6 @@ public class FinancingCommonController {
         FinanceOrder financeOrder = orderRepository.findOne(financeId);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         return methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).orderByTaskCreateTime().asc().list());
-    }
-
-    @RequestMapping(value = "/tasks/{taskId}/claim", method = RequestMethod.POST)
-    @ApiOperation(value = "管理员领取任务", notes = "管理员领取任务操作", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
-    public Result onlineTraderManagerClaimTaskMethod(@PathVariable(value = "taskId") String taskId) {
-        Task task = taskService.createTaskQuery().taskId(taskId).active().singleResult();
-        if (task == null) return Result.error(EnumAdminFinanceError.此任务不存在或者已经完成.toString());
-        if (!StringUtils.isEmpty(task.getAssignee())) {
-            if (task.getAssignee().equals(adminSession.getUser().getId())) {
-                return Result.error(EnumAdminFinanceError.你已经处理此任务.toString());
-            } else {
-                return Result.error(EnumAdminFinanceError.此任务已经被其他人处理.toString());
-            }
-        }
-        List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
-        List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
-        for (IdentityLink identityLink : identityLinkList) {
-            for (Group group : groupList) {
-                if (identityLink.getGroupId().equals(group.getId())) {
-                    taskService.claim(task.getId(), adminSession.getUser().getId());
-                    return Result.success().setData(true);
-                }
-            }
-        }
-        return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
-    }
-
-    @RequestMapping(value = "/tasks/{taskId}/person/{userId}", method = RequestMethod.PUT)
-    @ApiOperation(value = "管理员分配人员", notes = "管理员分配人员操作")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),
-            @ApiImplicitParam(name = "userId", value = "被分配人userId", required = true, dataType = "String", paramType = "path")
-    })
-    @Transactional
-    public Result assignMYROnlineTraderMethod(@PathVariable(value = "taskId") String taskId,
-                                              @PathVariable(value = "userId") String userId) {
-        Task task = taskService.createTaskQuery().taskId(taskId).active().singleResult();
-        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
-        User user = identityService.createUserQuery().userId(userId).singleResult();
-        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
-        List<User> userList = new ArrayList<>();
-        String financeEventType = "";
-        for (EnumFinanceAssignType type : EnumFinanceAssignType.values()) {
-            if (task.getTaskDefinitionKey().equals(type.toString())) {
-                userList = identityService.createUserQuery().memberOfGroup(type.id).list();
-                financeEventType = type.nextStep;
-                break;
-            }
-        }
-        if (StringUtils.isEmpty(financeEventType)) return Result.error(EnumCommonError.Admin_System_Error);
-        for (User u : userList) {
-            if (u.getId().equals(userId)) {
-                taskService.complete(task.getId());
-                Task t = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).taskDefinitionKey(financeEventType).active().singleResult();
-                if (t == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
-                taskService.setAssignee(t.getId(), userId);
-                return Result.success().setData(true);
-            }
-        }
-        return Result.error(EnumAdminFinanceError.你没有处理此金融单的权限.toString());
     }
 
     @RequestMapping(value = "/finance/process/{processInstanceId}/image", method = RequestMethod.GET)

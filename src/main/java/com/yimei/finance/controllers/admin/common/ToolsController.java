@@ -1,9 +1,9 @@
 package com.yimei.finance.controllers.admin.common;
 
-import com.yimei.finance.repository.admin.databook.DataBookRepository;
+import com.yimei.finance.repository.common.DataBookRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumMYRFinanceAllSteps;
 import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
-import com.yimei.finance.representation.common.databook.DataBook;
+import com.yimei.finance.entity.common.DataBook;
 import com.yimei.finance.representation.common.databook.EnumDataBookType;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.MapObject;
