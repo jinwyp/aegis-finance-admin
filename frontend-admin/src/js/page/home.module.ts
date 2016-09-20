@@ -57,8 +57,8 @@ import { MaterialDetailComponent} from "../components/task/material-detail";
 @NgModule({
     imports: [ BrowserModule, FormsModule, HttpModule, routing ],
     declarations: [
-        PaginationComponent, MyDatePicker,
-        HomeComponent, HomeDashboardComponent,
+        PaginationComponent, MyDatePicker, FileUploadComponent,
+        HomeComponent, HomeDashboardComponent,  headerComponent, LeftMenuComponent,
         UserDetailComponent, UserUpdatePasswordComponent,
         RoleListComponent, AddRoleComponent, RoleInfoComponent,
         UserListComponent, AddUserComponent, UserInfoComponent,
