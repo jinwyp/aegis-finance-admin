@@ -75,10 +75,10 @@
             </td>
             <td class="td-label">业务开展时间:</td>
             <td class="td-val">
-                <my-date-picker [options]="myDatePickerOptions" [selDate]="selectedDateInline" (dateChanged)="onDateChanged($event)"></my-date-picker>
+                <my-date-picker *ngIf="!css.isReadOnly" [options]="myDatePickerOptions" [selDate]="selectedDateInline" (dateChanged)="onDateChanged($event)"></my-date-picker>
                 <!--<datepicker *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.businessStartTime" [expanded]="true"></datepicker>-->
                 <!--<input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.businessStartTime" placeholder="请输入">-->
-                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.businessStartTime}}</span>
+                <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.businessStartTime||'--'}}</span>
             </td>
         </tr>
         <!--仓押字段-->

@@ -27,7 +27,7 @@ export class AuditInvestigatorComponent {
 
     private sub: Subscription;
 
-    private selectedDateInline: string = '2016-09-30';
+    private selectedDateInline: string = '';
 
     currentDate=new Date();
 
@@ -112,7 +112,9 @@ export class AuditInvestigatorComponent {
                 this.task.getOrderInfoById(this.currentTask.financeId, 'investigator').then((result)=>{
                     if (result.success && result.data ){
                         this.currentOrder = result.data;
-                        this.selectedDateInline=this.currentOrder.businessStartTime;
+                        if(this.currentOrder.businessStartTime){
+                            this.selectedDateInline=this.currentOrder.businessStartTime;
+                        }
                     }else{
 
                     }
