@@ -5,12 +5,11 @@ import { Component } from '@angular/core';
 
 import { Task, TaskService, TaskStatus } from '../../service/task';
 
-declare var __moduleName: string;
 
 
 @Component({
     selector: 'left-menu',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'left-menu.html'
 })
 export class LeftMenuComponent {

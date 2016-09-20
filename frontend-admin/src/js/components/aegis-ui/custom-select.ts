@@ -21,7 +21,7 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 
 @Component({
     selector :    'custom-select',
-    moduleId :    __moduleName || module.id,
+    moduleId :    module.id,
     templateUrl : 'custom-select.html',
     providers: [CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR]
 })

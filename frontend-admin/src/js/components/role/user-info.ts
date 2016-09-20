@@ -13,7 +13,7 @@ declare var __moduleName: string;
 
 @Component({
     selector: 'user-info',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'user-info.html'
 })
 export class UserInfoComponent implements OnInit, OnDestroy{

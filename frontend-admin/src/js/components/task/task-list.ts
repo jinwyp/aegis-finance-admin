@@ -14,7 +14,7 @@ declare var __moduleName: string;
 
 @Component({
     selector: 'pending-list',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'task-list.html'
 })
 export class TaskListComponent {

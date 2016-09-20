@@ -17,7 +17,7 @@ declare var __moduleName: string;
 
 @Component({
     selector: 'audit-salesman',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'audit-salesman.html'
 })
 export class AuditSalesmanComponent {

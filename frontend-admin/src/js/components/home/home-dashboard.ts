@@ -9,11 +9,10 @@ import { Router } from '@angular/router';
 import {Order, OrderService } from '../../service/order';
 
 
-declare var __moduleName: string;
 
 @Component({
     selector    : 'home-dashboard',
-    moduleId    : __moduleName || module.id,
+    moduleId    : module.id,
     templateUrl : 'home-dashboard.html'
 })
 export class HomeDashboardComponent implements OnInit {

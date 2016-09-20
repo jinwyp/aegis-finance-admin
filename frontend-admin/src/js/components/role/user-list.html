@@ -40,6 +40,7 @@
             </td>
         </tr>
     </table>
+    <pagination [pageObj]="pageObj" (pageClick)="getPageData($event)" ></pagination>
 </div>
 <custom-modal [(ngModel)]="isHiddenDelModal" [modalShowText]="modalShowText" (cancel)="hiddenModal()" (confirm)="delUser()"></custom-modal>
 <custom-modal [(ngModel)]="isHiddenResetModal" [modalShowText]="modalShowText" (cancel)="hiddenModal()" (confirm)="resetPwd()"></custom-modal>

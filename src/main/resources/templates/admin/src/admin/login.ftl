@@ -11,7 +11,7 @@
     <title>供应链金融管理平台 - 登录</title>
 
     <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/main.css"/>
-    <link rel="stylesheet" href="/static/admin/node_modules/bootstrap/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" type="text/css" href="/static/admin/js/libs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/page/login.css"/>
 
 </head>
@@ -21,27 +21,30 @@
 <page-login>加载中...</page-login>
 
 
-    <!-- 1. Load libraries -->
-    <!-- Polyfill(s) for older browsers -->
-    <script src="/static/admin/node_modules/core-js/client/shim.min.js"></script>
-    <script src="/static/admin/node_modules/zone.js/dist/zone.min.js"></script>
-    <script src="/static/admin/node_modules/reflect-metadata/Reflect.js"></script>
-    <script src="/static/admin/node_modules/systemjs/dist/system.js"></script>
+<!-- 1. Load libraries -->
+<!-- Polyfill(s) for older browsers -->
+<script src="/static/admin/js/libs/core-js/client/shim.min.js"></script>
+<script src="/static/admin/js/libs/zone.js/dist/zone.min.js"></script>
+<script src="/static/admin/js/libs/reflect-metadata/Reflect.js"></script>
+<script src="/static/admin/js/libs/systemjs/dist/system.js"></script>
+
+
+<!-- 2. Configure SystemJS -->
+<script src="/static/admin/js/systemjs.config.js"></script>
 
 
 <#if env == 'dev' || env == 'staging' || env == 'prod' >
 <!-- Remove this statement if you want to run the on the fly transpiler -->
 <!-- 生产环境使用 bundle.js 文件 -->
-<script src="/static/admin/jsoutput/page/login.bundle.js"></script>
+<script src="/static/admin/js/page/login.bundle.js"></script>
 
-<#else>
-<!-- 2. Configure SystemJS -->
-<script src="/static/admin/js/systemjs.config.js"></script>
+</#if>
+
 <script>
     System.import('jsoutput/page/login.js').catch(function(err){ console.error(err); });
 </script>
 
-</#if>
+
 
 
 

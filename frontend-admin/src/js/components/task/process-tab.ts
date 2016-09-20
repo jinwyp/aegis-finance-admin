@@ -11,7 +11,7 @@ declare var __moduleName: string;
 
 @Component({
     selector: 'process-tab',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'process-tab.html'
 })
 export class ProcessTabComponent {

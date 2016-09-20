@@ -13,7 +13,7 @@ declare var __moduleName: string;
 
 @Component({
     selector: 'order-detail',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     templateUrl: 'order-detail.html'
 })
 

@@ -3,19 +3,17 @@
  * System configuration for Angular 2 samples
  * Adjust as necessary for your application needs.
  */
-(function(global) {
+(function (global) {
     System.config({
-        paths: {
+        paths : {
             // paths serve as alias
-            'npm:': '/static/admin/node_modules/'
+            'npm:' : '/static/admin/node_modules/'
         },
 
         // map tells the System loader where to look for things
-        map: {
+        map : {
             // our app is within the app folder
             'jsoutput' : '/static/admin/jsoutput', // 'dist',
-            // 'home'     : '/static/admin/jsoutput',
-            // 'login'    : '/static/admin/jsoutput',
 
             // angular bundles
             '@angular/core'                     : 'npm:@angular/core/bundles/core.umd.js',
@@ -29,18 +27,15 @@
 
             // other libraries
             'rxjs'                       : 'npm:rxjs',
-            'angular2-in-memory-web-api' : 'npm:angular2-in-memory-web-api',
-            'moment' : 'npm:moment'
+            'angular2-in-memory-web-api' : 'npm:angular2-in-memory-web-api'
         },
 
         // packages tells the System loader how to load when no filename and/or no extension
-        packages: {
-            'jsoutput': {  defaultExtension: 'js' },
-            // 'login': { main: './page/login.js', defaultExtension: 'js' },
+        packages : {
+            'jsoutput' : {defaultExtension : 'js'},
 
-            'rxjs': {  defaultExtension: 'js' },
-            'angular2-in-memory-web-api': { main: './index.js', defaultExtension: 'js' },
-            'moment'                     : {main : 'moment.js', defaultExtension : 'js'}
+            'rxjs'                       : {defaultExtension : 'js'},
+            'angular2-in-memory-web-api' : {main : './index.js', defaultExtension : 'js'}
         }
     });
 })(this);

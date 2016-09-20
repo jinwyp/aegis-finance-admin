@@ -14,16 +14,16 @@ var SystemJS = require('systemjs-builder');
 var sourcePath = {
     'ts'                 : 'js/**/*.ts',
     'tsOutput'           : '../dist/jsoutput/**/*.js',
-    'componentsTemplate' : 'js/components/**/*.html'
+    'componentsTemplate' : 'js/components/**/*.html',
+    'libs' : 'js/**/*.js'
 };
 
 var distPath = {
-    'tsSourceWithHtmlTpl': 'tssource-temp-prodution/',
-    'tsTemp'             : 'jsoutput-temp-prodution/',
-    'js'                 : '../dist/jsoutput/',
-    'componentsTemplate' : 'jsoutput/components/',
-    "manifest"           : "../dist/rev/"
-
+    'tsSourceWithHtmlTpl' : 'tssource-temp-prodution/',
+    'tsTemp'              : 'jsoutput-temp-prodution/',
+    'componentsTemplate'  : 'jsoutput/components/',
+    'js'                  : '../dist/js/',
+    "manifest"            : "../dist/rev/"
 };
 
 
@@ -74,7 +74,7 @@ gulp.task("ts", function (cb) {
 });
 
 gulp.task('componentsTemplate', function() {
-    gulp.src(sourcePath.componentsTemplate)
+    return gulp.src(sourcePath.componentsTemplate)
         .pipe(gulp.dest(distPath.componentsTemplate));
 });
 
@@ -82,11 +82,7 @@ gulp.task('componentsTemplate', function() {
 
 
 gulp.task('libs', function() {
-    gulp.src('node_modules/bootstrap/**/*').pipe(gulp.dest('../dist/node_modules/bootstrap/'));
-    gulp.src('node_modules/core-js/**/*').pipe(gulp.dest('../dist/node_modules/core-js/'));
-    gulp.src('node_modules/zone.js/**/*').pipe(gulp.dest('../dist/node_modules/zone.js/'));
-    gulp.src('node_modules/reflect-metadata/**/*').pipe(gulp.dest('../dist/node_modules/reflect-metadata/'));
-    return gulp.src('node_modules/systemjs/**/*').pipe(gulp.dest('../dist/node_modules/systemjs/'));
+    return gulp.src(sourcePath.libs).pipe(gulp.dest(distPath.js));
 });
 
 
@@ -109,38 +105,12 @@ gulp.task("ts-release", ['injectTemplate'], function (cb) {
 
 
 gulp.task('js-bundle', ['libs', 'ts-release'], function () {
-    var builder = new SystemJS(distPath.tsTemp,
-        {
-            paths    : {
-                '*'    : '*.js',
-                'npm:' : './node_modules/'
-            },
-            map      : {
-                // angular bundles
-                '@angular/core'                     : 'npm:@angular/core/bundles/core.umd.js',
-                '@angular/common'                   : 'npm:@angular/common/bundles/common.umd.js',
-                '@angular/compiler'                 : 'npm:@angular/compiler/bundles/compiler.umd.js',
-                '@angular/platform-browser'         : 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
-                '@angular/platform-browser-dynamic' : 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
-                '@angular/http'                     : 'npm:@angular/http/bundles/http.umd.js',
-                '@angular/router'                   : 'npm:@angular/router/bundles/router.umd.js',
-                '@angular/forms'                    : 'npm:@angular/forms/bundles/forms.umd.js',
+    var builder = new SystemJS(distPath.tsTemp, 'js/systemjs.config.js');
 
-                // other libraries
-                'rxjs'                       : 'npm:rxjs',
-                'angular2-in-memory-web-api' : 'npm:angular2-in-memory-web-api',
-                'moment'                     : 'npm:moment'
-            },
-            packages : {
-                'rxjs'                       : {defaultExtension : 'js'},
-                'angular2-in-memory-web-api' : {main : './index.js', defaultExtension : 'js'},
-                'moment'                     : {main : 'moment.js', defaultExtension : 'js'}
-            }
-        });
 
     return Promise.all([
-        builder.buildStatic('page/login', distPath.js + 'page/login.bundle.js', { minify: true, sourceMaps: true }),
-        builder.buildStatic('page/home', distPath.js + 'page/home.bundle.js', { minify: true, sourceMaps: true })
+        builder.buildStatic('page/login', distPath.js + 'page/login.bundle.js', { minify: true, sourceMaps: false }),
+        builder.buildStatic('page/home', distPath.js + 'page/home.bundle.js', { minify: true, sourceMaps: false })
     ]).then(function() {
         console.log('Js-release Build complete !!');
     }).catch(function(err) {

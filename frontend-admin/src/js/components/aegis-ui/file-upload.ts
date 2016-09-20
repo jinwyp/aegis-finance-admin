@@ -13,7 +13,7 @@ declare var __moduleName:string;
 
 @Component({
     selector : 'file-upload',
-    moduleId : __moduleName || module.id,
+    moduleId : module.id,
     templateUrl : 'file-upload.html'
 })
 export class FileUploadComponent {
