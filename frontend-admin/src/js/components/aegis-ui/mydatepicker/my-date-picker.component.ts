@@ -3,12 +3,11 @@ import {IMyDate, IMyMonth, IMyWeek, IMyDayLabels, IMyMonthLabels} from './interf
 import {LocaleService} from './services/my-date-picker.locale.service';
 import {DateValidatorService} from './services/my-date-picker.date.validator.service';
 
-declare var __moduleName: string;
 
 @Component({
     selector: 'my-date-picker',
     templateUrl: 'my-date-picker.component.html',
-    moduleId: __moduleName || module.id,
+    moduleId: module.id,
     providers: [LocaleService, DateValidatorService]
 })
 

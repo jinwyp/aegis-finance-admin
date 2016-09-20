@@ -5,7 +5,6 @@ import { Component } from '@angular/core';
 
 import { Task, TaskService, TaskStatus } from '../../service/task';
 
-declare var __moduleName: string;
 
 
 @Component({

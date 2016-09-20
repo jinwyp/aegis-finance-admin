@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 import {Order, OrderService } from '../../service/order';
 
 
-declare var __moduleName: string;
 
 @Component({
     selector    : 'home-dashboard',
