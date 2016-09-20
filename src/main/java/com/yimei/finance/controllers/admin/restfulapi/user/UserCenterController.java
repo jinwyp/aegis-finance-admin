@@ -132,7 +132,7 @@ public class UserCenterController {
     }
 
     @RequestMapping(value = "/{taskId}/person/{userId}", method = RequestMethod.PUT)
-    @ApiOperation(value = "管理员分配人员", notes = "管理员分配人员操作")
+    @ApiOperation(value = "管理员分配任务", notes = "管理员分配任务操作")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path"),
             @ApiImplicitParam(name = "userId", value = "被分配人userId", required = true, dataType = "String", paramType = "path")
