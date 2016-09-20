@@ -39,7 +39,7 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(financeOrder.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.OnlineTraderAuditAttachment);
         if (submit) {
             if (taskMap.pass != 0 && taskMap.pass != 1) throw new BusinessException(EnumCommonError.Admin_System_Error);
-            taskService.setVariable(task.getId(), EnumFinanceEventType.onlineTraderAudit.toString(), taskMap.pass);
+            methodService.setTaskVariableMethod(task.getId(), EnumFinanceEventType.onlineTraderAudit.toString(), taskMap.pass);
             taskService.complete(task.getId());
             if (taskMap.pass == 1) {
                 return orderService.updateFinanceOrderApproveState(financeOrder.getId(), EnumFinanceStatus.Auditing, userId);
@@ -64,7 +64,7 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment);
         if (submit) {
             if (taskMap.pass != 0 && taskMap.pass != 1) throw new BusinessException(EnumCommonError.Admin_System_Error);
-            taskService.setVariable(task.getId(), EnumFinanceEventType.salesmanAudit.toString(), taskMap.pass);
+            methodService.setTaskVariableMethod(task.getId(), EnumFinanceEventType.salesmanAudit.toString(), taskMap.pass);
             taskService.complete(task.getId());
             if (taskMap.pass == 1) {
                 salesmanInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
@@ -116,7 +116,7 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(investigatorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
-            taskService.setVariable(task.getId(), EnumFinanceConditions.needSalesmanSupplyInvestigationMaterial.toString(), taskMap.need);
+            methodService.setTaskVariableMethod(task.getId(), EnumFinanceConditions.needSalesmanSupplyInvestigationMaterial.toString(), taskMap.need);
             taskService.complete(task.getId());
             if (taskMap.need == 1) {
                 investigatorInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
@@ -174,7 +174,7 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(supervisorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
-            taskService.setVariable(task.getId(), EnumFinanceConditions.needSalesmanSupplySupervisionMaterial.toString(), taskMap.need);
+            methodService.setTaskVariableMethod(task.getId(), EnumFinanceConditions.needSalesmanSupplySupervisionMaterial.toString(), taskMap.need);
             taskService.complete(task.getId());
             if (taskMap.need == 1) {
                 supervisorInfo.setApproveStateId(EnumFinanceStatus.SupplyMaterial.id);
@@ -232,9 +232,9 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment);
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
-            taskService.setVariable(task.getId(), EnumFinanceConditions.needSalesmanSupplyRiskManagerMaterial.toString(), taskMap.need);
+            methodService.setTaskVariableMethod(task.getId(), EnumFinanceConditions.needSalesmanSupplyRiskManagerMaterial.toString(), taskMap.need);
             if (taskMap.need == 0) {
-                taskService.setVariable(task.getId(), EnumFinanceEventType.riskManagerAudit.toString(), taskMap.pass);
+                methodService.setTaskVariableMethod(task.getId(), EnumFinanceEventType.riskManagerAudit.toString(), taskMap.pass);
             }
             taskService.complete(task.getId());
             if (taskMap.need == 1) {

@@ -6,7 +6,7 @@ import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.admin.user.validated.CreateUser;
 import com.yimei.finance.representation.admin.user.validated.EditUser;
 import com.yimei.finance.exception.BusinessException;
-import com.yimei.finance.repository.admin.databook.DataBookRepository;
+import com.yimei.finance.repository.common.DataBookRepository;
 import com.yimei.finance.representation.admin.user.AdminUserSearch;
 import com.yimei.finance.representation.admin.user.EnumAdminGroupError;
 import com.yimei.finance.representation.admin.user.EnumAdminUserError;
