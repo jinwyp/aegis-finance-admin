@@ -27,16 +27,20 @@ export class AuditInvestigatorComponent {
 
     private sub: Subscription;
 
+    private selectedDateInline: string = '2016-09-30';
+
+    currentDate=new Date();
+
     myDatePickerOptions = {
         todayBtnTxt: 'Today',
         dateFormat: 'yyyy-mm-dd',
-        firstDayOfWeek: 'mo',
+        firstDayOfWeek: 'su',
         sunHighlight: true,
-        height: '34px',
-        width: '260px',
+        height: '31px',
+        width: '200px',
         inline: false,
-        disableUntil: {year: 2016, month: 8, day: 10},
-        selectionTxtFontSize: '16px'
+        disableUntil: {year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+1, day: this.currentDate.getDate()-1},
+        selectionTxtFontSize: '14px'
     };
 
     css = {
@@ -108,6 +112,7 @@ export class AuditInvestigatorComponent {
                 this.task.getOrderInfoById(this.currentTask.financeId, 'investigator').then((result)=>{
                     if (result.success && result.data ){
                         this.currentOrder = result.data;
+                        this.selectedDateInline=this.currentOrder.businessStartTime;
                     }else{
 
                     }
@@ -208,7 +213,8 @@ export class AuditInvestigatorComponent {
     }
 
     onDateChanged(event:any) {
-        console.log('onDateChanged(): ', event.date, ' - formatted: ', event.formatted, ' - epoc timestamp: ', event.epoc);
+        this.currentOrder.businessStartTime = event.formatted;
+        this.selectedDateInline = event.formatted;
     }
 
 }

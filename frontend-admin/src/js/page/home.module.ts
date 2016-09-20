@@ -20,8 +20,8 @@ import { CustomSelectComponent } from '../components/aegis-ui/custom-select';
 import { CustomModalComponent } from '../components/aegis-ui/custom-modal';
 import { CustomCheckboxComponent } from '../components/aegis-ui/custom-checkbox';
 import { DatePickerComponent } from '../components/aegis-ui/ng2-datepicker/ng2-datepicker';
+import { MyDatePicker } from '../components/aegis-ui/mydatepicker/my-date-picker.component';
 import { PaginationComponent } from '../components/aegis-ui/pagination/pagination';
-import { MyDatePickerModule } from 'mydatepicker/src/my-date-picker/my-date-picker.module';
 
 
 import { headerComponent } from '../components/header/header';
@@ -55,9 +55,9 @@ import { MaterialDetailComponent} from "../components/task/material-detail";
 
 
 @NgModule({
-    imports: [ BrowserModule, FormsModule, HttpModule, routing ,MyDatePickerModule ],
+    imports: [ BrowserModule, FormsModule, HttpModule, routing ],
     declarations: [
-        PaginationComponent,
+        PaginationComponent, MyDatePicker,
         DatePickerComponent, FileUploadComponent, headerComponent, LeftMenuComponent,
         HomeComponent, HomeDashboardComponent,
         UserDetailComponent, UserUpdatePasswordComponent,
