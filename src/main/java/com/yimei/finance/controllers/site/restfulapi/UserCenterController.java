@@ -33,9 +33,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by JinWYP on 8/15/16.
- */
 @RequestMapping("/api/financing")
 @Api(tags = {"site-api"})
 @RestController("siteUserCenterController")
@@ -57,8 +54,10 @@ public class UserCenterController {
     @Transactional
     @ApiOperation(value = "供应链金融 - 发起融资申请", notes = "发起融资申请, 需要用户事先登录, 并完善企业信息", response = FinanceOrder.class)
     @RequestMapping(value = "/apply", method = RequestMethod.POST)
-    public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Validated(CreateFinanceOrder.class) @RequestBody FinanceOrder financeOrder) {
-        System.out.println("Order Type:" + financeOrder.getApplyType());
+    public Result requestFinancingOrder(@ApiParam(name = "financeOrder", value = "只需填写applyType 字段即可", required = true) @Validated(CreateFinanceOrder.class) @RequestBody FinanceOrderObject financeOrderObject) {
+        System.out.println("Order Type:" + financeOrderObject.getApplyType());
+        FinanceOrder financeOrder = new FinanceOrder();
+        financeOrder.setApplyType(financeOrderObject.getApplyType());
         if (!userSession.getUser().getVerifystatus().equals("审核通过")) return Result.error(ErrorMessage.User_Company_Not_AuditSuccess);
         List<FinanceOrder> financeOrderList = orderRepository.findByUserIdAndCreateTimeGreaterThan(userSession.getUser().getId(), java.sql.Date.valueOf(LocalDate.now()));
         if (financeOrderList != null && financeOrderList.size() >= 2) return Result.error(ErrorMessage.User_Finance_Times);

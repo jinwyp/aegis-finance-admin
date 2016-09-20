@@ -1,7 +1,6 @@
 package com.yimei.finance.controllers.admin.tpl;
 
 import com.yimei.finance.entity.tpl.TaskMess;
-import io.swagger.annotations.Api;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.*;
 import org.activiti.engine.impl.RepositoryServiceImpl;
@@ -10,7 +9,6 @@ import org.activiti.engine.runtime.Execution;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +27,9 @@ import java.util.Map;
  * Created by wangqi on 16/8/9.
  */
 
-@Api(tags = {"example"})
-@Controller
-@RequestMapping("/tpl")
+//@Api(tags = {"example"})
+//@Controller
+//@RequestMapping("/tpl")
 public class MyController {
 
     @Autowired

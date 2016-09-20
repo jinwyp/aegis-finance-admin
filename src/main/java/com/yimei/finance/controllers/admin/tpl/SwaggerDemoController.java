@@ -11,8 +11,8 @@ import java.util.*;
 /**
  * Created by wangqi on 16/8/10.
  */
-@RestController
-@RequestMapping("/swaggerdemo")
+//@RestController
+//@RequestMapping("/swaggerdemo")
 public class SwaggerDemoController {
     static Map<Long, UserTest> users = Collections.synchronizedMap(new HashMap<Long, UserTest>());
 
