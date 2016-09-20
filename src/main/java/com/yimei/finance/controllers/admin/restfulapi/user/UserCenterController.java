@@ -80,7 +80,7 @@ public class UserCenterController {
     public Result getPersonalWaitClaimTasksMethod(Page page) {
         List<String> groupIds = userService.getUserGroupIdList(adminSession.getUser().getId());
         if (groupIds != null && groupIds.size() != 0) {
-            List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByProcessInstanceId().orderByTaskCreateTime().desc().list();
+            List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
             page.setTotal(Long.valueOf(taskList.size()));
             int toIndex = page.getPage() * page.getCount() < taskList.size() ? page.getPage() * page.getCount() : taskList.size();
             Result result = workFlowService.changeTaskObject(taskList.subList(page.getOffset(), toIndex));
@@ -95,7 +95,7 @@ public class UserCenterController {
     @ApiOperation(value = "个人已处理任务列表", notes = "个人已处理任务列表", response = HistoryTaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalHistoryTasksMethod(Page page) {
-        List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByProcessDefinitionId().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
+        List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
         page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
         Long toIndex = page.getPage() * page.getCount() < page.getTotal() ? page.getPage() * page.getCount() : page.getTotal();
         Result result = workFlowService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), Math.toIntExact(toIndex)));
