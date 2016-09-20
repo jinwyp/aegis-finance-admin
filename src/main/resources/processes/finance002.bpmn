@@ -1,109 +1,109 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema" expressionLanguage="http://www.w3.org/1999/XPath" targetNamespace="http://www.activiti.org/test" id="m1473526000624" name="">
-  <process id="financingMYDWorkFlow" name="煤易贷" isExecutable="true" isClosed="false" processType="None">
-    <startEvent id="startWorkFlow" name="客户发起申请"></startEvent>
-    <userTask id="assignOnlineTrader" name="分配线上交易员" activiti:candidateGroups="GROUP00001">
-      <documentation>分配线上交易员。</documentation>
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<definitions xmlns="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:activiti="http://activiti.org/bpmn" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:omgdc="http://www.omg.org/spec/DD/20100524/DC" xmlns:omgdi="http://www.omg.org/spec/DD/20100524/DI" xmlns:tns="http://www.activiti.org/test" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" expressionLanguage="http://www.w3.org/1999/XPath" id="m1473526000624" name="" targetNamespace="http://www.activiti.org/test" typeLanguage="http://www.w3.org/2001/XMLSchema">
+  <process id="financingMYDWorkFlow" isClosed="false" isExecutable="true" name="煤易贷" processType="None">
+    <startEvent id="startWorkFlow" name="客户发起申请"/>
+    <userTask activiti:candidateGroups="GROUP00001" activiti:exclusive="true" id="assignOnlineTrader" name="分配线上交易员">
+      <documentation id="assignOnlineTrader_D_1"><![CDATA[分配线上交易员。]]></documentation>
     </userTask>
-    <sequenceFlow id="flow1" sourceRef="startWorkFlow" targetRef="assignOnlineTrader"></sequenceFlow>
-    <userTask id="onlineTraderAudit" name="线上交易员审核">
-      <documentation>线上交易员填写材料。</documentation>
+    <sequenceFlow id="flow1" sourceRef="startWorkFlow" targetRef="assignOnlineTrader"/>
+    <userTask activiti:exclusive="true" id="onlineTraderAudit" name="线上交易员审核">
+      <documentation id="onlineTraderAudit_D_1"><![CDATA[线上交易员填写材料。]]></documentation>
     </userTask>
-    <userTask id="assignSalesman" name="分配业务员" activiti:candidateGroups="GROUP00003">
-      <documentation>分配业务员</documentation>
+    <userTask activiti:candidateGroups="GROUP00003" activiti:exclusive="true" id="assignSalesman" name="分配业务员">
+      <documentation id="assignSalesman_D_1"><![CDATA[分配业务员。]]></documentation>
     </userTask>
-    <userTask id="salesmanAudit" name="业务员审核">
-      <documentation>业务员审核并填写材料。</documentation>
+    <userTask activiti:exclusive="true" id="salesmanAudit" name="业务员审核">
+      <documentation id="salesmanAudit_D_1"><![CDATA[业务员审核并填写材料。]]></documentation>
     </userTask>
-    <sequenceFlow id="flow4" sourceRef="assignSalesman" targetRef="salesmanAudit"></sequenceFlow>
-    <exclusiveGateway id="exclusivegateway1" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="flow5" sourceRef="salesmanAudit" targetRef="exclusivegateway1"></sequenceFlow>
-    <endEvent id="EndBySalesman" name="业务员审核不通过，流程结束。"></endEvent>
+    <sequenceFlow id="flow4" sourceRef="assignSalesman" targetRef="salesmanAudit"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway1" name="Exclusive Gateway"/>
+    <sequenceFlow id="flow5" sourceRef="salesmanAudit" targetRef="exclusivegateway1"/>
+    <endEvent id="EndBySalesman" name="业务员审核不通过，流程结束。"/>
     <sequenceFlow id="flow6" name="审核不通过" sourceRef="exclusivegateway1" targetRef="EndBySalesman">
-      <documentation>业务员审核不通过。</documentation>
+      <documentation id="flow6_D_1"><![CDATA[业务员审核不通过。]]></documentation>
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${salesmanAudit == 0}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="assignInvestigator" name="分配尽调员" activiti:candidateGroups="GROUP00005">
-      <documentation>分配尽调员。</documentation>
+    <userTask activiti:candidateGroups="GROUP00005" activiti:exclusive="true" id="assignInvestigator" name="分配尽调员">
+      <documentation id="assignInvestigator_D_1"><![CDATA[分配尽调员。]]></documentation>
     </userTask>
-    <userTask id="investigatorAudit" name="尽调员审核">
-      <documentation>尽调员审核。</documentation>
+    <userTask activiti:exclusive="true" id="investigatorAudit" name="尽调员审核">
+      <documentation id="investigatorAudit_D_1"><![CDATA[尽调员审核。]]></documentation>
     </userTask>
-    <sequenceFlow id="flow8" sourceRef="assignInvestigator" targetRef="investigatorAudit"></sequenceFlow>
-    <exclusiveGateway id="exclusivegateway2" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="flow9" sourceRef="investigatorAudit" targetRef="exclusivegateway2"></sequenceFlow>
-    <userTask id="salesmanSupplyInvestigationMaterial" name="业务员补充尽调材料">
-      <documentation>业务员补充尽调员材料。</documentation>
+    <sequenceFlow id="flow8" sourceRef="assignInvestigator" targetRef="investigatorAudit"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway2" name="Exclusive Gateway"/>
+    <sequenceFlow id="flow9" sourceRef="investigatorAudit" targetRef="exclusivegateway2"/>
+    <userTask activiti:exclusive="true" id="salesmanSupplyInvestigationMaterial" name="业务员补充尽调材料">
+      <documentation id="salesmanSupplyInvestigationMaterial_D_1"><![CDATA[业务员补充尽调员材料。]]></documentation>
     </userTask>
     <sequenceFlow id="flow10" name="需要补充材料" sourceRef="exclusivegateway2" targetRef="salesmanSupplyInvestigationMaterial">
-      <documentation>需要业务员补充尽调材料。</documentation>
+      <documentation id="flow10_D_1"><![CDATA[需要业务员补充尽调材料。]]></documentation>
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needSalesmanSupplyInvestigationMaterial == 1}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow11" sourceRef="salesmanSupplyInvestigationMaterial" targetRef="investigatorAudit"></sequenceFlow>
-    <userTask id="assignRiskManager" name="分配风控人员" activiti:candidateGroups="GROUP00009">
-      <documentation>分配风控人员。</documentation>
+    <sequenceFlow id="flow11" sourceRef="salesmanSupplyInvestigationMaterial" targetRef="investigatorAudit"/>
+    <userTask activiti:candidateGroups="GROUP00009" activiti:exclusive="true" id="assignRiskManager" name="分配风控人员">
+      <documentation id="assignRiskManager_D_1"><![CDATA[分配风控人员。]]></documentation>
     </userTask>
-    <userTask id="riskManagerAudit" name="风控人员审核">
-      <documentation>风控人员审核</documentation>
+    <userTask activiti:exclusive="true" id="riskManagerAudit" name="风控人员审核">
+      <documentation id="riskManagerAudit_D_1"><![CDATA[风控人员审核。]]></documentation>
     </userTask>
-    <sequenceFlow id="flow15" sourceRef="assignRiskManager" targetRef="riskManagerAudit"></sequenceFlow>
-    <exclusiveGateway id="exclusivegateway4" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="flow16" sourceRef="riskManagerAudit" targetRef="exclusivegateway4"></sequenceFlow>
-    <exclusiveGateway id="exclusivegateway5" name="Exclusive Gateway"></exclusiveGateway>
+    <sequenceFlow id="flow15" sourceRef="assignRiskManager" targetRef="riskManagerAudit"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway4" name="Exclusive Gateway"/>
+    <sequenceFlow id="flow16" sourceRef="riskManagerAudit" targetRef="exclusivegateway4"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway5" name="Exclusive Gateway"/>
     <sequenceFlow id="flow19" sourceRef="exclusivegateway4" targetRef="exclusivegateway5">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needSalesmanSupplyRiskManagerMaterial == 0}]]></conditionExpression>
     </sequenceFlow>
-    <endEvent id="EndByRiskManager" name="风控人员审核不通过，流程结束。"></endEvent>
+    <endEvent id="EndByRiskManager" name="风控人员审核不通过，流程结束。"/>
     <sequenceFlow id="flow20" name="审核不通过" sourceRef="exclusivegateway5" targetRef="EndByRiskManager">
-      <documentation>风控人员审核不通过。</documentation>
+      <documentation id="flow20_D_1"><![CDATA[风控人员审核不通过。]]></documentation>
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${riskManagerAudit == 0}]]></conditionExpression>
     </sequenceFlow>
     <endEvent id="completeWorkFlowSuccess" name="审核通过，流程完成。">
-      <documentation>流程完成。</documentation>
+      <documentation id="completeWorkFlowSuccess_D_1"><![CDATA[流程完成。]]></documentation>
     </endEvent>
-    <sequenceFlow id="flow23" sourceRef="assignOnlineTrader" targetRef="onlineTraderAudit"></sequenceFlow>
-    <exclusiveGateway id="exclusivegateway6" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="flow24" sourceRef="onlineTraderAudit" targetRef="exclusivegateway6"></sequenceFlow>
+    <sequenceFlow id="flow23" sourceRef="assignOnlineTrader" targetRef="onlineTraderAudit"/>
+    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway6" name="Exclusive Gateway"/>
+    <sequenceFlow id="flow24" sourceRef="onlineTraderAudit" targetRef="exclusivegateway6"/>
     <sequenceFlow id="flow25" name="审核通过" sourceRef="exclusivegateway6" targetRef="assignSalesman">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${onlineTraderAudit == 1}]]></conditionExpression>
     </sequenceFlow>
-    <endEvent id="EndByOnlineTrader" name="线上交易员审核不通过，流程结束。"></endEvent>
+    <endEvent id="EndByOnlineTrader" name="线上交易员审核不通过，流程结束。"/>
     <sequenceFlow id="flow26" name="审核不通过" sourceRef="exclusivegateway6" targetRef="EndByOnlineTrader">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${onlineTraderAudit == 0}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="assignSupervisor" name="分配监管员" activiti:candidateGroups="GROUP00007">
-      <documentation>分配监管员。</documentation>
+    <userTask activiti:candidateGroups="GROUP00007" activiti:exclusive="true" id="assignSupervisor" name="分配监管员">
+      <documentation id="assignSupervisor_D_1"><![CDATA[分配监管员。]]></documentation>
     </userTask>
-    <parallelGateway id="parallelgateway1" name="Parallel Gateway"></parallelGateway>
+    <parallelGateway gatewayDirection="Unspecified" id="parallelgateway1" name="Parallel Gateway"/>
     <sequenceFlow id="flow29" sourceRef="exclusivegateway1" targetRef="parallelgateway1">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${salesmanAudit == 1}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow30" sourceRef="parallelgateway1" targetRef="assignInvestigator"></sequenceFlow>
-    <sequenceFlow id="flow31" sourceRef="parallelgateway1" targetRef="assignSupervisor"></sequenceFlow>
-    <userTask id="supervisorAudit" name="监管员审核">
-      <documentation>监管员审核。</documentation>
+    <sequenceFlow id="flow30" sourceRef="parallelgateway1" targetRef="assignInvestigator"/>
+    <sequenceFlow id="flow31" sourceRef="parallelgateway1" targetRef="assignSupervisor"/>
+    <userTask activiti:exclusive="true" id="supervisorAudit" name="监管员审核">
+      <documentation id="supervisorAudit_D_1"><![CDATA[监管员审核。]]></documentation>
     </userTask>
-    <sequenceFlow id="flow32" sourceRef="assignSupervisor" targetRef="supervisorAudit"></sequenceFlow>
-    <userTask id="salesmanSupplySupervisionMaterial" name="业务员补充监管材料">
-      <documentation>业务员补充监管员材料。</documentation>
+    <sequenceFlow id="flow32" sourceRef="assignSupervisor" targetRef="supervisorAudit"/>
+    <userTask activiti:exclusive="true" id="salesmanSupplySupervisionMaterial" name="业务员补充监管材料">
+      <documentation id="salesmanSupplySupervisionMaterial_D_1"><![CDATA[业务员补充监管员材料。]]></documentation>
     </userTask>
-    <exclusiveGateway id="exclusivegateway7" name="Exclusive Gateway"></exclusiveGateway>
-    <sequenceFlow id="flow34" sourceRef="supervisorAudit" targetRef="exclusivegateway7"></sequenceFlow>
+    <exclusiveGateway gatewayDirection="Unspecified" id="exclusivegateway7" name="Exclusive Gateway"/>
+    <sequenceFlow id="flow34" sourceRef="supervisorAudit" targetRef="exclusivegateway7"/>
     <sequenceFlow id="flow35" name="需要补充材料" sourceRef="exclusivegateway7" targetRef="salesmanSupplySupervisionMaterial">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needSalesmanSupplySupervisionMaterial == 1}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow36" sourceRef="salesmanSupplySupervisionMaterial" targetRef="supervisorAudit"></sequenceFlow>
-    <parallelGateway id="parallelgateway2" name="Parallel Gateway"></parallelGateway>
+    <sequenceFlow id="flow36" sourceRef="salesmanSupplySupervisionMaterial" targetRef="supervisorAudit"/>
+    <parallelGateway gatewayDirection="Unspecified" id="parallelgateway2" name="Parallel Gateway"/>
     <sequenceFlow id="flow41" sourceRef="parallelgateway2" targetRef="assignRiskManager">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needSalesmanSupplySupervisionMaterial == 0 && needSalesmanSupplyInvestigationMaterial == 0}]]></conditionExpression>
     </sequenceFlow>
-    <userTask id="salesmanSupplyRiskManagerMaterial" name="业务员补充风控材料">
-      <documentation>业务员补充风控人员材料。</documentation>
+    <userTask activiti:exclusive="true" id="salesmanSupplyRiskManagerMaterial" name="业务员补充风控材料">
+      <documentation id="salesmanSupplyRiskManagerMaterial_D_1"><![CDATA[业务员补充风控人员材料。]]></documentation>
     </userTask>
     <sequenceFlow id="flow46" sourceRef="exclusivegateway4" targetRef="salesmanSupplyRiskManagerMaterial">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needSalesmanSupplyRiskManagerMaterial == 1}]]></conditionExpression>
     </sequenceFlow>
-    <sequenceFlow id="flow47" sourceRef="salesmanSupplyRiskManagerMaterial" targetRef="riskManagerAudit"></sequenceFlow>
+    <sequenceFlow id="flow47" sourceRef="salesmanSupplyRiskManagerMaterial" targetRef="riskManagerAudit"/>
     <sequenceFlow id="flow48" name="审核通过" sourceRef="exclusivegateway5" targetRef="completeWorkFlowSuccess">
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${riskManagerAudit == 1}]]></conditionExpression>
     </sequenceFlow>
@@ -114,228 +114,372 @@
       <conditionExpression xsi:type="tFormalExpression"><![CDATA[${needSalesmanSupplySupervisionMaterial == 0}]]></conditionExpression>
     </sequenceFlow>
   </process>
-  <bpmndi:BPMNDiagram id="BPMNDiagram_financingMYDWorkFlow">
-    <bpmndi:BPMNPlane bpmnElement="financingMYDWorkFlow" id="BPMNPlane_financingMYDWorkFlow">
-      <bpmndi:BPMNShape bpmnElement="startWorkFlow" id="BPMNShape_startWorkFlow">
-        <omgdc:Bounds height="35.0" width="35.0" x="60.0" y="12.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="assignOnlineTrader" id="BPMNShape_assignOnlineTrader">
-        <omgdc:Bounds height="55.0" width="105.0" x="25.0" y="64.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="onlineTraderAudit" id="BPMNShape_onlineTraderAudit">
-        <omgdc:Bounds height="55.0" width="105.0" x="25.0" y="140.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="assignSalesman" id="BPMNShape_assignSalesman">
-        <omgdc:Bounds height="55.0" width="105.0" x="25.0" y="287.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="salesmanAudit" id="BPMNShape_salesmanAudit">
-        <omgdc:Bounds height="55.0" width="105.0" x="25.0" y="367.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="BPMNShape_exclusivegateway1">
-        <omgdc:Bounds height="32.0" width="32.0" x="160.0" y="374.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="EndBySalesman" id="BPMNShape_EndBySalesman">
-        <omgdc:Bounds height="35.0" width="35.0" x="163.0" y="298.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="assignInvestigator" id="BPMNShape_assignInvestigator">
-        <omgdc:Bounds height="55.0" width="105.0" x="310.0" y="370.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="investigatorAudit" id="BPMNShape_investigatorAudit">
-        <omgdc:Bounds height="55.0" width="105.0" x="460.0" y="368.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="BPMNShape_exclusivegateway2">
-        <omgdc:Bounds height="32.0" width="32.0" x="600.0" y="377.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="salesmanSupplyInvestigationMaterial" id="BPMNShape_salesmanSupplyInvestigationMaterial">
-        <omgdc:Bounds height="55.0" width="105.0" x="460.0" y="288.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="assignRiskManager" id="BPMNShape_assignRiskManager">
-        <omgdc:Bounds height="55.0" width="105.0" x="760.0" y="287.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="riskManagerAudit" id="BPMNShape_riskManagerAudit">
-        <omgdc:Bounds height="55.0" width="105.0" x="900.0" y="287.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway4" id="BPMNShape_exclusivegateway4">
-        <omgdc:Bounds height="32.0" width="32.0" x="1045.0" y="294.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway5" id="BPMNShape_exclusivegateway5">
-        <omgdc:Bounds height="32.0" width="32.0" x="1125.0" y="294.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="EndByRiskManager" id="BPMNShape_EndByRiskManager">
-        <omgdc:Bounds height="35.0" width="35.0" x="1128.0" y="214.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="completeWorkFlowSuccess" id="BPMNShape_completeWorkFlowSuccess">
-        <omgdc:Bounds height="35.0" width="35.0" x="1210.0" y="297.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway6" id="BPMNShape_exclusivegateway6">
-        <omgdc:Bounds height="32.0" width="32.0" x="57.0" y="220.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="EndByOnlineTrader" id="BPMNShape_EndByOnlineTrader">
-        <omgdc:Bounds height="35.0" width="35.0" x="146.0" y="223.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="assignSupervisor" id="BPMNShape_assignSupervisor">
-        <omgdc:Bounds height="55.0" width="105.0" x="310.0" y="213.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="parallelgateway1" id="BPMNShape_parallelgateway1">
-        <omgdc:Bounds height="32.0" width="32.0" x="230.0" y="375.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="supervisorAudit" id="BPMNShape_supervisorAudit">
-        <omgdc:Bounds height="55.0" width="105.0" x="460.0" y="213.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="salesmanSupplySupervisionMaterial" id="BPMNShape_salesmanSupplySupervisionMaterial">
-        <omgdc:Bounds height="55.0" width="105.0" x="460.0" y="130.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="exclusivegateway7" id="BPMNShape_exclusivegateway7">
-        <omgdc:Bounds height="32.0" width="32.0" x="600.0" y="220.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="parallelgateway2" id="BPMNShape_parallelgateway2">
-        <omgdc:Bounds height="32.0" width="32.0" x="680.0" y="294.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNShape bpmnElement="salesmanSupplyRiskManagerMaterial" id="BPMNShape_salesmanSupplyRiskManagerMaterial">
-        <omgdc:Bounds height="55.0" width="105.0" x="900.0" y="200.0"></omgdc:Bounds>
-      </bpmndi:BPMNShape>
-      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1">
-        <omgdi:waypoint x="77.0" y="47.0"></omgdi:waypoint>
-        <omgdi:waypoint x="77.0" y="64.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4">
-        <omgdi:waypoint x="77.0" y="342.0"></omgdi:waypoint>
-        <omgdi:waypoint x="77.0" y="367.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5">
-        <omgdi:waypoint x="130.0" y="394.0"></omgdi:waypoint>
-        <omgdi:waypoint x="160.0" y="390.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6">
-        <omgdi:waypoint x="176.0" y="374.0"></omgdi:waypoint>
-        <omgdi:waypoint x="180.0" y="333.0"></omgdi:waypoint>
+  <bpmndi:BPMNDiagram documentation="background=#3C3F41;count=1;horizontalcount=2;orientation=0;width=842.4;height=1195.2;imageableWidth=832.4;imageableHeight=1185.2;imageableX=5.0;imageableY=5.0" id="Diagram-_1" name="New Diagram">
+    <bpmndi:BPMNPlane bpmnElement="financingMYDWorkFlow">
+      <bpmndi:BPMNShape bpmnElement="startWorkFlow" id="Shape-startWorkFlow">
+        <omgdc:Bounds height="32.0" width="32.0" x="60.0" y="12.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="55.0" x="153.0" y="345.0"></omgdc:Bounds>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="assignOnlineTrader" id="Shape-assignOnlineTrader">
+        <omgdc:Bounds height="55.0" width="105.0" x="25.0" y="64.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="onlineTraderAudit" id="Shape-onlineTraderAudit">
+        <omgdc:Bounds height="55.0" width="105.0" x="25.0" y="140.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="assignSalesman" id="Shape-assignSalesman">
+        <omgdc:Bounds height="55.0" width="105.0" x="25.0" y="287.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="salesmanAudit" id="Shape-salesmanAudit">
+        <omgdc:Bounds height="55.0" width="105.0" x="25.0" y="367.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway1" id="Shape-exclusivegateway1" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="160.0" y="374.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndBySalesman" id="Shape-EndBySalesman">
+        <omgdc:Bounds height="32.0" width="32.0" x="163.0" y="298.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="assignInvestigator" id="Shape-assignInvestigator">
+        <omgdc:Bounds height="55.0" width="105.0" x="310.0" y="370.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="investigatorAudit" id="Shape-investigatorAudit">
+        <omgdc:Bounds height="55.0" width="105.0" x="460.0" y="368.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway2" id="Shape-exclusivegateway2" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="600.0" y="377.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="salesmanSupplyInvestigationMaterial" id="Shape-salesmanSupplyInvestigationMaterial">
+        <omgdc:Bounds height="55.0" width="105.0" x="460.0" y="288.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="assignRiskManager" id="Shape-assignRiskManager">
+        <omgdc:Bounds height="55.0" width="105.0" x="760.0" y="287.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="riskManagerAudit" id="Shape-riskManagerAudit">
+        <omgdc:Bounds height="55.0" width="105.0" x="900.0" y="287.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway4" id="Shape-exclusivegateway4" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="1045.0" y="294.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway5" id="Shape-exclusivegateway5" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="1125.0" y="294.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndByRiskManager" id="Shape-EndByRiskManager">
+        <omgdc:Bounds height="32.0" width="32.0" x="1128.0" y="214.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="completeWorkFlowSuccess" id="Shape-completeWorkFlowSuccess">
+        <omgdc:Bounds height="32.0" width="32.0" x="1210.0" y="297.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway6" id="Shape-exclusivegateway6" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="57.0" y="220.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="EndByOnlineTrader" id="Shape-EndByOnlineTrader">
+        <omgdc:Bounds height="32.0" width="32.0" x="146.0" y="223.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="assignSupervisor" id="Shape-assignSupervisor">
+        <omgdc:Bounds height="55.0" width="105.0" x="310.0" y="213.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway1" id="Shape-parallelgateway1">
+        <omgdc:Bounds height="32.0" width="32.0" x="230.0" y="375.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="supervisorAudit" id="Shape-supervisorAudit">
+        <omgdc:Bounds height="55.0" width="105.0" x="460.0" y="213.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="salesmanSupplySupervisionMaterial" id="Shape-salesmanSupplySupervisionMaterial">
+        <omgdc:Bounds height="55.0" width="105.0" x="460.0" y="130.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="exclusivegateway7" id="Shape-exclusivegateway7" isMarkerVisible="false">
+        <omgdc:Bounds height="32.0" width="32.0" x="600.0" y="220.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="parallelgateway2" id="Shape-parallelgateway2">
+        <omgdc:Bounds height="32.0" width="32.0" x="680.0" y="294.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="32.0" width="32.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape bpmnElement="salesmanSupplyRiskManagerMaterial" id="Shape-salesmanSupplyRiskManagerMaterial">
+        <omgdc:Bounds height="55.0" width="105.0" x="900.0" y="200.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="55.0" width="105.0" x="0.0" y="0.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge bpmnElement="flow46" id="BPMNEdge_flow46" sourceElement="exclusivegateway4" targetElement="salesmanSupplyRiskManagerMaterial">
+        <omgdi:waypoint x="1063.0" y="296.0"/>
+        <omgdi:waypoint x="1063.0" y="229.0"/>
+        <omgdi:waypoint x="1005.0" y="229.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8">
-        <omgdi:waypoint x="415.0" y="397.0"></omgdi:waypoint>
-        <omgdi:waypoint x="460.0" y="395.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9">
-        <omgdi:waypoint x="565.0" y="395.0"></omgdi:waypoint>
-        <omgdi:waypoint x="600.0" y="393.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10">
-        <omgdi:waypoint x="616.0" y="377.0"></omgdi:waypoint>
-        <omgdi:waypoint x="619.0" y="315.0"></omgdi:waypoint>
-        <omgdi:waypoint x="565.0" y="315.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow47" id="BPMNEdge_flow47" sourceElement="salesmanSupplyRiskManagerMaterial" targetElement="riskManagerAudit">
+        <omgdi:waypoint x="952.5" y="255.0"/>
+        <omgdi:waypoint x="952.5" y="287.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="66.0" x="587.0" y="345.0"></omgdc:Bounds>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11">
-        <omgdi:waypoint x="512.0" y="343.0"></omgdi:waypoint>
-        <omgdi:waypoint x="512.0" y="368.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15">
-        <omgdi:waypoint x="865.0" y="314.0"></omgdi:waypoint>
-        <omgdi:waypoint x="900.0" y="314.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16">
-        <omgdi:waypoint x="1005.0" y="314.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1045.0" y="310.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19">
-        <omgdi:waypoint x="1077.0" y="310.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1125.0" y="310.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20">
-        <omgdi:waypoint x="1141.0" y="294.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1145.0" y="249.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow48" id="BPMNEdge_flow48" sourceElement="exclusivegateway5" targetElement="completeWorkFlowSuccess">
+        <omgdi:waypoint x="1157.0" y="310.0"/>
+        <omgdi:waypoint x="1210.0" y="313.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="55.0" x="1115.0" y="261.0"></omgdc:Bounds>
+          <omgdc:Bounds height="16.0" width="44.0" x="1175.0" y="314.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23">
-        <omgdi:waypoint x="77.0" y="119.0"></omgdi:waypoint>
-        <omgdi:waypoint x="77.0" y="140.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24">
-        <omgdi:waypoint x="77.0" y="195.0"></omgdi:waypoint>
-        <omgdi:waypoint x="73.0" y="220.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25">
-        <omgdi:waypoint x="73.0" y="252.0"></omgdi:waypoint>
-        <omgdi:waypoint x="77.0" y="287.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow49" id="BPMNEdge_flow49" sourceElement="exclusivegateway2" targetElement="parallelgateway2">
+        <omgdi:waypoint x="629.0" y="396.0"/>
+        <omgdi:waypoint x="700.0" y="396.0"/>
+        <omgdi:waypoint x="700.0" y="322.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="44.0" x="86.0" y="259.0"></omgdc:Bounds>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26">
-        <omgdi:waypoint x="89.0" y="236.0"></omgdi:waypoint>
-        <omgdi:waypoint x="146.0" y="240.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow1" id="BPMNEdge_flow1" sourceElement="startWorkFlow" targetElement="assignOnlineTrader">
+        <omgdi:waypoint x="76.0" y="44.0"/>
+        <omgdi:waypoint x="76.0" y="64.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="55.0" x="91.0" y="220.0"></omgdc:Bounds>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29">
-        <omgdi:waypoint x="192.0" y="390.0"></omgdi:waypoint>
-        <omgdi:waypoint x="230.0" y="391.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow30" id="BPMNEdge_flow30">
-        <omgdi:waypoint x="262.0" y="391.0"></omgdi:waypoint>
-        <omgdi:waypoint x="310.0" y="397.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31">
-        <omgdi:waypoint x="246.0" y="375.0"></omgdi:waypoint>
-        <omgdi:waypoint x="250.0" y="240.0"></omgdi:waypoint>
-        <omgdi:waypoint x="310.0" y="240.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32">
-        <omgdi:waypoint x="415.0" y="240.0"></omgdi:waypoint>
-        <omgdi:waypoint x="460.0" y="240.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow34" id="BPMNEdge_flow34">
-        <omgdi:waypoint x="565.0" y="240.0"></omgdi:waypoint>
-        <omgdi:waypoint x="600.0" y="236.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow35" id="BPMNEdge_flow35">
-        <omgdi:waypoint x="616.0" y="220.0"></omgdi:waypoint>
-        <omgdi:waypoint x="619.0" y="156.0"></omgdi:waypoint>
-        <omgdi:waypoint x="565.0" y="157.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow4" id="BPMNEdge_flow4" sourceElement="assignSalesman" targetElement="salesmanAudit">
+        <omgdi:waypoint x="77.5" y="342.0"/>
+        <omgdi:waypoint x="77.5" y="367.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="66.0" x="587.0" y="190.0"></omgdc:Bounds>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow36" id="BPMNEdge_flow36">
-        <omgdi:waypoint x="512.0" y="185.0"></omgdi:waypoint>
-        <omgdi:waypoint x="512.0" y="213.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow41" id="BPMNEdge_flow41">
-        <omgdi:waypoint x="712.0" y="310.0"></omgdi:waypoint>
-        <omgdi:waypoint x="760.0" y="314.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow46" id="BPMNEdge_flow46">
-        <omgdi:waypoint x="1061.0" y="294.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1063.0" y="229.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1005.0" y="227.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow47" id="BPMNEdge_flow47">
-        <omgdi:waypoint x="952.0" y="255.0"></omgdi:waypoint>
-        <omgdi:waypoint x="952.0" y="287.0"></omgdi:waypoint>
-      </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow48" id="BPMNEdge_flow48">
-        <omgdi:waypoint x="1157.0" y="310.0"></omgdi:waypoint>
-        <omgdi:waypoint x="1210.0" y="314.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow5" id="BPMNEdge_flow5" sourceElement="salesmanAudit" targetElement="exclusivegateway1">
+        <omgdi:waypoint x="130.0" y="394.5"/>
+        <omgdi:waypoint x="160.0" y="390.0"/>
         <bpmndi:BPMNLabel>
-          <omgdc:Bounds height="16.0" width="44.0" x="1175.0" y="314.0"></omgdc:Bounds>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
         </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow49" id="BPMNEdge_flow49">
-        <omgdi:waypoint x="632.0" y="393.0"></omgdi:waypoint>
-        <omgdi:waypoint x="700.0" y="396.0"></omgdi:waypoint>
-        <omgdi:waypoint x="696.0" y="326.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow6" id="BPMNEdge_flow6" sourceElement="exclusivegateway1" targetElement="EndBySalesman">
+        <omgdi:waypoint x="177.5" y="375.5"/>
+        <omgdi:waypoint x="177.5" y="329.929532322074"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="55.0" x="153.0" y="345.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
-      <bpmndi:BPMNEdge bpmnElement="flow50" id="BPMNEdge_flow50">
-        <omgdi:waypoint x="632.0" y="236.0"></omgdi:waypoint>
-        <omgdi:waypoint x="700.0" y="240.0"></omgdi:waypoint>
-        <omgdi:waypoint x="696.0" y="294.0"></omgdi:waypoint>
+      <bpmndi:BPMNEdge bpmnElement="flow8" id="BPMNEdge_flow8" sourceElement="assignInvestigator" targetElement="investigatorAudit">
+        <omgdi:waypoint x="415.0" y="397.5"/>
+        <omgdi:waypoint x="460.0" y="395.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow9" id="BPMNEdge_flow9" sourceElement="investigatorAudit" targetElement="exclusivegateway2">
+        <omgdi:waypoint x="565.0" y="395.5"/>
+        <omgdi:waypoint x="600.0" y="393.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow41" id="BPMNEdge_flow41" sourceElement="parallelgateway2" targetElement="assignRiskManager">
+        <omgdi:waypoint x="712.0" y="310.0"/>
+        <omgdi:waypoint x="760.0" y="314.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow35" id="BPMNEdge_flow35" sourceElement="exclusivegateway7" targetElement="salesmanSupplySupervisionMaterial">
+        <omgdi:waypoint x="619.0" y="223.0"/>
+        <omgdi:waypoint x="619.0" y="156.0"/>
+        <omgdi:waypoint x="565.0" y="156.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="66.0" x="587.0" y="190.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow36" id="BPMNEdge_flow36" sourceElement="salesmanSupplySupervisionMaterial" targetElement="supervisorAudit">
+        <omgdi:waypoint x="512.5" y="185.0"/>
+        <omgdi:waypoint x="512.5" y="213.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow31" id="BPMNEdge_flow31" sourceElement="parallelgateway1" targetElement="assignSupervisor">
+        <omgdi:waypoint x="250.0" y="379.0"/>
+        <omgdi:waypoint x="250.0" y="240.0"/>
+        <omgdi:waypoint x="310.0" y="240.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow32" id="BPMNEdge_flow32" sourceElement="assignSupervisor" targetElement="supervisorAudit">
+        <omgdi:waypoint x="415.0" y="240.5"/>
+        <omgdi:waypoint x="460.0" y="240.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow34" id="BPMNEdge_flow34" sourceElement="supervisorAudit" targetElement="exclusivegateway7">
+        <omgdi:waypoint x="565.0" y="240.5"/>
+        <omgdi:waypoint x="600.0" y="236.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow30" id="BPMNEdge_flow30" sourceElement="parallelgateway1" targetElement="assignInvestigator">
+        <omgdi:waypoint x="262.0" y="391.0"/>
+        <omgdi:waypoint x="310.0" y="397.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow29" id="BPMNEdge_flow29" sourceElement="exclusivegateway1" targetElement="parallelgateway1">
+        <omgdi:waypoint x="192.0" y="390.0"/>
+        <omgdi:waypoint x="230.0" y="391.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow24" id="BPMNEdge_flow24" sourceElement="onlineTraderAudit" targetElement="exclusivegateway6">
+        <omgdi:waypoint x="73.0" y="195.0"/>
+        <omgdi:waypoint x="73.0" y="220.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow25" id="BPMNEdge_flow25" sourceElement="exclusivegateway6" targetElement="assignSalesman">
+        <omgdi:waypoint x="73.0" y="252.0"/>
+        <omgdi:waypoint x="73.0" y="287.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="44.0" x="86.0" y="259.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow26" id="BPMNEdge_flow26" sourceElement="exclusivegateway6" targetElement="EndByOnlineTrader">
+        <omgdi:waypoint x="89.0" y="236.0"/>
+        <omgdi:waypoint x="146.0" y="239.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="55.0" x="91.0" y="220.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow20" id="BPMNEdge_flow20" sourceElement="exclusivegateway5" targetElement="EndByRiskManager">
+        <omgdi:waypoint x="1142.5" y="295.5"/>
+        <omgdi:waypoint x="1142.5" y="245.929532322074"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="55.0" x="1115.0" y="261.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow23" id="BPMNEdge_flow23" sourceElement="assignOnlineTrader" targetElement="onlineTraderAudit">
+        <omgdi:waypoint x="77.5" y="119.0"/>
+        <omgdi:waypoint x="77.5" y="140.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow19" id="BPMNEdge_flow19" sourceElement="exclusivegateway4" targetElement="exclusivegateway5">
+        <omgdi:waypoint x="1077.0" y="310.0"/>
+        <omgdi:waypoint x="1125.0" y="310.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow15" id="BPMNEdge_flow15" sourceElement="assignRiskManager" targetElement="riskManagerAudit">
+        <omgdi:waypoint x="865.0" y="314.5"/>
+        <omgdi:waypoint x="900.0" y="314.5"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow16" id="BPMNEdge_flow16" sourceElement="riskManagerAudit" targetElement="exclusivegateway4">
+        <omgdi:waypoint x="1005.0" y="314.5"/>
+        <omgdi:waypoint x="1045.0" y="310.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow10" id="BPMNEdge_flow10" sourceElement="exclusivegateway2" targetElement="salesmanSupplyInvestigationMaterial">
+        <omgdi:waypoint x="619.0" y="380.0"/>
+        <omgdi:waypoint x="619.0" y="315.0"/>
+        <omgdi:waypoint x="565.0" y="315.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="16.0" width="66.0" x="587.0" y="345.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow11" id="BPMNEdge_flow11" sourceElement="salesmanSupplyInvestigationMaterial" targetElement="investigatorAudit">
+        <omgdi:waypoint x="512.5" y="343.0"/>
+        <omgdi:waypoint x="512.5" y="368.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge bpmnElement="flow50" id="BPMNEdge_flow50" sourceElement="exclusivegateway7" targetElement="parallelgateway2">
+        <omgdi:waypoint x="628.0" y="240.0"/>
+        <omgdi:waypoint x="700.0" y="240.0"/>
+        <omgdi:waypoint x="700.0" y="298.0"/>
+        <bpmndi:BPMNLabel>
+          <omgdc:Bounds height="-1.0" width="-1.0" x="-1.0" y="-1.0"/>
+        </bpmndi:BPMNLabel>
       </bpmndi:BPMNEdge>
     </bpmndi:BPMNPlane>
   </bpmndi:BPMNDiagram>
