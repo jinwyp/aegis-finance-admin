@@ -9,13 +9,14 @@
     "removeComments": false,
     "noImplicitAny": false,
     "suppressImplicitAnyIndexErrors": true,
-    "outDir": "./jsoutput-temp-prodution",
+    "outDir": "./jsoutput",
     "rootDir": "./tssource-temp-prodution"
   },
   "exclude": [
     ".git",
     ".js",
     "js",
+    "libs",
     "node_modules"
   ]
 }
