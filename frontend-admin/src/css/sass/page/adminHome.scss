@@ -1,6 +1,7 @@
 @import '../helpers/_variables.scss';
 @import '../components/_ng2datepicker.scss';
-@import '../components/pagination';
+@import '../components/_pagination.scss';
+@import '../components/_mydatepicker.scss';
 
 
 .custom-select{
@@ -509,7 +510,7 @@
         margin:0 auto;
         font-size:14px;
         tr.item-max td{padding: 14px 20px;}
-        tr.item-min td{padding: 6px 20px;}
+        tr.item-min>td{padding: 6px 20px;}
         tr.item-title td{  padding: 11px 20px 11px 0;  }
         td.td-label{ width:190px; background-color: #f7f7f7;  }
         td.td-val{ background-color: #fcfdfd;}
@@ -556,7 +557,7 @@
 
 
         }
-        .finance-types>div{  display: inline-block;  width: 230px; height:100px; vertical-align: middle;  }
+        .finance-types>div{  display: inline-block;  width: 227px; height:100px; vertical-align: middle;  }
         .finance-types label{
           margin-top:20px;
           margin-left:20px;

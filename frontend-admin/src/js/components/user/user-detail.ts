@@ -7,7 +7,6 @@ import { Component } from '@angular/core';
 import { User, UserService } from '../../service/user';
 
 
-declare var __moduleName: string;
 
 @Component({
     selector: 'user-detail',
