@@ -17,7 +17,7 @@ var sourcePath = {
     'tsOutput'           : ['../dist/jsoutput/**/*.js'],
     'componentsTemplate' : 'js/components/**/*.html',
     'systemJsConfig'     : 'js/*.js',
-    'libs'               : 'libs/**/*.js'
+    'libs'               : 'libs/**/*'
 };
 
 var distPath = {
