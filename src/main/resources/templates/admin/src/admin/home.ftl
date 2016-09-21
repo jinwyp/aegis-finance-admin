@@ -14,6 +14,8 @@
     <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/main.css"/>
     <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/page/adminHome.css"/>
 
+    <link type="image/x-icon" rel="shortcut icon" href="/static/admin/css/images/favicon.ico" />
+
     <base href="/finance/admin/home">
 </head>
 <body>
@@ -33,7 +35,6 @@
 <script src="/static/admin/jsoutput/systemjs.config.js"></script>
 
 <#if env == 'dev' || env == 'staging' || env == 'prod' >
-<!-- Remove this statement if you want to run the on the fly transpiler -->
 <!-- 生产环境使用 bundle.js 文件 -->
 <script src="/static/admin/jsoutput/page/dependencies.bundle.js"></script>
 <script src="/static/admin/jsoutput/page/home.bundle.js"></script>
