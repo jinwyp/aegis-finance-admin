@@ -45,7 +45,7 @@
                                 </tr>
                                 <tr>
                                     <td><a href="/finance">金融</a></td>
-                                    <td><a href="${sitepage}/tender">阳光采购</a></td>
+                                    <td><a href="${bidpage}">阳光采购</a></td>
                                     <td class="padding40"><a href="${sitepage}/coalzone">煤矿专区</a></td>
                                 </tr>
                                 <tr>
@@ -69,6 +69,8 @@
                                 </tr>
                                 <tr>
                                     <td><a href="${payUrl}/">财务管理中心</a></td>
+                                    <td class="paddingRight0"><a href="${bidpage}/account">阳光采购平台</a></td>
+
                                 </tr>
                                 <tr>
                                     <td><a href="${ssoMemberUrl}/account/individualCenter">账户设置</a></td>

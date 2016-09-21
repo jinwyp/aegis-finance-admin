@@ -37,12 +37,18 @@ public class FreemarkerConfiguration extends FreeMarkerAutoConfiguration.FreeMar
     private String LOGISTICSPAGE;
     @Value("${pay.env}")
     private String PAYURL;
+    @Value("${bidpage}")
+    private String BIDPAGE;
+
 
     @Value("${info.page}")
     private String INFOPAGE;
 
     @Value("${spring.profiles}")
     private String ENV;
+
+
+
 
 
 
@@ -55,6 +61,7 @@ public class FreemarkerConfiguration extends FreeMarkerAutoConfiguration.FreeMar
         configuration.setSharedVariable("ssoMemberUrl",SSOPROTOCOL+"://"+SSOURL);
         configuration.setSharedVariable("payUrl",SSOPROTOCOL+"://"+PAYURL);
         configuration.setSharedVariable("sitepage",SITEPAGE);
+        configuration.setSharedVariable("bidpage",BIDPAGE);
         configuration.setSharedVariable("logisticspage",LOGISTICSPAGE);
         configuration.setSharedVariable("infopage",INFOPAGE);
         configuration.setSharedVariable("session", sessionMethod);
