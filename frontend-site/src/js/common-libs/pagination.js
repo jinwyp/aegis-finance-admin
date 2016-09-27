@@ -5,10 +5,7 @@ function heredoc(fn) {
     return fn.toString().replace(/^[^\/]+\/\*!?\s?/, '').replace(/\*\/[^\/]+$/, '').trim().replace(/>\s*</g, '><');
 }
 
-var paginationTemplate = heredoc(function() {
-
-    /*
-
+var paginationTemplate = `
      <nav class="pagination-financial" ms-visible="@_isShow">
      <ul class="pagination pageno">
      <li> <a aria-label="Previous" ms-class="{disabled: @isDisabled('prev', 1)}" ms-click="@_changePage($event, @currentPage-1, 'prev' )"> <span aria-hidden="true"> 上一页</span> </a> </li>
@@ -32,11 +29,8 @@ var paginationTemplate = heredoc(function() {
      <button class="iBtn pagination-button" ms-click="@_changePage($event, @inputCurrentPages)">确定</button>
      </div>
      </nav>
+    `;
 
-
-     */
-
-});
 
 avalon.component('ms-pagination', {
     template: paginationTemplate,

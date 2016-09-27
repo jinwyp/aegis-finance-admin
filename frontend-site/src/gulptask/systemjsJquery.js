@@ -63,11 +63,11 @@ gulp.task('components', function() {
 });
 
 
-gulp.task('js-release-libs', ['components'], function(){
+gulp.task('js-release-libs', function(){
     return gulp.src(sourcePath.jsPage)
         .pipe(jspm({
             //inject : true,
-            arithmetic : '- [js/page/**/*.js] - [js/common-libs/pagination.js]',
+            arithmetic : '- [js/page/**/*.js] - [js/common-libs/**/*.js]',
             fileName : 'dependencies.bundle',
             minify : true
         }))
@@ -78,14 +78,13 @@ gulp.task('js-release-page',['js-release-libs'], function(){
     return gulp.src(sourcePath.jsPage)
         .pipe(jspm({
             //inject : true,
-            minify : false,
+            minify : true,
             arithmetic : '- js/page-temp-bundle/dependencies.bundle.js'
         }))
         .pipe(gulp.dest(distPath.jsPageDevTemp));
 });
 
-
-gulp.task('js-release', ['js-release-page'], function(){
+gulp.task('js-release', ['js-release-page', 'components'], function(){
     return gulp.src(distPath.jsPageDevTemp+'**/*.js')
         .pipe(rev())
         .pipe(gulp.dest(distPath.jsPage))
@@ -95,26 +94,9 @@ gulp.task('js-release', ['js-release-page'], function(){
 
 
 
-gulp.task('js-release-dev', ['js-release-dev-libs'], function(){
-    return gulp.src(sourcePath.jsPage)
-        .pipe(jspm({
-            //inject : true,
-            arithmetic : '- js/page-temp-bundle/dependencies.bundle.js',
-            minify : false
-        }))
-        .pipe(gulp.dest(distPath.jsPageDevTemp));
-});
+gulp.task('js-release-dev', ['js-release-page']);
 
-gulp.task('js-release-dev-libs', function(){
-    return gulp.src(sourcePath.jsPage)
-        .pipe(jspm({
-            //inject : true,
-            arithmetic : '- [js/page/**/*.js] - [js/common-libs/pagination.js]',
-            fileName : 'dependencies.bundle',
-            minify : false
-        }))
-        .pipe(gulp.dest(distPath.jsPageDevTemp));
-});
+
 
 
 gulp.task('watchJs', [ 'js-release-dev'],function() {
