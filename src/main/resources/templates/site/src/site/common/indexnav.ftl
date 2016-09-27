@@ -16,7 +16,7 @@
                         <dd class="noborder"><a href="${sitepage}/sell"><i class="block"></i>需求专区</a></dd>
                     </dl>
                 </li>
-                <li class=" slideDl-right"><a href="${sitepage}/tender" class="navFist">阳光采购</a></li>
+                <li class=" slideDl-right"><a href="${bidpage}" class="navFist">阳光采购</a></li>
                 <li class=" normalLi"><a href="${sitepage}/coalzone" class="navFist">煤矿专区</a></li>
                 <li class="g-nav-finance  slideDl-left active" ><a href="/finance" class="navFist">金融</a></li>
                 <li  class="slideDl">

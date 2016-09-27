@@ -100,13 +100,6 @@ public class IndexController {
         style.setVerticalAlignment(CellStyle.VERTICAL_CENTER);
         sheet.setVerticallyCenter(true);
         sheet.setHorizontallyCenter(true);
-        sheet.setColumnWidth(0, 1200);
-        sheet.setColumnWidth(1, 6000);
-        sheet.setColumnWidth(2, 5000);
-        sheet.setColumnWidth(3, 5000);
-        sheet.setColumnWidth(4, 3000);
-        sheet.setColumnWidth(5, 5000);
-        sheet.setColumnWidth(6, 6000);
         String[] excelHeader = {"序号", "业务编号", "业务类型", "申请时间", "拟融资总金额（万元）", "使用天数", "审核状态"};
         for (int i=0; i <excelHeader.length; i++) {
             HSSFCell cell = row.createCell(i);
@@ -116,6 +109,13 @@ public class IndexController {
         SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         List<FinanceOrderObject> financeOrderList = DozerUtils.copy(financeOrderRepository.findByUserId(userSession.getUser().getId()), FinanceOrderObject.class);
         for (int i = 0; i < financeOrderList.size(); i++) {
+            sheet.autoSizeColumn(0);
+            sheet.autoSizeColumn(1);
+            sheet.autoSizeColumn(2);
+            sheet.autoSizeColumn(3);
+            sheet.autoSizeColumn(4);
+            sheet.autoSizeColumn(5);
+            sheet.autoSizeColumn(6);
             FinanceOrderObject order = financeOrderList.get(i);
             row = sheet.createRow(i+1);
             row.createCell(0).setCellValue(String.valueOf(i + 1));

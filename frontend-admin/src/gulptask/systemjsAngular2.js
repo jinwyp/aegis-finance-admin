@@ -9,20 +9,24 @@ var exec   = require('child_process').exec;
 var rev    = require('gulp-rev');
 
 var ng2Templates = require('gulp-angular-embed-templates');
-var SystemJS = require('systemjs-builder');
+var SystemJS     = require('systemjs-builder');
+var uglify       = require('gulp-uglify');
 
 var sourcePath = {
-    'ts'                 : 'js/**/*.ts',
-    'tsOutput'           : '../dist/jsoutput/**/*.js',
+    'ts'                 :  ['js/**/*.ts', '!js/libs/**/*'],
+    'tsOutput'           : ['../dist/jsoutput/**/*.js'],
     'componentsTemplate' : 'js/components/**/*.html',
-    'libs' : 'js/**/*.js'
+    'systemJsConfig'     : 'js/*.js',
+    'libs'               : 'libs/**/*'
 };
 
 var distPath = {
     'tsSourceWithHtmlTpl' : 'tssource-temp-prodution/',
-    'tsTemp'              : 'jsoutput-temp-prodution/',
+    'tsTempOutput'        : 'jsoutput/',
     'componentsTemplate'  : 'jsoutput/components/',
-    'js'                  : '../dist/js/',
+    'systemJsConfig'      : 'jsoutput/',
+    'js'                  : '../dist/jsoutput/',
+    'libs'                : '../dist/libs/',
     "manifest"            : "../dist/rev/"
 };
 
@@ -74,6 +78,8 @@ gulp.task("ts", function (cb) {
 });
 
 gulp.task('componentsTemplate', function() {
+    gulp.src(sourcePath.systemJsConfig)
+        .pipe(gulp.dest(distPath.systemJsConfig));
     return gulp.src(sourcePath.componentsTemplate)
         .pipe(gulp.dest(distPath.componentsTemplate));
 });
@@ -81,9 +87,6 @@ gulp.task('componentsTemplate', function() {
 
 
 
-gulp.task('libs', function() {
-    return gulp.src(sourcePath.libs).pipe(gulp.dest(distPath.js));
-});
 
 
 gulp.task('injectTemplate', function() {
@@ -101,17 +104,43 @@ gulp.task("ts-release", ['injectTemplate'], function (cb) {
     });
 });
 
+gulp.task('js-bundle', ['ts-release'], function () {
+    var builder = new SystemJS('', {
+        paths    : {
+            'npm:' : './node_modules/'
+        },
+        map      : {
+            'jsoutput' : 'jsoutput', // 'dist',
 
+            // angular bundles
+            '@angular/core'                     : 'npm:@angular/core/bundles/core.umd.js',
+            '@angular/common'                   : 'npm:@angular/common/bundles/common.umd.js',
+            '@angular/compiler'                 : 'npm:@angular/compiler/bundles/compiler.umd.js',
+            '@angular/platform-browser'         : 'npm:@angular/platform-browser/bundles/platform-browser.umd.js',
+            '@angular/platform-browser-dynamic' : 'npm:@angular/platform-browser-dynamic/bundles/platform-browser-dynamic.umd.js',
+            '@angular/http'                     : 'npm:@angular/http/bundles/http.umd.js',
+            '@angular/router'                   : 'npm:@angular/router/bundles/router.umd.js',
+            '@angular/forms'                    : 'npm:@angular/forms/bundles/forms.umd.js',
 
+            // other libraries
+            'rxjs'                       : 'npm:rxjs',
+            'angular2-in-memory-web-api' : 'npm:angular2-in-memory-web-api'
+        },
+        packages : {
+            'jsoutput': {defaultExtension: 'js'},
+            'rxjs'                       : {defaultExtension : 'js'},
+            'angular2-in-memory-web-api' : {main : './index.js', defaultExtension : 'js'}
+        }
+    });
 
-gulp.task('js-bundle', ['libs', 'ts-release'], function () {
-    var builder = new SystemJS(distPath.tsTemp, 'js/systemjs.config.js');
+    return builder.bundle('jsoutput/page/*.js - [jsoutput/**/*.js]', distPath.tsTempOutput + 'page/dependencies.bundle.js', { minify: false, sourceMaps: false}).then(function() {
+        console.log('Js-release Build dependencies complete');
 
-
-    return Promise.all([
-        builder.buildStatic('page/login', distPath.js + 'page/login.bundle.js', { minify: true, sourceMaps: false }),
-        builder.buildStatic('page/home', distPath.js + 'page/home.bundle.js', { minify: true, sourceMaps: false })
-    ]).then(function() {
+        return Promise.all([
+            builder.bundle('jsoutput/page/login.js - jsoutput/page/dependencies.bundle.js', distPath.js + 'page/login.bundle.js', { minify: false, sourceMaps: false }),
+            builder.bundle('jsoutput/page/home.js - jsoutput/page/dependencies.bundle.js', distPath.js + 'page/home.bundle.js', { minify: false, sourceMaps: false })
+        ])
+    }).then(function() {
         console.log('Js-release Build complete !!');
     }).catch(function(err) {
         console.log('Js-release Build error !! ');
@@ -121,8 +150,16 @@ gulp.task('js-bundle', ['libs', 'ts-release'], function () {
 });
 
 
-gulp.task('js-release', [ 'js-bundle'], function(){
+gulp.task('libs', ['js-bundle'], function() {
+    gulp.src(sourcePath.systemJsConfig).pipe(gulp.dest(distPath.js));
+    gulp.src(distPath.tsTempOutput + 'page/dependencies.bundle.js').pipe(gulp.dest(distPath.js + 'page'));
+    return gulp.src(sourcePath.libs).pipe(gulp.dest(distPath.libs));
+});
+
+
+gulp.task('js-release', ['libs'], function(){
     return gulp.src(sourcePath.tsOutput)
+        .pipe(uglify())
         .pipe(rev())
         .pipe(gulp.dest(distPath.js))
         .pipe(rev.manifest('rev-manifest-js.json'))

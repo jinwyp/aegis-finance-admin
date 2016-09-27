@@ -10,7 +10,7 @@
       <documentation>线上交易员填写材料。</documentation>
     </userTask>
     <userTask id="assignSalesman" name="分配业务员" activiti:candidateGroups="GROUP00003">
-      <documentation>分配业务员</documentation>
+      <documentation>分配业务员。</documentation>
     </userTask>
     <userTask id="salesmanAudit" name="业务员审核">
       <documentation>业务员审核并填写材料。</documentation>
@@ -48,7 +48,7 @@
       <documentation>分配风控人员。</documentation>
     </userTask>
     <userTask id="riskManagerAudit" name="风控人员审核">
-      <documentation>风控人员审核</documentation>
+      <documentation>风控人员审核。</documentation>
     </userTask>
     <sequenceFlow id="flow15" sourceRef="assignRiskManager" targetRef="riskManagerAudit"></sequenceFlow>
     <exclusiveGateway id="exclusivegateway4" name="Exclusive Gateway"></exclusiveGateway>

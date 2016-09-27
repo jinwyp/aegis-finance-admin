@@ -193,10 +193,12 @@
 <#if env == 'dev' || env == 'staging' || env == 'prod' >
 <!-- Remove this statement if you want to run the on the fly transpiler -->
 <!-- 生产环境使用 bundle.js 文件 -->
-<script src="${staticPath}/js/page/userCenterFinanceList.bundle.js"></script>
+    <script src="${staticPath}/js/page/dependencies.bundle.js"></script>
+    <script src="${staticPath}/js/page/userCenterFinanceList.bundle.js"></script>
 </#if>
 
-<!--<script src="${staticPath}/js/page-temp-bundle/userCenterFinanceList.bundle.js"></script>-->
+<script src="${staticPath}/js/page-temp-bundle/dependencies.bundle.js"></script>
+<script src="${staticPath}/js/page-temp-bundle/userCenterFinanceList.bundle.js"></script>
 <script>
     System['import']('${staticPath}/js/page/userCenterFinanceList.js')
 </script>

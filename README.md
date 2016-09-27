@@ -19,7 +19,7 @@
 ## 管理后台 admin 前端环境
 
 - 安装 Typescript 编译器。 进入 frontend-admin/src 下运行 ``` npm install -g typescript ```
-- 安装依赖, 进入 frontend-admin/src 下运行 ``` npm install --registry=https://registry.npm.taobao.org --phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs ```
+- 安装依赖, 进入 frontend-admin/src 下运行 ``` SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ npm install --registry=https://registry.npm.taobao.org --phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs ```
 - 运行 gulp dev 进行ts编译,并监视 ts 文件修改自动编译成 js
 - 调试 angular2的chrome 工具 [Augury](https://augury.angular.io/)  
 
@@ -29,11 +29,21 @@
 
 - 使用Gulp 作为前端编译工具  ``` npm install gulp -g ```  
 - 使用jspm 替代bower 作为前端包管理工具  ``` npm install jspm -g ``` [查找库](http://jspm.io/docs/installing-packages.html) [参考文章](https://www.sitepoint.com/modular-javascript-systemjs-jspm/)
-- 进入 frontend-site/src 下运行 ``` npm install ```  安装前端代码编译工具依赖库 ``` npm install --registry=https://registry.npm.taobao.org --phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs ```
+- 进入 frontend-site/src 下运行 ``` npm install ```  安装前端代码编译工具依赖库 ``` SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ npm install --registry=https://registry.npm.taobao.org --phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs ```
 - 运行 ``` jspm install ```  安装前端代码依赖库
 - [ES6 模块系统解析](https://segmentfault.com/a/1190000003410285)  [ES6 入门](http://es6.ruanyifeng.com/#docs/module)
 - 开发环境下 运行 gulp dev 进入监视 sass 文件改动自动编译css, 使用 gulp build 进行生产环境打包
 
+
+### 
+- npm 安装 node-sass 网速慢的 可以 运行 ```npm config set registry https://registry.npm.taobao.org```  
+- 然后 编辑 ~/.npmrc 加入下面内容
+```
+registry=https://registry.npm.taobao.org
+sass_binary_site=https://npm.taobao.org/mirrors/node-sass/
+phantomjs_cdnurl=http://npm.taobao.org/mirrors/phantomjs
+ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
+```
 
 ## 测试 
 
