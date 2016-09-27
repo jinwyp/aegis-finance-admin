@@ -22,7 +22,7 @@
         <span class="col-sm-4 info-label-input" *ngIf="currentTask.taskDefinitionKey===taskStatusStep.assignSupervisor">选择你要分配的监管员:</span>
         <span class="col-sm-4 info-label-input" *ngIf="currentTask.taskDefinitionKey===taskStatusStep.assignRiskManager">选择你要分配的风控员:</span>
         <div class="col-sm-4 info-val">
-            <user-select  [optionList]="userList" [(ngModel)]="selectedUser" [ngModelOptions]="{standalone: true}"></user-select>
+            <user-select  [optionList]="userList" [(ngModel)]="selectedUser" (itemChange)="itemChange()" [ngModelOptions]="{standalone: true}"></user-select>
         </div>
     </div>
     <div class="row info-item">

@@ -3,7 +3,7 @@
  */
 
 
-import {Input, Component, forwardRef} from '@angular/core';
+import {Input, Output, EventEmitter, Component, forwardRef} from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 import { User } from '../../service/user';
 
@@ -81,10 +81,14 @@ export class UserSelectComponent implements ControlValueAccessor{
         this.value = new User();
         this.onChangeCallback(this.value);
     }
-    
+
+    @Output()
+    itemChange:any = new EventEmitter();
+
     itemClick(item) {
         this.isClose = !this.isClose;
         this.value = item;
+        this.itemChange.emit();
         this.onChangeCallback(this.value);
     }
 
