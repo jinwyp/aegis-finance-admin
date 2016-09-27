@@ -51,7 +51,8 @@ gulp.task('images', function() {
 
 
 gulp.task('sprite', function () {
-    var spriteData = gulp.src(sourcePath.imagesSprites).pipe(spritesmith({
+    var spriteData = gulp.src(sourcePath.imagesSprites)
+        .pipe(spritesmith({
         imgName:  distPath.imagesSprites ,
         imgPath: distPath.imagesSpritesOutputReferringPath,
         cssName:  distPath.imagesSpritesOutput ,
