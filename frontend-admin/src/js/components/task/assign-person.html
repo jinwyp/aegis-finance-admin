@@ -22,9 +22,7 @@
         <span class="col-sm-4 info-label-input" *ngIf="currentTask.taskDefinitionKey===taskStatusStep.assignSupervisor">选择你要分配的监管员:</span>
         <span class="col-sm-4 info-label-input" *ngIf="currentTask.taskDefinitionKey===taskStatusStep.assignRiskManager">选择你要分配的风控员:</span>
         <div class="col-sm-4 info-val">
-            <select class="form-control" [(ngModel)]="selectedUser" (ngModelChange)="selectUserChange()">
-                <option *ngFor="let user of userList" [ngValue]="user">{{user.username}} - {{user.email}}</option>
-            </select>
+            <user-select  [optionList]="userList" [(ngModel)]="selectedUser" (itemChange)="itemChange()" [ngModelOptions]="{standalone: true}"></user-select>
         </div>
     </div>
     <div class="row info-item">
@@ -41,8 +39,11 @@
     </div>
     <div class="row info-item">
         <span class="col-sm-4 info-label">角色名称:</span>
-        <div class="col-sm-8 info-val">
-            <span *ngFor="let group of selectedUser.groupList">{{group.name||'--'}} <br/></span>
+        <div *ngIf="selectedUser.groupList.length > 0" class="col-sm-8 info-val">
+            <span  *ngFor="let group of selectedUser.groupList">{{group.name||'--'}} <br/></span>
+        </div>
+        <div *ngIf="selectedUser.groupList.length===0" class="col-sm-8 info-val">
+            <span>--</span>
         </div>
     </div>
     <div class="row info-item">
