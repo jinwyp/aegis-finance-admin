@@ -79,15 +79,26 @@ gulp.task('js-release', ['components'], function(){
 
 
 
-gulp.task('js-release-dev', function(){
+gulp.task('js-release-dev', ['js-release-dev-libs'], function(){
     return gulp.src(sourcePath.jsPage)
         .pipe(jspm({
             //inject : true,
+            arithmetic : '- js/page-temp-bundle/dependencies.bundle.js',
             minify : false
         }))
         .pipe(gulp.dest(distPath.jsPageDevTemp));
 });
 
+gulp.task('js-release-dev-libs', function(){
+    return gulp.src(sourcePath.jsPage)
+        .pipe(jspm({
+            //inject : true,
+            arithmetic : '- [js/page/**/*.js]',
+            fileName : 'dependencies.bundle',
+            minify : false
+        }))
+        .pipe(gulp.dest(distPath.jsPageDevTemp));
+});
 
 
 gulp.task('watchJs', [ 'js-release-dev'],function() {
