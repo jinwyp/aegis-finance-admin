@@ -51,6 +51,7 @@ import { AuditInvestigatorComponent } from '../components/task/audit-investigato
 import { AuditSupervisorComponent } from '../components/task/audit-supervisor';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
 import { MaterialDetailComponent} from "../components/task/material-detail";
+import {UserSelectComponent} from "../components/aegis-ui/user-select";
 
 
 
@@ -62,7 +63,7 @@ import { MaterialDetailComponent} from "../components/task/material-detail";
         UserDetailComponent, UserUpdatePasswordComponent,
         RoleListComponent, AddRoleComponent, RoleInfoComponent,
         UserListComponent, AddUserComponent, UserInfoComponent,
-        TaskListComponent, AssignPersonComponent, ProcessTabComponent,
+        TaskListComponent, AssignPersonComponent, ProcessTabComponent,UserSelectComponent,
         AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, AuditSupervisorComponent, AuditRiskManagerComponent,
         CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent, MaterialDetailComponent
     ],

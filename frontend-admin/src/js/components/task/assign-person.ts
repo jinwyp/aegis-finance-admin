@@ -99,12 +99,6 @@ export class AssignPersonComponent {
         }
     }
 
-    selectUserChange () {
-        if (this.selectedUser.id){
-            this.css.isSubmitted = false;
-        }
-    }
-
     assignPerson (){
 
         this.css.ajaxErrorHidden = true;
