@@ -5,5 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AdminUserLoginRecordRepository extends JpaRepository<UserLoginRecord, Long> {
 
-    UserLoginRecord findTopByUserId(String userId);
+    UserLoginRecord findTopByUserIdOrderByCreateTimeDesc(String userId);
 }

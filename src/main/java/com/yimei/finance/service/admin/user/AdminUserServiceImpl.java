@@ -135,7 +135,7 @@ public class AdminUserServiceImpl {
         userObject.setName(identityService.getUserInfo(user.getId(), "name"));
         userObject.setDepartment(identityService.getUserInfo(user.getId(), "department"));
         userObject.setGroupList(DozerUtils.copy(identityService.createGroupQuery().groupMember(user.getId()).list(), GroupObject.class));
-        UserLoginRecord loginRecord = loginRecordRepository.findTopByUserId(user.getId());
+        UserLoginRecord loginRecord = loginRecordRepository.findTopByUserIdOrderByCreateTimeDesc(user.getId());
         if (loginRecord != null) {
             userObject.setLastLoginTime(loginRecord.getCreateTime());
         }
@@ -150,7 +150,7 @@ public class AdminUserServiceImpl {
         userObject.setName(identityService.getUserInfo(user.getId(), "name"));
         userObject.setDepartment(identityService.getUserInfo(user.getId(), "department"));
         userObject.setGroupList(DozerUtils.copy(identityService.createGroupQuery().groupMember(user.getId()).list(), GroupObject.class));
-        UserLoginRecord loginRecord = loginRecordRepository.findTopByUserId(user.getId());
+        UserLoginRecord loginRecord = loginRecordRepository.findTopByUserIdOrderByCreateTimeDesc(user.getId());
         if (loginRecord != null) {
             userObject.setLastLoginTime(loginRecord.getCreateTime());
         }
