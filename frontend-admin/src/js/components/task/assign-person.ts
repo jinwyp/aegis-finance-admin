@@ -99,7 +99,7 @@ export class AssignPersonComponent {
         }
     }
 
-    selectUserChange () {
+    itemChange () {
         if (this.selectedUser.id){
             this.css.isSubmitted = false;
         }

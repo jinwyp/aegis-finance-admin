@@ -1,0 +1,8 @@
+<div class="custom-select user-select">
+    <label *ngIf="!selectedUser" (click)="toggleSelect()">请选择<span class="caret" ></span></label>
+    <label *ngIf="selectedUser" (click)="toggleSelect()">{{selectedUser.name || '请选择'}}<span class="caret" ></span></label>
+
+    <ul [class.hidden]="isClose">
+        <li *ngFor="let item of optionList" (click)="itemClick(item)">{{item.name}} - {{item.email}}</li>
+    </ul>
+</div>
