@@ -113,8 +113,8 @@ class UserService {
     }
 
 
-    getList(name:string, username:string, groupName:string, page:number) {
-        let url = `${API.users}?page=${page||1}&name=${name||''}&username=${username||''}&groupName=${groupName||''}`;
+    getList(name:string, username:string, groupId:string, page:number) {
+        let url = `${API.users}?page=${page||1}&name=${name||''}&username=${username||''}&groupId=${groupId||''}`;
         return this.http.get(url).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);

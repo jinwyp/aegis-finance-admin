@@ -3,7 +3,7 @@
  */
 
 
-import {Input, Component, forwardRef} from '@angular/core';
+import {Input, Output, EventEmitter, Component, forwardRef} from '@angular/core';
 import { NG_VALUE_ACCESSOR, ControlValueAccessor } from '@angular/forms';
 
 
@@ -28,11 +28,16 @@ export const CUSTOM_INPUT_CONTROL_VALUE_ACCESSOR: any = {
 export class CustomSelectComponent implements ControlValueAccessor{
 
 
-    private innerSelectedItem: any = '' ; // The internal data model
+    private innerSelectedItem: any = {} ; // The internal data model
 
     //Placeholders for the callbacks which are later provided by the Control Value Accessor
     private onTouchedCallback: () => {};
     private onChangeCallback: (_: any) => {};
+
+
+    ngOnInit() {
+        console.log(this.innerSelectedItem);
+    }
 
     //get accessor
     get value(): any {
@@ -70,6 +75,11 @@ export class CustomSelectComponent implements ControlValueAccessor{
     @Input()
     optionList = [];
 
+    @Input()
+    outputName = '';
+
+    @Input()
+    hasDefaultItem :boolean = true;
 
     toggleSelect() {
         this.isClose = !this.isClose;
@@ -77,14 +87,27 @@ export class CustomSelectComponent implements ControlValueAccessor{
 
     hideClick(){
         this.isClose = !this.isClose;
-        this.value = '';
-        this.onChangeCallback(this.value);
+        this.value = {};
+        if (this.outputName){
+            this.onChangeCallback(this.value[this.outputName]);
+        }else{
+            this.onChangeCallback(this.value);
+        }
     }
+
+    @Output()
+    itemChange:any = new EventEmitter();
 
     itemClick(item) {
         this.isClose = !this.isClose;
-        this.value = item.name;
-        this.onChangeCallback(this.value);
+        this.value = item;
+        this.itemChange.emit();
+
+        if (this.outputName){
+            this.onChangeCallback(this.value[this.outputName]);
+        }else{
+            this.onChangeCallback(this.value);
+        }
     }
 
 }

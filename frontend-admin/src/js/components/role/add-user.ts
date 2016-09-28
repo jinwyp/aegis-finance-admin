@@ -45,7 +45,7 @@ export class AddUserComponent {
 
     groups       = [];
     departments  = [];
-    selectedItem = '';
+    selectedItem = {name : null};
     modalShowText : string ='';
 
     ngOnInit() {
@@ -93,7 +93,7 @@ export class AddUserComponent {
         this.userService.getUserById(id).then((result)=> {
             if (result.success) {
                 this.currentUser = result.data;
-                this.selectedItem = this.currentUser.department;
+                this.selectedItem = {name : this.currentUser.department};
                 this.getGroupList();
             } else {
 
@@ -106,7 +106,7 @@ export class AddUserComponent {
         this.css.isSubmitted     = true;
         this.css.ajaxErrorHidden     = true;
         this.css.ajaxSuccessHidden     = true;
-        this.currentUser.department = this.selectedItem;
+        this.currentUser.department = this.selectedItem.name;
 
         if (this.css.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
@@ -166,7 +166,7 @@ export class AddUserComponent {
         this.currentUser.phone      = '';
         this.currentUser.department = '';
         this.currentUser.groupIds   = [];
-        this.selectedItem     = '';
+        this.selectedItem     = {name : null};
         this.css.formActiveForRefresh = false;
         setTimeout(() => this.css.formActiveForRefresh = true, 0);
     }
