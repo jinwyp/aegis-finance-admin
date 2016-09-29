@@ -45,12 +45,17 @@ phantomjs_cdnurl=http://npm.taobao.org/mirrors/phantomjs
 ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
 ```
 
-## 测试 
+## 单元测试 
 
 - 安装 Karma 命令行 ``` npm install -g karma-cli --registry=https://registry.npm.taobao.org --phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs
 - 进入 frontend-site/src 下运行``` karma start karma.conf.js ``` 或 ``` npm test ```
 - 进入 frontend-admin/src 下运行``` karma start karma.conf.js ``` 或 ``` npm test ```
 
+
+## E2E 测试 端到端的场景测试 
+
+- 安装 Protractor 命令行 ``` npm install -g protractor ```
+- 运行 ``` webdriver-manager update ```  有可能下载失败，网速太慢，需要翻墙
 
 
 ## docker环境准备
