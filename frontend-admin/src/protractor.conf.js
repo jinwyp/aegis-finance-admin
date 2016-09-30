@@ -11,6 +11,35 @@ exports.config = {
 
     baseUrl: 'http://finance-local.yimei180.com:8002',
 
+    multiCapabilities: [
+        // { browserName: 'safari'},
+        { browserName: 'chrome', chromeOptions: {'args': ['show-fps-counter=true']}}
+    ],
+
+    allScriptsTimeout: 120 * 1000,
+
+    jasmineNodeOpts: {
+        showTiming: true,
+        showColors: true,
+        includeStackTrace: false,
+        defaultTimeoutInterval: 400000
+    },
+
+    directConnect: true,
+
+    onPrepare: function () {
+        var SpecReporter = require('jasmine-spec-reporter');
+        // add jasmine spec reporter
+        jasmine.getEnv().addReporter(new SpecReporter({
+            displayStacktrace       : true,
+            displaySuccessesSummary : true,
+            displaySpecDuration     : true,
+            displaySuiteNumber      : true
+        }));
+
+        // browser.ignoreSynchronization = true;
+    },
+
     /**
      * Angular 2 configuration
      *
