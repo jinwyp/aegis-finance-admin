@@ -54,8 +54,11 @@ ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
 
 ## E2E 测试 端到端的场景测试 
 
-- 安装 Protractor 命令行 ``` npm install -g protractor ```
+- 安装 [Protractor](http://www.protractortest.org/) 命令行 ``` npm install -g protractor ```
 - 运行 ``` webdriver-manager update ```  有可能下载失败，网速太慢，需要翻墙
+- 运行 ``` webdriver-manager start ```  启动 Selenium Server at http://localhost:4444/wd/hub.
+                                                         
+
 
 
 ## docker环境准备

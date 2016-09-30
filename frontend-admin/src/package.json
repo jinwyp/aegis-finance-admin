@@ -7,7 +7,7 @@
     "tscw": "tsc -w",
     "typings": "typings",
     "test": "karma start karma.conf.js --single-run",
-    "e2e": "protractor protractor.config.js"
+    "e2e": "protractor protractor.conf.js"
   },
   "license": "ISC",
   "dependencies": {
