@@ -84,7 +84,7 @@ gulp.task('js-release-page',['js-release-libs'], function(){
         .pipe(gulp.dest(distPath.jsPageDevTemp));
 });
 
-gulp.task('js-release', ['js-release-page', 'components'], function(){
+gulp.task('js-build-production', ['js-release-page', 'components'], function(){
     return gulp.src(distPath.jsPageDevTemp+'**/*.js')
         .pipe(rev())
         .pipe(gulp.dest(distPath.jsPage))
@@ -94,13 +94,13 @@ gulp.task('js-release', ['js-release-page', 'components'], function(){
 
 
 
-gulp.task('js-release-dev', ['js-release-page']);
+gulp.task('js-build-dev', ['js-release-page']);
 
 
 
 
-gulp.task('watchJs', [ 'js-release-dev'],function() {
-    gulp.watch(sourcePath.js, ['esLint', 'js-release-dev']);
+gulp.task('watchJs', [ 'js-build-dev'],function() {
+    gulp.watch(sourcePath.js, ['esLint', 'js-build-dev']);
 });
 
 
