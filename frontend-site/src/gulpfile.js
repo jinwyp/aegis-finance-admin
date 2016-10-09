@@ -20,7 +20,6 @@
 
 
 var gulp        = require("gulp");
-var runSequence = require('run-sequence');
 var requireDir  = require('require-dir');
 var env         = process.env.NODE_ENV || 'development';
 
@@ -37,9 +36,7 @@ gulp.task('watch',[ 'watchJs', 'watchSass']);
 // gulp.task('sync', ['clean',  'sass', 'javascript', 'images', 'watch', 'nodemon', 'browser-sync']);
 
 
-gulp.task('dev', function (done){
-    runSequence('sass', 'watch', done);
-});
+gulp.task('dev', ['watch']);
 
 gulp.task('build', ['clean', 'replaceTpl']);
 
