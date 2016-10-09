@@ -19,9 +19,9 @@
 
 
 
-var gulp       = require("gulp");
-var requireDir = require('require-dir');
-var env        = process.env.NODE_ENV || 'development';
+var gulp        = require("gulp");
+var requireDir  = require('require-dir');
+var env         = process.env.NODE_ENV || 'development';
 
 // Require all tasks in gulp/tasks, including subfolders
 requireDir('./gulptask', { recurse: true });
@@ -29,19 +29,15 @@ requireDir('./gulptask', { recurse: true });
 
 
 
-
-
 gulp.task('watch',[ 'watchJs', 'watchSass']);
 
 
+// gulp.task('server', ['clean',  'sass', 'javascript', 'images', 'watch', 'nodemon']);
+// gulp.task('sync', ['clean',  'sass', 'javascript', 'images', 'watch', 'nodemon', 'browser-sync']);
 
-gulp.task('dev', ['sass', 'watch']);
 
-gulp.task('server', ['clean',  'sass', 'javascript', 'images', 'watch', 'nodemon']);
-gulp.task('sync', ['clean',  'sass', 'javascript', 'images', 'watch', 'nodemon', 'browser-sync']);
-
+gulp.task('dev', ['watch']);
 
 gulp.task('build', ['clean', 'replaceTpl']);
-
 
 gulp.task('default', ['dev']);

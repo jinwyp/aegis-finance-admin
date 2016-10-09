@@ -111,6 +111,6 @@ gulp.task('sass-release', ['htmlTemplate', 'sprite'], function(done) {
 
 
 
-gulp.task('watchSass', function() {
+gulp.task('watchSass', ['sass'], function() {
     gulp.watch(sourcePath.scss, ['sass']);
 });

@@ -47,7 +47,6 @@
                 <span [class.hidden]="username.valid || username.pristine">请填写用户名!</span>
                 <span [class.hidden]="password.valid || password.pristine">请填写密码!</span>
                 <span [class.hidden]="css.ajaxErrorHidden">账户或者密码错误，请重新输入。</span>
-
             </div>
 
             <button type="submit" class="button" [disabled]="!loginForm.form.valid">登录</button>

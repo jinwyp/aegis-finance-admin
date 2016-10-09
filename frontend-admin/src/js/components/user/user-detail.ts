@@ -29,7 +29,7 @@ export class UserDetailComponent {
     errorMsg = '';
     currentUserSession : User = new User();
     departments  = [];
-    selectedItem = '';
+    selectedItem = {name : null};
 
     ngOnInit() {
         this.getCurrentUser();
@@ -42,7 +42,7 @@ export class UserDetailComponent {
             result => {
                 if (result && result.success) {
                     this.currentUserSession = result.data;
-                    this.selectedItem = this.currentUserSession.department;
+                    this.selectedItem.name = this.currentUserSession.department;
                 } else {
 
                 }
@@ -55,7 +55,7 @@ export class UserDetailComponent {
         this.css.isSubmitted     = true;
         this.css.ajaxSuccessHidden = true;
         this.css.ajaxErrorHidden = true;
-        this.currentUserSession.department = this.selectedItem;
+        this.currentUserSession.department = this.selectedItem.name||'';
         this.userService.updateCurrentUserInfo(this.currentUserSession).then((result)=> {
             if (result.success) {
                 this.css.ajaxSuccessHidden = false;

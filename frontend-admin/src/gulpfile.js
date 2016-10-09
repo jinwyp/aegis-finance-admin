@@ -34,8 +34,7 @@ requireDir('./gulptask', { recurse: true });
 gulp.task('watch',['watchSass', 'watchJs']);
 
 
-
-gulp.task('dev', ['sass', 'watch']);
+gulp.task('dev', ['watch']);
 gulp.task('build', ['clean', 'replaceTpl']);
 
 

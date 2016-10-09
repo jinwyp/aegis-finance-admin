@@ -26,8 +26,8 @@ export class UserListComponent {
     pageObj: Page;
     name:string = '';
     username:string = '';
-    groupName:string = '';
-    selectedItem = '';
+    groupId:string = '';
+    selectedItem = {id : null, name : null};
     groups       = [];
     userList : User[];
     isHiddenDelModal : boolean = true;
@@ -46,8 +46,8 @@ export class UserListComponent {
 
 
     getUserList(page:number) {
-        this.groupName=this.selectedItem;
-        this.user.getList(this.name,this.username,this.groupName,page).then((result)=> {
+        this.groupId=this.selectedItem.id;
+        this.user.getList(this.name,this.username,this.groupId,page).then((result)=> {
             if (result.success) {
                 this.userList = result.data;
                 if(result.meta){
