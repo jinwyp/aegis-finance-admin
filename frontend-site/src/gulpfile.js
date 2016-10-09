@@ -38,8 +38,7 @@ gulp.task('watch',[ 'watchJs', 'watchSass']);
 
 
 gulp.task('dev', function (done){
-    runSequence('sass', 'watch',
-        done);
+    runSequence('sass', 'watch', done);
 });
 
 gulp.task('build', ['clean', 'replaceTpl']);
