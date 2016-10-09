@@ -2,9 +2,6 @@ package com.yimei.finance.representation.common.result;
 
 import lombok.*;
 
-/**
- * Created by liuxinjie on 16/8/9.
- */
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
