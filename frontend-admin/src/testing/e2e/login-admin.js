@@ -2,18 +2,12 @@
  * Created by JinWYP on 9/29/16.
  */
 
-describe('Admin Login 管理员登录', function() {
+var util = require('../util.js');
+var user = require('../userData.js');
 
 
-    function waitForUrlToChangeTo( url) {
 
-        browser.driver.wait(function () {
-            return browser.driver.getCurrentUrl().then(function (resultUrl) {
-                return resultUrl.includes(url);
-            });
-        }, 10 * 1000, '等待10秒钟');
-    }
-
+describe('Admin Login Page - 管理员登录页面', function() {
 
     var usernameInput = element(by.id('inputUsername'));
     var passwordInput = element(by.id('inputPassword'));
@@ -32,7 +26,7 @@ describe('Admin Login 管理员登录', function() {
     });
 
 
-    it('输入错误的密码', function() {
+    it('登录输入错误的密码', function() {
         usernameInput.sendKeys('jin');
         passwordInput.sendKeys('654321');
 
@@ -44,12 +38,12 @@ describe('Admin Login 管理员登录', function() {
     });
 
 
-    it('输入正确的密码', function() {
-        usernameInput.sendKeys('jin');
-        passwordInput.sendKeys('123456');
+    it('登录输入正确的密码', function() {
+        usernameInput.sendKeys(user.admin.username);
+        passwordInput.sendKeys(user.admin.password);
 
         submitButton.click();
-        waitForUrlToChangeTo('/finance/admin/home/tasks/pending');
+        util.waitForUrlToChangeTo('/finance/admin/home/tasks/pending');
         expect(browser.getTitle()).toEqual('供应链金融管理平台 - 管理首页');
 
     });
