@@ -29,12 +29,17 @@ exports.config = {
 
     onPrepare: function () {
         var SpecReporter = require('jasmine-spec-reporter');
+        var Jasmine2HtmlReporter = require('protractor-jasmine2-html-reporter');
         // add jasmine spec reporter
         jasmine.getEnv().addReporter(new SpecReporter({
-            displayStacktrace       : true,
+            displayStacktrace       : 'all',
             displaySuccessesSummary : true,
             displaySpecDuration     : true,
             displaySuiteNumber      : true
+        }));
+
+        jasmine.getEnv().addReporter(new Jasmine2HtmlReporter({
+            savePath: 'testing/report/'
         }));
 
         // browser.ignoreSynchronization = true;
@@ -48,4 +53,4 @@ exports.config = {
      *
      */
     useAllAngular2AppRoots: true
-}
+};
