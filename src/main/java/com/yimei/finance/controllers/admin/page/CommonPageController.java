@@ -2,6 +2,7 @@ package com.yimei.finance.controllers.admin.page;
 
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.service.common.file.LocalStorage;
+import com.yimei.finance.service.common.message.MailServiceImpl;
 import com.yimei.finance.utils.WebUtils;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,8 @@ import java.io.IOException;
 public class CommonPageController {
     @Autowired
     private LocalStorage localStorage;
+    @Autowired
+    private MailServiceImpl mailService;
 
     @RequestMapping(value = "/files", method = RequestMethod.GET)
     @ApiOperation(value = "下载文件", notes = "通过文件url路径下载文件")
@@ -32,5 +35,14 @@ public class CommonPageController {
             throw new NotFoundException();
         }
     }
+
+    @RequestMapping("/test/email")
+    public void testEmail(@RequestParam("email") String email) {
+        String subject = "测试邮件";
+        String content = "测试 --------------- 你好: 你的账号已开通, 用户名 请修改密码. [易煤网金融系统]";
+        mailService.sendSimpleMail(email, subject, content);
+
+    }
+
 
 }
