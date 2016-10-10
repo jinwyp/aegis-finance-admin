@@ -56,11 +56,13 @@ describe('Admin Home Page - 管理后台首页', function() {
             expect(breadNav.getText()).toEqual('用户管理');
         });
 
+        
         it('点击添加用户按钮', function() {
             userAddButton.click();
             browser.wait(browser.isElementPresent(userSaveButton), 10000);
             expect(breadNav.getText()).toEqual('添加用户');
         });
+
 
         it('创建新用户-线上交易员管理组 成功', function() {
             newUsernameInput.sendKeys(user.adminTrader.username);
@@ -76,6 +78,7 @@ describe('Admin Home Page - 管理后台首页', function() {
             expect(errorMessage.getAttribute('class')).toContain('hidden');
 
         });
+
 
         it('创建新用户-线上交易员管理组 失败', function() {
             newUsernameInput.sendKeys(user.adminTrader.username);
