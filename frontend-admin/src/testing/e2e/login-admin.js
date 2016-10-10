@@ -7,7 +7,7 @@ var user = require('../userData.js');
 
 
 
-describe('Admin Login Page - 管理员登录页面', function() {
+describe('Admin Login Page - 管理后台登录页面', function() {
 
     var usernameInput = element(by.id('inputUsername'));
     var passwordInput = element(by.id('inputPassword'));
