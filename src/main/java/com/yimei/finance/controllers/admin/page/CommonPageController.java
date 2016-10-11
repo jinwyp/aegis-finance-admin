@@ -1,6 +1,7 @@
 package com.yimei.finance.controllers.admin.page;
 
 import com.yimei.finance.exception.NotFoundException;
+import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.common.file.LocalStorage;
 import com.yimei.finance.service.common.message.MailServiceImpl;
 import com.yimei.finance.utils.WebUtils;
@@ -10,6 +11,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
@@ -37,7 +39,8 @@ public class CommonPageController {
     }
 
     @RequestMapping(value = "/test/email", method = RequestMethod.GET)
-    public void testEmail(@RequestParam("email") String email) {
+    @ResponseBody
+    public Result testEmail(@RequestParam("email") String email) {
         System.out.println(" ------------------------------ " + email);
         System.out.println(" ------------------------------ " + email);
         System.out.println(" ------------------------------ " + email);
@@ -47,6 +50,7 @@ public class CommonPageController {
         String subject = "测试邮件";
         String content = "测试 --------------- 你好: 你的账号已开通, 用户名 请修改密码. [易煤网金融系统]";
         mailService.sendSimpleMail(email, subject, content);
+        return Result.success();
     }
 
 
