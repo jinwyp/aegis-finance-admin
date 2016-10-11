@@ -56,8 +56,8 @@ ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
 
 - 安装 [Protractor](http://www.protractortest.org/) 命令行 ``` npm install -g protractor ```
 - 运行 ``` webdriver-manager update ```  有可能下载失败，网速太慢，需要翻墙
-- 运行 ``` webdriver-manager start ```  启动 Selenium Server at http://localhost:4444/wd/hub.
-- 运行 ``` protractor ``` 或 ``` npm run e2e ``` 开始进行测试, 完成后打开 frontend-admin/src/testing/report/htmlReport.html 查看测试结果                                  
+- （可以不用运行该命令）运行 ``` webdriver-manager start ```  启动 Selenium Server at http://localhost:4444/wd/hub.
+- 进入 frontend-admin/src 运行 ``` protractor ``` 或 ``` npm run e2e ``` 开始进行测试, 完成后打开 frontend-admin/src/testing/report/htmlReport.html 查看测试结果                                  
 
 
 
