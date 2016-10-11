@@ -2,6 +2,7 @@ package com.yimei.finance.service.common.message;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.stereotype.Service;
@@ -18,14 +19,18 @@ public class MailServiceImpl  {
     Logger logger  = LoggerFactory.getLogger(MailServiceImpl.class) ;
     protected JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
 
-    private final static String USERNAME = "auto_server@yimei180.com";
-    private final static String PASSWORD = "Aa1234567890";
+    @Value("${notice_server_mail.name}")
+    private String USERNAME;
+    @Value("${notice_server_mail.password}")
+    private String PASSWORD;
+    @Value("${notice_server_mail.smtp}")
+    private String Mail_Server_Smtp;
 
-    private final String Mail_Server_Smtp = "smtp.qq.com";
     private final String Mail_Transport_Protocol = "mail.transport.protocol";
     private final String Mail_Smtp_Auth = "mail.smtp.auth";
     private final String Mail_Smtp_Starttls_Enable = "mail.smtp.starttls.enable";
     private final String Mail_Debug = "mail.debug";
+
 
     /**
      * 发送 Simple 邮件
