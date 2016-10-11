@@ -36,12 +36,17 @@ public class CommonPageController {
         }
     }
 
-    @RequestMapping("/test/email")
+    @RequestMapping(value = "/test/email", method = RequestMethod.GET)
     public void testEmail(@RequestParam("email") String email) {
+        System.out.println(" ------------------------------ " + email);
+        System.out.println(" ------------------------------ " + email);
+        System.out.println(" ------------------------------ " + email);
+        System.out.println(" ------------------------------ " + email);
+        System.out.println(" ------------------------------ " + email);
+        System.out.println(" ------------------------------ " + email);
         String subject = "测试邮件";
         String content = "测试 --------------- 你好: 你的账号已开通, 用户名 请修改密码. [易煤网金融系统]";
         mailService.sendSimpleMail(email, subject, content);
-
     }
 
 
