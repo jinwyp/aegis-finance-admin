@@ -1,18 +1,12 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.representation.admin.user.GroupObject;
-import com.yimei.finance.representation.admin.user.UserObject;
-import com.yimei.finance.representation.admin.user.validated.CreateUser;
-import com.yimei.finance.representation.admin.user.validated.EditUser;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.common.DataBookRepository;
-import com.yimei.finance.representation.admin.user.AdminUserSearch;
-import com.yimei.finance.representation.admin.user.EnumAdminGroupError;
-import com.yimei.finance.representation.admin.user.EnumAdminUserError;
-import com.yimei.finance.representation.admin.user.UserPasswordObject;
+import com.yimei.finance.representation.admin.user.*;
+import com.yimei.finance.representation.admin.user.validated.CreateUser;
+import com.yimei.finance.representation.admin.user.validated.EditUser;
 import com.yimei.finance.representation.common.databook.EnumDataBookType;
-import com.yimei.finance.representation.common.enums.EnumCommonString;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
@@ -110,7 +104,8 @@ public class UserController {
         DozerUtils.copy(user, newUser);
         newUser.setId(null);
         newUser.setFirstName(user.getUsername());
-        newUser.setPassword(userService.securePassword(EnumCommonString.AdminUser_InitPwd.name));
+        String password = CodeUtils.CreateNumLetterCode();
+        newUser.setPassword(userService.securePassword(password));
         newUser.setEmail(user.getEmail());
         identityService.saveUser(newUser);
         identityService.setUserInfo(newUser.getId(), "username", user.getUsername());
@@ -119,7 +114,7 @@ public class UserController {
         identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
         addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
         String subject = "开通账户通知邮件";
-        String content = "你好: 你的账号已开通, 用户名:" + user.getUsername() + ", 初始密码:123456, 请修改密码. [易煤网金融系统]";
+        String content = "你好: 你的账号已开通, 用户名:" + user.getUsername() + ", 初始密码:" + password + ", 请修改密码. [易煤网金融系统]";
         mailService.sendSimpleMail(user.getEmail(), subject, content);
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(newUser.getId()).singleResult()));
     }
