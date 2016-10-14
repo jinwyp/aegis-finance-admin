@@ -54,15 +54,15 @@ public class FinanceOrderInvestigatorInfo extends BaseEntity implements Serializ
     private String mainBusinessInfo;                                 //业务主要信息
     @Column(name = "business_transfer_info", length = 1020)
     private String businessTransferInfo;                             //业务流转信息
-    @Column(name = "business_risk_point", length = 1020)
+    @Column(name = "business_risk_point", length = 5020)
     private String businessRiskPoint;                                //业务风险点
-    @Column(name = "performance_credit_ability_eval", length = 1020)
+    @Column(name = "performance_credit_ability_eval", length = 5020)
     private String performanceCreditAbilityEval;                     //履约信用及能力评估
-    @Column(name = "final_conclusion", length = 1020)
+    @Column(name = "final_conclusion", length = 5020)
     private String finalConclusion;                                  //综合意见/最终结论
     @Column(name = "need_supply_material", length = 1, nullable = false)
     private int needSupplyMaterial;                                  //需要补充材料 1: 需要, 0: 不需要
-    @Column(name = "supply_material_introduce", length = 520)
+    @Column(name = "supply_material_introduce", length = 5020)
     private String supplyMaterialIntroduce;                          //补充材料说明
     @Column(name = "approve_state", length = 30)
     private String approveState;                                     //审批状态

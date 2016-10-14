@@ -72,17 +72,17 @@ public class FinanceOrderInvestigatorInfoObject extends BaseObject implements Se
     @Size(max = 1000, message = "业务流转信息不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     private String businessTransferInfo;                             //业务流转信息
 
-    @Size(max = 1000, message = "业务风险点不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
+    @Size(max = 5000, message = "业务风险点不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     private String businessRiskPoint;                                //业务风险点
 
-    @Size(max = 1000, message = "履约信用及能力评估不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
+    @Size(max = 5000, message = "履约信用及能力评估不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     private String performanceCreditAbilityEval;                     //履约信用及能力评估
 
-    @Size(max = 1000, message = "综合意见不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
+    @Size(max = 5000, message = "综合意见不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     private String finalConclusion;                                  //综合意见/最终结论
     private int needSupplyMaterial;                                  //需要补充材料 1: 需要, 0: 不需要
 
-    @Size(max = 500, message = "补充材料说明不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
+    @Size(max = 5000, message = "补充材料说明不能超过 {max} 个字符", groups = {SaveFinanceInvestigatorInfo.class, SubmitFinanceInvestigatorInfo.class})
     private String supplyMaterialIntroduce;                          //补充材料说明
     private String approveState;                                     //审批状态
     private Integer approveStateId;                                  //审批状态Id  0:审核不通过, 1:审核通过
