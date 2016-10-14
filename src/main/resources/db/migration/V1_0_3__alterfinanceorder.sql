@@ -1,1 +1,1 @@
-ALTER TABLE t_finance_order modify `comments` varchar(5020) DEFAULT NULL;
+ALTER TABLE t_finance_order modify `comments` TEXT DEFAULT NULL;
