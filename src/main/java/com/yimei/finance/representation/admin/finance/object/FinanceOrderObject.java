@@ -65,7 +65,7 @@ public class FinanceOrderObject extends BaseObject implements Serializable {
     @Size(max = 100, message = "中转港口不能超过 {max} 个字符", groups = {SaveFinanceOrder.class, SubmitFinanceOrder.class})
     private String transferPort;                                     //中转港口/地全称
 
-    @Size(max = 1000, message = "备注说明不能超过 {max} 个字符", groups = {SaveFinanceOrder.class, SubmitFinanceOrder.class})
+    @Size(max = 5000, message = "备注说明不能超过 {max} 个字符", groups = {SaveFinanceOrder.class, SubmitFinanceOrder.class})
     private String comments;                                         //备注说明
 
     @Size(max = 100, message = "我方签约单位不能超过 {max} 个字符", groups = {SaveFinanceOrder.class, SubmitFinanceOrder.class})
