@@ -95,7 +95,6 @@ gulp.task('injectTemplate', function() {
         .pipe(gulp.dest(distPath.tsSourceWithHtmlTpl));
 });
 
-
 gulp.task("ts-release", ['injectTemplate'], function (cb) {
     exec('./node_modules/typescript/bin/tsc --project tsconfig-build.json', function (err, stdout, stderr) {
         console.log(stdout);
@@ -150,14 +149,14 @@ gulp.task('js-bundle', ['ts-release'], function () {
 });
 
 
-gulp.task('libs', ['js-bundle'], function() {
+gulp.task('js-release-libs', ['js-bundle'], function() {
     gulp.src(sourcePath.systemJsConfig).pipe(gulp.dest(distPath.js));
     gulp.src(distPath.tsTempOutput + 'page/dependencies.bundle.js').pipe(gulp.dest(distPath.js + 'page'));
     return gulp.src(sourcePath.libs).pipe(gulp.dest(distPath.libs));
 });
 
 
-gulp.task('js-release', ['libs'], function(){
+gulp.task('js-build-production', ['js-release-libs'], function(){
     return gulp.src(sourcePath.tsOutput)
         .pipe(uglify())
         .pipe(rev())
