@@ -31,28 +31,28 @@ public class FinanceOrderSupervisorInfo extends BaseEntity implements Serializab
     @Column(name = "storage_address", length = 220)
     private String storageAddress;                                   //仓储地地址
 
-    @Column(name = "historical_cooperation_detail", length = 1020)
+    @Column(name = "historical_cooperation_detail", length = 5020, columnDefinition = "TEXT")
     private String historicalCooperationDetail;                      //历史合作情况
 
-    @Column(name = "operating_storage_detail", length = 5020)
+    @Column(name = "operating_storage_detail", length = 5020, columnDefinition = "TEXT")
     private String operatingStorageDetail;                           //经营及堆存情况
 
-    @Column(name = "port_standard_degree", length = 5020)
+    @Column(name = "port_standard_degree", length = 5020, columnDefinition = "TEXT")
     private String portStandardDegree;                               //保管及进出口流程规范程度
 
-    @Column(name = "supervision_cooperate_detail", length = 5020)
+    @Column(name = "supervision_cooperate_detail", length = 5020, columnDefinition = "TEXT")
     private String supervisionCooperateDetail;                       //监管配合情况
 
-    @Column(name = "supervision_scheme", length = 5020)
+    @Column(name = "supervision_scheme", length = 5020, columnDefinition = "TEXT")
     private String supervisionScheme;                                //监管方案
 
-    @Column(name = "final_conclusion", length = 5020)
+    @Column(name = "final_conclusion", length = 5020, columnDefinition = "TEXT")
     private String finalConclusion;                                  //最终结论/综合意见
 
     @Column(name = "need_supply_material", length = 1, nullable = false)
     private int needSupplyMaterial;                                  //需要补充材料 1: 需要, 0: 不需要
 
-    @Column(name = "supply_material_introduce", length = 5020)
+    @Column(name = "supply_material_introduce", length = 5020, columnDefinition = "TEXT")
     private String supplyMaterialIntroduce;                          //补充材料说明
 
     @Column(name = "approve_state", length = 30)

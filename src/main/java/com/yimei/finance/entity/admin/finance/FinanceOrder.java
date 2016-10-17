@@ -7,12 +7,14 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import javax.transaction.Transactional;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 
 @Entity
 @Table(name = "t_finance_order")
+@Transactional
 @ApiModel(value = "financeOrder", description = "金融申请单对象")
 @Data
 @NoArgsConstructor
@@ -62,7 +64,7 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     @Column(name = "transfer_port", length = 120)
     private String transferPort;                                     //中转港口/地全称
 
-    @Column(name = "comments", length = 5020)
+    @Column(name = "comments", length = 5020, columnDefinition = "TEXT")
     private String comments;                                         //备注说明
 
     @Column(name = "our_contract_company", length = 120)
@@ -92,10 +94,10 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     @Column(name = "approve_state_id", length = 3, nullable = false)
     private Integer approveStateId;                                  //审批状态Id
 
-    @Column(name = "coal_quantity_index", length = 520)
+    @Column(name = "coal_quantity_index", length = 5020, columnDefinition = "TEXT")
     private String coalQuantityIndex;                                //主要煤质指标
 
-    @Column(name = "end_time", updatable = false)
+    @Column(name = "end_time", updatable = false, columnDefinition = "DATETIME")
     private Date endTime;                                            //结束时间
 
 

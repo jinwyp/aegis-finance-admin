@@ -11,7 +11,6 @@ import java.time.LocalDate;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class Number implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

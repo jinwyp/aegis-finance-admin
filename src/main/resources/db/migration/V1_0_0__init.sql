@@ -1,69 +1,211 @@
--- CREATE TABLE `T_finance_apply_info` (
---   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
---   `userId` int(11) DEFAULT NULL COMMENT '用户id ',
---   `applyType` varchar(45) DEFAULT NULL COMMENT '申请类型：\n煤易融：MYR\n煤易贷:   MYD\n煤易购:   MYG',
---   `financingAmount` decimal(10,2) DEFAULT NULL COMMENT '拟融资金额（单位：万元）',
---   `expectedDate` int(11) DEFAULT NULL COMMENT '拟使用资金时间（单位：天）',
---   `businessAmount` decimal(15,2) DEFAULT NULL COMMENT '预期此笔业务量（单位：万吨）',
---   `transportMode` varchar(45) DEFAULT NULL COMMENT '运输方式：\n海运\n汽运\n火运\n其他',
---   `procurementPrice` decimal(10,2) DEFAULT NULL COMMENT '单吨采购价 (元/吨)',
---   `upstreamResource` varchar(100) DEFAULT NULL COMMENT '上游资源方全称',
---   `transferPort` varchar(100) DEFAULT NULL COMMENT '中转港口/地全称',
---   `comments` varchar(200) DEFAULT NULL COMMENT '备注说明',
---   `contractors` varchar(100) DEFAULT NULL COMMENT '签约单位全称',
---   `downstreamContractors` varchar(100) DEFAULT NULL COMMENT '下游签约单位全称',
---   `terminalServer` varchar(100) DEFAULT NULL COMMENT '用煤终端',
---   `sellingPrice` decimal(10,2) DEFAULT NULL COMMENT '预计单吨销售价 (元/吨)',
---   `storageLocation` varchar(100) DEFAULT NULL COMMENT '煤炭仓储地',
---   `coalSources` varchar(100) DEFAULT NULL COMMENT '煤炭来源',
---   `marketPrice` decimal(10,2) DEFAULT NULL COMMENT '单吨市场报价（元／吨）',
---   `approveState` varchar(30) DEFAULT NULL COMMENT '审批状态',
---   `sourceId` varchar(50) DEFAULT NULL COMMENT '流水号，编号',
---   `applyDateTime` datetime DEFAULT NULL COMMENT '申请时间',
---   `applyUserName` varchar(45) DEFAULT NULL COMMENT '申请人姓名',
---   `applyCompanyName` varchar(45) DEFAULT NULL COMMENT '申请公司名称',
---   `workFlowInstanceId` varchar(45) DEFAULT NULL COMMENT '工作流实例id',
---   PRIMARY KEY (`id`)
--- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '申请信息表';
---
--- CREATE TABLE `T_finance_apply_info_bills` (
---   `id` int(11) NOT NULL AUTO_INCREMENT,
---   `T_finance_apply_info_id` int(11) DEFAULT NULL,
---   `path` varchar(100) DEFAULT NULL COMMENT '路径',
---   `billtype` varchar(50) DEFAULT NULL COMMENT '类别',
---   PRIMARY KEY (`id`)
--- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '申请信息账单表';
---
--- CREATE TABLE `T_finance_role` (
---   `id` int(11) NOT NULL AUTO_INCREMENT,
---   `name` varchar(45) DEFAULT NULL COMMENT '角色名',
---   `comment` varchar(45) DEFAULT NULL COMMENT '备份描述',
---   PRIMARY KEY (`id`)
--- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '角色表';
---
--- CREATE TABLE `T_finance_users` (
---   `id` int(11) NOT NULL AUTO_INCREMENT,
---   `name` varchar(20) DEFAULT NULL COMMENT '用户姓名',
---   `phone` varchar(15) DEFAULT NULL COMMENT '联系电话',
---   `email` varchar(50) DEFAULT NULL COMMENT '邮箱',
---   `password` varchar(15) DEFAULT NULL COMMENT '密码',
---   `lastLoginTime` datetime DEFAULT NULL COMMENT '最后一次登陆时间',
---   `department` varchar(20) DEFAULT NULL COMMENT '所属部门',
---   PRIMARY KEY (`id`)
--- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '用户表';
---
--- CREATE TABLE `T_financing_review_result` (
---   `id` int(11) NOT NULL AUTO_INCREMENT,
---   `workFlowInstanceId` varchar(45) DEFAULT NULL COMMENT '工作流实例id',
---   `reviewResult` varchar(2000) DEFAULT NULL COMMENT '结果json内容',
---   `isPassed` tinyint(1) DEFAULT NULL COMMENT '是否通过',
---   `nodeName` varchar(50) DEFAULT NULL COMMENT '节点名',
---   PRIMARY KEY (`id`)
--- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '节点审核结果表';
---
--- CREATE TABLE `T_finance_user_role` (
---   `id` int(11) NOT NULL AUTO_INCREMENT,
---   `T_finance_users_id` int(11) DEFAULT NULL,
---   `T_finance_role_id` int(11) DEFAULT NULL,
---   PRIMARY KEY (`id`)
--- ) ENGINE=InnoDB AUTO_INCREMENT=1 DEFAULT CHARSET=utf8 COMMENT '用户角色中间表';
+
+CREATE TABLE `t_finance_order` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `create_man_id` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `last_update_man_id` varchar(255) DEFAULT NULL,
+  `last_update_time` datetime DEFAULT NULL,
+  `apply_company_name` varchar(60) NOT NULL,
+  `apply_type` varchar(20) NOT NULL,
+  `apply_user_name` varchar(50) DEFAULT NULL,
+  `apply_user_phone` varchar(50) NOT NULL,
+  `approve_state` varchar(30) NOT NULL,
+  `approve_state_id` int(11) NOT NULL,
+  `business_amount` decimal(20,2) DEFAULT NULL,
+  `coal_quantity_index` text DEFAULT NULL,
+  `coal_source` varchar(120) DEFAULT NULL,
+  `comments` text,
+  `downstream_contract_company` varchar(120) DEFAULT NULL,
+  `end_time` datetime DEFAULT NULL,
+  `expect_date` int(11) NOT NULL,
+  `financing_amount` decimal(20,2) DEFAULT NULL,
+  `market_price` decimal(10,2) DEFAULT NULL,
+  `our_contract_company` varchar(120) DEFAULT NULL,
+  `procurement_price` decimal(10,2) DEFAULT NULL,
+  `selling_price` decimal(10,2) DEFAULT NULL,
+  `source_id` varchar(100) NOT NULL,
+  `storage_location` varchar(120) DEFAULT NULL,
+  `terminal_server` varchar(120) DEFAULT NULL,
+  `transfer_port` varchar(120) DEFAULT NULL,
+  `transport_mode` varchar(30) DEFAULT NULL,
+  `upstream_resource` varchar(120) DEFAULT NULL,
+  `user_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_g6enb55whaik9mab9598yn0rf` (`source_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_finance_order_contract` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `create_man_id` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `last_update_man_id` varchar(255) DEFAULT NULL,
+  `last_update_time` datetime DEFAULT NULL,
+  `attachment_names` varchar(520) DEFAULT NULL,
+  `attachment_number` int(11) DEFAULT NULL,
+  `buyer_bank_account` varchar(120) DEFAULT NULL,
+  `buyer_bank_name` varchar(120) DEFAULT NULL,
+  `buyer_company_address` varchar(220) DEFAULT NULL,
+  `buyer_company_name` varchar(120) DEFAULT NULL,
+  `buyer_legal_person` varchar(60) DEFAULT NULL,
+  `buyer_linkman_email` varchar(120) DEFAULT NULL,
+  `buyer_linkman_name` varchar(60) DEFAULT NULL,
+  `buyer_linkman_phone` varchar(50) DEFAULT NULL,
+  `buyer_settlement_money` decimal(20,2) DEFAULT NULL,
+  `cash_deposit` decimal(20,2) DEFAULT NULL,
+  `coal_amount` decimal(12,2) DEFAULT NULL,
+  `coal_index` text,
+  `coal_ton` decimal(12,2) DEFAULT NULL,
+  `coal_type` varchar(120) DEFAULT NULL,
+  `contract_no` varchar(100) NOT NULL,
+  `delivery_place` varchar(220) DEFAULT NULL,
+  `finance_id` bigint(20) NOT NULL,
+  `payment_period` int(11) DEFAULT NULL,
+  `purchase_place` varchar(220) DEFAULT NULL,
+  `quality_acceptance_criteria` text,
+  `quality_remark` text,
+  `quantity_acceptance_criteria` text,
+  `quantity_remark` text,
+  `seller_bank_account` varchar(120) DEFAULT NULL,
+  `seller_bank_name` varchar(120) DEFAULT NULL,
+  `seller_company_address` varchar(220) DEFAULT NULL,
+  `seller_company_name` varchar(120) DEFAULT NULL,
+  `seller_legal_person` varchar(60) DEFAULT NULL,
+  `seller_linkman_email` varchar(120) DEFAULT NULL,
+  `seller_linkman_name` varchar(60) DEFAULT NULL,
+  `seller_linkman_phone` varchar(50) DEFAULT NULL,
+  `seller_receipt_amount` decimal(12,2) DEFAULT NULL,
+  `seller_receipt_money` decimal(20,2) DEFAULT NULL,
+  `seller_receipt_price` decimal(10,2) DEFAULT NULL,
+  `settlement_amount` decimal(12,2) DEFAULT NULL,
+  `settlement_price` decimal(10,2) DEFAULT NULL,
+  `ship_name` varchar(120) DEFAULT NULL,
+  `ship_no` varchar(120) DEFAULT NULL,
+  `sign_date` date DEFAULT NULL,
+  `sign_place` varchar(220) DEFAULT NULL,
+  `special_remark` text DEFAULT NULL,
+  `type` int(11) NOT NULL,
+  `unload_place` varchar(220) DEFAULT NULL,
+  `unload_place_short` varchar(220) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_ar2nid9hkaxh09l3i0lf3hx48` (`contract_no`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_finance_order_investigator_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `create_man_id` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `last_update_man_id` varchar(255) DEFAULT NULL,
+  `last_update_time` datetime DEFAULT NULL,
+  `apply_company_name` varchar(120) DEFAULT NULL,
+  `approve_state` varchar(30) DEFAULT NULL,
+  `approve_state_id` int(11) DEFAULT NULL,
+  `business_risk_point` text,
+  `business_start_time` datetime DEFAULT NULL,
+  `business_transfer_info` TEXT DEFAULT NULL,
+  `downstream_contract_company` varchar(120) DEFAULT NULL,
+  `final_conclusion` text,
+  `finance_id` bigint(20) NOT NULL,
+  `financing_amount` decimal(20,2) DEFAULT NULL,
+  `financing_period` int(11) DEFAULT NULL,
+  `historical_cooperation_detail` TEXT DEFAULT NULL,
+  `interest_rate` decimal(5,2) DEFAULT NULL,
+  `main_business_information` TEXT DEFAULT NULL,
+  `need_supply_material` int(11) NOT NULL,
+  `our_contract_company` varchar(120) DEFAULT NULL,
+  `performance_credit_ability_eval` text,
+  `quality_inspection_unit` varchar(120) DEFAULT NULL,
+  `quantity_inspection_unit` varchar(120) DEFAULT NULL,
+  `supply_material_introduce` text,
+  `terminal_server` varchar(120) DEFAULT NULL,
+  `transit_port` varchar(120) DEFAULT NULL,
+  `transport_party` varchar(120) DEFAULT NULL,
+  `upstream_contract_company` varchar(120) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_5fk8chux90a1u2oqh98w5rwsj` (`finance_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_finance_order_riskmanager_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `create_man_id` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `last_update_man_id` varchar(255) DEFAULT NULL,
+  `last_update_time` datetime DEFAULT NULL,
+  `approve_state` varchar(30) DEFAULT NULL,
+  `approve_state_id` int(11) DEFAULT NULL,
+  `business_risk_point` text,
+  `distribution_ability_eval` text,
+  `edit_contract` int(11) NOT NULL,
+  `final_conclusion` text,
+  `finance_id` bigint(20) NOT NULL,
+  `need_supply_material` int(11) NOT NULL,
+  `payment_situation_eval` text DEFAULT NULL,
+  `risk_control_scheme` text,
+  `supply_material_introduce` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_krvryyysusj5h2283e9j6xaji` (`finance_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_finance_order_salesman_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `create_man_id` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `last_update_man_id` varchar(255) DEFAULT NULL,
+  `last_update_time` datetime DEFAULT NULL,
+  `approve_state` varchar(30) DEFAULT NULL,
+  `approve_state_id` int(11) DEFAULT NULL,
+  `business_model_introduce` text,
+  `contract_companies_info_supply` text,
+  `finance_id` bigint(20) NOT NULL,
+  `logistics_storage_info_supply` text,
+  `need_supply_material` int(11) NOT NULL,
+  `other_info_supply` text,
+  `supply_material_introduce` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_8bpnaokbijty2d0db9vjhpnms` (`finance_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_finance_order_supervisor_info` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `create_man_id` varchar(255) DEFAULT NULL,
+  `create_time` datetime DEFAULT NULL,
+  `last_update_man_id` varchar(255) DEFAULT NULL,
+  `last_update_time` datetime DEFAULT NULL,
+  `approve_state` varchar(30) DEFAULT NULL,
+  `approve_state_id` int(11) DEFAULT NULL,
+  `final_conclusion` text,
+  `finance_id` bigint(20) NOT NULL,
+  `historical_cooperation_detail` varchar(1020) DEFAULT NULL,
+  `need_supply_material` int(11) NOT NULL,
+  `operating_storage_detail` text,
+  `port_standard_degree` text,
+  `storage_address` varchar(220) DEFAULT NULL,
+  `storage_location` varchar(120) DEFAULT NULL,
+  `storage_property` varchar(120) DEFAULT NULL,
+  `supervision_cooperate_detail` text,
+  `supervision_scheme` text,
+  `supply_material_introduce` text,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `UK_ta4japa2kqpk7dot785derkb2` (`finance_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_finance_userlogin_log` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `create_time` datetime NOT NULL,
+  `user_id` varchar(30) NOT NULL,
+  `username` varchar(30) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+CREATE TABLE `t_finance_number` (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `create_date` date DEFAULT NULL,
+  `type` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;

@@ -24,6 +24,6 @@ public class UserLoginRecord implements Serializable {
     @Column(name = "username", length = 30, nullable = false, updatable = false)
     private String username;                                         //登陆账号
     @NonNull
-    @Column(name = "create_time", nullable = false, updatable = false)
+    @Column(name = "create_time", nullable = false, updatable = false, columnDefinition = "DATETIME")
     private Date createTime;                                         //创建时间
 }

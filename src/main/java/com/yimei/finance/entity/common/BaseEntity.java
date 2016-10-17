@@ -16,10 +16,10 @@ import java.util.Date;
 public class BaseEntity implements Serializable {
     @Column(name = "create_man_id", updatable = false)
     private String createManId;                                      //创建人id
-    @Column(name = "create_time", updatable = false)
+    @Column(name = "create_time", updatable = false, columnDefinition = "DATETIME")
     private Date createTime;                                         //创建时间
     @Column(name = "last_update_man_id")
     private String lastUpdateManId;                                  //最后一次更新人id
-    @Column(name = "last_update_time")
+    @Column(name = "last_update_time", columnDefinition = "DATETIME")
     private Date lastUpdateTime;                                     //最后一次更新时间
 }

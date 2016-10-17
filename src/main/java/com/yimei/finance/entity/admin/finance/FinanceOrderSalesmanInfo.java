@@ -22,22 +22,22 @@ public class FinanceOrderSalesmanInfo extends BaseEntity implements Serializable
     @Column(name = "finance_id", nullable = false, updatable = false, unique = true)
     private Long financeId;                                          //金融单id
 
-    @Column(name = "contract_companies_info_supply", length = 5020)
+    @Column(name = "contract_companies_info_supply", length = 5020, columnDefinition = "TEXT")
     private String contractCompaniesInfoSupply;                      //上下游签约单位信息补充
 
-    @Column(name = "business_model_introduce", length = 5020)
+    @Column(name = "business_model_introduce", length = 5020, columnDefinition = "TEXT")
     private String businessModelIntroduce;                           //业务操作模式介绍
 
-    @Column(name = "logistics_storage_info_supply", length = 5020)
+    @Column(name = "logistics_storage_info_supply", length = 5020, columnDefinition = "TEXT")
     private String logisticsStorageInfoSupply;                       //物流仓储信息补充
 
-    @Column(name = "other_info_supply", length = 5020)
+    @Column(name = "other_info_supply", length = 5020, columnDefinition = "TEXT")
     private String otherInfoSupply;                                  //其它补充说明
 
     @Column(name = "need_supply_material", length = 1, nullable = false)
     private int needSupplyMaterial;                                  //需要补充材料 1: 需要, 0: 不需要
 
-    @Column(name = "supply_material_introduce", length = 5020)
+    @Column(name = "supply_material_introduce", length = 5020, columnDefinition = "TEXT")
     private String supplyMaterialIntroduce;                          //补充材料说明
 
     @Column(name = "approve_state", length = 30)
