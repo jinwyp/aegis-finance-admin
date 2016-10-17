@@ -68,7 +68,7 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     private String coalIndex;                                        //煤炭指标  
 
     @Column(name = "quality_remark", length = 5020, columnDefinition = "TEXT")
-    private String qualityRemark;                                    //质量标准/质量说明  
+    private String qualityRemark;                                    //质量备注/质量说明  
 
     @Column(name = "quantity_acceptance_criteria", length = 5020, columnDefinition = "TEXT")
     private String quantityAcceptanceCriteria;                       //数量验收标准  

@@ -1,1 +1,1 @@
-ALTER TABLE t_finance_order modify `comments` TEXT DEFAULT NULL;
+ALTER TABLE t_finance_order modify `comments` TEXT DEFAULT NULL COMMENT '备注说明';
