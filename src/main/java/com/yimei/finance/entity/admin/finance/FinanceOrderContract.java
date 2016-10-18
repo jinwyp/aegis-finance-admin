@@ -25,7 +25,10 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     private String contractNo;                                       //合同编号  
 
     @Column(name = "type")
-    private int type;
+    private int type;                                                //合同类型
+
+    @Column(name = "type_name")
+    private int typeName;                                            //合同类型名称
 
     @Column(name = "sign_place")
     private String signPlace;                                        //签订地点  

@@ -28,7 +28,7 @@ import java.util.List;
 public class FinanceOrderObject extends BaseObject implements Serializable {
     private Long id;                                                 //主键
     private int userId;                                              //申请人用户id
-    @Size(min = 3, max = 10, message = "申请类型字段应在3-10个字符之间", groups = {CreateFinanceOrder.class})
+    @Size(min = 3, max = 10, message = "申请类型字段应在 {min}-{max} 个字符之间", groups = {CreateFinanceOrder.class})
     @NotBlank(message = "申请类型字段不能为空", groups = {CreateFinanceOrder.class})
     private String applyType;                                        //申请类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
     private String applyTypeName;

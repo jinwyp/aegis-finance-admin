@@ -1,11 +1,10 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
-import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
-import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.object.*;
 import com.yimei.finance.representation.admin.finance.object.validated.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
@@ -189,6 +188,22 @@ public class MYDFinancingController {
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
         return flowStepService.riskManagerAuditFinanceOrderMethod(adminSession.getUser().getId(), taskMap, riskManagerInfoObject, object.t, object.u, submit);
+    }
+
+    @RequestMapping(value = "/riskmanager/audit/contract", method = RequestMethod.POST)
+    @ApiOperation(value = "风控人员填写合同内容", notes = "风控人员填写合同内容")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
+    public Result mydRiskManagerAddContractMethod(@PathVariable("taskId") String taskId,
+                                                  @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SaveFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) {
+        return riskManagerAddContractMethod(taskId, financeOrderContractObject, true);
+    }
+
+    private Result riskManagerAddContractMethod(String taskId, FinanceOrderContractObject financeOrderContractObject, boolean submit) {
+        Result result = checkMYDMethod(taskId);
+        if (!result.isSuccess()) return result;
+        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+        financeOrderContractObject.setId(object.u);
+        return flowStepService.riskManagerAddFinanceOrderContractMethod(adminSession.getUser().getId(), object.t, financeOrderContractObject, submit);
     }
 
     private Result checkMYDMethod(String taskId) {

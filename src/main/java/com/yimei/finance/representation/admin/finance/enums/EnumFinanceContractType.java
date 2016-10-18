@@ -1,5 +1,8 @@
 package com.yimei.finance.representation.admin.finance.enums;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public enum EnumFinanceContractType {
     GoodsMortgage_Upstream_Purchase(1, "买方仓押上游合同"),
     GoodsMortgage_Downstream_Purchase(2, "买家仓押下游合同"),
@@ -18,5 +21,18 @@ public enum EnumFinanceContractType {
     public static String getName(EnumFinanceContractType status) {
         return status.name;
     }
+
+    public static Map<Integer, String> typeList = new HashMap() {
+        {
+            this.put(Integer.valueOf(1), "买方仓押上游合同");
+            this.put(Integer.valueOf(2), "买家仓押下游合同");
+        }
+    };
+
+
+    public static String getTypeName(int type) {
+        return (String)typeList.get(Integer.valueOf(type));
+    }
+
 
 }
