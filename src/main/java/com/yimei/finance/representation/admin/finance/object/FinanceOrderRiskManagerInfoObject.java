@@ -4,7 +4,6 @@ import com.yimei.finance.representation.admin.finance.object.validated.SaveFinan
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceRiskManagerInfo;
 import com.yimei.finance.representation.common.base.BaseObject;
 import io.swagger.annotations.ApiModel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -15,7 +14,6 @@ import java.util.List;
 @ApiModel(description = "金融-风控人员填写信息对象")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class FinanceOrderRiskManagerInfoObject extends BaseObject implements Serializable {
     private Long id;                                                 //主键
     private Long financeId;                                          //金融单id

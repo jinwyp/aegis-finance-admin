@@ -8,7 +8,6 @@ import com.yimei.finance.representation.admin.finance.object.validated.SubmitFin
 import com.yimei.finance.representation.common.base.BaseObject;
 import com.yimei.finance.representation.common.enums.EnumCommonString;
 import io.swagger.annotations.ApiModel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.NotBlank;
@@ -26,7 +25,6 @@ import java.util.List;
 @ApiModel(description = "金融单对象")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class FinanceOrderObject extends BaseObject implements Serializable {
     private Long id;                                                 //主键
     private int userId;                                              //申请人用户id

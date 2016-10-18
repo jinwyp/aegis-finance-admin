@@ -13,7 +13,6 @@ import java.util.Date;
 @ApiModel(description = "附件对象")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class AttachmentObject implements Serializable {
     private String id;
     @Size(min = 1, max = 100, message = "文件名称应在1-100个字符之间")

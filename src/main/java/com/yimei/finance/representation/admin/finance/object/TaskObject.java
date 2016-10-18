@@ -3,7 +3,6 @@ package com.yimei.finance.representation.admin.finance.object;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yimei.finance.representation.common.enums.EnumCommonString;
 import io.swagger.annotations.ApiModel;
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -14,7 +13,6 @@ import java.util.Date;
 @ApiModel(description = "任务对象")
 @Data
 @NoArgsConstructor
-@AllArgsConstructor
 public class TaskObject implements Serializable {
     private String id;
     private String processInstanceId;                               //流程id

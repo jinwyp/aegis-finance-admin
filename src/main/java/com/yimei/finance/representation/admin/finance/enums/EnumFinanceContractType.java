@@ -1,8 +1,8 @@
 package com.yimei.finance.representation.admin.finance.enums;
 
 public enum EnumFinanceContractType {
-    Buyer_GoodsMortgage_Upstream(2, "买方仓押上游合同"),
-    Buyer_GoodsMortgage_Downstream(4, "买家仓押下游合同"),
+    GoodsMortgage_Upstream_Purchase(1, "买方仓押上游合同"),
+    GoodsMortgage_Downstream_Purchase(2, "买家仓押下游合同"),
     ;
 
     public int id;
