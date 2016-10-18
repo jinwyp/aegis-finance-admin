@@ -1,10 +1,6 @@
 
 CREATE TABLE `t_finance_order` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
-  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   `apply_company_name` varchar(60) NOT NULL COMMENT '申请人公司名称',
   `apply_type` varchar(20) NOT NULL COMMENT '申请类型',
   `apply_user_name` varchar(50) DEFAULT NULL COMMENT '申请人姓名',
@@ -30,6 +26,10 @@ CREATE TABLE `t_finance_order` (
   `transport_mode` varchar(30) DEFAULT NULL COMMENT '运输方式：海运\汽运\火运\其他',
   `upstream_resource` varchar(120) DEFAULT NULL COMMENT '上游资源方全称',
   `user_id` int(11) NOT NULL COMMENT '申请人userId',
+  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
+  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `sourceCode` (`source_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='金融申请单表';
@@ -37,10 +37,6 @@ CREATE TABLE `t_finance_order` (
 
 CREATE TABLE `t_finance_order_investigator_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
-  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   `apply_company_name` varchar(120) DEFAULT NULL COMMENT '申请人公司名称',
   `approve_state` varchar(30) NOT NULL COMMENT '审核状态',
   `approve_state_id` int(11) NOT NULL COMMENT '审核状态id',
@@ -65,6 +61,10 @@ CREATE TABLE `t_finance_order_investigator_info` (
   `transit_port` varchar(120) DEFAULT NULL COMMENT '中转港口',
   `transport_party` varchar(120) DEFAULT NULL COMMENT '运输方',
   `upstream_contract_company` varchar(120) DEFAULT NULL COMMENT '上游签约单位',
+  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
+  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `financecode` (`finance_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='金融单-监管员填写信息表';
@@ -72,10 +72,6 @@ CREATE TABLE `t_finance_order_investigator_info` (
 
 CREATE TABLE `t_finance_order_riskmanager_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
-  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   `approve_state` varchar(30) NOT NULL COMMENT '审核状态',
   `approve_state_id` int(11) NOT NULL COMMENT '审核状态id',
   `business_risk_point` text DEFAULT NULL COMMENT '业务风险点',
@@ -87,6 +83,10 @@ CREATE TABLE `t_finance_order_riskmanager_info` (
   `payment_situation_eval` text DEFAULT NULL COMMENT '预计回款情况',
   `risk_control_scheme` text DEFAULT NULL COMMENT '风险控制方案',
   `supply_material_introduce` text DEFAULT NULL COMMENT '补充材料说明',
+  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
+  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `financecode` (`finance_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='金融单-风控人员填写信息表';
@@ -94,10 +94,6 @@ CREATE TABLE `t_finance_order_riskmanager_info` (
 
 CREATE TABLE `t_finance_order_salesman_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
-  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   `approve_state` varchar(30) NOT NULL COMMENT '审核状态',
   `approve_state_id` int(11) NOT NULL COMMENT '审核状态id',
   `business_model_introduce` text DEFAULT NULL COMMENT '业务操作模式介绍',
@@ -107,6 +103,10 @@ CREATE TABLE `t_finance_order_salesman_info` (
   `need_supply_material` int(11) NOT NULL COMMENT '是否需要补充材料',
   `other_info_supply` text DEFAULT NULL COMMENT '其它补充说明',
   `supply_material_introduce` text DEFAULT NULL COMMENT '补充材料说明',
+  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
+  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `financecode` (`finance_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='金融单-业务员填写信息表';
@@ -114,10 +114,6 @@ CREATE TABLE `t_finance_order_salesman_info` (
 
 CREATE TABLE `t_finance_order_supervisor_info` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
-  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   `approve_state` varchar(30) NOT NULL COMMENT '审核状态',
   `approve_state_id` int(11) NOT NULL COMMENT '审核状态id',
   `final_conclusion` text DEFAULT NULL COMMENT '最终结论,综合意见',
@@ -132,6 +128,10 @@ CREATE TABLE `t_finance_order_supervisor_info` (
   `supervision_cooperate_detail` text DEFAULT NULL COMMENT '监管配合情况',
   `supervision_scheme` text DEFAULT NULL COMMENT '监管方案',
   `supply_material_introduce` text DEFAULT NULL COMMENT '补充材料说明',
+  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
+  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `financecode` (`finance_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='金融单-监管员填写信息表';

@@ -1,10 +1,6 @@
 
 CREATE TABLE `t_finance_order_contract` (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
-  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   `attachment_names` varchar(520) DEFAULT NULL COMMENT '附件名称',
   `attachment_number` int(11) DEFAULT NULL COMMENT '附件个数',
   `buyer_bank_account` varchar(120) DEFAULT NULL COMMENT '买家银行账号',
@@ -52,6 +48,10 @@ CREATE TABLE `t_finance_order_contract` (
   `type_name` VARCHAR(100) NOT NULL COMMENT '合同类型Name',
   `unload_place` varchar(220) DEFAULT NULL COMMENT '卸货地点',
   `unload_place_short` varchar(220) DEFAULT NULL COMMENT '卸货地点简称',
+  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
+  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
+  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `contractnumber` (`contract_no`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='金融申-合同表';
