@@ -13,12 +13,13 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class Number implements Serializable {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "id", length = 20)
+    @Column(name = "id")
     private Long id;
+
     @NonNull
-    @Column(name = "type", length = 30)
+    @Column(name = "type")
     private String type;
+
     @NonNull
     @Column(name = "create_date")
     private LocalDate createDate;

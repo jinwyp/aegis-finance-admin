@@ -83,7 +83,7 @@ CREATE TABLE `t_finance_order_contract` (
   `ship_no` varchar(120) DEFAULT NULL COMMENT '船次',
   `sign_date` date DEFAULT NULL COMMENT '签约日期',
   `sign_place` varchar(220) DEFAULT NULL COMMENT '签约地点',
-  `special_remark` text DEFAULT NULL COMMENT '特别约定/特殊说明  ',
+  `special_remark` text DEFAULT NULL COMMENT '特别约定,特殊说明  ',
   `type` int(11) NOT NULL COMMENT '合同类型',
   `unload_place` varchar(220) DEFAULT NULL COMMENT '卸货地点',
   `unload_place_short` varchar(220) DEFAULT NULL COMMENT '卸货地点简称',

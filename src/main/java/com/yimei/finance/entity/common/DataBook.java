@@ -13,16 +13,18 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class DataBook implements Serializable {
     @Id
-    @GeneratedValue
-    @Column(name = "id", length = 11)
+    @Column(name = "id")
     private int id;                    // id
-    @Column(name = "sequence", length = 5, nullable = false)
+
+    @Column(name = "sequence")
     @NonNull
     private int sequence;
-    @Column(name = "name", length = 30, nullable = false)
+
+    @Column(name = "name")
     @NonNull
     private String name;               // 名称
-    @Column(name = "type", length = 30, nullable = false)
+
+    @Column(name = "type")
     @NonNull
     private String type;               // 类型
 

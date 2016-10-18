@@ -3,15 +3,11 @@ package com.yimei.finance.entity.site.user;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotNull;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 
-/**
- * Created by wangqi on 16/4/14.
- */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
@@ -22,7 +18,6 @@ public class User implements Serializable {
     private String nickname;
     @NotNull(message = "用户名密码不为空")
     private String password;
-    @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime registertime;
     private boolean isactive;
     private String verifystatus;
