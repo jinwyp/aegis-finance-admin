@@ -33,6 +33,10 @@ public class User implements Serializable {
     private Integer traderid;                 //配置交易员id
     private String companyName;
 
+    //会员新增信息
+    private int companyId;                    //所属公司Id
+    private boolean master;                   //是否为主账户
+
     public User(int id, String securephone) {
         this.id = id;
         this.securephone = securephone;
