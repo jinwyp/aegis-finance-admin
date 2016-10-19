@@ -19,9 +19,9 @@
                     <div>
                         <p>行情资讯</p>
                         <ul>
-                            <li><a href="${sitepage}/news/hyyw">行业要闻</a></li>
-                            <li><a href="${sitepage}/news/zczz">政策追踪</a></li>
-                            <li><a href="${sitepage}/news/djsd">独家视点</a></li>
+                            <li><a href="${infopage}/news/hyyw">行业要闻</a></li>
+                            <li><a href="${infopage}/news/zczz">政策追踪</a></li>
+                            <li><a href="${infopage}/news/djsd">独家视点</a></li>
                         </ul>
                     </div>
                 </li>
