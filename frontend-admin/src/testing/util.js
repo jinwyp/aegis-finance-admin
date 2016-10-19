@@ -9,7 +9,7 @@ function waitForUrlToChangeTo(url) {
         return browser.driver.getCurrentUrl().then(function (resultUrl) {
             return resultUrl.includes(url);
         });
-    }, 10 * 1000, '等待10秒钟');
+    }, 5 * 1000, '等待5秒钟');
 }
 
 

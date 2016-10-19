@@ -69,13 +69,13 @@ describe('Admin Home Page - 管理后台首页', function() {
 
         it('点击用户管理菜单', function() {
             menuUserManageButton.click();
-            browser.wait(browser.isElementPresent(userSearchButton), 10000);
+            browser.wait(browser.isElementPresent(userSearchButton), 5000);
             expect(breadNav.getText()).toEqual('用户管理');
         });
 
         it('点击添加用户按钮', function() {
             userAddButton.click();
-            browser.wait(browser.isElementPresent(userSaveButton), 10000);
+            browser.wait(browser.isElementPresent(userSaveButton), 5000);
             expect(breadNav.getText()).toEqual('添加用户');
         });
     });
@@ -188,7 +188,7 @@ describe('Admin Home Page - 管理后台首页', function() {
 
         it('点击返回按钮', function() {
             userBackButton.click();
-            browser.wait(browser.isElementPresent(userSearchButton), 10000);
+            browser.wait(browser.isElementPresent(userSearchButton), 5000);
             expect(breadNav.getText()).toEqual('用户管理');
         });
     });

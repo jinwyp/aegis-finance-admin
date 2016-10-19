@@ -5,8 +5,8 @@
 module.exports = {
 
     admin : {
-        username : 'admin',
-        password : '123456',
+        username : 'adminfinance',
+        password : 'financeadmin',
         email : 'admin1@yimei180.com'
     },
 
