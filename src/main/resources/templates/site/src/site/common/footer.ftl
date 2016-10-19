@@ -10,7 +10,7 @@
                             <li><a href="${sitepage}/teach/register">免费注册认证</a></li>
                             <li><a href="${sitepage}/teach/buy">如何买煤</a></li>
                             <li><a href="${sitepage}/teach/sell">如何卖煤</a></li>
-                            <li><a href="${sitepage}/teach/logisticsLink">物流指导</a></li>
+                            <#--<li><a href="${sitepage}/teach/logisticsLink">物流指导</a></li>-->
                             <li><a href="${sitepage}/teach/questions">常见问题</a></li>
                         </ul>
                     </div>
