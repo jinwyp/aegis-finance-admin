@@ -11,19 +11,20 @@ import java.util.Date;
 @Data
 @NoArgsConstructor
 @RequiredArgsConstructor
-@AllArgsConstructor
 public class UserLoginRecord implements Serializable {
     @Id
-    @Column(name = "id", unique = true, updatable = false)
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "id")
     private Long id;                                                 //主键
+
     @NonNull
-    @Column(name = "user_id", length = 30, nullable = false, updatable = false)
+    @Column(name = "user_id")
     private String userId;                                           //用户id
+
     @NonNull
-    @Column(name = "username", length = 30, nullable = false, updatable = false)
+    @Column(name = "username")
     private String username;                                         //登陆账号
+
     @NonNull
-    @Column(name = "create_time", nullable = false, updatable = false)
+    @Column(name = "create_time")
     private Date createTime;                                         //创建时间
 }

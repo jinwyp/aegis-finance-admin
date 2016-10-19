@@ -262,5 +262,15 @@ public class FinanceFlowStepServiceImpl {
         }
     }
 
+    /**
+     * 风控人员填写合同内容
+     */
+    @Transactional
+    public Result riskManagerAddFinanceOrderContractMethod(String userId, Task task, FinanceOrderContractObject financeOrderContractObject, boolean submit) {
+        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAudit.toString()))
+            return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
+        orderService.saveFinanceOrderContract(userId, financeOrderContractObject);
+        return Result.success();
+    }
 
 }

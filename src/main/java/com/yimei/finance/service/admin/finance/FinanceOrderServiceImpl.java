@@ -52,6 +52,8 @@ public class FinanceOrderServiceImpl {
     private TaskService taskService;
     @Autowired
     private MessageServiceImpl messageService;
+    @Autowired
+    private FinanceOrderContractRepository contractRepository;
 
     /**
      * 查询金融单
@@ -243,6 +245,20 @@ public class FinanceOrderServiceImpl {
         riskManagerInfo.setLastUpdateManId(userId);
         riskManagerInfo.setLastUpdateTime(new Date());
         riskRepository.save(DozerUtils.copy(riskManagerInfo, FinanceOrderRiskManagerInfo.class));
+    }
+
+    /**
+     * 保存,更新 金融单 合同
+     */
+    public void saveFinanceOrderContract(String userId, FinanceOrderContractObject financeOrderContract) {
+        FinanceOrderContract orderContract = contractRepository.findByFinanceIdAndType(financeOrderContract.getFinanceId(), financeOrderContract.getType());
+        orderContract.setId(null);
+        if (orderContract != null) {
+            financeOrderContract.setId(orderContract.getId());
+        }
+        financeOrderContract.setLastUpdateManId(userId);
+        financeOrderContract.setLastUpdateTime(new Date());
+        contractRepository.save(DozerUtils.copy(financeOrderContract, FinanceOrderContract.class));
     }
 
     /**

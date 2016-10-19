@@ -21,8 +21,7 @@ public enum EnumMYRFinanceAllSteps {
     public int id;
     public String name;
 
-    EnumMYRFinanceAllSteps() {
-    }
+    EnumMYRFinanceAllSteps() {}
 
     EnumMYRFinanceAllSteps(int id, String name) {
         this.id = id;

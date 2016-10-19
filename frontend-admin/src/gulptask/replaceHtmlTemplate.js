@@ -20,7 +20,7 @@ var distPath = {
 
 
 
-gulp.task('replaceTpl', ['sass-release', 'js-release'],  function () {
+gulp.task('replaceTpl', ['sass-release', 'js-build-production'],  function () {
     // 替换CSS中的图片
     //gulp.src(['rev/**/*.json', 'dist/styles/**/*.css'])
     //    .pipe( plugins.revCollector() )
