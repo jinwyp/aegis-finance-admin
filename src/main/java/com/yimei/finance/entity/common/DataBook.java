@@ -13,6 +13,7 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class DataBook implements Serializable {
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id")
     private int id;                    // id
 

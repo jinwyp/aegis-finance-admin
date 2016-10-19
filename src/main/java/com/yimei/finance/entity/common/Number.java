@@ -13,6 +13,7 @@ import java.time.LocalDate;
 @RequiredArgsConstructor
 public class Number implements Serializable {
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id")
     private Long id;
 

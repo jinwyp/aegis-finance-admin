@@ -4,10 +4,7 @@ import com.yimei.finance.entity.common.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.io.Serializable;
 
 @Table(name = "t_finance_order_salesman_info")
@@ -16,6 +13,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 public class FinanceOrderSalesmanInfo extends BaseEntity implements Serializable {
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id")
     private Long id;                                                 //主键
 

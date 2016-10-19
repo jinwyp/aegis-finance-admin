@@ -13,6 +13,7 @@ import java.util.Date;
 @RequiredArgsConstructor
 public class UserLoginRecord implements Serializable {
     @Id
+    @GeneratedValue(strategy= GenerationType.AUTO)
     @Column(name = "id")
     private Long id;                                                 //主键
 
