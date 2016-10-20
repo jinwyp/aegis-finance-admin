@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -119,6 +120,20 @@ public class GlobalExceptionHandler {
     public Result process409Error(BusinessException ex) {
         log.error("409 Exception: ",ex);
         return Result.error(409, ex.getMessage());
+    }
+
+    @ExceptionHandler(MultipartException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody
+    public Result processFileUploadException(HttpServletRequest request, Exception ex) {
+        log.error("MultipartException: ",ex);
+        if (ex instanceof MultipartException) {
+            if (ex.toString().contains("org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException")) {
+                return Result.error(409, EnumCommonError.上传文件大小不能超过30M.toString());
+            }
+        }
+        handler500(request, ex);
+        return Result.error(500, ex.getMessage());
     }
 
     @ExceptionHandler
