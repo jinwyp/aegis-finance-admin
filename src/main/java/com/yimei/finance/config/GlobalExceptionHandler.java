@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartException;
 import org.springframework.web.servlet.NoHandlerFoundException;
 
 import javax.servlet.http.HttpServletRequest;
@@ -79,19 +80,19 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public Result process404Error(NotFoundException ex) {
-        log.error("404 Exception: ",ex);
+        log.error("404 Exception: ", ex);
         return Result.error(404, ex.getMessage());
     }
 
     @ExceptionHandler(NoHandlerFoundException.class)
-    @ResponseStatus(value= HttpStatus.NOT_FOUND)
+    @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
-    public Result requestHandlingNoHandlerFound(NoHandlerFoundException ex, HttpServletRequest request,HttpServletResponse response) throws IOException {
-        log.error("404 Exception: ",ex);
+    public Result requestHandlingNoHandlerFound(NoHandlerFoundException ex, HttpServletRequest request, HttpServletResponse response) throws IOException {
+        log.error("404 Exception: ", ex);
         String AJAX = request.getHeader("X-Requested-With");
         String currentUrl = request.getRequestURL().toString();
 
-        if (null != AJAX && AJAX.equals("XMLHttpRequest") || currentUrl.contains("/api"))  {
+        if (null != AJAX && AJAX.equals("XMLHttpRequest") || currentUrl.contains("/api")) {
             return Result.error(404, ex.getMessage());
         } else {
             if (currentUrl.contains("/admin")) {
@@ -109,7 +110,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ResponseBody
     public Result process405Error(HttpRequestMethodNotSupportedException ex) {
-        log.error("405 Exception: ",ex);
+        log.error("405 Exception: ", ex);
         return Result.error(405, ex.getMessage());
     }
 
@@ -117,15 +118,28 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.CONFLICT)
     @ResponseBody
     public Result process409Error(BusinessException ex) {
-        log.error("409 Exception: ",ex);
+        log.error("409 Exception: ", ex);
         return Result.error(409, ex.getMessage());
+    }
+
+    @ExceptionHandler(MultipartException.class)
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ResponseBody
+    public Result processFileUploadException(HttpServletRequest request, Exception ex) {
+        log.error("MultipartException: ", ex);
+        if (ex instanceof MultipartException) {
+            if (ex.toString().contains("org.apache.tomcat.util.http.fileupload.FileUploadBase$SizeLimitExceededException")) {
+                return Result.error(409, EnumCommonError.上传文件大小不能超过30M.toString());
+            }
+        }
+        return process500Error(request, ex);
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ResponseBody
     public Result process500Error(HttpServletRequest request, Exception ex) {
-        log.error("500 Exception: ",ex);
+        log.error("500 Exception: ", ex);
         handler500(request, ex);
         return Result.error(500, ex.getMessage());
     }
@@ -135,9 +149,9 @@ public class GlobalExceptionHandler {
         log.warn("开始发送邮件");
         Object user = userSession.getUser() == null ? userSession.getUser() : adminSession.getUser();
         try {
-            if("application/json".equals(request.getContentType())){
+            if ("application/json".equals(request.getContentType())) {
                 reporter.handle(ex, request.getRequestURL().toString(), om.writeValueAsString(extractPostRequestBody(request)), getHeadersInfo(request), user);
-            }else{
+            } else {
                 reporter.handle(ex, request.getRequestURL().toString(), om.writeValueAsString(request.getParameterMap()), getHeadersInfo(request), user);
             }
         } catch (Exception e) {
@@ -145,9 +159,6 @@ public class GlobalExceptionHandler {
         }
         log.warn("邮件发送结束");
     }
-
-
-
 
 
     //获取header对象
@@ -159,7 +170,7 @@ public class GlobalExceptionHandler {
             String value = request.getHeader(key);
             map.put(key, value);
         }
-        map.put("Request Method",request.getMethod());
+        map.put("Request Method", request.getMethod());
         map.put("requestURL", request.getRequestURL().toString());
         return om.writeValueAsString(map);
     }
@@ -175,7 +186,7 @@ public class GlobalExceptionHandler {
                 e.printStackTrace();
             }
             return s.hasNext() ? s.next() : "";
-        }else {
+        } else {
             return "{}";
         }
     }
