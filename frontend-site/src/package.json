@@ -28,7 +28,7 @@
     "karma-jasmine": "^1.0.2",
     "karma-spec-reporter": "0.0.26",
     "request": "^2.74.0",
-    "require-dir": "^0.3.0",
+    "require-dir": "^0.3.1",
     "run-sequence": "^1.2.2"
   },
   "jspm": {

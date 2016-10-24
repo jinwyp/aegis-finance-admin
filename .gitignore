@@ -62,6 +62,10 @@ frontend-admin/src/css/stylesheets
 frontend-admin/src/testing/report
 
 
+frontend-cangya/dist
+frontend-cangya/src/css/stylesheets
+
+
 .tmp/
 files
 .vscode

@@ -1,0 +1,31 @@
+{
+  "name": "avalon2admin",
+  "version": "1.0.0",
+  "scripts": {
+    "dev": "run-p watch webpackserver",
+    "webpack": "webpack --config ./webpack.config.js --display-modules --display-chunks -d",
+    "webpackserver": "webpack-dev-server --config ./webpack.config.js",
+    "build": "webpack --config ./pro.config",
+    "watch": "gulp watch"
+  },
+  "dependencies": {
+    "avalon2": "^2.1.16",
+    "bootstrap": "^3.3.7",
+    "jquery": "1.12.4"
+  },
+  "devDependencies": {
+    "del": "^2.2.2",
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-clean-css": "^2.0.13",
+    "gulp-eslint": "^3.0.1",
+    "gulp-rev": "^7.1.2",
+    "gulp-rev-collector": "^1.0.5",
+    "gulp-sass": "^2.3.2",
+    "gulp.spritesmith": "^6.2.1",
+    "npm-run-all": "^3.1.1",
+    "require-dir": "^0.3.1",
+    "run-sequence": "^1.2.2",
+    "webpack": "^2.1.0-beta.25",
+    "webpack-dev-server": "^2.1.0-beta.9"
+  }
+}

@@ -1,5 +1,5 @@
 {
-  "name": "angular2-quickstart",
+  "name": "angular2admin",
   "version": "1.0.0",
   "scripts": {
     "start": "gulp dev",
@@ -9,7 +9,6 @@
     "test": "karma start karma.conf.js --single-run",
     "e2e": "protractor protractor.conf.js"
   },
-  "license": "ISC",
   "dependencies": {
     "@angular/common": "^2.1.0",
     "@angular/compiler": "^2.1.0",
