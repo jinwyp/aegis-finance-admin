@@ -64,7 +64,8 @@ frontend-admin/src/testing/report
 
 frontend-cangya/dist
 frontend-cangya/src/css/stylesheets
-
+frontend-cangya/src/js/page-temp-bundle
+mockserver
 
 .tmp/
 files

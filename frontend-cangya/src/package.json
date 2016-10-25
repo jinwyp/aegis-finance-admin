@@ -5,13 +5,15 @@
     "dev": "run-p watch webpackserver",
     "webpack": "webpack --config ./webpack.config.js --display-modules --display-chunks -d",
     "webpackserver": "webpack-dev-server --config ./webpack.config.js",
-    "build": "webpack --config ./pro.config",
+    "build": "webpack --config ./webpack.config.js -p",
     "watch": "gulp watch"
   },
   "dependencies": {
-    "avalon2": "^2.1.16",
+    "avalon2": "2.1.15",
     "bootstrap": "^3.3.7",
-    "jquery": "1.12.4"
+    "html5shiv": "^3.7.3",
+    "jquery": "1.12.4",
+    "respond.js": "^1.4.2"
   },
   "devDependencies": {
     "del": "^2.2.2",
@@ -24,8 +26,6 @@
     "gulp.spritesmith": "^6.2.1",
     "npm-run-all": "^3.1.1",
     "require-dir": "^0.3.1",
-    "run-sequence": "^1.2.2",
-    "webpack": "^2.1.0-beta.25",
-    "webpack-dev-server": "^2.1.0-beta.9"
+    "run-sequence": "^1.2.2"
   }
 }

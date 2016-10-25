@@ -7,11 +7,12 @@ var webpack = require('webpack');
 
 module.exports = {
     entry: {
+        // common: ['jquery','avalon2'],
         adminLogin : './js/page/adminLogin.js',
         adminHome : './js/page/adminHome.js'
     },
     output: {
-        path: path.join(__dirname, "../dist/js"),
+        path: path.join(__dirname, "js/page-temp-bundle"),
         filename: "[name].bundle.js",
         chunkFilename: "[id].chunk.js",
         publicPath : '/'
@@ -19,7 +20,7 @@ module.exports = {
 
 
     module: {
-        rules: [
+        loaders: [
 
         ]
     },
