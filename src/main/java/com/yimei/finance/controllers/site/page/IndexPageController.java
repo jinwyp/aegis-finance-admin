@@ -31,17 +31,14 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * Created by liuxinjie on 16/7/29.
- */
 @Api(tags = {"site-page"})
-@Controller
-public class IndexController {
+@Controller("financeSitePageController")
+public class IndexPageController {
 
     private Environment env;
 
     @Autowired
-    public IndexController(Environment env) {
+    public IndexPageController(Environment env) {
         this.env = env;
     }
 

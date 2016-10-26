@@ -18,7 +18,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 
-
 @Api(tags={"admin-page"})
 @RequestMapping("/finance/admin")
 @Controller("adminCommonPageController")
