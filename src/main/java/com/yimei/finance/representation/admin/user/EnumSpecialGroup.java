@@ -3,9 +3,6 @@ package com.yimei.finance.representation.admin.user;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by liuxinjie on 16/8/15.
- */
 public enum EnumSpecialGroup {
     SuperAdminGroup("GROUP00000", "系统管理员组"),
     ManageOnlineTraderGroup("GROUP00001", "线上交易员管理组"),

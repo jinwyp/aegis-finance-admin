@@ -1,8 +1,5 @@
 package com.yimei.finance.representation.admin.user;
 
-/**
- * Created by liuxinjie on 16/8/11.
- */
 public enum EnumAdminGroupError {
     此组不存在,
     组对象不能为空,

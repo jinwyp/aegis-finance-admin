@@ -1,8 +1,5 @@
 package com.yimei.finance.representation.admin.user;
 
-/**
- * Created by liuxinjie on 16/8/11.
- */
 public enum EnumAdminUserError {
     此用户不存在,
     用户对象不能为空,
