@@ -84,6 +84,21 @@ gulp.task('js-build-dev', function(cb) {
 });
 
 
+gulp.task('copydpd', function(cb) {
+    exec('npm run build', function (err, stdout, stderr) {
+        console.log(stdout);
+        console.log(stderr);
+        cb(err);
+    });
+
+    gulp.src('*.html')
+        .pipe(gulp.dest('../mockserver/public/'));
+    gulp.src(sourcePath.components)
+        .pipe(gulp.dest('../mockserver/public/js/libs/'));
+    gulp.src(distPath.jsPageDevTemp+'**/*.js')
+        .pipe(gulp.dest('../mockserver/public/js/'));
+});
+
 
 gulp.task('watchJs', [ 'js-build-dev'],function() {
     gulp.watch(sourcePath.js, ['esLint', 'js-build-dev']);
