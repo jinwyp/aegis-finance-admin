@@ -18,7 +18,7 @@ import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.site.finance.result.FinanceOrderSearch;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
-import com.yimei.finance.service.common.NumberServiceImpl;
+import com.yimei.finance.service.common.tools.NumberServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
