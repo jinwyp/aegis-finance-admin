@@ -1,0 +1,39 @@
+@import '../helpers/_variables.scss';
+
+
+.navbar-fixed-top{
+  position: inherit;
+  min-width:1000px;
+}
+.navbar.h-80{
+  height:80px;
+  line-height:80px;
+}
+.navbar{
+  margin-bottom: 0px;
+  .header-bg{
+    height:inherit;
+    background-color: #47b3e4;
+    .header-logo{
+      display: inline-block;
+      width:100px;
+      height:45px;
+      vertical-align: middle;
+      background: url("#{$assetPath}/css/images/yimei_logo.png");
+    }
+    .header-title{
+      margin-left:20px;
+      vertical-align: middle;
+      font-size:18px;
+      color: #ffffff;
+    }
+    .navbar-nav{
+      margin-top:15px;
+      margin-right: 0px;
+      a{  color: #ffffff;  }
+    }
+    .nav>li>a:focus, .nav>li>a:hover{
+      background-color: #47b3e4;
+    }
+  }
+}

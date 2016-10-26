@@ -1,0 +1,17 @@
+
+/* IE 6/7 */
+
+.clearfix {
+  *zoom: 1;
+}
+
+.clear {
+  clear: both;
+  display: block;
+  overflow: hidden;
+  visibility: hidden;
+  width: 0;
+  height: 0;
+}
+
+
