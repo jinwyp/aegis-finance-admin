@@ -55,32 +55,10 @@
                 </div>
 
                 <form>
-                    <label for="startDate">申请时间:</label>
-                    <div class="time"><input type="text" id="startDate" class="iIpt iIpt_sm startDate"placeholder="yyyy-mm-dd" ms-duplex="@searchQuery.startDate" /></div>
-
-                    <label for="endDate">到</label>
-                    <div class="time"><input type="text" id="endDate" class="iIpt iIpt_sm endDate" placeholder="yyyy-mm-dd" ms-duplex="@searchQuery.endDate" /></div>
-
-                    <label for="approveStateId">审核状态:</label>
-                    <div class="positionR selectDiv">
-                        <input type="text" value="全部" name="approveStateId" id="approveStateId" class="margin-l" ms-duplex="@searchQuery.approveStateId" readonly="readonly" />
-                        <ul class="select">
-                            <li ms-click="@clickStatus('全部')">全部</li>
-                            <li ms-click="@clickStatus('待审核')">待审核</li>
-                            <li ms-click="@clickStatus('审核中')">审核中</li>
-                            <li ms-click="@clickStatus('审核中(补充材料)')">审核中(补充材料)</li>
-                            <li ms-click="@clickStatus('审核通过')">审核通过</li>
-                            <li class="lastLi" ms-click="@clickStatus('审核不通过')">审核不通过</li>
-                        </ul>
-                        <span class="trigger"></span>
-                    </div>
-
-                    <br/>
-
-                    <label for="sourceId">业务编号:</label>
+                    <label for="sourceId">合同编号:</label>
                     <input type="text" id="sourceId" class="margin-l" ms-duplex="@searchQuery.sourceId">
 
-                    <label for="applyType">业务类型:</label>
+                    <label for="applyType">关联业务类型:</label>
                     <div class="positionR selectDiv">
                         <input type="text" value="全部" name="applyType" id="applyType" class="margin-l" readonly="readonly" ms-duplex="@searchQuery.applyType" />
                         <ul class="select">
@@ -91,14 +69,8 @@
                         </ul>
                         <span class="trigger"></span>
                     </div>
-
-                    <!--<label>申请人:</label>-->
-                    <!--<input type="text" placeholder="请输入申请人姓名" class="margin-l" ms-duplex="@searchQuery.requestUsername">-->
                     <input type="button" value="查询" ms-click="@searchFinanceOrder()">
-                    <input type="button" value="导出Excel" id="excel" class="excel">
                 </form>
-
-                <!--<div class="loading" ms-visible="@financeList.length===0"><img src="${staticPath}/css/images/finance/loading.gif" alt="loading"></div>-->
 
 
                 <table class="list">
@@ -106,7 +78,6 @@
                         <th>业务编号</th>
                         <th>业务类型</th>
                         <th>申请时间</th>
-                        <!--<th>申请人</th>-->
                         <th>拟融资总额状态<br/>(万元)</th>
                         <th>使用时间<br/>(天)</th>
                         <th>审核状态</th>
@@ -122,7 +93,6 @@
                         </td>
 
                         <td>{{order.createTime || '/'}}</td>
-                        <!--<td>{{order.applyUserName || '/'}}</td>-->
                         <td>
                             <span ms-visible="order.financingAmount===null">/</span>
                             <span ms-visible="order.financingAmount!=null">{{order.financingAmount}}</span>
@@ -154,7 +124,7 @@
                             <a  class="detailA orangeA" ms-visible="order.approveStateId===6" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
                         </td>
                     </tr>
-                    <tr ms-visible="@financeList.length===0">
+                    <tr ms-visible="@contactList.length===0">
                         <td colspan="7">当前无融资申请记录！</td>
                     </tr>
 
@@ -188,13 +158,13 @@
 <!-- Remove this statement if you want to run the on the fly transpiler -->
 <!-- 生产环境使用 bundle.js 文件 -->
     <script src="${staticPath}/js/page/dependencies.bundle.js"></script>
-    <script src="${staticPath}/js/page/userCenterFinanceList.bundle.js"></script>
+    <script src="${staticPath}/js/page/userCenterContactList.bundle.js"></script>
 </#if>
 
 <!--<script src="${staticPath}/js/page-temp-bundle/dependencies.bundle.js"></script>-->
 <!--<script src="${staticPath}/js/page-temp-bundle/userCenterFinanceList.bundle.js"></script>-->
 <script>
-    System['import']('${staticPath}/js/page/userCenterFinanceList.js')
+    System['import']('${staticPath}/js/page/userCenterContactList.js')
 </script>
 
 
