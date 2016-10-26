@@ -3,6 +3,7 @@ package com.yimei.finance.controllers.site.page;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.service.common.file.LocalStorage;
 import com.yimei.finance.utils.WebUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 
+@Api(tags = {"site-page"})
 @Controller("siteCommonPageController")
 public class CommonPageController {
     @Autowired

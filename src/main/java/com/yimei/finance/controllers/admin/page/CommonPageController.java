@@ -5,6 +5,7 @@ import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.common.file.LocalStorage;
 import com.yimei.finance.service.common.message.MessageServiceImpl;
 import com.yimei.finance.utils.WebUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 
+
+@Api(tags={"admin-page"})
 @RequestMapping("/finance/admin")
 @Controller("adminCommonPageController")
 public class CommonPageController {
@@ -38,6 +41,7 @@ public class CommonPageController {
         }
     }
 
+    @ApiOperation(value = "测试email", notes = "测试email")
     @RequestMapping(value = "/test/email", method = RequestMethod.GET)
     @ResponseBody
     public Result testEmail(@RequestParam("email") String email) {
@@ -53,7 +57,7 @@ public class CommonPageController {
         return Result.success();
     }
 
-    @RequestMapping(value = "/contract")
+    @RequestMapping(value = "/contract" , method = RequestMethod.GET)
     @ApiOperation(value = "合同页面", notes = "合同页面")
     public String contractPage() {
         return "admin/contract";
