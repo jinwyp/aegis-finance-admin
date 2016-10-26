@@ -3,7 +3,7 @@ package com.yimei.finance.controllers.admin.page;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.common.file.LocalStorage;
-import com.yimei.finance.service.common.message.MailServiceImpl;
+import com.yimei.finance.service.common.message.MessageServiceImpl;
 import com.yimei.finance.utils.WebUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -26,7 +26,7 @@ public class CommonPageController {
     @Autowired
     private LocalStorage localStorage;
     @Autowired
-    private MailServiceImpl mailService;
+    private MessageServiceImpl messageService;
 
     @RequestMapping(value = "/files", method = RequestMethod.GET)
     @ApiOperation(value = "下载文件", notes = "通过文件url路径下载文件")
@@ -53,7 +53,7 @@ public class CommonPageController {
         System.out.println(" ------------------------------ " + email);
         String subject = "测试邮件";
         String content = "测试 --------------- 你好: 你的账号已开通, 用户名 请修改密码. [易煤网金融系统]";
-        mailService.sendSimpleMail(email, subject, content);
+        messageService.sendSimpleMail(email, subject, content);
         return Result.success();
     }
 

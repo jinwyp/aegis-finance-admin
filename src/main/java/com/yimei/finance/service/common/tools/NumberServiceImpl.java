@@ -1,4 +1,4 @@
-package com.yimei.finance.service.common;
+package com.yimei.finance.service.common.tools;
 
 import com.yimei.finance.entity.common.Number;
 import com.yimei.finance.repository.common.NumberRepository;
