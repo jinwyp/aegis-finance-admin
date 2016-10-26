@@ -2,6 +2,10 @@ package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.representation.common.file.AttachmentObject;
+import com.yimei.finance.representation.admin.activiti.HistoryTaskObject;
+import com.yimei.finance.representation.admin.activiti.HistoryVariableObject;
+import com.yimei.finance.representation.admin.activiti.TaskObject;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEndType;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEventType;

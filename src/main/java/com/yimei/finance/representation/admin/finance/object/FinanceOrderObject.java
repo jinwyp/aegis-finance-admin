@@ -1,6 +1,7 @@
 package com.yimei.finance.representation.admin.finance.object;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.object.validated.CreateFinanceOrder;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceOrder;

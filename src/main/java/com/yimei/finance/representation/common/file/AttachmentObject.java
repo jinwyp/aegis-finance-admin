@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.admin.finance.object;
+package com.yimei.finance.representation.common.file;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yimei.finance.representation.common.enums.EnumCommonString;
