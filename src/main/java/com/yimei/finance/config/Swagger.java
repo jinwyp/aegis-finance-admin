@@ -30,10 +30,8 @@ public class Swagger {
                 .apiInfo(apiInfo())
                 .tags(
                     new Tag("site-page", "网站页面"),
-                    new Tag("site-page-error", "网站错误页面"),
                     new Tag("site-api", "网站 RESTful API"),
                     new Tag("admin-page", "管理后台页面"),
-                    new Tag("admin-page-error", "管理后台错误页面"),
                     new Tag("admin-api", "管理后台 RESTful API"),
                     new Tag("admin-api-user", "管理后台 RESTful API 用户登录与信息"),
                     new Tag("admin-api-permission", "管理后台 RESTful API 权限"),
