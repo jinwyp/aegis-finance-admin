@@ -46,7 +46,7 @@
         <div class="financeCon ms-controller" ms-controller="financeList">
             <div class="application ">
                 <div class="borderB clearfix">
-                    <h4><span></span>融资详情</h4>
+                    <h4><span></span>融资详情 - 煤易贷 </h4>
                     <div class="floatR">
                         <!--<span><em></em>了解业务类型</span>-->
                         <a href="/finance">《&nbsp;返回易煤金融</a>

@@ -39,7 +39,7 @@
 <div class="financeManageWrap">
     <div class="financeManage clearfix">
         <!--侧边栏开始-->
-    <#include "../common/leftmenu.ftl" >
+            <#include "../common/leftmenu.ftl" >
         <!--侧边栏结束-->
 
         <!--右侧主内容开始-->
@@ -55,7 +55,7 @@
                     <!--</ol>-->
                 <!--</div>-->
                 <!--面包屑结束-->
-                <h4><span></span>融资详情</h4>
+                <h4><span></span>合同管理</h4>
                 <div class="table" >
                     <div class="table-title">
                         <em></em>申请信息:

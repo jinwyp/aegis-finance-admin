@@ -42,11 +42,12 @@
             <#include "../common/leftmenu.ftl" >
         <!--侧边栏结束-->
 
+
         <!--右侧主内容开始-->
         <div class="financeCon ms-controller" ms-controller="financeList">
             <div class="application ">
                 <div class="borderB clearfix">
-                    <h4><span></span>融资详情</h4>
+                    <h4><span></span>合同管理</h4>
                     <div class="floatR">
                         <!--<span><em></em>了解业务类型</span>-->
                         <a href="/finance">《&nbsp;返回易煤金融</a>
