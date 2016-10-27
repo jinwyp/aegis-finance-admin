@@ -10,14 +10,14 @@ import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 
 var url = 'http://192.168.1.180:2403/orders';
 
-var financeList = () => {
+var cangyaList = () => {
 
-    var applyTypeList = [
-        {'name' : '', text : '全部'},
-        {'name' : 'MYR', text : '煤易融'},
-        {'name' : 'MYG', text : '煤易购'},
-        {'name' : 'MYD', text : '煤易贷'},
-    ];
+    // var applyTypeList = [
+    //     {'name' : '', text : '全部'},
+    //     {'name' : 'MYR', text : '煤易融'},
+    //     {'name' : 'MYG', text : '煤易购'},
+    //     {'name' : 'MYD', text : '煤易贷'},
+    // ];
     var statusList = [
         {
             "name": "风控人员审批通过",
@@ -126,19 +126,29 @@ var financeList = () => {
             "statusNo": 57,
             "displayName": "港口已确认返回货物",
             "id": "c132a4ae1954f93b"
-        }
+        },
+        {'name' : '0', text : '全部'},
+        {'name' : '2', text : '待回款赎货'},
+        {'name' : '4', text : '已结束(业务超时未处理)'},
+        {'name' : '6', text : '已结束(港口超时未处理)'},
+        {'name' : '8', text : '已结束(监管超时未处理)'},
+        {'name' : '10', text : '已结束(资金方未放款)'},
+        {'name' : '10', text : '待缴纳保证金'},
+        {'name' : '10', text : '已完成回款赎货'},
+        {'name' : '10', text : '放款审核未通过'},
+        {'name' : '10', text : '货权已处置'},
     ];
 
     var vm = avalon.define({
-        $id   : 'financeList',
-        financeList : [],
+        $id   : 'cangyaList',
+        cangyaList : [],
         css : {
             status : false
         },
         searchQuery : {
             // requestUsername : '',
             approveStateId : '全部',
-            applyType : '全部',
+            // applyType : '全部',
             sourceId : '',
             startDate : '',
             endDate : '',
@@ -151,7 +161,7 @@ var financeList = () => {
                 getFinanceList({
                     // requestUsername : vm.searchQuery.requestUsername,
                     approveStateId : statusList.find(status => { return status.text === vm.searchQuery.approveStateId}).name,
-                    applyType : applyTypeList.find(type => { return type.text === vm.searchQuery.applyType}).name,
+                    // applyType : applyTypeList.find(type => { return type.text === vm.searchQuery.applyType}).name,
                     sourceId : vm.searchQuery.sourceId,
                     startDate : vm.searchQuery.startDate,
                     endDate : vm.searchQuery.endDate,
@@ -165,15 +175,15 @@ var financeList = () => {
             vm.searchQuery.approveStateId = value;
         },
 
-        clickType : (value)=>{
-            vm.searchQuery.applyType = value;
-        },
+        // clickType : (value)=>{
+        //     vm.searchQuery.applyType = value;
+        // },
 
         searchFinanceOrder : (event)=>{
              getFinanceList({
                 // requestUsername : vm.searchQuery.requestUsername,
                 approveStateId : statusList.find(status => { return status.text === vm.searchQuery.approveStateId}).name,
-                applyType : applyTypeList.find(type => { return type.text === vm.searchQuery.applyType}).name,
+                // applyType : applyTypeList.find(type => { return type.text === vm.searchQuery.applyType}).name,
                 sourceId : vm.searchQuery.sourceId,
                 startDate : vm.searchQuery.startDate,
                 endDate : vm.searchQuery.endDate,
@@ -194,13 +204,13 @@ var financeList = () => {
             method   : 'GET',
             dataType : 'json',
             data     : params,
-            success  : (data)=> {
-                if (data.success){
-                    vm.financeList = data.data;
-                    vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
-                }else{
-
-                }
+            success  : (data)=> {vm.cangyaList = data;
+                // if (data.success){
+                //
+                //     vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
+                // }else{
+                //
+                // }
             }
         });
     };
@@ -251,7 +261,7 @@ var financeList = () => {
 };
 
 
-financeList();
+cangyaList();
 
-export default financeList;
+export default cangyaList;
 

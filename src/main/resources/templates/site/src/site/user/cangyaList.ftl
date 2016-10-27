@@ -43,7 +43,7 @@
         <!--侧边栏结束-->
 
         <!--右侧主内容开始-->
-        <div class="financeCon ms-controller" ms-controller="financeList">
+        <div class="financeCon ms-controller" ms-controller="cangyaList">
             <div class="application ">
                 <div class="borderB clearfix">
                     <h4><span></span>融资详情 - 煤易贷 </h4>
@@ -65,11 +65,15 @@
                         <input type="text" value="全部" name="approveStateId" id="approveStateId" class="margin-l" ms-duplex="@searchQuery.approveStateId" readonly="readonly" />
                         <ul class="select">
                             <li ms-click="@clickStatus('全部')">全部</li>
-                            <li ms-click="@clickStatus('待审核')">待审核</li>
-                            <li ms-click="@clickStatus('审核中')">审核中</li>
-                            <li ms-click="@clickStatus('审核中(补充材料)')">审核中(补充材料)</li>
-                            <li ms-click="@clickStatus('审核通过')">审核通过</li>
-                            <li class="lastLi" ms-click="@clickStatus('审核不通过')">审核不通过</li>
+                            <li ms-click="@clickStatus('待回款赎货')">待回款赎货</li>
+                            <li ms-click="@clickStatus('已结束(业务超时未处理)')">已结束(业务超时未处理)</li>
+                            <li ms-click="@clickStatus('已结束(港口超时未处理)')">已结束(港口超时未处理)</li>
+                            <li ms-click="@clickStatus('已结束(监管超时未处理)')">已结束(监管超时未处理)</li>
+                            <li ms-click="@clickStatus('已结束(资金方未放款)')">已结束(资金方未放款)</li>
+                            <li ms-click="@clickStatus('待缴纳保证金')">待缴纳保证金</li>
+                            <li ms-click="@clickStatus('已完成回款赎货')">已完成回款赎货</li>
+                            <li ms-click="@clickStatus('放款审核未通过')">放款审核未通过</li>
+                            <li class="lastLi"  ms-click="@clickStatus('货权已处置')">货权已处置</li>
                         </ul>
                         <span class="trigger"></span>
                     </div>
@@ -79,25 +83,26 @@
                     <label for="sourceId">业务编号:</label>
                     <input type="text" id="sourceId" class="margin-l" ms-duplex="@searchQuery.sourceId">
 
-                    <label for="applyType">业务类型:</label>
-                    <div class="positionR selectDiv">
-                        <input type="text" value="全部" name="applyType" id="applyType" class="margin-l" readonly="readonly" ms-duplex="@searchQuery.applyType" />
-                        <ul class="select">
-                            <li ms-click="@clickType('全部')">全部</li>
-                            <li ms-click="@clickType('煤易融')">煤易融</li>
-                            <li ms-click="@clickType('煤易贷')">煤易贷</li>
-                            <li class="lastLi" ms-click="@clickType('煤易购')">煤易购</li>
-                        </ul>
-                        <span class="trigger"></span>
-                    </div>
+                    <!--<label for="applyType">业务类型:</label>-->
+                    <!--<div class="positionR selectDiv">-->
+                        <!--<input type="text" value="全部" name="applyType" id="applyType" class="margin-l" readonly="readonly" ms-duplex="@searchQuery.applyType" />-->
+                        <!--<ul class="select">-->
+                            <!--<li ms-click="@clickType('全部')">全部</li>-->
+                            <!--<li ms-click="@clickType('煤易融')">煤易融</li>-->
+                            <!--<li ms-click="@clickType('煤易贷')">煤易贷</li>-->
+                            <!--<li class="lastLi" ms-click="@clickType('煤易购')">煤易购</li>-->
+                        <!--</ul>-->
+                        <!--<span class="trigger"></span>-->
+                    <!--</div>-->
 
                     <!--<label>申请人:</label>-->
+                    <!--<input type="text" placeholder="请输入申请人姓名" class="margin-l">-->
                     <!--<input type="text" placeholder="请输入申请人姓名" class="margin-l" ms-duplex="@searchQuery.requestUsername">-->
                     <input type="button" value="查询" ms-click="@searchFinanceOrder()">
                     <input type="button" value="导出Excel" id="excel" class="excel">
                 </form>
 
-                <!--<div class="loading" ms-visible="@financeList.length===0"><img src="${staticPath}/css/images/finance/loading.gif" alt="loading"></div>-->
+                <!--<div class="loading" ms-visible="@cangyaList.length===0"><img src="${staticPath}/css/images/finance/loading.gif" alt="loading"></div>-->
 
 
                 <table class="list">
@@ -105,55 +110,48 @@
                         <th>业务编号</th>
                         <th>业务类型</th>
                         <th>申请时间</th>
-                        <!--<th>申请人</th>-->
-                        <th>拟融资总额状态<br/>(万元)</th>
-                        <th>使用时间<br/>(天)</th>
-                        <th>审核状态</th>
+                        <th>抵押数量<br/>(吨)</th>
+                        <!--<th>抵押货值<br/>(万元)</th>-->
+                        <th>融资金额<br/>(万元)</th>
+                        <th>存放港口</th>
+                        <th>已赎回数量<br/>(吨)</th>
+                        <!--<th>已归还金额<br/>(万元)</th>-->
+                        <!--<th>剩余赎回数量<br/>(吨)</th>-->
+                        <th>资金方审核状态</th>
+                        <th>业务状态</th>
+                        <th>期限<br/>(天)</th>
                         <th>操作</th>
                     </tr>
-                    <tr class="borderB" ms-for="(index, order) in @financeList">
-                        <td>{{order.sourceId}}</td>
+                    <tr class="borderB" ms-for="(index, order) in @cangyaList">
+                        <td>{{order.orderNo}}</td>
                         <td>
-                            <span ms-visible="order.applyType==='MYR'">煤易融</span>
-                            <span ms-visible="order.applyType==='MYG'">煤易购</span>
-                            <span ms-visible="order.applyType==='MYD'">煤易贷</span>
-                            <span ms-visible="order.applyType===''">/</span>
+                            <span ms-visible="order.type==='MYR'">煤易融</span>
+                            <span ms-visible="order.type==='MYG'">煤易购</span>
+                            <span ms-visible="order.type==='MYD'">煤易贷</span>
+                            <span ms-visible="order.type===''">/</span>
                         </td>
 
-                        <td>{{order.createTime || '/'}}</td>
-                        <!--<td>{{order.applyUserName || '/'}}</td>-->
+                        <td>{{order.requestTime || '/'}}</td>
+                        <td>{{order.mortgageAmount || '/'}}</td>
+                        <td>{{order.mortgageValue || '/'}}</td>
+                        <td>{{order.harbor || '/'}}</td>
+                        <td>{{order.redemptionAmount || '/'}}</td>
+                        <td>{{order.paymentList.type || '/'}}</td>
+                        <!--<td>{{order.status || '/'}}</td>-->
                         <td>
-                            <span ms-visible="order.financingAmount===null">/</span>
-                            <span ms-visible="order.financingAmount!=null">{{order.financingAmount}}</span>
-
-                        </td>
-                        <td>{{order.expectDate || '/'}}</td>
-
-                        <td>
-                            <span class="gray" ms-visible="order.approveStateId===10">审核不通过</span>
-                            <span class="green" ms-visible="order.approveStateId===2">待审核</span>
-                            <span class="bold" ms-visible="order.approveStateId===8">审核通过</span>
-                            <span class="bold" ms-visible="order.approveStateId===4">审核中</span>
-                            <span class="bold" ms-visible="order.approveStateId===6">审核中<br/><b>(补充材料)</b></span>
+                            <span class="gray" ms-visible="order.status==='11'">审核不通过</span>
+                            <span class="green" ms-visible="order.status==='12'">待审核</span>
+                            <span class="bold" ms-visible="order.status===8">审核通过</span>
+                            <span class="bold" ms-visible="order.status===4">审核中</span>
+                            <span class="bold" ms-visible="order.status===6">审核中<br/><b>(补充材料)</b></span>
                             <span ms-visible="order.approveStateId===''">/</span>
                         </td>
-
+                        <td>{{order.lifeTimeDay || '/'}}</td>
                         <td>
-                            <!--审核不通过-->
-                            <a  class="detailA blueA" ms-visible="order.approveStateId===10" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <!--审核通过-->
-                            <a  class="detailA orangeA" ms-visible="order.approveStateId===8" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <!--待审核-->
-                            <a  class="detailA grayA" ms-visible="order.approveStateId===2">查看详情
-                                <!--<span class="btnTips">等待我们帮您完善材料</span>-->
-                            </a>
-                            <!--审核中-->
-                            <a  class="detailA orangeA" ms-visible="order.approveStateId===4" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <!--审核中(补充材料)-->
-                            <a  class="detailA orangeA" ms-visible="order.approveStateId===6" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <a  class="detailA blueA"  ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
                         </td>
                     </tr>
-                    <tr ms-visible="@financeList.length===0">
+                    <tr ms-visible="@cangyaList.length===0">
                         <td colspan="7">当前无融资申请记录！</td>
                     </tr>
 
@@ -187,7 +185,7 @@
 <!-- Remove this statement if you want to run the on the fly transpiler -->
 <!-- 生产环境使用 bundle.js 文件 -->
     <script src="${staticPath}/js/page/dependencies.bundle.js"></script>
-    <script src="${staticPath}/js/page/userCenterFinanceList.bundle.js"></script>
+    <script src="${staticPath}/js/page/userCenterCangyaList.bundle.js"></script>
 </#if>
 
 <!--<script src="${staticPath}/js/page-temp-bundle/dependencies.bundle.js"></script>-->
