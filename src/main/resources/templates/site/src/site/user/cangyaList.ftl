@@ -110,10 +110,16 @@
                         <th>业务编号</th>
                         <th>业务类型</th>
                         <th>申请时间</th>
-                        <!--<th>申请人</th>-->
-                        <th>拟融资总额状态<br/>(万元)</th>
-                        <th>使用时间<br/>(天)</th>
-                        <th>审核状态</th>
+                        <th>抵押数量<br/>(吨)</th>
+                        <th>抵押货值<br/>(万元)</th>
+                        <th>融资金额<br/>(万元)</th>
+                        <th>存放港口</th>
+                        <th>已赎回数量<br/>(吨)</th>
+                        <th>已归还金额<br/>(万元)</th>
+                        <th>剩余赎回数量<br/>(吨)</th>
+                        <th>资金方审核状态</th>
+                        <th>业务状态</th>
+                        <th>期限<br/>(天)</th>
                         <th>操作</th>
                     </tr>
                     <tr class="borderB" ms-for="(index, order) in @cangyaList">
@@ -126,7 +132,6 @@
                         </td>
 
                         <td>{{order.createTime || '/'}}</td>
-                        <!--<td>{{order.applyUserName || '/'}}</td>-->
                         <td>
                             <span ms-visible="order.financingAmount===null">/</span>
                             <span ms-visible="order.financingAmount!=null">{{order.financingAmount}}</span>

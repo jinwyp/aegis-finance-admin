@@ -9,7 +9,7 @@ import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 
 
 
-var financeList = () => {
+var contactList = () => {
 
     var applyTypeList = [
         {'name' : '', text : '全部'},
@@ -19,8 +19,8 @@ var financeList = () => {
     ];
 
     var vm = avalon.define({
-        $id   : 'financeList',
-        financeList : [],
+        $id   : 'contactList',
+        contactList : [],
         css : {
             status : false
         },
@@ -70,7 +70,7 @@ var financeList = () => {
             data     : params,
             success  : (data)=> {
                 if (data.success){
-                    vm.financeList = data.data;
+                    vm.contactList = data.data;
                     vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
                 }else{
 
@@ -102,7 +102,7 @@ var financeList = () => {
 };
 
 
-financeList();
+contactList();
 
-export default financeList;
+export default contactList;
 

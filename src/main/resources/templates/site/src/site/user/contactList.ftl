@@ -44,7 +44,7 @@
 
 
         <!--右侧主内容开始-->
-        <div class="financeCon ms-controller" ms-controller="financeList">
+        <div class="financeCon ms-controller" ms-controller="contactList">
             <div class="application ">
                 <div class="borderB clearfix">
                     <h4><span></span>合同管理</h4>
@@ -75,15 +75,14 @@
 
                 <table class="list">
                     <tr class="border">
-                        <th>业务编号</th>
-                        <th>业务类型</th>
-                        <th>申请时间</th>
-                        <th>拟融资总额状态<br/>(万元)</th>
-                        <th>使用时间<br/>(天)</th>
-                        <th>审核状态</th>
+                        <th>合同编号</th>
+                        <th>关联业务编号</th>
+                        <th>关联业务类型</th>
+                        <th>业务申请时间</th>
                         <th>操作</th>
                     </tr>
-                    <tr class="borderB" ms-for="(index, order) in @financeList">
+                    <tr class="borderB" ms-for="(index, order) in @contactList">
+                        <td>{{order.sourceId}}</td>
                         <td>{{order.sourceId}}</td>
                         <td>
                             <span ms-visible="order.applyType==='MYR'">煤易融</span>
@@ -93,35 +92,9 @@
                         </td>
 
                         <td>{{order.createTime || '/'}}</td>
-                        <td>
-                            <span ms-visible="order.financingAmount===null">/</span>
-                            <span ms-visible="order.financingAmount!=null">{{order.financingAmount}}</span>
-
-                        </td>
-                        <td>{{order.expectDate || '/'}}</td>
 
                         <td>
-                            <span class="gray" ms-visible="order.approveStateId===10">审核不通过</span>
-                            <span class="green" ms-visible="order.approveStateId===2">待审核</span>
-                            <span class="bold" ms-visible="order.approveStateId===8">审核通过</span>
-                            <span class="bold" ms-visible="order.approveStateId===4">审核中</span>
-                            <span class="bold" ms-visible="order.approveStateId===6">审核中<br/><b>(补充材料)</b></span>
-                            <span ms-visible="order.approveStateId===''">/</span>
-                        </td>
-
-                        <td>
-                            <!--审核不通过-->
-                            <a  class="detailA blueA" ms-visible="order.approveStateId===10" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <!--审核通过-->
-                            <a  class="detailA orangeA" ms-visible="order.approveStateId===8" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <!--待审核-->
-                            <a  class="detailA grayA" ms-visible="order.approveStateId===2">查看详情
-                                <!--<span class="btnTips">等待我们帮您完善材料</span>-->
-                            </a>
-                            <!--审核中-->
-                            <a  class="detailA orangeA" ms-visible="order.approveStateId===4" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <!--审核中(补充材料)-->
-                            <a  class="detailA orangeA" ms-visible="order.approveStateId===6" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <a  class="detailA blueA" ms-visible="order.approveStateId===10" ms-attr="{href:'/finance/user/financing/'+order.id}" >合同详情</a>
                         </td>
                     </tr>
                     <tr ms-visible="@contactList.length===0">
