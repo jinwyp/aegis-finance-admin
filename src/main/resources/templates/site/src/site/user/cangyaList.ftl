@@ -112,7 +112,7 @@
                         <th>操作</th>
                     </tr>
                     <tr class="borderB" ms-for="(index, order) in @financeList">
-                        <td>{{order.sourceId}}</td>
+                        <td>{{order.orderNo}}</td>
                         <td>
                             <span ms-visible="order.applyType==='MYR'">煤易融</span>
                             <span ms-visible="order.applyType==='MYG'">煤易购</span>
@@ -120,7 +120,7 @@
                             <span ms-visible="order.applyType===''">/</span>
                         </td>
 
-                        <td>{{order.createTime || '/'}}</td>
+                        <td>{{order.requestTime || '/'}}</td>
                         <!--<td>{{order.applyUserName || '/'}}</td>-->
                         <td>
                             <span ms-visible="order.financingAmount===null">/</span>

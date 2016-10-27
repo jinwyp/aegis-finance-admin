@@ -194,13 +194,13 @@ var financeList = () => {
             method   : 'GET',
             dataType : 'json',
             data     : params,
-            success  : (data)=> {
-                if (data.success){
-                    vm.financeList = data.data;
-                    vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
-                }else{
-
-                }
+            success  : (data)=> {vm.financeList = data;
+                // if (data.success){
+                //
+                //     vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
+                // }else{
+                //
+                // }
             }
         });
     };
