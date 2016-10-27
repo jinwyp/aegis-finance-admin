@@ -3,6 +3,7 @@ package com.yimei.finance.controllers.admin.restfulapi.finance;
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.object.*;

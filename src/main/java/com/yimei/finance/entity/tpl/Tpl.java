@@ -8,9 +8,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 
-/**
- * Created by liuxinjie on 16/7/30.
- */
 @Entity
 @Table(name = "test")
 @Data

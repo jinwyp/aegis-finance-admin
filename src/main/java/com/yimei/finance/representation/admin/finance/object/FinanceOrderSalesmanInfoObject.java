@@ -1,5 +1,6 @@
 package com.yimei.finance.representation.admin.finance.object;
 
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceSalesmanInfo;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceSalesmanInfo;
 import com.yimei.finance.representation.common.base.BaseObject;

@@ -3,6 +3,7 @@ package com.yimei.finance.service.admin.finance;
 import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.*;
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;

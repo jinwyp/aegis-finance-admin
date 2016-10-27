@@ -1,6 +1,6 @@
 package com.yimei.finance.utils;
 
-import com.yimei.finance.representation.admin.finance.object.AttachmentObject;
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.service.common.file.Storage;
 import com.yimei.finance.service.common.file.StorageException;
 import org.apache.commons.codec.binary.Hex;

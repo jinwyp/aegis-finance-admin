@@ -6,9 +6,6 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-/**
- * Created by liuxinjie on 16/8/21.
- */
 public interface DataBookRepository extends JpaRepository<DataBook, Long> {
 
     DataBook findByTypeAndSequence(@Param("type") String type,

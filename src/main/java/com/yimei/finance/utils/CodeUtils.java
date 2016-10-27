@@ -2,9 +2,6 @@ package com.yimei.finance.utils;
 
 import java.util.Random;
 
-/**
- * Created by liuxinjie on 16/3/30.
- */
 public class CodeUtils {
     public static char[] codeNums = {'1', '2', '3', '4', '5', '6', '7', '8', '9', '0'};
 

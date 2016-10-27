@@ -11,7 +11,7 @@ import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
-import com.yimei.finance.service.common.message.MailServiceImpl;
+import com.yimei.finance.service.common.message.MessageServiceImpl;
 import com.yimei.finance.utils.CodeUtils;
 import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.*;
@@ -39,7 +39,7 @@ public class UserController {
     @Autowired
     private AdminGroupServiceImpl groupService;
     @Autowired
-    private MailServiceImpl mailService;
+    private MessageServiceImpl messageService;
     @Autowired
     private AdminSession adminSession;
 
@@ -115,7 +115,7 @@ public class UserController {
         addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
         String subject = "开通账户通知邮件";
         String content = "你好: 你的账号已开通, 用户名:" + user.getUsername() + ", 初始密码:" + password + ", 请修改密码. [易煤网金融系统]";
-        mailService.sendSimpleMail(user.getEmail(), subject, content);
+        messageService.sendSimpleMail(user.getEmail(), subject, content);
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(newUser.getId()).singleResult()));
     }
 
@@ -185,7 +185,7 @@ public class UserController {
         user.setPassword(userService.securePassword(password));
         identityService.saveUser(user);
         String content = "你好: " + user.getFirstName() + ", 管理员为你重置密码, 新密码是: " + password + " . [易煤网金融系统]";
-        mailService.sendSimpleMail(user.getEmail(), subject, content);
+        messageService.sendSimpleMail(user.getEmail(), subject, content);
         return Result.success().setData(true);
     }
 

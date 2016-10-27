@@ -3,8 +3,9 @@ package com.yimei.finance.controllers.admin.page;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.common.file.LocalStorage;
-import com.yimei.finance.service.common.message.MailServiceImpl;
+import com.yimei.finance.service.common.message.MessageServiceImpl;
 import com.yimei.finance.utils.WebUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,13 +18,14 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 
+@Api(tags={"admin-page"})
 @RequestMapping("/finance/admin")
 @Controller("adminCommonPageController")
 public class CommonPageController {
     @Autowired
     private LocalStorage localStorage;
     @Autowired
-    private MailServiceImpl mailService;
+    private MessageServiceImpl messageService;
 
     @RequestMapping(value = "/files", method = RequestMethod.GET)
     @ApiOperation(value = "下载文件", notes = "通过文件url路径下载文件")
@@ -38,6 +40,7 @@ public class CommonPageController {
         }
     }
 
+    @ApiOperation(value = "测试email", notes = "测试email")
     @RequestMapping(value = "/test/email", method = RequestMethod.GET)
     @ResponseBody
     public Result testEmail(@RequestParam("email") String email) {
@@ -49,11 +52,11 @@ public class CommonPageController {
         System.out.println(" ------------------------------ " + email);
         String subject = "测试邮件";
         String content = "测试 --------------- 你好: 你的账号已开通, 用户名 请修改密码. [易煤网金融系统]";
-        mailService.sendSimpleMail(email, subject, content);
+        messageService.sendSimpleMail(email, subject, content);
         return Result.success();
     }
 
-    @RequestMapping(value = "/contract")
+    @RequestMapping(value = "/contract" , method = RequestMethod.GET)
     @ApiOperation(value = "合同页面", notes = "合同页面")
     public String contractPage() {
         return "admin/contract";
