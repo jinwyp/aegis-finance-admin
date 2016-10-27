@@ -95,8 +95,8 @@
                         <!--<span class="trigger"></span>-->
                     <!--</div>-->
 
-                    <label>申请人:</label>
-                    <input type="text" placeholder="请输入申请人姓名" class="margin-l">
+                    <!--<label>申请人:</label>-->
+                    <!--<input type="text" placeholder="请输入申请人姓名" class="margin-l">-->
                     <!--<input type="text" placeholder="请输入申请人姓名" class="margin-l" ms-duplex="@searchQuery.requestUsername">-->
                     <input type="button" value="查询" ms-click="@searchFinanceOrder()">
                     <input type="button" value="导出Excel" id="excel" class="excel">
@@ -111,59 +111,44 @@
                         <th>业务类型</th>
                         <th>申请时间</th>
                         <th>抵押数量<br/>(吨)</th>
-                        <th>抵押货值<br/>(万元)</th>
+                        <!--<th>抵押货值<br/>(万元)</th>-->
                         <th>融资金额<br/>(万元)</th>
                         <th>存放港口</th>
                         <th>已赎回数量<br/>(吨)</th>
-                        <th>已归还金额<br/>(万元)</th>
-                        <th>剩余赎回数量<br/>(吨)</th>
+                        <!--<th>已归还金额<br/>(万元)</th>-->
+                        <!--<th>剩余赎回数量<br/>(吨)</th>-->
                         <th>资金方审核状态</th>
                         <th>业务状态</th>
                         <th>期限<br/>(天)</th>
                         <th>操作</th>
                     </tr>
                     <tr class="borderB" ms-for="(index, order) in @cangyaList">
-                        <td>{{order.sourceId}}</td>
-                    <tr class="borderB" ms-for="(index, order) in @financeList">
                         <td>{{order.orderNo}}</td>
                         <td>
-                            <span ms-visible="order.applyType==='MYR'">煤易融</span>
-                            <span ms-visible="order.applyType==='MYG'">煤易购</span>
-                            <span ms-visible="order.applyType==='MYD'">煤易贷</span>
-                            <span ms-visible="order.applyType===''">/</span>
+                            <span ms-visible="order.type==='MYR'">煤易融</span>
+                            <span ms-visible="order.type==='MYG'">煤易购</span>
+                            <span ms-visible="order.type==='MYD'">煤易贷</span>
+                            <span ms-visible="order.type===''">/</span>
                         </td>
 
                         <td>{{order.requestTime || '/'}}</td>
-                        <!--<td>{{order.applyUserName || '/'}}</td>-->
+                        <td>{{order.mortgageAmount || '/'}}</td>
+                        <td>{{order.mortgageValue || '/'}}</td>
+                        <td>{{order.harbor || '/'}}</td>
+                        <td>{{order.redemptionAmount || '/'}}</td>
+                        <td>{{order.paymentList.type || '/'}}</td>
+                        <!--<td>{{order.status || '/'}}</td>-->
                         <td>
-                            <span ms-visible="order.financingAmount===null">/</span>
-                            <span ms-visible="order.financingAmount!=null">{{order.financingAmount}}</span>
-
-                        </td>
-                        <td>{{order.expectDate || '/'}}</td>
-
-                        <td>
-                            <span class="gray" ms-visible="order.approveStateId===10">审核不通过</span>
-                            <span class="green" ms-visible="order.approveStateId===2">待审核</span>
-                            <span class="bold" ms-visible="order.approveStateId===8">审核通过</span>
-                            <span class="bold" ms-visible="order.approveStateId===4">审核中</span>
-                            <span class="bold" ms-visible="order.approveStateId===6">审核中<br/><b>(补充材料)</b></span>
+                            <span class="gray" ms-visible="order.status==='11'">审核不通过</span>
+                            <span class="green" ms-visible="order.status==='12'">待审核</span>
+                            <span class="bold" ms-visible="order.status===8">审核通过</span>
+                            <span class="bold" ms-visible="order.status===4">审核中</span>
+                            <span class="bold" ms-visible="order.status===6">审核中<br/><b>(补充材料)</b></span>
                             <span ms-visible="order.approveStateId===''">/</span>
                         </td>
-
+                        <td>{{order.lifeTimeDay || '/'}}</td>
                         <td>
-                            <!--审核不通过-->
-                            <a  class="detailA blueA" ms-visible="order.approveStateId===10" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <!--审核通过-->
-                            <a  class="detailA orangeA" ms-visible="order.approveStateId===8" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <!--待审核-->
-                            <a  class="detailA grayA" ms-visible="order.approveStateId===2">查看详情
-                                <!--<span class="btnTips">等待我们帮您完善材料</span>-->
-                            </a>
-                            <!--审核中-->
-                            <a  class="detailA orangeA" ms-visible="order.approveStateId===4" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
-                            <!--审核中(补充材料)-->
-                            <a  class="detailA orangeA" ms-visible="order.approveStateId===6" ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <a  class="detailA blueA"  ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
                         </td>
                     </tr>
                     <tr ms-visible="@cangyaList.length===0">

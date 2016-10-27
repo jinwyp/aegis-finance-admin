@@ -204,7 +204,7 @@ var cangyaList = () => {
             method   : 'GET',
             dataType : 'json',
             data     : params,
-            success  : (data)=> {vm.financeList = data;
+            success  : (data)=> {vm.cangyaList = data;
                 // if (data.success){
                 //
                 //     vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
