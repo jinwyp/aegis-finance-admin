@@ -193,7 +193,7 @@
 <!--<script src="${staticPath}/js/page-temp-bundle/dependencies.bundle.js"></script>-->
 <!--<script src="${staticPath}/js/page-temp-bundle/userCenterFinanceList.bundle.js"></script>-->
 <script>
-    System['import']('${staticPath}/js/page/userCenterFinanceList.js')
+    System['import']('${staticPath}/js/page/userCenterCangyaList.js')
 </script>
 
 
