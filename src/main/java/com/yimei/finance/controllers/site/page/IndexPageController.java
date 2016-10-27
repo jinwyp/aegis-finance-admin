@@ -170,6 +170,16 @@ public class IndexPageController {
         return "site/user/cangyaInfo";
     }
 
+    /**
+     * 网站供应链金融 - 个人中心 - 我的仓押 - 业务详情 - 填写合同
+     */
+    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的仓押 - 业务详情 - 填写合同", notes = "供应链金融 我的融资 煤易贷 仓押详情 填写合同页面")
+    @LoginRequired
+    @RequestMapping(value = "/finance/user/cangya/{id}/contact", method = RequestMethod.GET)
+    public String personCenterCangYaContact(@PathVariable("id") int id, Model model) {
+        model.addAttribute("currentMenu", 12);
+        return "site/user/cangyaInfoContact";
+    }
 
 
     /**
