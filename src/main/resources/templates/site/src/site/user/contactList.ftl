@@ -82,19 +82,19 @@
                         <th>操作</th>
                     </tr>
                     <tr class="borderB" ms-for="(index, order) in @contactList">
-                        <td>{{order.sourceId}}</td>
-                        <td>{{order.sourceId}}</td>
+                        <td>{{order.contactNo}}</td>
+                        <td>{{order.orderNo}}</td>
                         <td>
-                            <span ms-visible="order.applyType==='MYR'">煤易融</span>
-                            <span ms-visible="order.applyType==='MYG'">煤易购</span>
-                            <span ms-visible="order.applyType==='MYD'">煤易贷</span>
-                            <span ms-visible="order.applyType===''">/</span>
+                            <span ms-visible="order.type==='MYR'">煤易融</span>
+                            <span ms-visible="order.type==='MYG'">煤易购</span>
+                            <span ms-visible="order.type==='MYD'">煤易贷</span>
+                            <span ms-visible="order.type===''">/</span>
                         </td>
 
-                        <td>{{order.createTime || '/'}}</td>
+                        <td>{{order.requesTime || '/'}}</td>
 
                         <td>
-                            <a  class="detailA blueA" ms-visible="order.approveStateId===10" ms-attr="{href:'/finance/user/financing/'+order.id}" >合同详情</a>
+                            <a  class="detailA blueA" ms-visible="order.approveStateId===10" ms-attr="{href:'/finance/user/contact/'+order.id}" >合同详情</a>
                         </td>
                     </tr>
                     <tr ms-visible="@contactList.length===0">

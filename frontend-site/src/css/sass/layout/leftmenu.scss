@@ -1,0 +1,47 @@
+//侧边栏样式开始
+$assetPath : "/static/site";
+.finance_sideBar{
+  width: 130px;
+  background: #ffffff;
+  padding: 26px 0 0 26px;
+  min-height: 400px;
+  float: left;
+  h3{
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 25px;
+  }
+  ul{
+    li{
+      margin-bottom: 25px;
+      &:hover{
+        a{
+          color: #00b7ec;
+        }
+        span{
+          background-position: 0px center;
+        }
+      }
+      a{
+        color: #333333;
+        text-decoration: none;
+      }
+      span{
+        width: 8px;
+        height: 10px;
+        display: inline-block;
+        margin-left: 10px;
+        background: url("#{$assetPath}/css/images/finance/sideBar-trigle.png") no-repeat -8px center;
+      }
+    }
+    .active{
+      a{
+        color: #00b7ec;
+      }
+      span{
+        background-position: 0px center;
+      }
+    }
+  }
+}
+//侧边栏样式结束

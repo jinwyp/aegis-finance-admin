@@ -148,7 +148,7 @@
                         </td>
                         <td>{{order.lifeTimeDay || '/'}}</td>
                         <td>
-                            <a  class="detailA blueA"  ms-attr="{href:'/finance/user/financing/'+order.id}" >查看详情</a>
+                            <a  class="detailA blueA"  ms-attr="{href:'/finance/user/cangya/'+order.status}" >查看详情</a>
                         </td>
                     </tr>
                     <tr ms-visible="@cangyaList.length===0">
