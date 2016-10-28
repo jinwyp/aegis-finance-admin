@@ -8,6 +8,8 @@ import 'js/common-libs/pagination';
 import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 
 
+var url = 'http://192.168.1.180:2403/contacts';
+
 
 var contactList = () => {
 
@@ -64,17 +66,19 @@ var contactList = () => {
         var params = $.extend({}, query);
 
         $.ajax({
-            url      : '/api/financing/list',
+            url      : url,
             method   : 'GET',
             dataType : 'json',
             data     : params,
             success  : (data)=> {
-                if (data.success){
-                    vm.contactList = data.data;
-                    vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
-                }else{
+                vm.contactList = data;
 
-                }
+                // if (data.success){
+                //     vm.contactList = data.data;
+                //     vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
+                // }else{
+                //
+                // }
             }
         });
     };
