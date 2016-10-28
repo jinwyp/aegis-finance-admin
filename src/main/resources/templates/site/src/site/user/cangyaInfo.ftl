@@ -24,7 +24,8 @@
     <meta name="keywords" content="易煤网">
     <meta name="description" content="易煤网">
 
-    <link rel="stylesheet" href="${staticPath}/css/stylesheets/page/financingInfo.css">
+    <link rel="stylesheet" href="${staticPath}/css/stylesheets/layout/leftmenu.css">
+    <link rel="stylesheet" href="${staticPath}/css/stylesheets/page/cangyaInfo.css">
 </head>
 <body>
 <!-- header start -->
@@ -45,20 +46,10 @@
         <!--右侧主内容开始-->
         <div class="financeCon ms-controller" ms-controller="financeInfo">
             <div class="application">
-                <!--面包屑开始-->
-                <!--<div>-->
-                    <!--<ol class="breadcrumb">-->
-                        <!--<li><a href="#">用户中心</a></li>-->
-                        <!--<li><a href="#">融资管理</a></li>-->
-                        <!--<li><a href="#">我的融资</a></li>-->
-                        <!--<li class="active">融资详情</li>-->
-                    <!--</ol>-->
-                <!--</div>-->
-                <!--面包屑结束-->
                 <h4><span></span>融资详情 - 煤易贷 </h4>
                 <div class="table" >
                     <div class="table-title">
-                        <em></em>申请信息:
+                        <em></em>基本信息:
                     </div>
                     <div class="paddingTable">
                         <table>
@@ -67,184 +58,135 @@
                                 <td ms-visible="@financeInfo.applyType==='MYR'">煤易融</td>
                                 <td ms-visible="@financeInfo.applyType==='MYD'">煤易贷</td>
                                 <td ms-visible="@financeInfo.applyType==='MYG'">煤易购</td>
+                                <td>煤易购</td>
+                                <th>融资用户:</th>
+                                <td>嘎嘎嘎</td>
                                 <th>业务编号:</th>
-                                <td>{{@financeInfo.sourceId}}</td>
-                            </tr>
-                            <tr>
-                                <!--<th>申请人:</th>-->
-                                <!--<td>{{@financeInfo.applyUserName}}</td>-->
-                                <th colspan="1">申请时间:</th>
-                                <td colspan="3">{{@financeInfo.createTime}}</td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="paddingTable">
-                        <table>
-                            <tr>
-                                <th>拟使用资金时间:</th>
-                                <td >
-                                    <span ms-visible="@financeInfo.expectDate">{{@financeInfo.expectDate}}&nbsp;天</span>
-                                    <span ms-visible="!@financeInfo.expectDate">--</span>
-                                </td>
-                                <th colspan="2">预期此笔业务量:</th>
-                                <td>
-                                    <span ms-visible="@financeInfo.businessAmount">{{@financeInfo.businessAmount}}&nbsp;万吨</span>
-                                    <span ms-visible="!@financeInfo.businessAmount">--</span>
-                                </td>
+                                <td>嘎嘎嘎</td>
                             </tr>
                             <tr>
                                 <th>拟融资金额:</th>
-                                <td colspan="2" ms-visible="!@financeInfo.financingAmount">--</td>
-                                <td colspan="2" ms-visible="@financeInfo.financingAmount">
-                                    <span class="red">{{@financeInfo.financingAmount}}</span>&nbsp;万元
+                                <td>{{@financeInfo.applyUserName}}</td>
+                                <th>申请时间:</th>
+                                <td>{{@financeInfo.createTime}}</td>
+                                <th>使用时长:</th>
+                                <td>{{@financeInfo.createTime}}</td>
+                            </tr>
+                            <tr>
+                                <th>审批放款总额:</th>
+                                <td>{{@financeInfo.applyUserName}}</td>
+                                <th>抵押货值:</th>
+                                <td>{{@financeInfo.createTime}}</td>
+                                <th>已缴纳保证金:</th>
+                                <td>{{@financeInfo.createTime}}</td>
+                            </tr>
+                            <tr>
+                                <th>已归还金额:</th>
+                                <td>{{@financeInfo.applyUserName}}</td>
+                                <th>抵押数量:</th>
+                                <td>{{@financeInfo.createTime}}</td>
+                                <th>已赎回数量:</th>
+                                <td>{{@financeInfo.createTime}}</td>
+                            </tr>
+                            <tr>
+                                <th>剩余赎回数量:</th>
+                                <td colspan="5">{{@financeInfo.applyUserName}}</td>
+                            </tr>
+                        </table>
+                    </div>
 
-                                    <p class="gray">({{@financeInfo.financingAmount | switchTxt}})</p>
-                                </td>
-                            </tr>
-                        </table>
+                    <div class="table-title">
+                        <em></em>交易信息:
                     </div>
-                    <div class="paddingTable">
-                        <!--融--2-->
-                        <table ms-visible="@financeInfo.applyType==='MYR'">
-                            <tr>
-                                <th>签约单位全称:</th>
-                                <td>{{@financeInfo.contractor || '--'}}</td>
-                                <th>下游签约单位全称:</th>
-                                <td>{{@financeInfo.downstreamContractor || '--'}}</td>
-                            </tr>
-                            <tr>
-                                <th>用煤终端:</th>
-                                <td>{{@financeInfo.terminalServer || '--'}}</td>
-                                <th>运输方式:</th>
-                                <td>{{@financeInfo.transportMode || '--'}}</td>
-                            </tr>
-                            <tr>
-                                <th>预计单吨销售价:</th>
-                                <td colspan="2">
-                                    <span ms-visible="@financeInfo.sellingPrice">{{@financeInfo.sellingPrice}}&nbsp;元/吨</span>
-                                    <span ms-visible="!@financeInfo.sellingPrice">--</span>
-                                </td>
-                            </tr>
-                        </table>
-                        <!--购-->
-                        <table ms-visible="@financeInfo.applyType==='MYG'">
-                            <tr>
-                                <th>上游资源方全称:</th>
-                                <td>{{@financeInfo.upstreamResource || '--'}}</td>
-                                <th>中转港口/地全称:</th>
-                                <td>{{@financeInfo.transferPort || '--'}}</td>
-                            </tr>
-                            <tr>
-                                <th>运输方式:</th>
-                                <td>{{@financeInfo.transportMode || '--'}}</td>
-                                <th>单吨采购价:</th>
-                                <td>
-                                    <span ms-visible="@financeInfo.procurementPrice">{{@financeInfo.procurementPrice}}&nbsp;元/吨</span>
-                                    <span ms-visible="!@financeInfo.procurementPrice">--</span>
-                                </td>
-                            </tr>
-                        </table>
-                        <!--贷-->
-                        <table ms-visible="@financeInfo.applyType==='MYD'">
-                            <tr>
-                                <th>煤炭仓储地:</th>
-                                <td>{{@financeInfo.storageLocation || '--'}}</td>
-                                <th>煤炭来源:</th>
-                                <td>{{@financeInfo.coalSource || '--'}}</td>
-                            </tr>
-                            <tr>
-                                <th>主要煤质指标:</th>
-                                <!--------------------------------------------字段无------------------------->
-                                <td>{{@financeInfo.coalQuantityIndex || '--'}}</td>
-                                <th>单吨市场报价:</th>
-                                <td>
-                                    <span ms-visible="@financeInfo.marketPrice">{{@financeInfo.marketPrice}}&nbsp;元/吨</span>
-                                    <span ms-visible="!@financeInfo.marketPrice">--</span>
-                                </td>
-                            </tr>
-                        </table>
-                    </div>
-                    <div class="paddingTable">
+                    <div class="changeInfo">
                         <table>
                             <tr>
-                                <th>已上传单据:</th>
-                                <td colspan="3">
-                                    <ul ms-visible="@financeInfo.attachmentList1">
-                                        <li class="paddingL0" ms-for="(index, bill) in @financeInfo.attachmentList1">
-                                            <a ms-attr="{href: '/finance/files?url=' + bill.url}" target="_blank">{{bill.name}}</a>
-                                            <!--<img  ms-attr="{src: bill.url}">-->
-                                        </li>
-
-                                    </ul>
-                                    <span ms-visible="!@financeInfo.attachmentList1">--</span>
-                                </td>
-
+                                <th>交易流水</th>
+                                <th>交易日期</th>
+                                <th>交易类型</th>
+                                <th>本次赎货数量(吨)</th>
+                                <th>剩余吨数(吨)</th>
+                                <th>交易金额</th>
+                            </tr>
+                            <tr>
+                                <td>交易流水</td>
+                                <td>交易日期</td>
+                                <td>交易类型</td>
+                                <td>本次赎货数量(吨)</td>
+                                <td>剩余吨数(吨)</td>
+                                <td>交易金额</td>
                             </tr>
 
                         </table>
                     </div>
-                    <!--<div class="paddingTable">-->
-                        <!--<table>-->
-                            <!--<tr>-->
-                                <!--<th>备注说明:</th>-->
-                                <!--<td colspan="3">-->
-                                    <!--{{@financeInfo.comments}}-->
-                                <!--</td>-->
-                            <!--</tr>-->
-                        <!--</table>-->
-                    <!--</div>-->
+
                     <div class="table-title">
-                        <em></em>审批信息:
+                        <em></em>审批详情:
                     </div>
-                    <div class="approvalInfo">
+                    <div class="paddingTable">
                         <table>
                             <tr>
                                 <th>审批状态:</th>
                                 <td >
+                                    <span class="green"><em></em>审核通过</span>
                                     <!--补充材料-->
-                                    <span class="red" ms-visible="@financeInfo.approveStateId===6"><em></em>审核中(补充材料)</span>
+                                    <!--<span class="red" ms-visible="@financeInfo.approveStateId===6"><em></em>审核中(补充材料)</span>-->
                                     <!--审核不通过-->
-                                    <span class="red" ms-visible="@financeInfo.approveStateId===10"><em></em>审核不通过</span>
+                                    <!--<span class="red" ms-visible="@financeInfo.approveStateId===10"><em></em>审核不通过</span>-->
                                     <!--待审核-->
-                                    <span class="green" ms-visible="@financeInfo.approveStateId===2"><em></em>待审核</span>
+                                    <!--<span class="green" ms-visible="@financeInfo.approveStateId===2"><em></em>待审核</span>-->
                                     <!--审核中-->
-                                    <span class="green" ms-visible="@financeInfo.approveStateId===4"><em></em>审核中</span>
+                                    <!--<span class="green" ms-visible="@financeInfo.approveStateId===4"><em></em>审核中</span>-->
                                     <!--审核通过-->
-                                    <span class="green" ms-visible="@financeInfo.approveStateId===8"><em></em>审核通过</span>
+                                    <!--<span class="green" ms-visible="@financeInfo.approveStateId===8"><em></em>审核通过</span>-->
                                 </td>
+                                <th>审批时间:</th>
+                                <td>2016-08-28   11:37:08</td>
                             </tr>
-                            <!--<tr>-->
-                                <!--<th>备注说明:</th>-->
-                                <!--<td>{{@financeInfo.comments || '&#45;&#45;'}}</td>-->
-                            <!--</tr>-->
+                            <tr>
+                                <th>审批金额:</th>
+                                <td>800万</td>
+                                <th>审批人:</th>
+                                <td>张三</td>
+                            </tr>
+
                         </table>
                     </div>
-                    <!--若已上传补充材料 显示 开始-->
-                    <!--<div class="table-title">-->
-                        <!--<em></em>补充材料:-->
-                    <!--</div>-->
-                    <!--<div class="approvalInfo">-->
-                        <!--<table>-->
-                            <!--<tr>-->
-                                <!--<th>已上传材料:</th>-->
-                                <!--<td>-->
-                                    <!--<ul>-->
-                                        <!--<li class="paddingL0">-->
-                                            <!--<p>税务单据</p>-->
-                                            <!--<img src="" alt="">-->
-                                        <!--</li>-->
 
-                                    <!--</ul>-->
-                                <!--</td>-->
-                            <!--</tr>-->
-                            <!--<tr>-->
-                                <!--<th>材料说明:</th>-->
-                                <!--<td>{{@financeInfo.comments}}</td>-->
-                            <!--</tr>-->
-                        <!--</table>-->
-                    <!--</div>-->
-                    <!--补充材料结束-->
+                    <div class="table-title">
+                        <em></em>业务状态:
+                    </div>
+                    <div class="text">
+                        货权已处置
+                    </div>
+
+                    <div class="table-title">
+                        <em></em>保证金缴纳:
+                    </div>
+                    <div class="paddingTable">
+                        <table>
+                            <tr>
+                                <th>需缴纳保证金:</th>
+                                <td>30万</td>
+                            </tr>
+                            <tr>
+                                <th>金额大写:</th>
+                                <td>三百万整</td>
+                            </tr>
+                            <tr>
+                                <th colspan="2">
+                                    <a href="">下载查看补充协议</a>
+                                    |
+                                    <a href="">上传</a>
+                                </th>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <a href="/finance/user/financing" class="back">赎回货物</a>
+                    <a href="/finance/user/financing" class="back">下载/上传合同</a>
                     <a href="/finance/user/financing" class="back">返回</a>
+
                 </div>
             </div>
         </div>
