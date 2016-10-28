@@ -4,7 +4,10 @@ $assetPath : "/static/site";
 $borderColor:#e4e4e4;
 .financeManageWrap{
   padding: 12px 0 50px 0;
-  background: #f6f6f6 url("#{$assetPath}/css/images/finance/loading.gif") no-repeat center 200px;
+  background-color: #f6f6f6;
+  background-image: url("#{$assetPath}/css/images/finance/loading.gif");
+  background-repeat: no-repeat;
+  background-position: center 200px;
   .financeManage{
     width: 1200px;
     margin: 0 auto;
@@ -149,18 +152,24 @@ $borderColor:#e4e4e4;
               }
             }
           }
-          .back{
+          .btn{
             width: 180px;
-            height: 40px;
-            line-height: 40px;
             text-align: center;
             display: inline-block;
-            background: #aabfc5;
             color: #ffffff;
             border-radius: 2px;
             font-size: 16px;
             margin: 50px 0 50px 50px;
             text-decoration: none;
+            &:hover{
+              opacity: 0.7;
+            }
+          }
+          .back{
+            background: #aabfc5;
+          }
+          .blue{
+            background-color: #1fb8ea;
           }
         }
 
@@ -170,5 +179,27 @@ $borderColor:#e4e4e4;
       }
     }
     //我的申请右侧内容样式结束
+  }
+}
+
+form{
+  div{
+    padding-top: 20px;
+    text-align: left;
+    label{
+      width: 170px;
+      text-align: left;
+      line-height: 35px;
+      vertical-align: bottom;
+      font-size: 14px;
+    }
+    .money{
+      display: inline-block;
+      width: 180px;
+      height: 35px;
+      line-height: 35px;
+      text-align: left;
+      font-size: 14px;
+    }
   }
 }

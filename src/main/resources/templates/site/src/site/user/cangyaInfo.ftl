@@ -44,7 +44,7 @@
         <!--侧边栏结束-->
 
         <!--右侧主内容开始-->
-        <div class="financeCon ms-controller" ms-controller="financeInfo">
+        <div class="financeCon ms-controller" ms-controller="cangyaInfo">
             <div class="application">
                 <h4><span></span>融资详情 - 煤易贷 </h4>
                 <div class="table" >
@@ -55,9 +55,9 @@
                         <table>
                             <tr>
                                 <th>融资类型:</th>
-                                <td ms-visible="@financeInfo.applyType==='MYR'">煤易融</td>
-                                <td ms-visible="@financeInfo.applyType==='MYD'">煤易贷</td>
-                                <td ms-visible="@financeInfo.applyType==='MYG'">煤易购</td>
+                                <td ms-visible="@cangyaInfo.applyType==='MYR'">煤易融</td>
+                                <td ms-visible="@cangyaInfo.applyType==='MYD'">煤易贷</td>
+                                <td ms-visible="@cangyaInfo.applyType==='MYG'">煤易购</td>
                                 <td>煤易购</td>
                                 <th>融资用户:</th>
                                 <td>嘎嘎嘎</td>
@@ -66,31 +66,31 @@
                             </tr>
                             <tr>
                                 <th>拟融资金额:</th>
-                                <td>{{@financeInfo.applyUserName}}</td>
+                                <td>{{@cangyaInfo.applyUserName}}</td>
                                 <th>申请时间:</th>
-                                <td>{{@financeInfo.createTime}}</td>
+                                <td>{{@cangyaInfo.createTime}}</td>
                                 <th>使用时长:</th>
-                                <td>{{@financeInfo.createTime}}</td>
+                                <td>{{@cangyaInfo.createTime}}</td>
                             </tr>
                             <tr>
                                 <th>审批放款总额:</th>
-                                <td>{{@financeInfo.applyUserName}}</td>
+                                <td>{{@cangyaInfo.applyUserName}}</td>
                                 <th>抵押货值:</th>
-                                <td>{{@financeInfo.createTime}}</td>
+                                <td>{{@cangyaInfo.createTime}}</td>
                                 <th>已缴纳保证金:</th>
-                                <td>{{@financeInfo.createTime}}</td>
+                                <td>{{@cangyaInfo.createTime}}</td>
                             </tr>
                             <tr>
                                 <th>已归还金额:</th>
-                                <td>{{@financeInfo.applyUserName}}</td>
+                                <td>{{@cangyaInfo.applyUserName}}</td>
                                 <th>抵押数量:</th>
-                                <td>{{@financeInfo.createTime}}</td>
+                                <td>{{@cangyaInfo.createTime}}</td>
                                 <th>已赎回数量:</th>
-                                <td>{{@financeInfo.createTime}}</td>
+                                <td>{{@cangyaInfo.createTime}}</td>
                             </tr>
                             <tr>
                                 <th>剩余赎回数量:</th>
-                                <td colspan="5">{{@financeInfo.applyUserName}}</td>
+                                <td colspan="5">{{@cangyaInfo.applyUserName}}</td>
                             </tr>
                         </table>
                     </div>
@@ -130,15 +130,15 @@
                                 <td >
                                     <span class="green"><em></em>审核通过</span>
                                     <!--补充材料-->
-                                    <!--<span class="red" ms-visible="@financeInfo.approveStateId===6"><em></em>审核中(补充材料)</span>-->
+                                    <!--<span class="red" ms-visible="@cangyaInfo.approveStateId===6"><em></em>审核中(补充材料)</span>-->
                                     <!--审核不通过-->
-                                    <!--<span class="red" ms-visible="@financeInfo.approveStateId===10"><em></em>审核不通过</span>-->
+                                    <!--<span class="red" ms-visible="@cangyaInfo.approveStateId===10"><em></em>审核不通过</span>-->
                                     <!--待审核-->
-                                    <!--<span class="green" ms-visible="@financeInfo.approveStateId===2"><em></em>待审核</span>-->
+                                    <!--<span class="green" ms-visible="@cangyaInfo.approveStateId===2"><em></em>待审核</span>-->
                                     <!--审核中-->
-                                    <!--<span class="green" ms-visible="@financeInfo.approveStateId===4"><em></em>审核中</span>-->
+                                    <!--<span class="green" ms-visible="@cangyaInfo.approveStateId===4"><em></em>审核中</span>-->
                                     <!--审核通过-->
-                                    <!--<span class="green" ms-visible="@financeInfo.approveStateId===8"><em></em>审核通过</span>-->
+                                    <!--<span class="green" ms-visible="@cangyaInfo.approveStateId===8"><em></em>审核通过</span>-->
                                 </td>
                                 <th>审批时间:</th>
                                 <td>2016-08-28   11:37:08</td>
@@ -183,17 +183,56 @@
                         </table>
                     </div>
 
-                    <a href="/finance/user/financing" class="back">赎回货物</a>
-                    <a href="/finance/user/financing" class="back">下载/上传合同</a>
-                    <a href="/finance/user/financing" class="back">返回</a>
+                    <a href="javascript:" class="btn blue" id="getBack">赎回货物</a>
+                    <a href="/finance/user/financing" class="btn blue">下载/上传合同</a>
+                    <a href="/finance/user/cangya" class="btn back">返回</a>
 
                 </div>
             </div>
+            <!--赎货弹框-->
+            <div class="container modalPublic">
+                <div class="row clearfix">
+                    <div class="getBack modal fade" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button"  class="close close_modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                    <h4 class="modal-title">赎回</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div>
+                                        <div class="form">
+                                            <form action="">
+                                                <div>
+                                                    <label>请输入本次赎货金额(万元):</label>
+                                                    <input type="text" placeholder="请输入金额" class="money" id="money" ms-duplex="@money">
+                                                </div>
+                                                <div>
+                                                    <span>金额大写:</span>
+                                                    <span>{{@money | switchTxt}}</span>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                        <div class="buttons">
+                                            <input type="button" data-dismiss="modal" class="btn cancel" value="取消" id="md_cancel_getBack">
+                                            <input type="button" class="btn confirm" value="确认赎货" id="md_getBack">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--赎货弹框-->
         </div>
         <!--右侧主内容结束-->
     </div>
 </div>
 <!--融资管理结束-->
+
+
 
 <!--footer start-->
 <#include "../common/footer.ftl" >
@@ -212,13 +251,13 @@
 <!-- Remove this statement if you want to run the on the fly transpiler -->
 <!-- 生产环境使用 bundle.js 文件 -->
 <script src="${staticPath}/js/page/dependencies.bundle.js"></script>
-<script src="${staticPath}/js/page/userCenterFinanceInfo.bundle.js"></script>
+<script src="${staticPath}/js/page/userCenterCangyaInfo.bundle.js"></script>
 </#if>
 
 <!--<script src="${staticPath}/js/page-temp-bundle/dependencies.bundle.js"></script>-->
 <!--<script src="${staticPath}/js/page-temp-bundle/userCenterFinanceInfo.bundle.js"></script>-->
 <script>
-    System['import']('${staticPath}/js/page/userCenterFinanceInfo.js')
+    System['import']('${staticPath}/js/page/userCenterCangyaInfo.js')
 </script>
 
 
