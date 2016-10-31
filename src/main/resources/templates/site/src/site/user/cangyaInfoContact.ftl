@@ -49,11 +49,73 @@
                 <h4><span></span>融资详情 - 填写合同 - 煤易贷 </h4>
                 <div class="contact" >
                     <div class="contact-title">
-                        <em></em>上游采购合同:
+                        <em></em>编辑下载合同
                     </div>
                     <div class="contactList">
-
+                        <h3>上游采购合同:</h3>
+                        <ul>
+                            <li>
+                                <span><em></em>《仓押上游采购合同》</span>
+                                <b></b>
+                                <a href=""><em></em>下载</a>
+                                |
+                                <a href="">预览</a>
+                                |
+                                <a href="javascript:">编辑</a>
+                            </li>
+                        </ul>
+                        <h3>下游采购合同:</h3>
+                        <ul>
+                            <li>
+                                <span><em></em>《仓押下游采购合同》</span>
+                                <b></b>
+                                <a href=""><em></em>下载</a>
+                                |
+                                <a href="">预览</a>
+                                |
+                                <a href="javascript:">编辑</a>
+                            </li>
+                        </ul>
+                        <h3>附件:</h3>
+                        <ul>
+                            <li>
+                                <span><em></em>《附件1》</span>
+                                <b class="w70"></b>
+                                <a href=""><em></em>下载</a>
+                                |
+                                <a href="">预览</a>
+                                |
+                                <a href="javascript:">编辑</a>
+                            </li>
+                            <li>
+                                <span><em></em>《附件2》</span>
+                                <b class="w70"></b>
+                                <a href=""><em></em>下载</a>
+                                |
+                                <a href="">预览</a>
+                                |
+                                <a href="javascript:">编辑</a>
+                            </li>
+                        </ul>
                     </div>
+
+                    <div class="contact-title">
+                        <em></em>上传合同:
+                    </div>
+                    <div class="contactUp">
+                        <div class="upLoad">
+                            <label for="">上游合同上传:</label>
+                            <span class="push"><em></em>点击上传</span>
+                            <input type="file" class="pushInput">
+                        </div>
+                        <p class="tips">提示：最多可上传<span>20个文件</span>，单个文件 <span>不大于1G</span>。</p>
+                        <div class="fileName">
+                            <em class="ico"></em>
+                            <span class="info">上游合同上传</span>
+                            <em class="delete">️️</em>
+                        </div>
+                    </div>
+
 
                     <a href="/finance/user/financing" class="btn back">返回</a>
                 </div>
