@@ -1,9 +1,7 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.common.DataBookRepository;
-import com.yimei.finance.representation.admin.group.EnumAdminGroupError;
 import com.yimei.finance.representation.admin.group.GroupObject;
 import com.yimei.finance.representation.admin.user.AdminUserSearch;
 import com.yimei.finance.representation.admin.user.EnumAdminUserError;
@@ -21,7 +19,6 @@ import com.yimei.finance.utils.CodeUtils;
 import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.*;
 import org.activiti.engine.IdentityService;
-import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -98,30 +95,7 @@ public class UserController {
     @RequestMapping(method = RequestMethod.POST)
     @Transactional
     public Result addUserMethod(@ApiParam(name = "user", value = "用户对象", required = true) @Validated(value = {CreateUser.class}) @RequestBody UserObject user) {
-        Result result = userService.checkAddUserGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
-        if (!result.isSuccess()) return result;
-        if (identityService.createUserQuery().userFirstName(user.getUsername()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
-        Result result1 = userService.checkUserEmail(user.getEmail());
-        if (!result1.isSuccess()) return result1;
-        Result result2 = userService.checkUserPhone(user.getPhone());
-        if (!result2.isSuccess()) return result2;
-        User newUser = identityService.newUser("");
-        DozerUtils.copy(user, newUser);
-        newUser.setId(null);
-        newUser.setFirstName(user.getUsername());
-        String password = CodeUtils.CreateNumLetterCode();
-        newUser.setPassword(userService.securePassword(password));
-        newUser.setEmail(user.getEmail());
-        identityService.saveUser(newUser);
-        identityService.setUserInfo(newUser.getId(), "username", user.getUsername());
-        identityService.setUserInfo(newUser.getId(), "name", user.getName());
-        identityService.setUserInfo(newUser.getId(), "phone", user.getPhone());
-        identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
-        addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
-        String subject = "开通账户通知邮件";
-        String content = "你好: 你的账号已开通, 用户名:" + user.getUsername() + ", 初始密码:" + password + ", 请修改密码. [易煤网金融系统]";
-        messageService.sendSimpleMail(user.getEmail(), subject, content);
-        return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(newUser.getId()).singleResult()));
+        return userService.addUser(user, adminSession.getUser().getId());
     }
 
     @ApiOperation(value = "删除用户", notes = "根据 UserId 删除用户", response = UserObject.class)
@@ -131,7 +105,7 @@ public class UserController {
         User user = identityService.createUserQuery().userId(id).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         List<String> groupIds = userService.getUserGroupIdList(id);
-        Result result = userService.checkAddUserGroupAuthority(adminSession.getUser().getId(), groupIds);
+        Result result = userService.checkAddUserAuthority(adminSession.getUser().getId(), groupIds);
         if (!result.isSuccess()) return result;
         UserObject userObject = DozerUtils.copy(user, UserObject.class);
         identityService.deleteUser(id);
@@ -147,7 +121,7 @@ public class UserController {
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());
         User oldUser = identityService.createUserQuery().userId(id).singleResult();
         if (oldUser == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
-        Result result = userService.checkAddUserGroupAuthority(adminSession.getUser().getId(), user.getGroupIds());
+        Result result = userService.checkAddUserAuthority(adminSession.getUser().getId(), user.getGroupIds());
         if (!result.isSuccess()) return result;
         Result result1 = userService.checkUserEmail(user.getEmail(), id);
         if (!result1.isSuccess()) return result1;
@@ -158,7 +132,7 @@ public class UserController {
         identityService.setUserInfo(oldUser.getId(), "name", user.getName());
         identityService.setUserInfo(oldUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(oldUser.getId(), "department", user.getDepartment());
-        addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
+        userService.addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
         return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
     }
 
@@ -209,21 +183,5 @@ public class UserController {
         }
     }
 
-    @Transactional
-    public void addUserGroupMemberShip(String userId, List<String> groupIds) {
-        List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
-        if (groupList != null && groupList.size() != 0) {
-            for (Group group : groupList) {
-                identityService.deleteMembership(userId, group.getId());
-            }
-        }
-        if (groupIds != null && groupIds.size() != 0) {
-            for (String gid : groupIds) {
-                if (identityService.createGroupQuery().groupId(gid).singleResult() == null)
-                    throw new BusinessException(EnumAdminGroupError.此组不存在.toString());
-                identityService.createMembership(userId, gid);
-            }
-        }
-    }
 
 }

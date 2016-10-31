@@ -1,12 +1,18 @@
 package com.yimei.finance.service.admin.user;
 
 import com.yimei.finance.entity.admin.user.UserLoginRecord;
+import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.user.AdminUserLoginRecordRepository;
+import com.yimei.finance.representation.admin.group.EnumAdminGroupError;
 import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
 import com.yimei.finance.representation.admin.group.GroupObject;
-import com.yimei.finance.representation.admin.user.*;
+import com.yimei.finance.representation.admin.user.AdminUserSearch;
+import com.yimei.finance.representation.admin.user.EnumAdminUserError;
+import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.service.common.message.MessageServiceImpl;
+import com.yimei.finance.utils.CodeUtils;
 import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
@@ -14,6 +20,7 @@ import org.activiti.engine.identity.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
@@ -27,6 +34,56 @@ public class AdminUserServiceImpl {
     private AdminGroupServiceImpl groupService;
     @Autowired
     private AdminUserLoginRecordRepository loginRecordRepository;
+    @Autowired
+    private MessageServiceImpl messageService;
+
+    /**
+     * 添加用户
+     */
+    public Result addUser(UserObject user, String sessionId) {
+        Result result = checkAddUserAuthority(sessionId, user.getGroupIds());
+        if (!result.isSuccess()) return result;
+        if (identityService.createUserQuery().userFirstName(user.getUsername()).singleResult() != null) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
+        Result result1 = checkUserEmail(user.getEmail());
+        if (!result1.isSuccess()) return result1;
+        Result result2 = checkUserPhone(user.getPhone());
+        if (!result2.isSuccess()) return result2;
+        User newUser = identityService.newUser("");
+        DozerUtils.copy(user, newUser);
+        newUser.setId(null);
+        newUser.setFirstName(user.getUsername());
+        String password = CodeUtils.CreateNumLetterCode();
+        newUser.setPassword(securePassword(password));
+        newUser.setEmail(user.getEmail());
+        identityService.saveUser(newUser);
+        identityService.setUserInfo(newUser.getId(), "username", user.getUsername());
+        identityService.setUserInfo(newUser.getId(), "name", user.getName());
+        identityService.setUserInfo(newUser.getId(), "phone", user.getPhone());
+        identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
+        addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
+        String subject = "开通账户通知邮件";
+        String content = "你好: 你的账号已开通, 用户名:" + user.getUsername() + ", 初始密码:" + password + ", 请修改密码. [易煤网金融系统]";
+        messageService.sendSimpleMail(user.getEmail(), subject, content);
+        return Result.success().setData(changeUserObject(identityService.createUserQuery().userId(newUser.getId()).singleResult()));
+
+    }
+
+    @Transactional
+    public void addUserGroupMemberShip(String userId, List<String> groupIds) {
+        List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
+        if (groupList != null && groupList.size() != 0) {
+            for (Group group : groupList) {
+                identityService.deleteMembership(userId, group.getId());
+            }
+        }
+        if (groupIds != null && groupIds.size() != 0) {
+            for (String gid : groupIds) {
+                if (identityService.createGroupQuery().groupId(gid).singleResult() == null)
+                    throw new BusinessException(EnumAdminGroupError.此组不存在.toString());
+                identityService.createMembership(userId, gid);
+            }
+        }
+    }
 
     /**
      * 检查是否具有系统管理员权限
@@ -44,7 +101,7 @@ public class AdminUserServiceImpl {
     /**
      * 判断一个用户是否有 向该组 添加用户的 权限
      */
-    public Result checkAddUserGroupAuthority(String userId, List<String> groupIds) {
+    public Result checkAddUserAuthority(String userId, List<String> groupIds) {
         if (getUserGroupIdList(userId).contains(EnumSpecialGroup.SystemAdminGroup.id)) return Result.success();
         List<String> canGroupIds = getCanAddUserGroupIds(userId);
         for (String gid : groupIds) {
