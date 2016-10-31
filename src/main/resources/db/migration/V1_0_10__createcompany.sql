@@ -26,7 +26,8 @@ CREATE TABLE `t_finance_company_role` (
 CREATE TABLE `t_finance_company_role_relationship` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `company_id` BIGINT(20) NOT NULL COMMENT '公司id',
-  `role_id` BIGINT(20) NOT NULL COMMENT '角色id',
+  `role_number` BIGINT(20) NOT NULL COMMENT '角色id',
+  `role` VARCHAR(50) NOT NULL COMMENT '角色',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='金融-公司角色-关系表';
 

@@ -1,7 +1,7 @@
 package com.yimei.finance.representation.admin.company.enums;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 public enum EnumCompanyRole {
     Business_Organization(1, "业务组织"),
@@ -18,16 +18,11 @@ public enum EnumCompanyRole {
         this.name = name;
     }
 
-    public static Map<Integer, String> typeList = new HashMap() {
-        {
-            this.put(Integer.valueOf(1), "业务组织");
-            this.put(Integer.valueOf(2), "资金方");
+    public static List<Integer> idList() {
+        List<Integer> idList = new ArrayList<>();
+        for (EnumCompanyRole role : EnumCompanyRole.values()) {
+            idList.add(role.id);
         }
-    };
-
-
-    public static String getTypeName(int type) {
-        return (String)typeList.get(Integer.valueOf(type));
+        return idList;
     }
-
 }

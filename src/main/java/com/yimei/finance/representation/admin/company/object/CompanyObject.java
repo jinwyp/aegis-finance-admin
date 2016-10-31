@@ -6,11 +6,10 @@ import com.yimei.finance.representation.admin.company.validated.EditCompany;
 import com.yimei.finance.representation.common.base.BaseObject;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.hibernate.validator.constraints.NotBlank;
 import org.hibernate.validator.constraints.Range;
-import org.springframework.util.StringUtils;
 
-import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -29,22 +28,18 @@ public class CompanyObject extends BaseObject implements Serializable {
     @NotBlank(message = "名称 不能为空", groups = {CreateCompany.class, EditCompany.class})
     private String name;                               //公司名称
 
-    @Range(min = 1, max = 10, message = "类型应在 {min}-{max} 之间", groups = {CreateCompany.class, EditCompany.class})
-    @NotBlank(message = "资金使用时间不能为空", groups = {CreateCompany.class, EditCompany.class})
-    private Integer type;                              //类型
-
-    private String typeName;                           //类型名称
-
-    @Column(name = "status")
     public String status;
-
-    @Column(name = "status_id")
     private int statusId;                              //状态id
-
-    private String statusName;
+    private String statusName;                         //状态名字
 
     private String getStatusName() {
         if (StringUtils.isEmpty(status)) return null;
         return EnumCompanyStatus.valueOf(status).name;
     }
+
+    @Range(min = 1, max = 100, message = "类型应在 {min}-{max} 天之间", groups = {CreateCompany.class})
+    @NotBlank(message = "类型不能为空", groups = {CreateCompany.class})
+    private int type;
+    private String roleName;
+
 }

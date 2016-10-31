@@ -3,6 +3,7 @@ package com.yimei.finance.controllers.admin.restfulapi.company;
 import com.yimei.finance.representation.admin.company.object.CompanyObject;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyRole;
 import com.yimei.finance.representation.admin.company.validated.CreateCompany;
+import com.yimei.finance.representation.admin.company.validated.EditCompany;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.company.AdminCompanyServiceImpl;
 import io.swagger.annotations.Api;
@@ -28,13 +29,13 @@ public class CompanyController {
     @RequestMapping(value = "/business", method = RequestMethod.GET)
     @ApiOperation(value = "获取业务组织列表", response = CompanyObject.class, responseContainer = "List")
     public Result findBusinessOrganizationListMethod() {
-        return companyService.findCompamyListByType(EnumCompanyRole.Business_Organization.id);
+        return companyService.findCompanyListByRole(EnumCompanyRole.Business_Organization.id);
     }
 
     @RequestMapping(value = "/fund", method = RequestMethod.GET)
     @ApiOperation(value = "获取资金方公司列表", response = CompanyObject.class, responseContainer = "List")
     public Result findFundProviderListMethod() {
-        return companyService.findCompamyListByType(EnumCompanyRole.Fund_Provider.id);
+        return companyService.findCompanyListByRole(EnumCompanyRole.Fund_Provider.id);
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -44,9 +45,15 @@ public class CompanyController {
     }
 
     @RequestMapping(method = RequestMethod.PUT)
-    @ApiOperation(value = "创建公司", notes = "根据 company 对象创建用户", response = CompanyObject.class)
-    public Result editCompanyMethod(@ApiParam(name = "company", value = "公司对象", required = true) @Validated(value = {CreateCompany.class}) @RequestBody CompanyObject company) {
-        return companyService.addCompany(company);
+    @ApiOperation(value = "修改公司", notes = "根据 company 对象修改用户", response = CompanyObject.class)
+    public Result editCompanyMethod(@ApiParam(name = "company", value = "公司对象", required = true) @Validated(value = {EditCompany.class}) @RequestBody CompanyObject company) {
+        return companyService.editCompany(company);
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @ApiOperation(value = "删除公司", notes = "根据 id 删除公司", response = CompanyObject.class)
+    public Result deleteCompanyMethod(@PathVariable("id") Long id) {
+        return companyService.deleteCompany(id);
     }
 
 }
