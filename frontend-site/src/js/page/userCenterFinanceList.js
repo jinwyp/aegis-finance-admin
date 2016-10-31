@@ -7,7 +7,7 @@ import 'js/jquery-plugin/jQuery.fn.datePicker';
 import avalon from 'avalon2';
 import 'js/common-libs/pagination';
 import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
-
+import '../common-libs/avalonFilter';
 
 
 var financeList = () => {
