@@ -1,0 +1,236 @@
+@import '../helpers/_variables.scss';
+$assetPath : "/static/site";
+
+$borderColor:#e4e4e4;
+.financeManageWrap{
+  padding: 12px 0 50px 0;
+  background-color: #f6f6f6;
+  background-image: url("#{$assetPath}/css/images/finance/loading.gif");
+  background-repeat: no-repeat;
+  background-position: center 200px;
+  .financeManage{
+    width: 1200px;
+    margin: 0 auto;
+
+    //我的申请右侧内容样式开始
+    .financeCon{
+      background: #ffffff;
+      width: 1060px;
+      float: right;
+      .application{
+        padding: 20px;
+        h4{
+          font-size: 16px;
+          font-weight: bold;
+          padding-bottom: 10px;
+          span{
+            width: 2px;
+            height: 14px;
+            display: inline-block;
+            background-color: #1fb8ea;
+            margin-right: 12px;
+          }
+        }
+        .contact{
+          .contact-title{
+            border-top: 2px solid #1fb8ea;
+            height: 43px;
+            background: #e5f7fc;
+            line-height: 43px;
+            font-weight: bold;
+            em{
+              width: 20px;
+              height: 20px;
+              display: inline-block;
+              background: url("#{$assetPath}/css/images/finance/table-title.png") no-repeat center;
+              margin: -4px 10px;
+            }
+          }
+          .contactList{
+            h3{
+              line-height: 40px;
+              background: #effafd;
+              padding-left: 20px;
+            }
+            ul{
+              padding:20px 20px;
+              li{
+                padding: 20px 0;
+                span{
+                  font-size: 16px;
+                  display: inline-block;
+                  vertical-align: middle;
+                  text-align: center;
+                  em{
+                    width: 18px;
+                    height: 18px;
+                    display: inline-block;
+                    background: url("#{$assetPath}/css/images/sprite/word.png") no-repeat;
+                    vertical-align: text-bottom;
+                  }
+                }
+                a{
+                  color: #007193;
+                  em{
+                    width: 18px;
+                    height: 18px;
+                    display: inline-block;
+                    background: url("#{$assetPath}/css/images/sprite/downLoad.png") no-repeat;
+                    vertical-align: top;
+                  }
+                }
+                b{
+                  margin: 1px 15px 0 15px;
+                  display: inline-block;
+                  width: 61%;
+                  height: 1px;
+                  _overflow: hidden;
+                  vertical-align: middle;
+                  border-bottom: 1px dashed  gray;
+                }
+                .w70{
+                  width: 70%;
+                }
+              }
+            }
+          }
+          .contactUp{
+            .upLoad{
+              position: relative;
+              padding:20px 20px 0 20px;
+              label{
+                line-height: 40px;
+                padding-left: 20px;
+              }
+              .pushInput{
+                display: inline-block;
+                opacity: 0.7;
+                margin-left: 20px;
+                width: 95px;
+                height: 32px;
+                margin-top: 6px;
+                cursor: pointer;
+                outline: none;
+                opacity: 0;
+
+              }
+              .push{
+                width: 95px;
+                height: 32px;
+                position: absolute;
+                left: 160px;
+                top: 25px;
+                border: 1px solid #e4e4e4;
+                background: #fbfbfb;
+                border-radius: 2px;
+                line-height: 32px;
+                text-align: center;
+                font-size: 12px;
+                cursor: pointer;
+                em{
+                  width: 14px;
+                  height: 14px;
+                  display: inline-block;
+                  background: url("#{$assetPath}/css/images/sprite/upLoad.png") no-repeat;
+                  vertical-align: text-bottom;
+                  margin-right: 4px;
+                }
+              }
+            }
+            .tips{
+              font-size: 12px;
+              color: #999999;
+              margin-left: 160px;
+              line-height: 18px;
+              span{
+                color: #fc683a;
+              }
+            }
+            .fileName{
+              font-size: 12px;
+              color: #333333;
+              margin-left: 160px;
+              line-height: 30px;
+              margin-top: 20px;
+              background: #f5f5f5;
+              border:1px solid #f5f5f5;
+              display: inline-block;
+              padding: 0 10px 0 20px;
+              .ico{
+                width: 16px;
+                height: 18px;
+                display: inline-block;
+                background: url("#{$assetPath}/css/images/sprite/word-ico.png") no-repeat;
+                vertical-align: middle;
+                margin-right: 4px;
+              }
+              .delete{
+                color: #999999;
+                font-size: 12px;
+                line-height: 30px;
+                &:hover{
+                  color: #1fb8ea;;
+                }
+              }
+              .info{
+                margin-right: 6px;
+              }
+              &:hover{
+                border:1px solid #1fb8ea;
+                .delete{
+                  color: #1fb8ea;;
+                }
+              }
+            }
+          }
+          .btn{
+            width: 180px;
+            text-align: center;
+            display: inline-block;
+            color: #ffffff;
+            border-radius: 2px;
+            font-size: 16px;
+            margin: 50px 0 50px 50px;
+            text-decoration: none;
+            &:hover{
+              opacity: 0.7;
+            }
+          }
+          .back{
+            background: #aabfc5;
+          }
+          .blue{
+            background-color: #1fb8ea;
+          }
+        }
+
+
+
+
+      }
+    }
+    //我的申请右侧内容样式结束
+  }
+}
+
+form{
+  div{
+    padding-top: 20px;
+    text-align: left;
+    label{
+      width: 170px;
+      text-align: left;
+      line-height: 35px;
+      vertical-align: bottom;
+      font-size: 14px;
+    }
+    .money{
+      display: inline-block;
+      width: 180px;
+      height: 35px;
+      line-height: 35px;
+      text-align: left;
+      font-size: 14px;
+    }
+  }
+}

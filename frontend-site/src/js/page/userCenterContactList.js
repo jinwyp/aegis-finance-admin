@@ -7,9 +7,7 @@ import avalon from 'avalon2';
 import 'js/common-libs/pagination';
 import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 
-
 var url = 'http://192.168.1.180:2403/contacts';
-
 
 var contactList = () => {
 
@@ -66,15 +64,13 @@ var contactList = () => {
         var params = $.extend({}, query);
 
         $.ajax({
-            url      : url,
+            url      : url + '?startDate=JR201610170001',
             method   : 'GET',
             dataType : 'json',
             data     : params,
-            success  : (data)=> {
-                vm.contactList = data;
-
+            success  : (data)=> {vm.contactList = data;
                 // if (data.success){
-                //     vm.contactList = data.data;
+                //
                 //     vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
                 // }else{
                 //
