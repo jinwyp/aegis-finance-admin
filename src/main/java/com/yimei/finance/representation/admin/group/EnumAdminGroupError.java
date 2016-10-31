@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.admin.user;
+package com.yimei.finance.representation.admin.group;
 
 public enum EnumAdminGroupError {
     此组不存在,

@@ -1,6 +1,6 @@
 package com.yimei.finance.controllers.admin.common;
 
-import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
+import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
 import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;

@@ -2,6 +2,8 @@ package com.yimei.finance.service.admin.user;
 
 import com.yimei.finance.entity.admin.user.UserLoginRecord;
 import com.yimei.finance.repository.admin.user.AdminUserLoginRecordRepository;
+import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
+import com.yimei.finance.representation.admin.group.GroupObject;
 import com.yimei.finance.representation.admin.user.*;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
@@ -32,7 +34,7 @@ public class AdminUserServiceImpl {
     public Result checkSuperAdminRight(String userId) {
         List<Group> groups = identityService.createGroupQuery().groupMember(userId).list();
         for (Group group : groups) {
-            if (group.getId().equals(EnumSpecialGroup.SuperAdminGroup.id)) {
+            if (group.getId().equals(EnumSpecialGroup.SystemAdminGroup.id)) {
                 return Result.success();
             }
         }
@@ -43,7 +45,7 @@ public class AdminUserServiceImpl {
      * 判断一个用户是否有 向该组 添加用户的 权限
      */
     public Result checkAddUserGroupAuthority(String userId, List<String> groupIds) {
-        if (getUserGroupIdList(userId).contains(EnumSpecialGroup.SuperAdminGroup.id)) return Result.success();
+        if (getUserGroupIdList(userId).contains(EnumSpecialGroup.SystemAdminGroup.id)) return Result.success();
         List<String> canGroupIds = getCanAddUserGroupIds(userId);
         for (String gid : groupIds) {
             if (!canGroupIds.contains(gid)) {
@@ -72,7 +74,7 @@ public class AdminUserServiceImpl {
     public List<String> getCanAddUserGroupIds(String userId) {
         List<Group> groupList = new ArrayList<>();
         List<String> sonGroupIds = new ArrayList<>();
-        if (getUserGroupIdList(userId).contains(EnumSpecialGroup.SuperAdminGroup.id)) {
+        if (getUserGroupIdList(userId).contains(EnumSpecialGroup.SystemAdminGroup.id)) {
             groupList = identityService.createGroupQuery().list();
             for (Group group : groupList) {
                 sonGroupIds.add(group.getId());
@@ -106,7 +108,7 @@ public class AdminUserServiceImpl {
      */
     public boolean checkOperateRight(String userId1, String userId2) {
         List<String> user1GroupList = getUserGroupIdList(userId1);
-        if (user1GroupList.contains(EnumSpecialGroup.SuperAdminGroup.id)) return true;
+        if (user1GroupList.contains(EnumSpecialGroup.SystemAdminGroup.id)) return true;
         List<String> user2GroupList = getUserGroupIdList(userId2);
         for (String gid : user2GroupList) {
             EnumSpecialGroup sonGroup = EnumSpecialGroup.getSonGroup(gid);

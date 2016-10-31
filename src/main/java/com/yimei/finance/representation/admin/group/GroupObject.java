@@ -1,5 +1,6 @@
-package com.yimei.finance.representation.admin.user;
+package com.yimei.finance.representation.admin.group;
 
+import com.yimei.finance.representation.admin.group.validated.CreateGroup;
 import io.swagger.annotations.ApiModel;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -15,10 +16,11 @@ import java.io.Serializable;
 @AllArgsConstructor
 public class GroupObject implements Serializable {
     private String id;
-    @Size(min = 2, max = 30, message = "组名应在2-30个字符之间")
-    @NotBlank(message = "组名不能为空")
+    @Size(min = 2, max = 30, message = "组名应在 {min}-{max} 个字符之间", groups = {CreateGroup.class})
+    @NotBlank(message = "组名不能为空", groups = {CreateGroup.class})
     private String name;
     private String type;
+    private String companyId;
     private Integer memberNums;
 
 }
