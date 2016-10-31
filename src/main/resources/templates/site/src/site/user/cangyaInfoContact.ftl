@@ -10,6 +10,7 @@
     <title>${title}</title>
 
     <link rel="stylesheet" href="${staticPath}/jspm_packages/github/twbs/bootstrap@3.3.7/css/bootstrap.min.css">
+    <!--<link rel="stylesheet" href="${staticPath}/jspm_packages/npm/webuploader@0.1.8/css/webuploader.css">-->
     <link rel="stylesheet" href="${staticPath}/css/stylesheets/main.css">
 
 
@@ -99,22 +100,53 @@
                         </ul>
                     </div>
 
+
                     <div class="contact-title">
                         <em></em>上传合同:
                     </div>
                     <div class="contactUp">
+                       <div class="upLoad">
+                           <label>上游合同上传:</label>
+                           <div class="push" id="picker"><em></em>点击上传</div>
+                           <p class="tips">提示：最多可上传<span>20个文件</span>，单个文件 <span>不大于1G</span>。</p>
+                           <div class="filesList">
+                               <div class="uploader-list fileName" ms-for="(index, file) in @upFilesList">
+                                   <em class="ico"></em>
+                                   <span class="info">{{file.name}}</span>
+                                   <em class="close">✖</em>
+                               </div>
+                           </div>
+                       </div>
+                    </div>
+                    <div class="contactUp">
                         <div class="upLoad">
-                            <label for="">上游合同上传:</label>
-                            <span class="push"><em></em>点击上传</span>
-                            <input type="file" class="pushInput">
-                        </div>
-                        <p class="tips">提示：最多可上传<span>20个文件</span>，单个文件 <span>不大于1G</span>。</p>
-                        <div class="fileName">
-                            <em class="ico"></em>
-                            <span class="info">上游合同上传</span>
-                            <em class="delete">️️</em>
+                            <label>下游合同上传:</label>
+                            <div class="push" id="picker2"><em></em>点击上传</div>
+                            <p class="tips">提示：最多可上传<span>20个文件</span>，单个文件 <span>不大于1G</span>。</p>
+                            <div class="filesList">
+                                <div class="uploader-list fileName" ms-for="(index, file) in @downFilesList">
+                                    <em class="ico"></em>
+                                    <span class="info">{{file.name}}</span>
+                                    <em class="close">✖</em>
+                                </div>
+                            </div>
                         </div>
                     </div>
+                    <div class="contactUp">
+                        <div class="upLoad">
+                            <label>附件上传:</label>
+                            <div class="push" id="picker3"><em></em>点击上传</div>
+                            <p class="tips">提示：最多可上传<span>20个文件</span>，单个文件 <span>不大于1G</span>。</p>
+                            <div class="filesList">
+                                <div class="uploader-list fileName" ms-for="(index, file) in @annexFilesList">
+                                    <em class="ico"></em>
+                                    <span class="info">{{file.name}}</span>
+                                    <em class="close">✖</em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
 
                     <a href="/finance/user/financing" class="btn back">返回</a>
@@ -149,7 +181,7 @@
 <!--<script src="${staticPath}/js/page-temp-bundle/dependencies.bundle.js"></script>-->
 <!--<script src="${staticPath}/js/page-temp-bundle/userCenterFinanceInfo.bundle.js"></script>-->
 <script>
-    System['import']('${staticPath}/js/page/userCenterFinanceInfo.js')
+    System['import']('${staticPath}/js/page/cangyaInfoContact.js')
 </script>
 
 
