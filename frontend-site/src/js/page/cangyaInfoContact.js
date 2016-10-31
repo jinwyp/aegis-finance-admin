@@ -8,8 +8,6 @@ import WebUploader from 'webuploader';
 
 
 
-
-
 var financeInfo = (query)=> {
 
     var url = window.location.href.match(/\/financing\/\d{1,8}/);
@@ -18,7 +16,9 @@ var financeInfo = (query)=> {
     var vm = avalon.define({
         $id   : 'financeInfo',
         financeInfo : {},
-        filesList:[],
+        upFilesList:[],
+        downFilesList:[],
+        annexFilesList:[],
         css : {
             status : false
         }
@@ -44,29 +44,29 @@ var financeInfo = (query)=> {
     // getFinanceInfo(financeInfoId);
 
 
-    //    上传文件
-    var uploader = WebUploader.create({
+    //    上游上传文件---------------------------------------------
+    var userLoader = WebUploader.create({
 
         // 自动上传。
         // auto: true,
         // swf文件路径
         swf: '/static/site/js/jquery-plugin/webuploader.swf',
 
-            // 文件接收服务端。
-            server: 'http://webuploader.duapp.com/server/fileupload.php',
+        // 文件接收服务端。
+        server: 'http://webuploader.duapp.com/server/fileupload.php',
 
-            // 选择文件的按钮。可选。
-            // 内部根据当前运行是创建，可能是input元素，也可能是flash.
-            pick: '#picker',
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#picker',
 
-            // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
-            resize: false
+        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+        resize: false
     });
 
     // 当有文件被添加进队列的时候
-    uploader.on( 'fileQueued', function( file ) {
+    userLoader.on( 'fileQueued', function( file ) {
         console.log(file);
-        vm.filesList.push({
+        vm.upFilesList.push({
             name:file.name,
             ext : file.ext,
             size : file.size,
@@ -74,15 +74,99 @@ var financeInfo = (query)=> {
         });
 
     });
-    uploader.on( 'uploadSuccess', function( file ) {
+    userLoader.on( 'uploadSuccess', function( file ) {
 
     });
 
-    uploader.on( 'uploadError', function( file ) {
+    userLoader.on( 'uploadError', function( file ) {
         $( '#'+file.id ).find('p.state').text('上传出错');
     });
 
-    uploader.on( 'uploadComplete', function( file ) {
+    userLoader.on( 'uploadComplete', function( file ) {
+        console.log(file)
+    });
+
+    //    下游游上传文件---------------------------------------------
+    var ensureLoader = WebUploader.create({
+
+        // 自动上传。
+        // auto: true,
+        // swf文件路径
+        swf: '/static/site/js/jquery-plugin/webuploader.swf',
+
+        // 文件接收服务端。
+        server: 'http://webuploader.duapp.com/server/fileupload.php',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#picker2',
+
+        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+        resize: false
+    });
+
+    // 当有文件被添加进队列的时候
+    ensureLoader.on( 'fileQueued', function( file ) {
+        console.log(file);
+        vm.downFilesList.push({
+            name:file.name,
+            ext : file.ext,
+            size : file.size,
+            type : file.type
+        });
+
+    });
+    ensureLoader.on( 'uploadSuccess', function( file ) {
+
+    });
+
+    ensureLoader.on( 'uploadError', function( file ) {
+        $( '#'+file.id ).find('p.state').text('上传出错');
+    });
+
+    ensureLoader.on( 'uploadComplete', function( file ) {
+        console.log(file)
+    });
+
+    //    附件上传文件---------------------------------------------
+    var annexLoader = WebUploader.create({
+
+        // 自动上传。
+        // auto: true,
+        // swf文件路径
+        swf: '/static/site/js/jquery-plugin/webuploader.swf',
+
+        // 文件接收服务端。
+        server: 'http://webuploader.duapp.com/server/fileupload.php',
+
+        // 选择文件的按钮。可选。
+        // 内部根据当前运行是创建，可能是input元素，也可能是flash.
+        pick: '#picker3',
+
+        // 不压缩image, 默认如果是jpeg，文件上传前会压缩一把再上传！
+        resize: false
+    });
+
+    // 当有文件被添加进队列的时候
+    annexLoader.on( 'fileQueued', function( file ) {
+        console.log(file);
+        vm.annexFilesList.push({
+            name:file.name,
+            ext : file.ext,
+            size : file.size,
+            type : file.type
+        });
+
+    });
+    annexLoader.on( 'uploadSuccess', function( file ) {
+
+    });
+
+    annexLoader.on( 'uploadError', function( file ) {
+        $( '#'+file.id ).find('p.state').text('上传出错');
+    });
+
+    annexLoader.on( 'uploadComplete', function( file ) {
         console.log(file)
     });
 

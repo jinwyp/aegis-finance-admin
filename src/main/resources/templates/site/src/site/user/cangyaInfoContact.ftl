@@ -110,14 +110,43 @@
                            <div class="push" id="picker"><em></em>点击上传</div>
                            <p class="tips">提示：最多可上传<span>20个文件</span>，单个文件 <span>不大于1G</span>。</p>
                            <div class="filesList">
-                               <div class="uploader-list fileName" ms-for="(index, file) in @filesList">
+                               <div class="uploader-list fileName" ms-for="(index, file) in @upFilesList">
                                    <em class="ico"></em>
-                                   <span class="info showFileName1">{{file.name}}</span>
+                                   <span class="info">{{file.name}}</span>
                                    <em class="close">✖</em>
                                </div>
                            </div>
                        </div>
                     </div>
+                    <div class="contactUp">
+                        <div class="upLoad">
+                            <label>下游合同上传:</label>
+                            <div class="push" id="picker2"><em></em>点击上传</div>
+                            <p class="tips">提示：最多可上传<span>20个文件</span>，单个文件 <span>不大于1G</span>。</p>
+                            <div class="filesList">
+                                <div class="uploader-list fileName" ms-for="(index, file) in @downFilesList">
+                                    <em class="ico"></em>
+                                    <span class="info">{{file.name}}</span>
+                                    <em class="close">✖</em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="contactUp">
+                        <div class="upLoad">
+                            <label>附件上传:</label>
+                            <div class="push" id="picker3"><em></em>点击上传</div>
+                            <p class="tips">提示：最多可上传<span>20个文件</span>，单个文件 <span>不大于1G</span>。</p>
+                            <div class="filesList">
+                                <div class="uploader-list fileName" ms-for="(index, file) in @annexFilesList">
+                                    <em class="ico"></em>
+                                    <span class="info">{{file.name}}</span>
+                                    <em class="close">✖</em>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
 
 
                     <a href="/finance/user/financing" class="btn back">返回</a>
