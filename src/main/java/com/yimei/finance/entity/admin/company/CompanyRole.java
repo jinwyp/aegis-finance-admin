@@ -19,7 +19,7 @@ public class CompanyRole extends BaseEntity implements Serializable {
     @Column(name = "number")
     private int number;                            //角色编号
 
-    @Column(name = "name")
+    @Column(name = "role")
     private String role;                           //角色名称
 
 }

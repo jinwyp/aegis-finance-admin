@@ -44,7 +44,8 @@ public class UserObject implements Serializable {
     @Size(max = 30, message = "部门名称应在 {min}-{max} 个字符之间", groups = {CreateUser.class, EditUser.class})
     private String department;                  //部门
 
-    private String companyId;                   //用户所在公司id
+    private Integer type;                       //类型, 0: 超级管理员添加 超级管理员, 1: 超级管理员添加管理员, 2: 管理员添加普通员工
+    private Long companyId;                   //用户所在公司id
     private String companyName;                 //用户所在公司名称
 
     @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)

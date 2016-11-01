@@ -9,6 +9,7 @@ public enum EnumAdminUserError {
     用户登录名不能为空,
     此登录名已经存在,
     只有系统管理员组成员才能执行此操作,
+    只有超级管理员组成员才能执行此操作,
     用户名不能为空,
     密码不能为空,
     原密码不正确,
@@ -17,6 +18,7 @@ public enum EnumAdminUserError {
     新密码和原密码一样,
     邮箱不能为空,
     您的企业信息未认证,
+    你没有操作此用户的权限
     ;
     public static final String NewPasswordLengthError = "密码应该在6-16个字符之间";
 

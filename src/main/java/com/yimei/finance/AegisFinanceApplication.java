@@ -51,12 +51,15 @@ public class AegisFinanceApplication {
 					User user = identityService.newUser("");
 					user.setId(null);
 					user.setFirstName("superadmin");
+					user.setEmail("yunying@yimei180.com");
 					user.setPassword("961e37962ed659bf4eb45a6f074981a0");
 					identityService.saveUser(user);
 					identityService.setUserInfo(user.getId(), "username", "superadmin");
+					identityService.setUserInfo(user.getId(), "companyId", "0");
+					identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
 					identityService.createMembership(user.getId(), EnumSpecialGroup.SuperAdminGroup.id);
 				}
-            }
+			}
         };
     }
 
