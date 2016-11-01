@@ -94,7 +94,7 @@
                         <td>{{order.requesTime || '/'}}</td>
 
                         <td>
-                            <a  class="detailA blueA" ms-attr="{href:'/finance/user/cangya/'+order.contactNo+'/contact/'}" >合同详情</a>
+                            <a  class="detailA blueA" ms-attr="{href:'/finance/user/contact/'+order.contactNo}" >合同详情</a>
                         </td>
                     </tr>
                     <tr ms-visible="@contactList.length===0">

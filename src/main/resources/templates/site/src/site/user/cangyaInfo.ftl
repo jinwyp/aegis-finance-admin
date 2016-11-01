@@ -184,7 +184,7 @@
                     </div>
 
                     <a href="javascript:" class="btn blue" id="getBack">赎回货物</a>
-                    <a href="/finance/user/financing" class="btn blue">下载/上传合同</a>
+                    <a href="/finance/user/cangya/11/contact" class="btn blue">下载/上传合同</a>
                     <a href="/finance/user/cangya" class="btn back">返回</a>
 
                 </div>

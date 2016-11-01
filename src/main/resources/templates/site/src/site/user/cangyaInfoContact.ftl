@@ -149,7 +149,9 @@
 
 
 
-                    <a href="/finance/user/financing" class="btn back">返回</a>
+                    <a href="" class="btn save">保存</a>
+                    <a href="/finance/user/cangya/11" class="btn back">返回</a>
+                    <p class="attention"><span>* </span>合同保存后，将<span>自动发送给资金方</span>，供其查阅。</p>
                 </div>
             </div>
         </div>

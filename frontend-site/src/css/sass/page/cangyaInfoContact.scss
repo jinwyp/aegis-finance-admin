@@ -182,7 +182,7 @@ $borderColor:#e4e4e4;
             color: #ffffff;
             border-radius: 2px;
             font-size: 16px;
-            margin: 50px 0 50px 50px;
+            margin: 50px 0 15px 50px;
             text-decoration: none;
             &:hover{
               opacity: 0.7;
@@ -193,6 +193,16 @@ $borderColor:#e4e4e4;
           }
           .blue{
             background-color: #1fb8ea;
+          }
+          .save{
+            background: #fc683a;
+          }
+          .attention{
+            font-size: 14px;
+            margin: 0 0 50px 50px;
+            span{
+              color: #fc683a;
+            }
           }
         }
 
