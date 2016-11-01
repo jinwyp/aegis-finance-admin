@@ -183,7 +183,7 @@
 <!--<script src="${staticPath}/js/page-temp-bundle/dependencies.bundle.js"></script>-->
 <!--<script src="${staticPath}/js/page-temp-bundle/userCenterFinanceInfo.bundle.js"></script>-->
 <script>
-    System['import']('${staticPath}/js/page/cangyaInfoContact.js')
+    System['import']('${staticPath}/js/page/userCenterCangyaInfoUpload.js')
 </script>
 
 
