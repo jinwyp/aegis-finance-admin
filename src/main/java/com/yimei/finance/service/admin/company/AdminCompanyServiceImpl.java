@@ -60,6 +60,7 @@ public class AdminCompanyServiceImpl {
         if (company == null) {
             return Result.error(EnumCompanyError.此公司不存在.toString());
         } else {
+            company.setName(companyObject.getName());
             company.setStatus(EnumCompanyStatus.Normal.toString());
             company.setStatusId(EnumCompanyStatus.Normal.id);
             companyRepository.save(company);
