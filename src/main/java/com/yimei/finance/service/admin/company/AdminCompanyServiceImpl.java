@@ -12,6 +12,7 @@ import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
 import com.yimei.finance.representation.admin.company.object.CompanyObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -28,6 +29,8 @@ public class AdminCompanyServiceImpl {
     private CompanyRoleRelationShipRepository companyRoleRelationShipRepository;
     @Autowired
     private CompanyRoleRepository companyRoleRepository;
+    @Autowired
+    private AdminUserServiceImpl userService;
 
     /**
      * 创建公司
@@ -86,6 +89,7 @@ public class AdminCompanyServiceImpl {
                 roleName.add(EnumCompanyRole.valueOf(role).name);
             });
             companyObject.setRoleName(Arrays.toString(roleName.toArray()));
+            companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
         }
         return companyObject;
     }

@@ -280,6 +280,15 @@ public class AdminUserServiceImpl {
         }
     }
 
+    public String findCompanyFirstAdminName(Long companyId) {
+        List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).orderByUserId().desc().list());
+        String adminName = null;
+        for (UserObject user : userObjectList) {
+            if (user.getCompanyId() == companyId) return user.getUsername();
+        }
+        return null;
+    }
+
     /**
      * 检查是否具有超级管理员权限
      */
