@@ -55,8 +55,8 @@ public class AdminCompanyServiceImpl {
     /**
      * 修改公司
      */
-    public Result editCompany(CompanyObject companyObject) {
-        Company company = companyRepository.findOne(companyObject.getId());
+    public Result editCompany(Long id, CompanyObject companyObject) {
+        Company company = companyRepository.findOne(id);
         if (company == null) {
             return Result.error(EnumCompanyError.此公司不存在.toString());
         } else {

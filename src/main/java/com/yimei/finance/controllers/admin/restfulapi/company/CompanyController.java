@@ -44,10 +44,11 @@ public class CompanyController {
         return companyService.addCompany(company);
     }
 
-    @RequestMapping(method = RequestMethod.PUT)
+    @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "修改公司", notes = "根据 company 对象修改用户", response = CompanyObject.class)
-    public Result editCompanyMethod(@ApiParam(name = "company", value = "公司对象", required = true) @Validated(value = {EditCompany.class}) @RequestBody CompanyObject company) {
-        return companyService.editCompany(company);
+    public Result editCompanyMethod(@PathVariable("id") Long id,
+                                    @ApiParam(name = "company", value = "公司对象", required = true) @Validated(value = {EditCompany.class}) @RequestBody CompanyObject company) {
+        return companyService.editCompany(id, company);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
