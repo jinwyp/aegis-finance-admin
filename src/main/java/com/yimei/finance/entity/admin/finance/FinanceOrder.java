@@ -96,5 +96,7 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     @Column(name = "end_time")
     private Date endTime;                                            //结束时间
 
+    @Column(name = "business_company_id")
+    private Long businessCompanyId;                                  //业务线(公司)id
 
 }

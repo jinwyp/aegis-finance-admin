@@ -1,5 +1,6 @@
 package com.yimei.finance.controllers.admin.restfulapi.finance;
 
+import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
@@ -51,40 +52,42 @@ public class FinancingCommonController {
     private FinanceOrderRepository orderRepository;
     @Autowired
     private FinanceFlowMethodServiceImpl methodService;
+    @Autowired
+    private AdminSession adminSession;
 
     @RequestMapping(value = "/finance/{financeId}", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看金融详细信息 线上业务员信息", notes = "通过 金融单id 查看金融详细信息 线上业务员信息", response = FinanceOrderObject.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderDetailByIdMethod(@PathVariable("financeId") Long financeId) {
-        return orderService.findById(financeId, EnumFinanceAttachment.OnlineTraderAuditAttachment);
+        return orderService.findById(financeId, EnumFinanceAttachment.OnlineTraderAuditAttachment, adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(value = "/finance/{financeId}/salesman", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看业务员填写表单详细信息", notes = "通过 金融单id 查看业务员填写表单详细信息", response = FinanceOrderSalesmanInfoObject.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderSalesmanInfoByFinanceIdMethod(@PathVariable("financeId") Long financeId) {
-        return orderService.findSalesmanInfoByFinanceId(financeId, EnumFinanceAttachment.SalesmanAuditAttachment);
+        return orderService.findSalesmanInfoByFinanceId(financeId, EnumFinanceAttachment.SalesmanAuditAttachment, adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(value = "/finance/{financeId}/investigator", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看尽调员填写表单详细信息", notes = "通过 金融单id 查看尽调员填写表单详细信息", response = FinanceOrderInvestigatorInfoObject.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderInvestigatorInfoByFinanceIdMethod(@PathVariable("financeId") Long financeId) {
-        return orderService.findInvestigatorInfoByFinanceId(financeId, EnumFinanceAttachment.InvestigatorAuditAttachment, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SalesmanSupplyAttachment_Investigator}));
+        return orderService.findInvestigatorInfoByFinanceId(financeId, EnumFinanceAttachment.InvestigatorAuditAttachment, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SalesmanSupplyAttachment_Investigator}), adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(value = "/finance/{financeId}/supervisor", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看监管员填写表单详细信息", notes = "通过 金融单id 查看监管员填写表单详细信息", response = FinanceOrderSupervisorInfoObject.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderSupervisorInfoByFinanceIdMethod(@PathVariable("financeId") Long financeId) {
-        return orderService.findSupervisorInfoByFinanceId(financeId, EnumFinanceAttachment.SupervisorAuditAttachment, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SalesmanSupplyAttachment_Supervisor}));
+        return orderService.findSupervisorInfoByFinanceId(financeId, EnumFinanceAttachment.SupervisorAuditAttachment, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SalesmanSupplyAttachment_Supervisor}), adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(value = "/finance/{financeId}/riskmanager", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看风控人员填写表单详细信息", notes = "通过 金融单id 查看风控人员填写表单详细信息", response = FinanceOrderRiskManagerInfoObject.class)
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderRiskManagerInfoByFinanceIdMethod(@PathVariable("financeId") Long financeId) {
-        return orderService.findRiskManagerInfoByFinanceId(financeId, EnumFinanceAttachment.RiskManagerAuditAttachment, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SalesmanSupplyAttachment_RiskManager}));
+        return orderService.findRiskManagerInfoByFinanceId(financeId, EnumFinanceAttachment.RiskManagerAuditAttachment, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SalesmanSupplyAttachment_RiskManager}), adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(value = "/finance/{financeId}/tasks", method = RequestMethod.GET)
@@ -104,6 +107,7 @@ public class FinancingCommonController {
         OutputStream out = response.getOutputStream();
         HistoricProcessInstance processInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
         if (processInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        if (orderRepository.findBusinessCompanyIdById(Long.valueOf(processInstance.getBusinessKey())) != adminSession.getUser().getCompanyId()) throw new BusinessException(EnumAdminFinanceError.你没有查看此流程的权限.toString());
         BpmnModel bpmnModel = repositoryService.getBpmnModel(processInstance.getProcessDefinitionId());
         InputStream inputStream = null;
         if (processInstance.getEndTime() == null) {
