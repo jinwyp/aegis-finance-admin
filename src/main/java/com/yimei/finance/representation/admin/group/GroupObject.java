@@ -23,4 +23,5 @@ public class GroupObject implements Serializable {
     private String companyId;
     private Integer memberNums;
 
+
 }

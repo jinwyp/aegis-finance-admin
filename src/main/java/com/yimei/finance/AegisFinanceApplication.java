@@ -56,9 +56,10 @@ public class AegisFinanceApplication {
 					identityService.saveUser(user);
 					identityService.setUserInfo(user.getId(), "username", "superadmin");
 					identityService.setUserInfo(user.getId(), "companyId", "0");
+					identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
 					identityService.createMembership(user.getId(), EnumSpecialGroup.SuperAdminGroup.id);
 				}
-            }
+			}
         };
     }
 
