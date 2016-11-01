@@ -221,20 +221,25 @@ public class AdminUserServiceImpl {
             }
         }
         List<UserObject> userObjectList = changeUserObject(userList, sessionUser);
+        List<UserObject> userObjList = new ArrayList<>();
+        if (!StringUtils.isEmpty(userSearch.getName())) {
+            for (UserObject user : userObjectList) {
+                if (user.getName() != null && user.getName().contains(userSearch.getName())) {
+                    userObjList.add(user);
+                }
+            }
+        } else {
+            userObjList = userObjectList;
+        }
         List<UserObject> finalUserList = new ArrayList<>();
-//        if (!StringUtils.isEmpty(userSearch.getName())) {
-//            userObjectList.forEach(user -> {
-//                if (user.getName() != null && user.getName().contains(userSearch.getName())) {
-//                    finalUserList.add(user);
-//                }
-//            });
-//        } else {
-//            finalUserList = userObjectList;
-//        }
-//        page.setTotal((long) userObjList.size());
-//        int toIndex = page.getPage() * page.getCount() < userObjList.size() ? page.getPage() * page.getCount() : userObjList.size();
-//        return Result.success().setData(userObjList.subList(page.getOffset(), toIndex)).setMeta(page);
-        return Result.success();
+        userObjList.forEach(user -> {
+            if (!StringUtils.isEmpty(user.getCompanyId()) && !StringUtils.isEmpty(sessionUser.getCompanyId()) && user.getCompanyId() == sessionUser.getCompanyId()) {
+                finalUserList.add(user);
+            }
+        });
+        page.setTotal((long) finalUserList.size());
+        int toIndex = page.getPage() * page.getCount() < finalUserList.size() ? page.getPage() * page.getCount() : finalUserList.size();
+        return Result.success().setData(finalUserList.subList(page.getOffset(), toIndex)).setMeta(page);
     }
 
     /**
