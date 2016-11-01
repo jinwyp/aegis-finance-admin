@@ -8,10 +8,7 @@ import com.yimei.finance.representation.admin.group.EnumAdminGroupError;
 import com.yimei.finance.representation.admin.group.EnumGroupType;
 import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
 import com.yimei.finance.representation.admin.group.GroupObject;
-import com.yimei.finance.representation.admin.user.AdminUserSearch;
-import com.yimei.finance.representation.admin.user.EnumAdminUserError;
-import com.yimei.finance.representation.admin.user.UserObject;
-import com.yimei.finance.representation.admin.user.UserPasswordObject;
+import com.yimei.finance.representation.admin.user.*;
 import com.yimei.finance.representation.common.databook.EnumDataBookType;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
@@ -28,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -247,6 +245,24 @@ public class AdminUserServiceImpl {
                     return Result.success().setData(userObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
                 }
             }
+        }
+    }
+
+    /**
+     * 用户登陆
+     */
+    public Result loginMethod(UserLoginObject userLoginObject) {
+        User user = identityService.createUserQuery().userFirstName(userLoginObject.getUsername()).singleResult();
+        if (user != null) {
+            UserObject userObject = changeUserObject(user);
+            if (identityService.checkPassword(user.getId(), securePassword(userLoginObject.getPassword()))) {
+                loginRecordRepository.save(new UserLoginRecord(userObject.getId(), userObject.getUsername(), new Date()));
+                return Result.success().setData(userObject);
+            } else {
+                return Result.error(401, EnumAdminUserError.用户名或者密码错误.toString());
+            }
+        } else {
+            return Result.error(401, EnumAdminUserError.该用户不存在或者已经被禁用.toString());
         }
     }
 

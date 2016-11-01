@@ -1,16 +1,12 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.representation.admin.group.EnumAdminGroupError;
 import com.yimei.finance.representation.admin.group.GroupObject;
 import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
-import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import io.swagger.annotations.*;
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.identity.Group;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -20,13 +16,9 @@ import org.springframework.web.bind.annotation.*;
 @RestController("adminGroupController")
 public class GroupController {
     @Autowired
-    private IdentityService identityService;
-    @Autowired
     private AdminSession adminSession;
     @Autowired
     private AdminGroupServiceImpl groupService;
-    @Autowired
-    private AdminUserServiceImpl userService;
 
     @ApiOperation(value = "查询所有的用户组", notes = "查询所有用户组列表", response = GroupObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
