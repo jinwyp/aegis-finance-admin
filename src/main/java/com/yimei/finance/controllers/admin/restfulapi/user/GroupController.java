@@ -18,6 +18,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Api(tags = {"admin-api-group"})
@@ -63,11 +64,15 @@ public class GroupController {
     public Result getUsersByGroupIdMethod(@PathVariable(value = "groupId") String groupId, Page page) {
         if (identityService.createGroupQuery().groupId(groupId).singleResult() == null)
             return Result.error(EnumAdminGroupError.此组不存在.toString());
-        List<User> userList = identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list();
-        page.setTotal(Long.valueOf(userList.size()));
-//        int toIndex = page.getPage() * page.getCount() < userList.size() ? page.getPage() * page.getCount() : userList.size();
-        List<UserObject> userObjectList = userService.changeUserObject(userList);
-        return Result.success().setData(userObjectList).setMeta(page);
+        List<UserObject> userList = userService.changeUserObject(identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list());
+        List<UserObject> newUserList = new ArrayList<>();
+        userList.forEach(user -> {
+            if (user.getCompanyId() != null && adminSession.getUser().getCompanyId() != null && user.getCompanyId() == adminSession.getUser().getCompanyId()) {
+                newUserList.add(user);
+            }
+        });
+        page.setTotal(Long.valueOf(newUserList.size()));
+        return Result.success().setData(newUserList).setMeta(page);
     }
 
     @ApiOperation(value = "创建用户组", notes = "根据Group对象创建用户组", response = GroupObject.class)
