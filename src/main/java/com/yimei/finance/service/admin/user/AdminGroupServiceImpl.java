@@ -27,7 +27,9 @@ public class AdminGroupServiceImpl {
     /**
      * 添加组
      */
-    public Result addGroup(GroupObject groupObject) {
+    public Result addGroup(GroupObject groupObject, String sessionUserId) {
+        Result result = userService.checkSuperAdminRight(sessionUserId);
+        if (!result.isSuccess()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
         if (StringUtils.isEmpty(groupObject.getName())) return Result.error(EnumAdminGroupError.组名称不能为空.toString());
         if (identityService.createGroupQuery().groupName(groupObject.getName()).singleResult() != null)
             return Result.error(EnumAdminGroupError.已经存在名称相同的组.toString());
@@ -40,22 +42,13 @@ public class AdminGroupServiceImpl {
     }
 
     /**
-     * 封装 group, 从 Group 到 GroupObject
+     * 根据 id 查询 用户组
      */
-    public GroupObject changeGroupObject(Group group) {
-        GroupObject groupObject = new GroupObject();
-        DozerUtils.copy(group, groupObject);
-        groupObject.setMemberNums(identityService.createUserQuery().memberOfGroup(group.getId()).list().size());
-        return groupObject;
-    }
-
-    public List<GroupObject> changeGroupObject(List<Group> groupList) {
-        if (groupList == null || groupList.size() == 0) return null;
-        List<GroupObject> groupObjectList = new ArrayList<>();
-        for (Group group : groupList) {
-            groupObjectList.add(changeGroupObject(group));
-        }
-        return groupObjectList;
+    public Result findById(String groupId) {
+        Group group = identityService.createGroupQuery().groupId(groupId).singleResult();
+        if (group == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
+        GroupObject groupObject = changeGroupObject(group);
+        return Result.success().setData(groupObject);
     }
 
     /**
@@ -100,15 +93,15 @@ public class AdminGroupServiceImpl {
     }
 
     /**
-     * 讲一个用户从指定组移出
+     * 将一个用户从指定组移出
      */
     public Result deleteUserFromGroup(String userId, String groupId, UserObject sessionUser) {
-        Result result = userService.findById(userId, sessionUser);
+        User user = identityService.createUserQuery().userId(userId).singleResult();
+        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
+        Result result = userService.checkOperateUserAuthority(userService.changeUserObject(user), sessionUser);
         if (!result.isSuccess()) return result;
         Group group1 = identityService.createGroupQuery().groupId(groupId).singleResult();
         if (group1 == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
-        User user = identityService.createUserQuery().userId(userId).singleResult();
-        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
         for (Group group2 : groupList) {
             if (group2.getId().equals(groupId)) {
@@ -118,4 +111,60 @@ public class AdminGroupServiceImpl {
         }
         return Result.error(EnumAdminGroupError.该用户并不在此组中.toString());
     }
+
+    /**
+     * 将一个用户添加到指定组
+     */
+    public Result addUserToGroup(String userId, String groupId, UserObject sessionUser) {
+        User user = identityService.createUserQuery().userId(userId).singleResult();
+        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
+        Result result = userService.checkOperateUserAuthority(userService.changeUserObject(user), sessionUser);
+        if (!result.isSuccess()) return result;
+        Group group1 = identityService.createGroupQuery().groupId(groupId).singleResult();
+        if (group1 == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
+        List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
+        for (Group group2 : groupList) {
+            if (group2.getId().equals(groupId)) return Result.error(EnumAdminGroupError.该用户已经在此组中.toString());
+        }
+        identityService.createMembership(userId, groupId);
+        return Result.success().setData(userService.changeUserObject(user));
+    }
+
+    /**
+     * 获取根据 groupId 查找本公司的用户列表
+     */
+    public Result findCompanyUserListByGroupId(String groupId, UserObject sessionUser, Page page) {
+        if (identityService.createGroupQuery().groupId(groupId).singleResult() == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
+        List<UserObject> userList = userService.changeUserObject(identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list());
+        List<UserObject> newUserList = new ArrayList<>();
+        userList.forEach(user -> {
+            if (user.getCompanyId() != null && sessionUser.getCompanyId() != null && user.getCompanyId() == sessionUser.getCompanyId()) {
+                newUserList.add(user);
+            }
+        });
+        page.setTotal(Long.valueOf(newUserList.size()));
+        return Result.success().setData(newUserList).setMeta(page);
+    }
+
+    /**
+     * 封装 group, 从 Group 到 GroupObject
+     */
+    public GroupObject changeGroupObject(Group group) {
+        GroupObject groupObject = new GroupObject();
+        DozerUtils.copy(group, groupObject);
+        groupObject.setMemberNums(identityService.createUserQuery().memberOfGroup(group.getId()).list().size());
+        return groupObject;
+    }
+
+    public List<GroupObject> changeGroupObject(List<Group> groupList) {
+        if (groupList == null || groupList.size() == 0) return null;
+        List<GroupObject> groupObjectList = new ArrayList<>();
+        for (Group group : groupList) {
+            groupObjectList.add(changeGroupObject(group));
+        }
+        return groupObjectList;
+    }
+
+
+
 }

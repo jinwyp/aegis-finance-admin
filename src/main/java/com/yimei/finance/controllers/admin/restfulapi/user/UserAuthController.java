@@ -1,9 +1,7 @@
 package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.user.UserLoginRecord;
 import com.yimei.finance.repository.admin.user.AdminUserLoginRecordRepository;
-import com.yimei.finance.representation.admin.user.EnumAdminUserError;
 import com.yimei.finance.representation.admin.user.UserLoginObject;
 import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.common.result.Result;
@@ -11,7 +9,6 @@ import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.IdentityService;
-import org.activiti.engine.identity.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -19,7 +16,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
-import java.util.Date;
 
 @Api(tags = {"admin-api-user"}, description = "用户登陆验证接口")
 @RequestMapping("/api/financing/admin")
@@ -37,19 +33,10 @@ public class UserAuthController {
     @ApiOperation(value = "登陆接口", notes = "需要输入用户名和密码登陆", response = UserLoginObject.class)
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Result authLoginWithPassword(@Valid @RequestBody UserLoginObject userLoginObject) {
-        User user = identityService.createUserQuery().userFirstName(userLoginObject.getUsername()).singleResult();
-        if (user != null) {
-            UserObject userObject = adminService.changeUserObject(user);
-            if (identityService.checkPassword(user.getId(), adminService.securePassword(userLoginObject.getPassword()))) {
-                adminSession.login(userObject);
-                loginRecordRepository.save(new UserLoginRecord(userObject.getId(), userObject.getUsername(), new Date()));
-                return Result.success().setData(userObject);
-            } else {
-                return Result.error(401, EnumAdminUserError.用户名或者密码错误.toString());
-            }
-        } else {
-            return Result.error(401, EnumAdminUserError.该用户不存在或者已经被禁用.toString());
-        }
+        Result result = adminService.loginMethod(userLoginObject);
+        if (!result.isSuccess()) return result;
+        adminSession.login((UserObject) result.getData());
+        return result;
     }
 
     @ApiOperation(value = "退出登录接口", notes = "退出登陆")
