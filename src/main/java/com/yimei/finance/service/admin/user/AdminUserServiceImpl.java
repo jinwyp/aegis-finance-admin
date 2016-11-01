@@ -206,13 +206,10 @@ public class AdminUserServiceImpl {
      * 用户管理 - 搜索查询 列表
      */
     public Result getUserListBySelect(UserObject sessionUser, AdminUserSearch userSearch, Page page) {
+        List<User> userList = new ArrayList<>();
         if (userSearch == null) {
-            page.setTotal(identityService.createUserQuery().count());
-            return Result.success().setData(identityService.createUserQuery().listPage(page.getOffset(), page.getCount())).setMeta(page);
+            userList = identityService.createUserQuery().orderByUserId().desc().list();
         } else {
-            List<User> userList = new ArrayList<>();
-            List<UserObject> userObjectList = new ArrayList<>();
-            List<UserObject> userObjList = new ArrayList<>();
             if (!StringUtils.isEmpty(userSearch.getUsername()) && !StringUtils.isEmpty(userSearch.getGroupId())) {
                 userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).memberOfGroup(userSearch.getGroupId()).orderByUserId().list();
             } else if (!StringUtils.isEmpty(userSearch.getUsername())) {
@@ -222,30 +219,22 @@ public class AdminUserServiceImpl {
             } else {
                 userList = identityService.createUserQuery().list();
             }
-            userObjectList = changeUserObject(userList, sessionUser);
-            if (!StringUtils.isEmpty(userSearch.getName())) {
-                for (UserObject user : userObjectList) {
-                    if (user.getName() != null && user.getName().contains(userSearch.getName())) {
-                        userObjList.add(user);
-                    }
-                }
-                if (userObjList == null) {
-                    return Result.success();
-                } else {
-                    page.setTotal((long) userObjList.size());
-                    int toIndex = page.getPage() * page.getCount() < userObjList.size() ? page.getPage() * page.getCount() : userObjList.size();
-                    return Result.success().setData(userObjList.subList(page.getOffset(), toIndex)).setMeta(page);
-                }
-            } else {
-                if (userObjectList == null) {
-                    return Result.success();
-                } else {
-                    page.setTotal(Long.valueOf(userObjectList.size()));
-                    int toIndex = page.getPage() * page.getCount() < userObjectList.size() ? page.getPage() * page.getCount() : userObjectList.size();
-                    return Result.success().setData(userObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
-                }
-            }
         }
+        List<UserObject> userObjectList = changeUserObject(userList, sessionUser);
+        List<UserObject> finalUserList = new ArrayList<>();
+//        if (!StringUtils.isEmpty(userSearch.getName())) {
+//            userObjectList.forEach(user -> {
+//                if (user.getName() != null && user.getName().contains(userSearch.getName())) {
+//                    finalUserList.add(user);
+//                }
+//            });
+//        } else {
+//            finalUserList = userObjectList;
+//        }
+//        page.setTotal((long) userObjList.size());
+//        int toIndex = page.getPage() * page.getCount() < userObjList.size() ? page.getPage() * page.getCount() : userObjList.size();
+//        return Result.success().setData(userObjList.subList(page.getOffset(), toIndex)).setMeta(page);
+        return Result.success();
     }
 
     /**

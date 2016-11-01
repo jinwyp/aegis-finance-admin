@@ -14,6 +14,7 @@ import org.springframework.util.StringUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.List;
 
 
 @SpringBootApplication
@@ -59,6 +60,13 @@ public class AegisFinanceApplication {
 					identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
 					identityService.createMembership(user.getId(), EnumSpecialGroup.SuperAdminGroup.id);
 				}
+				List<User> userList = identityService.createUserQuery().list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", "0");
+						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
+					}
+				});
 			}
         };
     }
