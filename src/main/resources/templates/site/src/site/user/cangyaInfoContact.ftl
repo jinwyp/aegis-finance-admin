@@ -62,7 +62,7 @@
                                 |
                                 <a href="">预览</a>
                                 |
-                                <a href="javascript:">编辑</a>
+                                <a href="javascript:" class="editSell">编辑</a>
                             </li>
                         </ul>
                         <h3>下游采购合同:</h3>
@@ -74,7 +74,7 @@
                                 |
                                 <a href="">预览</a>
                                 |
-                                <a href="javascript:">编辑</a>
+                                <a href="javascript:" class="editBuy">编辑</a>
                             </li>
                         </ul>
                         <h3>附件:</h3>
@@ -83,19 +83,11 @@
                                 <span><em></em>《附件1》</span>
                                 <b class="w70"></b>
                                 <a href=""><em></em>下载</a>
-                                |
-                                <a href="">预览</a>
-                                |
-                                <a href="javascript:">编辑</a>
                             </li>
                             <li>
                                 <span><em></em>《附件2》</span>
                                 <b class="w70"></b>
                                 <a href=""><em></em>下载</a>
-                                |
-                                <a href="">预览</a>
-                                |
-                                <a href="javascript:">编辑</a>
                             </li>
                         </ul>
                     </div>
@@ -147,12 +139,131 @@
                         </div>
                     </div>
 
-
-
                     <a href="" class="btn save">保存</a>
                     <a href="/finance/user/cangya/11" class="btn back">返回</a>
                     <p class="attention"><span>* </span>合同保存后，将<span>自动发送给资金方</span>，供其查阅。</p>
                 </div>
+
+                <!--编辑卖方合同弹框-->
+                <div class="container modalPublic editContact">
+                    <div class="row clearfix">
+                        <div class="editSellContact modal fade" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button"  class="close close_modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                        <h4 class="modal-title">编辑卖方合同内容(全部必填)</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <div class="form">
+                                                <form action="">
+                                                    <p class="note">＊您将编辑的所有内容，将填写入正式合同，具有法律效应</p>
+                                                    <div>
+                                                        <label>卖方公司名称:</label>
+                                                        <input type="text" placeholder="请输入卖方公司名称">
+                                                    </div>
+                                                    <div>
+                                                        <label>卖方联系人:</label>
+                                                        <input type="text" placeholder="联系人姓名">
+                                                    </div>
+                                                    <div>
+                                                        <label>联系手机号:</label>
+                                                        <input type="text" placeholder="联系手机号">
+                                                    </div>
+                                                    <div>
+                                                        <label>卖方公司地址:</label>
+                                                        <input type="text" placeholder="请输入卖方公司地址">
+                                                    </div>
+                                                    <div>
+                                                        <label>法定代表人:</label>
+                                                        <input type="text" placeholder="法定代表人姓名">
+                                                    </div>
+                                                    <div>
+                                                        <label>开户行:</label>
+                                                        <input type="text" placeholder="请输入公司开户行">
+                                                    </div>
+                                                    <div>
+                                                        <label>账号:</label>
+                                                        <input type="text" placeholder="开户行账号">
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+                                            <div class="buttons">
+                                                <input type="button" data-dismiss="modal" class="btn cancel" value="关闭">
+                                                <input type="button" class="btn confirm" value="保存">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--编辑卖方合同弹框-->
+
+                <!--编辑买方合同弹框-->
+                <div class="container modalPublic editContact">
+                    <div class="row clearfix">
+                        <div class="editBuyContact modal fade" data-backdrop="static" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <button type="button"  class="close close_modal" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                                        <h4 class="modal-title">编辑买方合同内容(全部必填)</h4>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div>
+                                            <div class="form">
+                                                <form action="">
+                                                    <p class="note">＊您将编辑的所有内容，将填写入正式合同，具有法律效应</p>
+                                                    <div>
+                                                        <label>买方公司名称:</label>
+                                                        <input type="text" placeholder="请输入买方公司名称">
+                                                    </div>
+                                                    <div>
+                                                        <label>卖方联系人:</label>
+                                                        <input type="text" placeholder="联系人姓名">
+                                                    </div>
+                                                    <div>
+                                                        <label>联系手机号:</label>
+                                                        <input type="text" placeholder="联系手机号">
+                                                    </div>
+                                                    <div>
+                                                        <label>买方公司地址:</label>
+                                                        <input type="text" placeholder="请输入买方公司地址">
+                                                    </div>
+                                                    <div>
+                                                        <label>法定代表人:</label>
+                                                        <input type="text" placeholder="法定代表人姓名">
+                                                    </div>
+                                                    <div>
+                                                        <label>开户行:</label>
+                                                        <input type="text" placeholder="请输入公司开户行">
+                                                    </div>
+                                                    <div>
+                                                        <label>账号:</label>
+                                                        <input type="text" placeholder="开户行账号">
+                                                    </div>
+
+                                                </form>
+                                            </div>
+
+                                            <div class="buttons">
+                                                <input type="button" data-dismiss="modal" class="btn cancel" value="关闭">
+                                                <input type="button" class="btn confirm" value="保存">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--编辑买房合同弹框-->
+
             </div>
         </div>
         <!--右侧主内容结束-->
