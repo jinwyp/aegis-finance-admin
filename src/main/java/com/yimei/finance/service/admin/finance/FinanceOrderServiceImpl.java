@@ -129,9 +129,10 @@ public class FinanceOrderServiceImpl {
     /**
      * 获取金融申请单详细
      */
-    public Result findById(Long id, EnumFinanceAttachment attachmentType) {
+    public Result findById(Long id, EnumFinanceAttachment attachmentType, Long sessionCompanyId) {
         FinanceOrderObject financeOrderObject = DozerUtils.copy(orderRepository.findOne(id), FinanceOrderObject.class);
         if (financeOrderObject == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
+        if (sessionCompanyId != 0 && sessionCompanyId != financeOrderObject.getBusinessCompanyId()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
         financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(id, attachmentType));
         return Result.success().setData(financeOrderObject);
     }
@@ -139,7 +140,8 @@ public class FinanceOrderServiceImpl {
     /**
      * 获取业务员填写信息详细
      */
-    public Result findSalesmanInfoByFinanceId(Long financeId, EnumFinanceAttachment attachmentType) {
+    public Result findSalesmanInfoByFinanceId(Long financeId, EnumFinanceAttachment attachmentType, Long sessionCompanyId) {
+        if (orderRepository.findBusinessCompanyIdById(financeId) != sessionCompanyId) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
         FinanceOrderSalesmanInfoObject salesmanInfoObject = DozerUtils.copy(salesmanRepository.findByFinanceId(financeId), FinanceOrderSalesmanInfoObject.class);
         if (salesmanInfoObject != null) {
             salesmanInfoObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(financeId, attachmentType));
@@ -150,7 +152,8 @@ public class FinanceOrderServiceImpl {
     /**
      * 获取尽调员填写信息详细
      */
-    public Result findInvestigatorInfoByFinanceId(Long financeId, EnumFinanceAttachment attachmentType, List<EnumFinanceAttachment> typeList2) {
+    public Result findInvestigatorInfoByFinanceId(Long financeId, EnumFinanceAttachment attachmentType, List<EnumFinanceAttachment> typeList2, Long sessionCompanyId) {
+        if (orderRepository.findBusinessCompanyIdById(financeId) != sessionCompanyId) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
         FinanceOrderInvestigatorInfoObject investigatorInfoObject = DozerUtils.copy(investigatorRepository.findByFinanceId(financeId), FinanceOrderInvestigatorInfoObject.class);
         if (investigatorInfoObject != null) {
             investigatorInfoObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(financeId, attachmentType));
@@ -162,7 +165,8 @@ public class FinanceOrderServiceImpl {
     /**
      * 获取监管员填写信息详细
      */
-    public Result findSupervisorInfoByFinanceId(Long financeId, EnumFinanceAttachment attachmentType, List<EnumFinanceAttachment> typeList2) {
+    public Result findSupervisorInfoByFinanceId(Long financeId, EnumFinanceAttachment attachmentType, List<EnumFinanceAttachment> typeList2, Long sessionCompanyId) {
+        if (orderRepository.findBusinessCompanyIdById(financeId) != sessionCompanyId) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
         FinanceOrderSupervisorInfoObject supervisorInfoObject = DozerUtils.copy(supervisorRepository.findByFinanceId(financeId), FinanceOrderSupervisorInfoObject.class);
         if (supervisorInfoObject != null) {
             supervisorInfoObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(financeId, attachmentType));
@@ -174,7 +178,8 @@ public class FinanceOrderServiceImpl {
     /**
      * 获取风控人员填写信息详细
      */
-    public Result findRiskManagerInfoByFinanceId(Long financeId, EnumFinanceAttachment attachmentType, List<EnumFinanceAttachment> typeList2) {
+    public Result findRiskManagerInfoByFinanceId(Long financeId, EnumFinanceAttachment attachmentType, List<EnumFinanceAttachment> typeList2, Long sessionCompanyId) {
+        if (orderRepository.findBusinessCompanyIdById(financeId) != sessionCompanyId) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
         FinanceOrderRiskManagerInfoObject riskManagerInfoObject = DozerUtils.copy(riskRepository.findByFinanceId(financeId), FinanceOrderRiskManagerInfoObject.class);
         if (riskManagerInfoObject != null) {
             riskManagerInfoObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(financeId, attachmentType));

@@ -1,5 +1,11 @@
 package com.yimei.finance;
 
+import com.yimei.finance.entity.admin.company.Company;
+import com.yimei.finance.entity.admin.company.CompanyRoleRelationShip;
+import com.yimei.finance.repository.admin.company.CompanyRepository;
+import com.yimei.finance.repository.admin.company.CompanyRoleRelationShipRepository;
+import com.yimei.finance.representation.admin.company.enums.EnumCompanyRole;
+import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
 import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.IdentityService;
@@ -14,6 +20,8 @@ import org.springframework.util.StringUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
+import java.util.Date;
+import java.util.List;
 
 
 @SpringBootApplication
@@ -31,7 +39,7 @@ public class AegisFinanceApplication {
 	}
 
     @Bean
-    public CommandLineRunner init(final IdentityService identityService) {
+    public CommandLineRunner init(final IdentityService identityService, CompanyRepository companyRepository, CompanyRoleRelationShipRepository companyRoleRelationShipRepository) {
         return new CommandLineRunner() {
             @Override
             public void run(String... strings) throws Exception {
@@ -59,6 +67,86 @@ public class AegisFinanceApplication {
 					identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
 					identityService.createMembership(user.getId(), EnumSpecialGroup.SuperAdminGroup.id);
 				}
+				Company company = new Company("易煤网", EnumCompanyStatus.Normal.toString(), EnumCompanyStatus.Normal.id, new Date(), "0", new Date(), "0");
+				companyRepository.save(company);
+				companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), EnumCompanyRole.Business_Organization.id, EnumCompanyRole.Business_Organization.toString(), new Date(), "0", new Date(), "0"));
+				List<User> userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", "0");
+						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
+					}
+				});
+				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageOnlineTraderGroup.id).list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", "0");
+						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
+					}
+				});
+				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.OnlineTraderGroup.id).list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", "0");
+						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
+					}
+				});
+				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageSalesmanGroup.id).list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(company.getId()));
+						identityService.setUserInfo(user.getId(), "companyName", company.getName());
+					}
+				});
+				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SalesmanGroup.id).list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(company.getId()));
+						identityService.setUserInfo(user.getId(), "companyName", company.getName());
+					}
+				});
+				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageInvestigatorGroup.id).list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(company.getId()));
+						identityService.setUserInfo(user.getId(), "companyName", company.getName());
+					}
+				});
+				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.InvestigatorGroup.id).list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(company.getId()));
+						identityService.setUserInfo(user.getId(), "companyName", company.getName());
+					}
+				});
+				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageSupervisorGroup.id).list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(company.getId()));
+						identityService.setUserInfo(user.getId(), "companyName", company.getName());
+					}
+				});
+				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SupervisorGroup.id).list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(company.getId()));
+						identityService.setUserInfo(user.getId(), "companyName", company.getName());
+					}
+				});
+				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageRiskGroup.id).list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(company.getId()));
+						identityService.setUserInfo(user.getId(), "companyName", company.getName());
+					}
+				});
+				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.RiskGroup.id).list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(company.getId()));
+						identityService.setUserInfo(user.getId(), "companyName", company.getName());
+					}
+				});
 			}
         };
     }

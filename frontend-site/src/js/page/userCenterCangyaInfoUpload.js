@@ -75,16 +75,12 @@ var cangyaInfo = (query)=> {
 
     });
     userLoader.on( 'uploadSuccess', function( file ) {
-
-    });
-
-    userLoader.on( 'uploadError', function( file ) {
-        $( '#'+file.id ).find('p.state').text('上传出错');
-    });
-
-    userLoader.on( 'uploadComplete', function( file ) {
+        "use strict";
         console.log(file)
     });
+
+    userLoader.on( 'uploadError', uploadError);
+    userLoader.on( 'uploadComplete', uploadComplete);
 
     //    下游游上传文件---------------------------------------------
     var ensureLoader = WebUploader.create({
@@ -120,13 +116,8 @@ var cangyaInfo = (query)=> {
 
     });
 
-    ensureLoader.on( 'uploadError', function( file ) {
-        $( '#'+file.id ).find('p.state').text('上传出错');
-    });
-
-    ensureLoader.on( 'uploadComplete', function( file ) {
-        console.log(file)
-    });
+    ensureLoader.on( 'uploadError', uploadError);
+    ensureLoader.on( 'uploadComplete', uploadComplete);
 
     //    附件上传文件---------------------------------------------
     var annexLoader = WebUploader.create({
@@ -162,13 +153,23 @@ var cangyaInfo = (query)=> {
 
     });
 
-    annexLoader.on( 'uploadError', function( file ) {
-        $( '#'+file.id ).find('p.state').text('上传出错');
-    });
+    annexLoader.on( 'uploadError', uploadError);
+    annexLoader.on( 'uploadComplete', uploadComplete);
 
-    annexLoader.on( 'uploadComplete', function( file ) {
-        console.log(file)
-    });
+
+    var uploadComplete = (file) => console.log(file);
+    var uploadError = (file) => {
+        "use strict";
+        console.error(file)
+    };
+
+//    编辑合同弹窗
+    $(".editSell").click(function(){
+        $(".editSellContact").modal();
+    })
+    $(".editBuy").click(function(){
+        $(".editBuyContact").modal();
+    })
 
 
 

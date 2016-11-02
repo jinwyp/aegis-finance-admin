@@ -3,7 +3,6 @@ package com.yimei.finance.service.admin.company;
 import com.yimei.finance.entity.admin.company.Company;
 import com.yimei.finance.entity.admin.company.CompanyRole;
 import com.yimei.finance.entity.admin.company.CompanyRoleRelationShip;
-import com.yimei.finance.repository.admin.company.CompanyRelationShipRepository;
 import com.yimei.finance.repository.admin.company.CompanyRepository;
 import com.yimei.finance.repository.admin.company.CompanyRoleRelationShipRepository;
 import com.yimei.finance.repository.admin.company.CompanyRoleRepository;
@@ -11,13 +10,17 @@ import com.yimei.finance.representation.admin.company.enums.EnumCompanyError;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyRole;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
 import com.yimei.finance.representation.admin.company.object.CompanyObject;
+import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -29,12 +32,12 @@ public class AdminCompanyServiceImpl {
     @Autowired
     private CompanyRoleRepository companyRoleRepository;
     @Autowired
-    private CompanyRelationShipRepository companyRelationShipRepository;
+    private AdminUserServiceImpl userService;
 
     /**
      * 创建公司
      */
-    public Result addCompany(CompanyObject companyObject) {
+    public Result addCompany(CompanyObject companyObject, UserObject sessionUser) {
         Company company = companyRepository.getCompanyByName(companyObject.getName());
         if (company != null) {
             return Result.error(EnumCompanyError.已存在同名的公司.toString());
@@ -47,7 +50,7 @@ public class AdminCompanyServiceImpl {
             companyRepository.save(company);
             CompanyRole companyRole = companyRoleRepository.findByNumber(companyObject.getType());
             if (companyRole == null) return Result.error(EnumCommonError.Admin_System_Error);
-            companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), companyRole.getNumber(), companyRole.getRole()));
+            companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), companyRole.getNumber(), companyRole.getRole(), new Date(), sessionUser.getId(), new Date(), sessionUser.getId()));
             return Result.success().setData(changeCompanyObject(companyRepository.findOne(company.getId())));
         }
     }
@@ -55,7 +58,7 @@ public class AdminCompanyServiceImpl {
     /**
      * 修改公司
      */
-    public Result editCompany(Long id, CompanyObject companyObject) {
+    public Result editCompany(Long id, CompanyObject companyObject, String sessionUserId) {
         Company company = companyRepository.findOne(id);
         if (company == null) {
             return Result.error(EnumCompanyError.此公司不存在.toString());
@@ -63,38 +66,43 @@ public class AdminCompanyServiceImpl {
             company.setName(companyObject.getName());
             company.setStatus(EnumCompanyStatus.Normal.toString());
             company.setStatusId(EnumCompanyStatus.Normal.id);
+            company.setLastUpdateManId(sessionUserId);
+            company.setLastUpdateTime(new Date());
             companyRepository.save(company);
             return Result.success();
         }
     }
 
+    /**
+     * 根据 id 查询公司
+     */
     public Result findById(Long id) {
         Company company = companyRepository.findOne(id);
         return Result.success().setData(changeCompanyObject(company));
     }
 
+    /**
+     * 封装公司对象
+     */
     public CompanyObject changeCompanyObject(Company company) {
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
         List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
         if (roleList != null && roleList.size() != 0) {
-            String roleName = null;
-            for (String role : roleList) {
-                if (roleList.indexOf(role) == 0) {
-                    roleName += EnumCompanyRole.valueOf(role).name;
-                } else {
-                    roleName += ", " + EnumCompanyRole.valueOf(role).name;
-                }
-            }
-            companyObject.setRoleName(roleName);
+            List<String> roleName = new ArrayList<>();
+            roleList.forEach(role -> {
+                roleName.add(EnumCompanyRole.valueOf(role).name);
+            });
+            companyObject.setRoleName(Arrays.toString(roleName.toArray()));
+            companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
         }
         return companyObject;
     }
 
     public List<CompanyObject> changeCompanyObject(List<Company> companyList) {
         List<CompanyObject> companyObjectList = new ArrayList<>();
-        for (Company company : companyList) {
+        companyList.forEach(company -> {
             companyObjectList.add(changeCompanyObject(company));
-        }
+        });
         return companyObjectList;
     }
 
@@ -105,11 +113,10 @@ public class AdminCompanyServiceImpl {
         List<Company> companyList = new ArrayList<>();
         List<Long> companyIds = companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type);
         if (companyIds != null && companyIds.size() != 0) {
-            for (Long id : companyIds) {
-                Company company = companyRepository.findOne(id);
-                if (company == null) return Result.error(EnumCommonError.Admin_System_Error);
-                companyList.add(company);
-            }
+            companyIds.forEach(id -> {
+                Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
+                if (company != null) companyList.add(company);
+            });
         }
         return Result.success().setData(changeCompanyObject(companyList));
     }

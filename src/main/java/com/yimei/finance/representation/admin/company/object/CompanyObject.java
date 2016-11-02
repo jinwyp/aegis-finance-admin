@@ -39,7 +39,9 @@ public class CompanyObject extends BaseObject implements Serializable {
 
     @Range(min = 1, max = 100, message = "类型应在 {min}-{max} 天之间", groups = {CreateCompany.class})
     @NotBlank(message = "类型不能为空", groups = {CreateCompany.class})
-    private int type;
+    private int type;                                 //类型: 1:业务线, 2:资金方等
     private String roleName;
+
+    private String adminName;                         //管理员账号名
 
 }

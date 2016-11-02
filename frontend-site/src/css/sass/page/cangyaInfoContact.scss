@@ -1,4 +1,5 @@
 @import '../helpers/_variables.scss';
+@import '../layout/leftmenu.scss';
 $assetPath : "/static/site";
 
 $borderColor:#e4e4e4;
@@ -89,7 +90,7 @@ $borderColor:#e4e4e4;
                   border-bottom: 1px dashed  gray;
                 }
                 .w70{
-                  width: 70%;
+                  width: 80%;
                 }
               }
             }
@@ -206,33 +207,52 @@ $borderColor:#e4e4e4;
           }
         }
 
-
-
-
       }
     }
     //我的申请右侧内容样式结束
   }
 }
 
-form{
-  div{
-    padding-top: 20px;
-    text-align: left;
-    label{
-      width: 170px;
-      text-align: left;
-      line-height: 35px;
-      vertical-align: bottom;
-      font-size: 14px;
+.editContact{
+  .modal-dialog{
+    width: 600px;
+    .modal-header{
+      .modal-title{
+        text-align: center;
+      }
     }
-    .money{
-      display: inline-block;
-      width: 180px;
-      height: 35px;
-      line-height: 35px;
-      text-align: left;
-      font-size: 14px;
+    .modal-body{
+      form{
+        text-align: left;
+        .note{
+          color: #fc683a;
+          font-size: 12px;
+        }
+        div{
+          padding-top: 20px;
+          width: 50%;
+          display: inline-block;
+          label{
+            width: 100px;
+            text-align: left;
+            line-height: 35px;
+            vertical-align: middle;
+            font-size: 14px;
+            text-align: right;
+            padding-right: 8px;
+            font-size: 12px;
+          }
+          input[type="text"]{
+            display: inline-block;
+            width: 180px;
+            height: 35px;
+            line-height: 35px;
+            text-align: left;
+            font-size: 14px;
+            font-size: 12px;
+          }
+        }
+      }
     }
   }
 }
