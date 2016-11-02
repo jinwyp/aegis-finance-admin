@@ -121,7 +121,7 @@ public class AdminUserServiceImpl {
         identityService.setUserInfo(newUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
         Result result3 = checkSuperAdminRight(sessionUser.getId());
-        if (result3.isSuccess() && user.getCompanyId() != null && user.getCompanyId() != 0) {
+        if (result3.isSuccess() && user.getCompanyId() != null && user.getCompanyId() != 0 && sessionUser.getCompanyId() != 0) {
             Company company = companyRepository.findOne(user.getCompanyId());
             if (company == null) return Result.error(EnumCommonError.Admin_System_Error);
             identityService.setUserInfo(newUser.getId(), "companyId", String.valueOf(company.getId()));
@@ -409,6 +409,8 @@ public class AdminUserServiceImpl {
         userObject.setPhone(identityService.getUserInfo(user.getId(), "phone"));
         userObject.setName(identityService.getUserInfo(user.getId(), "name"));
         userObject.setDepartment(identityService.getUserInfo(user.getId(), "department"));
+        userObject.setCompanyId(Long.valueOf(identityService.getUserInfo(user.getId(), "companyId")));
+        userObject.setCompanyName(identityService.getUserInfo(user.getId(), "companyName"));
         userObject.setGroupList(DozerUtils.copy(identityService.createGroupQuery().groupMember(user.getId()).list(), GroupObject.class));
         UserLoginRecord loginRecord = loginRecordRepository.findTopByUserIdOrderByCreateTimeDesc(user.getId());
         if (loginRecord != null) {
