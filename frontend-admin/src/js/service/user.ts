@@ -37,6 +37,7 @@ class User {
     operateAuthority : boolean;
     groupIds : string[];
     groupList : UserGroup[];
+    companyId : number;
 
     constructor() {
         this.id  = '';

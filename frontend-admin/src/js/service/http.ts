@@ -17,7 +17,8 @@ let API = {
     tasksMYG : '/api/financing/admin/myg',
     tasksMYD : '/api/financing/admin/myd',
     users : '/api/financing/admin/users',
-    groups : '/api/financing/admin/groups'
+    groups : '/api/financing/admin/groups',
+    fund : '/api/financing/admin/company'
 };
 
 

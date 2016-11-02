@@ -50,6 +50,10 @@ export class AddUserComponent {
 
     ngOnInit() {
 
+        this.sub = this.activatedRoute.params.subscribe(params => {
+            this.currentUser.companyId = params['companyId'] | -1;
+        });
+
         if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
             this.css.isAddStatus  = true;
             this.getGroupList();
