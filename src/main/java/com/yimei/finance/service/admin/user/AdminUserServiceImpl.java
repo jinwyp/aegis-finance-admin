@@ -121,13 +121,13 @@ public class AdminUserServiceImpl {
         identityService.setUserInfo(newUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
         if (user.getCompanyId() != null && user.getCompanyId() != 0) {
-            identityService.setUserInfo(newUser.getId(), "companyId", String.valueOf(sessionUser.getCompanyId()));
-            identityService.setUserInfo(newUser.getId(), "companyName", sessionUser.getCompanyName());
-        } else {
             Company company = companyRepository.findOne(user.getCompanyId());
             if (company == null) return Result.error(EnumCommonError.Admin_System_Error);
             identityService.setUserInfo(newUser.getId(), "companyId", String.valueOf(company.getId()));
             identityService.setUserInfo(newUser.getId(), "companyName", company.getName());
+        } else {
+            identityService.setUserInfo(newUser.getId(), "companyId", String.valueOf(sessionUser.getCompanyId()));
+            identityService.setUserInfo(newUser.getId(), "companyName", sessionUser.getCompanyName());
         }
         addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
         String subject = "开通账户通知邮件";
