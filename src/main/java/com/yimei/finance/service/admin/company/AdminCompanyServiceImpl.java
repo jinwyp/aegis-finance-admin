@@ -67,8 +67,10 @@ public class AdminCompanyServiceImpl {
         Result result = userService.checkSuperAdminRight(sessionUserId);
         if (!result.isSuccess()) return result;
         Company company = companyRepository.findOne(id);
-        if (company == null) {
-            return Result.error(EnumCompanyError.此公司不存在.toString());
+        if (company == null) return Result.error(EnumCompanyError.此公司不存在.toString());
+        Company company1 = companyRepository.getCompanyByName(companyObject.getName());
+        if (company1 != null && company1.getId() != id) {
+            return Result.error(EnumCompanyError.已存在同名的公司.toString());
         } else {
             company.setName(companyObject.getName());
             company.setStatus(EnumCompanyStatus.Normal.toString());
