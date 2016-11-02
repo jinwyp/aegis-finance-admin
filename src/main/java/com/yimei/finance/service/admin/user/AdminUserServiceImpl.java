@@ -378,7 +378,7 @@ public class AdminUserServiceImpl {
      * 检查是否有更改一个用户的权限
      */
     public Result checkOperateUserAuthority(UserObject userObject, UserObject sessionUser) {
-        Result result = checkOperateGroupsAuthority(userObject.getGroupIds(), sessionUser.getId());
+        Result result = checkOperateGroupsAuthority(getUserGroupIdList(userObject.getId()), sessionUser.getId());
         if (!result.isSuccess()) return result;
         boolean haveAuthority = getUserGroupIdList(userObject.getId()).contains(EnumSpecialGroup.SystemAdminGroup.id) && getUserGroupIdList(sessionUser.getId()).contains(EnumSpecialGroup.SuperAdminGroup.id);
         haveAuthority = haveAuthority || (userObject.getCompanyId() != sessionUser.getCompanyId());
