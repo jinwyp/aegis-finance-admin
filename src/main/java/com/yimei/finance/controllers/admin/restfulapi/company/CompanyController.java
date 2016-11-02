@@ -63,7 +63,7 @@ public class CompanyController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除公司", notes = "根据 id 删除公司", response = CompanyObject.class)
     public Result deleteCompanyMethod(@PathVariable("id") Long id) {
-        return companyService.deleteCompany(id);
+        return companyService.deleteCompany(id, adminSession.getUser().getId());
     }
 
     @RequestMapping(value = "/add/{businessCompanyId}/{fundCompanyId}", method = RequestMethod.GET)

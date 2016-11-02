@@ -138,6 +138,7 @@ public class FinanceFlowMethodServiceImpl {
         taskObject.setApplyTypeName(financeOrderObject.getApplyTypeName());
         taskObject.setFinancingAmount(financeOrderObject.getFinancingAmount());
         taskObject.setSourceId(financeOrderObject.getSourceId());
+        taskObject.setBusinessCompanyId(financeOrderObject.getBusinessCompanyId());
         if (!StringUtils.isEmpty(task.getAssignee())) {
             UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
             taskObject.setAssigneeName(user.getUsername());
@@ -146,12 +147,15 @@ public class FinanceFlowMethodServiceImpl {
         return Result.success().setData(taskObject);
     }
 
-    public Result changeTaskObject(List<Task> taskList) {
+    public Result changeTaskObject(List<Task> taskList, Long sessionCompanyId) {
         List<TaskObject> taskObjectList = new ArrayList<>();
         for (Task task : taskList) {
             Result result = changeTaskObject(task);
             if (!result.isSuccess()) return result;
-            taskObjectList.add((TaskObject) result.getData());
+            TaskObject taskObject = (TaskObject) result.getData();
+            if (taskObject.getBusinessCompanyId() == sessionCompanyId) {
+                taskObjectList.add((TaskObject) result.getData());
+            }
         }
         return Result.success().setData(taskObjectList);
     }

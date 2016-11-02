@@ -42,6 +42,8 @@ public class AdminCompanyServiceImpl {
      * 创建公司
      */
     public Result addCompany(CompanyObject companyObject, UserObject sessionUser) {
+        Result result = userService.checkSuperAdminRight(sessionUser.getId());
+        if (!result.isSuccess()) return result;
         Company company = companyRepository.getCompanyByName(companyObject.getName());
         if (company != null) {
             return Result.error(EnumCompanyError.已存在同名的公司.toString());
@@ -63,6 +65,8 @@ public class AdminCompanyServiceImpl {
      * 修改公司
      */
     public Result editCompany(Long id, CompanyObject companyObject, String sessionUserId) {
+        Result result = userService.checkSuperAdminRight(sessionUserId);
+        if (!result.isSuccess()) return result;
         Company company = companyRepository.findOne(id);
         if (company == null) {
             return Result.error(EnumCompanyError.此公司不存在.toString());
@@ -121,7 +125,9 @@ public class AdminCompanyServiceImpl {
     /**
      * 根据 id 删除 公司
      */
-    public Result deleteCompany(Long id) {
+    public Result deleteCompany(Long id, String sessionUserId) {
+        Result result = userService.checkSuperAdminRight(sessionUserId);
+        if (!result.isSuccess()) return result;
         Company company = companyRepository.findOne(id);
         if (company == null) return Result.error(EnumCompanyError.此公司不存在.toString());
         company.setStatusId(EnumCompanyStatus.Deleted.id);
