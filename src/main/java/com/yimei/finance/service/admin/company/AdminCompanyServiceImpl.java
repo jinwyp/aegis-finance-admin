@@ -52,6 +52,10 @@ public class AdminCompanyServiceImpl {
             company = DozerUtils.copy(companyObject, Company.class);
             company.setStatus(EnumCompanyStatus.Normal.toString());
             company.setStatusId(EnumCompanyStatus.Normal.id);
+            company.setCreateManId(sessionUser.getId());
+            company.setCreateTime(new Date());
+            company.setLastUpdateManId(sessionUser.getId());
+            company.setLastUpdateTime(new Date());
             companyRepository.save(company);
             CompanyRole companyRole = companyRoleRepository.findByNumber(companyObject.getType());
             if (companyRole == null) return Result.error(EnumCommonError.Admin_System_Error);
