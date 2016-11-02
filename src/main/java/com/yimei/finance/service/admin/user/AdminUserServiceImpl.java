@@ -120,7 +120,8 @@ public class AdminUserServiceImpl {
         identityService.setUserInfo(newUser.getId(), "name", user.getName());
         identityService.setUserInfo(newUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
-        if (user.getCompanyId() != null && user.getCompanyId() != 0) {
+        Result result3 = checkSuperAdminRight(sessionUser.getId());
+        if (result3.isSuccess() && user.getCompanyId() != null && user.getCompanyId() != 0) {
             Company company = companyRepository.findOne(user.getCompanyId());
             if (company == null) return Result.error(EnumCommonError.Admin_System_Error);
             identityService.setUserInfo(newUser.getId(), "companyId", String.valueOf(company.getId()));
