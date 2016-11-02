@@ -147,6 +147,9 @@ public class AdminCompanyServiceImpl {
         return companyList;
     }
 
+    /**
+     * 创建-业务线和资金方关系
+     */
     public Result createBusinessFundCompanyRelation(Long businessCompanyId, Long fundCompanyId, String sessionUserId) {
         Result result = userService.checkSuperAdminRight(sessionUserId);
         if (!result.isSuccess()) return result;
@@ -156,12 +159,14 @@ public class AdminCompanyServiceImpl {
         return Result.success();
     }
 
+    /**
+     * 解除-业务线和资金方关系
+     */
     public Result deleteBusinessFundCompanyRelation(Long businessCompanyId, Long fundCompanyId, String sessionUserId) {
         Result result = userService.checkSuperAdminRight(sessionUserId);
         if (!result.isSuccess()) return result;
         CompanyFBRelationShip companyFBRelationShip = companyFBRelationShipRepository.findByBusinessCompanyIdAndFundCompanyId(businessCompanyId, fundCompanyId);
-        if (companyFBRelationShip == null)
-            return Result.error(EnumCompanyError.该业务线和资金方关系已经解除.toString());
+        if (companyFBRelationShip == null) return Result.error(EnumCompanyError.该业务线和资金方关系已经解除.toString());
         companyFBRelationShipRepository.delete(companyFBRelationShip.getId());
         return Result.success();
     }
