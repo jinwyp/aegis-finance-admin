@@ -66,14 +66,14 @@ public class CompanyController {
         return companyService.deleteCompany(id);
     }
 
-    @RequestMapping(value = "/add/{businessCompanyId}/{fundCompanyId}")
+    @RequestMapping(value = "/add/{businessCompanyId}/{fundCompanyId}", method = RequestMethod.GET)
     @ApiOperation(value = "创建-业务线和资金方关系")
     public Result createBusinessFundCompanyRelationshipMethod(@PathVariable("businessCompanyId") Long businessCompanyId,
                                                               @PathVariable("fundCompanyId") Long fundCompanyId) {
         return companyService.createBusinessFundCompanyRelation(businessCompanyId, fundCompanyId, adminSession.getUser().getId());
     }
 
-    @RequestMapping(value = "/delete/{businessCompanyId}/{fundCompanyId}")
+    @RequestMapping(value = "/delete/{businessCompanyId}/{fundCompanyId}", method = RequestMethod.GET)
     @ApiOperation(value = "解除-业务线和资金方关系")
     public Result deleteBusinessFundCompanyRelationshipMethod(@PathVariable("businessCompanyId") Long businessCompanyId,
                                                               @PathVariable("fundCompanyId") Long fundCompanyId) {
