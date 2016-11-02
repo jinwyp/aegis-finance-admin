@@ -7,8 +7,9 @@ import avalon from 'avalon2';
 
 var cangyaInfo = (query)=> {
 
-    var url = window.location.href.match(/\/financing\/\d{1,8}/);
-    if (url){var financeInfoId = Number(url[0].substr(11))}
+    var urlPrefix = "http://192.168.1.180:2403/orders/";
+    var url = window.location.href.match(/\/cangya\/\d{1,8}/);
+    if (url){var id = Number(url[0].split('/')[2])}
 
     var vm = avalon.define({
         $id   : 'cangyaInfo',
@@ -22,7 +23,7 @@ var cangyaInfo = (query)=> {
     var getFinanceInfo = (id) => {
 
         $.ajax({
-            url      : '/api/financing/apply/' + id,
+            url      : urlPrefix + id,
             method   : 'GET',
             dataType : 'json',
             success  : (data)=> {
@@ -36,7 +37,7 @@ var cangyaInfo = (query)=> {
         });
     };
 
-    getFinanceInfo(financeInfoId);
+    getFinanceInfo(id);
 
     //数字转大写
     avalon.filters.switchTxt = function (n) {
