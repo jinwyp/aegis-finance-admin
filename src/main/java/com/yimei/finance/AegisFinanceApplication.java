@@ -84,6 +84,13 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
 					}
 				});
+				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SuperAdminGroup.id).list();
+				userList.forEach(user -> {
+					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
+						identityService.setUserInfo(user.getId(), "companyId", "0");
+						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
+					}
+				});
 				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageOnlineTraderGroup.id).list();
 				userList.forEach(user -> {
 					if (identityService.getUserInfo(user.getId(), "companyId") == null && identityService.getUserInfo(user.getId(), "companyName") == null) {
