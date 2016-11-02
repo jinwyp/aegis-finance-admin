@@ -108,14 +108,14 @@ public class AdminCompanyServiceImpl {
     public CompanyObject changeCompanyObject(Company company) {
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
         if (company != null) {
-            List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
-            if (roleList != null && roleList.size() != 0) {
-                String roleName = "";
-                for (String role : roleList) {
-                    roleName += EnumCompanyRole.valueOf(role) + " ";
-                }
-                companyObject.setRoleName(roleName);
-            }
+//            List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
+//            if (roleList != null && roleList.size() != 0) {
+//                String roleName = "";
+//                for (String role : roleList) {
+//                    roleName += EnumCompanyRole.valueOf(role) + " ";
+//                }
+//                companyObject.setRoleName(roleName);
+//            }
             companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
         }
         return companyObject;
