@@ -18,7 +18,7 @@ public interface CompanyRoleRelationShipRepository extends JpaRepository<Company
     /**
      * 根据 公司id 查询 role 列表
      */
-    @Query(" select c from CompanyRoleRelationShip c where c.companyId = ?1 order by c.is asc limit 1 ")
-    CompanyRoleRelationShip findRoleByCompanyId(Long companyId);
+    @Query(" select c.role from CompanyRoleRelationShip c where c.roleNumber = ?1 ")
+    List<String> findRoleByCompanyId(@Param("companyId") Long companyId);
 
 }

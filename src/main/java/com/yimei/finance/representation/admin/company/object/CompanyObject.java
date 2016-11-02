@@ -21,7 +21,6 @@ import java.io.Serializable;
 public class CompanyObject extends BaseObject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotBlank(message = "公司id不能为空", groups = {EditCompany.class})
     private Long id;
 
     @Size(min = 1, max = 100, message = "名称应该在 {min}-{max} 个字符之间", groups = {CreateCompany.class, EditCompany.class})
