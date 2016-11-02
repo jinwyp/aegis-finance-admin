@@ -3,6 +3,7 @@ package com.yimei.finance;
 import com.yimei.finance.entity.admin.company.Company;
 import com.yimei.finance.entity.admin.company.CompanyRoleRelationShip;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.repository.admin.company.CompanyFBRelationShipRepository;
 import com.yimei.finance.repository.admin.company.CompanyRepository;
 import com.yimei.finance.repository.admin.company.CompanyRoleRelationShipRepository;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
@@ -41,7 +42,7 @@ public class AegisFinanceApplication {
 	}
 
     @Bean
-    public CommandLineRunner init(final IdentityService identityService, CompanyRepository companyRepository, CompanyRoleRelationShipRepository companyRoleRelationShipRepository, FinanceOrderRepository financeOrderRepository) {
+    public CommandLineRunner init(final IdentityService identityService, CompanyRepository companyRepository, CompanyRoleRelationShipRepository companyRoleRelationShipRepository, FinanceOrderRepository financeOrderRepository, CompanyFBRelationShipRepository companyFBRelationShipRepository) {
         return new CommandLineRunner() {
             @Override
             public void run(String... strings) throws Exception {
@@ -159,6 +160,17 @@ public class AegisFinanceApplication {
 						financeOrder.setBusinessCompanyId(finalCompany.getId());
 						financeOrderRepository.save(financeOrder);
 					}
+				});
+				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
+				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
+				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
+				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
+				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
+				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
+				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
+				List<Long> companyIdList = companyFBRelationShipRepository.findFundCompanyIdByBusinessCompanyId(1L);
+				companyIdList.forEach(id -> {
+					System.out.println(" ------------------ " + id);
 				});
 			}
         };
