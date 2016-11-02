@@ -43,7 +43,7 @@ public class AdminCompanyServiceImpl {
     public Result addCompany(CompanyObject companyObject, UserObject sessionUser) {
         Result result = userService.checkSuperAdminRight(sessionUser.getId());
         if (!result.isSuccess()) return result;
-        Company company = companyRepository.getCompanyByName(companyObject.getName());
+        Company company = companyRepository.findByName(companyObject.getName());
         if (company != null) {
             return Result.error(EnumCompanyError.已存在同名的公司.toString());
         } else if (EnumCompanyRole.idList().indexOf(companyObject.getType()) == -1) {
@@ -68,7 +68,7 @@ public class AdminCompanyServiceImpl {
         if (!result.isSuccess()) return result;
         Company company = companyRepository.findOne(id);
         if (company == null) return Result.error(EnumCompanyError.此公司不存在.toString());
-        Company company1 = companyRepository.getCompanyByName(companyObject.getName());
+        Company company1 = companyRepository.findByName(companyObject.getName());
         if (company1 != null && company1.getId() != id) {
             return Result.error(EnumCompanyError.已存在同名的公司.toString());
         } else {
@@ -101,13 +101,10 @@ public class AdminCompanyServiceImpl {
      */
     public CompanyObject changeCompanyObject(Company company) {
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
-        List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
-        if (roleList != null && roleList.size() != 0) {
-            String roleName = "";
-            for (String role : roleList) {
-                roleName += EnumCompanyRole.valueOf(role) + " ";
-            }
-            companyObject.setRoleName(roleName);
+        CompanyRoleRelationShip companyRoleRelationShip = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
+        if (companyRoleRelationShip != null) {
+            companyObject.setType(companyRoleRelationShip.getRoleNumber());
+            companyObject.setRoleName(EnumCompanyRole.valueOf(companyRoleRelationShip.getRole()).name);
         }
         companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
         return companyObject;

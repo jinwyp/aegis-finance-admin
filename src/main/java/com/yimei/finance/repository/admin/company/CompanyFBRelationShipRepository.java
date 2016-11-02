@@ -6,7 +6,9 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import java.util.List;
 
 public interface CompanyFBRelationShipRepository extends JpaRepository<CompanyFBRelationShip, Long> {
-    List<Long> findFundCompanyIdByBusinessCompanyId(Long companyId);
+
+//    @Query(" select c.fundCompanyId from CompanyFBRelationShip c where c.BusinessCompanyId = ?1 ")
+    List<Long> findFundCompanyIdByBusinessCompanyId(Long BusinessCompanyId);
 
     CompanyFBRelationShip findByBusinessCompanyIdAndFundCompanyId(Long businessCompanyId, Long fundCompanyId);
 

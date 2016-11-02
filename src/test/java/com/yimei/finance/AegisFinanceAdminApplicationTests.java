@@ -1,6 +1,7 @@
 package com.yimei.finance;
 
 import com.yimei.finance.entity.tpl.UserTest;
+import com.yimei.finance.repository.admin.company.CompanyFBRelationShipRepository;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
 import com.yimei.finance.service.tpl.JpaRollbackDemo;
 import org.junit.Assert;
@@ -13,17 +14,17 @@ import org.springframework.test.context.junit4.SpringRunner;
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AegisFinanceAdminApplicationTests {
-
-	@Test
-	public void contextLoads() {
-	}
-
 	@Autowired
 	private JpaRepositoryDemo userRepository;
-
     @Autowired
     private JpaRollbackDemo jpaRollbackDemo;
+	@Autowired
+	private CompanyFBRelationShipRepository companyFBRelationShipRepository;
 
+	@Test
+	public void companyTest() {
+
+	}
 
     @Test
     public void testRollback() {
