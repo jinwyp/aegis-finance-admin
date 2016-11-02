@@ -160,11 +160,6 @@ public class AegisFinanceApplication {
 						financeOrderRepository.save(financeOrder);
 					}
 				});
-				System.out.println(companyRoleRelationShipRepository.findRoleByCompanyId(1L));
-				List<String> companyIdList = companyRoleRelationShipRepository.findRoleByCompanyId(1L);
-				companyIdList.forEach(id -> {
-					System.out.println(" ================= " + id);
-				});
 			}
         };
     }
