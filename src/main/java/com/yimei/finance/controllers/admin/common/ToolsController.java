@@ -1,15 +1,14 @@
 package com.yimei.finance.controllers.admin.common;
 
+import com.yimei.finance.entity.common.DataBook;
 import com.yimei.finance.repository.common.DataBookRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumMYRFinanceAllSteps;
-import com.yimei.finance.representation.common.file.AttachmentObject;
-import com.yimei.finance.entity.common.DataBook;
 import com.yimei.finance.representation.common.databook.EnumDataBookType;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.common.result.MapObject;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.common.file.LocalStorage;
-import com.yimei.finance.utils.DozerUtils;
 import com.yimei.finance.utils.StoreUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -64,7 +63,7 @@ public class ToolsController {
         Attachment attachment = taskService.getAttachment(attachmentId);
         if (attachment == null) return Result.error(EnumCommonError.此文件不存在.toString());
         taskService.deleteAttachment(attachmentId);
-        return Result.success().setData(DozerUtils.copy(taskService.getAttachment(attachmentId), AttachmentObject.class));
+        return Result.success().setData(attachmentId);
     }
 
 

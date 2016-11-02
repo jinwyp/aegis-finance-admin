@@ -90,6 +90,12 @@ public class AdminCompanyServiceImpl {
         return Result.success().setData(changeCompanyObject(company));
     }
 
+    public Result findByIdWithAuthority(Long id, String sessionUserId) {
+        Result result = userService.checkSuperAdminRight(sessionUserId);
+        if (!result.isSuccess()) return result;
+        return findById(id);
+    }
+
     /**
      * 封装公司对象
      */
@@ -118,7 +124,9 @@ public class AdminCompanyServiceImpl {
     /**
      * 根据角色获取公司列表
      */
-    public Result findCompanyListByRole(int type) {
+    public Result findCompanyListByRole(int type, String sessionUserId) {
+        Result result = userService.checkSuperAdminRight(sessionUserId);
+        if (!result.isSuccess()) return result;
         List<Company> companyList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
         return Result.success().setData(changeCompanyObject(companyList));
     }
