@@ -1,7 +1,9 @@
 package com.yimei.finance.service.admin.user;
 
+import com.yimei.finance.entity.admin.company.Company;
 import com.yimei.finance.entity.admin.user.UserLoginRecord;
 import com.yimei.finance.exception.BusinessException;
+import com.yimei.finance.repository.admin.company.CompanyRepository;
 import com.yimei.finance.repository.admin.user.AdminUserLoginRecordRepository;
 import com.yimei.finance.repository.common.DataBookRepository;
 import com.yimei.finance.representation.admin.group.EnumAdminGroupError;
@@ -10,6 +12,7 @@ import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
 import com.yimei.finance.representation.admin.group.GroupObject;
 import com.yimei.finance.representation.admin.user.*;
 import com.yimei.finance.representation.common.databook.EnumDataBookType;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.common.message.MessageServiceImpl;
@@ -40,6 +43,8 @@ public class AdminUserServiceImpl {
     private MessageServiceImpl messageService;
     @Autowired
     private DataBookRepository dataBookRepository;
+    @Autowired
+    private CompanyRepository companyRepository;
 
     /**
      * 根据id查询用户
@@ -115,8 +120,15 @@ public class AdminUserServiceImpl {
         identityService.setUserInfo(newUser.getId(), "name", user.getName());
         identityService.setUserInfo(newUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
-        identityService.setUserInfo(newUser.getId(), "companyId", String.valueOf(sessionUser.getCompanyId()));
-        identityService.setUserInfo(newUser.getId(), "companyName", sessionUser.getCompanyName());
+        if (user.getCompanyId() != null && user.getCompanyId() != 0) {
+            identityService.setUserInfo(newUser.getId(), "companyId", String.valueOf(sessionUser.getCompanyId()));
+            identityService.setUserInfo(newUser.getId(), "companyName", sessionUser.getCompanyName());
+        } else {
+            Company company = companyRepository.findOne(user.getCompanyId());
+            if (company == null) return Result.error(EnumCommonError.Admin_System_Error);
+            identityService.setUserInfo(newUser.getId(), "companyId", String.valueOf(company.getId()));
+            identityService.setUserInfo(newUser.getId(), "companyName", company.getName());
+        }
         addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
         String subject = "开通账户通知邮件";
         String content = "你好: 你的账号已开通, 用户名:" + user.getUsername() + ", 初始密码:" + password + ", 请修改密码. [易煤网金融系统]";
