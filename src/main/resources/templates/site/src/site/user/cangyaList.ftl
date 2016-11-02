@@ -152,7 +152,7 @@
                         </td>
                     </tr>
                     <tr ms-visible="@cangyaList.length===0">
-                        <td colspan="7">当前无融资申请记录！</td>
+                        <td colspan="11">当前无融资申请记录！</td>
                     </tr>
 
                 </table>

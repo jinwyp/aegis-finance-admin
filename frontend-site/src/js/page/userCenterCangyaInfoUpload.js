@@ -48,12 +48,12 @@ var financeInfo = (query)=> {
     var userLoader = WebUploader.create({
 
         // 自动上传。
-        // auto: true,
+        auto: true,
         // swf文件路径
         swf: '/static/site/js/jquery-plugin/webuploader.swf',
 
         // 文件接收服务端。
-        server: 'http://webuploader.duapp.com/server/fileupload.php',
+        server: '/api/financing/admin/files',
 
         // 选择文件的按钮。可选。
         // 内部根据当前运行是创建，可能是input元素，也可能是flash.
@@ -66,6 +66,16 @@ var financeInfo = (query)=> {
     // 当有文件被添加进队列的时候
     userLoader.on( 'fileQueued', function( file ) {
         console.log(file);
+        // vm.upFilesList.push({
+        //     name:file.name,
+        //     ext : file.ext,
+        //     size : file.size,
+        //     type : file.type
+        // });
+
+    });
+    userLoader.on( 'uploadSuccess', function( file ) {
+        console.log(file);
         vm.upFilesList.push({
             name:file.name,
             ext : file.ext,
@@ -73,10 +83,6 @@ var financeInfo = (query)=> {
             type : file.type
         });
 
-    });
-    userLoader.on( 'uploadSuccess', function( file ) {
-        "use strict";
-        console.log(file)
     });
 
     userLoader.on( 'uploadError', uploadError);
