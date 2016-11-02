@@ -6,10 +6,10 @@ import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 import avalon from 'avalon2';
 import '../common-libs/avalonFilter';
 
-var financeInfo = (query)=> {
+var financeInfo = ()=> {
 
     var url = window.location.href.match(/\/financing\/\d{1,8}/);
-    if (url){var financeInfoId = Number(url[0].substr(11))}
+    if (url){var financeInfoId = Number(url[0].split('/')[2])}
 
     var vm = avalon.define({
         $id   : 'financeInfo',
@@ -37,8 +37,6 @@ var financeInfo = (query)=> {
     };
 
     getFinanceInfo(financeInfoId);
-
-
 
 };
 

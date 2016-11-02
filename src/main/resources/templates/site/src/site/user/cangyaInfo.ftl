@@ -24,7 +24,6 @@
     <meta name="keywords" content="易煤网">
     <meta name="description" content="易煤网">
 
-    <link rel="stylesheet" href="${staticPath}/css/stylesheets/layout/leftmenu.css">
     <link rel="stylesheet" href="${staticPath}/css/stylesheets/page/cangyaInfo.css">
 </head>
 <body>
