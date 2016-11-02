@@ -87,7 +87,9 @@ public class AdminCompanyServiceImpl {
      */
     public Result findById(Long id) {
         Company company = companyRepository.findOne(id);
-        return Result.success().setData(changeCompanyObject(company));
+        CompanyObject companyObject = new CompanyObject();
+        if (companyObject != null) companyObject = changeCompanyObject(company);
+        return Result.success().setData(companyObject);
     }
 
     public Result findByIdWithAuthority(Long id, String sessionUserId) {
@@ -101,15 +103,17 @@ public class AdminCompanyServiceImpl {
      */
     public CompanyObject changeCompanyObject(Company company) {
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
-        List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
-        if (roleList != null && roleList.size() != 0) {
-            String roleName = "";
-            for (String role : roleList) {
-                roleName += EnumCompanyRole.valueOf(role) + " ";
+        if (company != null) {
+            List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
+            if (roleList != null && roleList.size() != 0) {
+                String roleName = "";
+                for (String role : roleList) {
+                    roleName += EnumCompanyRole.valueOf(role) + " ";
+                }
+                companyObject.setRoleName(roleName);
             }
-            companyObject.setRoleName(roleName);
+            companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
         }
-        companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
         return companyObject;
     }
 
