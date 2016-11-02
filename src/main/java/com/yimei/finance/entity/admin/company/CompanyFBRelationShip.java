@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Table(name = "t_finance_company_fb_relationship")
 @Entity
@@ -19,9 +20,18 @@ public class CompanyFBRelationShip extends BaseEntity implements Serializable {
     private Long id;
 
     @Column(name = "business_company_id")
-    private String businessCompanyId;                     //业务组织id
+    private Long businessCompanyId;                     //业务组织id
 
     @Column(name = "fund_company_id")
-    private String fundCompanyId;                        //资金方公司id
+    private Long fundCompanyId;                         //资金方公司id
+
+    public CompanyFBRelationShip(Long businessCompanyId, Long fundCompanyId, Date createTime, String createManId, Date lastUpdateTime, String lastUpdateManId) {
+        this.businessCompanyId = businessCompanyId;
+        this.fundCompanyId = fundCompanyId;
+        super.setCreateTime(createTime);
+        super.setCreateManId(createManId);
+        super.setLastUpdateTime(lastUpdateTime);
+        super.setLastUpdateManId(lastUpdateManId);
+    }
 
 }

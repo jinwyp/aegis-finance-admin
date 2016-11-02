@@ -40,8 +40,8 @@ public class GroupController {
             @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     })
     @RequestMapping(value = "/{groupId}/users", method = RequestMethod.GET)
-    public Result getCompanyUserListByGroupIdMethod(@PathVariable(value = "groupId") String groupId, Page page) {
-        return groupService.findCompanyUserListByGroupId(groupId, adminSession.getUser(), page);
+    public Result getCompanyUserListByGroupIdMethod(@PathVariable(value = "groupId") String groupId) {
+        return groupService.findCompanyUserListByGroupId(groupId, adminSession.getUser());
     }
 
     @ApiOperation(value = "创建用户组", notes = "根据Group对象创建用户组", response = GroupObject.class)

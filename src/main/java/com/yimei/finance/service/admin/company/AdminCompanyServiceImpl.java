@@ -1,8 +1,10 @@
 package com.yimei.finance.service.admin.company;
 
 import com.yimei.finance.entity.admin.company.Company;
+import com.yimei.finance.entity.admin.company.CompanyFBRelationShip;
 import com.yimei.finance.entity.admin.company.CompanyRole;
 import com.yimei.finance.entity.admin.company.CompanyRoleRelationShip;
+import com.yimei.finance.repository.admin.company.CompanyFBRelationShipRepository;
 import com.yimei.finance.repository.admin.company.CompanyRepository;
 import com.yimei.finance.repository.admin.company.CompanyRoleRelationShipRepository;
 import com.yimei.finance.repository.admin.company.CompanyRoleRepository;
@@ -29,6 +31,8 @@ public class AdminCompanyServiceImpl {
     private CompanyRepository companyRepository;
     @Autowired
     private CompanyRoleRelationShipRepository companyRoleRelationShipRepository;
+    @Autowired
+    private CompanyFBRelationShipRepository companyFBRelationShipRepository;
     @Autowired
     private CompanyRoleRepository companyRoleRepository;
     @Autowired
@@ -110,14 +114,7 @@ public class AdminCompanyServiceImpl {
      * 根据角色获取公司列表
      */
     public Result findCompanyListByRole(int type) {
-        List<Company> companyList = new ArrayList<>();
-        List<Long> companyIds = companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type);
-        if (companyIds != null && companyIds.size() != 0) {
-            companyIds.forEach(id -> {
-                Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
-                if (company != null) companyList.add(company);
-            });
-        }
+        List<Company> companyList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
         return Result.success().setData(changeCompanyObject(companyList));
     }
 
@@ -132,5 +129,40 @@ public class AdminCompanyServiceImpl {
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
         companyRepository.save(company);
         return Result.success().setData(companyObject);
+    }
+
+    public Result findFundCompanyListByCompanyId(Long  companyId) {
+        List<Company> companyList = getNormalCompanyListByIdList(companyFBRelationShipRepository.findFundCompanyIdByBusinessCompanyId(companyId));
+        return Result.success().setData(changeCompanyObject(companyList));
+    }
+
+    public List<Company> getNormalCompanyListByIdList(List<Long> companyIdList) {
+        List<Company> companyList = new ArrayList<>();
+        if (companyIdList != null && companyIdList.size() != 0) {
+            companyIdList.forEach(id -> {
+                Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
+                if (company != null) companyList.add(company);
+            });
+        }
+        return companyList;
+    }
+
+    public Result createBusinessFundCompanyRelation(Long businessCompanyId, Long fundCompanyId, String sessionUserId) {
+        Result result = userService.checkSuperAdminRight(sessionUserId);
+        if (!result.isSuccess()) return result;
+        if (companyFBRelationShipRepository.findByBusinessCompanyIdAndFundCompanyId(businessCompanyId, fundCompanyId) != null)
+            return Result.error(EnumCompanyError.该业务线和资金方已经建立关系.toString());
+        companyFBRelationShipRepository.save(new CompanyFBRelationShip(businessCompanyId, fundCompanyId, new Date(), sessionUserId, new Date(), sessionUserId));
+        return Result.success();
+    }
+
+    public Result deleteBusinessFundCompanyRelation(Long businessCompanyId, Long fundCompanyId, String sessionUserId) {
+        Result result = userService.checkSuperAdminRight(sessionUserId);
+        if (!result.isSuccess()) return result;
+        CompanyFBRelationShip companyFBRelationShip = companyFBRelationShipRepository.findByBusinessCompanyIdAndFundCompanyId(businessCompanyId, fundCompanyId);
+        if (companyFBRelationShip == null)
+            return Result.error(EnumCompanyError.该业务线和资金方关系已经解除.toString());
+        companyFBRelationShipRepository.delete(companyFBRelationShip.getId());
+        return Result.success();
     }
 }
