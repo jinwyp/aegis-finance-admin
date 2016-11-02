@@ -381,7 +381,7 @@ public class AdminUserServiceImpl {
         Result result = checkOperateGroupsAuthority(getUserGroupIdList(userObject.getId()), sessionUser.getId());
         if (!result.isSuccess()) return result;
         boolean haveAuthority = getUserGroupIdList(userObject.getId()).contains(EnumSpecialGroup.SystemAdminGroup.id) && getUserGroupIdList(sessionUser.getId()).contains(EnumSpecialGroup.SuperAdminGroup.id);
-        haveAuthority = haveAuthority || (userObject.getCompanyId() != sessionUser.getCompanyId());
+        haveAuthority = haveAuthority || (userObject.getCompanyId() == sessionUser.getCompanyId());
         if (!haveAuthority) return Result.error(EnumAdminUserError.你没有操作此用户的权限.toString());
         return Result.success();
     }

@@ -11,4 +11,6 @@ public interface CompanyRepository extends JpaRepository<Company, Long> {
 
 
     Company findByIdAndStatusId(@Param("id") Long id, @Param("statusId") int statusId);
+
+    Company findByName(@Param("name")String name);
 }

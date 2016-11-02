@@ -133,7 +133,7 @@ public class AdminGroupServiceImpl {
     /**
      * 获取根据 groupId 查找本公司的用户列表
      */
-    public Result findCompanyUserListByGroupId(String groupId, UserObject sessionUser, Page page) {
+    public Result findCompanyUserListByGroupId(String groupId, UserObject sessionUser) {
         if (identityService.createGroupQuery().groupId(groupId).singleResult() == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
         List<UserObject> userList = userService.changeUserObject(identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list());
         List<UserObject> newUserList = new ArrayList<>();
@@ -142,8 +142,7 @@ public class AdminGroupServiceImpl {
                 newUserList.add(user);
             }
         });
-        page.setTotal(Long.valueOf(newUserList.size()));
-        return Result.success().setData(newUserList).setMeta(page);
+        return Result.success().setData(newUserList);
     }
 
     /**

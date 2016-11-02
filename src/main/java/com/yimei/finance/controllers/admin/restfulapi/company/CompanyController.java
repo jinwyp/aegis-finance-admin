@@ -36,9 +36,15 @@ public class CompanyController {
     }
 
     @RequestMapping(value = "/fund", method = RequestMethod.GET)
-    @ApiOperation(value = "获取资金方公司列表", response = CompanyObject.class, responseContainer = "List")
+    @ApiOperation(value = "获取所有资金方公司列表", response = CompanyObject.class, responseContainer = "List")
     public Result findFundProviderListMethod() {
         return companyService.findCompanyListByRole(EnumCompanyRole.Fund_Provider.id);
+    }
+
+    @RequestMapping(value = "/fund/self", method = RequestMethod.GET)
+    @ApiOperation(value = "获取本公司资金方公司列表", response = CompanyObject.class, responseContainer = "List")
+    public Result findSelfFundProviderListMethod() {
+        return companyService.findFundCompanyListByCompanyId(adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -57,7 +63,21 @@ public class CompanyController {
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除公司", notes = "根据 id 删除公司", response = CompanyObject.class)
     public Result deleteCompanyMethod(@PathVariable("id") Long id) {
-        return companyService.deleteCompany(id);
+        return companyService.deleteCompany(id, adminSession.getUser().getId());
+    }
+
+    @RequestMapping(value = "/add/{businessCompanyId}/{fundCompanyId}", method = RequestMethod.GET)
+    @ApiOperation(value = "创建-业务线和资金方关系")
+    public Result createBusinessFundCompanyRelationshipMethod(@PathVariable("businessCompanyId") Long businessCompanyId,
+                                                              @PathVariable("fundCompanyId") Long fundCompanyId) {
+        return companyService.createBusinessFundCompanyRelation(businessCompanyId, fundCompanyId, adminSession.getUser().getId());
+    }
+
+    @RequestMapping(value = "/delete/{businessCompanyId}/{fundCompanyId}", method = RequestMethod.GET)
+    @ApiOperation(value = "解除-业务线和资金方关系")
+    public Result deleteBusinessFundCompanyRelationshipMethod(@PathVariable("businessCompanyId") Long businessCompanyId,
+                                                              @PathVariable("fundCompanyId") Long fundCompanyId) {
+        return companyService.deleteBusinessFundCompanyRelation(businessCompanyId, fundCompanyId, adminSession.getUser().getId());
     }
 
 }

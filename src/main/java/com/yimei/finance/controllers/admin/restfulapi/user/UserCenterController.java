@@ -66,12 +66,12 @@ public class UserCenterController {
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
         List<Task> taskList = taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
-        page.setTotal((long) taskList.size());
-        int toIndex = page.getPage() * page.getCount() < taskList.size() ? page.getPage() * page.getCount() : taskList.size();
-        Result result = workFlowService.changeTaskObject(taskList.subList(page.getOffset(), toIndex));
+        Result result = workFlowService.changeTaskObject(taskList, adminSession.getUser().getCompanyId());
         if (!result.isSuccess()) return result;
         List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
-        return Result.success().setData(taskObjectList).setMeta(page);
+        page.setTotal((long) taskObjectList.size());
+        int toIndex = page.getPage() * page.getCount() < taskObjectList.size() ? page.getPage() * page.getCount() : taskObjectList.size();
+        return Result.success().setData(taskObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
     }
 
     @RequestMapping(value = "/unclaimed", method = RequestMethod.GET)
@@ -81,12 +81,12 @@ public class UserCenterController {
         List<String> groupIds = userService.getUserGroupIdList(adminSession.getUser().getId());
         if (groupIds != null && groupIds.size() != 0) {
             List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
-            page.setTotal(Long.valueOf(taskList.size()));
-            int toIndex = page.getPage() * page.getCount() < taskList.size() ? page.getPage() * page.getCount() : taskList.size();
-            Result result = workFlowService.changeTaskObject(taskList.subList(page.getOffset(), toIndex));
+            Result result = workFlowService.changeTaskObject(taskList, adminSession.getUser().getCompanyId());
             if (!result.isSuccess()) return result;
             List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
-            return Result.success().setData(taskObjectList).setMeta(page);
+            page.setTotal(Long.valueOf(taskObjectList.size()));
+            int toIndex = page.getPage() * page.getCount() < taskObjectList.size() ? page.getPage() * page.getCount() : taskObjectList.size();
+            return Result.success().setData(taskObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
         }
         return Result.success().setData(null).setMeta(page);
     }
@@ -117,6 +117,8 @@ public class UserCenterController {
                 return Result.error(EnumAdminFinanceError.此任务已经被其他人处理.toString());
             }
         }
+        TaskObject taskObject = (TaskObject) workFlowService.changeTaskObject(task).getData();
+        if (taskObject.getBusinessCompanyId() != adminSession.getUser().getCompanyId()) return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
         List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
         List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
         for (IdentityLink identityLink : identityLinkList) {
