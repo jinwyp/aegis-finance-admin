@@ -161,17 +161,6 @@ public class AegisFinanceApplication {
 						financeOrderRepository.save(financeOrder);
 					}
 				});
-				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
-				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
-				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
-				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
-				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
-				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
-				System.out.println(" -=-0---0--00-0-0-0-0-0-0-0-0-0-0-0-");
-				List<Long> companyIdList = companyFBRelationShipRepository.findFundCompanyIdByBusinessCompanyId(1L);
-				companyIdList.forEach(id -> {
-					System.out.println(" ------------------ " + id);
-				});
 			}
         };
     }
