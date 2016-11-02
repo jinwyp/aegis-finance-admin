@@ -21,7 +21,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -94,15 +93,15 @@ public class AdminCompanyServiceImpl {
      */
     public CompanyObject changeCompanyObject(Company company) {
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
-        List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
-        if (roleList != null && roleList.size() != 0) {
-            List<String> roleName = new ArrayList<>();
-            roleList.forEach(role -> {
-                roleName.add(EnumCompanyRole.valueOf(role).name);
-            });
-            companyObject.setRoleName(Arrays.toString(roleName.toArray()));
-            companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
-        }
+//        List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
+//        if (roleList != null && roleList.size() != 0) {
+//            List<String> roleName = new ArrayList<>();
+//            roleList.forEach(role -> {
+//                roleName.add(EnumCompanyRole.valueOf(role).name);
+//            });
+//            companyObject.setRoleName(Arrays.toString(roleName.toArray()));
+//        }
+        companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
         return companyObject;
     }
 
