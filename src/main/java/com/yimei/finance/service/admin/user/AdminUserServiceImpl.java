@@ -409,8 +409,14 @@ public class AdminUserServiceImpl {
         userObject.setPhone(identityService.getUserInfo(user.getId(), "phone"));
         userObject.setName(identityService.getUserInfo(user.getId(), "name"));
         userObject.setDepartment(identityService.getUserInfo(user.getId(), "department"));
-        userObject.setCompanyId(Long.valueOf(identityService.getUserInfo(user.getId(), "companyId")));
-        userObject.setCompanyName(identityService.getUserInfo(user.getId(), "companyName"));
+        String companyId = identityService.getUserInfo(user.getId(), "companyId");
+        if (!StringUtils.isEmpty(companyId)) {
+            userObject.setCompanyId(Long.valueOf(companyId));
+        }
+        String companyName = identityService.getUserInfo(user.getId(), "companyName");
+        if (!StringUtils.isEmpty(companyName)) {
+            userObject.setCompanyName(companyName);
+        }
         userObject.setGroupList(DozerUtils.copy(identityService.createGroupQuery().groupMember(user.getId()).list(), GroupObject.class));
         UserLoginRecord loginRecord = loginRecordRepository.findTopByUserIdOrderByCreateTimeDesc(user.getId());
         if (loginRecord != null) {

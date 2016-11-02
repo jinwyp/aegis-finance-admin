@@ -117,6 +117,7 @@ public class AdminCompanyServiceImpl {
 //                companyObject.setRoleName(roleName);
 //            }
             companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
+            System.out.println(companyObject.getAdminName());
         }
         return companyObject;
     }
