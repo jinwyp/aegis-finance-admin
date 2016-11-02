@@ -154,10 +154,10 @@ public class AdminCompanyServiceImpl {
     public List<Company> getNormalCompanyListByIdList(List<Long> companyIdList) {
         List<Company> companyList = new ArrayList<>();
         if (companyIdList != null && companyIdList.size() != 0) {
-            for (Long id : companyIdList) {
+            companyIdList.forEach(id -> {
                 Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
                 if (company != null) companyList.add(company);
-            }
+            });
         }
         return companyList;
     }
