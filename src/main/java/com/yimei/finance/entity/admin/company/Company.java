@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.Date;
 
 @Table(name = "t_finance_company")
 @Entity
@@ -24,5 +25,15 @@ public class Company extends BaseEntity implements Serializable {
 
     @Column(name = "status_id")
     private int statusId;                          //状态id
+
+    public Company (String name, String status, int statusId, Date createTime, String createManId, Date lastUpdateTime, String lastUpdateManId) {
+        this.name = name;
+        this.status = status;
+        this.statusId = statusId;
+        super.setCreateTime(createTime);
+        super.setCreateManId(createManId);
+        super.setLastUpdateTime(lastUpdateTime);
+        super.setLastUpdateManId(lastUpdateManId);
+    }
 
 }

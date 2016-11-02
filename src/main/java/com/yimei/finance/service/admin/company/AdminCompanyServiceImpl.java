@@ -10,6 +10,7 @@ import com.yimei.finance.representation.admin.company.enums.EnumCompanyError;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyRole;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
 import com.yimei.finance.representation.admin.company.object.CompanyObject;
+import com.yimei.finance.representation.admin.user.UserObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
@@ -19,6 +20,7 @@ import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Service
@@ -35,7 +37,7 @@ public class AdminCompanyServiceImpl {
     /**
      * 创建公司
      */
-    public Result addCompany(CompanyObject companyObject) {
+    public Result addCompany(CompanyObject companyObject, UserObject sessionUser) {
         Company company = companyRepository.getCompanyByName(companyObject.getName());
         if (company != null) {
             return Result.error(EnumCompanyError.已存在同名的公司.toString());
@@ -48,7 +50,7 @@ public class AdminCompanyServiceImpl {
             companyRepository.save(company);
             CompanyRole companyRole = companyRoleRepository.findByNumber(companyObject.getType());
             if (companyRole == null) return Result.error(EnumCommonError.Admin_System_Error);
-            companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), companyRole.getNumber(), companyRole.getRole()));
+            companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), companyRole.getNumber(), companyRole.getRole(), new Date(), sessionUser.getId(), new Date(), sessionUser.getId()));
             return Result.success().setData(changeCompanyObject(companyRepository.findOne(company.getId())));
         }
     }
@@ -56,7 +58,7 @@ public class AdminCompanyServiceImpl {
     /**
      * 修改公司
      */
-    public Result editCompany(Long id, CompanyObject companyObject) {
+    public Result editCompany(Long id, CompanyObject companyObject, String sessionUserId) {
         Company company = companyRepository.findOne(id);
         if (company == null) {
             return Result.error(EnumCompanyError.此公司不存在.toString());
@@ -64,6 +66,8 @@ public class AdminCompanyServiceImpl {
             company.setName(companyObject.getName());
             company.setStatus(EnumCompanyStatus.Normal.toString());
             company.setStatusId(EnumCompanyStatus.Normal.id);
+            company.setLastUpdateManId(sessionUserId);
+            company.setLastUpdateTime(new Date());
             companyRepository.save(company);
             return Result.success();
         }
