@@ -1,6 +1,5 @@
 package com.yimei.finance;
 
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
@@ -23,9 +22,12 @@ public class AegisFinanceAdminApplicationTests {
 	private FinanceOrderRepository financeOrderRepository;
 
 	@Test
-	public void financeOrderTest() {
-		FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserIdOrCompanyId(3L, 1L, 1L);
-		System.out.println(financeOrder.toString());
+	public void test001() {
+		Long a = 1L;
+		Long b = 1L;
+		System.out.println("a == b " + (a == b));
+		System.out.println("a == 0 " + (a == 1L));
+		System.out.println("a.longValue == b.longValue " + (a.longValue() == b.longValue()));
 	}
 
     @Test
