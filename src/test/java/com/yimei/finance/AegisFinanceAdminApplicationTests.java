@@ -2,9 +2,8 @@ package com.yimei.finance;
 
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.tpl.UserTest;
+import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
-import com.yimei.finance.representation.common.result.Page;
-import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.tpl.JpaRollbackDemo;
 import org.junit.Assert;
 import org.junit.Test;
@@ -12,8 +11,6 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
-
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -23,19 +20,12 @@ public class AegisFinanceAdminApplicationTests {
     @Autowired
     private JpaRollbackDemo jpaRollbackDemo;
 	@Autowired
-	private FinanceOrderServiceImpl financeOrderService;
+	private FinanceOrderRepository financeOrderRepository;
 
 	@Test
 	public void financeOrderTest() {
-		Page page = new Page();
-		List<FinanceOrder> orderList = (List<FinanceOrder>) financeOrderService.getFinanceOrderBySelect(1, 0L, null, page).getData();
-		orderList.forEach(order -> {
-			System.out.println(" ------------------------- " + order.toString());
-		});
-		List<FinanceOrder> orderList1 = (List<FinanceOrder>) financeOrderService.getFinanceOrderBySelect(1, null, null, page).getData();
-		orderList1.forEach(order -> {
-			System.out.println(" ------------------------- " + order.toString());
-		});
+		FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserIdOrCompanyId(3L, 1L, 1L);
+		System.out.println(financeOrder.toString());
 	}
 
     @Test

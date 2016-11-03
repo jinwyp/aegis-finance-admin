@@ -3,20 +3,16 @@ package com.yimei.finance.service.admin.finance;
 import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.*;
-import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
 import com.yimei.finance.representation.admin.finance.enums.FinanceSMSMessage;
 import com.yimei.finance.representation.admin.finance.object.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
-import com.yimei.finance.representation.common.result.Page;
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.common.result.Result;
-import com.yimei.finance.representation.site.finance.result.FinanceOrderResult;
-import com.yimei.finance.representation.site.finance.result.FinanceOrderSearch;
 import com.yimei.finance.service.common.message.MessageServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
-import com.yimei.finance.utils.Where;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
@@ -26,9 +22,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.persistence.TypedQuery;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -45,8 +38,6 @@ public class FinanceOrderServiceImpl {
     private FinanceOrderSupervisorRepository supervisorRepository;
     @Autowired
     private FinanceOrderRiskRepository riskRepository;
-    @PersistenceContext
-    private EntityManager entityManager;
     @Autowired
     private HistoryService historyService;
     @Autowired
@@ -55,51 +46,6 @@ public class FinanceOrderServiceImpl {
     private MessageServiceImpl messageService;
     @Autowired
     private FinanceOrderContractRepository contractRepository;
-
-    /**
-     * 前台查询金融单
-     */
-    public Result getFinanceOrderBySelect(int userId, Long companyId, FinanceOrderSearch order, Page page) {
-        String hql = " select o from FinanceOrder o where (o.userId=:userId or o.applyCompanyId=:companyId) ";
-        if (order != null) {
-            if (order.getStartDate() != null && order.getEndDate() != null) {
-                hql += " and o.createTime between :startDate and :endDate ";
-            }
-            if (order.getApproveStateId() != 0) {
-                hql += " and o.approveStateId=:approveStateId ";
-            }
-            if (!StringUtils.isEmpty(order.getSourceId())) {
-                hql += " and o.sourceId like :sourceId ";
-            }
-            if (!StringUtils.isEmpty(order.getApplyType())) {
-                hql += " and o.applyType=:applyType ";
-            }
-        }
-        hql += " order by o.id desc ";
-        TypedQuery<FinanceOrder> query = entityManager.createQuery(hql, FinanceOrder.class);
-        query.setParameter("userId", userId);
-        query.setParameter("companyId", companyId);
-        if (order != null) {
-            if (order.getStartDate() != null && order.getEndDate() != null) {
-                query.setParameter("startDate", java.sql.Date.valueOf(order.getStartDate()));
-                query.setParameter("endDate", java.sql.Date.valueOf(order.getEndDate().plusDays(1)));
-            }
-            if (order.getApproveStateId() != 0) {
-                query.setParameter("approveStateId", order.getApproveStateId());
-            }
-            if (!StringUtils.isEmpty(order.getSourceId())) {
-                query.setParameter("sourceId", Where.$like$(order.getSourceId()));
-            }
-            if (!StringUtils.isEmpty(order.getApplyType())) {
-                query.setParameter("applyType", order.getApplyType());
-            }
-        }
-        List<FinanceOrder> totalList = query.getResultList();
-        page.setTotal(Long.valueOf(totalList.size()));
-        int toIndex = page.getPage() * page.getCount() < totalList.size() ? page.getPage() * page.getCount() : totalList.size();
-        List<FinanceOrderResult> financeOrderList = DozerUtils.copy(totalList.subList(page.getOffset(), toIndex), FinanceOrderResult.class);
-        return Result.success().setData(financeOrderList).setMeta(page);
-    }
 
     public List<AttachmentObject> getAttachmentByFinanceIdTypeOnce(Long financeId, EnumFinanceAttachment attachmentType) {
         List<AttachmentObject> attachmentList = new ArrayList<>();

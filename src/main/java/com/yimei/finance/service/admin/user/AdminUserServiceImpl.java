@@ -246,7 +246,7 @@ public class AdminUserServiceImpl {
         }
         List<UserObject> finalUserList = new ArrayList<>();
         userObjList.forEach(user -> {
-            if (!StringUtils.isEmpty(user.getCompanyId()) && !StringUtils.isEmpty(sessionUser.getCompanyId()) && user.getCompanyId() == sessionUser.getCompanyId()) {
+            if (!StringUtils.isEmpty(user.getCompanyId()) && !StringUtils.isEmpty(sessionUser.getCompanyId()) && (user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue())) {
                 finalUserList.add(user);
             }
         });
