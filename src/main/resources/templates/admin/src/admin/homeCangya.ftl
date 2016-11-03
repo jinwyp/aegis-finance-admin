@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <title>供应链金融管理平台 - 管理首页- 审批</title>
+    <title>供应链金融管理平台 - 管理首页 - 仓押</title>
 
     <link rel="stylesheet" type="text/css" href="/static/admin/libs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/main.css"/>
@@ -42,7 +42,7 @@
 </#if>
 
 <script>
-    System.import('jsoutput/page/cangya.js').catch(function(err){ console.error(err); });
+    System.import('jsoutput/page/home.js').catch(function(err){ console.error(err); });
 </script>
 
 
