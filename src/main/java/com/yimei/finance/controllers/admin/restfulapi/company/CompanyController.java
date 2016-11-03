@@ -31,7 +31,7 @@ public class CompanyController {
 
     @RequestMapping(value = "/self", method = RequestMethod.GET)
     @ApiOperation(value = "查询自己所在的业务线(公司)", response = CompanyObject.class)
-    public Result findByIdMethod() {
+    public Result findSelfCompanyMethod() {
         return companyService.findById(adminSession.getUser().getCompanyId());
     }
 
