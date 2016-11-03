@@ -102,7 +102,7 @@ public class UserCenterController {
     @RequestMapping(value = "/list", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(FinanceOrderSearch orderSearch, Page page) {
         page.setCount(10);
-        return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), orderSearch, page);
+        return orderService.getFinanceOrderBySelect(userSession.getUser().getId(), Long.valueOf(userSession.getUser().getCompanyId()), orderSearch, page);
     }
 
     @ApiOperation(value = "根据 id 查看金融申请单", notes = "根据 金融申请单id 查看金融申请单", response = FinanceOrder.class)

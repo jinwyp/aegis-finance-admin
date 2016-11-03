@@ -33,6 +33,9 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     @Column(name = "apply_user_phone")
     private String applyUserPhone;                                   //申请人手机号
 
+    @Column(name = "apply_company_id")
+    private Long applyCompanyId;                                     //申请人公司id
+
     @Column(name = "apply_company_name")
     private String applyCompanyName;                                 //申请公司名称
 

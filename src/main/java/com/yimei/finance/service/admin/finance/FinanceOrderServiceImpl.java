@@ -57,10 +57,10 @@ public class FinanceOrderServiceImpl {
     private FinanceOrderContractRepository contractRepository;
 
     /**
-     * 查询金融单
+     * 前台查询金融单
      */
-    public Result getFinanceOrderBySelect(int userId, FinanceOrderSearch order, Page page) {
-        String hql = " select o from FinanceOrder o where o.userId=:userId ";
+    public Result getFinanceOrderBySelect(int userId, Long companyId, FinanceOrderSearch order, Page page) {
+        String hql = " select o from FinanceOrder o where (o.userId=:userId or o.applyCompanyId=:companyId) ";
         if (order != null) {
             if (order.getStartDate() != null && order.getEndDate() != null) {
                 hql += " and o.createTime between :startDate and :endDate ";
@@ -78,6 +78,7 @@ public class FinanceOrderServiceImpl {
         hql += " order by o.id desc ";
         TypedQuery<FinanceOrder> query = entityManager.createQuery(hql, FinanceOrder.class);
         query.setParameter("userId", userId);
+        query.setParameter("companyId", companyId);
         if (order != null) {
             if (order.getStartDate() != null && order.getEndDate() != null) {
                 query.setParameter("startDate", java.sql.Date.valueOf(order.getStartDate()));
