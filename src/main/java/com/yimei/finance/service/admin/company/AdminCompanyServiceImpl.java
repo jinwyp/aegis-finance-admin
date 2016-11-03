@@ -133,11 +133,28 @@ public class AdminCompanyServiceImpl {
     }
 
     /**
-     * 根据角色获取公司列表
+     * 超级管理员, 交易员获取业务线列表
      */
-    public Result findCompanyListByRole(int type, String sessionUserId) {
+    public Result adminFindBusinessCompanyList(Long sessionCompanyId) {
+        if (sessionCompanyId != 0) {
+            return Result.error(EnumCompanyError.你没有权限查看业务线列表.toString());
+        }
+        return findCompanyListByRole(EnumCompanyRole.Business_Organization.id);
+    }
+
+    /**
+     * 超级管理员 获取所有资金方公司列表
+     */
+    public Result adminFindFundCompanyList(String sessionUserId) {
         Result result = userService.checkSuperAdminRight(sessionUserId);
         if (!result.isSuccess()) return result;
+        return findCompanyListByRole(EnumCompanyRole.Fund_Provider.id);
+    }
+
+    /**
+     * 根据角色获取公司列表
+     */
+    public Result findCompanyListByRole(int type) {
         List<Company> companyList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
         return Result.success().setData(changeCompanyObject(companyList));
     }
