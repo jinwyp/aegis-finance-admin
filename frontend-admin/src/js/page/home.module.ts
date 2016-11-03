@@ -54,6 +54,7 @@ import { MaterialDetailComponent} from "../components/task/material-detail";
 import {AddFundCompanyComponent} from "../components/role/add-fund-company";
 import {FundCompanyListComponent} from "../components/role/fund-company-list";
 import {FundService} from "../service/fund";
+import {BusinessLiseListComponent} from "../components/role/business-line-list";
 
 
 
@@ -67,7 +68,8 @@ import {FundService} from "../service/fund";
         UserListComponent, AddUserComponent, UserInfoComponent,
         TaskListComponent, AssignPersonComponent, ProcessTabComponent,
         AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, AuditSupervisorComponent, AuditRiskManagerComponent,
-        CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent, MaterialDetailComponent, FundCompanyListComponent, AddFundCompanyComponent
+        CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent, MaterialDetailComponent, FundCompanyListComponent,
+        BusinessLiseListComponent, AddFundCompanyComponent
     ],
     providers: [ FileUploadService, homePageRouterProviders, TaskService, UserService, UserGroupService, FundService ],
     bootstrap: [ HomeComponent ]

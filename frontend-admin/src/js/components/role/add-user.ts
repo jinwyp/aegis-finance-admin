@@ -5,6 +5,7 @@
 
 import {Component} from '@angular/core';
 import {ActivatedRoute, Router}      from '@angular/router';
+import { Location } from '@angular/common';
 import {Subscription} from 'rxjs/Subscription';
 
 import {User, UserService, UserGroupService} from '../../service/user';
@@ -23,6 +24,7 @@ export class AddUserComponent {
     private sub:Subscription;
 
     constructor(
+        private location: Location,
         private router : Router,
         private activatedRoute: ActivatedRoute,
         private userService: UserService,
@@ -51,7 +53,9 @@ export class AddUserComponent {
     ngOnInit() {
 
         this.sub = this.activatedRoute.params.subscribe(params => {
-            this.currentUser.companyId = params['companyId'] | -1;
+            // console.log(params['companyId']);
+            this.currentUser.companyId = params['companyId'] || -1;
+            // console.log(this.currentUser.companyId);
         });
 
         if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
@@ -173,6 +177,10 @@ export class AddUserComponent {
         this.selectedItem     = {name : null};
         this.css.formActiveForRefresh = false;
         setTimeout(() => this.css.formActiveForRefresh = true, 0);
+    }
+
+    back(){
+        this.location.back();
     }
 
 
