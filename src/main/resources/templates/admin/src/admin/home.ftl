@@ -42,7 +42,7 @@
 </#if>
 
 <script>
-    System.import('jsoutput/page/cangya.js').catch(function(err){ console.error(err); });
+    System.import('jsoutput/page/home.js').catch(function(err){ console.error(err); });
 </script>
 
 
