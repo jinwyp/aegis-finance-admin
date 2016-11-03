@@ -37,7 +37,7 @@
 <#if env == 'dev' || env == 'staging' || env == 'prod' >
 <!-- 生产环境使用 bundle.js 文件 -->
 <script src="/static/admin/jsoutput/page/dependencies.bundle.js"></script>
-<script src="/static/admin/jsoutput/page/home.bundle.js"></script>
+<script src="/static/admin/jsoutput/page/cangya.bundle.js"></script>
 
 </#if>
 

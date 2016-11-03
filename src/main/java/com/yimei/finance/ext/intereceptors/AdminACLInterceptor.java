@@ -21,6 +21,10 @@ public class AdminACLInterceptor extends HandlerInterceptorAdapter {
         if(request.getRequestURI().startsWith("/api/financing/admin") && !session.isLogined()){
             throw new UnauthorizedException();
         }
+        if(request.getRequestURI().startsWith("/api/cangya/admin") && !session.isLogined()){
+            throw new UnauthorizedException();
+        }
+
         return super.preHandle(request, response, handler);
     }
 }
