@@ -47,7 +47,7 @@ public class AdminCompanyServiceImpl {
         if (!result.isSuccess()) return result;
         Company company = companyRepository.findByName(companyObject.getName());
         if (company != null) {
-            return Result.error(EnumCompanyError.已存在同名的公司.toString());
+            return Result.error(EnumCompanyError.此名称已存在.toString());
         } else if (EnumCompanyRole.idList().indexOf(companyObject.getType()) == -1) {
             return Result.error(EnumCompanyError.公司类型错误.toString());
         } else {
@@ -76,8 +76,8 @@ public class AdminCompanyServiceImpl {
         Company company = companyRepository.findOne(id);
         if (company == null) return Result.error(EnumCompanyError.此公司不存在.toString());
         Company company1 = companyRepository.findByName(companyObject.getName());
-        if (company1 != null && company1.getId() != id) {
-            return Result.error(EnumCompanyError.已存在同名的公司.toString());
+        if (company1 != null && company1.getId().longValue() != id.longValue()) {
+            return Result.error(EnumCompanyError.此名称已存在.toString());
         } else {
             company.setName(companyObject.getName());
             company.setStatus(EnumCompanyStatus.Normal.toString());
@@ -136,7 +136,7 @@ public class AdminCompanyServiceImpl {
      * 超级管理员, 交易员获取业务线列表
      */
     public Result adminFindBusinessCompanyList(Long sessionCompanyId) {
-        if (sessionCompanyId != 0) {
+        if (sessionCompanyId.longValue() != 0) {
             return Result.error(EnumCompanyError.你没有权限查看业务线列表.toString());
         }
         return findCompanyListByRole(EnumCompanyRole.Business_Organization.id);

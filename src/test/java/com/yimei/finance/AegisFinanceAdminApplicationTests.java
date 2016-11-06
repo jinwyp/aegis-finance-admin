@@ -26,7 +26,8 @@ public class AegisFinanceAdminApplicationTests {
 		Long a = 1L;
 		Long b = 1L;
 		System.out.println("a == b " + (a == b));
-		System.out.println("a == 0 " + (a == 1L));
+		System.out.println("a == 0 " + (a.longValue() == 1));
+		System.out.println("a == b " + (a.longValue() == b));
 		System.out.println("a.longValue == b.longValue " + (a.longValue() == b.longValue()));
 	}
 
