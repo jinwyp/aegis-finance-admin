@@ -5,11 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 
 public interface CompanyRepository extends JpaRepository<Company, Long> {
-
-
-    Company getCompanyByName(@Param("name") String name);
-
-
     Company findByIdAndStatusId(@Param("id") Long id, @Param("statusId") int statusId);
 
     Company findByName(@Param("name")String name);

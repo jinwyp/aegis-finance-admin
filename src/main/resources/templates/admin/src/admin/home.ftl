@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta http-equiv="Cache-Control" content="no-siteapp" />
 
-    <title>供应链金融管理平台 - 管理首页</title>
+    <title>供应链金融管理平台 - 管理首页- 审批</title>
 
     <link rel="stylesheet" type="text/css" href="/static/admin/libs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/main.css"/>

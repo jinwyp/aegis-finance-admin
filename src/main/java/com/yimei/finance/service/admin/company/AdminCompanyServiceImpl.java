@@ -19,9 +19,9 @@ import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 
@@ -41,18 +41,23 @@ public class AdminCompanyServiceImpl {
     /**
      * 创建公司
      */
+    @Transactional
     public Result addCompany(CompanyObject companyObject, UserObject sessionUser) {
         Result result = userService.checkSuperAdminRight(sessionUser.getId());
         if (!result.isSuccess()) return result;
-        Company company = companyRepository.getCompanyByName(companyObject.getName());
+        Company company = companyRepository.findByName(companyObject.getName());
         if (company != null) {
-            return Result.error(EnumCompanyError.已存在同名的公司.toString());
+            return Result.error(EnumCompanyError.此名称已存在.toString());
         } else if (EnumCompanyRole.idList().indexOf(companyObject.getType()) == -1) {
             return Result.error(EnumCompanyError.公司类型错误.toString());
         } else {
             company = DozerUtils.copy(companyObject, Company.class);
             company.setStatus(EnumCompanyStatus.Normal.toString());
             company.setStatusId(EnumCompanyStatus.Normal.id);
+            company.setCreateManId(sessionUser.getId());
+            company.setCreateTime(new Date());
+            company.setLastUpdateManId(sessionUser.getId());
+            company.setLastUpdateTime(new Date());
             companyRepository.save(company);
             CompanyRole companyRole = companyRoleRepository.findByNumber(companyObject.getType());
             if (companyRole == null) return Result.error(EnumCommonError.Admin_System_Error);
@@ -64,12 +69,15 @@ public class AdminCompanyServiceImpl {
     /**
      * 修改公司
      */
+    @Transactional
     public Result editCompany(Long id, CompanyObject companyObject, String sessionUserId) {
         Result result = userService.checkSuperAdminRight(sessionUserId);
         if (!result.isSuccess()) return result;
         Company company = companyRepository.findOne(id);
-        if (company == null) {
-            return Result.error(EnumCompanyError.此公司不存在.toString());
+        if (company == null) return Result.error(EnumCompanyError.此公司不存在.toString());
+        Company company1 = companyRepository.findByName(companyObject.getName());
+        if (company1 != null && company1.getId().longValue() != id.longValue()) {
+            return Result.error(EnumCompanyError.此名称已存在.toString());
         } else {
             company.setName(companyObject.getName());
             company.setStatus(EnumCompanyStatus.Normal.toString());
@@ -86,7 +94,15 @@ public class AdminCompanyServiceImpl {
      */
     public Result findById(Long id) {
         Company company = companyRepository.findOne(id);
-        return Result.success().setData(changeCompanyObject(company));
+        CompanyObject companyObject = new CompanyObject();
+        if (companyObject != null) companyObject = changeCompanyObject(company);
+        return Result.success().setData(companyObject);
+    }
+
+    public Result findByIdWithAuthority(Long id, String sessionUserId) {
+        Result result = userService.checkSuperAdminRight(sessionUserId);
+        if (!result.isSuccess()) return result;
+        return findById(id);
     }
 
     /**
@@ -94,13 +110,15 @@ public class AdminCompanyServiceImpl {
      */
     public CompanyObject changeCompanyObject(Company company) {
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
-        List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
-        if (roleList != null && roleList.size() != 0) {
-            List<String> roleName = new ArrayList<>();
-            roleList.forEach(role -> {
-                roleName.add(EnumCompanyRole.valueOf(role).name);
-            });
-            companyObject.setRoleName(Arrays.toString(roleName.toArray()));
+        if (company != null) {
+            List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
+            if (roleList != null && roleList.size() != 0) {
+                String roleName = "";
+                for (String role : roleList) {
+                    roleName += EnumCompanyRole.valueOf(role).name + " ";
+                }
+                companyObject.setRoleName(roleName);
+            }
             companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
         }
         return companyObject;
@@ -115,6 +133,25 @@ public class AdminCompanyServiceImpl {
     }
 
     /**
+     * 超级管理员, 交易员获取业务线列表
+     */
+    public Result adminFindBusinessCompanyList(Long sessionCompanyId) {
+        if (sessionCompanyId.longValue() != 0) {
+            return Result.error(EnumCompanyError.你没有权限查看业务线列表.toString());
+        }
+        return findCompanyListByRole(EnumCompanyRole.Business_Organization.id);
+    }
+
+    /**
+     * 超级管理员 获取所有资金方公司列表
+     */
+    public Result adminFindFundCompanyList(String sessionUserId) {
+        Result result = userService.checkSuperAdminRight(sessionUserId);
+        if (!result.isSuccess()) return result;
+        return findCompanyListByRole(EnumCompanyRole.Fund_Provider.id);
+    }
+
+    /**
      * 根据角色获取公司列表
      */
     public Result findCompanyListByRole(int type) {
@@ -125,6 +162,7 @@ public class AdminCompanyServiceImpl {
     /**
      * 根据 id 删除 公司
      */
+    @Transactional
     public Result deleteCompany(Long id, String sessionUserId) {
         Result result = userService.checkSuperAdminRight(sessionUserId);
         if (!result.isSuccess()) return result;
@@ -137,6 +175,9 @@ public class AdminCompanyServiceImpl {
         return Result.success().setData(companyObject);
     }
 
+    /**
+     * 通过 业务线(公司)id查找资金方公司
+     */
     public Result findFundCompanyListByCompanyId(Long  companyId) {
         List<Company> companyList = getNormalCompanyListByIdList(companyFBRelationShipRepository.findFundCompanyIdByBusinessCompanyId(companyId));
         return Result.success().setData(changeCompanyObject(companyList));

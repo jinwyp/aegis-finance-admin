@@ -138,7 +138,7 @@ public class AdminGroupServiceImpl {
         List<UserObject> userList = userService.changeUserObject(identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list());
         List<UserObject> newUserList = new ArrayList<>();
         userList.forEach(user -> {
-            if (user.getCompanyId() != null && sessionUser.getCompanyId() != null && user.getCompanyId() == sessionUser.getCompanyId()) {
+            if (user.getCompanyId() != null && sessionUser.getCompanyId() != null && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()) {
                 newUserList.add(user);
             }
         });

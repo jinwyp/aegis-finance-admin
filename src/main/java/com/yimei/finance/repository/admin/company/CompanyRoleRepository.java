@@ -7,6 +7,6 @@ public interface CompanyRoleRepository extends JpaRepository<CompanyRole, Long> 
     /**
      * 根据 number 查询 CompanyRole
      */
-    CompanyRole findByNumber(Integer number);
+    CompanyRole findByNumber(int number);
 
 }

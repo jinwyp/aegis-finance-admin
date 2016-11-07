@@ -2,7 +2,6 @@ package com.yimei.finance.controllers.admin.restfulapi.company;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.representation.admin.company.object.CompanyObject;
-import com.yimei.finance.representation.admin.company.enums.EnumCompanyRole;
 import com.yimei.finance.representation.admin.company.validated.CreateCompany;
 import com.yimei.finance.representation.admin.company.validated.EditCompany;
 import com.yimei.finance.representation.common.result.Result;
@@ -26,19 +25,25 @@ public class CompanyController {
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "根据id获取公司对象", response = CompanyObject.class)
     public Result findByIdMethod(@PathVariable("id")Long id) {
-        return companyService.findById(id);
+        return companyService.findByIdWithAuthority(id, adminSession.getUser().getId());
+    }
+
+    @RequestMapping(value = "/self", method = RequestMethod.GET)
+    @ApiOperation(value = "查询自己所在的业务线(公司)", response = CompanyObject.class)
+    public Result findSelfCompanyMethod() {
+        return companyService.findById(adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(value = "/business", method = RequestMethod.GET)
     @ApiOperation(value = "获取业务组织列表", response = CompanyObject.class, responseContainer = "List")
     public Result findBusinessOrganizationListMethod() {
-        return companyService.findCompanyListByRole(EnumCompanyRole.Business_Organization.id);
+        return companyService.adminFindBusinessCompanyList(adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(value = "/fund", method = RequestMethod.GET)
-    @ApiOperation(value = "获取所有资金方公司列表", response = CompanyObject.class, responseContainer = "List")
+    @ApiOperation(value = "获取所有资金方列表", response = CompanyObject.class, responseContainer = "List")
     public Result findFundProviderListMethod() {
-        return companyService.findCompanyListByRole(EnumCompanyRole.Fund_Provider.id);
+        return companyService.adminFindFundCompanyList(adminSession.getUser().getId());
     }
 
     @RequestMapping(value = "/fund/self", method = RequestMethod.GET)

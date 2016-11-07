@@ -21,6 +21,8 @@ import { AuditInvestigatorComponent } from '../components/task/audit-investigato
 import { AuditSupervisorComponent } from '../components/task/audit-supervisor';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
 import {MaterialDetailComponent} from "../components/task/material-detail";
+import {AddFundCompanyComponent} from "../components/role/add-fund-company";
+import {FundCompanyListComponent} from "../components/role/fund-company-list";
 
 const routes: Routes = [
     {
@@ -65,9 +67,24 @@ const routes: Routes = [
         data: { routeType : 'list', title: '用户列表' }
     },
     {
+        path: 'fundcompanys',
+        component: FundCompanyListComponent,
+        data: { routeType : 'list', title: '资金方公司列表' }
+    },
+    {
         path: 'users/add',
         component: AddUserComponent,
         data: { routeType : 'add', title: '用户 - 添加' }
+    },
+    {
+        path: 'fundcompany/add',
+        component: AddFundCompanyComponent,
+        data: { routeType : 2, title: '资金方公司 - 添加' }
+    },
+    {
+        path: 'businessline/add',
+        component: AddFundCompanyComponent,
+        data: { routeType : 1, title: '业务线 - 添加' }
     },
     {
         path: 'users/:id',
@@ -79,8 +96,16 @@ const routes: Routes = [
         component: AddUserComponent,
         data: { routeType : 'edit', title: '用户 - 编辑' }
     },
-
-
+    {
+        path: 'fundcompany/:id/edit',
+        component: AddFundCompanyComponent,
+        data: { routeType : 2, title: '资金方公司 - 编辑' }
+    },
+    {
+        path: 'businessline/:id/edit',
+        component: AddFundCompanyComponent,
+        data: { routeType : 1, title: '业务闲 - 编辑' }
+    },
     {
         path: 'tasks/pending',
         component: TaskListComponent,

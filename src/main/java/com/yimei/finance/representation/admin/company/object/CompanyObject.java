@@ -21,7 +21,6 @@ import java.io.Serializable;
 public class CompanyObject extends BaseObject implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @NotBlank(message = "公司id不能为空", groups = {EditCompany.class})
     private Long id;
 
     @Size(min = 1, max = 100, message = "名称应该在 {min}-{max} 个字符之间", groups = {CreateCompany.class, EditCompany.class})
@@ -38,7 +37,7 @@ public class CompanyObject extends BaseObject implements Serializable {
     }
 
     @Range(min = 1, max = 100, message = "类型应在 {min}-{max} 天之间", groups = {CreateCompany.class})
-    private int type;                                 //类型: 1:业务线, 2:资金方等
+    private Integer type;                                 //类型: 1:业务线, 2:资金方等
     private String roleName;
 
     private String adminName;                         //管理员账号名

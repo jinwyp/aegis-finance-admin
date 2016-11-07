@@ -35,7 +35,6 @@ public class CommonController {
     @Autowired
     UserSession userSession;
 
-
     @Value("${ssourl.env}")
     private String SSOURL;
 

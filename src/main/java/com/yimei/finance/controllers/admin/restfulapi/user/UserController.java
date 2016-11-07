@@ -48,7 +48,7 @@ public class UserController {
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}/groups", method = RequestMethod.GET)
     public Result getUserGroupsMethod(@PathVariable("id") String id, Page page) {
-        return userService.findUserGroupList(id, page);
+        return userService.findUserGroupList(id, adminSession.getUser(), page);
     }
 
     @ApiOperation(value = "查询当前用户有权限操作的组列表", notes = "查询当前用户有权限操作的组列表", response = GroupObject.class, responseContainer = "List")
