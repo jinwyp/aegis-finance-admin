@@ -11,18 +11,6 @@ CREATE TABLE `t_finance_company` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='金融-公司表';
 
 
-CREATE TABLE `t_finance_company_fb_relationship` (
-  `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
-  `business_company_id` BIGINT(20) NOT NULL COMMENT '业务组织id',
-  `fund_company_id` BIGINT(20) NOT NULL COMMENT '资金公司id',
-  `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
-  `create_time` datetime DEFAULT NULL COMMENT '创建时间',
-  `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',
-  `last_update_time` datetime DEFAULT NULL COMMENT '最后一次更新时间',
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='金融-资金公司-业务组织-关系表';
-
-
 CREATE TABLE `t_finance_company_role` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `number` INT(10) NOT NULL COMMENT '编号',
@@ -47,5 +35,4 @@ CREATE TABLE `t_finance_company_role_relationship` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='金融-公司角色-关系表';
 
-INSERT INTO t_finance_company_role(`number`, `role`, `create_man_id`, `create_time`, `last_update_man_id`, `last_update_time`) VALUES(1, 'Business_Organization', '0', now(), '0', now());
-INSERT INTO t_finance_company_role(`number`, `role`, `create_man_id`, `create_time`, `last_update_man_id`, `last_update_time`) VALUES(2, 'Fund_Provider', '0', now(), '0', now());
+INSERT INTO t_finance_company_role(`number`, `role`, `create_man_id`, `create_time`, `last_update_man_id`, `last_update_time`) VALUES(1, 'RiskManager_Organization', '0', now(), '0', now());

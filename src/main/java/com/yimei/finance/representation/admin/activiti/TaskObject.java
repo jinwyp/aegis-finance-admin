@@ -33,5 +33,5 @@ public class TaskObject implements Serializable {
     private String applyTypeName;                                   //融资类型Name
     private BigDecimal financingAmount;                             //融资金额
     private String sourceId;                                        //金融单业务编号
-    private Long businessCompanyId;                                 //业务公司id
+    private Long riskCompanyId;                                     //业务公司id
 }

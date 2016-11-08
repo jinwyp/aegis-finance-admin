@@ -1,10 +1,8 @@
 package com.yimei.finance.service.admin.company;
 
 import com.yimei.finance.entity.admin.company.Company;
-import com.yimei.finance.entity.admin.company.CompanyFBRelationShip;
 import com.yimei.finance.entity.admin.company.CompanyRole;
 import com.yimei.finance.entity.admin.company.CompanyRoleRelationShip;
-import com.yimei.finance.repository.admin.company.CompanyFBRelationShipRepository;
 import com.yimei.finance.repository.admin.company.CompanyRepository;
 import com.yimei.finance.repository.admin.company.CompanyRoleRelationShipRepository;
 import com.yimei.finance.repository.admin.company.CompanyRoleRepository;
@@ -31,8 +29,6 @@ public class AdminCompanyServiceImpl {
     private CompanyRepository companyRepository;
     @Autowired
     private CompanyRoleRelationShipRepository companyRoleRelationShipRepository;
-    @Autowired
-    private CompanyFBRelationShipRepository companyFBRelationShipRepository;
     @Autowired
     private CompanyRoleRepository companyRoleRepository;
     @Autowired
@@ -133,22 +129,13 @@ public class AdminCompanyServiceImpl {
     }
 
     /**
-     * 超级管理员, 交易员获取业务线列表
+     * 超级管理员, 交易员获取风控线列表
      */
     public Result adminFindBusinessCompanyList(Long sessionCompanyId) {
         if (sessionCompanyId.longValue() != 0) {
-            return Result.error(EnumCompanyError.你没有权限查看业务线列表.toString());
+            return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
         }
-        return findCompanyListByRole(EnumCompanyRole.Business_Organization.id);
-    }
-
-    /**
-     * 超级管理员 获取所有资金方公司列表
-     */
-    public Result adminFindFundCompanyList(String sessionUserId) {
-        Result result = userService.checkSuperAdminRight(sessionUserId);
-        if (!result.isSuccess()) return result;
-        return findCompanyListByRole(EnumCompanyRole.Fund_Provider.id);
+        return findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id);
     }
 
     /**
@@ -175,14 +162,6 @@ public class AdminCompanyServiceImpl {
         return Result.success().setData(companyObject);
     }
 
-    /**
-     * 通过 业务线(公司)id查找资金方公司
-     */
-    public Result findFundCompanyListByCompanyId(Long  companyId) {
-        List<Company> companyList = getNormalCompanyListByIdList(companyFBRelationShipRepository.findFundCompanyIdByBusinessCompanyId(companyId));
-        return Result.success().setData(changeCompanyObject(companyList));
-    }
-
     public List<Company> getNormalCompanyListByIdList(List<Long> companyIdList) {
         List<Company> companyList = new ArrayList<>();
         if (companyIdList != null && companyIdList.size() != 0) {
@@ -194,27 +173,4 @@ public class AdminCompanyServiceImpl {
         return companyList;
     }
 
-    /**
-     * 创建-业务线和资金方关系
-     */
-    public Result createBusinessFundCompanyRelation(Long businessCompanyId, Long fundCompanyId, String sessionUserId) {
-        Result result = userService.checkSuperAdminRight(sessionUserId);
-        if (!result.isSuccess()) return result;
-        if (companyFBRelationShipRepository.findByBusinessCompanyIdAndFundCompanyId(businessCompanyId, fundCompanyId) != null)
-            return Result.error(EnumCompanyError.该业务线和资金方已经建立关系.toString());
-        companyFBRelationShipRepository.save(new CompanyFBRelationShip(businessCompanyId, fundCompanyId, new Date(), sessionUserId, new Date(), sessionUserId));
-        return Result.success();
-    }
-
-    /**
-     * 解除-业务线和资金方关系
-     */
-    public Result deleteBusinessFundCompanyRelation(Long businessCompanyId, Long fundCompanyId, String sessionUserId) {
-        Result result = userService.checkSuperAdminRight(sessionUserId);
-        if (!result.isSuccess()) return result;
-        CompanyFBRelationShip companyFBRelationShip = companyFBRelationShipRepository.findByBusinessCompanyIdAndFundCompanyId(businessCompanyId, fundCompanyId);
-        if (companyFBRelationShip == null) return Result.error(EnumCompanyError.该业务线和资金方关系已经解除.toString());
-        companyFBRelationShipRepository.delete(companyFBRelationShip.getId());
-        return Result.success();
-    }
 }
