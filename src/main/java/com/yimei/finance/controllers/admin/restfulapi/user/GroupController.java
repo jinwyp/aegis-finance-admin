@@ -35,10 +35,7 @@ public class GroupController {
     }
 
     @ApiOperation(value = "通过 groupId 查询用户组下,本公司的用户", notes = "通过 groupId 查询该用户组下,本公司的用户", response = UserObject.class, responseContainer = "List")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "groupId", value = "GroupId", required = true, dataType = "String", paramType = "path"),
-            @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
-    })
+    @ApiImplicitParam(name = "groupId", value = "GroupId", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{groupId}/users", method = RequestMethod.GET)
     public Result getCompanyUserListByGroupIdMethod(@PathVariable(value = "groupId") String groupId) {
         return groupService.findCompanyUserListByGroupId(groupId, adminSession.getUser());

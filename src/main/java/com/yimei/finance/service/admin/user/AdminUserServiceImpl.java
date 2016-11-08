@@ -61,8 +61,12 @@ public class AdminUserServiceImpl {
     /**
      * 查询一个用户所有的组
      */
-    public Result findUserGroupList(String id, Page page) {
-        if (identityService.createUserQuery().userId(id).singleResult() == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
+    public Result findUserGroupList(String id, UserObject sessionUser, Page page) {
+        User user = identityService.createUserQuery().userId(id).singleResult();
+        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
+        UserObject userObject = changeUserObject(user);
+        Result result = checkOperateUserAuthority(userObject, sessionUser);
+        if (!result.isSuccess()) return result;
         page.setTotal(identityService.createGroupQuery().groupMember(id).count());
         List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().groupMember(id).list());
         return Result.success().setData(groupObjectList).setMeta(page);
@@ -121,7 +125,7 @@ public class AdminUserServiceImpl {
         identityService.setUserInfo(newUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(newUser.getId(), "department", user.getDepartment());
         Result result3 = checkSuperAdminRight(sessionUser.getId());
-        if (result3.isSuccess() && user.getCompanyId() != null && user.getCompanyId() != 0 && user.getCompanyId() != -1) {
+        if (result3.isSuccess() && user.getCompanyId() != null && user.getCompanyId().longValue() != 0 && user.getCompanyId().longValue() != -1) {
             Company company = companyRepository.findOne(user.getCompanyId());
             if (company == null) return Result.error(EnumCommonError.Admin_System_Error);
             identityService.setUserInfo(newUser.getId(), "companyId", String.valueOf(company.getId()));
@@ -246,7 +250,7 @@ public class AdminUserServiceImpl {
         }
         List<UserObject> finalUserList = new ArrayList<>();
         userObjList.forEach(user -> {
-            if (!StringUtils.isEmpty(user.getCompanyId()) && !StringUtils.isEmpty(sessionUser.getCompanyId()) && user.getCompanyId() == sessionUser.getCompanyId()) {
+            if (!StringUtils.isEmpty(user.getCompanyId()) && !StringUtils.isEmpty(sessionUser.getCompanyId()) && (user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue())) {
                 finalUserList.add(user);
             }
         });
@@ -297,7 +301,7 @@ public class AdminUserServiceImpl {
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).orderByUserId().desc().list());
         String adminName = null;
         for (UserObject user : userObjectList) {
-            if (user.getCompanyId() == companyId) return user.getUsername();
+            if (user.getCompanyId().longValue() == companyId.longValue()) return user.getUsername();
         }
         return null;
     }

@@ -166,11 +166,11 @@
                         <table>
                             <tr>
                                 <th>需缴纳保证金:</th>
-                                <td>30万</td>
+                                <td>{{@money}}</td>
                             </tr>
                             <tr>
                                 <th>金额大写:</th>
-                                <td>三百万整</td>
+                                <td>{{@money | switchTxt}}</td>
                             </tr>
                             <tr>
                                 <th colspan="2">

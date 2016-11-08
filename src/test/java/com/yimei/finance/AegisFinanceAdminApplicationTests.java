@@ -1,7 +1,7 @@
 package com.yimei.finance;
 
 import com.yimei.finance.entity.tpl.UserTest;
-import com.yimei.finance.repository.admin.company.CompanyFBRelationShipRepository;
+import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
 import com.yimei.finance.service.tpl.JpaRollbackDemo;
 import org.junit.Assert;
@@ -19,11 +19,16 @@ public class AegisFinanceAdminApplicationTests {
     @Autowired
     private JpaRollbackDemo jpaRollbackDemo;
 	@Autowired
-	private CompanyFBRelationShipRepository companyFBRelationShipRepository;
+	private FinanceOrderRepository financeOrderRepository;
 
 	@Test
-	public void companyTest() {
-
+	public void test001() {
+		Long a = 1L;
+		Long b = 1L;
+		System.out.println("a == b " + (a == b));
+		System.out.println("a == 0 " + (a.longValue() == 1));
+		System.out.println("a == b " + (a.longValue() == b));
+		System.out.println("a.longValue == b.longValue " + (a.longValue() == b.longValue()));
 	}
 
     @Test
