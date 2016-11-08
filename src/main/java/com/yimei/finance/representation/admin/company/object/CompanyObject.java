@@ -30,6 +30,7 @@ public class CompanyObject extends BaseObject implements Serializable {
     public String status;
     private int statusId;                              //状态id
     private String statusName;                         //状态名字
+    private String remarks;                            //备注
 
     private String getStatusName() {
         if (StringUtils.isEmpty(status)) return null;

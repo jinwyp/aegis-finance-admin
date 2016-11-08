@@ -73,22 +73,6 @@ public class AdminUserServiceImpl {
     }
 
     /**
-     * 查询一个用户有权限操作的所有的组列表
-     */
-    public Result findHaveRightGroupList(String sessionUserId, Page page) {
-        List<GroupObject> groupList = getCanOperateGroupList(sessionUserId);
-        page.setTotal(Long.valueOf(groupList.size()));
-        return Result.success().setData(groupList).setMeta(page);
-    }
-
-    /**
-     * 获取所有部门列表
-     */
-    public Result findAllDepartmentList() {
-        return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.financedepartment.toString()));
-    }
-
-    /**
      * 删除用户
      */
     public Result deleteById(String id, UserObject sessionUser) {
@@ -297,6 +281,9 @@ public class AdminUserServiceImpl {
         }
     }
 
+    /**
+     * 获取风控线中的第一个系统管理员
+     */
     public String findCompanyFirstAdminName(Long companyId) {
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).orderByUserId().desc().list());
         String adminName = null;
@@ -307,6 +294,13 @@ public class AdminUserServiceImpl {
     }
 
     /**
+     * 获取所有部门列表
+     */
+    public Result findAllDepartmentList() {
+        return Result.success().setData(dataBookRepository.findByType(EnumDataBookType.financedepartment.toString()));
+    }
+
+    /**
      * 检查是否具有超级管理员权限
      */
     public Result checkSuperAdminRight(String userId) {
@@ -314,6 +308,15 @@ public class AdminUserServiceImpl {
             return Result.success();
         }
         return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+    }
+
+    /**
+     * 查询一个用户有权限操作的所有的组列表
+     */
+    public Result findHaveRightGroupList(String sessionUserId, Page page) {
+        List<GroupObject> groupList = getCanOperateGroupList(sessionUserId);
+        page.setTotal(Long.valueOf(groupList.size()));
+        return Result.success().setData(groupList).setMeta(page);
     }
 
     /**
@@ -328,19 +331,6 @@ public class AdminUserServiceImpl {
         return groupObjectList;
     }
 
-    /**
-     * 获取一个用户所有组id list
-     */
-    public List<String> getUserGroupIdList(String userId) {
-        List<String> groupIds = new ArrayList<>();
-        List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
-        if (groupList != null && groupList.size() != 0) {
-            for (Group group : groupList) {
-                groupIds.add(group.getId());
-            }
-        }
-        return groupIds;
-    }
 
     /**
      * 获取一个用户 有权限添加 用户的组id list
@@ -368,6 +358,20 @@ public class AdminUserServiceImpl {
             }
         }
         return sonGroupIds;
+    }
+
+    /**
+     * 获取一个用户所有组id list
+     */
+    public List<String> getUserGroupIdList(String userId) {
+        List<String> groupIds = new ArrayList<>();
+        List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
+        if (groupList != null && groupList.size() != 0) {
+            for (Group group : groupList) {
+                groupIds.add(group.getId());
+            }
+        }
+        return groupIds;
     }
 
     public Result checkOperateGroupsAuthority(List<String> groupIdList, String userId) {

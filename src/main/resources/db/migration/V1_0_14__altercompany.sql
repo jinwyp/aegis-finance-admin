@@ -1,0 +1,2 @@
+ALTER TABLE `t_finance_company` ADD COLUMN remarks VARCHAR(520) DEFAULT NULL COMMENT '备注';
+

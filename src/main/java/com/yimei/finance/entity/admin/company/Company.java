@@ -26,6 +26,9 @@ public class Company extends BaseEntity implements Serializable {
     @Column(name = "status_id")
     private int statusId;                          //状态id
 
+    @Column(name = "remarks")
+    private String remarks;                        //备注
+
     public Company (String name, String status, int statusId, Date createTime, String createManId, Date lastUpdateTime, String lastUpdateManId) {
         this.name = name;
         this.status = status;
