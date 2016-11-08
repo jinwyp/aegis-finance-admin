@@ -133,7 +133,8 @@ export class AddUserComponent {
                 this.css.isSubmitted     = false;
                 if (result.success) {
                     this.css.ajaxSuccessHidden=false;
-                    this.router.navigate(['/users']);
+                    this.back();
+                    // this.router.navigate(['/users']);
                     // setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 } else {
                     this.css.ajaxErrorHidden = false;
