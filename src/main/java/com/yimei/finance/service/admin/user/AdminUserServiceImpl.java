@@ -75,8 +75,8 @@ public class AdminUserServiceImpl {
     /**
      * 查询一个用户有权限操作的所有的组列表
      */
-    public Result findHaveRightGroupList(String id, Page page) {
-        List<GroupObject> groupList = getCanOperateGroupList(id);
+    public Result findHaveRightGroupList(String sessionUserId, Page page) {
+        List<GroupObject> groupList = getCanOperateGroupList(sessionUserId);
         page.setTotal(Long.valueOf(groupList.size()));
         return Result.success().setData(groupList).setMeta(page);
     }
@@ -364,11 +364,10 @@ public class AdminUserServiceImpl {
         List<String> groupIds = getUserGroupIdList(userId);
         List<String> sonGroupIds = new ArrayList<>();
         if (groupIds.contains(EnumSpecialGroup.SuperAdminGroup.id)) {
-            groupList = identityService.createGroupQuery().groupType(EnumGroupType.YIMEI_System_Group.id).list();
+            groupList = identityService.createGroupQuery().list();
             for (Group group : groupList) {
                 sonGroupIds.add(group.getId());
             }
-            sonGroupIds.add(EnumSpecialGroup.SystemAdminGroup.id);
         } else if (groupIds.contains(EnumSpecialGroup.SystemAdminGroup.id)) {
             groupList = identityService.createGroupQuery().groupType(EnumGroupType.Business_Company_Group.id).list();
             for (Group group : groupList) {
