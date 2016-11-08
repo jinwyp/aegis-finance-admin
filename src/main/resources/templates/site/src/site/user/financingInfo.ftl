@@ -244,7 +244,8 @@
                         <!--</table>-->
                     <!--</div>-->
                     <!--补充材料结束-->
-                    <a href="/finance/user/financing" class="back">返回</a>
+                    <a href="/finance/user/cangya/11/contact" class="btn blue">下载/上传合同</a>
+                    <a href="/finance/user/financing" class="btn back">返回</a>
                 </div>
             </div>
         </div>
