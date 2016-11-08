@@ -12,11 +12,11 @@ import {FundService,FundCompany} from "../../service/fund";
 declare var __moduleName:string;
 
 @Component({
-    selector :    'business-line-list',
+    selector :    'risk-line-list',
     moduleId :    module.id,
-    templateUrl : 'business-line-list.html'
+    templateUrl : 'risk-line-list.html'
 })
-export class BusinessLiseListComponent {
+export class RiskLineListComponent {
 
     constructor(
         private fundService:FundService
