@@ -90,7 +90,7 @@ var cangyaList = () => {
 
     //查询
     var getFinanceList = (query) => {
-        console.log('查询参数:', query);
+        // console.log('查询参数:', query);
         var params = $.extend({}, query);
 
         $.ajax({
