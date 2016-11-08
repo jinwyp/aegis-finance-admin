@@ -107,7 +107,7 @@ public class SiteFinanceOrderServiceImpl {
     /**
      * 前台查询金融单
      */
-    public Result getFinanceOrderBySelect(int userId, Long companyId, FinanceOrderSearch order, Page page) {
+    public Result getFinanceOrderBySelect(Long userId, Long companyId, FinanceOrderSearch order, Page page) {
         String hql = " select o from FinanceOrder o where (o.userId=:userId or o.applyCompanyId=:companyId) ";
         if (order != null) {
             if (order.getStartDate() != null && order.getEndDate() != null) {
