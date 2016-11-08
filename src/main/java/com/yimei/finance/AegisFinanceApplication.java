@@ -70,9 +70,9 @@ public class AegisFinanceApplication {
 					identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
 					identityService.createMembership(user.getId(), EnumSpecialGroup.SuperAdminGroup.id);
 				}
-				Company company = companyRepository.findByName("易煤网");
+				Company company = companyRepository.findByName("易煤风控线");
 				if (company == null) {
-					company = new Company("易煤网", EnumCompanyStatus.Normal.toString(), EnumCompanyStatus.Normal.id, new Date(), "0", new Date(), "0");
+					company = new Company("易煤风控线", EnumCompanyStatus.Normal.toString(), EnumCompanyStatus.Normal.id, new Date(), "0", new Date(), "0");
 					companyRepository.save(company);
 					companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), EnumCompanyRole.RiskManager_Organization.id, EnumCompanyRole.RiskManager_Organization.toString(), new Date(), "0", new Date(), "0"));
 				}
