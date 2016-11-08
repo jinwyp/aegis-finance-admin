@@ -83,6 +83,7 @@ CREATE TABLE `t_finance_order_riskmanager_info` (
   `payment_situation_eval` text DEFAULT NULL COMMENT '预计回款情况',
   `risk_control_scheme` text DEFAULT NULL COMMENT '风险控制方案',
   `supply_material_introduce` text DEFAULT NULL COMMENT '补充材料说明',
+  `edit_contract` int(11) DEFAULT NULL COMMENT '是否编辑合同',
   `create_man_id` varchar(255) DEFAULT NULL COMMENT '创建人userId',
   `create_time` datetime DEFAULT NULL COMMENT '创建时间',
   `last_update_man_id` varchar(255) DEFAULT NULL COMMENT '最后一次更新人userId',

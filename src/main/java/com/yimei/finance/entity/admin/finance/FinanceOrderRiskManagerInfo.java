@@ -41,9 +41,6 @@ public class FinanceOrderRiskManagerInfo extends BaseEntity implements Serializa
     @Column(name = "supply_material_introduce")
     private String supplyMaterialIntroduce;                          //补充材料说明
 
-    @Column(name = "edit_contract")
-    private int editContract;                                        //编辑合同     1: 需要编辑, 0: 不需要编辑
-
     @Column(name = "approve_state")
     private String approveState;                                     //审批状态
 
