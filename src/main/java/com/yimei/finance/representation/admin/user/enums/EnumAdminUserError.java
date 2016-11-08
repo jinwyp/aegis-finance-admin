@@ -23,5 +23,4 @@ public enum EnumAdminUserError {
     ;
     public static final String NewPasswordLengthError = "密码应该在6-16个字符之间";
 
-    public static final Error  = ;
 }
