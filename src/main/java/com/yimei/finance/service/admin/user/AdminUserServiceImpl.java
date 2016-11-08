@@ -451,6 +451,17 @@ public class AdminUserServiceImpl {
             userObject.setLastLoginTime(loginRecord.getCreateTime());
         }
         userObject.setOperateAuthority(checkOperateUserAuthority(userObject, sessionUser).isSuccess());
+        List<String> userGroupIdList = getUserGroupIdList(user.getId());
+        userObject.setGroupIds(userGroupIdList);
+        if (userGroupIdList != null && userGroupIdList.size() != 0) {
+            if (userGroupIdList.contains(EnumSpecialGroup.SuperAdminGroup.id)) {
+                userObject.setLevel(1);
+            } else if (userGroupIdList.contains(EnumSpecialGroup.SystemAdminGroup.id)) {
+                userObject.setLevel(2);
+            } else {
+                userObject.setLevel(3);
+            }
+        }
         return userObject;
     }
 
