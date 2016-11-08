@@ -373,6 +373,7 @@ public class AdminUserServiceImpl {
             for (Group group : groupList) {
                 sonGroupIds.add(group.getId());
             }
+            sonGroupIds.remove(EnumSpecialGroup.SystemAdminGroup.id);
         } else {
             groupList = identityService.createGroupQuery().groupMember(userId).list();
             for (Group group : groupList) {
