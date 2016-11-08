@@ -11,8 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Api(tags = {"admin-page"}, description = "管理后台首页")
 @Controller
 public class HomePageController {
-    @Autowired
-    private AdminSession adminSession;
+
 
     /**
      * 管理首页 页面
@@ -20,9 +19,6 @@ public class HomePageController {
     @ApiOperation(value = "管理后台管理员首页", notes = "管理后台管理员首页 需要管理员登录")
     @RequestMapping(value = "/finance/admin/home", method = RequestMethod.GET)
     public String index() {
-        if (adminSession.getUser() == null) {
-            return "redirect:/finance/admin/login";
-        }
         return "admin/home";
     }
 
@@ -32,9 +28,6 @@ public class HomePageController {
     @ApiOperation(value = "管理后台前端路由重定向", notes = "管理页面为了前端路由需要重定向")
     @RequestMapping(value = "/finance/admin/home/**", method = RequestMethod.GET)
     public String adminHome() {
-        if (adminSession.getUser() == null) {
-            return "redirect:/finance/admin/login";
-        }
         return "forward:/finance/admin/home";
     }
 

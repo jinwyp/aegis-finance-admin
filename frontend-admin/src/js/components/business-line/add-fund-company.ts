@@ -4,6 +4,7 @@
 
 
 import {Component} from '@angular/core';
+import {Location} from '@angular/common';
 import {ActivatedRoute, Router}      from '@angular/router';
 import {Subscription} from 'rxjs/Subscription';
 
@@ -23,6 +24,7 @@ export class AddFundCompanyComponent {
     private sub:Subscription;
 
     constructor(
+        private location : Location,
         private router : Router,
         private activatedRoute: ActivatedRoute,
         private fundService: FundService,
@@ -100,7 +102,12 @@ export class AddFundCompanyComponent {
                 this.css.isSubmitted     = false;
                 if (result.success) {
                     this.css.ajaxSuccessHidden=false;
-                    this.router.navigate(['/fundcompanys']);
+                    this.location.back();
+                    // if(this.fundCompany.type===1){
+                    //     this.router.navigate(['/businesslies']);
+                    // }else{
+                    //     this.router.navigate(['/fundcompanys']);
+                    // }
                 } else {
                     this.css.ajaxErrorHidden = false;
                     this.errorMsg = result.error.message;

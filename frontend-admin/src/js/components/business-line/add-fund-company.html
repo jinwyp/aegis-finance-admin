@@ -15,7 +15,8 @@
 <div class="item-margin">
     <form class="form-horizontal" *ngIf="css.formActiveForRefresh" (ngSubmit)="addUser()" #addFundCompanyForm="ngForm">
         <div class="row mt-50 info-item">
-            <label class="col-sm-2 info-label-input" for="nameInput"><span class="orange">*</span>资金方公司名称:</label>
+            <label *ngIf="fundCompany.type===2" class="col-sm-2 info-label-input" for="nameInput"><span class="orange">*</span>资金方公司名称:</label>
+            <label *ngIf="fundCompany.type===1" class="col-sm-2 info-label-input" for="nameInput"><span class="orange">*</span>业务线名称:</label>
             <div class="col-sm-10 info-val">
                 <input type="text" class="form-control wd-30" id="nameInput" name="name" [(ngModel)]="fundCompany.name" maxlength="100" #name="ngModel" required >
                 <span class="help-block" [class.hidden]="name.valid || name.pristine">请填写资金方公司名称!</span>

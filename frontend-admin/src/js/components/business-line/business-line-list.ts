@@ -12,19 +12,19 @@ import {FundService,FundCompany} from "../../service/fund";
 declare var __moduleName:string;
 
 @Component({
-    selector :    'fund-company-list',
+    selector :    'business-line-list',
     moduleId :    module.id,
-    templateUrl : 'fund-company-list.html'
+    templateUrl : 'business-line-list.html'
 })
-export class FundCompanyListComponent {
+export class BusinessLiseListComponent {
 
     constructor(
         private fundService:FundService
     ) {}
 
     pageObj : Page;
-    fundCompany = new FundCompany();
-    fundCompanyList : FundCompany[];
+    businessLine = new FundCompany();
+    businessLineList : FundCompany[];
     companyId : number;
 
 
@@ -44,50 +44,34 @@ export class FundCompanyListComponent {
 
     ngOnInit() {
         this.pageObj = new Page();
-        this.getFundCompanyList(this.fundCompany, this.pageObj)
-        // this.getUserList(this.pageObj.page);
-        // this.getGroupList();
+        this.getBusinessLineList(this.businessLine, this.pageObj)
     }
 
-    getFundCompanyList(fundCompany : FundCompany, pageObj : Page){
-        this.fundService.getFundCompanyList(fundCompany.name, fundCompany.adminName, pageObj.page).then((result)=>{
+    getBusinessLineList(fundCompany : FundCompany, pageObj : Page){
+        this.fundService.getBusinessLineList(fundCompany.name, fundCompany.adminName, pageObj.page).then((result)=>{
             if(result.success){
-                this.fundCompanyList = result.data;
+                this.businessLineList = result.data;
             }
         });
     }
 
 
-    // getUserList(page:number) {
-    //     this.groupId=this.selectedItem.id;
-    //     this.user.getList(this.name,this.username,this.groupId,page).then((result)=> {
-    //         if (result.success) {
-    //             this.userList = result.data;
-    //             if(result.meta){
-    //                 this.pageObj=result.meta;
-    //             }
-    //         } else {
-    //
-    //         }
-    //     });
-    // }
-    //
     // showDelModal(id:string, modalShowText:string) {
     //     this.isHiddenDelModal = false;
     //     this.modalShowText = modalShowText;
     //     this.userId = id;
     // }
-    //
+
     showResetModal(id:number, modalShowText:string) {
         this.isHiddenResetModal = false;
         this.modalShowText = modalShowText;
         this.companyId = id;
     }
-    //
+
     hiddenModal() {
         this.companyId = -1;
     }
-    //
+
     // delUser(){
     //     if (this.userId){
     //         this.user.del(this.userId).then((result)=> {
@@ -101,15 +85,7 @@ export class FundCompanyListComponent {
     //     }
     // }
     //
-    // getGroupList() {
-    //     this.groupService.getList().then((result)=> {
-    //         if (result.success) {
-    //             this.groups = result.data;
-    //         } else {
-    //
-    //         }
-    //     });
-    // }
+
     //
     // resetPwd(){
     //     if (this.userId){

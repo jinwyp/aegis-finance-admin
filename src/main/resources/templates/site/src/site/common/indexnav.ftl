@@ -22,8 +22,9 @@
                 <li  class="slideDl">
                     <a href="javascript:void(0);" class="navFist">资讯 <i class="ico_down"></i></a>
                     <dl class="slide">
-                        <dd class=""><a href="${sitepage}/news"><i class="block"></i>资讯</a></dd>
-                        <dd class="noborder"><a href="${sitepage}/dataCenter"><i class="block"></i>数据</a></dd>
+                        <dd class=""><a href="${infopage}/ymindex"><i class="block"></i>易煤指数</a></dd>
+                        <dd class=""><a href="${infopage}/news"><i class="block"></i>行情资讯</a></dd>
+                        <dd class="noborder"><a href="${infopage}/dataCenter"><i class="block"></i>数据中心</a></dd>
                     </dl>
                 </li>
                 <li class=" lastLi slideDl-right" ><a href="https://56.yimei180.com/logistics/toLogistics" class="navFist">物流</a></li>

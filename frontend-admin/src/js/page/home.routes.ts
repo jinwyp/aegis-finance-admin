@@ -23,6 +23,7 @@ import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager'
 import {MaterialDetailComponent} from "../components/task/material-detail";
 import {AddFundCompanyComponent} from "../components/role/add-fund-company";
 import {FundCompanyListComponent} from "../components/role/fund-company-list";
+import {BusinessLiseListComponent} from "../components/role/business-line-list";
 
 const routes: Routes = [
     {
@@ -70,6 +71,11 @@ const routes: Routes = [
         path: 'fundcompanys',
         component: FundCompanyListComponent,
         data: { routeType : 'list', title: '资金方公司列表' }
+    },
+    {
+        path: 'businesslines',
+        component: BusinessLiseListComponent,
+        data: { routeType : 'list', title: '业务线列表' }
     },
     {
         path: 'users/add',

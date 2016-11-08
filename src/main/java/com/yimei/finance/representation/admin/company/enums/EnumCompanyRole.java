@@ -4,8 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum EnumCompanyRole {
-    Business_Organization(1, "业务组织"),
-    Fund_Provider(2, "资金方"),
+    RiskManager_Organization(1, "风控线"),
     ;
 
     public int id;

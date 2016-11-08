@@ -79,7 +79,7 @@ public class FinanceOrderServiceImpl {
     public Result findById(Long id, EnumFinanceAttachment attachmentType, Long sessionCompanyId) {
         FinanceOrderObject financeOrderObject = DozerUtils.copy(orderRepository.findOne(id), FinanceOrderObject.class);
         if (financeOrderObject == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        if (sessionCompanyId.longValue() == 0 || sessionCompanyId.longValue() == financeOrderObject.getBusinessCompanyId().longValue()) {
+        if (sessionCompanyId.longValue() == 0 || sessionCompanyId.longValue() == financeOrderObject.getRiskCompanyId().longValue()) {
             financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(id, attachmentType));
             return Result.success().setData(financeOrderObject);
         } else {

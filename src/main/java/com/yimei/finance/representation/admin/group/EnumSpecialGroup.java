@@ -17,7 +17,6 @@ public enum EnumSpecialGroup {
     SupervisorGroup("GROUP00008", "监管员组", EnumGroupType.Business_Company_Group.id),
     ManageRiskGroup("GROUP00009", "风控管理组", EnumGroupType.Business_Company_Group.id),
     RiskGroup("GROUP00010", "风控员组", EnumGroupType.Business_Company_Group.id),
-    PortGroup("GROUP00011", "港口组", EnumGroupType.Business_Company_Group.id),
     ;
 
     public String id;

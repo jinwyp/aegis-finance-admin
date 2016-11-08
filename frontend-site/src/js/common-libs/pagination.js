@@ -100,7 +100,7 @@ avalon.component('ms-pagination', {
             }
 
             vm._isShow = vm.totalPages > 0 && vm.isShowPagination;
-            console.log('Pagination updated, isShow:', vm._isShow, '. Total Page:', this.totalPages, '. Current Page:', this.currentPage);
+            // console.log('Pagination updated, isShow:', vm._isShow, '. Total Page:', this.totalPages, '. Current Page:', this.currentPage);
 
             if (vm.currentPage < 1){
                 vm.currentPage = 1;

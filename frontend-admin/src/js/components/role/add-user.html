@@ -66,7 +66,7 @@
 
             <div class="col-sm-offset-2 col-sm-8 info-val no-bottom-border">
                 <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" [disabled]="addUserForm.form.invalid || css.isSubmitted"  >保存</button>
-                <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['/users']">返回</button>
+                <button type="button" class="btn btn-default btn-lg btn-return" (click)="back()">返回</button>
                 <div class="mt-20 fs-14"><span class="hint">注:确认保存后,该系统用户的密码将 <span class="orange">发送至填写的公司邮箱中。</span></span></div>
             </div>
         </div>
