@@ -159,8 +159,6 @@ public class AdminUserServiceImpl {
         identityService.setUserInfo(oldUser.getId(), "name", user.getName());
         identityService.setUserInfo(oldUser.getId(), "phone", user.getPhone());
         identityService.setUserInfo(oldUser.getId(), "department", user.getDepartment());
-        identityService.setUserInfo(oldUser.getId(), "companyId", String.valueOf(sessionUser.getCompanyId()));
-        identityService.setUserInfo(oldUser.getId(), "companyName", sessionUser.getCompanyName());
         addUserGroupMemberShip(oldUser.getId(), user.getGroupIds());
         return Result.success().setData(changeUserObject(identityService.createUserQuery().userId(id).singleResult()));
     }
