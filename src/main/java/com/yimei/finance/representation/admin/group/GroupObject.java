@@ -20,7 +20,6 @@ public class GroupObject implements Serializable {
     @NotBlank(message = "组名不能为空", groups = {CreateGroup.class})
     private String name;
     private String type;
-    private String companyId;
     private Integer memberNums;
 
 

@@ -187,13 +187,11 @@ public class AdminUserServiceImpl {
      * 管理员重置密码
      */
     public Result adminResetUserPassword(String id, UserObject sessionUser) {
-        boolean haveAuthority = getUserGroupIdList(id).contains(EnumSpecialGroup.SystemAdminGroup.id) && getUserGroupIdList(sessionUser.getId()).contains(EnumSpecialGroup.SuperAdminGroup.id);
         User user = identityService.createUserQuery().userId(id).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         UserObject userObject = DozerUtils.copy(user, UserObject.class);
         Result result = checkOperateUserAuthority(userObject, sessionUser);
-        haveAuthority = haveAuthority || result.isSuccess();
-        if (!haveAuthority) return result;
+        if (!result.isSuccess()) return result;
         String subject = "重置密码邮件";
         String password = CodeUtils.CreateNumLetterCode();
         user.setPassword(securePassword(password));
@@ -321,16 +319,6 @@ public class AdminUserServiceImpl {
     }
 
     /**
-     * 检查是否具有系统管理员权限
-     */
-    public Result checkSystemAdminRight(String userId) {
-        if (getUserGroupIdList(userId).contains(EnumSpecialGroup.SystemAdminGroup.id)) {
-            return Result.success();
-        }
-        return Result.error(EnumAdminUserError.只有系统管理员组成员才能执行此操作.toString());
-    }
-
-    /**
      * 获取一个用户 有权限操作的 组 list
      */
     public List<GroupObject> getCanOperateGroupList(String userId) {
@@ -399,11 +387,10 @@ public class AdminUserServiceImpl {
      * 检查是否有更改一个用户的权限
      */
     public Result checkOperateUserAuthority(UserObject userObject, UserObject sessionUser) {
+        if (getUserGroupIdList(sessionUser.getId()).contains(EnumSpecialGroup.SuperAdminGroup.id)) return Result.success();
         Result result = checkOperateGroupsAuthority(getUserGroupIdList(userObject.getId()), sessionUser.getId());
         if (!result.isSuccess()) return result;
-        boolean haveAuthority = getUserGroupIdList(userObject.getId()).contains(EnumSpecialGroup.SystemAdminGroup.id) && getUserGroupIdList(sessionUser.getId()).contains(EnumSpecialGroup.SuperAdminGroup.id);
-        haveAuthority = haveAuthority || (userObject.getCompanyId() == sessionUser.getCompanyId());
-        if (!haveAuthority) return Result.error(EnumAdminUserError.你没有操作此用户的权限.toString());
+        if (userObject.getCompanyId().longValue() != sessionUser.getCompanyId().longValue()) return Result.error(EnumAdminUserError.你没有操作此用户的权限.toString());
         return Result.success();
     }
 
