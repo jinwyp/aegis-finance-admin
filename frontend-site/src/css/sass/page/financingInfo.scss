@@ -159,18 +159,27 @@ $borderColor:#e4e4e4;
               }
             }
           }
-          .back{
+          .btn{
             width: 180px;
             height: 40px;
-            line-height: 40px;
+            line-height: 25px;
             text-align: center;
             display: inline-block;
             background: #aabfc5;
             color: #ffffff;
             border-radius: 2px;
             font-size: 16px;
-            margin: 50px 0 100px 174px;
+            margin: 50px 0 100px 50px;
             text-decoration: none;
+            &:hover{
+              opacity: 0.7;
+            }
+          }
+          .back{
+            background: #aabfc5;
+          }
+          .blue{
+            background-color: #1fb8ea;
           }
         }
 

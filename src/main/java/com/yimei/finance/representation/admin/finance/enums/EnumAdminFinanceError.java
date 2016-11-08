@@ -26,6 +26,7 @@ public enum EnumAdminFinanceError {
     此订单不是煤易融业务,
     此订单不是煤易购业务,
     此订单不是煤易贷业务,
+    你没有权限处理此任务,
     ;
 
 }

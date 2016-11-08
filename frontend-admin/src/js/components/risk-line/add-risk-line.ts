@@ -15,11 +15,11 @@ declare var __moduleName:string;
 
 
 @Component({
-    selector :    'add-fund-company',
+    selector :    'add-risk-line',
     moduleId :    module.id,
-    templateUrl : 'add-fund-company.html'
+    templateUrl : 'add-risk-line.html'
 })
-export class AddFundCompanyComponent {
+export class AddRiskLineComponent {
 
     private sub:Subscription;
 

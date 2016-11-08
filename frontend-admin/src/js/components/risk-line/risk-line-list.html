@@ -2,46 +2,31 @@
     <ol class="breadcrumb">
         <li>权限设置</li>
         <li>&gt;</li>
-        <li class="active">资金方管理</li>
+        <li class="active">风控线管理</li>
     </ol>
 </div>
 
 <div class="item-margin">
     <div class="row-search">
-        <!--<div style="display: inline-block; width: 250px;">-->
-            <!--<input style="width: 100%;;margin-left: 0px;" type="text"/>-->
-            <!--<ul style="max-height: 120px;overflow: auto;">-->
-                <!--<li>fdsfdsfsdfds</li>-->
-                <!--<li>fdsfdsfsdfds</li>-->
-                <!--<li>fdsfdsfsdfds</li>-->
-                <!--<li>fdsfdsfsdfds</li>-->
-                <!--<li>fdsfdsfsdfds</li>-->
-                <!--<li>fdsfdsfsdfds</li>-->
-                <!--<li>fdsfdsfsdfds</li>-->
-                <!--<li>fdsfdsfsdfds</li>-->
-                <!--<li>fdsfdsfsdfds</li>-->
-                <!--<li>fdsfdsfsdfds</li>-->
-                <!--<li>fdsfdsfsdfds</li>-->
-                <!--<li>fdsfdsfsdfds</li>-->
-            <!--</ul>-->
-        <!--</div>-->
-        <span>业务线名称:</span><input type="text" [(ngModel)]="username">
-        <span>业务线管理帐号:</span><input type="text" [(ngModel)]="name">
+        <span>风控线名称:</span><input type="text" [(ngModel)]="username">
+        <span>风控线管理帐号:</span><input type="text" [(ngModel)]="name">
         <!--<span>角色名称:</span><custom-select  [optionList]="groups" [(ngModel)]="selectedItem" [ngModelOptions]="{standalone: true}"></custom-select>-->
         <button class="btn btn-default" type="button" (click)="getUserList()">查询</button>
-        <button type="button" class="btn btn-default btn-addrole" [routerLink]="['/businessline/add']">
-            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加业务线
+        <button type="button" class="btn btn-default btn-addrole" [routerLink]="['/riskline/add']">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加风控线
         </button>
     </div>
     <table class="table table-striped mt-20 info-table">
         <tr class="head">
-            <th width="80">业务线名称</th>
-            <th width="100">业务线管理帐号</th>
+            <th width="80">风控线名称</th>
+            <th width="100">风控线管理帐号</th>
+            <th width="100">创建时间</th>
             <th width="100">操作</th>
         </tr>
-        <tr class="item" *ngIf="!businessLineList||businessLineList.length < 1"><td colspan="6">暂无业务线数据</td></tr>
+        <tr class="item" *ngIf="!businessLineList||businessLineList.length < 1"><td colspan="6">暂无风控线数据</td></tr>
         <tr class="item" *ngFor="let businessLine of businessLineList">
             <td>{{businessLine.name}}</td>
+            <td>{{businessLine.adminName||'--'}}</td>
             <td>{{businessLine.adminName||'--'}}</td>
             <td class="operation">
                 <span *ngIf="!businessLine.adminName" class="right-border" [routerLink]="['/users/add', {'companyId' : businessLine.id}]">绑定帐号</span>

@@ -103,8 +103,8 @@ public class FinanceOrderObject extends BaseObject implements Serializable {
     private String applyCompanyName;                                 //申请公司名称
     @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     private Date endTime;                                            //结束时间
-    @NotBlank(message = "业务公司不能为空", groups = {SubmitFinanceOrder.class})
-    private Long businessCompanyId;                                  //业务线(公司)id
+    @NotBlank(message = "风控线不能为空", groups = {SubmitFinanceOrder.class})
+    private Long riskCompanyId;                                      //风控线id
     private List<AttachmentObject> attachmentList1;                  //附件列表
 
     public String getApplyTypeName() {

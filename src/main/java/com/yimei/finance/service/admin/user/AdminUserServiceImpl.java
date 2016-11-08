@@ -249,11 +249,15 @@ public class AdminUserServiceImpl {
             userObjList = userObjectList;
         }
         List<UserObject> finalUserList = new ArrayList<>();
-        userObjList.forEach(user -> {
-            if (!StringUtils.isEmpty(user.getCompanyId()) && !StringUtils.isEmpty(sessionUser.getCompanyId()) && (user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue())) {
-                finalUserList.add(user);
+        if (getUserGroupIdList(sessionUser.getId()).contains(EnumSpecialGroup.SuperAdminGroup.id)) {
+            finalUserList = userObjectList;
+        } else {
+            for (UserObject user : userObjectList) {
+                if (!StringUtils.isEmpty(user.getCompanyId()) && !StringUtils.isEmpty(sessionUser.getCompanyId()) && (user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue())) {
+                    finalUserList.add(user);
+                }
             }
-        });
+        }
         page.setTotal((long) finalUserList.size());
         int toIndex = page.getPage() * page.getCount() < finalUserList.size() ? page.getPage() * page.getCount() : finalUserList.size();
         return Result.success().setData(finalUserList.subList(page.getOffset(), toIndex)).setMeta(page);

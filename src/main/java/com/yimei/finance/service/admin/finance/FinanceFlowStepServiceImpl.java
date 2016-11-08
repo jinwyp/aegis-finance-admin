@@ -10,6 +10,7 @@ import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.common.result.TaskMap;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -267,7 +268,7 @@ public class FinanceFlowStepServiceImpl {
      * 风控人员填写合同内容
      */
     @Transactional
-    public Result riskManagerAddFinanceOrderContractMethod(String userId, Task task, FinanceOrderContractObject financeOrderContractObject, boolean submit) {
+    public Result riskManagerAddFinanceOrderContractMethod(String userId, HistoricTaskInstance task, FinanceOrderContractObject financeOrderContractObject, boolean submit) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAudit.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
         orderService.saveFinanceOrderContract(userId, financeOrderContractObject);

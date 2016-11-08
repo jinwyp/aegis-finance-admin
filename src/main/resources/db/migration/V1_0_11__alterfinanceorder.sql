@@ -1,1 +1,1 @@
-ALTER TABLE t_finance_order ADD `business_company_id` BIGINT(20) DEFAULT NULL COMMENT '业务线(公司)id';
+ALTER TABLE t_finance_order ADD `risk_company_id` BIGINT(20) DEFAULT NULL COMMENT '风控线(公司)id';
