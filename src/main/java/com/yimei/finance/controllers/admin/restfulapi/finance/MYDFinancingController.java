@@ -17,8 +17,11 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,6 +45,8 @@ public class MYDFinancingController {
     private RuntimeService runtimeService;
     @Autowired
     private FinanceOrderRepository orderRepository;
+    @Autowired
+    private HistoryService historyService;
 
     @RequestMapping( value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "线上交易员填写材料-保存", notes = "线上交易员填写材料-保存", response = Boolean.class)
@@ -138,7 +143,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "监管员审核-保存", notes = "监管员审核-保存", response = Boolean.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result mydSupervisorAndMaterialMethod(@PathVariable("taskId") String taskId,
-                                           @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SaveFinanceSupervisorInfo.class}) @RequestBody FinanceOrderSupervisorInfoObject supervisorInfoObject) {
+                                                 @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SaveFinanceSupervisorInfo.class}) @RequestBody FinanceOrderSupervisorInfoObject supervisorInfoObject) {
         return supervisorAndMaterialAndAuditMethod(taskId, null, supervisorInfoObject, false);
     }
 
@@ -200,9 +205,9 @@ public class MYDFinancingController {
     }
 
     private Result riskManagerAddContractMethod(String taskId, FinanceOrderContractObject financeOrderContractObject, boolean submit) {
-        Result result = checkMYDMethod(taskId);
+        Result result = checkMYDContractMethod(taskId);
         if (!result.isSuccess()) return result;
-        CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+        CombineObject<HistoricTaskInstance, Long> object = (CombineObject<HistoricTaskInstance, Long>) result.getData();
         financeOrderContractObject.setId(object.u);
         return flowStepService.riskManagerAddFinanceOrderContractMethod(adminSession.getUser().getId(), object.t, financeOrderContractObject, submit);
     }
@@ -216,6 +221,18 @@ public class MYDFinancingController {
         if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
         if (!financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) return Result.error(EnumAdminFinanceError.此订单不是煤易贷业务.toString());
         CombineObject<Task, Long> map = new CombineObject<>(task, Long.valueOf(processInstance.getBusinessKey()));
+        return Result.success().setData(map);
+    }
+
+    private Result checkMYDContractMethod(String taskId) {
+        HistoricTaskInstance task = historyService.createHistoricTaskInstanceQuery().taskId(taskId).taskAssignee(adminSession.getUser().getId()).singleResult();
+        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务.toString());
+        HistoricProcessInstance processInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
+        if (processInstance == null || StringUtils.isEmpty(processInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
+        FinanceOrder financeOrder = orderRepository.findOne(Long.valueOf(processInstance.getBusinessKey()));
+        if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
+        if (!financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) return Result.error(EnumAdminFinanceError.此订单不是煤易贷业务.toString());
+        CombineObject<HistoricTaskInstance, Long> map = new CombineObject<>(task, Long.valueOf(processInstance.getBusinessKey()));
         return Result.success().setData(map);
     }
 
