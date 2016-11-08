@@ -74,7 +74,7 @@ public class AegisFinanceApplication {
 				if (company == null) {
 					company = new Company("易煤网", EnumCompanyStatus.Normal.toString(), EnumCompanyStatus.Normal.id, new Date(), "0", new Date(), "0");
 					companyRepository.save(company);
-					companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), EnumCompanyRole.Business_Organization.id, EnumCompanyRole.Business_Organization.toString(), new Date(), "0", new Date(), "0"));
+					companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), EnumCompanyRole.RiskManager_Organization.id, EnumCompanyRole.RiskManager_Organization.toString(), new Date(), "0", new Date(), "0"));
 				}
 				final Company finalCompany = company;
 				List<User> userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).list();
@@ -163,8 +163,8 @@ public class AegisFinanceApplication {
 				});
 				List<FinanceOrder> financeOrderList = financeOrderRepository.findByCreateTimeBeforeAndApproveStateIdNot(java.sql.Date.valueOf("2016-11-05"), EnumFinanceStatus.WaitForAudit.id);
 				financeOrderList.forEach(financeOrder -> {
-					if (financeOrder.getBusinessCompanyId() == null) {
-						financeOrder.setBusinessCompanyId(finalCompany.getId());
+					if (financeOrder.getRiskCompanyId() == null) {
+						financeOrder.setRiskCompanyId(finalCompany.getId());
 						financeOrderRepository.save(financeOrder);
 					}
 				});

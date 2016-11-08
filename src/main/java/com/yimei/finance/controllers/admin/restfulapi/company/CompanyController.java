@@ -29,27 +29,15 @@ public class CompanyController {
     }
 
     @RequestMapping(value = "/self", method = RequestMethod.GET)
-    @ApiOperation(value = "查询自己所在的业务线(公司)", response = CompanyObject.class)
+    @ApiOperation(value = "查询自己所在的风控线(公司)", response = CompanyObject.class)
     public Result findSelfCompanyMethod() {
         return companyService.findById(adminSession.getUser().getCompanyId());
     }
 
-    @RequestMapping(value = "/business", method = RequestMethod.GET)
-    @ApiOperation(value = "获取业务组织列表", response = CompanyObject.class, responseContainer = "List")
+    @RequestMapping(value = "/risk", method = RequestMethod.GET)
+    @ApiOperation(value = "获取风控线列表", response = CompanyObject.class, responseContainer = "List")
     public Result findBusinessOrganizationListMethod() {
         return companyService.adminFindBusinessCompanyList(adminSession.getUser().getCompanyId());
-    }
-
-    @RequestMapping(value = "/fund", method = RequestMethod.GET)
-    @ApiOperation(value = "获取所有资金方列表", response = CompanyObject.class, responseContainer = "List")
-    public Result findFundProviderListMethod() {
-        return companyService.adminFindFundCompanyList(adminSession.getUser().getId());
-    }
-
-    @RequestMapping(value = "/fund/self", method = RequestMethod.GET)
-    @ApiOperation(value = "获取本公司资金方公司列表", response = CompanyObject.class, responseContainer = "List")
-    public Result findSelfFundProviderListMethod() {
-        return companyService.findFundCompanyListByCompanyId(adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(method = RequestMethod.POST)
@@ -69,20 +57,6 @@ public class CompanyController {
     @ApiOperation(value = "删除公司", notes = "根据 id 删除公司", response = CompanyObject.class)
     public Result deleteCompanyMethod(@PathVariable("id") Long id) {
         return companyService.deleteCompany(id, adminSession.getUser().getId());
-    }
-
-    @RequestMapping(value = "/add/{businessCompanyId}/{fundCompanyId}", method = RequestMethod.GET)
-    @ApiOperation(value = "创建-业务线和资金方关系")
-    public Result createBusinessFundCompanyRelationshipMethod(@PathVariable("businessCompanyId") Long businessCompanyId,
-                                                              @PathVariable("fundCompanyId") Long fundCompanyId) {
-        return companyService.createBusinessFundCompanyRelation(businessCompanyId, fundCompanyId, adminSession.getUser().getId());
-    }
-
-    @RequestMapping(value = "/delete/{businessCompanyId}/{fundCompanyId}", method = RequestMethod.GET)
-    @ApiOperation(value = "解除-业务线和资金方关系")
-    public Result deleteBusinessFundCompanyRelationshipMethod(@PathVariable("businessCompanyId") Long businessCompanyId,
-                                                              @PathVariable("fundCompanyId") Long fundCompanyId) {
-        return companyService.deleteBusinessFundCompanyRelation(businessCompanyId, fundCompanyId, adminSession.getUser().getId());
     }
 
 }

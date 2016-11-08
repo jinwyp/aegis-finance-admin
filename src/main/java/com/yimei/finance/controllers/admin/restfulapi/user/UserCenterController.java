@@ -118,7 +118,7 @@ public class UserCenterController {
             }
         }
         TaskObject taskObject = (TaskObject) workFlowService.changeTaskObject(task).getData();
-        if (taskObject.getBusinessCompanyId() != adminSession.getUser().getCompanyId()) return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
+        if (taskObject.getRiskCompanyId() != adminSession.getUser().getCompanyId()) return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
         List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
         List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
         for (IdentityLink identityLink : identityLinkList) {
