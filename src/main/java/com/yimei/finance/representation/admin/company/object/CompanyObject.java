@@ -30,6 +30,7 @@ public class CompanyObject extends BaseObject implements Serializable {
     public String status;
     private int statusId;                              //状态id
     private String statusName;                         //状态名字
+    @Size(max = 500, message = "备注不能超过 {max} 个字符", groups = {CreateCompany.class, EditCompany.class})
     private String remarks;                            //备注
 
     private String getStatusName() {
