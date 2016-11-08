@@ -55,9 +55,11 @@ public class MailServiceImpl  {
         msg.setTo(to);
         msg.setSubject(subject);
         msg.setText(content);
-        logger.info(" ***************************************** email: ");
+        logger.info(" ----------------------------------------- email: ");
+        logger.info(" ----------------------------------------- email: ");
         logger.info(content);
-        logger.info(" ***************************************** email: ");
+        logger.info(" ----------------------------------------- email: ");
+        logger.info(" ----------------------------------------- email: ");
         try {
             javaMailSender.send(msg);
             logPrint(to, "验证码邮件", content);
