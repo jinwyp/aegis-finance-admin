@@ -33,6 +33,14 @@ class FundService {
             .catch(GlobalPromiseHttpCatch);
     }
 
+    getBusinessLineList(name:string, account:string, page:number,) {
+        // let url = `${API.fund}/fund?page=${page||1}&name=${name||''}&account=${account||''}`;
+        let url = `${API.fund}/business`;
+        return this.http.get(url).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(GlobalPromiseHttpCatch);
+    }
+
     getFundCompanyById(id: number) {
         return this.http.get(API.fund + '/' + id).toPromise()
             .then(response => response.json() as HttpResponse)
