@@ -51,7 +51,7 @@ import { AuditInvestigatorComponent } from '../components/task/audit-investigato
 import { AuditSupervisorComponent } from '../components/task/audit-supervisor';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
 import { MaterialDetailComponent} from "../components/task/material-detail";
-import {AddFundCompanyComponent} from "../components/role/add-fund-company";
+import {AddRiskLineComponent} from "../components/risk-line/add-risk-line";
 import {FundCompanyListComponent} from "../components/role/fund-company-list";
 import {FundService} from "../service/fund";
 
@@ -67,7 +67,7 @@ import {FundService} from "../service/fund";
         UserListComponent, AddUserComponent, UserInfoComponent,
         TaskListComponent, AssignPersonComponent, ProcessTabComponent,
         AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, AuditSupervisorComponent, AuditRiskManagerComponent,
-        CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent, MaterialDetailComponent, FundCompanyListComponent, AddFundCompanyComponent
+        CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent, MaterialDetailComponent, FundCompanyListComponent, AddRiskLineComponent
     ],
     providers: [ FileUploadService, cangyaPageRouterProviders, TaskService, UserService, UserGroupService, FundService ],
     bootstrap: [ HomeComponent ]

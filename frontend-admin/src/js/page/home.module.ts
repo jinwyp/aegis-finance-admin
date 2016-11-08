@@ -51,10 +51,10 @@ import { AuditInvestigatorComponent } from '../components/task/audit-investigato
 import { AuditSupervisorComponent } from '../components/task/audit-supervisor';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
 import { MaterialDetailComponent} from "../components/task/material-detail";
-import {AddFundCompanyComponent} from "../components/role/add-fund-company";
-import {FundCompanyListComponent} from "../components/role/fund-company-list";
-import {FundService} from "../service/fund";
-import {BusinessLiseListComponent} from "../components/role/business-line-list";
+import { AddRiskLineComponent } from "../components/risk-line/add-risk-line";
+import { FundCompanyListComponent } from "../components/role/fund-company-list";
+import { FundService } from "../service/fund";
+import { RiskLineListComponent } from "../components/risk-line/risk-line-list";
 
 
 
@@ -69,7 +69,7 @@ import {BusinessLiseListComponent} from "../components/role/business-line-list";
         TaskListComponent, AssignPersonComponent, ProcessTabComponent,
         AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, AuditSupervisorComponent, AuditRiskManagerComponent,
         CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent, MaterialDetailComponent, FundCompanyListComponent,
-        BusinessLiseListComponent, AddFundCompanyComponent
+        RiskLineListComponent, AddRiskLineComponent
     ],
     providers: [ FileUploadService, homePageRouterProviders, TaskService, UserService, UserGroupService, FundService ],
     bootstrap: [ HomeComponent ]
