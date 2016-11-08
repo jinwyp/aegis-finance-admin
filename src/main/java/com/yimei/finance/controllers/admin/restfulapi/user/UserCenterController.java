@@ -6,7 +6,7 @@ import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceErro
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAssignType;
 import com.yimei.finance.representation.admin.activiti.HistoryTaskObject;
 import com.yimei.finance.representation.admin.activiti.TaskObject;
-import com.yimei.finance.representation.admin.user.EnumAdminUserError;
+import com.yimei.finance.representation.admin.user.enums.EnumAdminUserError;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;

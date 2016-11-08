@@ -2,8 +2,8 @@ package com.yimei.finance.service.admin.user;
 
 import com.yimei.finance.representation.admin.group.EnumAdminGroupError;
 import com.yimei.finance.representation.admin.group.GroupObject;
-import com.yimei.finance.representation.admin.user.EnumAdminUserError;
-import com.yimei.finance.representation.admin.user.UserObject;
+import com.yimei.finance.representation.admin.user.enums.EnumAdminUserError;
+import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.utils.DozerUtils;

@@ -2,7 +2,7 @@ package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.representation.admin.group.GroupObject;
-import com.yimei.finance.representation.admin.user.UserObject;
+import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;

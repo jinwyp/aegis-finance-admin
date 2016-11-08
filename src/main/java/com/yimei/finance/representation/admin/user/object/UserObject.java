@@ -1,7 +1,8 @@
-package com.yimei.finance.representation.admin.user;
+package com.yimei.finance.representation.admin.user.object;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yimei.finance.representation.admin.group.GroupObject;
+import com.yimei.finance.representation.admin.user.enums.EnumUserStatus;
 import com.yimei.finance.representation.admin.user.validated.CreateUser;
 import com.yimei.finance.representation.admin.user.validated.EditUser;
 import com.yimei.finance.representation.common.enums.EnumCommonString;
@@ -48,11 +49,17 @@ public class UserObject implements Serializable {
     private String companyName;                 //用户所在公司名称
 
     private Integer level;                      //员工级别,   1:超级管理员, 2:风控线管理员,    100:其它
+    private String status;                      //状态
+    private String statusName;
 
     @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     private Date lastLoginTime;                 //最后一次登录时间
     private boolean operateAuthority;           //是否具有操作/更改此用户的权限, true: 有权限, false: 无
     private List<String> groupIds;              //用户组id数组
     private List<GroupObject> groupList;        //用户所在组列表
+
+    public String getStatusName() {
+        return EnumUserStatus.valueOf(status).name;
+    }
 
 }

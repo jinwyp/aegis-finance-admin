@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.admin.user;
+package com.yimei.finance.representation.admin.user.object;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;

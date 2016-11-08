@@ -10,7 +10,7 @@ import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachmen
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEndType;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEventType;
 import com.yimei.finance.representation.admin.finance.object.*;
-import com.yimei.finance.representation.admin.user.UserObject;
+import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;

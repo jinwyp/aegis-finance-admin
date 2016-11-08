@@ -10,7 +10,12 @@ import com.yimei.finance.representation.admin.group.EnumAdminGroupError;
 import com.yimei.finance.representation.admin.group.EnumGroupType;
 import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
 import com.yimei.finance.representation.admin.group.GroupObject;
-import com.yimei.finance.representation.admin.user.*;
+import com.yimei.finance.representation.admin.user.enums.EnumAdminUserError;
+import com.yimei.finance.representation.admin.user.enums.EnumUserStatus;
+import com.yimei.finance.representation.admin.user.object.AdminUserSearch;
+import com.yimei.finance.representation.admin.user.object.UserLoginObject;
+import com.yimei.finance.representation.admin.user.object.UserObject;
+import com.yimei.finance.representation.admin.user.object.UserPasswordObject;
 import com.yimei.finance.representation.common.databook.EnumDataBookType;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Page;
@@ -55,6 +60,7 @@ public class AdminUserServiceImpl {
         UserObject userObject = changeUserObject(user);
         Result result = checkOperateUserAuthority(userObject, sessionUser);
         if (!result.isSuccess()) return result;
+        if (userObject.getStatus().equals(EnumUserStatus.Deleted.toString())) return Result.error(EnumAdminUserError.此用户已删除.toString());
         return Result.success().setData(userObject);
     }
 
@@ -81,7 +87,7 @@ public class AdminUserServiceImpl {
         UserObject userObject = DozerUtils.copy(user, UserObject.class);
         Result result = checkOperateUserAuthority(userObject, sessionUser);
         if (!result.isSuccess()) return result;
-        identityService.deleteUser(id);
+        identityService.setUserInfo(id, "status", EnumUserStatus.Deleted.toString());
         return Result.success().setData(userObject);
     }
 
@@ -406,6 +412,7 @@ public class AdminUserServiceImpl {
         userObject.setPhone(identityService.getUserInfo(user.getId(), "phone"));
         userObject.setName(identityService.getUserInfo(user.getId(), "name"));
         userObject.setDepartment(identityService.getUserInfo(user.getId(), "department"));
+        userObject.setStatus(identityService.getUserInfo(user.getId(), "status"));
         String companyId = identityService.getUserInfo(user.getId(), "companyId");
         if (companyId != null && !companyId.equals("null")) {
             userObject.setCompanyId(Long.valueOf(companyId));
@@ -440,6 +447,7 @@ public class AdminUserServiceImpl {
         userObject.setName(identityService.getUserInfo(user.getId(), "name"));
         userObject.setDepartment(identityService.getUserInfo(user.getId(), "department"));
         String companyId = identityService.getUserInfo(user.getId(), "companyId");
+        userObject.setStatus(identityService.getUserInfo(user.getId(), "status"));
         if (companyId != null && !companyId.equals("null")) {
             userObject.setCompanyId(Long.valueOf(companyId));
         }

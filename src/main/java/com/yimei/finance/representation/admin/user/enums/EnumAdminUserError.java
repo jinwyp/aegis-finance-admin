@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.admin.user;
+package com.yimei.finance.representation.admin.user.enums;
 
 public enum EnumAdminUserError {
     此用户不存在,
@@ -18,8 +18,10 @@ public enum EnumAdminUserError {
     新密码和原密码一样,
     邮箱不能为空,
     您的企业信息未认证,
-    你没有操作此用户的权限
+    你没有操作此用户的权限,
+    此用户已删除,
     ;
     public static final String NewPasswordLengthError = "密码应该在6-16个字符之间";
 
+    public static final Error  = ;
 }
