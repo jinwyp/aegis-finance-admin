@@ -40,7 +40,7 @@ public class SiteFinancePageController {
     @LoginRequired
     @RequestMapping(value = "/finance/user/{financeId}/contract", method = RequestMethod.GET)
     public String personCenterContactInfo(@PathVariable("financeId") Long financeId, Model model) {
-        model.addAttribute("currentMenu", 21);
+        model.addAttribute("currentMenu", 11);
         return "site/user/financeInfoContact";
     }
 
