@@ -79,6 +79,7 @@ public class AdminCompanyServiceImpl {
             return Result.error(EnumCompanyError.此名称已存在.toString());
         } else {
             company.setName(companyObject.getName());
+            company.setRemarks(companyObject.getRemarks());
             company.setStatus(EnumCompanyStatus.Normal.toString());
             company.setStatusId(EnumCompanyStatus.Normal.id);
             company.setLastUpdateManId(sessionUserId);

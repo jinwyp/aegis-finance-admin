@@ -275,4 +275,9 @@ public class SiteFinanceOrderServiceImpl {
         financeOrderContractObject.setFinanceSourceId(financeOrder.getSourceId());
         return financeOrderContractObject;
     }
+
+    public void downFinanceOrderContractByFinanceIdAndContractType(Long financeId, int type) {
+        FinanceOrderContract financeOrderContract = orderContractRepository.findByFinanceIdAndType(financeId, type);
+
+    }
 }
