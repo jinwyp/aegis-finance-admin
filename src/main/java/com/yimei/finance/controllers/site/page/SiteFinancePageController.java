@@ -3,12 +3,15 @@ package com.yimei.finance.controllers.site.page;
 import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.ext.annotations.LoginRequired;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceContractType;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.site.finance.SiteFinanceOrderServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -42,6 +45,24 @@ public class SiteFinancePageController {
     public String personCenterContactInfo(@PathVariable("financeId") Long financeId, Model model) {
         model.addAttribute("currentMenu", 11);
         return "site/user/financeInfoContact";
+    }
+
+    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 合同详情 - 下载合同", notes = "供应链金融 我的融资 煤易贷 合同详情 - 下载合同")
+    @LoginRequired
+    @RequestMapping(value = "/finance/user/{financeId}/contract/{type}/download", method = RequestMethod.GET)
+    public void siteFinanceOrderDownloadContractByFinanceIdAndContractType(@PathVariable("financeId") Long financeId,
+                                                                           @PathVariable("type") int type) {
+        if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
+        financeOrderService.downFinanceOrderContractByFinanceIdAndContractType(financeId, type);
+    }
+
+    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 合同详情 - 预览合同", notes = "供应链金融 我的融资 煤易贷 合同详情 - 预览合同")
+    @LoginRequired
+    @RequestMapping(value = "/finance/user/{financeId}/contract/{type}/preview", method = RequestMethod.GET)
+    public String siteFinanceOrderPreviewContractByFinanceIdAndContractType(@PathVariable("financeId") Long financeId,
+                                                                            @PathVariable("type") int type) {
+        if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
+        return "site/user/contractPreview";
     }
 
 }

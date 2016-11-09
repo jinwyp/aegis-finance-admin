@@ -56,11 +56,5 @@ public class CommonPageController {
         return Result.success();
     }
 
-    @RequestMapping(value = "/contract" , method = RequestMethod.GET)
-    @ApiOperation(value = "合同页面", notes = "合同页面")
-    public String contractPage() {
-        return "admin/contract";
-    }
-
 
 }

@@ -15,6 +15,8 @@ class RiskLine{
     name : string;          //资金方公司名称
     type : number;          //类型
     remarks : string;       //备注
+    createTime : string;    //备注
+    personNum  : number;    //人数
     adminName : string;     //帐号
 }
 
@@ -27,9 +29,15 @@ class RiskService {
 
 
 
+    getRiskListSelect() {
+        // let url = `${API.fund}/fund?page=${page||1}&name=${name||''}&account=${account||''}`;
+        let url = `${API.risk}/risk`;
+        return this.http.get(url).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(GlobalPromiseHttpCatch);
+    }
 
-
-    getRiskLineList(name:string, account:string, page:number,) {
+    getRiskLineList(name:string, account:string, page:number) {
         // let url = `${API.fund}/fund?page=${page||1}&name=${name||''}&account=${account||''}`;
         let url = `${API.risk}/risk`;
         return this.http.get(url).toPromise()
@@ -50,12 +58,12 @@ class RiskService {
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }
-    //
-    // deleteFundCompanyById(id: number) {
-    //     return this.http.delete(API.fund + '/' + id).toPromise()
-    //         .then(response => response.json() as HttpResponse)
-    //         .catch(GlobalPromiseHttpCatch);
-    // }
+
+    del(id: number) {
+        return this.http.delete(API.risk + '/' + id).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(GlobalPromiseHttpCatch);
+    }
 
     add(riskLine: RiskLine) {
         let headers = new Headers({'Content-Type': 'application/json'});

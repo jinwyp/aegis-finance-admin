@@ -4,11 +4,12 @@
 
 
 import {Component} from '@angular/core';
-import {ActivatedRoute, Router}      from '@angular/router';
+import {ActivatedRoute}      from '@angular/router';
 import { Location } from '@angular/common';
 import {Subscription} from 'rxjs/Subscription';
 
 import {User, UserService, UserGroupService} from '../../service/user';
+import { RiskService } from '../../service/risk'
 
 
 declare var __moduleName:string;
@@ -25,9 +26,9 @@ export class AddUserComponent {
 
     constructor(
         private location: Location,
-        private router : Router,
         private activatedRoute: ActivatedRoute,
         private userService: UserService,
+        private riskService: RiskService,
         private groupService:UserGroupService
     ) {}
 
@@ -47,7 +48,7 @@ export class AddUserComponent {
 
     groups       = [];
     departments  = [];
-    riskLines = [{id : 1,name : "风控线1"},{id : 2,name : "风控线2"},{id : 3,name : "风控线3"}]
+    riskLines = [{id : 1,name : "风控线1"},{id : 2,name : "风控线2"},{id : 3,name : "风控线3"}];
     selectedItem = {name : null};
     riskSelected = {name : null};
     modalShowText : string ='';
@@ -55,9 +56,7 @@ export class AddUserComponent {
     ngOnInit() {
 
         this.sub = this.activatedRoute.params.subscribe(params => {
-            // console.log(params['companyId']);
             this.currentUser.companyId = params['companyId'] || -1;
-            // console.log(this.currentUser.companyId);
         });
 
         if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
@@ -69,6 +68,7 @@ export class AddUserComponent {
             });
         }
         this.getDepartmentList();
+        this.getRiskLineList();
     }
 
 
@@ -83,6 +83,16 @@ export class AddUserComponent {
         this.groupService.getList().then((result)=> {
             if (result.success) {
                 this.groups = result.data;
+            }
+        });
+    }
+
+    getRiskLineList() {
+        this.riskService.getRiskListSelect().then((result)=> {
+            if (result.success) {
+                console.log(result.data);
+            } else {
+
             }
         });
     }
@@ -113,7 +123,7 @@ export class AddUserComponent {
     }
 
 
-    addUser(form) {
+    addUser() {
         this.css.isSubmitted     = true;
         this.css.ajaxErrorHidden     = true;
         this.css.ajaxSuccessHidden     = true;
@@ -137,8 +147,6 @@ export class AddUserComponent {
                 if (result.success) {
                     this.css.ajaxSuccessHidden=false;
                     this.back();
-                    // this.router.navigate(['/users']);
-                    // setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
                 } else {
                     this.css.ajaxErrorHidden = false;
                     this.errorMsg = result.error.message;

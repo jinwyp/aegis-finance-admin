@@ -25,30 +25,20 @@ export class RiskLineListComponent {
     pageObj : Page;
     riskLine = new RiskLine();
     riskLineList : RiskLine[];
-    companyId : number;
+    riskLineId : number;
 
 
-
-    name:string = '';
-    username:string = '';
-    groupId:string = '';
-    selectedItem = {id : null, name : null};
-    groups       = [];
     isHiddenDelModal : boolean = true;
-    isHiddenResetModal : boolean = true;
-    isHiddenMsgModal : boolean = true;
-    btnClick : boolean    = false;
-    userId : string       = '';
     modalShowText : string       = '';
 
 
     ngOnInit() {
         this.pageObj = new Page();
-        this.getRiskLineList(this.riskLine, this.pageObj)
+        this.getRiskLineList();
     }
 
-    getRiskLineList(riskLine : RiskLine, pageObj : Page){
-        this.riskService.getRiskLineList(riskLine.name, riskLine.adminName, pageObj.page).then((result)=>{
+    getRiskLineList(){
+        this.riskService.getRiskLineList(this.riskLine.name, this.riskLine.adminName, this.pageObj.page).then((result)=>{
             if(result.success){
                 console.log(result.data);
                 this.riskLineList = result.data;
@@ -57,50 +47,29 @@ export class RiskLineListComponent {
     }
 
 
-    // showDelModal(id:string, modalShowText:string) {
-    //     this.isHiddenDelModal = false;
-    //     this.modalShowText = modalShowText;
-    //     this.userId = id;
-    // }
-
-    showResetModal(id:number, modalShowText:string) {
-        this.isHiddenResetModal = false;
+    showDelModal(id : number, modalShowText : string) {
+        this.isHiddenDelModal = false;
         this.modalShowText = modalShowText;
-        this.companyId = id;
+        this.riskLineId = id;
     }
 
     hiddenModal() {
-        this.companyId = -1;
+        this.riskLineId = -1;
     }
 
-    // delUser(){
-    //     if (this.userId){
-    //         this.user.del(this.userId).then((result)=> {
-    //             if (result.success) {
-    //                 // this.pageObj=new Page();
-    //                 this.getUserList(this.pageObj.page);
-    //             } else {
-    //
-    //             }
-    //         });
-    //     }
-    // }
-    //
+    delRiskLine(){
+        if (this.riskLineId){
+            this.riskService.del(this.riskLineId).then((result)=> {
+                if (result.success) {
+                    this.pageObj=new Page();
+                    this.getRiskLineList();
+                } else {
 
-    //
-    // resetPwd(){
-    //     if (this.userId){
-    //         this.user.resetPassword(this.userId).then((result)=> {
-    //             if (result.success) {
-    //                 this.modalShowText='重置密码成功!';
-    //             } else {
-    //                 this.modalShowText=result.error.message;
-    //             }
-    //             this.isHiddenMsgModal=false;
-    //         });
-    //     }
-    // }
-    //
+                }
+            });
+        }
+    }
+
 
 }
 
