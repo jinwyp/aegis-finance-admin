@@ -75,9 +75,7 @@ export class AddRiskLineComponent {
 
         this.riskService.getRiskLineById(id).then((result)=> {
             if (result.success) {
-                console.log(result.data);
-                this.riskLine.id   = result.data.id;
-                this.riskLine.name = result.data.name;
+                this.riskLine = result.data;
             }
         });
     }
