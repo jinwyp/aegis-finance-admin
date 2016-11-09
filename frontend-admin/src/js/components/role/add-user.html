@@ -37,6 +37,15 @@
                 <span class="help-block" [class.hidden]="true">请选择角色!</span>
             </div>
         </div>
+
+        <!--选择风控线-->
+        <div class="row info-item">
+            <label class="col-sm-2 info-label-input"><span>所属风控线:</span></label>
+            <div class="col-sm-10 info-val">
+                <custom-select  [optionList]="riskLines" [(ngModel)]="riskSelected" [ngModelOptions]="{standalone: true}"></custom-select>
+            </div>
+        </div>
+
         <div class="row info-item">
             <label class="col-sm-2 info-label-input" for="emailInput"><span class="orange">*</span><span>公司邮箱:</span></label>
             <div class="col-sm-10 info-val">
