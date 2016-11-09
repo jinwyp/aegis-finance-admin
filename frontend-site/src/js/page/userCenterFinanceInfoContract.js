@@ -9,12 +9,15 @@ import {getFinanceOrderInfo} from 'js/service/http.js';
 
 var financeInfo = ()=> {
 
-    var url = window.location.href.match(/\/financing\/\d{1,8}/);
-    var financeInfoId = 0
-    if (url) financeInfoId = Number(url[0].split('/')[2])
+    var url = window.location.href.match(/\/user\/\d{1,8}/);
+    var financeInfoId = 0;
+    if (url) financeInfoId = Number(url[0].split('/')[2]);
+    console.log(financeInfoId);
+
 
     var vm = avalon.define({
-        $id   : 'financeInfo',
+        $id   : 'financeInfoController',
+        financeInfoId : financeInfoId,
         financeInfo : {},
         css : {
             status : false
