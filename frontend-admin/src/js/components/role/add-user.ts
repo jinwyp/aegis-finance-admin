@@ -88,7 +88,7 @@ export class AddUserComponent {
     }
 
     getRiskLineList() {
-        this.riskService.getRiskLineList().then((result)=> {
+        this.riskService.getRiskListSelect().then((result)=> {
             if (result.success) {
                 console.log(result.data);
             } else {
