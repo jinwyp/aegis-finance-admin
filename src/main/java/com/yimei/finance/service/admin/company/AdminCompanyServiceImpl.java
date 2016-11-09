@@ -12,6 +12,7 @@ import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
 import com.yimei.finance.representation.admin.company.object.CompanyObject;
 import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
@@ -152,11 +153,31 @@ public class AdminCompanyServiceImpl {
     }
 
     /**
+     * 超级管理员, 交易员获取风控线列表
+     */
+    public Result adminFindRiskCompanyList(Long sessionCompanyId, Page page) {
+        if (sessionCompanyId.longValue() != 0) {
+            return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
+        }
+        return findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id, page);
+    }
+
+    /**
      * 根据角色获取公司列表
      */
     public Result findCompanyListByRole(int type) {
         List<Company> companyList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
         return Result.success().setData(changeCompanyObject(companyList));
+    }
+
+    /**
+     * 根据角色获取公司列表
+     */
+    public Result findCompanyListByRole(int type, Page page) {
+        List<Company> companyList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
+        page.setTotal((long) companyList.size());
+        int toIndex = page.getPage() * page.getCount() < companyList.size() ? page.getPage() * page.getCount() : companyList.size();
+        return Result.success().setData(changeCompanyObject(companyList.subList(page.getOffset(), toIndex))).setMeta(page);
     }
 
     /**

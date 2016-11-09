@@ -1,15 +1,13 @@
 package com.yimei.finance.controllers.admin.page;
 
-import com.yimei.finance.config.session.AdminSession;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Api(tags = {"admin-page"}, description = "管理后台登陆, 退出等页面")
-@Controller
+@Controller("adminLoginPageController")
 public class LoginPageController {
 
 

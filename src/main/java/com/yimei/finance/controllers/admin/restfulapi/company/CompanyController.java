@@ -4,6 +4,7 @@ import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.representation.admin.company.object.CompanyObject;
 import com.yimei.finance.representation.admin.company.validated.CreateCompany;
 import com.yimei.finance.representation.admin.company.validated.EditCompany;
+import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.company.AdminCompanyServiceImpl;
 import io.swagger.annotations.Api;
@@ -34,10 +35,16 @@ public class CompanyController {
         return companyService.findById(adminSession.getUser().getCompanyId());
     }
 
+    @RequestMapping(value = "/risk/all", method = RequestMethod.GET)
+    @ApiOperation(value = "获取风控线列表", response = CompanyObject.class, responseContainer = "List")
+    public Result findAllFundOrganizationListMethod() {
+        return companyService.adminFindRiskCompanyList(adminSession.getUser().getCompanyId());
+    }
+
     @RequestMapping(value = "/risk", method = RequestMethod.GET)
     @ApiOperation(value = "获取风控线列表", response = CompanyObject.class, responseContainer = "List")
-    public Result findBusinessOrganizationListMethod() {
-        return companyService.adminFindRiskCompanyList(adminSession.getUser().getCompanyId());
+    public Result findFundOrganizationListMethod(Page page) {
+        return companyService.adminFindRiskCompanyList(adminSession.getUser().getCompanyId(), page);
     }
 
     @RequestMapping(method = RequestMethod.POST)
