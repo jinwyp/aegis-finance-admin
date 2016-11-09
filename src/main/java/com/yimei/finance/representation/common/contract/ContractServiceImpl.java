@@ -22,9 +22,6 @@ public class ContractServiceImpl {
     public String getFinanceOrderFormalContractContent(Long financeId, int type) {
         try {
             return freeMarker.render(getFinanceOrderContentTemplateByType(type), new HashMap<String, Object>() {{
-                int year=0;
-                int month=0;
-                int day=0;
                 put("contractNo", "HT201611090001");
             }});
         } catch (Exception e) {
@@ -53,9 +50,9 @@ public class ContractServiceImpl {
 
     public String getFinanceOrderContentTemplateByType(int type) {
         if (type == 1) {
-            return "/admin/src/admin/contractup";
+            return "/admin/contract/contractup";
         } else if (type == 2) {
-            return "/admin/src/admin/contractup";
+            return "/admin/contract/contractdown";
         } else {
             throw new BusinessException(EnumCommonError.Admin_System_Error);
         }
