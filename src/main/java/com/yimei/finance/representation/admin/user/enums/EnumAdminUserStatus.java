@@ -1,6 +1,6 @@
 package com.yimei.finance.representation.admin.user.enums;
 
-public enum EnumUserStatus {
+public enum EnumAdminUserStatus {
     Normal(1, "正常"),
     Deleted(2, "已删除"),
     ;
@@ -8,9 +8,9 @@ public enum EnumUserStatus {
     public int id;
     public String name;
 
-    EnumUserStatus() {}
+    EnumAdminUserStatus() {}
 
-    EnumUserStatus(int id, String name) {
+    EnumAdminUserStatus(int id, String name) {
         this.id = id;
         this.name = name;
     }

@@ -10,7 +10,7 @@ import com.yimei.finance.representation.admin.company.enums.EnumCompanyRole;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
 import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
-import com.yimei.finance.representation.admin.user.enums.EnumUserStatus;
+import com.yimei.finance.representation.admin.user.enums.EnumAdminUserStatus;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
@@ -85,7 +85,7 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
 					}
 					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumUserStatus.Normal.toString());
+						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 					}
 				});
 				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SuperAdminGroup.id).list();
@@ -95,7 +95,7 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
 					}
 					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumUserStatus.Normal.toString());
+						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 					}
 				});
 				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageOnlineTraderGroup.id).list();
@@ -105,7 +105,7 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
 					}
 					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumUserStatus.Normal.toString());
+						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 					}
 				});
 				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.OnlineTraderGroup.id).list();
@@ -115,7 +115,7 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
 					}
 					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumUserStatus.Normal.toString());
+						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 					}
 				});
 				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageSalesmanGroup.id).list();
@@ -125,7 +125,7 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
 					}
 					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumUserStatus.Normal.toString());
+						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 					}
 				});
 				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SalesmanGroup.id).list();
@@ -135,7 +135,7 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
 					}
 					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumUserStatus.Normal.toString());
+						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 					}
 				});
 				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageInvestigatorGroup.id).list();
@@ -145,7 +145,7 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
 					}
 					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumUserStatus.Normal.toString());
+						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 					}
 				});
 				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.InvestigatorGroup.id).list();
@@ -155,7 +155,7 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
 					}
 					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumUserStatus.Normal.toString());
+						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 					}
 				});
 				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageSupervisorGroup.id).list();
@@ -165,7 +165,7 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
 					}
 					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumUserStatus.Normal.toString());
+						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 					}
 				});
 				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SupervisorGroup.id).list();
@@ -175,7 +175,7 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
 					}
 					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumUserStatus.Normal.toString());
+						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 					}
 				});
 				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageRiskGroup.id).list();
@@ -185,7 +185,7 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
 					}
 					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumUserStatus.Normal.toString());
+						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 					}
 				});
 				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.RiskGroup.id).list();
@@ -195,7 +195,7 @@ public class AegisFinanceApplication {
 						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
 					}
 					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumUserStatus.Normal.toString());
+						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 					}
 				});
 				List<FinanceOrder> financeOrderList = financeOrderRepository.findByCreateTimeBeforeAndApproveStateIdNot(java.sql.Date.valueOf("2016-11-05"), EnumFinanceStatus.WaitForAudit.id);

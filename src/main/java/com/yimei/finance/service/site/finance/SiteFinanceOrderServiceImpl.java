@@ -1,13 +1,16 @@
 package com.yimei.finance.service.site.finance;
 
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.entity.admin.finance.FinanceOrderContract;
 import com.yimei.finance.entity.site.user.User;
 import com.yimei.finance.exception.BusinessException;
+import com.yimei.finance.repository.admin.finance.FinanceOrderContractRepository;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
+import com.yimei.finance.representation.admin.finance.object.FinanceOrderContractObject;
 import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.file.AttachmentObject;
@@ -65,6 +68,8 @@ public class SiteFinanceOrderServiceImpl {
     private HistoryService historyService;
     @Autowired
     private TaskService taskService;
+    @Autowired
+    private FinanceOrderContractRepository orderContractRepository;
 
     /**
      * 客户申请金融单
@@ -236,5 +241,14 @@ public class SiteFinanceOrderServiceImpl {
         OutputStream out = response.getOutputStream();
         wb.write(out);
         out.close();
+    }
+
+    public Result getFinanceOrderContractObject(Long financeId, Integer type, Long sessionUserId, Long sessionCompanyId) {
+        FinanceOrder financeOrder = orderRepository.findByIdAndUserIdOrCompanyId(financeId, sessionUserId, sessionCompanyId);
+        if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
+        FinanceOrderContract financeOrderContract = orderContractRepository.findByFinanceIdAndType(financeId, type);
+        if (financeOrderContract == null) return Result.error(EnumAdminFinanceError.此合同不存在.toString());
+        FinanceOrderContractObject financeOrderContractObject = DozerUtils.copy(financeOrderContract, FinanceOrderContractObject.class);
+        return Result.success().setData(financeOrderContractObject);
     }
 }
