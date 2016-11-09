@@ -38,8 +38,8 @@ public class CompanyObject extends BaseObject implements Serializable {
         return EnumCompanyStatus.valueOf(status).name;
     }
 
-    @Range(min = 1, max = 100, message = "类型应在 {min}-{max} 天之间", groups = {CreateCompany.class})
-    private Integer type;                              //类型: 1:业务线
+    @Range(min = 1, max = 100, message = "类型应在 {min}-{max} 之间", groups = {CreateCompany.class})
+    private int type;                                  //类型: 1:业务线
     private String roleName;
 
     private String adminName;                          //管理员账号名
