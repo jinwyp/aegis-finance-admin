@@ -25,7 +25,6 @@ export class AddRiskLineComponent {
 
     constructor(
         private location : Location,
-        private router : Router,
         private activatedRoute: ActivatedRoute,
         private riskService: RiskService,
     ) {}
@@ -87,6 +86,7 @@ export class AddRiskLineComponent {
 
         console.log(this.riskLine);
         this.riskLine.type = 1;
+        console.log(this.riskLine);
 
         this.riskService.save(this.riskLine).then((result)=> {
             this.css.isSubmitted = false;

@@ -27,7 +27,7 @@
         <tr class="item" *ngFor="let riskLine of riskLineList">
             <td>{{riskLine.name}}</td>
             <td>{{riskLine.createTime||'--'}}</td>
-            <td>{{riskLine.personNum}}</td>
+            <td>{{riskLine.personNum}}人</td>
             <td>{{riskLine.adminName||'--'}}</td>
             <td class="operation">
                 <span class="right-border" [routerLink]="['/riskline', riskLine.id]">查看</span>
