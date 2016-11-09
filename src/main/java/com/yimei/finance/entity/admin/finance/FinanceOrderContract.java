@@ -25,6 +25,27 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     @Column(name = "contract_no")
     private String contractNo;                                       //合同编号  
 
+    @Column(name = "finance_source_id")
+    private String financeSourceId;                                  //流水号，编号
+
+    @Column(name = "apply_user_id")
+    private Long applyUserId;                                        //申请人用户id
+
+    @Column(name = "apply_user_name")
+    private String applyUserName;                                    //申请人姓名
+
+    @Column(name = "apply_user_phone")
+    private String applyUserPhone;                                   //申请人手机号
+
+    @Column(name = "apply_company_id")
+    private Long applyCompanyId;                                     //申请人公司id
+
+    @Column(name = "apply_company_name")
+    private String applyCompanyName;                                 //申请公司名称
+
+    @Column(name = "finance_type")
+    private String financeType;                                      //金融类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
+
     @Column(name = "type")
     private int type;                                                //合同类型
 

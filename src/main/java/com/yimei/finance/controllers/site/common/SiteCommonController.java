@@ -27,7 +27,7 @@ import java.io.PrintWriter;
 
 @Api(tags = {"example"})
 @Controller("siteCommonController")
-public class CommonController {
+public class SiteCommonController {
     public static final String passportCookieName = "passport";
 
     public static final String userNameCookieName = "userName";

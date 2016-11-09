@@ -18,8 +18,9 @@ import com.yimei.finance.representation.common.result.ErrorMessage;
 import com.yimei.finance.representation.common.result.MapObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
-import com.yimei.finance.representation.site.finance.result.FinanceOrderResult;
-import com.yimei.finance.representation.site.finance.result.FinanceOrderSearch;
+import com.yimei.finance.representation.site.finance.FinanceContractSearch;
+import com.yimei.finance.representation.site.finance.FinanceOrderResult;
+import com.yimei.finance.representation.site.finance.FinanceOrderSearch;
 import com.yimei.finance.service.common.tools.NumberServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import com.yimei.finance.utils.Where;
@@ -55,7 +56,7 @@ import java.util.List;
 @Service
 public class SiteFinanceOrderServiceImpl {
     @Autowired
-    private FinanceOrderRepository orderRepository;
+    private FinanceOrderRepository financeOrderRepository;
     @Autowired
     private NumberServiceImpl numberService;
     @Autowired
@@ -78,7 +79,7 @@ public class SiteFinanceOrderServiceImpl {
         FinanceOrder financeOrder = new FinanceOrder();
         financeOrder.setApplyType(financeOrderObject.getApplyType());
         if (!sessionUser.getVerifystatus().equals("审核通过")) return Result.error(ErrorMessage.User_Company_Not_AuditSuccess);
-        List<FinanceOrder> financeOrderList = orderRepository.findByUserIdAndCreateTimeGreaterThan(Long.valueOf(sessionUser.getId()), java.sql.Date.valueOf(LocalDate.now()));
+        List<FinanceOrder> financeOrderList = financeOrderRepository.findByUserIdAndCreateTimeGreaterThan(Long.valueOf(sessionUser.getId()), java.sql.Date.valueOf(LocalDate.now()));
         if (financeOrderList != null && financeOrderList.size() >= 2) return Result.error(ErrorMessage.User_Finance_Times);
         financeOrder.setApplyType(financeOrder.getApplyType());
         financeOrder.setSourceId(numberService.getNextCode("JR"));
@@ -94,8 +95,8 @@ public class SiteFinanceOrderServiceImpl {
         financeOrder.setEndTime(null);
         financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);
-        orderRepository.save(financeOrder);
-        financeOrder = orderRepository.findBySourceId(financeOrder.getSourceId());
+        financeOrderRepository.save(financeOrder);
+        financeOrder = financeOrderRepository.findBySourceId(financeOrder.getSourceId());
         identityService.setAuthenticatedUserId(String.valueOf(sessionUser.getId()));
         if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYR.toString())) {
             runtimeService.startProcessInstanceByKey("financingMYRWorkFlow", String.valueOf(financeOrder.getId()));
@@ -106,7 +107,7 @@ public class SiteFinanceOrderServiceImpl {
         } else {
             throw new BusinessException(EnumCommonError.Admin_System_Error);
         }
-        return Result.success().setData(orderRepository.findBySourceId(financeOrder.getSourceId()));
+        return Result.success().setData(financeOrderRepository.findBySourceId(financeOrder.getSourceId()));
     }
 
     /**
@@ -158,7 +159,7 @@ public class SiteFinanceOrderServiceImpl {
      * 客户根据 id 查询 金融申请单
      */
     public Result findByIdAndUserIdOrCompanyId(Long id, Long sessionUserId, Long sessionCompanyId) {
-        FinanceOrder financeOrder = orderRepository.findByIdAndUserIdOrCompanyId(id, sessionUserId, sessionCompanyId);
+        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserIdOrCompanyId(id, sessionUserId, sessionCompanyId);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         FinanceOrderObject financeOrderObject = DozerUtils.copy(financeOrder, FinanceOrderObject.class);
         financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(id, EnumFinanceAttachment.OnlineTraderAuditAttachment));
@@ -208,7 +209,7 @@ public class SiteFinanceOrderServiceImpl {
             cell.setCellStyle(style);
         }
         SimpleDateFormat myFmt = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        List<FinanceOrderObject> financeOrderList = DozerUtils.copy(orderRepository.findByUserIdOrApplyCompanyId(sessionUserId, sessionCompanyId), FinanceOrderObject.class);
+        List<FinanceOrderObject> financeOrderList = DozerUtils.copy(financeOrderRepository.findByUserIdOrApplyCompanyId(sessionUserId, sessionCompanyId), FinanceOrderObject.class);
         for (int i = 0; i < financeOrderList.size(); i++) {
             sheet.autoSizeColumn(0);
             sheet.autoSizeColumn(1);
@@ -244,11 +245,34 @@ public class SiteFinanceOrderServiceImpl {
     }
 
     public Result getFinanceOrderContractObject(Long financeId, Integer type, Long sessionUserId, Long sessionCompanyId) {
-        FinanceOrder financeOrder = orderRepository.findByIdAndUserIdOrCompanyId(financeId, sessionUserId, sessionCompanyId);
+        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserIdOrCompanyId(financeId, sessionUserId, sessionCompanyId);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         FinanceOrderContract financeOrderContract = orderContractRepository.findByFinanceIdAndType(financeId, type);
         if (financeOrderContract == null) return Result.error(EnumAdminFinanceError.此合同不存在.toString());
-        FinanceOrderContractObject financeOrderContractObject = DozerUtils.copy(financeOrderContract, FinanceOrderContractObject.class);
+        FinanceOrderContractObject financeOrderContractObject = changeFinanceOrderContractObject(financeOrderContract);
         return Result.success().setData(financeOrderContractObject);
+    }
+
+    public Result findFinanceContractByFinanceIdUserIdCompanyId(Long financeId, Long sessionUserId, Long sessionCompanyId) {
+        FinanceOrderContract financeOrderContract = orderContractRepository.findByFinanceIdAndApplyUserIdAndApplyCompanyId(financeId, sessionUserId, sessionCompanyId);
+        if (financeOrderContract == null) return Result.error(EnumAdminFinanceError.此合同不存在.toString());
+        if (financeOrderRepository.findByIdAndUserIdOrCompanyId(financeOrderContract.getFinanceId(), sessionUserId, sessionCompanyId) == null)
+            return Result.error(EnumAdminFinanceError.你没有权限查看此合同.toString());
+        FinanceOrderContractObject financeOrderContractObject = changeFinanceOrderContractObject(financeOrderContract);
+        return Result.success().setData(financeOrderContractObject);
+    }
+
+    public Result getFinanceContractBySelect(Long sessionUserId, Long sessionCompanyId, FinanceContractSearch contractSearch, Page page) {
+        return null;
+    }
+
+    private FinanceOrderContractObject changeFinanceOrderContractObject(FinanceOrderContract financeOrderContract) {
+        if (financeOrderContract == null) return null;
+        FinanceOrderContractObject financeOrderContractObject = DozerUtils.copy(financeOrderContract, FinanceOrderContractObject.class);
+        FinanceOrder financeOrder = financeOrderRepository.findOne(financeOrderContract.getId());
+        if (financeOrder == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        financeOrderContractObject.setFinanceType(financeOrder.getApplyType());
+        financeOrderContractObject.setFinanceSourceId(financeOrder.getSourceId());
+        return financeOrderContractObject;
     }
 }

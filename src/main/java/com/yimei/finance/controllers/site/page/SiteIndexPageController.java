@@ -18,8 +18,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 @Api(tags = {"site-page"})
-@Controller("financeSitePageController")
-public class IndexPageController {
+@Controller("siteFinanceIndexPageController")
+public class SiteIndexPageController {
     @Autowired
     private SiteFinanceOrderServiceImpl financeOrderService;
     @Autowired
