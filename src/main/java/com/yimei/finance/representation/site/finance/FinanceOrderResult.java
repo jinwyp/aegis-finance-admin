@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.site.finance.result;
+package com.yimei.finance.representation.site.finance;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yimei.finance.representation.common.enums.EnumCommonString;

@@ -17,7 +17,7 @@ import java.io.IOException;
 
 @Api(tags = {"site-page"})
 @Controller("siteCommonPageController")
-public class CommonPageController {
+public class SiteCommonPageController {
     @Autowired
     private LocalStorage localStorage;
 

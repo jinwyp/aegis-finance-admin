@@ -208,7 +208,7 @@ public class MYDFinancingController {
         Result result = checkMYDContractMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<HistoricTaskInstance, Long> object = (CombineObject<HistoricTaskInstance, Long>) result.getData();
-        financeOrderContractObject.setId(object.u);
+        financeOrderContractObject.setFinanceId(object.u);
         return flowStepService.riskManagerAddFinanceOrderContractMethod(adminSession.getUser().getId(), object.t, financeOrderContractObject, submit);
     }
 

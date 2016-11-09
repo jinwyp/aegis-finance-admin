@@ -8,6 +8,8 @@ import com.yimei.finance.service.site.finance.SiteFinanceOrderServiceImpl;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,7 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 @Controller("financePageController")
-public class FinancePageController {
+public class SiteFinancePageController {
     @Autowired
     private SiteFinanceOrderServiceImpl financeOrderService;
     @Autowired
@@ -32,6 +34,14 @@ public class FinancePageController {
         Map<String, Object> map = new HashMap<>();
         map.put("contract", result.getData());
         return "admin/contract";
+    }
+
+    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 合同详情", notes = "供应链金融 我的融资 煤易贷 合同详情页面")
+    @LoginRequired
+    @RequestMapping(value = "/finance/user/{financeId}/contact", method = RequestMethod.GET)
+    public String personCenterContactInfo(@PathVariable("financeId") Long financeId, Model model) {
+        model.addAttribute("currentMenu", 21);
+        return "site/user/financeInfoContact";
     }
 
 }

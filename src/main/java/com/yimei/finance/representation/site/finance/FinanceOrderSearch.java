@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.site.finance.result;
+package com.yimei.finance.representation.site.finance;
 
 import io.swagger.annotations.ApiModel;
 import lombok.Data;

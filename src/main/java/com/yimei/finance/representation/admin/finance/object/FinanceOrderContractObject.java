@@ -2,6 +2,7 @@ package com.yimei.finance.representation.admin.finance.object;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceContractType;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceContract;
 import com.yimei.finance.representation.common.base.BaseObject;
 import com.yimei.finance.representation.common.enums.EnumCommonString;
@@ -25,6 +26,16 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     private Long id;                                                 //主键  
     private Long financeId;                                          //金融单id  
     private String contractNo;                                       //合同编号  
+
+    private String financeType;                                      //金融单类型
+    private String financeTypeName;                                  //金融单类型名称
+    private String financeSourceId;                                  //流水号，编号
+    private Long applyUserId;                                        //申请人用户id
+    private String applyUserName;                                    //申请人姓名
+    private String applyUserPhone;                                   //申请人手机号
+    private Long applyCompanyId;                                     //申请人公司id
+    private String applyCompanyName;                                 //申请公司名称
+
 
     @Range(min = 1, max = 100, message = "合同类型 应在 {min}-{max} 之间", groups = {SaveFinanceContract.class})
     @NotBlank(message = "合同类型 不能为空", groups = {SaveFinanceContract.class})
@@ -210,6 +221,10 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     public String getTypeName() {
         if (type == null) return null;
         else return EnumFinanceContractType.getTypeName(type);
+    }
+
+    public String getFinanceTypeName() {
+        return EnumFinanceOrderType.getName(EnumFinanceOrderType.valueOf(financeType));
     }
 
 }
