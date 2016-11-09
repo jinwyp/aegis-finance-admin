@@ -44,15 +44,16 @@ export class RiskLineListComponent {
 
     ngOnInit() {
         this.pageObj = new Page();
-        this.getBusinessLineList(this.riskLine, this.pageObj)
+        this.getRiskLineList(this.riskLine, this.pageObj)
     }
 
-    getBusinessLineList(fundCompany : RiskLine, pageObj : Page){
-        // this.riskService.getBusinessLineList(fundCompany.name, fundCompany.adminName, pageObj.page).then((result)=>{
-        //     if(result.success){
-        //         this.riskLineList = result.data;
-        //     }
-        // });
+    getRiskLineList(riskLine : RiskLine, pageObj : Page){
+        this.riskService.getRiskLineList(riskLine.name, riskLine.adminName, pageObj.page).then((result)=>{
+            if(result.success){
+                console.log(result.data);
+                this.riskLineList = result.data;
+            }
+        });
     }
 
 

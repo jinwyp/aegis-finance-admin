@@ -83,9 +83,9 @@ const routes: Routes = [
         data: { routeType : 'add', title: '用户 - 添加' }
     },
     {
-        path: 'riskline/add',
-        component: AddRiskLineComponent,
-        data: { routeType : 1, title: '风控线 - 添加' }
+        path: 'users/:id/edit',
+        component: AddUserComponent,
+        data: { routeType : 'edit', title: '用户 - 编辑' }
     },
     {
         path: 'users/:id',
@@ -93,14 +93,19 @@ const routes: Routes = [
         data: { routeType : 'list', title: '用户 - 查看信息'}
     },
     {
-        path: 'users/:id/edit',
-        component: AddUserComponent,
-        data: { routeType : 'edit', title: '用户 - 编辑' }
+        path: 'riskline/add',
+        component: AddRiskLineComponent,
+        data: { routeType : 1, title: '风控线 - 添加' }
     },
     {
         path: 'riskline/:id/edit',
         component: AddRiskLineComponent,
-        data: { routeType : 1, title: '风控线 - 编辑' }
+        data: { routeType : 2, title: '风控线 - 编辑' }
+    },
+    {
+        path: 'riskline/:id',
+        component: AddRiskLineComponent,
+        data: { routeType : 3, title: '风控线 - 查看信息'}
     },
     {
         path: 'tasks/pending',

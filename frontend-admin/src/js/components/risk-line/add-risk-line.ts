@@ -37,7 +37,9 @@ export class AddRiskLineComponent {
         isSubmitted :      false,
         isHiddenResetModal : true,
         isHiddenMsgModal : true,
-        isAddStatus :  false
+        isAddStatus :  false,
+        isLookStatus :  false,
+        isEditStatus :  false
     };
 
     errorMsg = '';
@@ -45,15 +47,21 @@ export class AddRiskLineComponent {
     riskLine = new RiskLine();
 
     ngOnInit() {
-
-        if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
-            this.css.isAddStatus = true;
-        }else{
-            this.css.isAddStatus = false;
-            this.sub = this.activatedRoute.params.subscribe(params => {
-                this.getRiskLine(params['id']);
-            });
-        }
+        this.sub = this.activatedRoute.data.subscribe(data => {
+            if(data['routeType']===1){
+                this.css.isAddStatus = true;
+            }else if(data['routeType']===2){
+                this.css.isEditStatus = true;
+                this.sub = this.activatedRoute.params.subscribe(params => {
+                    this.getRiskLine(params['id']);
+                });
+            }else if(data['routeType']===3){
+                this.css.isLookStatus = true;
+                this.sub = this.activatedRoute.params.subscribe(params => {
+                    this.getRiskLine(params['id']);
+                });
+            }
+        });
     }
 
 
