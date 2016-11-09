@@ -2,14 +2,17 @@
  * Created by JinWYP on 8/12/16.
  */
 
-import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 import avalon from 'avalon2';
 import '../common-libs/avalonFilter';
+
+import {getFinanceOrderInfo} from 'js/service/http.js';
 
 var financeInfo = ()=> {
 
     var url = window.location.href.match(/\/financing\/\d{1,8}/);
-    if (url){var financeInfoId = Number(url[0].split('/')[2])}
+    var financeInfoId = 0
+    if (url) financeInfoId = Number(url[0].split('/')[2])
+
 
     var vm = avalon.define({
         $id   : 'financeInfo',
@@ -19,24 +22,13 @@ var financeInfo = ()=> {
         }
     });
 
-    var getFinanceInfo = (id) => {
+    getFinanceOrderInfo(financeInfoId).done(function( data, textStatus, jqXHR ) {
+        if (data.success){
+            vm.financeInfo = data.data;
+        }else{
 
-        $.ajax({
-            url      : '/api/financing/apply/' + id,
-            method   : 'GET',
-            dataType : 'json',
-            success  : (data)=> {
-                console.log(data);
-                if (data.success){
-                    vm.financeInfo = data.data;
-                }else{
-
-                }
-            }
-        });
-    };
-
-    getFinanceInfo(financeInfoId);
+        }
+    });
 
 };
 

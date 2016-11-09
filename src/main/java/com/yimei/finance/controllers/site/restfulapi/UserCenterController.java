@@ -44,7 +44,7 @@ public class UserCenterController {
             @ApiImplicitParam(name = "approveStateId", value = "审批状态id", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
             @ApiImplicitParam(name = "applyType", value = "业务类型", required = false, dataType = "String", paramType = "query")
     })
-    @RequestMapping(value = "/list", method = RequestMethod.GET)
+    @RequestMapping(value = "/financeOrder", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(FinanceOrderSearch orderSearch, Page page) {
         page.setCount(10);
         return financeOrderService.getFinanceOrderBySelect(Long.valueOf(userSession.getUser().getId()), Long.valueOf(userSession.getUser().getCompanyId()), orderSearch, page);
@@ -53,7 +53,7 @@ public class UserCenterController {
     @ApiOperation(value = "根据 id 查看金融申请单", notes = "根据 金融申请单id 查看金融申请单", response = FinanceOrder.class)
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Long", paramType = "path")
     @LoginRequired
-    @RequestMapping(value = "/apply/{id}", method = RequestMethod.GET)
+    @RequestMapping(value = "/financeOrder/{id}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
         return financeOrderService.findByIdAndUserIdOrCompanyId(id, Long.valueOf(userSession.getUser().getId()), Long.valueOf(userSession.getUser().getCompanyId()));
     }
