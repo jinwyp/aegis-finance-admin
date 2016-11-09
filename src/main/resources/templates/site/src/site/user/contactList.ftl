@@ -98,7 +98,7 @@
                         </td>
                     </tr>
                     <tr ms-visible="@contactList.length===0">
-                        <td colspan="7">当前无融资申请记录！</td>
+                        <td colspan="7">当前无合同列表！</td>
                     </tr>
 
                 </table>

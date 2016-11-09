@@ -244,7 +244,7 @@
                         <!--</table>-->
                     <!--</div>-->
                     <!--补充材料结束-->
-                    <a href="/finance/user/cangya/11/contact" class="btn blue" ms-visible="@financeInfo.approveStateId===8">合同下载</a>
+                    <a href="/finance/user/11/contract" class="btn blue">合同下载</a>
                     <a href="/finance/user/financing" class="btn back">返回</a>
                 </div>
             </div>
