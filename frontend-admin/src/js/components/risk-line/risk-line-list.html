@@ -18,19 +18,21 @@
     <table class="table table-striped mt-20 info-table">
         <tr class="head">
             <th width="80">风控线名称</th>
-            <th width="100">风控线管理帐号</th>
             <th width="100">创建时间</th>
+            <th width="100">包含人数</th>
+            <th width="100">风控线管理帐号</th>
             <th width="100">操作</th>
         </tr>
         <tr class="item" *ngIf="!riskLineList||riskLineList.length < 1"><td colspan="6">暂无风控线数据</td></tr>
         <tr class="item" *ngFor="let riskLine of riskLineList">
-            <td><a [routerLink]="['/riskline', riskLine.id]">{{riskLine.name}}</a></td>
-            <td>{{riskLine.adminName||'--'}}</td>
+            <td>{{riskLine.name}}</td>
+            <td>{{riskLine.createTime||'--'}}</td>
+            <td>{{riskLine.personNum}}</td>
             <td>{{riskLine.adminName||'--'}}</td>
             <td class="operation">
-                <span *ngIf="!riskLine.adminName" class="right-border" [routerLink]="['/users/add', {'companyId' : riskLine.id}]">绑定帐号</span>
-                <span *ngIf="riskLine.adminName" class="right-border" (click)="showResetModal(riskLine.id,'确认重置用户密码吗?')">重置密码</span>
-                <span [routerLink]="['/riskline', riskLine.id, 'edit']">编辑</span>
+                <span class="right-border" [routerLink]="['/riskline', riskLine.id]">查看</span>
+                <span class="right-border" [routerLink]="['/riskline', riskLine.id, 'edit']">编辑</span>
+                <span>删除</span>
                 <!--<span *ngIf="user.operateAuthority" (click)="showDelModal(user.id,'确认删除该用户吗?')">删除</span>-->
             </td>
         </tr>
