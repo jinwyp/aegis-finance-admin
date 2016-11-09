@@ -29,7 +29,7 @@ class RiskService {
 
 
 
-    getRiskLineList() {
+    getRiskListSelect() {
         // let url = `${API.fund}/fund?page=${page||1}&name=${name||''}&account=${account||''}`;
         let url = `${API.risk}/risk`;
         return this.http.get(url).toPromise()
@@ -58,12 +58,12 @@ class RiskService {
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }
-    //
-    // deleteFundCompanyById(id: number) {
-    //     return this.http.delete(API.fund + '/' + id).toPromise()
-    //         .then(response => response.json() as HttpResponse)
-    //         .catch(GlobalPromiseHttpCatch);
-    // }
+
+    del(id: number) {
+        return this.http.delete(API.risk + '/' + id).toPromise()
+            .then(response => response.json() as HttpResponse)
+            .catch(GlobalPromiseHttpCatch);
+    }
 
     add(riskLine: RiskLine) {
         let headers = new Headers({'Content-Type': 'application/json'});
