@@ -56,13 +56,12 @@ public class SiteFinancePageController {
         financeOrderService.downFinanceOrderContractByFinanceIdAndContractType(financeId, type);
     }
 
-    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 合同详情 - 下载合同", notes = "供应链金融 我的融资 煤易贷 合同详情 - 下载合同")
+    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 合同详情 - 预览合同", notes = "供应链金融 我的融资 煤易贷 合同详情 - 预览合同")
     @LoginRequired
     @RequestMapping(value = "/finance/user/{financeId}/contract/{type}/preview", method = RequestMethod.GET)
     public String siteFinanceOrderPreviewContractByFinanceIdAndContractType(@PathVariable("financeId") Long financeId,
                                                                             @PathVariable("type") int type) {
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
-        financeOrderService.downFinanceOrderContractByFinanceIdAndContractType(financeId, type);
         return "site/user/contractPreview";
     }
 

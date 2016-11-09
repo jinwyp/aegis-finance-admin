@@ -45,10 +45,10 @@ public class AdminCompanyServiceImpl {
         Result result = userService.checkSuperAdminRight(sessionUser.getId());
         if (!result.isSuccess()) return result;
         Company company = companyRepository.findByName(companyObject.getName());
-        if (company != null) {
+        if (company != null && company.getStatusId() != EnumCompanyStatus.Deleted.id) {
             return Result.error(EnumCompanyError.此名称已存在.toString());
         } else if (EnumCompanyRole.idList().indexOf(companyObject.getType()) == -1) {
-            return Result.error(EnumCompanyError.公司类型错误.toString());
+            return Result.error(EnumCompanyError.类型错误.toString());
         } else {
             company = DozerUtils.copy(companyObject, Company.class);
             company.setStatus(EnumCompanyStatus.Normal.toString());
@@ -73,9 +73,9 @@ public class AdminCompanyServiceImpl {
         Result result = userService.checkSuperAdminRight(sessionUserId);
         if (!result.isSuccess()) return result;
         Company company = companyRepository.findOne(id);
-        if (company == null) return Result.error(EnumCompanyError.此公司不存在.toString());
+        if (company == null) return Result.error(EnumCompanyError.对象不存在.toString());
         Company company1 = companyRepository.findByName(companyObject.getName());
-        if (company1 != null && company1.getId().longValue() != id.longValue()) {
+        if (company1 != null && company1.getStatusId() != EnumCompanyStatus.Deleted.id && company1.getId().longValue() != id.longValue()) {
             return Result.error(EnumCompanyError.此名称已存在.toString());
         } else {
             company.setName(companyObject.getName());
@@ -94,6 +94,7 @@ public class AdminCompanyServiceImpl {
      */
     public Result findById(Long id) {
         Company company = companyRepository.findOne(id);
+        if (company.getStatusId() == EnumCompanyStatus.Deleted.id) return Result.error(EnumCompanyError.已经被删除.toString());
         CompanyObject companyObject = new CompanyObject();
         if (companyObject != null) companyObject = changeCompanyObject(company);
         return Result.success().setData(companyObject);
@@ -166,7 +167,8 @@ public class AdminCompanyServiceImpl {
         Result result = userService.checkSuperAdminRight(sessionUserId);
         if (!result.isSuccess()) return result;
         Company company = companyRepository.findOne(id);
-        if (company == null) return Result.error(EnumCompanyError.此公司不存在.toString());
+        if (company == null) return Result.error(EnumCompanyError.对象不存在.toString());
+        if (company.getStatusId() == EnumCompanyStatus.Deleted.id) return Result.error(EnumCompanyError.已经被删除.toString());
         company.setStatusId(EnumCompanyStatus.Deleted.id);
         company.setStatus(EnumCompanyStatus.Deleted.toString());
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
