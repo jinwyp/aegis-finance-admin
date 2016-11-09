@@ -87,7 +87,7 @@ var financeList = () => {
     //查询
     var getFinanceList = (query) => {
 
-        getFinanceOrderList().done(function(data, textStatus, jqXHR) {
+        getFinanceOrderList(query).done(function(data, textStatus, jqXHR) {
             if (data.success){
                 vm.financeList = data.data;
                 vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
