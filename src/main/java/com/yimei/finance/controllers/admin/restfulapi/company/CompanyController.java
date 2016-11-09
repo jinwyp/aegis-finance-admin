@@ -37,7 +37,7 @@ public class CompanyController {
     @RequestMapping(value = "/risk", method = RequestMethod.GET)
     @ApiOperation(value = "获取风控线列表", response = CompanyObject.class, responseContainer = "List")
     public Result findBusinessOrganizationListMethod() {
-        return companyService.adminFindBusinessCompanyList(adminSession.getUser().getCompanyId());
+        return companyService.adminFindRiskCompanyList(adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(method = RequestMethod.POST)
