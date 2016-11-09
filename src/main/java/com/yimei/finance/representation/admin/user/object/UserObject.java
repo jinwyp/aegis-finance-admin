@@ -2,7 +2,7 @@ package com.yimei.finance.representation.admin.user.object;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yimei.finance.representation.admin.group.GroupObject;
-import com.yimei.finance.representation.admin.user.enums.EnumUserStatus;
+import com.yimei.finance.representation.admin.user.enums.EnumAdminUserStatus;
 import com.yimei.finance.representation.admin.user.object.validated.CreateUser;
 import com.yimei.finance.representation.admin.user.object.validated.EditUser;
 import com.yimei.finance.representation.common.enums.EnumCommonString;
@@ -59,7 +59,7 @@ public class UserObject implements Serializable {
     private List<GroupObject> groupList;        //用户所在组列表
 
     public String getStatusName() {
-        return EnumUserStatus.valueOf(status).name;
+        return EnumAdminUserStatus.valueOf(status).name;
     }
 
 }

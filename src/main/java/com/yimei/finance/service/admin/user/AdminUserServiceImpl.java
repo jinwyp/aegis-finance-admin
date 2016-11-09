@@ -11,7 +11,7 @@ import com.yimei.finance.representation.admin.group.EnumGroupType;
 import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
 import com.yimei.finance.representation.admin.group.GroupObject;
 import com.yimei.finance.representation.admin.user.enums.EnumAdminUserError;
-import com.yimei.finance.representation.admin.user.enums.EnumUserStatus;
+import com.yimei.finance.representation.admin.user.enums.EnumAdminUserStatus;
 import com.yimei.finance.representation.admin.user.object.AdminUserSearch;
 import com.yimei.finance.representation.admin.user.object.UserLoginObject;
 import com.yimei.finance.representation.admin.user.object.UserObject;
@@ -52,26 +52,32 @@ public class AdminUserServiceImpl {
     private CompanyRepository companyRepository;
 
     /**
-     * 根据id查询用户
+     * 用户相关检查,判断
      */
-    public Result findById(String id, UserObject sessionUser) {
+    public Result userValidated(String id, UserObject sessionUser) {
         User user = identityService.createUserQuery().userId(id).singleResult();
         if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         UserObject userObject = changeUserObject(user);
         Result result = checkOperateUserAuthority(userObject, sessionUser);
         if (!result.isSuccess()) return result;
-        if (userObject.getStatus().equals(EnumUserStatus.Deleted.toString())) return Result.error(EnumAdminUserError.此用户已删除.toString());
-        return Result.success().setData(userObject);
+        if (userObject.getStatus().equals(EnumAdminUserStatus.Deleted.toString())) return Result.error(EnumAdminUserError.此用户已删除.toString());
+        return Result.success();
+    }
+
+    /**
+     * 根据id查询用户
+     */
+    public Result findById(String id, UserObject sessionUser) {
+        Result result = userValidated(id, sessionUser);
+        if (!result.isSuccess()) return result;
+        return Result.success().setData(result.getData());
     }
 
     /**
      * 查询一个用户所有的组
      */
     public Result findUserGroupList(String id, UserObject sessionUser, Page page) {
-        User user = identityService.createUserQuery().userId(id).singleResult();
-        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
-        UserObject userObject = changeUserObject(user);
-        Result result = checkOperateUserAuthority(userObject, sessionUser);
+        Result result = userValidated(id, sessionUser);
         if (!result.isSuccess()) return result;
         page.setTotal(identityService.createGroupQuery().groupMember(id).count());
         List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().groupMember(id).list());
@@ -82,12 +88,10 @@ public class AdminUserServiceImpl {
      * 删除用户
      */
     public Result deleteById(String id, UserObject sessionUser) {
-        User user = identityService.createUserQuery().userId(id).singleResult();
-        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
-        UserObject userObject = DozerUtils.copy(user, UserObject.class);
-        Result result = checkOperateUserAuthority(userObject, sessionUser);
+        Result result = userValidated(id, sessionUser);
         if (!result.isSuccess()) return result;
-        identityService.setUserInfo(id, "status", EnumUserStatus.Deleted.toString());
+        identityService.setUserInfo(id, "status", EnumAdminUserStatus.Deleted.toString());
+        UserObject userObject = (UserObject) result.getData();
         return Result.success().setData(userObject);
     }
 
@@ -140,6 +144,7 @@ public class AdminUserServiceImpl {
         if (oldUser == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
         Result result = checkOperateUserAuthority(user, sessionUser);
         if (!result.isSuccess()) return result;
+        if (identityService.getUserInfo(id, "status").equals(EnumAdminUserStatus.Deleted.toString())) return Result.error(EnumAdminUserError.此用户已删除.toString());
         Result result1 = checkUserEmail(user.getEmail(), id);
         if (!result1.isSuccess()) return result1;
         Result result2 = checkUserPhone(user.getPhone(), oldUser.getId());
@@ -157,6 +162,7 @@ public class AdminUserServiceImpl {
      * 修改自己的信息
      */
     public Result updateSelfInfo(String id, UserObject user) {
+        if (identityService.getUserInfo(id, "status").equals(EnumAdminUserStatus.Deleted.toString())) return Result.error(EnumAdminUserError.您的账号已被删除.toString());
         Result result1 = checkUserEmail(user.getEmail(), id);
         if (!result1.isSuccess()) return result1;
         Result result2 = checkUserPhone(user.getPhone(), id);
@@ -175,11 +181,9 @@ public class AdminUserServiceImpl {
      * 管理员重置密码
      */
     public Result adminResetUserPassword(String id, UserObject sessionUser) {
-        User user = identityService.createUserQuery().userId(id).singleResult();
-        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
-        UserObject userObject = DozerUtils.copy(user, UserObject.class);
-        Result result = checkOperateUserAuthority(userObject, sessionUser);
+        Result result = userValidated(id, sessionUser);
         if (!result.isSuccess()) return result;
+        User user = identityService.createUserQuery().userId(id).singleResult();
         String subject = "重置密码邮件";
         String password = CodeUtils.CreateNumLetterCode();
         user.setPassword(securePassword(password));
@@ -193,6 +197,7 @@ public class AdminUserServiceImpl {
      * 用户更改自己密码
      */
     public Result updateSelfPassword(String id, UserPasswordObject userObject) {
+        if (identityService.getUserInfo(id, "status").equals(EnumAdminUserStatus.Deleted.toString())) return Result.error(EnumAdminUserError.您的账号已被删除.toString());
         if (!identityService.checkPassword(id, securePassword(userObject.getOldPassword()))) {
             return Result.error(EnumAdminUserError.原密码不正确.toString());
         } else if (securePassword(userObject.getNewPassword()).equals(identityService.createUserQuery().userId(id).singleResult().getPassword())) {
@@ -227,18 +232,22 @@ public class AdminUserServiceImpl {
         List<UserObject> userObjList = new ArrayList<>();
         if (!StringUtils.isEmpty(userSearch.getName())) {
             for (UserObject user : userObjectList) {
-                if (user.getName() != null && user.getName().contains(userSearch.getName())) {
+                if (user.getName() != null && user.getName().contains(userSearch.getName()) && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())) {
                     userObjList.add(user);
                 }
             }
         } else {
-            userObjList = userObjectList;
+            for (UserObject user : userObjectList) {
+                if (user.getStatus().equals(EnumAdminUserStatus.Normal.toString())) {
+                    userObjList.add(user);
+                }
+            }
         }
         List<UserObject> finalUserList = new ArrayList<>();
         if (getUserGroupIdList(sessionUser.getId()).contains(EnumSpecialGroup.SuperAdminGroup.id)) {
-            finalUserList = userObjectList;
+            finalUserList = userObjList;
         } else {
-            for (UserObject user : userObjectList) {
+            for (UserObject user : userObjList) {
                 if (!StringUtils.isEmpty(user.getCompanyId()) && !StringUtils.isEmpty(sessionUser.getCompanyId()) && (user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue())) {
                     finalUserList.add(user);
                 }
@@ -256,6 +265,7 @@ public class AdminUserServiceImpl {
         User user = identityService.createUserQuery().userFirstName(userLoginObject.getUsername()).singleResult();
         if (user != null) {
             UserObject userObject = changeUserObject(user);
+            if (!userObject.getStatus().equals(EnumAdminUserStatus.Normal.toString())) return Result.error(EnumAdminUserError.您的账号已被删除.toString());
             if (identityService.checkPassword(user.getId(), securePassword(userLoginObject.getPassword()))) {
                 loginRecordRepository.save(new UserLoginRecord(userObject.getId(), userObject.getUsername(), new Date()));
                 return Result.success().setData(userObject);
@@ -292,9 +302,8 @@ public class AdminUserServiceImpl {
      */
     public String findCompanyFirstAdminName(Long companyId) {
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).orderByUserId().desc().list());
-        String adminName = null;
         for (UserObject user : userObjectList) {
-            if (user.getCompanyId().longValue() == companyId.longValue()) return user.getUsername();
+            if (user.getCompanyId().longValue() == companyId.longValue() && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())) return user.getUsername();
         }
         return null;
     }
@@ -313,7 +322,7 @@ public class AdminUserServiceImpl {
         if (getUserGroupIdList(userId).contains(EnumSpecialGroup.SuperAdminGroup.id)) {
             return Result.success();
         }
-        return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        return Result.error(EnumAdminUserError.只有超级管理员才能执行此操作.toString());
     }
 
     /**
@@ -336,7 +345,6 @@ public class AdminUserServiceImpl {
         }
         return groupObjectList;
     }
-
 
     /**
      * 获取一个用户 有权限添加 用户的组id list
@@ -500,7 +508,7 @@ public class AdminUserServiceImpl {
         if (StringUtils.isEmpty(phone)) return Result.success();
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().list());
         for (UserObject user : userObjectList) {
-            if (!StringUtils.isEmpty(user.getPhone()) && user.getPhone().equals(phone))
+            if (user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && !StringUtils.isEmpty(user.getPhone()) && user.getPhone().equals(phone))
                 return Result.error(EnumAdminUserError.此手机号已经存在.toString());
         }
         return Result.success();
@@ -510,7 +518,7 @@ public class AdminUserServiceImpl {
         if (StringUtils.isEmpty(phone)) return Result.success();
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().list());
         for (UserObject user : userObjectList) {
-            if (!StringUtils.isEmpty(user.getPhone()) && user.getPhone().equals(phone) && !user.getId().equals(userId))
+            if (user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && !StringUtils.isEmpty(user.getPhone()) && user.getPhone().equals(phone) && !user.getId().equals(userId))
                 return Result.error(EnumAdminUserError.此手机号已经存在.toString());
         }
         return Result.success();
@@ -521,16 +529,19 @@ public class AdminUserServiceImpl {
      */
     public Result checkUserEmail(String email) {
         if (StringUtils.isEmpty(email)) return Result.error(EnumAdminUserError.邮箱不能为空.toString());
-        User emailUser = identityService.createUserQuery().userEmail(email).singleResult();
-        if (emailUser != null) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
+        List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().userEmail(email).list());
+        for(UserObject user : userObjectList) {
+            if (user.getStatus().equals(EnumAdminUserStatus.Normal.toString())) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
+        }
         return Result.success();
     }
 
     public Result checkUserEmail(String email, String userId) {
         if (StringUtils.isEmpty(email)) return Result.error(EnumAdminUserError.邮箱不能为空.toString());
-        User emailUser = identityService.createUserQuery().userEmail(email).singleResult();
-        if (emailUser != null && !emailUser.getId().equals(userId))
-            return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
+        List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().userEmail(email).list());
+        for(UserObject user : userObjectList) {
+            if (user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && !user.getId().equals(userId)) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
+        }
         return Result.success();
     }
 

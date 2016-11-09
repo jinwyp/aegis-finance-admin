@@ -43,6 +43,7 @@
     //li:last-child{border-bottom: none;}
   }
 }
+
 .info-item .info-val .custom-select{
   width:200px;
   label{
@@ -54,6 +55,7 @@
   width:100px;
   height:100px;
 }
+
 .file-upload {
   display: inline-block;
   vertical-align: middle;
@@ -110,15 +112,9 @@
   margin-right: 20px;
   margin-bottom: 8px;
 
-  span{
-
-  }
-
   a {
     font-size: 16px;
   }
-
-
 }
 
 
@@ -381,6 +377,7 @@
       }
 
     }
+
     .table-title{
       height:40px;
       line-height:40px;
@@ -393,6 +390,9 @@
       text-align: center;
       font-size:12px;
       border-bottom:1px solid $input-border-color;
+
+      a{ text-decoration: none; }
+
       tr.item>td{
         height:50px;
         vertical-align: middle;

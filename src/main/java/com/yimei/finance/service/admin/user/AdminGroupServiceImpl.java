@@ -29,7 +29,7 @@ public class AdminGroupServiceImpl {
      */
     public Result addGroup(GroupObject groupObject, String sessionUserId) {
         Result result = userService.checkSuperAdminRight(sessionUserId);
-        if (!result.isSuccess()) return Result.error(EnumAdminUserError.只有超级管理员组成员才能执行此操作.toString());
+        if (!result.isSuccess()) return Result.error(EnumAdminUserError.只有超级管理员才能执行此操作.toString());
         if (StringUtils.isEmpty(groupObject.getName())) return Result.error(EnumAdminGroupError.组名称不能为空.toString());
         if (identityService.createGroupQuery().groupName(groupObject.getName()).singleResult() != null)
             return Result.error(EnumAdminGroupError.已经存在名称相同的组.toString());

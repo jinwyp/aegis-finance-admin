@@ -39,7 +39,6 @@ public class CompanyObject extends BaseObject implements Serializable {
     }
 
     @Range(min = 1, max = 100, message = "类型应在 {min}-{max} 之间", groups = {CreateCompany.class})
-    @NotBlank(message = "类型 不能为空", groups = {CreateCompany.class})
     private Integer type;                              //类型: 1:业务线
     private String roleName;
 
