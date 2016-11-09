@@ -73,7 +73,7 @@ public class SiteFinanceOrderServiceImpl {
         FinanceOrder financeOrder = new FinanceOrder();
         financeOrder.setApplyType(financeOrderObject.getApplyType());
         if (!sessionUser.getVerifystatus().equals("审核通过")) return Result.error(ErrorMessage.User_Company_Not_AuditSuccess);
-        List<FinanceOrder> financeOrderList = orderRepository.findByUserIdAndCreateTimeGreaterThan(sessionUser.getId(), java.sql.Date.valueOf(LocalDate.now()));
+        List<FinanceOrder> financeOrderList = orderRepository.findByUserIdAndCreateTimeGreaterThan(Long.valueOf(sessionUser.getId()), java.sql.Date.valueOf(LocalDate.now()));
         if (financeOrderList != null && financeOrderList.size() >= 2) return Result.error(ErrorMessage.User_Finance_Times);
         financeOrder.setApplyType(financeOrder.getApplyType());
         financeOrder.setSourceId(numberService.getNextCode("JR"));

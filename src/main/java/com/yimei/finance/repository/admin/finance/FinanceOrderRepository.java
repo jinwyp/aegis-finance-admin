@@ -20,7 +20,7 @@ public interface FinanceOrderRepository extends JpaRepository<FinanceOrder, Long
 
     FinanceOrder findBySourceId(@Param("sourceId") String sourceId);
 
-    List<FinanceOrder> findByUserIdAndCreateTimeGreaterThan(@Param("id") int id, @Param("createTime") Date createTime);
+    List<FinanceOrder> findByUserIdAndCreateTimeGreaterThan(@Param("id") Long id, @Param("createTime") Date createTime);
 
     Long findBusinessCompanyIdById(@Param("id") Long id);
 
