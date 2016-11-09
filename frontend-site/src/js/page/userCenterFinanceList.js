@@ -2,12 +2,15 @@
  * Created by JinWYP on 8/1/16.
  */
 
-
+import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 import 'js/jquery-plugin/jQuery.fn.datePicker';
+
 import avalon from 'avalon2';
 import 'js/common-libs/pagination';
-import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 import '../common-libs/avalonFilter';
+
+import {getFinanceOrderList} from 'js/service/http.js';
+
 
 
 var financeList = () => {
@@ -83,22 +86,15 @@ var financeList = () => {
 
     //查询
     var getFinanceList = (query) => {
-        var params = $.extend({}, query);
 
-        $.ajax({
-            url      : '/api/financing/list',
-            method   : 'GET',
-            dataType : 'json',
-            data     : params,
-            success  : (data)=> {
-                if (data.success){
-                    vm.financeList = data.data;
-                    vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
-                }else{
+        getFinanceOrderList(query).done(function(data, textStatus, jqXHR) {
+            if (data.success){
+                vm.financeList = data.data;
+                vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
+            }else{
 
-                }
             }
-        });
+        })
     };
 
     getFinanceList();

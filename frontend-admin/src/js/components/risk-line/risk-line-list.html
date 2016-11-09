@@ -10,7 +10,6 @@
     <div class="row-search">
         <span>风控线名称:</span><input type="text" [(ngModel)]="username">
         <span>风控线管理帐号:</span><input type="text" [(ngModel)]="name">
-        <!--<span>角色名称:</span><custom-select  [optionList]="groups" [(ngModel)]="selectedItem" [ngModelOptions]="{standalone: true}"></custom-select>-->
         <button class="btn btn-default" type="button" (click)="getUserList()">查询</button>
         <button type="button" class="btn btn-default btn-addrole" [routerLink]="['/riskline/add']">
             <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加风控线
@@ -23,15 +22,15 @@
             <th width="100">创建时间</th>
             <th width="100">操作</th>
         </tr>
-        <tr class="item" *ngIf="!businessLineList||businessLineList.length < 1"><td colspan="6">暂无风控线数据</td></tr>
-        <tr class="item" *ngFor="let businessLine of businessLineList">
-            <td>{{businessLine.name}}</td>
-            <td>{{businessLine.adminName||'--'}}</td>
-            <td>{{businessLine.adminName||'--'}}</td>
+        <tr class="item" *ngIf="!riskLineList||riskLineList.length < 1"><td colspan="6">暂无风控线数据</td></tr>
+        <tr class="item" *ngFor="let riskLine of riskLineList">
+            <td><a [routerLink]="['/riskline', riskLine.id]">{{riskLine.name}}</a></td>
+            <td>{{riskLine.adminName||'--'}}</td>
+            <td>{{riskLine.adminName||'--'}}</td>
             <td class="operation">
-                <span *ngIf="!businessLine.adminName" class="right-border" [routerLink]="['/users/add', {'companyId' : businessLine.id}]">绑定帐号</span>
-                <span *ngIf="businessLine.adminName" class="right-border" (click)="showResetModal(businessLine.id,'确认重置用户密码吗?')">重置密码</span>
-                <span [routerLink]="['/businessline', businessLine.id, 'edit']">编辑</span>
+                <span *ngIf="!riskLine.adminName" class="right-border" [routerLink]="['/users/add', {'companyId' : riskLine.id}]">绑定帐号</span>
+                <span *ngIf="riskLine.adminName" class="right-border" (click)="showResetModal(riskLine.id,'确认重置用户密码吗?')">重置密码</span>
+                <span [routerLink]="['/riskline', riskLine.id, 'edit']">编辑</span>
                 <!--<span *ngIf="user.operateAuthority" (click)="showDelModal(user.id,'确认删除该用户吗?')">删除</span>-->
             </td>
         </tr>
