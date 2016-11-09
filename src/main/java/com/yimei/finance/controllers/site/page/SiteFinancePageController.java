@@ -38,7 +38,7 @@ public class SiteFinancePageController {
 
     @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 合同详情", notes = "供应链金融 我的融资 煤易贷 合同详情页面")
     @LoginRequired
-    @RequestMapping(value = "/finance/user/{financeId}/contact", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/user/{financeId}/contract", method = RequestMethod.GET)
     public String personCenterContactInfo(@PathVariable("financeId") Long financeId, Model model) {
         model.addAttribute("currentMenu", 21);
         return "site/user/financeInfoContact";
