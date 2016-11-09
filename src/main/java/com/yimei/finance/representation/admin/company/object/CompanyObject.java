@@ -44,4 +44,6 @@ public class CompanyObject extends BaseObject implements Serializable {
 
     private String adminName;                          //管理员账号名
 
+    private int personNum;                             //员工人数
+
 }

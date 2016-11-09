@@ -15,6 +15,7 @@ import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
+import org.activiti.engine.IdentityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +34,8 @@ public class AdminCompanyServiceImpl {
     private CompanyRoleRepository companyRoleRepository;
     @Autowired
     private AdminUserServiceImpl userService;
+    @Autowired
+    private IdentityService identityService;
 
     /**
      * 创建公司
@@ -116,6 +119,14 @@ public class AdminCompanyServiceImpl {
                 companyObject.setRoleName(roleName);
             }
             companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
+            int personNum = 0;
+            List<UserObject> userObjectList = userService.changeUserObject(identityService.createUserQuery().list());
+            for (UserObject user : userObjectList) {
+                if (user.getCompanyId().longValue() == company.getId().longValue()) {
+                    personNum += 1;
+                }
+            }
+            companyObject.setPersonNum(personNum);
         }
         return companyObject;
     }
@@ -131,7 +142,7 @@ public class AdminCompanyServiceImpl {
     /**
      * 超级管理员, 交易员获取风控线列表
      */
-    public Result adminFindBusinessCompanyList(Long sessionCompanyId) {
+    public Result adminFindRiskCompanyList(Long sessionCompanyId) {
         if (sessionCompanyId.longValue() != 0) {
             return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
         }
