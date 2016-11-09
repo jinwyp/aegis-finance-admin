@@ -47,7 +47,9 @@ export class AddUserComponent {
 
     groups       = [];
     departments  = [];
+    riskLines = [{id : 1,name : "风控线1"},{id : 2,name : "风控线2"},{id : 3,name : "风控线3"}]
     selectedItem = {name : null};
+    riskSelected = {name : null};
     modalShowText : string ='';
 
     ngOnInit() {
@@ -89,6 +91,7 @@ export class AddUserComponent {
     getDepartmentList() {
         this.userService.getDepartmentList().then((result)=> {
             if (result.success) {
+                console.log(result.data);
                 this.departments = result.data;
             } else {
 

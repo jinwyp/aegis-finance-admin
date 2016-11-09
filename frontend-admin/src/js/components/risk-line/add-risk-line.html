@@ -4,17 +4,17 @@
         <li>&gt;</li>
         <li>风控线管理</li>
         <li>&gt;</li>
-        <li class="active" *ngIf="css.isAddStatus&&fundCompany.type===1">添加风控线</li>
-        <li class="active" *ngIf="!css.isAddStatus&&fundCompany.type===1">编辑风控线</li>
+        <li class="active" *ngIf="css.isAddStatus">添加风控线</li>
+        <li class="active" *ngIf="!css.isAddStatus">编辑风控线</li>
     </ol>
 </div>
 
 <div class="item-margin">
-    <form class="form-horizontal" *ngIf="css.formActiveForRefresh" (ngSubmit)="addUser()" #addFundCompanyForm="ngForm">
+    <form class="form-horizontal" *ngIf="css.formActiveForRefresh" (ngSubmit)="addUser()" #addRiskLineForm="ngForm">
         <div class="row mt-50 info-item">
             <label class="col-sm-2 info-label-input" for="nameInput"><span class="orange">*</span>风控线名称:</label>
             <div class="col-sm-10 info-val">
-                <input type="text" class="form-control wd-30" id="nameInput" name="name" [(ngModel)]="fundCompany.name" maxlength="100" #name="ngModel" required >
+                <input type="text" class="form-control wd-30" id="nameInput" name="name" [(ngModel)]="riskLine.name" maxlength="100" #name="ngModel" required >
                 <span class="help-block" [class.hidden]="name.valid || name.pristine">风控线名称!</span>
             </div>
         </div>
@@ -22,7 +22,7 @@
         <div class="row mt-20 info-item">
             <label class="col-sm-2 info-label-input" for="nameInput">风控线简介:</label>
             <div class="col-sm-10 info-val">
-                <textarea class="risk-remark" rows="10"></textarea>
+                <textarea class="risk-remark" rows="10" name="remarks" [(ngModel)]="riskLine.remarks"></textarea>
             </div>
         </div>
 
@@ -33,7 +33,7 @@
             </div>
 
             <div class="col-sm-offset-2 col-sm-8 info-val no-bottom-border">
-                <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" [disabled]="addFundCompanyForm.form.invalid || css.isSubmitted"  >保存</button>
+                <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" [disabled]="addRiskLineForm.form.invalid || css.isSubmitted"  >保存</button>
                 <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['/fundcompanys']">返回</button>
             </div>
         </div>

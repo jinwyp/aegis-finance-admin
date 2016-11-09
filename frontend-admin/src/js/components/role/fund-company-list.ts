@@ -6,7 +6,7 @@
 import {Component} from '@angular/core';
 
 import { Page } from '../../service/task';
-import {FundService,FundCompany} from "../../service/fund";
+import {RiskService,RiskLine} from "../../service/risk";
 
 
 declare var __moduleName:string;
@@ -19,12 +19,12 @@ declare var __moduleName:string;
 export class FundCompanyListComponent {
 
     constructor(
-        private fundService:FundService
+        private riskService:RiskService
     ) {}
 
     pageObj : Page;
-    fundCompany = new FundCompany();
-    fundCompanyList : FundCompany[];
+    riskLine = new RiskLine();
+    fundCompanyList : RiskLine[];
     companyId : number;
 
 
@@ -44,17 +44,17 @@ export class FundCompanyListComponent {
 
     ngOnInit() {
         this.pageObj = new Page();
-        this.getFundCompanyList(this.fundCompany, this.pageObj)
+        this.getFundCompanyList(this.riskLine, this.pageObj)
         // this.getUserList(this.pageObj.page);
         // this.getGroupList();
     }
 
-    getFundCompanyList(fundCompany : FundCompany, pageObj : Page){
-        this.fundService.getFundCompanyList(fundCompany.name, fundCompany.adminName, pageObj.page).then((result)=>{
-            if(result.success){
-                this.fundCompanyList = result.data;
-            }
-        });
+    getFundCompanyList(riskLine : RiskLine, pageObj : Page){
+        // this.fundService.getFundCompanyList(riskLine.name, riskLine.adminName, pageObj.page).then((result)=>{
+        //     if(result.success){
+        //         this.fundCompanyList = result.data;
+        //     }
+        // });
     }
 
 

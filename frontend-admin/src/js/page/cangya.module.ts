@@ -53,7 +53,7 @@ import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager'
 import { MaterialDetailComponent} from "../components/task/material-detail";
 import {AddRiskLineComponent} from "../components/risk-line/add-risk-line";
 import {FundCompanyListComponent} from "../components/role/fund-company-list";
-import {FundService} from "../service/fund";
+import {RiskService} from "../service/risk";
 
 
 
@@ -69,7 +69,7 @@ import {FundService} from "../service/fund";
         AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, AuditSupervisorComponent, AuditRiskManagerComponent,
         CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent, MaterialDetailComponent, FundCompanyListComponent, AddRiskLineComponent
     ],
-    providers: [ FileUploadService, cangyaPageRouterProviders, TaskService, UserService, UserGroupService, FundService ],
+    providers: [ FileUploadService, cangyaPageRouterProviders, TaskService, UserService, UserGroupService, RiskService ],
     bootstrap: [ HomeComponent ]
 })
 export class CangyaModule { }

@@ -53,7 +53,7 @@ import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager'
 import { MaterialDetailComponent} from "../components/task/material-detail";
 import { AddRiskLineComponent } from "../components/risk-line/add-risk-line";
 import { FundCompanyListComponent } from "../components/role/fund-company-list";
-import { FundService } from "../service/fund";
+import { RiskService } from "../service/risk";
 import { RiskLineListComponent } from "../components/risk-line/risk-line-list";
 
 
@@ -71,7 +71,7 @@ import { RiskLineListComponent } from "../components/risk-line/risk-line-list";
         CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent, MaterialDetailComponent, FundCompanyListComponent,
         RiskLineListComponent, AddRiskLineComponent
     ],
-    providers: [ FileUploadService, homePageRouterProviders, TaskService, UserService, UserGroupService, FundService ],
+    providers: [ FileUploadService, homePageRouterProviders, TaskService, UserService, UserGroupService, RiskService ],
     bootstrap: [ HomeComponent ]
 })
 export class HomeModule { }

@@ -83,14 +83,9 @@ const routes: Routes = [
         data: { routeType : 'add', title: '用户 - 添加' }
     },
     {
-        path: 'fundcompany/add',
-        component: AddRiskLineComponent,
-        data: { routeType : 2, title: '资金方公司 - 添加' }
-    },
-    {
         path: 'riskline/add',
         component: AddRiskLineComponent,
-        data: { routeType : 1, title: '业务线 - 添加' }
+        data: { routeType : 1, title: '风控线 - 添加' }
     },
     {
         path: 'users/:id',
@@ -103,33 +98,24 @@ const routes: Routes = [
         data: { routeType : 'edit', title: '用户 - 编辑' }
     },
     {
-        path: 'fundcompany/:id/edit',
-        component: AddRiskLineComponent,
-        data: { routeType : 2, title: '资金方公司 - 编辑' }
-    },
-    {
         path: 'riskline/:id/edit',
         component: AddRiskLineComponent,
-        data: { routeType : 1, title: '业务闲 - 编辑' }
+        data: { routeType : 1, title: '风控线 - 编辑' }
     },
     {
         path: 'tasks/pending',
         component: TaskListComponent,
         data: { routeType : 'pending', title: '待办任务' }
     },
-
     {
         path: 'tasks/all',
         component: TaskListComponent,
         data: {routeType : 'all', title: '全部任务' }
     },
-
     {
         path: 'tasks/:id/assign',
         component: AssignPersonComponent
     },
-
-
     {
         path: 'tasks/:id/trader',
         component: AuditTraderComponent,
