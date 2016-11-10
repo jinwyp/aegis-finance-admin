@@ -259,11 +259,15 @@ public class SiteFinanceOrderServiceImpl {
         if (financeOrderRepository.findByIdAndUserIdOrCompanyId(financeOrderContract.getFinanceId(), sessionUserId, sessionCompanyId) == null)
             return Result.error(EnumAdminFinanceError.你没有权限查看此合同.toString());
         FinanceOrderContractObject financeOrderContractObject = changeFinanceOrderContractObject(financeOrderContract);
+        List<Attachment> attachmentList1 = taskService.getTaskAttachments("c" + financeId + EnumFinanceAttachment.Upstream_Contract_Attachment.type);
+        if (attachmentList1 != null && attachmentList1.size() != 0) {
+            financeOrderContractObject.setAttachmentList1(DozerUtils.copy(attachmentList1, AttachmentObject.class));
+        }
+        List<Attachment> attachmentList2 = taskService.getTaskAttachments("c" + financeId + EnumFinanceAttachment.Downstream_Contract_Attachment.type);
+        if (attachmentList2 != null && attachmentList2.size() != 0) {
+            financeOrderContractObject.setAttachmentList2(DozerUtils.copy(attachmentList2, AttachmentObject.class));
+        }
         return Result.success().setData(financeOrderContractObject);
-    }
-
-    public Result getFinanceContractBySelect(Long sessionUserId, Long sessionCompanyId, FinanceContractSearch contractSearch, Page page) {
-        return null;
     }
 
     private FinanceOrderContractObject changeFinanceOrderContractObject(FinanceOrderContract financeOrderContract) {
