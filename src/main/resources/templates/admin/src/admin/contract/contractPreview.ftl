@@ -21,7 +21,7 @@
 </div>
 
 <div class="col-xs-2 col-md-2 col-md-offset-5">
-    <a href="http://localhost:8002/finance/admin/finance/25/contract/1/download" type="button" class="btn" style="background:#317EE6;color:#ffffff;width:200px;height: 40px;font-size: 18px;" id="btn-depositConfirm">下载合同</a>
+    <a href="http://localhost:8002/finance/admin/finance/25/contract/2/download" type="button" class="btn" style="background:#317EE6;color:#ffffff;width:200px;height: 40px;font-size: 18px;" id="btn-depositConfirm">下载合同</a>
 </div>
 
 </body>

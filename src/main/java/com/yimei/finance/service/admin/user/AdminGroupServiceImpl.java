@@ -149,18 +149,17 @@ public class AdminGroupServiceImpl {
      * 封装 group, 从 Group 到 GroupObject
      */
     public GroupObject changeGroupObject(Group group) {
-        GroupObject groupObject = new GroupObject();
-        DozerUtils.copy(group, groupObject);
+        GroupObject groupObject = DozerUtils.copy(group, GroupObject.class);
         groupObject.setMemberNums(identityService.createUserQuery().memberOfGroup(group.getId()).list().size());
         return groupObject;
     }
 
     public List<GroupObject> changeGroupObject(List<Group> groupList) {
         if (groupList == null || groupList.size() == 0) return null;
-        List<GroupObject> groupObjectList = new ArrayList<>();
-        for (Group group : groupList) {
-            groupObjectList.add(changeGroupObject(group));
-        }
+        List<GroupObject> groupObjectList = DozerUtils.copy(groupList, GroupObject.class);
+        groupObjectList.parallelStream().forEach(groupObject -> {
+            groupObject.setMemberNums(identityService.createUserQuery().memberOfGroup(groupObject.getId()).list().size());
+        });
         return groupObjectList;
     }
 

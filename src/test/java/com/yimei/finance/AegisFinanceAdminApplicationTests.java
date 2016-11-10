@@ -12,6 +12,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Stream;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 public class AegisFinanceAdminApplicationTests {
@@ -32,6 +36,10 @@ public class AegisFinanceAdminApplicationTests {
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(financeOrderContractAttachment.toString());
+
+		List<Integer> list1 = Arrays.asList(new Integer[] {1,2,3,4,5});
+		list1.parallelStream().filter(num -> (num > 1)).forEach(System.out::println);
+		Stream.iterate(1, item -> item + 1).limit(10).forEach(System.out::println);
 	}
 
     @Test
