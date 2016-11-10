@@ -233,13 +233,13 @@ public class AdminUserServiceImpl {
         List<UserObject> userObjList = new ArrayList<>();
         if (!StringUtils.isEmpty(userSearch.getName())) {
             for (UserObject user : userObjectList) {
-                if (user.getName() != null && user.getName().contains(userSearch.getName()) && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())) {
+                if (user.getName() != null && user.getName().contains(userSearch.getName()) && !StringUtils.isEmpty(user.getStatus()) && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())) {
                     userObjList.add(user);
                 }
             }
         } else {
             for (UserObject user : userObjectList) {
-                if (user.getStatus().equals(EnumAdminUserStatus.Normal.toString())) {
+                if (!StringUtils.isEmpty(user.getStatus()) && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())) {
                     userObjList.add(user);
                 }
             }
