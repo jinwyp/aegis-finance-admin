@@ -123,21 +123,26 @@ public class AdminCompanyServiceImpl {
                 companyObject.setRoleName(roleName);
             }
             companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
-            int personNum = 0;
-            for (UserObject user : userObjectList) {
-                if (user.getCompanyId().longValue() == company.getId().longValue()) {
-                    personNum += 1;
-                }
-            }
+//            int personNum = 0;
+//            for (UserObject user : userObjectList) {
+//                if (user.getCompanyId().longValue() == company.getId().longValue()) {
+//                    personNum += 1;
+//                }
+//            }
+            Long personNum = userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId()).count();
             companyObject.setPersonNum(personNum);
         }
         return companyObject;
     }
 
     public List<CompanyObject> changeCompanyObject(List<Company> companyList, List<UserObject> userObjectList) {
-        List<CompanyObject> companyObjectList = new ArrayList<>();
-        companyList.forEach(company -> {
-            companyObjectList.add(changeCompanyObject(company, userObjectList));
+        List<CompanyObject> companyObjectList = DozerUtils.copy(companyList, CompanyObject.class);
+//        companyList.forEach(company -> {
+//            companyObjectList.add(changeCompanyObject(company, userObjectList));
+//        });
+        companyObjectList.parallelStream().forEach(company -> {
+            company.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
+            company.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
         });
         return companyObjectList;
     }

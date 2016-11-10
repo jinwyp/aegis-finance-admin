@@ -175,7 +175,7 @@ public class FinanceFlowMethodServiceImpl {
             Result result = changeTaskObject(task);
             if (!result.isSuccess()) return result;
             TaskObject taskObject = (TaskObject) result.getData();
-            if (taskObject.getRiskCompanyId() == sessionCompanyId) {
+            if (taskObject.getRiskCompanyId().longValue() == sessionCompanyId.longValue()) {
                 taskObjectList.add((TaskObject) result.getData());
             }
         }
