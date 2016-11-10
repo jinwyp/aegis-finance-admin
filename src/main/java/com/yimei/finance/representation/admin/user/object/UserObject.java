@@ -12,6 +12,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotBlank;
+import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
@@ -59,6 +60,7 @@ public class UserObject implements Serializable {
     private List<GroupObject> groupList;        //用户所在组列表
 
     public String getStatusName() {
+        if (StringUtils.isEmpty(status)) return null;
         return EnumAdminUserStatus.valueOf(status).name;
     }
 
