@@ -271,8 +271,13 @@ public class FinanceFlowStepServiceImpl {
     public Result riskManagerAddFinanceOrderContractMethod(String userId, HistoricTaskInstance task, FinanceOrderContractObject financeOrderContractObject, boolean submit) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
         orderService.saveFinanceOrderContract(userId, financeOrderContractObject);
-        methodService.addAttachmentsMethodSecond(financeOrderContractObject.getAttachmentList1(), "c" + financeOrderContractObject.getFinanceId() + EnumFinanceAttachment.Upstream_Contract_Attachment.type, task.getProcessInstanceId(), EnumFinanceAttachment.Upstream_Contract_Attachment);
-        methodService.addAttachmentsMethodSecond(financeOrderContractObject.getAttachmentList2(), "c" + financeOrderContractObject.getFinanceId() + EnumFinanceAttachment.Downstream_Contract_Attachment.type, task.getProcessInstanceId(), EnumFinanceAttachment.Downstream_Contract_Attachment);
+        if (financeOrderContractObject.getType() == 1) {
+            methodService.addAttachmentsMethodSecond(financeOrderContractObject.getAttachmentList(), "c" + financeOrderContractObject.getFinanceId() + EnumFinanceAttachment.Upstream_Contract_Attachment.type, task.getProcessInstanceId(), EnumFinanceAttachment.Upstream_Contract_Attachment);
+        } else if (financeOrderContractObject.getType() == 2) {
+            methodService.addAttachmentsMethodSecond(financeOrderContractObject.getAttachmentList(), "c" + financeOrderContractObject.getFinanceId() + EnumFinanceAttachment.Downstream_Contract_Attachment.type, task.getProcessInstanceId(), EnumFinanceAttachment.Downstream_Contract_Attachment);
+        } else {
+            throw new BusinessException(EnumCommonError.Admin_System_Error);
+        }
         return Result.success();
     }
 

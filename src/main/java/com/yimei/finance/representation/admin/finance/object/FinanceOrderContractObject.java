@@ -220,8 +220,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     @NotBlank(message = "卖家银行账号 不能为空", groups = {SaveFinanceContract.class})
     private String sellerBankAccount;                                //卖家银行账号    
 
-    List<AttachmentObject> attachmentList1;                          //上游合同附件list
-    List<AttachmentObject> attachmentList2;                          //下游合同附件list
+    List<AttachmentObject> attachmentList;                          //合同附件list
 
     public String getTypeName() {
         if (type == null) return null;

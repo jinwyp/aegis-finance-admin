@@ -2,10 +2,12 @@ package com.yimei.finance.controllers.site.restfulapi;
 
 import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.entity.admin.finance.FinanceOrderContract;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.representation.common.result.MapObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.representation.site.finance.FinanceOrderContractAttachment;
 import com.yimei.finance.representation.site.finance.FinanceOrderSearch;
 import com.yimei.finance.service.site.finance.SiteFinanceOrderServiceImpl;
 import io.swagger.annotations.Api;
@@ -57,12 +59,20 @@ public class SiteUserCenterController {
         return financeOrderService.financeOrderStatusList();
     }
 
-    @ApiOperation(value = "查看合同详情", notes = "根据 合同金融id 查看合同详情", response = FinanceOrder.class)
+    @ApiOperation(value = "查看合同详情", notes = "根据 合同金融id 查看合同详情", response = FinanceOrderContract.class)
     @ApiImplicitParam(name = "id", value = "合同id", required = true, dataType = "Long", paramType = "path")
     @LoginRequired
     @RequestMapping(value = "/financeOrder/{financeId}/contract", method = RequestMethod.GET)
     public Result getFinancingContractInfo(@PathVariable("financeId") Long financeId) {
         return financeOrderService.findFinanceContractByFinanceIdUserIdCompanyId(financeId, Long.valueOf(userSession.getUser().getId()), Long.valueOf(userSession.getUser().getCompanyId()));
+    }
+
+    @ApiOperation(value = "根据金融单id查看合同附件列表", notes = "根据 金融单id 查看合同附件列表", response = FinanceOrderContractAttachment.class)
+    @ApiImplicitParam(name = "id", value = "合同id", required = true, dataType = "Long", paramType = "path")
+    @LoginRequired
+    @RequestMapping(value = "/financeOrder/{financeId}/contract/attachment", method = RequestMethod.GET)
+    public Result getFinancingContractAttachmentList(@PathVariable("financeId") Long financeId) {
+        return financeOrderService.findFinanceContractAttachmentListByFinanceIdUserIdCompanyId(financeId, Long.valueOf(userSession.getUser().getId()), Long.valueOf(userSession.getUser().getCompanyId()));
     }
 
 }
