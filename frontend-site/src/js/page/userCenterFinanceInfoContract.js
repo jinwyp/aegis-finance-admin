@@ -12,7 +12,6 @@ var financeInfo = ()=> {
     var url = window.location.href.match(/\/user\/\d{1,8}/);
     var financeInfoId = 0;
     if (url) financeInfoId = Number(url[0].split('/')[2]);
-    console.log(financeInfoId);
 
 
     var vm = avalon.define({
