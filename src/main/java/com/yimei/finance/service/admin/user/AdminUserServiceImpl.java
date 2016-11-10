@@ -361,9 +361,9 @@ public class AdminUserServiceImpl {
     public List<GroupObject> getCanOperateGroupList(String userId) {
         List<GroupObject> groupObjectList = new ArrayList<>();
         List<String> groupIds = getCanOperateGroupIdList(userId);
-        for (String gid : groupIds) {
+        groupIds.parallelStream().forEach(gid -> {
             groupObjectList.add(groupService.changeGroupObject(identityService.createGroupQuery().groupId(gid).singleResult()));
-        }
+        });
         return groupObjectList;
     }
 
