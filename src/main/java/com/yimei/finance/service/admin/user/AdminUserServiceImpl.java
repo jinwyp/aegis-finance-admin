@@ -316,6 +316,7 @@ public class AdminUserServiceImpl {
      */
     public String findCompanyFirstAdminName(Long companyId) {
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).orderByUserId().desc().list());
+        if (userObjectList == null || userObjectList.size() == 0) return null;
         for (UserObject user : userObjectList) {
             if (user.getCompanyId().longValue() == companyId.longValue() && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())) return user.getUsername();
         }
