@@ -10,6 +10,9 @@ public enum EnumFinanceAttachment {
     SalesmanSupplyAttachment_RiskManager(EnumFinanceEventType.salesmanSupplyRiskManagerMaterial.toString(), "业务员补充风控材料"),
     RiskManagerAuditAttachment(EnumFinanceEventType.riskManagerAudit.toString(), "风控人员审核附件"),
 
+    Upstream_Contract_Attachment("upstream", "金融-审批-上游合同附件"),
+    Downstream_Contract_Attachment("downstream", "金融-审批-下游合同附件"),
+
     ;
 
     public String type;

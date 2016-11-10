@@ -269,9 +269,10 @@ public class FinanceFlowStepServiceImpl {
      */
     @Transactional
     public Result riskManagerAddFinanceOrderContractMethod(String userId, HistoricTaskInstance task, FinanceOrderContractObject financeOrderContractObject, boolean submit) {
-        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAudit.toString()))
-            return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
+        if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
         orderService.saveFinanceOrderContract(userId, financeOrderContractObject);
+        methodService.addAttachmentsMethodSecond(financeOrderContractObject.getAttachmentList1(), "c" + financeOrderContractObject.getFinanceId(), task.getProcessInstanceId(), EnumFinanceAttachment.Upstream_Contract_Attachment);
+        methodService.addAttachmentsMethodSecond(financeOrderContractObject.getAttachmentList2(), "c" + financeOrderContractObject.getFinanceId(), task.getProcessInstanceId(), EnumFinanceAttachment.Downstream_Contract_Attachment);
         return Result.success();
     }
 

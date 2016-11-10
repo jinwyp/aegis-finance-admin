@@ -6,6 +6,7 @@ import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceContract;
 import com.yimei.finance.representation.common.base.BaseObject;
 import com.yimei.finance.representation.common.enums.EnumCommonString;
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -18,6 +19,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+import java.util.List;
 
 @ApiModel(description = "金融单-合同内容")
 @Data
@@ -217,6 +219,9 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     @Size(min = 1, max = 100, message = "卖家银行账号 应在 {min}-{max} 个字符之间", groups = {SaveFinanceContract.class})
     @NotBlank(message = "卖家银行账号 不能为空", groups = {SaveFinanceContract.class})
     private String sellerBankAccount;                                //卖家银行账号    
+
+    List<AttachmentObject> attachmentList1;                          //上游合同附件list
+    List<AttachmentObject> attachmentList2;                          //下游合同附件list
 
     public String getTypeName() {
         if (type == null) return null;
