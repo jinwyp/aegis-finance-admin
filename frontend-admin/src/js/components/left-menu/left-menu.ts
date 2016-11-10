@@ -3,7 +3,8 @@
  */
 import { Component } from '@angular/core';
 
-import { Task, TaskService, TaskStatus } from '../../service/task';
+import { TaskService } from '../../service/task';
+import { UserService } from '../../service/user';
 
 
 
@@ -19,16 +20,31 @@ export class LeftMenuComponent {
         currentMenu : 1,
         allTaskListInfo : 0,
         pendingTaskListInfo : 0,
+        isAdminUser : false
     };
 
 
     constructor(
-        private task: TaskService
+        private task: TaskService,
+        private userService: UserService
     ) {}
 
 
     ngOnInit() {
         this.getTaskInfo();
+
+        this.userService.getUserSessionObservable.subscribe(
+            result => {
+                if (result && result.success) {
+                    if(result.data.level==1){
+                        this.css.isAdminUser = true;
+                    }else{
+                        this.css.isAdminUser = false;
+                    }
+                }
+            },
+            error => console.error(error)
+        )
     }
 
     getTaskInfo() {
