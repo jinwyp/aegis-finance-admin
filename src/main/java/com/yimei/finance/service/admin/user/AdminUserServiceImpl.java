@@ -35,6 +35,7 @@ import org.springframework.util.StringUtils;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminUserServiceImpl {
@@ -237,31 +238,31 @@ public class AdminUserServiceImpl {
             }
         }
         List<UserObject> userObjectList = changeUserObject(userList, sessionUser);
+        List<UserObject> finalUserList = new ArrayList<>();
         if (getUserGroupIdList(sessionUser.getId()).contains(EnumSpecialGroup.SuperAdminGroup.id)) {
             if (!StringUtils.isEmpty(userSearch.getName())) {
-                userObjectList.parallelStream().filter(user ->
+                finalUserList = userObjectList.parallelStream().filter(user ->
                         user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName())
-                );
+                ).collect(Collectors.toList());
             } else {
-                userObjectList.parallelStream().filter(user -> (
+                finalUserList = userObjectList.parallelStream().filter(user ->
                         user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
-                ));
+                ).collect(Collectors.toList());
             }
         } else {
             if (!StringUtils.isEmpty(userSearch.getName())) {
-                userObjectList.stream().filter(user ->
+                finalUserList = userObjectList.parallelStream().filter(user ->
                         user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
-                );
+                ).collect(Collectors.toList());
             } else {
-                userObjectList.stream().filter(user ->
-//                        user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
-                        user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
-                );
+                finalUserList = userObjectList.parallelStream().filter(user ->
+                        user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
+                ).collect(Collectors.toList());
             }
         }
-        page.setTotal((long) userObjectList.size());
-        int toIndex = page.getPage() * page.getCount() < userObjectList.size() ? page.getPage() * page.getCount() : userObjectList.size();
-        return Result.success().setData(userObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
+        page.setTotal((long) finalUserList.size());
+        int toIndex = page.getPage() * page.getCount() < finalUserList.size() ? page.getPage() * page.getCount() : finalUserList.size();
+        return Result.success().setData(finalUserList.subList(page.getOffset(), toIndex)).setMeta(page);
     }
 
     /**
