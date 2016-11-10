@@ -29,11 +29,17 @@ class RiskService {
 
 
 
-    getRiskListSelect() {
+    getRiskSelectList() {
         // let url = `${API.fund}/fund?page=${page||1}&name=${name||''}&account=${account||''}`;
-        let url = `${API.risk}/risk`;
+        let url = `${API.risk}/risk/all`;
         return this.http.get(url).toPromise()
-            .then(response => response.json() as HttpResponse)
+            .then(response => {
+                var result = response.json() as HttpResponse;
+                if (result.data ){
+                    result.data = result.data.map( item => { return {name : item.name, id : item.id}})
+                }
+                return result;
+            })
             .catch(GlobalPromiseHttpCatch);
     }
 

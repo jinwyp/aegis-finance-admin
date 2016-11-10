@@ -39,7 +39,8 @@ export class AddUserComponent {
         isSubmitted :      false,
         isHiddenResetModal : true,
         isHiddenMsgModal : true,
-        isAddStatus :  false
+        isAddStatus :  false,
+        isAdminUser :  false
     };
     errorMsg = '';
 
@@ -48,12 +49,26 @@ export class AddUserComponent {
 
     groups       = [];
     departments  = [];
-    riskLines = [{id : 1,name : "风控线1"},{id : 2,name : "风控线2"},{id : 3,name : "风控线3"}];
-    selectedItem = {name : null};
-    riskSelected = {name : null};
+    riskLines = [];
+    partSelectedItem = {name : null};
+    riskSelectedItem = {name : null, id : -1};
     modalShowText : string ='';
 
     ngOnInit() {
+
+        this.userService.getUserSessionObservable.subscribe(
+            result => {
+                if (result && result.success) {
+                    if(result.data.level==1){
+                        this.css.isAdminUser = true;
+                    }else{
+                        this.css.isAdminUser = false;
+                    }
+                }
+            },
+            error => console.error(error)
+        )
+
 
         this.sub = this.activatedRoute.params.subscribe(params => {
             this.currentUser.companyId = params['companyId'] || -1;
@@ -88,11 +103,9 @@ export class AddUserComponent {
     }
 
     getRiskLineList() {
-        this.riskService.getRiskListSelect().then((result)=> {
+        this.riskService.getRiskSelectList().then((result)=> {
             if (result.success) {
-                console.log(result.data);
-            } else {
-
+                this.riskLines = result.data;
             }
         });
     }
@@ -114,7 +127,7 @@ export class AddUserComponent {
         this.userService.getUserById(id).then((result)=> {
             if (result.success) {
                 this.currentUser = result.data;
-                this.selectedItem = {name : this.currentUser.department};
+                this.partSelectedItem = {name : this.currentUser.department};
                 this.getGroupList();
             } else {
 
@@ -127,7 +140,8 @@ export class AddUserComponent {
         this.css.isSubmitted     = true;
         this.css.ajaxErrorHidden     = true;
         this.css.ajaxSuccessHidden     = true;
-        this.currentUser.department = this.selectedItem.name;
+        this.currentUser.department = this.partSelectedItem.name;
+        this.currentUser.companyId = this.riskSelectedItem.id;
 
         if (this.css.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
@@ -186,7 +200,7 @@ export class AddUserComponent {
         this.currentUser.phone      = '';
         this.currentUser.department = '';
         this.currentUser.groupIds   = [];
-        this.selectedItem     = {name : null};
+        this.partSelectedItem     = {name : null};
         this.css.formActiveForRefresh = false;
         setTimeout(() => this.css.formActiveForRefresh = true, 0);
     }
