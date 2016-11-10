@@ -226,7 +226,7 @@ public class AdminUserServiceImpl {
             } else if (!StringUtils.isEmpty(userSearch.getGroupId())) {
                 userList = identityService.createUserQuery().memberOfGroup(userSearch.getGroupId()).list();
             } else {
-                userList = identityService.createUserQuery().list();
+                userList = identityService.createUserQuery().orderByUserId().desc().list();
             }
         }
         List<UserObject> userObjectList = changeUserObject(userList, sessionUser);
@@ -458,7 +458,7 @@ public class AdminUserServiceImpl {
             } else if (userGroupIdList.contains(EnumSpecialGroup.SystemAdminGroup.id)) {
                 userObject.setLevel(2);
             } else {
-                userObject.setLevel(3);
+                userObject.setLevel(100);
             }
         }
         return userObject;
@@ -493,7 +493,7 @@ public class AdminUserServiceImpl {
             } else if (userGroupIdList.contains(EnumSpecialGroup.SystemAdminGroup.id)) {
                 userObject.setLevel(2);
             } else {
-                userObject.setLevel(3);
+                userObject.setLevel(100);
             }
         }
         return userObject;
