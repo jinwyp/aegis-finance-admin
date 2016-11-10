@@ -60,7 +60,7 @@ public class SiteUserCenterController {
     @ApiOperation(value = "查看合同详情", notes = "根据 合同金融id 查看合同详情", response = FinanceOrder.class)
     @ApiImplicitParam(name = "id", value = "合同id", required = true, dataType = "Long", paramType = "path")
     @LoginRequired
-    @RequestMapping(value = "/{financeId}/contract", method = RequestMethod.GET)
+    @RequestMapping(value = "/financeOrder/{financeId}/contract", method = RequestMethod.GET)
     public Result getFinancingContractInfo(@PathVariable("financeId") Long financeId) {
         return financeOrderService.findFinanceContractByFinanceIdUserIdCompanyId(financeId, Long.valueOf(userSession.getUser().getId()), Long.valueOf(userSession.getUser().getCompanyId()));
     }

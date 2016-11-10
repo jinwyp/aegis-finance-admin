@@ -57,7 +57,7 @@
                         <ul>
                             <li>
                                 <span><em></em>《仓押上游采购合同》</span>
-                                <b></b>
+                                <b class="w66"></b>
                                 <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/1'}"><em></em>下载</a>
                                 |
                                 <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/1/preview'}">预览</a>
@@ -68,25 +68,32 @@
                         <ul>
                             <li>
                                 <span><em></em>《仓押下游采购合同》</span>
-                                <b></b>
+                                <b class="w66"></b>
                                 <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/2'}"><em></em>下载</a>
                                 |
                                 <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/2/preview'}">预览</a>
                             </li>
                         </ul>
-                        <h3>附件:</h3>
-                        <ul>
-                            <li>
-                                <span><em></em>《附件1》</span>
-                                <b class="w70"></b>
-                                <a href=""><em></em>下载</a>
-                            </li>
-                            <li>
-                                <span><em></em>《附件2》</span>
-                                <b class="w70"></b>
-                                <a href=""><em></em>下载</a>
-                            </li>
-                        </ul>
+                        <div >
+                            <h3>上游合同附件:</h3>
+                            <ul>
+                                <li ms-for="(index, annex) in @financeInfo.attachmentList1">
+                                    <span><em></em>《{{annex.name}}》</span>
+                                    <b class="w70"></b>
+                                    <a ms-attr="{href:annex.url}"><em></em>下载</a>
+                                </li>
+                            </ul>
+                        </div>
+                        <div ms-visible="@financeInfo.attachmentList1 != '' ">
+                            <h3>下游合同附件:</h3>
+                            <ul>
+                                <li ms-for="(index, annex) in @financeInfo.attachmentList2">
+                                    <span><em></em>《{{annex.name}}》</span>
+                                    <b class="w70"></b>
+                                    <a ms-attr="{href:annex.url}"><em></em>下载</a>
+                                </li>
+                            </ul>
+                        </div>
                     </div>
 
                     <a ms-attr="{href:'/finance/user/financing/'+@financeInfoId}" class="btn back">返回</a>

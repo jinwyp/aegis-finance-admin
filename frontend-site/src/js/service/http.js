@@ -6,8 +6,7 @@ import jQuery from 'jquery';
 var prefix = '/api/financing'
 
 var url = {
-    financeOrderList : prefix + '/financeOrder',
-    contractList : prefix + '/contract'
+    financeOrderList : prefix + '/financeOrder'
 }
 
 
@@ -40,7 +39,7 @@ var getContractList = (query)=>{
     var params = jQuery.extend({}, query);
 
     return jQuery.ajax({
-        url      : url.contractList,
+        url      : url.financeOrderList,
         method   : 'GET',
         dataType : 'json',
         data     : params,
@@ -49,9 +48,8 @@ var getContractList = (query)=>{
 }
 
 var getContractInfo = (id)=>{
-
     return jQuery.ajax({
-        url      : url.contractList + '/' + id,
+        url      : url.financeOrderList + '/' + id +'/contract/attachment',
         method   : 'GET',
         dataType : 'json'
     });
