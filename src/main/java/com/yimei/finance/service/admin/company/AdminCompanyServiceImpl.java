@@ -63,7 +63,7 @@ public class AdminCompanyServiceImpl {
             CompanyRole companyRole = companyRoleRepository.findByNumber(companyObject.getType());
             if (companyRole == null) return Result.error(EnumCommonError.Admin_System_Error);
             companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), companyRole.getNumber(), companyRole.getRole(), new Date(), sessionUser.getId(), new Date(), sessionUser.getId()));
-            return Result.success().setData(changeCompanyObject(companyRepository.findOne(company.getId())));
+            return Result.success().setData(changeCompanyObject(companyRepository.findOne(company.getId()), userService.changeUserObject(identityService.createUserQuery().list())));
         }
     }
 
@@ -98,7 +98,7 @@ public class AdminCompanyServiceImpl {
         Company company = companyRepository.findOne(id);
         if (company.getStatusId() == EnumCompanyStatus.Deleted.id) return Result.error(EnumCompanyError.已经被删除.toString());
         CompanyObject companyObject = new CompanyObject();
-        if (companyObject != null) companyObject = changeCompanyObject(company);
+        if (companyObject != null) companyObject = changeCompanyObject(company, userService.changeUserObject(identityService.createUserQuery().list()));
         return Result.success().setData(companyObject);
     }
 
@@ -111,7 +111,7 @@ public class AdminCompanyServiceImpl {
     /**
      * 封装公司对象
      */
-    public CompanyObject changeCompanyObject(Company company) {
+    public CompanyObject changeCompanyObject(Company company, List<UserObject> userObjectList) {
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
         if (company != null) {
             List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
@@ -124,7 +124,6 @@ public class AdminCompanyServiceImpl {
             }
             companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
             int personNum = 0;
-            List<UserObject> userObjectList = userService.changeUserObject(identityService.createUserQuery().list());
             for (UserObject user : userObjectList) {
                 if (user.getCompanyId().longValue() == company.getId().longValue()) {
                     personNum += 1;
@@ -135,10 +134,10 @@ public class AdminCompanyServiceImpl {
         return companyObject;
     }
 
-    public List<CompanyObject> changeCompanyObject(List<Company> companyList) {
+    public List<CompanyObject> changeCompanyObject(List<Company> companyList, List<UserObject> userObjectList) {
         List<CompanyObject> companyObjectList = new ArrayList<>();
         companyList.forEach(company -> {
-            companyObjectList.add(changeCompanyObject(company));
+            companyObjectList.add(changeCompanyObject(company, userObjectList));
         });
         return companyObjectList;
     }
@@ -168,7 +167,7 @@ public class AdminCompanyServiceImpl {
      */
     public Result findCompanyListByRole(int type) {
         List<Company> companyList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
-        return Result.success().setData(changeCompanyObject(companyList));
+        return Result.success().setData(changeCompanyObject(companyList, userService.changeUserObject(identityService.createUserQuery().list())));
     }
 
     /**
@@ -178,7 +177,7 @@ public class AdminCompanyServiceImpl {
         List<Company> companyList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
         page.setTotal((long) companyList.size());
         int toIndex = page.getPage() * page.getCount() < companyList.size() ? page.getPage() * page.getCount() : companyList.size();
-        return Result.success().setData(changeCompanyObject(companyList.subList(page.getOffset(), toIndex))).setMeta(page);
+        return Result.success().setData(changeCompanyObject(companyList.subList(page.getOffset(), toIndex), userService.changeUserObject(identityService.createUserQuery().list()))).setMeta(page);
     }
 
     /**

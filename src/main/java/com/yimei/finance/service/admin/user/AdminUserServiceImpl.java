@@ -61,7 +61,7 @@ public class AdminUserServiceImpl {
         Result result = checkOperateUserAuthority(userObject, sessionUser);
         if (!result.isSuccess()) return result;
         if (userObject.getStatus().equals(EnumAdminUserStatus.Deleted.toString())) return Result.error(EnumAdminUserError.此用户已删除.toString());
-        return Result.success();
+        return Result.success().setData(userObject);
     }
 
     /**
