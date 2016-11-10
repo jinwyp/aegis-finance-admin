@@ -56,31 +56,40 @@
                         <h3>上游采购合同:</h3>
                         <ul>
                             <li>
-                                <span><em></em>《仓押上游采购合同》</span>
-                                <b class="w66"></b>
-                                <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/1'}"><em></em>下载</a>
-                                |
-                                <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/1/preview'}">预览</a>
+                                <div class="borderBottom">
+                                    <span><em></em>《仓押上游采购合同》</span>
+                                    <p class="floatR">
+                                        <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/1'}"><em></em>下载</a>
+                                        |
+                                        <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/1/preview'}">预览</a>
+                                    </p>
+                                </div>
                             </li>
                         </ul>
 
                         <h3>下游采购合同:</h3>
                         <ul>
                             <li>
-                                <span><em></em>《仓押下游采购合同》</span>
-                                <b class="w66"></b>
-                                <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/2'}"><em></em>下载</a>
-                                |
-                                <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/2/preview'}">预览</a>
+                                <div class="borderBottom">
+                                    <span><em></em>《仓押下游采购合同》</span>
+                                    <p class="floatR">
+                                        <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/2'}"><em></em>下载</a>
+                                        |
+                                        <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/2/preview'}">预览</a>
+                                    </p>
+                                </div>
                             </li>
                         </ul>
                         <div >
                             <h3>上游合同附件:</h3>
                             <ul>
                                 <li ms-for="(index, annex) in @financeInfo.attachmentList1">
-                                    <span><em></em>《{{annex.name}}》</span>
-                                    <b class="w70"></b>
-                                    <a ms-attr="{href:annex.url}"><em></em>下载</a>
+                                    <div class="borderBottom">
+                                        <span><em></em>《{{annex.name}}》</span>
+                                        <p class="floatR">
+                                            <a ms-attr="{href:annex.url}"><em></em>下载</a>
+                                        </p>
+                                    </div>
                                 </li>
                             </ul>
                         </div>
@@ -88,9 +97,12 @@
                             <h3>下游合同附件:</h3>
                             <ul>
                                 <li ms-for="(index, annex) in @financeInfo.attachmentList2">
-                                    <span><em></em>《{{annex.name}}》</span>
-                                    <b class="w70"></b>
-                                    <a ms-attr="{href:annex.url}"><em></em>下载</a>
+                                    <div class="borderBottom">
+                                        <span><em></em>《{{annex.name}}》</span>
+                                        <p class="floatR">
+                                            <a ms-attr="{href:annex.url}"><em></em>下载</a>
+                                        </p>
+                                    </div>
                                 </li>
                             </ul>
                         </div>

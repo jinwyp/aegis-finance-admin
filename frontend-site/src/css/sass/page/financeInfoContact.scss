@@ -57,39 +57,41 @@ $borderColor:#e4e4e4;
               padding:20px 20px;
               li{
                 padding: 20px 0;
-                span{
-                  font-size: 16px;
-                  display: inline-block;
-                  vertical-align: middle;
-                  text-align: center;
-                  em{
-                    width: 18px;
-                    height: 18px;
-                    display: inline-block;
-                    background: url("#{$assetPath}/css/images/sprite/word.png") no-repeat;
-                    vertical-align: text-bottom;
-                  }
-                }
-                a{
-                  color: #007193;
-                  em{
-                    width: 18px;
-                    height: 18px;
-                    display: inline-block;
-                    background: url("#{$assetPath}/css/images/sprite/downLoad.png") no-repeat;
-                    vertical-align: top;
-                  }
-                }
-                b{
-                  margin: 1px 15px 0 15px;
-                  display: inline-block;
+                .borderBottom{
                   height: 1px;
-                  _overflow: hidden;
-                  vertical-align: middle;
                   border-bottom: 1px dashed  gray;
-                }
-                .w66{
-                  width: 66%;
+                  span{
+                    margin-top: -20px;
+                    background: white;
+                    padding-right: 20px;
+                    font-size: 16px;
+                    display: inline-block;
+                    vertical-align: middle;
+                    //text-align: center;
+                    em{
+                      width: 18px;
+                      height: 18px;
+                      display: inline-block;
+                      background: url("#{$assetPath}/css/images/sprite/word.png") no-repeat;
+                      vertical-align: text-bottom;
+                    }
+                  }
+                  .floatR{
+                    float: right;
+                    margin-top: -10px;
+                    padding-left: 10px;
+                    background: white;
+                    a{
+                      color: #007193;
+                      em{
+                        width: 18px;
+                        height: 18px;
+                        display: inline-block;
+                        background: url("#{$assetPath}/css/images/sprite/downLoad.png") no-repeat;
+                        vertical-align: top;
+                      }
+                    }
+                  }
                 }
               }
             }
