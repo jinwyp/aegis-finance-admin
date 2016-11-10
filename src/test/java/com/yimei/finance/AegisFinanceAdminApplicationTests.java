@@ -1,9 +1,9 @@
 package com.yimei.finance;
 
-import com.yimei.finance.entity.admin.finance.FinanceOrderContract;
 import com.yimei.finance.entity.tpl.UserTest;
-import com.yimei.finance.repository.admin.finance.FinanceOrderContractRepository;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
+import com.yimei.finance.representation.site.finance.FinanceOrderContractAttachment;
+import com.yimei.finance.service.site.finance.SiteFinanceOrderServiceImpl;
 import com.yimei.finance.service.tpl.JpaRollbackDemo;
 import org.junit.Assert;
 import org.junit.Test;
@@ -20,18 +20,18 @@ public class AegisFinanceAdminApplicationTests {
     @Autowired
     private JpaRollbackDemo jpaRollbackDemo;
 	@Autowired
-	private FinanceOrderContractRepository financeOrderContractRepository;
+	private SiteFinanceOrderServiceImpl financeOrderService;
 
 	@Test
 	public void test001() {
-		FinanceOrderContract financeOrderContract = financeOrderContractRepository.findByFinanceIdAndApplyUserIdAndApplyCompanyId(25L, 1L, 1L);
+		FinanceOrderContractAttachment financeOrderContractAttachment = (FinanceOrderContractAttachment) financeOrderService.findFinanceContractAttachmentListByFinanceIdUserIdCompanyId(25L, 1L, 1L).getData();
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
-		System.out.println(financeOrderContract.toString());
+		System.out.println(financeOrderContractAttachment.toString());
 	}
 
     @Test
