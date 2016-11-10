@@ -10,6 +10,7 @@ import com.yimei.finance.representation.admin.company.enums.EnumCompanyError;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyRole;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
 import com.yimei.finance.representation.admin.company.object.CompanyObject;
+import com.yimei.finance.representation.admin.user.enums.EnumAdminUserStatus;
 import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Page;
@@ -194,6 +195,10 @@ public class AdminCompanyServiceImpl {
         company.setStatus(EnumCompanyStatus.Deleted.toString());
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
         companyRepository.save(company);
+        List<UserObject> userObjectList = userService.getUserByRiskCompanyId(company.getId());
+        userObjectList.forEach(user -> {
+            identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Deleted.toString());
+        });
         return Result.success().setData(companyObject);
     }
 

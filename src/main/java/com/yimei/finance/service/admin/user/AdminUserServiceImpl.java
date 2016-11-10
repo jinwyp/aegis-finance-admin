@@ -259,6 +259,20 @@ public class AdminUserServiceImpl {
     }
 
     /**
+     * 获取一条风控线中的所有用户
+     */
+    public List<UserObject> getUserByRiskCompanyId(Long companyId) {
+        List<UserObject> userList = changeUserObject(identityService.createUserQuery().orderByUserId().desc().list());
+        List<UserObject> userObjectList = new ArrayList<>();
+        userList.forEach(user -> {
+            if (user.getCompanyId().longValue() == companyId.longValue() && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())) {
+                userObjectList.add(user);
+            }
+        });
+        return userObjectList;
+    }
+
+    /**
      * 用户登陆
      */
     public Result loginMethod(UserLoginObject userLoginObject) {
