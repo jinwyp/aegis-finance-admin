@@ -61,7 +61,7 @@
                                     <p class="floatR">
                                         <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/1/download'}"><em></em>下载</a>
                                         |
-                                        <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/1/preview'}">预览</a>
+                                        <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/1/preview'}" target="_blank">预览</a>
                                     </p>
                                 </div>
                             </li>
@@ -75,7 +75,7 @@
                                     <p class="floatR">
                                         <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/2/download'}"><em></em>下载</a>
                                         |
-                                        <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/2/preview'}">预览</a>
+                                        <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/2/preview'}" target="_blank">预览</a>
                                     </p>
                                 </div>
                             </li>
