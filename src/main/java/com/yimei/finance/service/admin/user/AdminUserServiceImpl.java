@@ -428,8 +428,7 @@ public class AdminUserServiceImpl {
      * 封装 user, 从 User 到 UserObject
      */
     public UserObject changeUserObject(User user) {
-        UserObject userObject = new UserObject();
-        DozerUtils.copy(user, userObject);
+        UserObject userObject = DozerUtils.copy(user, UserObject.class);
         userObject.setUsername(identityService.getUserInfo(user.getId(), "username"));
         userObject.setPhone(identityService.getUserInfo(user.getId(), "phone"));
         userObject.setName(identityService.getUserInfo(user.getId(), "name"));

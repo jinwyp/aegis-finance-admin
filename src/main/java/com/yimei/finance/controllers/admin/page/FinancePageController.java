@@ -54,7 +54,7 @@ public class FinancePageController {
         FinanceOrderContract financeOrderContract = orderContractRepository.findByFinanceIdAndType(financeId, type);
         if (financeOrderContract == null) throw new NotFoundException(EnumAdminFinanceError.此合同不存在.toString());
         String contract = contractService.getFinanceOrderFormalContractContent(financeId, type);
-        File file = PDF.create(contract);
+        File file = PDF.createByHtml(contract);
         WebUtils.doDownloadFile(file, "合同-" + financeOrderContract.getContractNo(), response);
     }
 
