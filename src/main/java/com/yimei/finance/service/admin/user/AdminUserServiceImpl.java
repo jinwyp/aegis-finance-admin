@@ -544,6 +544,7 @@ public class AdminUserServiceImpl {
     public Result checkUserEmail(String email) {
         if (StringUtils.isEmpty(email)) return Result.error(EnumAdminUserError.邮箱不能为空.toString());
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().userEmail(email).list());
+        if (userObjectList == null || userObjectList.size() == 0) return Result.success();
         for(UserObject user : userObjectList) {
             if (user.getStatus().equals(EnumAdminUserStatus.Normal.toString())) return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
         }
