@@ -59,7 +59,7 @@
                                 <div class="borderBottom">
                                     <span><em></em>《仓押上游采购合同》</span>
                                     <p class="floatR">
-                                        <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/1'}"><em></em>下载</a>
+                                        <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/1/download'}"><em></em>下载</a>
                                         |
                                         <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/1/preview'}">预览</a>
                                     </p>
@@ -73,7 +73,7 @@
                                 <div class="borderBottom">
                                     <span><em></em>《仓押下游采购合同》</span>
                                     <p class="floatR">
-                                        <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/2'}"><em></em>下载</a>
+                                        <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/2/download'}"><em></em>下载</a>
                                         |
                                         <a ms-attr="{href:'/finance/user/'+@financeInfoId+'/contract/2/preview'}">预览</a>
                                     </p>
