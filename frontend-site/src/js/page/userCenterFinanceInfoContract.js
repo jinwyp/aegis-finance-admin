@@ -5,7 +5,7 @@
 import avalon from 'avalon2';
 import '../common-libs/avalonFilter';
 
-import {getFinanceOrderInfo} from 'js/service/http.js';
+import {getContractInfo} from 'js/service/http.js';
 
 var financeInfo = ()=> {
 
@@ -24,7 +24,7 @@ var financeInfo = ()=> {
         }
     });
 
-    getFinanceOrderInfo(financeInfoId).done(function( data, textStatus, jqXHR ) {
+    getContractInfo(financeInfoId).done(function( data, textStatus, jqXHR ) {
         if (data.success){
             vm.financeInfo = data.data;
         }else{
