@@ -9,8 +9,8 @@
 
     <title>${title}</title>
 
-    <link rel="stylesheet" href="${staticPath}/jspm_packages/github/twbs/bootstrap@3.3.7/css/bootstrap.min.css">
-    <link rel="stylesheet" href="${staticPath}/css/stylesheets/main.css">
+    <!--<link rel="stylesheet" href="${staticPath}/jspm_packages/github/twbs/bootstrap@3.3.7/css/bootstrap.min.css">-->
+    <!--<link rel="stylesheet" href="${staticPath}/css/stylesheets/main.css">-->
 
 
 
@@ -23,15 +23,20 @@
 
     <meta name="keywords" content="易煤网">
     <meta name="description" content="易煤网">
-    <style>
-        .wrap{
-            padding-top: 50px;
-        }
-        h1{
-            font-size: 32px;
-            line-height: 120px;
-        }
-    </style>
+    <!--<style>-->
+        <!--.wrap{-->
+            <!--padding-top: 50px;-->
+        <!--}-->
+        <!--h1{-->
+            <!--font-size: 32px;-->
+            <!--line-height: 120px;-->
+        <!--}-->
+        <!--h4{-->
+            <!--font-size: 18px;-->
+            <!--line-height: 50px;-->
+            <!--font-weight: bold;-->
+        <!--}-->
+    <!--</style>-->
 
 
 </head>
