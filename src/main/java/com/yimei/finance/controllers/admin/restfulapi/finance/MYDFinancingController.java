@@ -197,11 +197,19 @@ public class MYDFinancingController {
         return flowStepService.riskManagerAuditFinanceOrderMethod(adminSession.getUser().getId(), taskMap, riskManagerInfoObject, object.t, object.u, submit);
     }
 
-    @RequestMapping(value = "/riskmanager/audit/{taskId}/contract", method = RequestMethod.POST)
+    @RequestMapping(value = "/riskmanager/audit/{taskId}/contract", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "风控人员填写合同内容", notes = "风控人员填写合同内容")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mydRiskManagerAddContractMethod(@PathVariable("taskId") String taskId,
                                                   @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SaveFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) throws BadHanyuPinyinOutputFormatCombination {
+        return riskManagerAddContractMethod(taskId, financeOrderContractObject, true);
+    }
+
+    @RequestMapping(value = "/riskmanager/audit/{taskId}/contract", method = RequestMethod.POST, params = {"type=1"})
+    @ApiOperation(value = "风控人员填写合同内容", notes = "风控人员填写合同内容")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
+    public Result mydRiskManagerAddContractMethodSubmit(@PathVariable("taskId") String taskId,
+                                                        @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SubmitFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) throws BadHanyuPinyinOutputFormatCombination {
         return riskManagerAddContractMethod(taskId, financeOrderContractObject, true);
     }
 
