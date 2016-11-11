@@ -151,6 +151,8 @@ class Task {
     name :string;
     sourceId :string;
 
+    riskCompanyId : number;
+
     processInstanceId : string;
     taskDefinitionKey : string;
     startTime : string;

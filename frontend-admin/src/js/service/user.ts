@@ -39,6 +39,7 @@ class User {
     groupIds : string[];
     groupList : UserGroup[];
     companyId : number;
+    companyName : string;
 
     constructor() {
         this.id  = '';

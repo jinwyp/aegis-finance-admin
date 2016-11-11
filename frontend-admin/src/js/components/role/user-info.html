@@ -27,6 +27,12 @@
             <span *ngFor="let usergroup of currentUser.groupList">{{usergroup.name}}&nbsp;</span>
         </div>
     </div>
+    <div *ngIf="currentUser.companyId!==0" class="row info-item">
+        <span class="col-sm-2 info-label"><span>所属风控线:</span></span>
+        <div class="col-sm-10 info-val">
+            <span>{{currentUser.companyName}}</span>
+        </div>
+    </div>
     <div class="row info-item">
         <span class="col-sm-2 info-label"><span>公司邮箱:</span></span>
         <div class="col-sm-10 info-val">
