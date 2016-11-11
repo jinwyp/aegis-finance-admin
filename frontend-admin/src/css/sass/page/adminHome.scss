@@ -550,6 +550,13 @@
             margin-right:10px;
           }
         }
+        tr.item-title .enclosure{
+          padding:20px 14px;
+          li{
+            margin-left:20px;
+            margin-top: 10px;
+          }
+        }
         tr.item-title td>span{
           border-left:2px solid #f66c54;
           padding-left:20px;
@@ -583,6 +590,22 @@
         .finance-types label>input {
           margin-right: 10px;
         }
+        .word_icon{
+          display: inline-block;
+          width:18px;
+          height:18px;
+          vertical-align: middle;
+          margin-left:20px;
+          background-image: url("#{$assetPath}/css/images/word_icon.png");
+        }
+        .word_line{
+          border-bottom: 1px dotted black;
+          display: inline-block;
+          width: 50%;
+          vertical-align: middle;
+        }
+        .a-padding{  padding:0 16px; text-decoration: none;cursor: pointer;  }
+        .a-line{ border-left: 1px solid gray;border-right: 1px solid gray; }
       }
     }
 
@@ -591,6 +614,86 @@
       border:1px solid $border-color;
       .info-item>span{ text-align: right;  padding-right:30px; }
     }
+
+    .orange{  color: #f66c54; }
+
+    //合同编辑的样式开始
+
+    .contract-title{
+      width: 900px;
+      margin:0 auto;
+      font-size: 24px;
+      text-align: center;
+      padding:20px 0 30px;
+      border-bottom:1px solid #ebebeb;
+      span{ font-size: 16px; }
+    }
+
+    .contract-table{
+      width: 850px;
+      margin: 0 auto;
+      margin-bottom: 30px;
+
+      .div-150 {  width: 150px;  }
+      .div-180 {  width: 180px;  }
+      .div-205 {  width: 205px;  }
+      .div-250 {  width: 250px;  }
+
+      .pdl-15{ padding-left: 15px; }
+      .input-rl{ background-color: #ebebeb; }
+      .money-zh{  margin-top:12px; }
+      .table-label {  text-align: right;  }
+      .textarea-label{  padding: 0 0 60px;  }
+      .money-label{  padding:5px 0 30px; }
+
+      input {
+        width: 283px;
+        height: 36px;
+        outline: none;
+        font-size: 16px;
+        background-color: #fcfdfd;
+        border:1px solid #e0e0e0;
+        padding:2px 10px;
+      }
+
+      input.selection{ width: 198px; }
+
+      textarea {
+        resize: none;
+        outline: none;
+        width: 706px;
+        padding:10px;
+        font-size: 16px;
+        background-color: #fcfdfd;
+        border:1px solid #e0e0e0;
+      }
+    }
+
+    .contract-table tr td{
+      vertical-align: middle;
+      padding:8px 0;
+      .notice{
+        display: inline-block;
+        font-size: 14px;
+        border:1px solid red;
+        border-radius: 3px;
+        padding:4px 6px;
+        .notice-icon{
+          display: inline-block;
+          width:14px;
+          height:14px;
+          vertical-align: middle;
+          background-image: url("#{$assetPath}/css/images/notice_icon.png");
+        }
+      }
+      .btn-option{  width:350px;  margin:20px auto; }
+      .btn{ min-width: 140px; color: #ffffff; font-size: 18px; }
+      .btn.commit{  background-color: #f66c54; }
+      .btn.cancel{ background-color: #a2acb5; }
+      .ml-40{  margin-left:40px; }
+    }
+
+    //合同编辑的样式结束
   }
 }
 
