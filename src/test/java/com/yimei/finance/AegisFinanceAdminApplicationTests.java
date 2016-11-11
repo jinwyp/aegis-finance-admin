@@ -2,10 +2,11 @@ package com.yimei.finance;
 
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
-import com.yimei.finance.service.common.tools.NumberServiceImpl;
+import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
+import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
+import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.service.tpl.JpaRollbackDemo;
-import com.yimei.finance.utils.CodeUtils;
-import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+import org.activiti.engine.IdentityService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,58 +22,25 @@ public class AegisFinanceAdminApplicationTests {
     @Autowired
     private JpaRollbackDemo jpaRollbackDemo;
 	@Autowired
-	private NumberServiceImpl numberService;
+	private AdminGroupServiceImpl groupService;
+	@Autowired
+	private AdminUserServiceImpl userService;
+	@Autowired
+	private IdentityService identityService;
+	@Autowired
+	private FinanceOrderServiceImpl financeOrderService;
 
 	@Test
-	public void test001() throws BadHanyuPinyinOutputFormatCombination {
+	public void test001() {
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("和略电子商务上海有限公司", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("和略电子商务上海有限公司", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("和略电子商务上海有限公司", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("和略电子商务上海有限公司", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(" ------------------------------------ ");
-		System.out.println(" ------------------------------------ ");
-		System.out.println(" ------------------------------------ ");
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("上海瑞易供应链管理有限公司", 4,  true)));
-		System.out.println(" ------------------------------------ ");
-		System.out.println(" ------------------------------------ ");
-		System.out.println(" ------------------------------------ ");
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
-		System.out.println(numberService.generateContractNo(CodeUtils.GeneratePinYinCode("ABCDEFG", 4, true) + "-" + CodeUtils.GeneratePinYinCode("123456", 4,  true)));
+		financeOrderService.changeFinanceOrderRiskManagerInfoContractStatus(1L, 2, 1);
+
+
 	}
 
     @Test

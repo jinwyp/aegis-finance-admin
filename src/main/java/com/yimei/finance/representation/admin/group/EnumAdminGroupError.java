@@ -8,5 +8,6 @@ public enum EnumAdminGroupError {
     该用户已经在此组中,
     已经存在名称相同的组,
     组名称不能为空,
+    组类型不能为空,
     ;
 }

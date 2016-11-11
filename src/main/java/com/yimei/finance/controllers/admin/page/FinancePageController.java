@@ -40,9 +40,6 @@ public class FinancePageController {
     @ApiOperation(value = "预览金融合同页面", notes = "预览金融合同页面")
     public String financeContractPreviewPage(@PathVariable("financeId") Long financeId,
                                              @PathVariable("type") int type, Map<String, Object> model) {
-        System.out.println(" ----------------------------- " + EnumFinanceContractType.getTypeName(type));
-        System.out.println(" ----------------------------- " + EnumFinanceContractType.getTypeName(type));
-        System.out.println(" ----------------------------- " + EnumFinanceContractType.getTypeName(type));
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
         if (orderContractRepository.findByFinanceIdAndType(financeId, type) == null) {
             model.put("contract", contractService.getFinanceOrderContractContent(financeId, type, false));

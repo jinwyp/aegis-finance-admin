@@ -82,8 +82,6 @@ public class AdminCompanyServiceImpl {
         } else {
             company.setName(companyObject.getName());
             company.setRemarks(companyObject.getRemarks());
-            company.setStatus(EnumCompanyStatus.Normal.toString());
-            company.setStatusId(EnumCompanyStatus.Normal.id);
             company.setLastUpdateManId(sessionUserId);
             company.setLastUpdateTime(new Date());
             companyRepository.save(company);
@@ -124,8 +122,7 @@ public class AdminCompanyServiceImpl {
                 companyObject.setRoleName(roleName);
             }
             companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
-            Long personNum = userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId()).count();
-            companyObject.setPersonNum(personNum);
+            companyObject.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId()).count());
         }
         return companyObject;
     }
@@ -193,7 +190,7 @@ public class AdminCompanyServiceImpl {
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
         companyRepository.save(company);
         List<UserObject> userObjectList = userService.getUserByRiskCompanyId(company.getId());
-        userObjectList.forEach(user -> {
+        userObjectList.parallelStream().forEach(user -> {
             identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Deleted.toString());
         });
         return Result.success().setData(companyObject);
@@ -202,9 +199,8 @@ public class AdminCompanyServiceImpl {
     public List<Company> getNormalCompanyListByIdList(List<Long> companyIdList) {
         List<Company> companyList = new ArrayList<>();
         if (companyIdList != null && companyIdList.size() != 0) {
-            companyIdList.forEach(id -> {
-                Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
-                if (company != null) companyList.add(company);
+            companyIdList.parallelStream().filter(id -> companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id) != null).forEach(id -> {
+                companyList.add(companyRepository.findOne(id));
             });
         }
         return companyList;

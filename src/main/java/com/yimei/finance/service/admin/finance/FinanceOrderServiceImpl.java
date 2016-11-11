@@ -139,6 +139,14 @@ public class FinanceOrderServiceImpl {
         if (riskManagerInfoObject != null) {
             riskManagerInfoObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(financeId, attachmentType));
             riskManagerInfoObject.setAttachmentList2(getAttachmentByFinanceIdType(financeId, typeList2));
+            List<Attachment> attachmentList3 = taskService.getTaskAttachments("c" + financeId + EnumFinanceAttachment.Upstream_Contract_Attachment.type);
+            if (attachmentList3 != null && attachmentList3.size() != 0) {
+                riskManagerInfoObject.setAttachmentList3(DozerUtils.copy(attachmentList3, AttachmentObject.class));
+            }
+            List<Attachment> attachmentList4 = taskService.getTaskAttachments("c" + financeId + EnumFinanceAttachment.Downstream_Contract_Attachment.type);
+            if (attachmentList4 != null && attachmentList4.size() != 0) {
+                riskManagerInfoObject.setAttachmentList4(DozerUtils.copy(attachmentList4, AttachmentObject.class));
+            }
         }
         return Result.success().setData(riskManagerInfoObject);
     }
@@ -214,6 +222,16 @@ public class FinanceOrderServiceImpl {
         riskManagerInfo.setLastUpdateManId(userId);
         riskManagerInfo.setLastUpdateTime(new Date());
         riskRepository.save(DozerUtils.copy(riskManagerInfo, FinanceOrderRiskManagerInfo.class));
+    }
+
+    @Transactional
+    public void changeFinanceOrderRiskManagerInfoContractStatus(Long financeId, int type, int status) {
+        if (type == 1) {
+            riskRepository.updateUpstreamContractStatusByFinanceId(financeId, status);
+            System.out.println();
+        } else if (type == 2) {
+            riskRepository.updateDownstreamContractStatusByFinanceId(financeId, status);
+        }
     }
 
     /**

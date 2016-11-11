@@ -202,7 +202,7 @@ public class MYDFinancingController {
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mydRiskManagerAddContractMethod(@PathVariable("taskId") String taskId,
                                                   @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SaveFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) throws BadHanyuPinyinOutputFormatCombination {
-        return riskManagerAddContractMethod(taskId, financeOrderContractObject, true);
+        return riskManagerAddContractMethod(taskId, financeOrderContractObject, false);
     }
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}/contract", method = RequestMethod.POST, params = {"type=1"})

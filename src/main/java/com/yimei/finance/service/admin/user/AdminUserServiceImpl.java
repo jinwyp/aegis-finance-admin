@@ -61,8 +61,7 @@ public class AdminUserServiceImpl {
         UserObject userObject = changeUserObject(user);
         Result result = checkOperateUserAuthority(userObject, sessionUser);
         if (!result.isSuccess()) return result;
-        if (userObject.getStatus().equals(EnumAdminUserStatus.Deleted.toString()))
-            return Result.error(EnumAdminUserError.此用户已删除.toString());
+        if (userObject.getStatus().equals(EnumAdminUserStatus.Deleted.toString())) return Result.error(EnumAdminUserError.此用户已删除.toString());
         return Result.success().setData(userObject);
     }
 
@@ -81,8 +80,9 @@ public class AdminUserServiceImpl {
     public Result findUserGroupList(String id, UserObject sessionUser, Page page) {
         Result result = userValidated(id, sessionUser);
         if (!result.isSuccess()) return result;
-        page.setTotal(identityService.createGroupQuery().groupMember(id).count());
-        List<GroupObject> groupObjectList = groupService.changeGroupObject(identityService.createGroupQuery().groupMember(id).list());
+        List<Group> groupList = identityService.createGroupQuery().groupMember(id).list();
+        page.setTotal(Long.valueOf(groupList.size()));
+        List<GroupObject> groupObjectList = groupService.changeGroupObject(groupList);
         return Result.success().setData(groupObjectList).setMeta(page);
     }
 
@@ -93,8 +93,7 @@ public class AdminUserServiceImpl {
         Result result = userValidated(id, sessionUser);
         if (!result.isSuccess()) return result;
         identityService.setUserInfo(id, "status", EnumAdminUserStatus.Deleted.toString());
-        UserObject userObject = (UserObject) result.getData();
-        return Result.success().setData(userObject);
+        return Result.success().setData(result.getData());
     }
 
     /**
@@ -238,31 +237,30 @@ public class AdminUserServiceImpl {
             }
         }
         List<UserObject> userObjectList = changeUserObject(userList, sessionUser);
-        List<UserObject> finalUserList = new ArrayList<>();
         if (getUserGroupIdList(sessionUser.getId()).contains(EnumSpecialGroup.SuperAdminGroup.id)) {
             if (!StringUtils.isEmpty(userSearch.getName())) {
-                finalUserList = userObjectList.parallelStream().filter(user ->
+                userObjectList = userObjectList.parallelStream().filter(user ->
                         user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName())
                 ).collect(Collectors.toList());
             } else {
-                finalUserList = userObjectList.parallelStream().filter(user ->
+                userObjectList = userObjectList.parallelStream().filter(user ->
                         user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
                 ).collect(Collectors.toList());
             }
         } else {
             if (!StringUtils.isEmpty(userSearch.getName())) {
-                finalUserList = userObjectList.parallelStream().filter(user ->
+                userObjectList = userObjectList.parallelStream().filter(user ->
                         user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
                 ).collect(Collectors.toList());
             } else {
-                finalUserList = userObjectList.parallelStream().filter(user ->
+                userObjectList = userObjectList.parallelStream().filter(user ->
                         user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
                 ).collect(Collectors.toList());
             }
         }
-        page.setTotal((long) finalUserList.size());
-        int toIndex = page.getPage() * page.getCount() < finalUserList.size() ? page.getPage() * page.getCount() : finalUserList.size();
-        return Result.success().setData(finalUserList.subList(page.getOffset(), toIndex)).setMeta(page);
+        page.setTotal(Long.valueOf(userObjectList.size()));
+        int toIndex = page.getPage() * page.getCount() < userObjectList.size() ? page.getPage() * page.getCount() : userObjectList.size();
+        return Result.success().setData(userObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
     }
 
     /**
@@ -270,9 +268,9 @@ public class AdminUserServiceImpl {
      */
     public List<UserObject> getUserByRiskCompanyId(Long companyId) {
         List<UserObject> userList = changeUserObject(identityService.createUserQuery().list());
-        userList.parallelStream().filter(user -> (
+        userList = userList.parallelStream().filter(user -> (
                 user.getCompanyId().longValue() == companyId.longValue() && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
-        ));
+        )).collect(Collectors.toList());
         return userList;
     }
 
@@ -303,12 +301,12 @@ public class AdminUserServiceImpl {
     public void addUserGroupMemberShip(String userId, List<String> groupIds) {
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
         if (groupList != null && groupList.size() != 0) {
-            groupList.forEach(group -> {
+            groupList.parallelStream().forEach(group -> {
                 identityService.deleteMembership(userId, group.getId());
             });
         }
         if (groupIds != null && groupIds.size() != 0) {
-            groupIds.forEach(id -> {
+            groupIds.parallelStream().forEach(id -> {
                 if (identityService.createGroupQuery().groupId(id).singleResult() == null)
                     throw new BusinessException(EnumAdminGroupError.此组不存在.toString());
                 identityService.createMembership(userId, id);
@@ -317,14 +315,14 @@ public class AdminUserServiceImpl {
     }
 
     /**
-     * 获取风控线中的第一个系统管理员
+     * 获取风控线中的第一个系统管理员姓名
      */
     public String findCompanyFirstAdminName(Long companyId) {
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).orderByUserId().desc().list());
         if (userObjectList == null || userObjectList.size() == 0) return null;
-        userObjectList.parallelStream().filter(user -> (
+        userObjectList = userObjectList.parallelStream().filter(user -> (
                 user.getCompanyId().longValue() == companyId.longValue() && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
-        ));
+        )).collect(Collectors.toList());
         if (userObjectList == null || userObjectList.size() == 0) return null;
         return userObjectList.get(0).getUsername();
     }
@@ -360,8 +358,7 @@ public class AdminUserServiceImpl {
      */
     public List<GroupObject> getCanOperateGroupList(String userId) {
         List<GroupObject> groupObjectList = new ArrayList<>();
-        List<String> groupIds = getCanOperateGroupIdList(userId);
-        groupIds.parallelStream().forEach(gid -> {
+        getCanOperateGroupIdList(userId).parallelStream().forEach(gid -> {
             groupObjectList.add(groupService.changeGroupObject(identityService.createGroupQuery().groupId(gid).singleResult()));
         });
         return groupObjectList;
@@ -399,8 +396,7 @@ public class AdminUserServiceImpl {
      */
     public List<String> getUserGroupIdList(String userId) {
         List<String> groupIds = new ArrayList<>();
-        List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
-        groupList.parallelStream().forEach(group -> {
+        identityService.createGroupQuery().groupMember(userId).list().parallelStream().forEach(group -> {
             groupIds.add(group.getId());
         });
         return groupIds;

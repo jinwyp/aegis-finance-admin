@@ -16,6 +16,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminGroupServiceImpl {
@@ -31,6 +32,7 @@ public class AdminGroupServiceImpl {
         Result result = userService.checkSuperAdminRight(sessionUserId);
         if (!result.isSuccess()) return Result.error(EnumAdminUserError.只有超级管理员才能执行此操作.toString());
         if (StringUtils.isEmpty(groupObject.getName())) return Result.error(EnumAdminGroupError.组名称不能为空.toString());
+        if (StringUtils.isEmpty(groupObject.getType())) return Result.error(EnumAdminGroupError.组类型不能为空.toString());
         if (identityService.createGroupQuery().groupName(groupObject.getName()).singleResult() != null)
             return Result.error(EnumAdminGroupError.已经存在名称相同的组.toString());
         Group group = identityService.newGroup("");
@@ -89,7 +91,7 @@ public class AdminGroupServiceImpl {
         if (group == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
         group.setName(groupObject.getName());
         identityService.saveGroup(group);
-        return Result.success().setData(changeGroupObject(identityService.createGroupQuery().groupId(id).singleResult()));
+        return Result.success().setData(changeGroupObject(group));
     }
 
     /**
@@ -137,11 +139,9 @@ public class AdminGroupServiceImpl {
         if (identityService.createGroupQuery().groupId(groupId).singleResult() == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
         List<UserObject> userList = userService.changeUserObject(identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list());
         List<UserObject> newUserList = new ArrayList<>();
-        userList.forEach(user -> {
-            if (user.getCompanyId() != null && sessionUser.getCompanyId() != null && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()) {
-                newUserList.add(user);
-            }
-        });
+        if (sessionUser.getCompanyId() != null) {
+            newUserList = userList.parallelStream().filter(user -> (user.getCompanyId() != null && user.getCompanyId().longValue() == sessionUser.getCompanyId())).collect(Collectors.toList());
+        }
         return Result.success().setData(newUserList);
     }
 
@@ -150,15 +150,15 @@ public class AdminGroupServiceImpl {
      */
     public GroupObject changeGroupObject(Group group) {
         GroupObject groupObject = DozerUtils.copy(group, GroupObject.class);
-        groupObject.setMemberNums(identityService.createUserQuery().memberOfGroup(group.getId()).list().size());
+        groupObject.setMemberNums(identityService.createUserQuery().memberOfGroup(group.getId()).count());
         return groupObject;
     }
 
     public List<GroupObject> changeGroupObject(List<Group> groupList) {
         if (groupList == null || groupList.size() == 0) return null;
         List<GroupObject> groupObjectList = DozerUtils.copy(groupList, GroupObject.class);
-        groupObjectList.parallelStream().forEach(groupObject -> {
-            groupObject.setMemberNums(identityService.createUserQuery().memberOfGroup(groupObject.getId()).list().size());
+        groupObjectList.parallelStream().forEach(group -> {
+            group.setMemberNums(identityService.createUserQuery().memberOfGroup(group.getId()).count());
         });
         return groupObjectList;
     }

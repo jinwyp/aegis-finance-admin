@@ -199,15 +199,15 @@ public class MYGFinancingController {
     }
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}/contract", method = RequestMethod.POST, params = {"type=0"})
-    @ApiOperation(value = "风控人员填写合同内容", notes = "风控人员填写合同内容")
+    @ApiOperation(value = "风控人员填写合同内容-保存", notes = "风控人员填写合同内容-保存")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mygRiskManagerAddContractMethod(@PathVariable("taskId") String taskId,
                                                   @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SaveFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) throws BadHanyuPinyinOutputFormatCombination {
-        return riskManagerAddContractMethod(taskId, financeOrderContractObject, true);
+        return riskManagerAddContractMethod(taskId, financeOrderContractObject, false);
     }
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}/contract", method = RequestMethod.POST, params = {"type=1"})
-    @ApiOperation(value = "风控人员填写合同内容", notes = "风控人员填写合同内容")
+    @ApiOperation(value = "风控人员填写合同内容-提交", notes = "风控人员填写合同内容-提交")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mygRiskManagerAddContractMethodSubmit(@PathVariable("taskId") String taskId,
                                                         @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SubmitFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) throws BadHanyuPinyinOutputFormatCombination {

@@ -53,16 +53,16 @@ public class FinanceFlowMethodServiceImpl {
     public void addAttachmentsMethod(List<AttachmentObject> attachmentList, String taskId, String processInstanceId, EnumFinanceAttachment type) {
         List<Attachment> oldAttachmentList = taskService.getTaskAttachments(taskId);
         if (oldAttachmentList != null && oldAttachmentList.size() != 0) {
-            for (Attachment attachment : oldAttachmentList) {
+            oldAttachmentList.parallelStream().forEach(attachment -> {
                 taskService.deleteAttachment(attachment.getId());
-            }
+            });
         }
         if (attachmentList != null && attachmentList.size() != 0) {
-            for (AttachmentObject attachmentObject : attachmentList) {
+            attachmentList.parallelStream().forEach(attachmentObject -> {
                 if (!StringUtils.isEmpty(attachmentObject.getName()) && !StringUtils.isEmpty(attachmentObject.getUrl())) {
                     taskService.createAttachment(type.toString(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
                 }
-            }
+            });
         }
     }
 
