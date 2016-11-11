@@ -28,6 +28,7 @@ import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -446,6 +447,15 @@ public class AdminUserServiceImpl {
         return userObjectList;
     }
 
+    public List<UserObject> changeUserObjectSimple(List<User> userList) {
+        if (userList == null || userList.size() == 0) return null;
+        List<UserObject> userObjectList = DozerUtils.copy(userList, UserObject.class);
+        userObjectList.parallelStream().forEach(userObject -> {
+            userObject.setCompanyId(Long.valueOf(identityService.getUserInfo(userObject.getId(), "companyId")));
+        });
+        return userObjectList;
+    }
+
     public List<UserObject> changeUserObject(List<User> userList, UserObject sessionUser) {
         if (userList == null || userList.size() == 0) return null;
         List<UserObject> userObjectList = DozerUtils.copy(userList, UserObject.class);
@@ -470,9 +480,9 @@ public class AdminUserServiceImpl {
             userObject.setCompanyName(companyName);
         }
         userObject.setGroupList(DozerUtils.copy(identityService.createGroupQuery().groupMember(userObject.getId()).list(), GroupObject.class));
-        UserLoginRecord loginRecord = loginRecordRepository.findTopByUserIdOrderByCreateTimeDesc(userObject.getId());
-        if (loginRecord != null) {
-            userObject.setLastLoginTime(loginRecord.getCreateTime());
+        UserLoginRecord userLoginRecord = loginRecordRepository.findTopByUserIdOrderByCreateTimeDesc(userObject.getId());
+        if (userLoginRecord != null) {
+            userObject.setLastLoginTime(userLoginRecord.getCreateTime());
         }
         if (sessionUser != null) {
             userObject.setOperateAuthority(checkOperateUserAuthority(userObject, sessionUser).isSuccess());

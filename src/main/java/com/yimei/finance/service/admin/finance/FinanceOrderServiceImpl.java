@@ -144,6 +144,14 @@ public class FinanceOrderServiceImpl {
     }
 
     /**
+     * 获取合同
+     */
+    public Result findFinanceOrderRiskManagerContractByFinanceIdAndType(Long financeId, int type) {
+        FinanceOrderContractObject financeOrderContractObject = DozerUtils.copy(contractRepository.findByFinanceIdAndType(financeId, type), FinanceOrderContractObject.class);
+        return Result.success().setData(financeOrderContractObject);
+    }
+
+    /**
      * 交易员补充材料
      */
     public void updateFinanceOrderByOnlineTrader(String userId, FinanceOrderObject financeOrder) {
