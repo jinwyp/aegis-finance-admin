@@ -92,12 +92,13 @@ public class FinancingCommonController {
     }
 
     @RequestMapping(value = "/finance/{financeId}/riskmanager/contract/{type}")
-    @ApiOperation(value = "通过 金融单id 查看 合同", notes = "通过 金融单id 查看 合同详细内容")
-    @ApiImplicitParams(
-    @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
-    )
+    @ApiOperation(value = "通过 金融单id, type 查看 合同", notes = "通过 金融单id 查看 合同详细内容")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "type", value = "类型", required = true, dataType = "int", paramType = "path")
+    })
     public Result getFinanceOrderRiskManagerContractByFinanceIdAndTypeTypeMethod(@PathVariable("financeId") Long financeId,
-                                                                          @PathVariable("type") int type) {
+                                                                                 @PathVariable("type") int type) {
         return orderService.findFinanceOrderRiskManagerContractByFinanceIdAndType(financeId, type);
     }
 
