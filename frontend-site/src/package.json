@@ -34,7 +34,7 @@
   "jspm": {
     "configFile": "js/config.js",
     "dependencies": {
-      "avalon2": "npm:avalon2@^2.1.11",
+      "avalon2": "npm:avalon2@^2.1.15",
       "bootstrap": "github:twbs/bootstrap@^3.3.7",
       "jquery": "npm:jquery@1.12.4"
     },

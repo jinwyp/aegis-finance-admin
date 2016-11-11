@@ -65,8 +65,8 @@ public class GroupController {
             return Result.error(EnumAdminGroupError.此组不存在.toString());
         List<User> userList = identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list();
         page.setTotal(Long.valueOf(userList.size()));
-        int toIndex = page.getPage() * page.getCount() < userList.size() ? page.getPage() * page.getCount() : userList.size();
-        List<UserObject> userObjectList = userService.changeUserObject(userList.subList(page.getOffset(), toIndex));
+//        int toIndex = page.getPage() * page.getCount() < userList.size() ? page.getPage() * page.getCount() : userList.size();
+        List<UserObject> userObjectList = userService.changeUserObject(userList);
         return Result.success().setData(userObjectList).setMeta(page);
     }
 

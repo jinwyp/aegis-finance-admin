@@ -1,0 +1,48 @@
+.custom-pagination{
+  margin-bottom:30px;
+  text-align: center;
+  .css-disabled{
+    color: #a2acb5;
+  }
+  a{
+    color:#2199e8;
+    text-decoration: none;
+    cursor: pointer;
+  }
+  .pagination-previous,.pagination-next{
+    display: inline-block;
+    //border:1px solid red;
+    /*IE hack 保证在ie下不换行*/
+    *display:inline;
+    /*IE hack 触发layout*/
+    *zoom: 1;
+  }
+  .pagination-previous>a,.pagination-previous>span,
+  .pagination-next>a,.pagination-next>span{
+    display: inline-block;
+    padding:6px 10px;
+  }
+  .page-item{
+    display: inline-block;
+    .basic{
+      display: inline-block;
+      //border:1px solid red;
+      /*IE hack 保证在ie下不换行*/
+      *display:inline;
+      /*IE hack 触发layout*/
+      *zoom: 1;
+    }
+    .basic>a,.basic>span{
+      display: inline-block;
+      padding:6px 10px;
+    }
+  }
+  .page-item>div{
+    display: inline-block;
+    /*IE hack 保证在ie下不换行*/
+    *display:inline;
+    /*IE hack 触发layout*/
+    *zoom: 1;
+  }
+}
+

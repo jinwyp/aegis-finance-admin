@@ -39,14 +39,9 @@
 <div class="financeManageWrap">
     <div class="financeManage clearfix">
         <!--侧边栏开始-->
-        <div class="finance_sideBar">
-            <h3>融资管理</h3>
-            <ul>
-                <li class="active"><a href="/finance/user/financing">我的申请 </a><span class="trigle"></span></li>
-                <!--<li><a href="#">我的申请</a><span class="trigle"></span></li>-->
-            </ul>
-        </div>
+    <#include "../common/leftmenu.ftl" >
         <!--侧边栏结束-->
+
         <!--右侧主内容开始-->
         <div class="financeCon ms-controller" ms-controller="financeInfo">
             <div class="application">

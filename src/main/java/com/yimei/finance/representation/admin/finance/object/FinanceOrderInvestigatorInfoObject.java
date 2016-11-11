@@ -1,6 +1,7 @@
 package com.yimei.finance.representation.admin.finance.object;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceInvestigatorInfo;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceInvestigatorInfo;
 import com.yimei.finance.representation.common.base.BaseObject;

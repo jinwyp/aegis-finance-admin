@@ -2,11 +2,11 @@
  * Created by JinWYP on 24/10/2016.
  */
 
-import avalon from 'avalon2';
-import $ from 'jquery';
-import 'bootstrap/dist/js/bootstrap.js';
+var avalon = require('avalon2') ;
+var $ = require('jquery') ;
+require('bootstrap/dist/js/bootstrap.js');
 
-var login = () => {
+var login = function() {
 
     var vm = avalon.define({
         $id: "loginController",
@@ -21,10 +21,8 @@ var login = () => {
 };
 
 
-
-
-
 login();
 
-export default login;
+module.exports = login;
+
 

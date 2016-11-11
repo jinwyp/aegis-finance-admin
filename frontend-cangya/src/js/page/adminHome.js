@@ -3,10 +3,11 @@
  */
 
 
-import $ from 'jquery';
-import 'bootstrap/dist/js/bootstrap.js';
+var avalon = require('avalon2') ;
+var $ = require('jquery') ;
+require('bootstrap/dist/js/bootstrap.js');
 
-var login = () => {
+var home = function() {
 
 };
 
@@ -14,7 +15,7 @@ var login = () => {
 
 
 
-login();
+home();
 
-export default login;
 
+module.exports = home;

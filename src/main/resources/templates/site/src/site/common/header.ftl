@@ -49,7 +49,7 @@
                                     <td class="padding40"><a href="${sitepage}/coalzone">煤矿专区</a></td>
                                 </tr>
                                 <tr>
-                                    <td><a href="${sitepage}/news">资讯</a></td>
+                                    <td><a href="${infopage}/news">资讯</a></td>
                                     <td><a href="${sitepage}/logistics/toLogistics">物流</a></td>
                                     <td class="padding40"><a href="${sitepage}/dataCenter">数据中心</a></td>
                                 </tr>
