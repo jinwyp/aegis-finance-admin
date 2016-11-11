@@ -170,5 +170,18 @@ export class AuditRiskManagerComponent {
         this.location.back();
     }
 
+    previewContract(){
+        // window.open('http://finance-local.yimei180.com:8002/finance/admin/home/contract/10/edit');
+        window.open('http://finance-local.yimei180.com:8002/finance/admin/contract');
+    }
+
+    editUp(){
+        window.open('http://finance-local.yimei180.com:8002/finance/admin/home/contractup/'+this.taskId+'/edit');
+    }
+
+    editDown(){
+        window.open('http://finance-local.yimei180.com:8002/finance/admin/home/contractdown/'+this.taskId+'/edit');
+    }
+
 }
 
