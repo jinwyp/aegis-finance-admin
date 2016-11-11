@@ -224,7 +224,6 @@ public class FinanceOrderServiceImpl {
         riskRepository.save(DozerUtils.copy(riskManagerInfo, FinanceOrderRiskManagerInfo.class));
     }
 
-    @Transactional
     public void changeFinanceOrderRiskManagerInfoContractStatus(Long financeId, int type, int status) {
         if (type == 1) {
             riskRepository.updateUpstreamContractStatusByFinanceId(financeId, status);

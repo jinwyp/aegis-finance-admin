@@ -21,6 +21,7 @@ public enum EnumAdminUserError {
     你没有操作此用户的权限,
     此用户已删除,
     您的账号已被删除,
+    此风控线已经存在系统管理员,
     ;
     public static final String NewPasswordLengthError = "密码应该在6-16个字符之间";
 

@@ -125,6 +125,8 @@ public class AdminUserServiceImpl {
         if (result3.isSuccess() && user.getCompanyId() != null && user.getCompanyId().longValue() != 0 && user.getCompanyId().longValue() != -1) {
             Company company = companyRepository.findOne(user.getCompanyId());
             if (company == null) return Result.error(EnumCommonError.Admin_System_Error);
+            List<UserObject> userObjectList = changeUserObjectSimple(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).list()).parallelStream().filter(u -> u.getCompanyId().longValue() == user.getCompanyId().longValue()).collect(Collectors.toList());
+            if (userObjectList != null && userObjectList.size() != 0) return Result.error(EnumAdminUserError.此风控线已经存在系统管理员.toString());
             identityService.setUserInfo(newUser.getId(), "companyId", String.valueOf(company.getId()));
             identityService.setUserInfo(newUser.getId(), "companyName", company.getName());
         } else {
