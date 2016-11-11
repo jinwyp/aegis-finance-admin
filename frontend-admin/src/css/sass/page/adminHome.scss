@@ -63,8 +63,8 @@
   position: relative;
 
   .hidden-input {
-    width:180px;
-    height:120px;
+    width:100px;
+    height:30px;
     position:absolute;
     left:0px;
     top:0px;
@@ -73,18 +73,19 @@
     opacity:0;
 
     input {
-      width:180px;
-      height:120px;
+      width:100px;
+      height:30px;
       font-size:100px;
+      cursor: pointer;
     }
   }
 
   .file-btn-upload{
     text-align: center;
-    width:180px;
+    min-width:100px;
     border:1px solid $input-border-color;
-
-    padding:20px 0;
+    border-radius: 3px;
+    padding:4px 10px;
     text-decoration: none;
 
     .upload-icon{
@@ -93,9 +94,8 @@
       height:46px;
       background: url("#{$assetPath}/css/images/upload_btn_icon.png") no-repeat;
     }
-    span{
-      display: block;
-    }
+    a{  cursor: pointer;  }
+    span{  display: block;  }
   }
 }
 
@@ -528,6 +528,13 @@
           label{
             width:190px;}
         }
+
+        tr.item-title .contract{ margin-bottom: 20px;
+          margin-left:20px; }
+        tr.item-title .contract .file-upload{
+          margin-bottom:0;
+        }
+
         td.td-label{ width:190px; background-color: #f7f7f7;  }
         td.td-val{ background-color: #fcfdfd;}
         td.td-textarea>textarea{ box-shadow: none;  border:none;  resize: none;  padding:4px 0; background-color: #fcfdfd; }
@@ -548,6 +555,13 @@
           margin-left:20px;
           input{
             margin-right:10px;
+          }
+        }
+        tr.item-title .enclosure{
+          padding:20px 14px;
+          li{
+            margin-left:20px;
+            margin-top: 10px;
           }
         }
         tr.item-title td>span{
@@ -583,6 +597,24 @@
         .finance-types label>input {
           margin-right: 10px;
         }
+        .word_icon{
+          display: inline-block;
+          width:18px;
+          height:18px;
+          vertical-align: middle;
+          background-image: url("#{$assetPath}/css/images/word_icon.png");
+        }
+        .word_line{
+          border-bottom: 1px dotted black;
+          display: inline-block;
+          width: 50%;
+          vertical-align: middle;
+        }
+        .a-padding{  padding:0 16px; text-decoration: none;cursor: pointer;  }
+        .a-line{ border-left: 1px solid gray;border-right: 1px solid gray; }
+        .enclosure-list{
+          padding:0 20px 20px 20px;
+        }
       }
     }
 
@@ -591,6 +623,86 @@
       border:1px solid $border-color;
       .info-item>span{ text-align: right;  padding-right:30px; }
     }
+
+    .orange{  color: #f66c54; }
+
+    //合同编辑的样式开始
+
+    .contract-title{
+      width: 900px;
+      margin:0 auto;
+      font-size: 24px;
+      text-align: center;
+      padding:20px 0 30px;
+      border-bottom:1px solid #ebebeb;
+      span{ font-size: 16px; }
+    }
+
+    .contract-table{
+      width: 850px;
+      margin: 0 auto;
+      margin-bottom: 30px;
+
+      .div-150 {  width: 150px;  }
+      .div-180 {  width: 180px;  }
+      .div-205 {  width: 205px;  }
+      .div-250 {  width: 250px;  }
+
+      .pdl-15{ padding-left: 15px; }
+      .input-rl{ background-color: #ebebeb; }
+      .money-zh{  margin-top:12px; }
+      .table-label {  text-align: right;  }
+      .textarea-label{  padding: 0 0 60px;  }
+      .money-label{  padding:5px 0 30px; }
+
+      input {
+        width: 283px;
+        height: 36px;
+        outline: none;
+        font-size: 16px;
+        background-color: #fcfdfd;
+        border:1px solid #e0e0e0;
+        padding:2px 10px;
+      }
+
+      input.selection{ width: 198px; }
+
+      textarea {
+        resize: none;
+        outline: none;
+        width: 706px;
+        padding:10px;
+        font-size: 16px;
+        background-color: #fcfdfd;
+        border:1px solid #e0e0e0;
+      }
+    }
+
+    .contract-table tr td{
+      vertical-align: middle;
+      padding:8px 0;
+      .notice{
+        display: inline-block;
+        font-size: 14px;
+        border:1px solid red;
+        border-radius: 3px;
+        padding:4px 6px;
+        .notice-icon{
+          display: inline-block;
+          width:14px;
+          height:14px;
+          vertical-align: middle;
+          background-image: url("#{$assetPath}/css/images/notice_icon.png");
+        }
+      }
+      .btn-option{  width:350px;  margin:20px auto; }
+      .btn{ min-width: 140px; color: #ffffff; font-size: 18px; }
+      .btn.commit{  background-color: #f66c54; }
+      .btn.cancel{ background-color: #a2acb5; }
+      .ml-40{  margin-left:40px; }
+    }
+
+    //合同编辑的样式结束
   }
 }
 

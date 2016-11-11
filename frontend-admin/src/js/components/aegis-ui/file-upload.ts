@@ -23,6 +23,9 @@ export class FileUploadComponent {
         url : ''
     };
 
+    @Input()
+    btnText : string;
+
     @Output()
     onFinished:any = new EventEmitter();
 

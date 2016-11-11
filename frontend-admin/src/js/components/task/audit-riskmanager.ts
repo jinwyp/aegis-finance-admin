@@ -4,7 +4,7 @@
 
 
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -46,11 +46,15 @@ export class AuditRiskManagerComponent {
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
 
+    btnText1 : string = '点击上传';
+    btnText2 : string = '+ 添加附件';
+
     constructor(
-        private location: Location,
-        private activatedRoute: ActivatedRoute,
-        private task: TaskService,
-        private user: UserService
+        private location : Location,
+        private router : Router,
+        private activatedRoute : ActivatedRoute,
+        private task : TaskService,
+        private user : UserService
     ) {}
 
 
@@ -89,6 +93,7 @@ export class AuditRiskManagerComponent {
                 this.task.getOrderInfoById(this.currentTask.financeId, 'riskmanager').then((result)=>{
                     if (result.success && result.data){
                         this.currentOrder = result.data;
+                        console.log(this.currentOrder);
                     }else{
 
                     }
@@ -152,6 +157,28 @@ export class AuditRiskManagerComponent {
         })
     }
 
+    finishedUpload3 (event) {
+        if (!this.currentOrder.attachmentList3) {this.currentOrder.attachmentList3 = []}
+        this.currentOrder.attachmentList3.push({
+            "url": event.value.url,
+            "name": event.value.name,
+            "type": event.value.type,
+            "processInstanceId": this.currentTask.processInstanceId,
+            "taskId": this.currentTask.id
+        })
+    }
+
+    finishedUpload4 (event) {
+        if (!this.currentOrder.attachmentList4) {this.currentOrder.attachmentList4 = []}
+        this.currentOrder.attachmentList4.push({
+            "url": event.value.url,
+            "name": event.value.name,
+            "type": event.value.type,
+            "processInstanceId": this.currentTask.processInstanceId,
+            "taskId": this.currentTask.id
+        })
+    }
+
     delAttachmentList1(file, isAttachmentList2 : boolean = false){
         let index = this.currentOrder.attachmentList1.indexOf(file);
 
@@ -165,22 +192,43 @@ export class AuditRiskManagerComponent {
         }
     }
 
+    delAttachmentList(file, attachmentListType : number){
+        let index = -1;
+        if(attachmentListType===1){
+            index = this.currentOrder.attachmentList1.indexOf(file);
+        }else if(attachmentListType===3){
+            index = this.currentOrder.attachmentList3.indexOf(file);
+        }else if(attachmentListType===4){
+            index = this.currentOrder.attachmentList4.indexOf(file);
+        }
+        if(index<0){
+            return;
+        }
+        if(attachmentListType===1){
+            this.currentOrder.attachmentList1.splice(index, 1);
+        }else if(attachmentListType===3){
+            this.currentOrder.attachmentList3.splice(index, 1);
+        }else if(attachmentListType===4){
+            this.currentOrder.attachmentList4.splice(index, 1);
+        }
+    }
+
+
 
     goBack() {
         this.location.back();
     }
 
-    previewContract(){
-        // window.open('http://finance-local.yimei180.com:8002/finance/admin/home/contract/10/edit');
-        window.open('http://finance-local.yimei180.com:8002/finance/admin/contract');
+    previewContract(financeId : number,type : number){
+        window.open('http://finance-local.yimei180.com:8002/finance/admin/finance/'+financeId+'/contract/'+type+'/preview');
     }
 
-    editUp(){
-        window.open('http://finance-local.yimei180.com:8002/finance/admin/home/contractup/'+this.taskId+'/edit');
+    editUp(financeId : number){
+        this.router.navigate(['/contractup', financeId, 'edit']);
     }
 
-    editDown(){
-        window.open('http://finance-local.yimei180.com:8002/finance/admin/home/contractdown/'+this.taskId+'/edit');
+    editDown(financeId : number){
+        this.router.navigate(['/contractdown', financeId, 'edit']);
     }
 
 }

@@ -24,6 +24,8 @@ import { MaterialDetailComponent } from "../components/task/material-detail";
 import { AddRiskLineComponent } from "../components/risk-line/add-risk-line";
 import { FundCompanyListComponent } from "../components/role/fund-company-list";
 import { RiskLineListComponent } from "../components/risk-line/risk-line-list";
+import { ContractUpEditComponent } from "../components/risk-line/contract-up-edit";
+import { ContractDownEditComponent } from "../components/risk-line/contract-down-edit";
 
 const routes: Routes = [
     {
@@ -179,6 +181,14 @@ const routes: Routes = [
         path: 'tasks/:id/riskmanager/info',
         component: AuditRiskManagerComponent,
         data: { routeType : 'info', title: '任务 - 查看详情' }
+    },
+    {
+        path: 'contractup/:id/edit',
+        component: ContractUpEditComponent
+    },
+    {
+        path: 'contractdown/:id/edit',
+        component: ContractDownEditComponent
     },
     {
         path: '**',
