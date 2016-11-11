@@ -179,6 +179,8 @@ class Task {
     taskList : Task[] ;
     attachmentList1 : Array<any>;
     attachmentList2 : Array<any>;
+    attachmentList3 : Array<any>;
+    attachmentList4 : Array<any>;
 
     //公用字段
     financingAmount : number;               //拟融资金额（单位：万元）

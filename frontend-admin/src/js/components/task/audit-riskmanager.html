@@ -80,7 +80,7 @@
                         <a [href]="'/finance/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
                     </div>
 
-                    <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
+                    <file-upload *ngIf="!css.isReadOnly" [btnText]="btnText1" (onFinished)="finishedUpload($event)"></file-upload>
                 </div>
             </td>
         </tr>
@@ -124,38 +124,33 @@
         </tr>
         <tr class="item-title">
             <td colspan="4">
-                <div>
+                <div class="contract">
                     <span class="word_icon"></span>《仓押上游采购合同》<span class="word_line"></span>
-                    <a class="a-padding" (click)="previewContract()">预览</a>
-                    <a class="a-padding a-line" (click)="editUp()">编辑</a>
-                    <a class="a-padding">+&nbsp;添加附件</a></div>
-                <div>
-                    <ul class="enclosure">
-                        <li>
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"  *ngIf="!css.isReadOnly"></span>
-                            <a [href]="'/finance/admin/files?url='" target="_blank">aaaaa.png</a>
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"  *ngIf="!css.isReadOnly"></span>
-                            <a [href]="'/finance/admin/files?url='" target="_blank">aaaaa.png</a>
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"  *ngIf="!css.isReadOnly"></span>
-                            <a [href]="'/finance/admin/files?url='" target="_blank">aaaaa.png</a>
-                        </li>
-                    </ul>
+                    <a class="a-padding" (click)="previewContract(currentOrder.id, 1)">预览</a>
+                    <a class="a-padding a-line mr-20" (click)="editUp(currentOrder.id)">编辑</a>
+                    <file-upload *ngIf="!css.isReadOnly" [btnText]="btnText2" (onFinished)="finishedUpload3($event)"></file-upload>
+                    <!--<a class="a-padding">+&nbsp;添加附件</a>-->
                 </div>
-                <div>
+
+                <div class="enclosure-list">
+                    <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList3">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList(pic,3)" *ngIf="!css.isReadOnly"></span>
+                        <a [href]="'/finance/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
+                    </div>
+                </div>
+                <div class="contract">
                     <span class="word_icon"></span>《仓押下游采购合同》<span class="word_line"></span>
-                    <a class="a-padding" (click)="previewContract()">预览</a>
-                    <a class="a-padding a-line" (click)="editDown()">编辑</a>
-                    <a class="a-padding">+&nbsp;添加附件</a>
+                    <a class="a-padding" (click)="previewContract(currentOrder.id, 2)">预览</a>
+                    <a class="a-padding a-line mr-20" (click)="editDown(currentOrder.id)">编辑</a>
+                    <file-upload *ngIf="!css.isReadOnly" [btnText]="btnText2" (onFinished)="finishedUpload4($event)"></file-upload>
+                    <!--<a class="a-padding">+&nbsp;添加附件</a>-->
                 </div>
-                <!--<ul class="enclosure">-->
-                    <!--<li>aaaa.jpg</li>-->
-                    <!--<li>aaaa.jpg</li>-->
-                    <!--<li>aaaa.jpg</li>-->
-                <!--</ul>-->
+                <div class="enclosure-list">
+                    <div class="attachment-list" *ngFor="let pic of currentOrder.attachmentList4">
+                        <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList(pic,4)" *ngIf="!css.isReadOnly"></span>
+                        <a [href]="'/finance/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
+                    </div>
+                </div>
             </td>
         </tr>
     </table>

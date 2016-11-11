@@ -63,8 +63,8 @@
   position: relative;
 
   .hidden-input {
-    width:180px;
-    height:120px;
+    width:100px;
+    height:30px;
     position:absolute;
     left:0px;
     top:0px;
@@ -73,18 +73,19 @@
     opacity:0;
 
     input {
-      width:180px;
-      height:120px;
+      width:100px;
+      height:30px;
       font-size:100px;
+      cursor: pointer;
     }
   }
 
   .file-btn-upload{
     text-align: center;
-    width:180px;
+    min-width:100px;
     border:1px solid $input-border-color;
-
-    padding:20px 0;
+    border-radius: 3px;
+    padding:4px 10px;
     text-decoration: none;
 
     .upload-icon{
@@ -93,9 +94,8 @@
       height:46px;
       background: url("#{$assetPath}/css/images/upload_btn_icon.png") no-repeat;
     }
-    span{
-      display: block;
-    }
+    a{  cursor: pointer;  }
+    span{  display: block;  }
   }
 }
 
@@ -528,6 +528,13 @@
           label{
             width:190px;}
         }
+
+        tr.item-title .contract{ margin-bottom: 20px;
+          margin-left:20px; }
+        tr.item-title .contract .file-upload{
+          margin-bottom:0;
+        }
+
         td.td-label{ width:190px; background-color: #f7f7f7;  }
         td.td-val{ background-color: #fcfdfd;}
         td.td-textarea>textarea{ box-shadow: none;  border:none;  resize: none;  padding:4px 0; background-color: #fcfdfd; }
@@ -595,7 +602,6 @@
           width:18px;
           height:18px;
           vertical-align: middle;
-          margin-left:20px;
           background-image: url("#{$assetPath}/css/images/word_icon.png");
         }
         .word_line{
@@ -606,6 +612,9 @@
         }
         .a-padding{  padding:0 16px; text-decoration: none;cursor: pointer;  }
         .a-line{ border-left: 1px solid gray;border-right: 1px solid gray; }
+        .enclosure-list{
+          padding:0 20px 20px 20px;
+        }
       }
     }
 
