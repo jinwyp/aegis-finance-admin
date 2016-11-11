@@ -41,6 +41,8 @@ public class FinanceOrderRiskManagerInfoObject extends BaseObject implements Ser
     private String approveState;                                     //审批状态
     List<AttachmentObject> attachmentList1;                          //附件列表
     List<AttachmentObject> attachmentList2;                          //补充材料/附件列表
+    List<AttachmentObject> attachmentList3;                          //上游合同附件
+    List<AttachmentObject> attachmentList4;                          //下游合同附件
 
 
 }
