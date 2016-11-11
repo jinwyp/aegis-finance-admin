@@ -144,6 +144,14 @@ public class FinanceOrderServiceImpl {
     }
 
     /**
+     * 获取合同
+     */
+    public Result findFinanceOrderRiskManagerContractByFinanceIdAndType(Long financeId, int type) {
+        FinanceOrderContractObject financeOrderContractObject = DozerUtils.copy(contractRepository.findByFinanceIdAndType(financeId, type), FinanceOrderContractObject.class);
+        return Result.success().setData(financeOrderContractObject);
+    }
+
+    /**
      * 交易员补充材料
      */
     public void updateFinanceOrderByOnlineTrader(String userId, FinanceOrderObject financeOrder) {
@@ -214,17 +222,18 @@ public class FinanceOrderServiceImpl {
     public void saveFinanceOrderContract(String userId, FinanceOrderContractObject financeOrderContract) throws BadHanyuPinyinOutputFormatCombination {
         FinanceOrderContract orderContract = contractRepository.findByFinanceIdAndType(financeOrderContract.getFinanceId(), financeOrderContract.getType());
         FinanceOrder financeOrder = financeOrderRepository.findOne(orderContract.getFinanceId());
-        orderContract.setContractNo(numberService.generateContractNo(CodeUtils.GeneratePinYinCode(financeOrderContract.getBuyerCompanyName(), 4, true) + "-" + CodeUtils.GeneratePinYinCode(financeOrderContract.getSellerCompanyName(), 4,  true)));
-        orderContract.setFinanceType(financeOrder.getApplyType());
-        orderContract.setFinanceSourceId(financeOrder.getSourceId());
-        orderContract.setApplyUserId(financeOrder.getUserId());
-        orderContract.setApplyUserName(financeOrder.getApplyUserName());
-        orderContract.setApplyUserPhone(financeOrder.getApplyUserPhone());
-        orderContract.setApplyCompanyId(financeOrder.getApplyCompanyId());
-        orderContract.setApplyCompanyName(financeOrder.getApplyCompanyName());
-        orderContract.setId(null);
+        financeOrderContract.setFinanceType(financeOrder.getApplyType());
+        financeOrderContract.setFinanceSourceId(financeOrder.getSourceId());
+        financeOrderContract.setApplyUserId(financeOrder.getUserId());
+        financeOrderContract.setApplyUserName(financeOrder.getApplyUserName());
+        financeOrderContract.setApplyUserPhone(financeOrder.getApplyUserPhone());
+        financeOrderContract.setApplyCompanyId(financeOrder.getApplyCompanyId());
+        financeOrderContract.setApplyCompanyName(financeOrder.getApplyCompanyName());
+        financeOrderContract.setId(null);
         if (orderContract != null) {
             financeOrderContract.setId(orderContract.getId());
+        } else {
+            financeOrderContract.setContractNo(numberService.generateContractNo(CodeUtils.GeneratePinYinCode(financeOrderContract.getBuyerCompanyName(), 4, true) + "-" + CodeUtils.GeneratePinYinCode(financeOrderContract.getSellerCompanyName(), 4,  true)));
         }
         financeOrderContract.setLastUpdateManId(userId);
         financeOrderContract.setLastUpdateTime(new Date());

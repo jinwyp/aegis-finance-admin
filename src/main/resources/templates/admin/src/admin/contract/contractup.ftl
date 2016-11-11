@@ -8,7 +8,7 @@
             /*page-break-inside:avoid;*/
         }
         @page {
-            size: A4 landscape;
+            size: A4 portrait;
             margin-bottom: 5%;
         }
         i{font-style: normal;}
@@ -51,7 +51,7 @@
 
 <body>
 
-<div style="width: 1100px;margin: 0 auto 50px;">
+<div style="width: 700px;margin: 0 auto 50px;">
     <h1 style="text-align: center;">煤炭购销合同</h1>
     <div style="line-height: 32px;text-align: right;">合同编号：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 160px;">${contract.contractNo}</span></div>
     <div style="line-height: 32px;text-align: right;">签订地：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 160px;"></span></div>
