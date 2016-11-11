@@ -12,7 +12,10 @@ import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.common.message.MessageServiceImpl;
+import com.yimei.finance.service.common.tools.NumberServiceImpl;
+import com.yimei.finance.utils.CodeUtils;
 import com.yimei.finance.utils.DozerUtils;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
@@ -46,6 +49,8 @@ public class FinanceOrderServiceImpl {
     private MessageServiceImpl messageService;
     @Autowired
     private FinanceOrderContractRepository contractRepository;
+    @Autowired
+    private NumberServiceImpl numberService;
 
     public List<AttachmentObject> getAttachmentByFinanceIdTypeOnce(Long financeId, EnumFinanceAttachment attachmentType) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
@@ -206,9 +211,10 @@ public class FinanceOrderServiceImpl {
     /**
      * 保存,更新 金融单 合同
      */
-    public void saveFinanceOrderContract(String userId, FinanceOrderContractObject financeOrderContract) {
+    public void saveFinanceOrderContract(String userId, FinanceOrderContractObject financeOrderContract) throws BadHanyuPinyinOutputFormatCombination {
         FinanceOrderContract orderContract = contractRepository.findByFinanceIdAndType(financeOrderContract.getFinanceId(), financeOrderContract.getType());
         FinanceOrder financeOrder = financeOrderRepository.findOne(orderContract.getFinanceId());
+        orderContract.setContractNo(numberService.generateContractNo(CodeUtils.GeneratePinYinCode(financeOrderContract.getBuyerCompanyName(), 4, true) + "-" + CodeUtils.GeneratePinYinCode(financeOrderContract.getSellerCompanyName(), 4,  true)));
         orderContract.setFinanceType(financeOrder.getApplyType());
         orderContract.setFinanceSourceId(financeOrder.getSourceId());
         orderContract.setApplyUserId(financeOrder.getUserId());

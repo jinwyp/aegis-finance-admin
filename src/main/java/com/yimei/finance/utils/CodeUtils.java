@@ -1,5 +1,11 @@
 package com.yimei.finance.utils;
 
+import net.sourceforge.pinyin4j.PinyinHelper;
+import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
+import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
+import net.sourceforge.pinyin4j.format.HanyuPinyinToneType;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
+
 import java.util.Random;
 
 public class CodeUtils {
@@ -34,6 +40,31 @@ public class CodeUtils {
             code += codeChars[random.nextInt(62)];
         }
         return code;
+    }
+
+    /**
+     * 根据名称,生成拼音首字母
+     */
+    public static String GeneratePinYinCode(String str, int length, boolean upper) throws BadHanyuPinyinOutputFormatCombination {
+        String pinyinName = "";
+        char[] nameChar = str.toCharArray();
+        HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
+        if(upper){
+            defaultFormat.setCaseType(HanyuPinyinCaseType.UPPERCASE);
+        } else {
+            defaultFormat.setCaseType(HanyuPinyinCaseType.LOWERCASE);
+        }
+        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
+        length = nameChar.length < length ? nameChar.length : length;
+        for (int i=0; i<length; i++) {
+            if (Character.toString(nameChar[i]).matches(
+                    "[\\u4E00-\\u9FA5]+")) {
+                pinyinName += PinyinHelper.toHanyuPinyinStringArray(nameChar[i], defaultFormat)[0].substring(0, 1);
+            } else {
+                pinyinName += Character.toString(nameChar[i]);
+            }
+        }
+        return pinyinName;
     }
 
 }
