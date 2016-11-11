@@ -17,6 +17,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -201,11 +202,11 @@ public class MYGFinancingController {
     @ApiOperation(value = "风控人员填写合同内容", notes = "风控人员填写合同内容")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mygRiskManagerAddContractMethod(@PathVariable("taskId") String taskId,
-                                                  @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SaveFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) {
+                                                  @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SaveFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) throws BadHanyuPinyinOutputFormatCombination {
         return riskManagerAddContractMethod(taskId, financeOrderContractObject, true);
     }
 
-    private Result riskManagerAddContractMethod(String taskId, FinanceOrderContractObject financeOrderContractObject, boolean submit) {
+    private Result riskManagerAddContractMethod(String taskId, FinanceOrderContractObject financeOrderContractObject, boolean submit) throws BadHanyuPinyinOutputFormatCombination {
         Result result = checkMYGContractMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<HistoricTaskInstance, Long> object = (CombineObject<HistoricTaskInstance, Long>) result.getData();
