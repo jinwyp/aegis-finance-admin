@@ -11,6 +11,7 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Task, TaskService, TaskStatus } from '../../service/task';
 import { User, UserService } from '../../service/user';
+import { RiskService } from '../../service/risk';
 
 
 declare var __moduleName: string;
@@ -43,20 +44,21 @@ export class AuditTraderComponent {
     currentOrder : Task = new Task();
     isApprovedRadio : number =-1;
 
+    riskLines = [];
+    riskSelectedItem = {name : null, id : -1};
+
 
     constructor(
         private location: Location,
         private activatedRoute: ActivatedRoute,
         private task: TaskService,
+        private riskService: RiskService,
         private user: UserService
     ) {}
 
 
     ngOnInit(){
-        this.sub = this.activatedRoute.params.subscribe(params => {
-            this.taskId = params['id'];
-            this.getTaskInfo(params['id']);
-        });
+        this.getRiskLineList();
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
             if (this.routeData.routeType === 'info') {
@@ -81,6 +83,18 @@ export class AuditTraderComponent {
         )
     }
 
+    getRiskLineList() {
+        this.riskService.getRiskSelectList().then((result)=> {
+            if (result.success) {
+                this.riskLines = result.data;
+                this.sub = this.activatedRoute.params.subscribe(params => {
+                    this.taskId = params['id'];
+                    this.getTaskInfo(params['id']);
+                });
+            }
+        });
+    }
+
     getTaskInfo (id) {
         this.task.getTaskInfoById(id).then((result)=>{
             if (result.success){
@@ -89,6 +103,14 @@ export class AuditTraderComponent {
                 this.task.getOrderInfoById(this.currentTask.financeId, 'onlinetrader').then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
+                        this.riskLines.forEach(riskLine => {
+                            console.log(riskLine);
+                            if (this.currentOrder.riskCompanyId===riskLine.id) {
+                                this.riskSelectedItem.name = riskLine.name;
+                                this.riskSelectedItem.id = riskLine.id;
+                            }
+                        });
+                        console.log(this.riskSelectedItem);
                         if(this.currentOrder.expectDate===0){
                             this.currentOrder.expectDate=null;
                         }
@@ -153,6 +175,14 @@ export class AuditTraderComponent {
             }
         }
 
+        if(this.riskSelectedItem.id < 1){
+            this.css.ajaxErrorHidden = false;
+            this.errorMsg = '请选择风控线';
+            this.css.isSubmitted = false;
+            return;
+        }
+
+        this.currentOrder.riskCompanyId = this.riskSelectedItem.id;
         let auditType : string = '';
         let body : any = {
             t : {
@@ -162,7 +192,6 @@ export class AuditTraderComponent {
             },
             u : Object.assign({}, this.currentOrder)
         };
-
 
         if (this.currentTask.taskDefinitionKey === TaskStatus.onlineTraderAudit) auditType = 'onlinetrader'; //线上交易员审核并填写材料
 

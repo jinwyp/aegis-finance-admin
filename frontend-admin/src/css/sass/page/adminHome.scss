@@ -522,6 +522,12 @@
         tr.item-max td{padding: 14px 20px;}
         tr.item-min>td{padding: 6px 20px;}
         tr.item-title td{  padding: 11px 20px 11px 0;  }
+        tr.risk-line td .custom-select{
+          margin-left:20px;
+          width:200px;
+          label{
+            width:190px;}
+        }
         td.td-label{ width:190px; background-color: #f7f7f7;  }
         td.td-val{ background-color: #fcfdfd;}
         td.td-textarea>textarea{ box-shadow: none;  border:none;  resize: none;  padding:4px 0; background-color: #fcfdfd; }
