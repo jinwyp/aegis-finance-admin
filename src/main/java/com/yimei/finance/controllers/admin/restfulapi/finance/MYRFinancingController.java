@@ -164,7 +164,7 @@ public class MYRFinancingController {
         return flowStepService.riskManagerAuditFinanceOrderMethod(adminSession.getUser().getId(), taskMap, riskManagerInfoObject, object.t, object.u, submit);
     }
 
-    @RequestMapping(value = "/riskmanager/audit/contract", method = RequestMethod.POST)
+    @RequestMapping(value = "/riskmanager/audit/{taskId}/contract", method = RequestMethod.POST)
     @ApiOperation(value = "风控人员填写合同内容", notes = "风控人员填写合同内容")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mygRiskManagerAddContractMethod(@PathVariable("taskId") String taskId,
