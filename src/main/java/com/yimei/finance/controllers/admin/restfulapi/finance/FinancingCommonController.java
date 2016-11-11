@@ -13,6 +13,7 @@ import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.bpmn.model.BpmnModel;
 import org.activiti.engine.HistoryService;
@@ -88,6 +89,16 @@ public class FinancingCommonController {
     @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getFinanceOrderRiskManagerInfoByFinanceIdMethod(@PathVariable("financeId") Long financeId) {
         return orderService.findRiskManagerInfoByFinanceId(financeId, EnumFinanceAttachment.RiskManagerAuditAttachment, Arrays.asList(new EnumFinanceAttachment[] {EnumFinanceAttachment.SalesmanSupplyAttachment_RiskManager}), adminSession.getUser().getCompanyId());
+    }
+
+    @RequestMapping(value = "/finance/{financeId}/riskmanager/contract/{type}")
+    @ApiOperation(value = "通过 金融单id 查看 合同", notes = "通过 金融单id 查看 合同详细内容")
+    @ApiImplicitParams(
+    @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
+    )
+    public Result getFinanceOrderRiskManagerContractByFinanceIdAndTypeTypeMethod(@PathVariable("financeId") Long financeId,
+                                                                          @PathVariable("type") int type) {
+        return orderService.findFinanceOrderRiskManagerContractByFinanceIdAndType(financeId, type);
     }
 
     @RequestMapping(value = "/finance/{financeId}/tasks", method = RequestMethod.GET)
