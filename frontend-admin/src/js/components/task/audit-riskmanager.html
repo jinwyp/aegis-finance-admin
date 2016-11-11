@@ -106,9 +106,6 @@
                 </div>
             </td>
         </tr>
-        <!--<tr class="item-title">-->
-            <!--<td colspan="4"><label><input type="checkbox">发送给业务人员</label><label><input type="checkbox">发送给用户</label></td>-->
-        <!--</tr>-->
         <tr class="item-title" *ngIf="!css.isReadOnly">
             <td colspan="4">
                 <span>审核意见:</span>
@@ -127,7 +124,8 @@
         </tr>
         <tr class="item-title">
             <td colspan="4">
-                <div><span class="word_icon"></span>《仓押上游采购合同》<span class="word_line"></span>
+                <div>
+                    <span class="word_icon"></span>《仓押上游采购合同》<span class="word_line"></span>
                     <a class="a-padding" (click)="previewContract()">预览</a>
                     <a class="a-padding a-line" (click)="editUp()">编辑</a>
                     <a class="a-padding">+&nbsp;添加附件</a></div>
@@ -145,53 +143,19 @@
                             <span class="glyphicon glyphicon-trash" aria-hidden="true"  *ngIf="!css.isReadOnly"></span>
                             <a [href]="'/finance/admin/files?url='" target="_blank">aaaaa.png</a>
                         </li>
-                        <li>
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"  *ngIf="!css.isReadOnly"></span>
-                            <a [href]="'/finance/admin/files?url='" target="_blank">aaaaa.png</a>
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"  *ngIf="!css.isReadOnly"></span>
-                            <a [href]="'/finance/admin/files?url='" target="_blank">aaaaa.png</a>
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"  *ngIf="!css.isReadOnly"></span>
-                            <a [href]="'/finance/admin/files?url='" target="_blank">aaaaa.png</a>
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"  *ngIf="!css.isReadOnly"></span>
-                            <a [href]="'/finance/admin/files?url='" target="_blank">aaaaa.png</a>
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"  *ngIf="!css.isReadOnly"></span>
-                            <a [href]="'/finance/admin/files?url='" target="_blank">aaaaa.png</a>
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"  *ngIf="!css.isReadOnly"></span>
-                            <a [href]="'/finance/admin/files?url='" target="_blank">aaaaa.png</a>
-                        </li>
-                        <li>
-                            <span class="glyphicon glyphicon-trash" aria-hidden="true"  *ngIf="!css.isReadOnly"></span>
-                            <a [href]="'/finance/admin/files?url='" target="_blank">aaaaa.png</a>
-                        </li>
                     </ul>
                 </div>
-                <div><span class="word_icon"></span>《仓押下游采购合同》<span class="word_line"></span>
+                <div>
+                    <span class="word_icon"></span>《仓押下游采购合同》<span class="word_line"></span>
                     <a class="a-padding" (click)="previewContract()">预览</a>
                     <a class="a-padding a-line" (click)="editDown()">编辑</a>
-                    <a class="a-padding">+&nbsp;添加附件</a></div>
-                <ul class="enclosure">
-                    <li>aaaa.jpg</li>
-                    <li>aaaa.jpg</li>
-                    <li>aaaa.jpg</li>
-                </ul>
-            </td>
-        </tr>
-        <tr class="item-title" *ngIf="!css.isReadOnly">
-            <td colspan="4">
-                <span>选择资金方:</span>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="1">通过</label>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="0">不通过</label>
-                <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" [value]="2">让业务员补充材料</label>
+                    <a class="a-padding">+&nbsp;添加附件</a>
+                </div>
+                <!--<ul class="enclosure">-->
+                    <!--<li>aaaa.jpg</li>-->
+                    <!--<li>aaaa.jpg</li>-->
+                    <!--<li>aaaa.jpg</li>-->
+                <!--</ul>-->
             </td>
         </tr>
     </table>

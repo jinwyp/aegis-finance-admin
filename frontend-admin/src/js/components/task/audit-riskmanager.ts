@@ -4,7 +4,7 @@
 
 
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -47,10 +47,11 @@ export class AuditRiskManagerComponent {
     currentOrder : Task = new Task();
 
     constructor(
-        private location: Location,
-        private activatedRoute: ActivatedRoute,
-        private task: TaskService,
-        private user: UserService
+        private location : Location,
+        private router : Router,
+        private activatedRoute : ActivatedRoute,
+        private task : TaskService,
+        private user : UserService
     ) {}
 
 
@@ -176,11 +177,13 @@ export class AuditRiskManagerComponent {
     }
 
     editUp(){
-        window.open('http://finance-local.yimei180.com:8002/finance/admin/home/contractup/'+this.taskId+'/edit');
+        // this.audit(false);
+        this.router.navigate(['/contractup', 10, 'edit']);
     }
 
     editDown(){
-        window.open('http://finance-local.yimei180.com:8002/finance/admin/home/contractdown/'+this.taskId+'/edit');
+        this.router.navigate(['/contractdown', 10, 'edit']);
+        // window.open('http://finance-local.yimei180.com:8002/finance/admin/home/contractdown/'+this.taskId+'/edit');
     }
 
 }
