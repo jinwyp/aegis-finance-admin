@@ -38,7 +38,10 @@ public class AegisFinanceAdminApplicationTests {
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
-		financeOrderService.changeFinanceOrderRiskManagerInfoContractStatus(1L, 2, 1);
+		userService.getCanOperateGroupList("7587").parallelStream().forEach(group -> {
+			System.out.println(" ---------- " + group.toString());
+			System.out.println();
+		});
 
 
 	}

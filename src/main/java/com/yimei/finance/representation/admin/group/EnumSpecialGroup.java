@@ -33,8 +33,9 @@ public enum EnumSpecialGroup {
 
     public static EnumSpecialGroup getSonGroup(String id) {
         EnumSpecialGroup group = getGroupById(id);
-        if (!group.toString().startsWith("Manage")) return null;
-        else {
+        if (!group.toString().startsWith("Manage")) {
+            return null;
+        } else {
             String groupName = group.toString();
             return EnumSpecialGroup.valueOf(groupName.substring(6, groupName.length()));
         }

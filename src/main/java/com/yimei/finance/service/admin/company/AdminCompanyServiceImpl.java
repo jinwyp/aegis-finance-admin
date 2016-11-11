@@ -25,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class AdminCompanyServiceImpl {
@@ -110,7 +111,7 @@ public class AdminCompanyServiceImpl {
      * 封装公司对象
      */
     public CompanyObject changeCompanyObject(Company company) {
-        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list());
+        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> (user.getStatus().equals(EnumAdminUserStatus.Normal.toString()))).collect(Collectors.toList());
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
         if (company != null) {
             List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
@@ -128,7 +129,7 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<CompanyObject> changeCompanyObject(List<Company> companyList) {
-        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list());
+        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> (user.getStatus().equals(EnumAdminUserStatus.Normal.toString()))).collect(Collectors.toList());
         List<CompanyObject> companyObjectList = DozerUtils.copy(companyList, CompanyObject.class);
         companyObjectList.parallelStream().forEach(company -> {
             company.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());

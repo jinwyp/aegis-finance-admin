@@ -125,7 +125,7 @@ public class AdminUserServiceImpl {
         if (result3.isSuccess() && user.getCompanyId() != null && user.getCompanyId().longValue() != 0 && user.getCompanyId().longValue() != -1) {
             Company company = companyRepository.findOne(user.getCompanyId());
             if (company == null) return Result.error(EnumCommonError.Admin_System_Error);
-            List<UserObject> userObjectList = changeUserObjectSimple(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).list()).parallelStream().filter(u -> u.getCompanyId().longValue() == user.getCompanyId().longValue()).collect(Collectors.toList());
+            List<UserObject> userObjectList = changeUserObjectSimple(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).list()).parallelStream().filter(u -> (u.getCompanyId().longValue() == user.getCompanyId().longValue() && u.getStatus().equals(EnumAdminUserStatus.Normal.toString()))).collect(Collectors.toList());
             if (userObjectList != null && userObjectList.size() != 0) return Result.error(EnumAdminUserError.此风控线已经存在系统管理员.toString());
             identityService.setUserInfo(newUser.getId(), "companyId", String.valueOf(company.getId()));
             identityService.setUserInfo(newUser.getId(), "companyName", company.getName());
@@ -387,7 +387,7 @@ public class AdminUserServiceImpl {
         } else {
             groupList = identityService.createGroupQuery().groupMember(userId).list();
             groupList.parallelStream().filter(group -> EnumSpecialGroup.getSonGroup(group.getId()) != null).forEach(group -> {
-                sonGroupIds.add(group.getId());
+                sonGroupIds.add(EnumSpecialGroup.getSonGroup(group.getId()).id);
             });
         }
         return sonGroupIds;
@@ -449,6 +449,7 @@ public class AdminUserServiceImpl {
         List<UserObject> userObjectList = DozerUtils.copy(userList, UserObject.class);
         userObjectList.parallelStream().forEach(userObject -> {
             userObject.setCompanyId(Long.valueOf(identityService.getUserInfo(userObject.getId(), "companyId")));
+            userObject.setStatus(identityService.getUserInfo(userObject.getId(), "status"));
         });
         return userObjectList;
     }
@@ -550,4 +551,38 @@ public class AdminUserServiceImpl {
     }
 
 
+    public void updateOldUserData(Company company) {
+        List<Group> groupList = identityService.createGroupQuery().groupType(EnumSpecialGroup.SuperAdminGroup.type).list();
+        groupList.parallelStream().forEach(group -> {
+            identityService.createUserQuery().memberOfGroup(group.getId()).list().parallelStream().forEach(user -> {
+                changeSystemUserData(user);
+            });
+        });
+        groupList = identityService.createGroupQuery().groupType(EnumSpecialGroup.SystemAdminGroup.type).list();
+        groupList.parallelStream().forEach(group -> {
+            identityService.createUserQuery().memberOfGroup(group.getId()).list().parallelStream().forEach(user -> {
+                changeRiskCompanyUserData(user, company);
+            });
+        });
+    }
+
+    void changeSystemUserData(User user) {
+        if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
+            identityService.setUserInfo(user.getId(), "companyId", "0");
+            identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
+        }
+        if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
+            identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
+        }
+    }
+
+    void changeRiskCompanyUserData(User user, Company company) {
+        if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
+            identityService.setUserInfo(user.getId(), "companyId", String.valueOf(company.getId()));
+            identityService.setUserInfo(user.getId(), "companyName", company.getName());
+        }
+        if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
+            identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
+        }
+    }
 }

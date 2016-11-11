@@ -10,7 +10,7 @@ import com.yimei.finance.representation.admin.company.enums.EnumCompanyRole;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
 import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
-import com.yimei.finance.representation.admin.user.enums.EnumAdminUserStatus;
+import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
@@ -43,7 +43,7 @@ public class AegisFinanceApplication {
 	}
 
     @Bean
-    public CommandLineRunner init(final IdentityService identityService, CompanyRepository companyRepository, CompanyRoleRelationShipRepository companyRoleRelationShipRepository, FinanceOrderRepository financeOrderRepository) {
+    public CommandLineRunner init(IdentityService identityService, AdminUserServiceImpl userService, CompanyRepository companyRepository, CompanyRoleRelationShipRepository companyRoleRelationShipRepository, FinanceOrderRepository financeOrderRepository) {
         return new CommandLineRunner() {
             @Override
             public void run(String... strings) throws Exception {
@@ -78,128 +78,9 @@ public class AegisFinanceApplication {
 					companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), EnumCompanyRole.RiskManager_Organization.id, EnumCompanyRole.RiskManager_Organization.toString(), new Date(), "0", new Date(), "0"));
 				}
 				final Company finalCompany = company;
-				List<User> userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).list();
-				userList.forEach(user -> {
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
-						identityService.setUserInfo(user.getId(), "companyId", "0");
-						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
-					}
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-					}
-				});
-				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SuperAdminGroup.id).list();
-				userList.forEach(user -> {
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
-						identityService.setUserInfo(user.getId(), "companyId", "0");
-						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
-					}
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-					}
-				});
-				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageOnlineTraderGroup.id).list();
-				userList.forEach(user -> {
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
-						identityService.setUserInfo(user.getId(), "companyId", "0");
-						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
-					}
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-					}
-				});
-				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.OnlineTraderGroup.id).list();
-				userList.forEach(user -> {
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
-						identityService.setUserInfo(user.getId(), "companyId", "0");
-						identityService.setUserInfo(user.getId(), "companyName", "易煤网金融系统");
-					}
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-					}
-				});
-				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageSalesmanGroup.id).list();
-				userList.forEach(user -> {
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
-						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(finalCompany.getId()));
-						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
-					}
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-					}
-				});
-				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SalesmanGroup.id).list();
-				userList.forEach(user -> {
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
-						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(finalCompany.getId()));
-						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
-					}
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-					}
-				});
-				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageInvestigatorGroup.id).list();
-				userList.forEach(user -> {
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
-						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(finalCompany.getId()));
-						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
-					}
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-					}
-				});
-				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.InvestigatorGroup.id).list();
-				userList.forEach(user -> {
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
-						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(finalCompany.getId()));
-						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
-					}
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-					}
-				});
-				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageSupervisorGroup.id).list();
-				userList.forEach(user -> {
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
-						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(finalCompany.getId()));
-						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
-					}
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-					}
-				});
-				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SupervisorGroup.id).list();
-				userList.forEach(user -> {
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
-						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(finalCompany.getId()));
-						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
-					}
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-					}
-				});
-				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.ManageRiskGroup.id).list();
-				userList.forEach(user -> {
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
-						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(finalCompany.getId()));
-						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
-					}
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-					}
-				});
-				userList = identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.RiskGroup.id).list();
-				userList.forEach(user -> {
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
-						identityService.setUserInfo(user.getId(), "companyId", String.valueOf(finalCompany.getId()));
-						identityService.setUserInfo(user.getId(), "companyName", finalCompany.getName());
-					}
-					if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "status"))) {
-						identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-					}
-				});
+				userService.updateOldUserData(finalCompany);
 				List<FinanceOrder> financeOrderList = financeOrderRepository.findByCreateTimeBeforeAndApproveStateIdNot(java.sql.Date.valueOf("2016-11-05"), EnumFinanceStatus.WaitForAudit.id);
-				financeOrderList.forEach(financeOrder -> {
+				financeOrderList.parallelStream().forEach(financeOrder -> {
 					if (financeOrder.getRiskCompanyId() == null) {
 						financeOrder.setRiskCompanyId(finalCompany.getId());
 						financeOrderRepository.save(financeOrder);
