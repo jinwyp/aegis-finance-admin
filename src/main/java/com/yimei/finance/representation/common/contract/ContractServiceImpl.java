@@ -24,12 +24,13 @@ public class ContractServiceImpl {
     /**
      * 获取正式合同内容
      */
-    public String getFinanceOrderFormalContractContent(Long financeId, int type) {
+    public String getFinanceOrderContractContent(Long financeId, int type, boolean formal) {
         FinanceOrderContractObject financeOrderContract = DozerUtils.copy(orderContractRepository.findByFinanceIdAndType(financeId, type), FinanceOrderContractObject.class);
-        if (financeOrderContract == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
         try {
-            return freeMarker.render(getFinanceOrderContentTemplateByType(type), new HashMap<String, Object>() {{
-                put("contract", financeOrderContract);
+            return freeMarker.render(getFinanceOrderContentTemplateByType(type, formal), new HashMap<String, Object>() {{
+                if (formal) {
+                    put("contract", financeOrderContract);
+                }
             }});
         } catch (Exception e) {
             e.printStackTrace();
@@ -39,27 +40,15 @@ public class ContractServiceImpl {
     }
 
 
-    /**
-     * 获取标准(空白)合同内容
-     */
-    public String getFinanceOrderBlankContractContent(int type) {
-        try {
-            return freeMarker.render(getFinanceOrderContentTemplateByType(type), new HashMap<String, Object>() {{
-            }});
-        } catch (Exception e) {
-            e.printStackTrace();
-            logger.info(EnumCommonError.Admin_System_Error);
-        }
-        return null;
-    }
-
-
-
-    public String getFinanceOrderContentTemplateByType(int type) {
-        if (type == 1) {
+    public String getFinanceOrderContentTemplateByType(int type, boolean formal) {
+        if (type == 1 && formal) {
             return "/admin/contract/contractup";
-        } else if (type == 2) {
+        } else if (type == 1 && !formal) {
+            return "/admin/contract/contractupblank";
+        } else if (type == 2 && formal) {
             return "/admin/contract/contractdown";
+        } else if (type == 2 && !formal) {
+            return "/admin/contract/contractdownblank";
         } else {
             throw new BusinessException(EnumCommonError.Admin_System_Error);
         }

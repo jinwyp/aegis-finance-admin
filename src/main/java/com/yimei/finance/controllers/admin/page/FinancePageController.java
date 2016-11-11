@@ -45,9 +45,9 @@ public class FinancePageController {
         System.out.println(" ----------------------------- " + EnumFinanceContractType.getTypeName(type));
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
         if (orderContractRepository.findByFinanceIdAndType(financeId, type) == null) {
-            model.put("contract", contractService.getFinanceOrderBlankContractContent(type));
+            model.put("contract", contractService.getFinanceOrderContractContent(financeId, type, false));
         } else {
-            model.put("contract", contractService.getFinanceOrderFormalContractContent(financeId, type));
+            model.put("contract", contractService.getFinanceOrderContractContent(financeId, type, true));
         }
         return "admin/contract/contractPreview";
     }
@@ -59,14 +59,16 @@ public class FinancePageController {
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
         FinanceOrderContract financeOrderContract = orderContractRepository.findByFinanceIdAndType(financeId, type);
         String contract = "";
+        String fileName = "";
         if (orderContractRepository.findByFinanceIdAndType(financeId, type) == null) {
-            contract = contractService.getFinanceOrderBlankContractContent(type);
+            contract = contractService.getFinanceOrderContractContent(financeId, type, false);
+            fileName = "标准合同.pdf";
         } else {
-            contract = contractService.getFinanceOrderFormalContractContent(financeId, type);
+            contract = contractService.getFinanceOrderContractContent(financeId, type, true);
+            fileName  = "合同-" + financeOrderContract.getContractNo() + ".pdf";
         }
         File file = PDF.createByHtml(contract);
         HttpHeaders headers = new HttpHeaders();
-        String fileName = "合同-" + financeOrderContract.getContractNo() + ".pdf";
         headers.setContentDispositionFormData("attachment", URLEncoder.encode(fileName,"UTF-8"));
         return new HttpEntity<>(FileUtils.readFileToByteArray(file), headers);
 
