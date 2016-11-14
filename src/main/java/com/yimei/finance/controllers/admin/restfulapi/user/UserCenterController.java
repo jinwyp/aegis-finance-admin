@@ -2,10 +2,10 @@ package com.yimei.finance.controllers.admin.restfulapi.user;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.exception.BusinessException;
-import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
-import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAssignType;
 import com.yimei.finance.representation.admin.activiti.HistoryTaskObject;
 import com.yimei.finance.representation.admin.activiti.TaskObject;
+import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAssignType;
 import com.yimei.finance.representation.admin.user.enums.EnumAdminUserError;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.result.Page;
@@ -19,7 +19,6 @@ import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.identity.Group;
 import org.activiti.engine.identity.User;
 import org.activiti.engine.task.IdentityLink;
@@ -63,43 +62,21 @@ public class UserCenterController {
     @ApiOperation(value = "个人待办任务列表", notes = "个人待办任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
-        List<Task> taskList = taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
-        Result result = financeFlowMethodService.changeTaskObject(taskList, adminSession.getUser().getCompanyId());
-        if (!result.isSuccess()) return result;
-        List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
-        page.setTotal((long) taskObjectList.size());
-        int toIndex = page.getPage() * page.getCount() < taskObjectList.size() ? page.getPage() * page.getCount() : taskObjectList.size();
-        return Result.success().setData(taskObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
+        return financeFlowMethodService.findSelfTaskList(adminSession.getUser().getId(), adminSession.getUser().getCompanyId(), page);
     }
 
     @RequestMapping(value = "/unclaimed", method = RequestMethod.GET)
     @ApiOperation(value = "给分配管理员查看待领取任务列表", notes = "给线上交易员管理组, 业务员管理组, 尽调员管理组, 监管员管理组, 风控管理组, 查看待领取任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalWaitClaimTasksMethod(Page page) {
-        List<String> groupIds = userService.getUserGroupIdList(adminSession.getUser().getId());
-        if (groupIds != null && groupIds.size() != 0) {
-            List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
-            Result result = financeFlowMethodService.changeTaskObject(taskList, adminSession.getUser().getCompanyId());
-            if (!result.isSuccess()) return result;
-            List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
-            page.setTotal(Long.valueOf(taskObjectList.size()));
-            int toIndex = page.getPage() * page.getCount() < taskObjectList.size() ? page.getPage() * page.getCount() : taskObjectList.size();
-            return Result.success().setData(taskObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
-        }
-        return Result.success().setData(null).setMeta(page);
+        return financeFlowMethodService.findSelfWaitClaimTaskList(adminSession.getUser().getId(), adminSession.getUser().getCompanyId(), page);
     }
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     @ApiOperation(value = "个人已处理任务列表", notes = "个人已处理任务列表", response = HistoryTaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalHistoryTasksMethod(Page page) {
-        List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
-        page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
-        Long toIndex = page.getPage() * page.getCount() < page.getTotal() ? page.getPage() * page.getCount() : page.getTotal();
-        Result result = financeFlowMethodService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), Math.toIntExact(toIndex)));
-        if (!result.isSuccess()) return result;
-        List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
-        return Result.success().setData(taskList).setMeta(page);
+        return financeFlowMethodService.findSelfHistoryTaskList(adminSession.getUser().getId(), page);
     }
 
     @RequestMapping(value = "/{taskId}/claim", method = RequestMethod.POST)
