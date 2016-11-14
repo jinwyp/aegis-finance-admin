@@ -1,6 +1,5 @@
 package com.yimei.finance.entity.admin.finance;
 
-import com.sun.org.apache.xpath.internal.operations.String;
 import com.yimei.finance.entity.common.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
