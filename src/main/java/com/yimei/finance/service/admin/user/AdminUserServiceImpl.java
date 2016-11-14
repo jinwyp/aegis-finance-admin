@@ -475,11 +475,13 @@ public class AdminUserServiceImpl {
         userObject.setDepartment(identityService.getUserInfo(userObject.getId(), "department"));
         userObject.setStatus(identityService.getUserInfo(userObject.getId(), "status"));
         String companyId = identityService.getUserInfo(userObject.getId(), "companyId");
-        if (companyId != null && !companyId.equals("null")) {
+        if (!StringUtils.isEmpty(companyId) && !companyId.equals("null")) {
             userObject.setCompanyId(Long.valueOf(companyId));
+        } else {
+            userObject.setCompanyId(-1L);
         }
         String companyName = identityService.getUserInfo(userObject.getId(), "companyName");
-        if (companyName != null && !companyName.equals("null")) {
+        if (!StringUtils.isEmpty(companyName) && !companyName.equals("null")) {
             userObject.setCompanyName(companyName);
         }
         userObject.setGroupList(DozerUtils.copy(identityService.createGroupQuery().groupMember(userObject.getId()).list(), GroupObject.class));
