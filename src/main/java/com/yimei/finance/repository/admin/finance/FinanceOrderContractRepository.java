@@ -10,8 +10,9 @@ public interface FinanceOrderContractRepository extends JpaRepository<FinanceOrd
     FinanceOrderContract findByFinanceIdAndType(@Param("financeId") Long financeId,
                                                 @Param("type") int type);
 
-    @Query(" select f from FinanceOrderContract f where f.financeId = ?1 and (f.applyUserId=?2 or f.applyCompanyId=?3) ")
-    FinanceOrderContract findByFinanceIdAndApplyUserIdAndApplyCompanyId(@Param("financeId") Long financeId,
-                                                                        @Param("applyUserId") Long applyUserId,
-                                                                        @Param("applyCompanyId") Long applyCompanyId);
+    @Query(" select f from FinanceOrderContract f where f.financeId=?1 and f.type=?2 and (f.applyUserId=?3 or f.applyCompanyId=?4) ")
+    FinanceOrderContract findByFinanceIdAndTypeAndApplyUserIdAndApplyCompanyId(@Param("financeId") Long financeId,
+                                                                               @Param("type") int type,
+                                                                               @Param("applyUserId") Long applyUserId,
+                                                                               @Param("applyCompanyId") Long applyCompanyId);
 }

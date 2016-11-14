@@ -18,7 +18,6 @@ import com.yimei.finance.representation.common.result.ErrorMessage;
 import com.yimei.finance.representation.common.result.MapObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
-import com.yimei.finance.representation.site.finance.FinanceContractSearch;
 import com.yimei.finance.representation.site.finance.FinanceOrderContractAttachment;
 import com.yimei.finance.representation.site.finance.FinanceOrderResult;
 import com.yimei.finance.representation.site.finance.FinanceOrderSearch;
@@ -254,8 +253,8 @@ public class SiteFinanceOrderServiceImpl {
         return Result.success().setData(financeOrderContractObject);
     }
 
-    public Result findFinanceContractByFinanceIdUserIdCompanyId(Long financeId, Long sessionUserId, Long sessionCompanyId) {
-        FinanceOrderContract financeOrderContract = orderContractRepository.findByFinanceIdAndApplyUserIdAndApplyCompanyId(financeId, sessionUserId, sessionCompanyId);
+    public Result findFinanceContractByFinanceIdUserIdCompanyId(Long financeId, int type, Long sessionUserId, Long sessionCompanyId) {
+        FinanceOrderContract financeOrderContract = orderContractRepository.findByFinanceIdAndTypeAndApplyUserIdAndApplyCompanyId(financeId, type, sessionUserId, sessionCompanyId);
         if (financeOrderContract == null) return Result.error(EnumAdminFinanceError.此合同不存在.toString());
         if (financeOrderRepository.findByIdAndUserIdOrCompanyId(financeOrderContract.getFinanceId(), sessionUserId, sessionCompanyId) == null)
             return Result.error(EnumAdminFinanceError.你没有权限查看此合同.toString());

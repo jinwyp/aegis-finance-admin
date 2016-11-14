@@ -62,9 +62,10 @@ public class SiteUserCenterController {
     @ApiOperation(value = "查看合同详情", notes = "根据 合同金融id 查看合同详情", response = FinanceOrderContract.class)
     @ApiImplicitParam(name = "id", value = "合同id", required = true, dataType = "Long", paramType = "path")
     @LoginRequired
-    @RequestMapping(value = "/financeOrder/{financeId}/contract", method = RequestMethod.GET)
-    public Result getFinancingContractInfo(@PathVariable("financeId") Long financeId) {
-        return financeOrderService.findFinanceContractByFinanceIdUserIdCompanyId(financeId, Long.valueOf(userSession.getUser().getId()), Long.valueOf(userSession.getUser().getCompanyId()));
+    @RequestMapping(value = "/financeOrder/{financeId}/contract/{type}", method = RequestMethod.GET)
+    public Result getFinancingContractInfo(@PathVariable("financeId") Long financeId,
+                                           @PathVariable("type") int type) {
+        return financeOrderService.findFinanceContractByFinanceIdUserIdCompanyId(financeId, type, Long.valueOf(userSession.getUser().getId()), Long.valueOf(userSession.getUser().getCompanyId()));
     }
 
     @ApiOperation(value = "根据金融单id查看合同附件列表", notes = "根据 金融单id 查看合同附件列表", response = FinanceOrderContractAttachment.class)
