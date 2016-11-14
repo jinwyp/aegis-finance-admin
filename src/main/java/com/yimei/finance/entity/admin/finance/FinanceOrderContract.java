@@ -1,5 +1,6 @@
 package com.yimei.finance.entity.admin.finance;
 
+import com.sun.org.apache.xpath.internal.operations.String;
 import com.yimei.finance.entity.common.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -47,10 +48,10 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     private String financeType;                                      //金融类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
 
     @Column(name = "type")
-    private int type;                                                //合同类型
+    private Integer type;                                                //合同类型
 
     @Column(name = "type_name")
-    private int typeName;                                            //合同类型名称
+    private String typeName;                                         //合同类型名称
 
     @Column(name = "sign_place")
     private String signPlace;                                        //签订地点  
