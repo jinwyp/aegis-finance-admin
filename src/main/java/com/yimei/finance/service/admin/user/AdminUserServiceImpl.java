@@ -270,7 +270,7 @@ public class AdminUserServiceImpl {
      */
     public List<UserObject> getUserByRiskCompanyId(Long companyId) {
         List<UserObject> userList = changeUserObject(identityService.createUserQuery().list());
-        userList = userList.parallelStream().filter(user -> (
+        userList.parallelStream().filter(user -> (
                 user.getCompanyId().longValue() == companyId.longValue() && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
         )).collect(Collectors.toList());
         return userList;
@@ -562,6 +562,7 @@ public class AdminUserServiceImpl {
     public Result checkUserEmail(String email, String userId) {
         if (StringUtils.isEmpty(email)) return Result.error(EnumAdminUserError.邮箱不能为空.toString());
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().userEmail(email).list());
+        if (userObjectList == null || userObjectList.size() == 0) return Result.success();
         for (UserObject user : userObjectList) {
             if (user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && !user.getId().equals(userId))
                 return Result.error(EnumAdminUserError.此邮箱已经存在.toString());
