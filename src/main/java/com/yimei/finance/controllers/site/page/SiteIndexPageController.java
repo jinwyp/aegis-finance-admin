@@ -67,7 +67,6 @@ public class SiteIndexPageController {
         financeOrderService.customerExportFinanceOrder(Long.valueOf(userSession.getUser().getId()), Long.valueOf(userSession.getUser().getCompanyId()), response, request);
     }
 
-
-
+    
 
 }

@@ -42,7 +42,7 @@ public class SiteFinancePageController {
 
     @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 合同详情", notes = "供应链金融 我的融资 煤易贷 合同详情页面")
     @LoginRequired
-    @RequestMapping(value = "/finance/user/{financeId}/contract", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/user/order/{financeId}/contract", method = RequestMethod.GET)
     public String personCenterContactInfo(@PathVariable("financeId") Long financeId, Model model) {
         model.addAttribute("currentMenu", 11);
         return "site/user/financeInfoContact";
@@ -50,7 +50,7 @@ public class SiteFinancePageController {
 
     @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 合同详情 - 下载合同", notes = "供应链金融 我的融资 煤易贷 合同详情 - 下载合同")
     @LoginRequired
-    @RequestMapping(value = "/finance/user/{financeId}/contract/{type}/download", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/user/order/{financeId}/contract/{type}/download", method = RequestMethod.GET)
     public HttpEntity<byte[]> siteFinanceOrderDownloadContractByFinanceIdAndContractType(@PathVariable("financeId") Long financeId,
                                                                            @PathVariable("type") int type) throws IOException, DocumentException {
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
@@ -66,7 +66,7 @@ public class SiteFinancePageController {
 
     @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 合同详情 - 预览合同", notes = "供应链金融 我的融资 煤易贷 合同详情 - 预览合同")
     @LoginRequired
-    @RequestMapping(value = "/finance/user/{financeId}/contract/{type}/preview", method = RequestMethod.GET)
+    @RequestMapping(value = "/finance/user/order/{financeId}/contract/{type}/preview", method = RequestMethod.GET)
     public String siteFinanceOrderPreviewContractByFinanceIdAndContractType(@PathVariable("financeId") Long financeId,
                                                                             @PathVariable("type") int type, Map<String, Object> model) {
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
