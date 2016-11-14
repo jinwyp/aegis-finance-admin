@@ -3,12 +3,12 @@ package com.yimei.finance.controllers.admin.restfulapi.finance;
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
-import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.object.*;
 import com.yimei.finance.representation.admin.finance.object.validated.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.common.result.CombineObject;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.common.result.TaskMap;
@@ -17,7 +17,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
-import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
@@ -194,6 +193,9 @@ public class MYDFinancingController {
         Result result = checkMYDMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
+        if (submit) {
+
+        }
         return flowStepService.riskManagerAuditFinanceOrderMethod(adminSession.getUser().getId(), taskMap, riskManagerInfoObject, object.t, object.u, submit);
     }
 
