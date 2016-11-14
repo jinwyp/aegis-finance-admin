@@ -22,8 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -129,13 +129,15 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<CompanyObject> changeCompanyObject(List<Company> companyList) {
-        if (companyList == null || companyList.size() == 0) return null;
-        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString())).collect(Collectors.toList());
-        List<CompanyObject> companyObjectList = DozerUtils.copy(companyList, CompanyObject.class);
-        companyObjectList.parallelStream().forEach(company -> {
-            company.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
-            company.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
-        });
+        List<CompanyObject> companyObjectList = new ArrayList<>();
+        if (companyList != null && companyList.size() != 0) {
+            List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString())).collect(Collectors.toList());
+            companyObjectList = DozerUtils.copy(companyList, CompanyObject.class);
+            companyObjectList.parallelStream().forEach(company -> {
+                company.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
+                company.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
+            });
+        }
         return companyObjectList;
     }
 
@@ -199,12 +201,13 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<Company> getNormalCompanyListByIdList(List<Long> companyIdList) {
-        List<Company> companyList = new LinkedList<>();
+        List<Company> companyList = new ArrayList<>();
         if (companyIdList != null && companyIdList.size() != 0) {
             companyIdList.parallelStream().forEach(id -> {
                 Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
+                System.out.println(" ------11111111111111111111111111111111111----- " + (company==null));
                 if (company != null) {
-                    companyList.add(company);
+                    companyList.add(companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id));
                 }
             });
         }

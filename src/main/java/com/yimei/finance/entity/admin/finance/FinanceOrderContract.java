@@ -47,10 +47,10 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     private String financeType;                                      //金融类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
 
     @Column(name = "type")
-    private int type;                                                //合同类型
+    private Integer type;                                                //合同类型
 
     @Column(name = "type_name")
-    private int typeName;                                            //合同类型名称
+    private String typeName;                                         //合同类型名称
 
     @Column(name = "sign_place")
     private String signPlace;                                        //签订地点  
@@ -87,6 +87,12 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
 
     @Column(name = "quantity_remark")
     private String quantityRemark;                                   //数量备注/备注说明  
+
+    @Column(name = "coal_index_ncv")
+    private String CoalIndex_NCV;                                    //煤炭指标   - 热值
+
+    @Column(name = "coal_index_rs")
+    private String CoalIndex_RS;                                     //煤炭指标   - 硫分
 
     @Column(name = "coal_index")
     private String coalIndex;                                        //煤炭指标  

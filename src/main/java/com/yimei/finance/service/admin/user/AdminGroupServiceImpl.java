@@ -138,7 +138,7 @@ public class AdminGroupServiceImpl {
         if (identityService.createGroupQuery().groupId(groupId).singleResult() == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
         List<UserObject> userList = userService.changeUserObject(identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list());
         if (sessionUser.getCompanyId() != null) {
-            userList.parallelStream().filter(user -> (user.getCompanyId() != null && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue())).collect(Collectors.toList());
+            userList = userList.parallelStream().filter(user -> (user.getCompanyId() != null && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue())).collect(Collectors.toList());
         }
         return Result.success().setData(userList);
     }

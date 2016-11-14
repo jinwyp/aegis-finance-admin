@@ -4,6 +4,9 @@
 
 
 import { Component } from '@angular/core';
+import { Location } from '@angular/common';
+import { ActivatedRoute } from '@angular/router';
+import { Subscription } from 'rxjs/Subscription';
 
 import { Contract, ContractService } from '../../service/contract';
 
@@ -17,7 +20,7 @@ declare var __moduleName: string;
 export class ContractDownEditComponent {
 
     currentDate=new Date();
-    private selectedDateInline: string = '';
+    private selectedDateInline : string = '';
     myDatePickerOptions = {
         todayBtnTxt: 'Today',
         dateFormat: 'yyyy-mm-dd',
@@ -30,15 +33,63 @@ export class ContractDownEditComponent {
         selectionTxtFontSize: '14px'
     };
 
+    taskId : string = '';
     contract : Contract = new Contract();
     money : string = '';
     moneyZh : string = '';
 
 
+    private sub: Subscription;
+
+    constructor(
+        private location : Location,
+        private activatedRoute : ActivatedRoute,
+        private contractService : ContractService,
+    ){}
+
+    ngOnInit(){
+        this.sub = this.activatedRoute.params.subscribe(param=>{
+            console.log(param);
+            this.contract.financeId = param['financeId'];
+            this.taskId = param['taskId'];
+            this.getContractById(param['financeId']);
+        });
+    }
+
+    getContractById(financeId : number){
+        this.contractService.getContractById(financeId, 1).then(result=>{
+            if(result.success&&result.data){
+                this.contract = result.data;
+                this.selectedDateInline = result.data.signDate;
+            }
+        });
+    }
+
+    save(type : number){
+        this.contract.signDate = this.selectedDateInline;
+        this.contract.type = 2;
+        console.log(this.contract);
+        this.contractService.add(this.contract, this.taskId, type).then(result=>{
+            if(result.success){
+                this.goBack();
+            }
+        });
+    }
+
+    saveAndCommitContract(type : number){
+        this.contract.signDate = this.selectedDateInline;
+        console.log(this.contract);
+        this.contractService.add(this.contract, this.taskId, type).then(result=>{
+            if(result.success){
+                this.goBack();
+            }
+        });
+    }
+
+
     onDateChanged(event:any) {
-        // [selDate]="selectedDateInline"
-        // this.currentOrder.businessStartTime = event.formatted;
-        // this.selectedDateInline = event.formatted;
+        this.contract.signDate = event.formatted;
+        this.selectedDateInline = event.formatted;
     }
 
     parserString(n){
@@ -69,6 +120,10 @@ export class ContractDownEditComponent {
         // return str.replace(/零(千|百|拾|角)/g, "零").replace(/(零)+/g, "零").replace(/零(万|亿|元)/g, "$1").replace(/(亿)万|壹(拾)/g, "$1$2").replace(/^元零?|零分/g, "").replace(/元$/g, "元整");
 
         console.log(this.moneyZh);
+    }
+
+    goBack(){
+        this.location.back();
     }
 
 }

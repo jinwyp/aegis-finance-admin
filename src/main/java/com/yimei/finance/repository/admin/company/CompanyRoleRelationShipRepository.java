@@ -12,7 +12,7 @@ public interface CompanyRoleRelationShipRepository extends JpaRepository<Company
     /**
      * 根据 role_number 查询公司id
      */
-    @Query(" select c.companyId from CompanyRoleRelationShip c where c.roleNumber = ?1 order by c.companyId desc ")
+    @Query(" select distinct(c.companyId) from CompanyRoleRelationShip c where c.roleNumber = ?1 order by c.companyId desc ")
     List<Long> findCompanyIdByRoleNumberOrderByCompanyIdDesc(@Param("roleNumber") int roleNumber);
 
     /**
