@@ -57,7 +57,7 @@ export class ContractDownEditComponent {
     }
 
     getContractById(financeId : number){
-        this.contractService.getContractById(financeId, 1).then(result=>{
+        this.contractService.getContractById(financeId, 2).then(result=>{
             if(result.success&&result.data){
                 this.contract = result.data;
                 this.selectedDateInline = result.data.signDate;

@@ -53,18 +53,15 @@ export class ContractUpEditComponent {
             this.contract.financeId = Number(param['financeId']);
             this.taskId = Number(param['taskId']);
             this.getContractById(this.contract.financeId);
-            // console.log(typeof this.taskId);
-            // console.log(this.taskId);
-            // console.log(typeof this.contract.financeId);
-            // console.log(this.contract.financeId);
         });
     }
 
     getContractById(financeId : number){
         this.contractService.getContractById(financeId, 1).then(result=>{
             if(result.success&&result.data){
+                this.selectedDateInline = result.data.signDate||'';
                 this.contract = result.data;
-                this.selectedDateInline = result.data.signDate;
+                console.log(this.contract);
             }
         });
     }
