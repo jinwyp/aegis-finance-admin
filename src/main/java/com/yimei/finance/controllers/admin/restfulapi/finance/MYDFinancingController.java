@@ -201,7 +201,7 @@ public class MYDFinancingController {
     @ApiOperation(value = "风控人员填写合同内容", notes = "风控人员填写合同内容")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mydRiskManagerAddContractMethod(@PathVariable("taskId") String taskId,
-                                                  @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SaveFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) throws BadHanyuPinyinOutputFormatCombination {
+                                                  @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SaveFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) {
         return riskManagerAddContractMethod(taskId, financeOrderContractObject, false);
     }
 
@@ -209,11 +209,11 @@ public class MYDFinancingController {
     @ApiOperation(value = "风控人员填写合同内容", notes = "风控人员填写合同内容")
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
     public Result mydRiskManagerAddContractMethodSubmit(@PathVariable("taskId") String taskId,
-                                                        @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SubmitFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) throws BadHanyuPinyinOutputFormatCombination {
+                                                        @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SubmitFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) {
         return riskManagerAddContractMethod(taskId, financeOrderContractObject, true);
     }
 
-    private Result riskManagerAddContractMethod(String taskId, FinanceOrderContractObject financeOrderContractObject, boolean submit) throws BadHanyuPinyinOutputFormatCombination {
+    private Result riskManagerAddContractMethod(String taskId, FinanceOrderContractObject financeOrderContractObject, boolean submit) {
         Result result = checkMYDContractMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<HistoricTaskInstance, Long> object = (CombineObject<HistoricTaskInstance, Long>) result.getData();

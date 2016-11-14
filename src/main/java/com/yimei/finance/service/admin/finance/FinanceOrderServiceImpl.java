@@ -237,7 +237,7 @@ public class FinanceOrderServiceImpl {
     /**
      * 保存,更新 金融单 合同
      */
-    public void saveFinanceOrderContract(String userId, FinanceOrderContractObject financeOrderContract) throws BadHanyuPinyinOutputFormatCombination {
+    public void saveFinanceOrderContract(String userId, FinanceOrderContractObject financeOrderContract) {
         FinanceOrderContract orderContract = contractRepository.findByFinanceIdAndType(financeOrderContract.getFinanceId(), financeOrderContract.getType());
         FinanceOrder financeOrder = financeOrderRepository.findOne(orderContract.getFinanceId());
         financeOrderContract.setFinanceType(financeOrder.getApplyType());
