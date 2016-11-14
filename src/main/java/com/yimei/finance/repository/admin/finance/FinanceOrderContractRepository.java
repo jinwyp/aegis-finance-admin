@@ -7,7 +7,7 @@ import org.springframework.data.jpa.repository.Query;
 
 public interface FinanceOrderContractRepository extends JpaRepository<FinanceOrderContract, Long> {
 
-    FinanceOrderContract findByFinanceIdAndType(@Param("financeid") Long financeId,
+    FinanceOrderContract findByFinanceIdAndType(@Param("financeId") Long financeId,
                                                 @Param("type") int type);
 
     @Query(" select f from FinanceOrderContract f where f.financeId = ?1 and (f.applyUserId=?2 or f.applyCompanyId=?3) ")

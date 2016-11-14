@@ -577,7 +577,7 @@ public class AdminUserServiceImpl {
     }
 
     void changeRiskCompanyUserData(User user, Company company) {
-        if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
+        if ((StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) | Integer.valueOf(identityService.getUserInfo(user.getId(), "companyId")) == 0) {
             identityService.setUserInfo(user.getId(), "companyId", String.valueOf(company.getId()));
             identityService.setUserInfo(user.getId(), "companyName", company.getName());
         }
