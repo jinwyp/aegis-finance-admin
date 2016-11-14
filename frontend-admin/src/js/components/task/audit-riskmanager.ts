@@ -110,17 +110,15 @@ export class AuditRiskManagerComponent {
         this.css.isSubmitted = true;
         console.log(isAudit);
         console.log(this.currentOrder);
-        // if(isAudit){
-            if(isAudit&&(this.currentOrder.upstreamContractStatus===0
-                ||this.currentOrder.downstreamContractStatus===0
-                ||this.currentOrder.upstreamContractStatus===null
-                ||this.currentOrder.downstreamContractStatus===null)){
-                this.css.ajaxErrorHidden = false;
-                this.errorMsg = '请编辑合同信息';
-                this.css.isSubmitted = false;
-                return;
-            }
-        // }
+        if (isAudit && (this.currentOrder.upstreamContractStatus === 0
+            || this.currentOrder.downstreamContractStatus === 0
+            || this.currentOrder.upstreamContractStatus === null
+            || this.currentOrder.downstreamContractStatus === null)) {
+            this.css.ajaxErrorHidden = false;
+            this.errorMsg            = '请编辑合同信息';
+            this.css.isSubmitted     = false;
+            return;
+        }
 
         let body : any = {
             t : {

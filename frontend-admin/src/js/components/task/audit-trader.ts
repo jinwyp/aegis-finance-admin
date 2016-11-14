@@ -47,6 +47,8 @@ export class AuditTraderComponent {
     riskLines = [];
     riskSelectedItem = {name : null, id : -1};
 
+    btnText : string = '点击上传';
+
 
     constructor(
         private location: Location,
