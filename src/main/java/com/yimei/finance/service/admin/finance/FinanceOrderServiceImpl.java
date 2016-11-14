@@ -15,7 +15,6 @@ import com.yimei.finance.service.common.message.MessageServiceImpl;
 import com.yimei.finance.service.common.tools.NumberServiceImpl;
 import com.yimei.finance.utils.CodeUtils;
 import com.yimei.finance.utils.DozerUtils;
-import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
@@ -239,7 +238,7 @@ public class FinanceOrderServiceImpl {
      */
     public void saveFinanceOrderContract(String userId, FinanceOrderContractObject financeOrderContract) {
         FinanceOrderContract orderContract = contractRepository.findByFinanceIdAndType(financeOrderContract.getFinanceId(), financeOrderContract.getType());
-        FinanceOrder financeOrder = financeOrderRepository.findOne(orderContract.getFinanceId());
+        FinanceOrder financeOrder = financeOrderRepository.findOne(financeOrderContract.getFinanceId());
         financeOrderContract.setFinanceType(financeOrder.getApplyType());
         financeOrderContract.setFinanceSourceId(financeOrder.getSourceId());
         financeOrderContract.setApplyUserId(financeOrder.getUserId());
