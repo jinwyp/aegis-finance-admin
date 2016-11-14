@@ -1,7 +1,9 @@
 package com.yimei.finance;
 
+import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
+import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
@@ -13,6 +15,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.time.LocalDateTime;
+import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -29,6 +34,8 @@ public class AegisFinanceAdminApplicationTests {
 	private IdentityService identityService;
 	@Autowired
 	private FinanceOrderServiceImpl financeOrderService;
+	@Autowired
+	private AdminSession adminSession;
 
 	@Test
 	public void test001() {
@@ -38,11 +45,22 @@ public class AegisFinanceAdminApplicationTests {
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
-		userService.getCanOperateGroupList("7587").parallelStream().forEach(group -> {
-			System.out.println(" ---------- " + group.toString());
-			System.out.println();
-		});
+		List<UserObject> userObjectList = (List<UserObject>) groupService.findCompanyUserListByGroupId("14", adminSession.getUser()).getData();
 
+		System.out.println(" ------ 1 startTime: " + LocalDateTime.now());
+		userObjectList.parallelStream().forEach(userObject -> {
+			System.out.println(" ------------------------------- ");
+			System.out.println(userObject.toString());
+		});
+		System.out.println(" ------ 1 endTime: " + LocalDateTime.now());
+
+
+		System.out.println(" ------ 2 startTime: " + LocalDateTime.now());
+		for (UserObject user : userObjectList) {
+			System.out.println(" ------------------------------- ");
+			System.out.println(user.toString());
+		}
+		System.out.println(" ------ 2 endTime: " + LocalDateTime.now());
 
 	}
 

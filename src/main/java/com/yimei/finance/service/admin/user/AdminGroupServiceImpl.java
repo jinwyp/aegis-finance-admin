@@ -140,7 +140,7 @@ public class AdminGroupServiceImpl {
         List<UserObject> userList = userService.changeUserObject(identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list());
         List<UserObject> newUserList = new ArrayList<>();
         if (sessionUser.getCompanyId() != null) {
-            newUserList = userList.parallelStream().filter(user -> (user.getCompanyId() != null && user.getCompanyId().longValue() == sessionUser.getCompanyId())).collect(Collectors.toList());
+            newUserList = userList.parallelStream().filter(user -> (user.getCompanyId() != null && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue())).collect(Collectors.toList());
         }
         return Result.success().setData(newUserList);
     }
@@ -158,7 +158,7 @@ public class AdminGroupServiceImpl {
         if (groupList == null || groupList.size() == 0) return null;
         List<GroupObject> groupObjectList = DozerUtils.copy(groupList, GroupObject.class);
         groupObjectList.parallelStream().forEach(group -> {
-            group.setMemberNums(identityService.createUserQuery().memberOfGroup(group.getId()).count());
+            group.setMemberNums(identityService.createUserQuery().memberOfGroup(groupObject.getId()).count());
         });
         return groupObjectList;
     }
