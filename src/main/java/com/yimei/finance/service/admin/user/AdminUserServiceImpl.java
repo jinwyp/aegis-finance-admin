@@ -244,21 +244,21 @@ public class AdminUserServiceImpl {
             List<UserObject> userObjectList = changeUserObject(userList, sessionUser);
             if (sessionUserGroupIdList.contains(EnumSpecialGroup.SuperAdminGroup.id)) {
                 if (!StringUtils.isEmpty(userSearch.getName())) {
-                    userObjectList.parallelStream().filter(user ->
+                    userObjectList = userObjectList.parallelStream().filter(user ->
                             user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName())
                     ).collect(Collectors.toList());
                 } else {
-                    userObjectList.parallelStream().filter(user ->
+                    userObjectList = userObjectList.parallelStream().filter(user ->
                             user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
                     ).collect(Collectors.toList());
                 }
             } else {
                 if (!StringUtils.isEmpty(userSearch.getName())) {
-                    userObjectList.parallelStream().filter(user ->
+                    userObjectList = userObjectList.parallelStream().filter(user ->
                             user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
                     ).collect(Collectors.toList());
                 } else {
-                    userObjectList.parallelStream().filter(user ->
+                    userObjectList = userObjectList.parallelStream().filter(user ->
                             user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
                     ).collect(Collectors.toList());
                 }
