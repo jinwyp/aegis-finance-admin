@@ -64,4 +64,9 @@ public class UserObject implements Serializable {
         return EnumAdminUserStatus.valueOf(status).name;
     }
 
+    public UserObject(String id, Long companyId) {
+        this.id = id;
+        this.companyId = companyId;
+    }
+
 }

@@ -4,6 +4,7 @@ import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
 import com.yimei.finance.representation.admin.user.object.UserObject;
+import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
@@ -45,20 +46,22 @@ public class AegisFinanceAdminApplicationTests {
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
-		List<UserObject> userObjectList = (List<UserObject>) groupService.findCompanyUserListByGroupId("14", adminSession.getUser()).getData();
+		Page page = new Page();
+		UserObject user = new UserObject("15014", 0L);
+		List<UserObject> userObjectList = (List<UserObject>) userService.getUserListBySelect(user, null, page).getData();
 
 		System.out.println(" ------ 1 startTime: " + LocalDateTime.now());
 		userObjectList.parallelStream().forEach(userObject -> {
-			System.out.println(" ------------------------------- ");
-			System.out.println(userObject.toString());
+			System.out.print(" -- ");
+			System.out.print(userObject);
 		});
 		System.out.println(" ------ 1 endTime: " + LocalDateTime.now());
 
 
 		System.out.println(" ------ 2 startTime: " + LocalDateTime.now());
-		for (UserObject user : userObjectList) {
+		for (UserObject u : userObjectList) {
 			System.out.println(" ------------------------------- ");
-			System.out.println(user.toString());
+			System.out.println(u.getId());
 		}
 		System.out.println(" ------ 2 endTime: " + LocalDateTime.now());
 

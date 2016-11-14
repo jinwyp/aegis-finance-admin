@@ -123,7 +123,7 @@ public class AdminCompanyServiceImpl {
                 companyObject.setRoleName(roleName);
             }
             companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
-            companyObject.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId()).count());
+            companyObject.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
         }
         return companyObject;
     }

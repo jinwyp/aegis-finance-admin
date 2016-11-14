@@ -10,7 +10,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller("adminHomePageController")
 public class HomePageController {
 
-
     /**
      * 管理首页 页面
      */

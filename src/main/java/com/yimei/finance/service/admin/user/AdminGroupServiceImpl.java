@@ -14,7 +14,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -138,11 +137,10 @@ public class AdminGroupServiceImpl {
     public Result findCompanyUserListByGroupId(String groupId, UserObject sessionUser) {
         if (identityService.createGroupQuery().groupId(groupId).singleResult() == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
         List<UserObject> userList = userService.changeUserObject(identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list());
-        List<UserObject> newUserList = new ArrayList<>();
         if (sessionUser.getCompanyId() != null) {
-            newUserList = userList.parallelStream().filter(user -> (user.getCompanyId() != null && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue())).collect(Collectors.toList());
+            userList.parallelStream().filter(user -> (user.getCompanyId() != null && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue())).collect(Collectors.toList());
         }
-        return Result.success().setData(newUserList);
+        return Result.success().setData(userList);
     }
 
     /**
