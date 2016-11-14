@@ -40,7 +40,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
 
 
     @Range(min = 1, max = 100, message = "合同类型 应在 {min}-{max} 之间", groups = {SubmitFinanceContract.class})
-    private int type;                                                //合同类型
+    private Integer type;                                            //合同类型
     private String typeName;                                         //合同类型名称
 
     @Size(min = 1, max = 200, message = "签订地点 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
