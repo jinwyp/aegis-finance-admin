@@ -2,17 +2,18 @@ package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
-import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
-import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.admin.activiti.HistoryTaskObject;
 import com.yimei.finance.representation.admin.activiti.HistoryVariableObject;
 import com.yimei.finance.representation.admin.activiti.TaskObject;
+import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEndType;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEventType;
-import com.yimei.finance.representation.admin.finance.object.*;
+import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
 import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.file.AttachmentObject;
+import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
@@ -20,7 +21,9 @@ import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.RuntimeService;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.history.*;
+import org.activiti.engine.history.HistoricActivityInstance;
+import org.activiti.engine.history.HistoricProcessInstance;
+import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Attachment;
 import org.activiti.engine.task.Task;
@@ -51,10 +54,44 @@ public class FinanceFlowMethodServiceImpl {
         HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
         if (taskInstance == null) return Result.error(EnumAdminFinanceError.不存在此任务.toString());
         TaskObject taskObject = (TaskObject) changeHistoryTaskObject(taskInstance).getData();
-        if (sessionCompanyId.longValue() == 0L || (sessionCompanyId.longValue() == taskObject.getRiskCompanyId().longValue())) {
+        if (sessionCompanyId.longValue() == 0 || (sessionCompanyId.longValue() == taskObject.getRiskCompanyId().longValue())) {
             return Result.success().setData(taskObject);
         }
         return Result.error(EnumAdminFinanceError.你没有权限查看此任务.toString());
+    }
+
+    public Result findSelfTaskList(String sessionUserId, Long sessionCompanyId, Page page) {
+        List<Task> taskList = taskService.createTaskQuery().taskAssignee(sessionUserId).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
+        Result result = changeTaskObject(taskList, sessionCompanyId);
+        if (!result.isSuccess()) return result;
+        List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
+        page.setTotal((long) taskObjectList.size());
+        int toIndex = page.getPage() * page.getCount() < taskObjectList.size() ? page.getPage() * page.getCount() : taskObjectList.size();
+        return Result.success().setData(taskObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
+    }
+
+    public Result findSelfWaitClaimTaskList(String sessionUserId, Long sessionCompanyId, Page page) {
+        List<String> groupIds = userService.getUserGroupIdList(sessionUserId);
+        if (groupIds != null && groupIds.size() != 0) {
+            List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
+            Result result = changeTaskObject(taskList, sessionCompanyId);
+            if (!result.isSuccess()) return result;
+            List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
+            page.setTotal(Long.valueOf(taskObjectList.size()));
+            int toIndex = page.getPage() * page.getCount() < taskObjectList.size() ? page.getPage() * page.getCount() : taskObjectList.size();
+            return Result.success().setData(taskObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
+        }
+        return Result.success().setData(null).setMeta(page);
+    }
+
+    public Result findSelfHistoryTaskList(String sessionUserId, Page page) {
+        List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(sessionUserId).finished().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
+        page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
+        Long toIndex = page.getPage() * page.getCount() < page.getTotal() ? page.getPage() * page.getCount() : page.getTotal();
+        Result result = changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), Math.toIntExact(toIndex)));
+        if (!result.isSuccess()) return result;
+        List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
+        return Result.success().setData(taskList).setMeta(page);
     }
 
     /**
@@ -182,12 +219,14 @@ public class FinanceFlowMethodServiceImpl {
 
     public Result changeTaskObject(List<Task> taskList, Long sessionCompanyId) {
         List<TaskObject> taskObjectList = new ArrayList<>();
-        for (Task task : taskList) {
-            Result result = changeTaskObject(task);
-            if (!result.isSuccess()) return result;
-            TaskObject taskObject = (TaskObject) result.getData();
-            if (sessionCompanyId.longValue() == 0 || (taskObject.getRiskCompanyId().longValue() == sessionCompanyId.longValue())) {
-                taskObjectList.add((TaskObject) result.getData());
+        if (taskList != null && taskList.size() != 0) {
+            for (Task task : taskList) {
+                Result result = changeTaskObject(task);
+                if (!result.isSuccess()) return result;
+                TaskObject taskObject = (TaskObject) result.getData();
+                if (sessionCompanyId.longValue() == 0 || (taskObject.getRiskCompanyId().longValue() == sessionCompanyId.longValue())) {
+                    taskObjectList.add((TaskObject) result.getData());
+                }
             }
         }
         return Result.success().setData(taskObjectList);
