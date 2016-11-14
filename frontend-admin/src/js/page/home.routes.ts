@@ -187,6 +187,10 @@ const routes: Routes = [
         component: ContractUpEditComponent
     },
     {
+        path: 'contractdown/edit',
+        component: ContractDownEditComponent
+    },
+    {
         path: 'contractup/:id/edit',
         component: ContractUpEditComponent
     },

@@ -104,7 +104,7 @@ export class AuditRiskManagerComponent {
         });
     }
 
-    audit (isAudit : boolean){
+    audit (isAudit : boolean, type : number){
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
@@ -129,11 +129,18 @@ export class AuditRiskManagerComponent {
         if (this.currentTask.taskDefinitionKey && auditType) {
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, isAudit, body).then((result)=>{
                 if (result.success){
-                    if(!isAudit){
-                        this.css.isSubmitted = false;
+                    if(type===1){
+                        console.log(typeof this.currentOrder.financeId);
+                        this.router.navigate(['/contractup/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId}]);
+                    }else if(type===2){
+                        this.router.navigate(['/contractdown/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId}]);
+                    }else{
+                        if(!isAudit){
+                            this.css.isSubmitted = false;
+                        }
+                        this.css.ajaxSuccessHidden=false;
+                        setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                     }
-                    this.css.ajaxSuccessHidden=false;
-                    setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                 }else{
                     this.css.isSubmitted = false;
                     this.css.ajaxErrorHidden=false;
