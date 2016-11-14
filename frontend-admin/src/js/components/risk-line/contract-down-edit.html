@@ -165,4 +165,59 @@
         </td>
         <td><input type="text" [(ngModel)]="contract.sellerBankAccount"/></td>
     </tr>
+
+    <tr>
+        <td>
+            <div class="table-label">买方公司名称：</div>
+        </td>
+        <td><input type="text" [(ngModel)]="contract.buyerCompanyName" required [ngModelOptions]="{standalone: true}"/></td>
+        <td>
+            <div class="table-label">买方联系人：</div>
+        </td>
+        <td><input type="text" [(ngModel)]="contract.buyerLinkmanName" required [ngModelOptions]="{standalone: true}"/></td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="table-label">联系手机：</div>
+        </td>
+        <td><input type="text" [(ngModel)]="contract.buyerLinkmanPhone" required [ngModelOptions]="{standalone: true}"/></td>
+        <td>
+            <div class="table-label">联系邮箱：</div>
+        </td>
+        <td><input type="text" [(ngModel)]="contract.buyerLinkmanEmail" required [ngModelOptions]="{standalone: true}"/></td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="table-label">买方公司地址：</div>
+        </td>
+        <td><input type="text" [(ngModel)]="contract.buyerCompanyAddress" required [ngModelOptions]="{standalone: true}"/></td>
+        <td>
+            <div class="table-label">法定代表人：</div>
+        </td>
+        <td><input type="text" [(ngModel)]="contract.buyerLegalPerson" required [ngModelOptions]="{standalone: true}"/></td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="table-label">开户行：</div>
+        </td>
+        <td><input type="text" [(ngModel)]="contract.buyerBankName" required [ngModelOptions]="{standalone: true}"/></td>
+        <td>
+            <div class="table-label">帐号：</div>
+        </td>
+        <td><input type="text" [(ngModel)]="contract.buyerBankAccount" required [ngModelOptions]="{standalone: true}"/></td>
+    </tr>
+
+    <tr>
+        <td colspan="4">
+            <div class="btn-option">
+                <span class="notice"><span class="notice-icon"></span>保存后，可以刷新预览页面查看保存后的内容。</span>
+                <button type="submit" class="btn btn-default commit" [disabled]="!contractForm.form.valid">保存</button>
+                <button type="button" class="btn btn-default cancel ml-40" (click)="back()" [disabled]="!contractForm.form.valid">返回</button>
+                <!--<span class="btn cancel ml-40">关闭</span>-->
+            </div>
+        </td>
+    </tr>
 </table>

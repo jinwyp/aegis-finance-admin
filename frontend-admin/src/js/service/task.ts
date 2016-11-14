@@ -169,6 +169,9 @@ class Task {
     currentName : string;
     currentTaskDefinitionKey : string;
 
+    downstreamContractStatus : number;
+    upstreamContractStatus : number;
+
 
     // finance Order 字段
     applyType : string;
