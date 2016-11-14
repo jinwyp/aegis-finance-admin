@@ -17,7 +17,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -47,23 +46,25 @@ public class AegisFinanceAdminApplicationTests {
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		Page page = new Page();
-		UserObject user = new UserObject("15014", 0L);
-		List<UserObject> userObjectList = (List<UserObject>) userService.getUserListBySelect(user, null, page).getData();
+		UserObject user = new UserObject("14", 0L);
 
-		System.out.println(" ------ 1 startTime: " + LocalDateTime.now());
-		userObjectList.parallelStream().forEach(userObject -> {
-			System.out.print(" -- ");
-			System.out.print(userObject);
-		});
-		System.out.println(" ------ 1 endTime: " + LocalDateTime.now());
+        List<String> keyList = identityService.getUserInfoKeys("14");
+        System.out.println(" ------- " + keyList);
 
+        keyList.forEach(key -> {
+            System.out.println(" ---------------- " + key);
+            System.out.println(" ---------------- " + identityService.getUserInfo("14", key));
+        });
 
-		System.out.println(" ------ 2 startTime: " + LocalDateTime.now());
-		for (UserObject u : userObjectList) {
-			System.out.println(" ------------------------------- ");
-			System.out.println(u.getId());
-		}
-		System.out.println(" ------ 2 endTime: " + LocalDateTime.now());
+        System.out.println(" ------------------------------------- ");
+        System.out.println(" ------------------------------------- ");
+        System.out.println(" ------------------------------------- ");
+
+        System.out.println(" ------------------------------------ ");
+        System.out.println(" ------------------------------------ ");
+        System.out.println(" ------------------------------------ ");
+
+        System.out.println(user.toString());
 
 	}
 

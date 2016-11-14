@@ -22,8 +22,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -129,7 +129,8 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<CompanyObject> changeCompanyObject(List<Company> companyList) {
-        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> (user.getStatus().equals(EnumAdminUserStatus.Normal.toString()))).collect(Collectors.toList());
+        if (companyList == null || companyList.size() == 0) return null;
+        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString())).collect(Collectors.toList());
         List<CompanyObject> companyObjectList = DozerUtils.copy(companyList, CompanyObject.class);
         companyObjectList.parallelStream().forEach(company -> {
             company.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
@@ -198,10 +199,13 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<Company> getNormalCompanyListByIdList(List<Long> companyIdList) {
-        List<Company> companyList = new ArrayList<>();
+        List<Company> companyList = new LinkedList<>();
         if (companyIdList != null && companyIdList.size() != 0) {
-            companyIdList.parallelStream().filter(id -> companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id) != null).forEach(id -> {
-                companyList.add(companyRepository.findOne(id));
+            companyIdList.parallelStream().forEach(id -> {
+                Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
+                if (company != null) {
+                    companyList.add(company);
+                }
             });
         }
         return companyList;

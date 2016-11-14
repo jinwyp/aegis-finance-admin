@@ -154,7 +154,8 @@ public class FinanceOrderServiceImpl {
     /**
      * 获取合同
      */
-    public Result findFinanceOrderRiskManagerContractByFinanceIdAndType(Long financeId, int type) {
+    public Result findFinanceOrderRiskManagerContractByFinanceIdAndType(Long financeId, int type, Long sessionCompanyId) {
+        if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
         FinanceOrderContractObject financeOrderContractObject = DozerUtils.copy(contractRepository.findByFinanceIdAndType(financeId, type), FinanceOrderContractObject.class);
         return Result.success().setData(financeOrderContractObject);
     }
@@ -236,7 +237,7 @@ public class FinanceOrderServiceImpl {
     /**
      * 保存,更新 金融单 合同
      */
-    public void saveFinanceOrderContract(String userId, FinanceOrderContractObject financeOrderContract) throws BadHanyuPinyinOutputFormatCombination {
+    public void saveFinanceOrderContract(String userId, FinanceOrderContractObject financeOrderContract) {
         FinanceOrderContract orderContract = contractRepository.findByFinanceIdAndType(financeOrderContract.getFinanceId(), financeOrderContract.getType());
         FinanceOrder financeOrder = financeOrderRepository.findOne(orderContract.getFinanceId());
         financeOrderContract.setFinanceType(financeOrder.getApplyType());

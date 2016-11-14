@@ -271,7 +271,7 @@ public class FinanceFlowStepServiceImpl {
      * 风控人员填写合同内容
      */
     @Transactional
-    public Result riskManagerAddFinanceOrderContractMethod(String userId, HistoricTaskInstance task, FinanceOrderContractObject financeOrderContractObject, boolean submit) throws BadHanyuPinyinOutputFormatCombination {
+    public Result riskManagerAddFinanceOrderContractMethod(String userId, HistoricTaskInstance task, FinanceOrderContractObject financeOrderContractObject, boolean submit) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAudit.toString())) return Result.error(EnumAdminFinanceError.当前业务不能完善合同.toString());
         orderService.saveFinanceOrderContract(userId, financeOrderContractObject);
         if (submit) {

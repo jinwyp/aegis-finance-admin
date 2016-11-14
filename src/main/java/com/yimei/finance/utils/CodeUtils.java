@@ -1,5 +1,7 @@
 package com.yimei.finance.utils;
 
+import com.yimei.finance.exception.BusinessException;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
@@ -45,7 +47,7 @@ public class CodeUtils {
     /**
      * 根据名称,生成拼音首字母
      */
-    public static String GeneratePinYinCode(String str, int length, boolean upper) throws BadHanyuPinyinOutputFormatCombination {
+    public static String GeneratePinYinCode(String str, int length, boolean upper) {
         String pinyinName = "";
         char[] nameChar = str.toCharArray();
         HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
@@ -59,7 +61,12 @@ public class CodeUtils {
         for (int i=0; i<length; i++) {
             if (Character.toString(nameChar[i]).matches(
                     "[\\u4E00-\\u9FA5]+")) {
-                pinyinName += PinyinHelper.toHanyuPinyinStringArray(nameChar[i], defaultFormat)[0].substring(0, 1);
+                try {
+                    pinyinName += PinyinHelper.toHanyuPinyinStringArray(nameChar[i], defaultFormat)[0].substring(0, 1);
+                } catch (BadHanyuPinyinOutputFormatCombination badHanyuPinyinOutputFormatCombination) {
+                    badHanyuPinyinOutputFormatCombination.printStackTrace();
+                    throw new BusinessException(EnumCommonError.Admin_System_Error);
+                }
             } else {
                 pinyinName += Character.toString(nameChar[i]);
             }

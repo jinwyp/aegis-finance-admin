@@ -46,7 +46,7 @@ public class UserCenterController {
     @Autowired
     private HistoryService historyService;
     @Autowired
-    private FinanceFlowMethodServiceImpl workFlowService;
+    private FinanceFlowMethodServiceImpl financeFlowMethodService;
     @Autowired
     private AdminUserServiceImpl userService;
     @Autowired
@@ -58,7 +58,7 @@ public class UserCenterController {
     public Result getTaskByIdMethod(@PathVariable(value = "taskId") String taskId) {
         HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
         if (taskInstance == null) return Result.error(EnumAdminFinanceError.不存在此任务.toString());
-        return workFlowService.changeHistoryTaskObject(taskInstance);
+        return financeFlowMethodService.changeHistoryTaskObject(taskInstance);
     }
 
     @RequestMapping(method = RequestMethod.GET)
@@ -66,7 +66,7 @@ public class UserCenterController {
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalTasksMethod(Page page) {
         List<Task> taskList = taskService.createTaskQuery().taskAssignee(adminSession.getUser().getId()).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
-        Result result = workFlowService.changeTaskObject(taskList, adminSession.getUser().getCompanyId());
+        Result result = financeFlowMethodService.changeTaskObject(taskList, adminSession.getUser().getCompanyId());
         if (!result.isSuccess()) return result;
         List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
         page.setTotal((long) taskObjectList.size());
@@ -81,7 +81,7 @@ public class UserCenterController {
         List<String> groupIds = userService.getUserGroupIdList(adminSession.getUser().getId());
         if (groupIds != null && groupIds.size() != 0) {
             List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
-            Result result = workFlowService.changeTaskObject(taskList, adminSession.getUser().getCompanyId());
+            Result result = financeFlowMethodService.changeTaskObject(taskList, adminSession.getUser().getCompanyId());
             if (!result.isSuccess()) return result;
             List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
             page.setTotal(Long.valueOf(taskObjectList.size()));
@@ -98,7 +98,7 @@ public class UserCenterController {
         List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(adminSession.getUser().getId()).finished().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
         page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
         Long toIndex = page.getPage() * page.getCount() < page.getTotal() ? page.getPage() * page.getCount() : page.getTotal();
-        Result result = workFlowService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), Math.toIntExact(toIndex)));
+        Result result = financeFlowMethodService.changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), Math.toIntExact(toIndex)));
         if (!result.isSuccess()) return result;
         List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
         return Result.success().setData(taskList).setMeta(page);
@@ -117,7 +117,7 @@ public class UserCenterController {
                 return Result.error(EnumAdminFinanceError.此任务已经被其他人处理.toString());
             }
         }
-        TaskObject taskObject = (TaskObject) workFlowService.changeTaskObject(task).getData();
+        TaskObject taskObject = (TaskObject) financeFlowMethodService.changeTaskObject(task).getData();
         if (taskObject.getRiskCompanyId().longValue() != adminSession.getUser().getCompanyId().longValue() && adminSession.getUser().getCompanyId().longValue() != 0) return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
         List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
         List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();

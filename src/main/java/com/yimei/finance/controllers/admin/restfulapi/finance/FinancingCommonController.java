@@ -99,7 +99,7 @@ public class FinancingCommonController {
     })
     public Result getFinanceOrderRiskManagerContractByFinanceIdAndTypeTypeMethod(@PathVariable("financeId") Long financeId,
                                                                                  @PathVariable("type") int type) {
-        return orderService.findFinanceOrderRiskManagerContractByFinanceIdAndType(financeId, type);
+        return orderService.findFinanceOrderRiskManagerContractByFinanceIdAndType(financeId, type, adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(value = "/finance/{financeId}/tasks", method = RequestMethod.GET)
