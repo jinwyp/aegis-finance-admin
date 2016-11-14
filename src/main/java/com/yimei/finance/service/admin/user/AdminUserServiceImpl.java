@@ -229,11 +229,11 @@ public class AdminUserServiceImpl {
             userList = identityService.createUserQuery().orderByUserId().desc().list();
         } else {
             if (!StringUtils.isEmpty(userSearch.getUsername()) && !StringUtils.isEmpty(userSearch.getGroupId())) {
-                userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).memberOfGroup(userSearch.getGroupId()).orderByUserId().list();
+                userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).memberOfGroup(userSearch.getGroupId()).orderByUserId().desc().list();
             } else if (!StringUtils.isEmpty(userSearch.getUsername())) {
-                userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).list();
+                userList = identityService.createUserQuery().userFirstNameLike(userSearch.getUsername()).orderByUserId().desc().list();
             } else if (!StringUtils.isEmpty(userSearch.getGroupId())) {
-                userList = identityService.createUserQuery().memberOfGroup(userSearch.getGroupId()).list();
+                userList = identityService.createUserQuery().memberOfGroup(userSearch.getGroupId()).orderByUserId().desc().list();
             } else {
                 userList = identityService.createUserQuery().orderByUserId().desc().list();
             }
@@ -466,34 +466,16 @@ public class AdminUserServiceImpl {
     }
 
     public UserObject improveUserObject(UserObject userObject, UserObject sessionUser) {
-        identityService.getUserInfoKeys(userObject.getId()).forEach(key -> {
-            switch (key) {
-                case "username":
-                    userObject.setUsername(identityService.getUserInfo(userObject.getId(), key));
-                    break;
-                case "companyName":
-                    userObject.setCompanyName(identityService.getUserInfo(userObject.getId(), key));
-                    break;
-                case "status":
-                    userObject.setStatus(identityService.getUserInfo(userObject.getId(), key));
-                    break;
-                case "name":
-                    userObject.setName(identityService.getUserInfo(userObject.getId(), key));
-                    break;
-                case "phone":
-                    userObject.setPhone(identityService.getUserInfo(userObject.getId(), key));
-                    break;
-                case "department":
-                    userObject.setDepartment(identityService.getUserInfo(userObject.getId(), key));
-                    break;
-                case "companyId":
-                    userObject.setCompanyId(Long.valueOf(identityService.getUserInfo(userObject.getId(), key)));
-                    break;
-                default:
-                    break;
-            }
-        });
-        if (StringUtils.isEmpty(userObject.getCompanyId()) || userObject.getCompanyId().equals("null")) {
+        userObject.setUsername(identityService.getUserInfo(userObject.getId(), "username"));
+        userObject.setCompanyName(identityService.getUserInfo(userObject.getId(), "companyName"));
+        userObject.setStatus(identityService.getUserInfo(userObject.getId(), "status"));
+        userObject.setName(identityService.getUserInfo(userObject.getId(), "name"));
+        userObject.setPhone(identityService.getUserInfo(userObject.getId(), "phone"));
+        userObject.setDepartment(identityService.getUserInfo(userObject.getId(), "department"));
+        String companyId = identityService.getUserInfo(userObject.getId(), "companyId");
+        if (!StringUtils.isEmpty(companyId) && !companyId.equals("null")) {
+            userObject.setCompanyId(Long.valueOf(companyId));
+        } else {
             userObject.setCompanyId(-1L);
         }
         UserLoginRecord userLoginRecord = loginRecordRepository.findTopByUserIdOrderByCreateTimeDesc(userObject.getId());
@@ -518,6 +500,8 @@ public class AdminUserServiceImpl {
             } else {
                 userObject.setLevel(100);
             }
+        } else {
+            userObject.setLevel(100);
         }
         return userObject;
     }

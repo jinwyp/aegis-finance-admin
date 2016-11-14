@@ -37,6 +37,7 @@ public class HistoryTaskObject {
     private String applyTypeName;                                   //融资类型Name
     private BigDecimal financingAmount;                             //融资金额
     private String sourceId;                                        //金融单业务编号
+    private Long riskCompanyId;                                     //风控线id
     private String currentAssignee;                                 //当前处理人id
     private String currentAssigneeName;                             //当前处理人姓名
     private String currentAssigneeDepartment;                       //当前处理人部门
