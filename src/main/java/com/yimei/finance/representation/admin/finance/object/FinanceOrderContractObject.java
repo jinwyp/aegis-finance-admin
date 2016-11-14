@@ -229,6 +229,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     }
 
     public String getFinanceTypeName() {
+        if (financeType == null) return null;
         return EnumFinanceOrderType.getName(EnumFinanceOrderType.valueOf(financeType));
     }
 
