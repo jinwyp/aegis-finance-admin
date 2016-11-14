@@ -118,7 +118,7 @@ public class UserCenterController {
             }
         }
         TaskObject taskObject = (TaskObject) financeFlowMethodService.changeTaskObject(task).getData();
-        if (adminSession.getUser().getCompanyId().longValue() == 0 || taskObject.getRiskCompanyId().longValue() != adminSession.getUser().getCompanyId().longValue()) {
+        if (adminSession.getUser().getCompanyId().longValue() == 0 || taskObject.getRiskCompanyId().longValue() == adminSession.getUser().getCompanyId().longValue()) {
             List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
             List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
             for (IdentityLink identityLink : identityLinkList) {
