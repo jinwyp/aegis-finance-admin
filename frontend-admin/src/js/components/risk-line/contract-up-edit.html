@@ -1,6 +1,6 @@
 <div class="contract-title">买方合同<span>(全部必填)</span></div>
 
-<form (ngSubmit)="saveContract()" #contractForm="ngForm">
+<form (ngSubmit)="save(1)" #contractForm="ngForm">
 <table class="contract-table">
     <tr><td colspan="4"><span class="orange pdl-15">＊您将编辑的所有内容，将填写入正式合同，具有法律效应。</span></td></tr>
     <tr>
@@ -74,11 +74,11 @@
         <td>
             <div class="table-label">主要质量标准：</div>
         </td>
-        <td><span>热值：</span><input type="text" class="div-205" [(ngModel)]="contract.qualityRemark" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;K</span></td>
+        <td><span>热值：</span><input type="text" class="div-205" [(ngModel)]="contract.CoalIndex_NCV" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;K</span></td>
         <td>
             <div class="table-label">硫分：</div>
         </td>
-        <td><input type="text" class="div-250" [(ngModel)]="contract.qualityRemark" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;%</span></td>
+        <td><input type="text" class="div-250" [(ngModel)]="contract.CoalIndex_RS" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;%</span></td>
     </tr>
 
     <tr>
@@ -246,9 +246,10 @@
     <tr>
         <td colspan="4">
             <div class="btn-option">
-                <span class="notice"><span class="notice-icon"></span>保存后，可以刷新预览页面查看保存后的内容。</span>
-                <button type="submit" class="btn btn-default commit" [disabled]="!contractForm.form.valid">保存</button>
-                <button type="button" class="btn btn-default cancel ml-40" (click)="back()" [disabled]="!contractForm.form.valid">返回</button>
+                <!--<span class="notice"><span class="notice-icon"></span>保存后，可以刷新预览页面查看保存后的内容。</span>-->
+                <button type="button" class="btn btn-default commit" (click)="save(0)" [disabled]="!contractForm.form.valid">保存</button>
+                <button type="submit" class="btn btn-default commit ml-40" [disabled]="!contractForm.form.valid">保存并提交</button>
+                <button type="button" class="btn btn-default cancel ml-40" (click)="goBack()" [disabled]="!contractForm.form.valid">返回</button>
                 <!--<span class="btn cancel ml-40">关闭</span>-->
             </div>
         </td>

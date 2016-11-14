@@ -183,6 +183,14 @@ const routes: Routes = [
         data: { routeType : 'info', title: '任务 - 查看详情' }
     },
     {
+        path: 'contractup/edit',
+        component: ContractUpEditComponent
+    },
+    {
+        path: 'contractdown/edit',
+        component: ContractDownEditComponent
+    },
+    {
         path: 'contractup/:id/edit',
         component: ContractUpEditComponent
     },
