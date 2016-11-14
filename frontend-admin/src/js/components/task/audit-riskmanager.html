@@ -141,7 +141,7 @@
                 <div class="contract">
                     <span class="word_icon"></span>《仓押下游采购合同》<span class="word_line"></span>
                     <a class="a-padding" (click)="previewContract(currentOrder.id, 2)">预览</a>
-                    <a class="a-padding a-line mr-20" (click)="editDown(currentOrder.id)">编辑</a>
+                    <a class="a-padding a-line mr-20" (click)="editUp(currentOrder.id)">编辑</a>
                     <file-upload *ngIf="!css.isReadOnly" [btnText]="btnText2" (onFinished)="finishedUpload4($event)"></file-upload>
                     <!--<a class="a-padding">+&nbsp;添加附件</a>-->
                 </div>

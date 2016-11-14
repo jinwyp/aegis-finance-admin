@@ -224,7 +224,7 @@ export class AuditRiskManagerComponent {
     }
 
     editUp(financeId : number){
-        this.router.navigate(['/contractup', financeId, 'edit']);
+        this.router.navigate(['/contractup/edit',{financeId : financeId, taskId : this.taskId}]);
     }
 
     editDown(financeId : number){
