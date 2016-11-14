@@ -30,10 +30,12 @@ public class AdminACLInterceptor extends HandlerInterceptorAdapter {
                 throw new UnauthorizedException();
             } else {
                 response.sendRedirect("/finance/admin/login");
+                return false;
             }
 
+        }else{
+            return super.preHandle(request, response, handler);
         }
 
-        return super.preHandle(request, response, handler);
     }
 }
