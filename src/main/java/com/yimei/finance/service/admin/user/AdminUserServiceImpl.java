@@ -451,6 +451,8 @@ public class AdminUserServiceImpl {
             String companyId = identityService.getUserInfo(userObject.getId(), "companyId");
             if (!StringUtils.isEmpty(companyId) && !companyId.equals("null")) {
                 userObject.setCompanyId(Long.valueOf(companyId));
+            } else {
+                userObject.setCompanyId(-1L);
             }
             userObject.setStatus(identityService.getUserInfo(userObject.getId(), "status"));
         });
