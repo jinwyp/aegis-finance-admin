@@ -151,7 +151,7 @@ public class AdminCompanyServiceImpl {
         if (sessionCompanyId.longValue() != 0) {
             return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
         }
-        return Result.success().setData(findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id));
+        return Result.success().setData(findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id, null));
     }
 
     /**
@@ -161,7 +161,7 @@ public class AdminCompanyServiceImpl {
         if (sessionCompanyId.longValue() != 0) {
             return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
         }
-        List<CompanyObject> companyObjectList = findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id, riskCompanySearch, page);
+        List<CompanyObject> companyObjectList = findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id, riskCompanySearch);
         page.setTotal((long) companyObjectList.size());
         int toIndex = page.getPage() * page.getCount() < companyObjectList.size() ? page.getPage() * page.getCount() : companyObjectList.size();
         return Result.success().setData(companyObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
@@ -170,19 +170,14 @@ public class AdminCompanyServiceImpl {
     /**
      * 根据角色获取公司列表
      */
-    public List<CompanyObject> findCompanyListByRole(int type) {
-        return getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
-    }
-
-    /**
-     * 根据角色获取公司列表
-     */
-    public List<CompanyObject> findCompanyListByRole(int type, RiskCompanySearch riskCompanySearch, Page page) {
+    public List<CompanyObject> findCompanyListByRole(int type, RiskCompanySearch riskCompanySearch) {
         List<CompanyObject> companyObjectList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
         System.out.println(riskCompanySearch == null);
         System.out.println(riskCompanySearch.toString());
         if (riskCompanySearch != null) {
-            if (!StringUtils.isEmpty(riskCompanySearch.getName())) {
+            if (!StringUtils.isEmpty(riskCompanySearch.getName()) && !StringUtils.isEmpty(riskCompanySearch.getAdminName())) {
+                companyObjectList = companyObjectList.parallelStream().filter(company -> company.getName().contains(riskCompanySearch.getName()) && company.getAdminName().contains(riskCompanySearch.getAdminName())).collect(Collectors.toList());
+            } else if (!StringUtils.isEmpty(riskCompanySearch.getName())) {
                 companyObjectList = companyObjectList.parallelStream().filter(company -> company.getName().contains(riskCompanySearch.getName())).collect(Collectors.toList());
             } else if (!StringUtils.isEmpty(riskCompanySearch.getAdminName())) {
                 companyObjectList = companyObjectList.parallelStream().filter(company -> company.getAdminName().contains(riskCompanySearch.getAdminName())).collect(Collectors.toList());
