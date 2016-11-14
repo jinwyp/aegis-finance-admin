@@ -205,7 +205,7 @@ public class AdminCompanyServiceImpl {
         if (companyIdList != null && companyIdList.size() != 0) {
             companyIdList.parallelStream().forEach(id -> {
                 Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
-                System.out.println(" ----------- " + (company==null));
+                System.out.println(" ------11111111111111111111111111111111111----- " + (company==null));
                 if (company != null) {
                     companyList.add(companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id));
                 }
