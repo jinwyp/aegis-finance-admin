@@ -452,10 +452,7 @@ public class AdminUserServiceImpl {
             if (!StringUtils.isEmpty(companyId) && !companyId.equals("null")) {
                 userObject.setCompanyId(Long.valueOf(companyId));
             }
-            String companyName = identityService.getUserInfo(userObject.getId(), "companyName");
-            if (!StringUtils.isEmpty(companyName) && !companyName.equals("null")) {
-                userObject.setCompanyName(companyName);
-            }
+            userObject.setStatus(identityService.getUserInfo(userObject.getId(), "status"));
         });
         return userObjectList;
     }

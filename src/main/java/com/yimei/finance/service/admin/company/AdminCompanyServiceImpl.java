@@ -129,7 +129,7 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<CompanyObject> changeCompanyObject(List<Company> companyList) {
-        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> (user.getStatus().equals(EnumAdminUserStatus.Normal.toString()))).collect(Collectors.toList());
+        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString())).collect(Collectors.toList());
         List<CompanyObject> companyObjectList = DozerUtils.copy(companyList, CompanyObject.class);
         companyObjectList.parallelStream().forEach(company -> {
             company.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
