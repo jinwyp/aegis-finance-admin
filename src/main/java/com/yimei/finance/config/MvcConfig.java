@@ -66,8 +66,8 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(siteACLInterceptor).addPathPatterns("/finance/**", "/api/financing/**").excludePathPatterns("/finance/admin/**", "/api/financing/admin/**");
-        registry.addInterceptor(adminACLInterceptor).addPathPatterns("/finance/admin/**", "/api/financing/admin/**").excludePathPatterns("/finance/admin/login", "/api/financing/admin/login");
+        registry.addInterceptor(siteACLInterceptor).addPathPatterns("/finance/**", "/api/financing/**").excludePathPatterns("/finance/admin/**", "/api/financing/admin/**", "/finance/admin/404", "/finance/admin/500");
+        registry.addInterceptor(adminACLInterceptor).addPathPatterns("/finance/admin/**", "/api/financing/admin/**").excludePathPatterns("/finance/admin/login", "/api/financing/admin/login", "/finance/admin/404", "/finance/admin/500");
     }
 
 //    @Override
@@ -81,18 +81,19 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         converters.add(new StringHttpMessageConverter(Charset.forName("UTF-8")));
     }
 
-//    @Bean
-//    public EmbeddedServletContainerCustomizer containerCustomizer() {
-//        return new EmbeddedServletContainerCustomizer() {
-//            @Override
-//            public void customize(ConfigurableEmbeddedServletContainer container) {
-//                container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST, "/400"));
-//                container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/404"));
-//                container.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/401"));
-//                container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/403"));
-//            }
-//        };
-//    }
+    @Bean
+    public EmbeddedServletContainerCustomizer containerCustomizer() {
+        return new EmbeddedServletContainerCustomizer() {
+            @Override
+            public void customize(ConfigurableEmbeddedServletContainer container) {
+                container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST, "/finance/admin/404"));
+                container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/finance/admin/404"));
+                container.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/finance/admin/404"));
+                container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/finance/admin/404"));
+                container.addErrorPages(new ErrorPage(HttpStatus.INTERNAL_SERVER_ERROR, "/finance/admin/500"));
+            }
+        };
+    }
 
     //JSR-303
     @Bean(name = "validator")
