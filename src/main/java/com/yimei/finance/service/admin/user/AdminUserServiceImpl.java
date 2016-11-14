@@ -241,21 +241,21 @@ public class AdminUserServiceImpl {
         List<UserObject> userObjectList = changeUserObject(userList, sessionUser);
         if (getUserGroupIdList(sessionUser.getId()).contains(EnumSpecialGroup.SuperAdminGroup.id)) {
             if (!StringUtils.isEmpty(userSearch.getName())) {
-                userObjectList = userObjectList.parallelStream().filter(user ->
+                userObjectList.parallelStream().filter(user ->
                         user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName())
                 ).collect(Collectors.toList());
             } else {
-                userObjectList = userObjectList.parallelStream().filter(user ->
+                userObjectList.parallelStream().filter(user ->
                         user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
                 ).collect(Collectors.toList());
             }
         } else {
             if (!StringUtils.isEmpty(userSearch.getName())) {
-                userObjectList = userObjectList.parallelStream().filter(user ->
+                userObjectList.parallelStream().filter(user ->
                         user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
                 ).collect(Collectors.toList());
             } else {
-                userObjectList = userObjectList.parallelStream().filter(user ->
+                userObjectList.parallelStream().filter(user ->
                         user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
                 ).collect(Collectors.toList());
             }
@@ -419,13 +419,10 @@ public class AdminUserServiceImpl {
      * 检查是否有更改一个用户的权限
      */
     public Result checkOperateUserAuthority(UserObject userObject, UserObject sessionUser) {
-        if (getUserGroupIdList(sessionUser.getId()).contains(EnumSpecialGroup.SuperAdminGroup.id))
-            return Result.success();
-        Result result = checkOperateGroupsAuthority(getUserGroupIdList(userObject.getId()), sessionUser.getId());
-        if (!result.isSuccess()) return result;
+        if (getUserGroupIdList(sessionUser.getId()).contains(EnumSpecialGroup.SuperAdminGroup.id)) return Result.success();
         if (userObject.getCompanyId().longValue() != sessionUser.getCompanyId().longValue())
             return Result.error(EnumAdminUserError.你没有操作此用户的权限.toString());
-        return Result.success();
+        return checkOperateGroupsAuthority(getUserGroupIdList(userObject.getId()), sessionUser.getId());
     }
 
     /**
@@ -463,28 +460,42 @@ public class AdminUserServiceImpl {
         if (userList == null || userList.size() == 0) return null;
         List<UserObject> userObjectList = DozerUtils.copy(userList, UserObject.class);
         userObjectList.parallelStream().forEach(userObject -> {
-            userObject = improveUserObject(userObject, sessionUser);
+            improveUserObject(userObject, sessionUser);
         });
         return userObjectList;
     }
 
     public UserObject improveUserObject(UserObject userObject, UserObject sessionUser) {
-        userObject.setUsername(identityService.getUserInfo(userObject.getId(), "username"));
-        userObject.setPhone(identityService.getUserInfo(userObject.getId(), "phone"));
-        userObject.setName(identityService.getUserInfo(userObject.getId(), "name"));
-        userObject.setDepartment(identityService.getUserInfo(userObject.getId(), "department"));
-        userObject.setStatus(identityService.getUserInfo(userObject.getId(), "status"));
-        String companyId = identityService.getUserInfo(userObject.getId(), "companyId");
-        if (!StringUtils.isEmpty(companyId) && !companyId.equals("null")) {
-            userObject.setCompanyId(Long.valueOf(companyId));
-        } else {
+        identityService.getUserInfoKeys(userObject.getId()).forEach(key -> {
+            switch (key) {
+                case "username":
+                    userObject.setUsername(identityService.getUserInfo(userObject.getId(), key));
+                    break;
+                case "companyName":
+                    userObject.setCompanyName(identityService.getUserInfo(userObject.getId(), key));
+                    break;
+                case "status":
+                    userObject.setStatus(identityService.getUserInfo(userObject.getId(), key));
+                    break;
+                case "name":
+                    userObject.setName(identityService.getUserInfo(userObject.getId(), key));
+                    break;
+                case "phone":
+                    userObject.setPhone(identityService.getUserInfo(userObject.getId(), key));
+                    break;
+                case "department":
+                    userObject.setDepartment(identityService.getUserInfo(userObject.getId(), key));
+                    break;
+                case "companyId":
+                    userObject.setCompanyId(Long.valueOf(identityService.getUserInfo(userObject.getId(), key)));
+                    break;
+                default:
+                    break;
+            }
+        });
+        if (StringUtils.isEmpty(userObject.getCompanyId()) || userObject.getCompanyId().equals("null")) {
             userObject.setCompanyId(-1L);
         }
-        String companyName = identityService.getUserInfo(userObject.getId(), "companyName");
-        if (!StringUtils.isEmpty(companyName) && !companyName.equals("null")) {
-            userObject.setCompanyName(companyName);
-        }
-        userObject.setGroupList(DozerUtils.copy(identityService.createGroupQuery().groupMember(userObject.getId()).list(), GroupObject.class));
         UserLoginRecord userLoginRecord = loginRecordRepository.findTopByUserIdOrderByCreateTimeDesc(userObject.getId());
         if (userLoginRecord != null) {
             userObject.setLastLoginTime(userLoginRecord.getCreateTime());
@@ -492,7 +503,12 @@ public class AdminUserServiceImpl {
         if (sessionUser != null) {
             userObject.setOperateAuthority(checkOperateUserAuthority(userObject, sessionUser).isSuccess());
         }
-        List<String> userGroupIdList = getUserGroupIdList(userObject.getId());
+        List<Group> groupList = identityService.createGroupQuery().groupMember(userObject.getId()).list();
+        userObject.setGroupList(DozerUtils.copy(groupList, GroupObject.class));
+        List<String> userGroupIdList = new ArrayList<>();
+        groupList.parallelStream().forEach(group -> {
+            userGroupIdList.add(group.getId());
+        });
         userObject.setGroupIds(userGroupIdList);
         if (userGroupIdList != null && userGroupIdList.size() != 0) {
             if (userGroupIdList.contains(EnumSpecialGroup.SuperAdminGroup.id)) {
