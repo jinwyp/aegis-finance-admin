@@ -24,7 +24,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.LinkedList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -202,7 +201,7 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<Company> getNormalCompanyListByIdList(List<Long> companyIdList) {
-        List<Company> companyList = new LinkedList<>();
+        List<Company> companyList = new ArrayList<>();
         if (companyIdList != null && companyIdList.size() != 0) {
             companyIdList.parallelStream().forEach(id -> {
                 Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
