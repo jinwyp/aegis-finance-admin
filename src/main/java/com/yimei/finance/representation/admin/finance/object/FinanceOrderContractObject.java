@@ -3,7 +3,6 @@ package com.yimei.finance.representation.admin.finance.object;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceContractType;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
-import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceContract;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceContract;
 import com.yimei.finance.representation.common.base.BaseObject;
 import com.yimei.finance.representation.common.enums.EnumCommonString;
@@ -41,8 +40,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
 
 
     @Range(min = 1, max = 100, message = "合同类型 应在 {min}-{max} 之间", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "合同类型 不能为空", groups = {SaveFinanceContract.class, SubmitFinanceContract.class})
-    private Integer type;                                            //合同类型
+    private int type;                                                //合同类型
     private String typeName;                                         //合同类型名称
 
     @Size(min = 1, max = 200, message = "签订地点 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
