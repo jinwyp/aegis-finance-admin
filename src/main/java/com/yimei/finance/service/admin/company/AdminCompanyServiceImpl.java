@@ -10,6 +10,7 @@ import com.yimei.finance.representation.admin.company.enums.EnumCompanyError;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyRole;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
 import com.yimei.finance.representation.admin.company.object.CompanyObject;
+import com.yimei.finance.representation.admin.company.object.RiskCompanySearch;
 import com.yimei.finance.representation.admin.user.enums.EnumAdminUserStatus;
 import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
@@ -21,8 +22,10 @@ import org.activiti.engine.IdentityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -148,35 +151,39 @@ public class AdminCompanyServiceImpl {
         if (sessionCompanyId.longValue() != 0) {
             return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
         }
-        return findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id);
+        return Result.success().setData(findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id, null));
     }
 
     /**
      * 超级管理员, 交易员获取风控线列表
      */
-    public Result adminFindRiskCompanyList(Long sessionCompanyId, Page page) {
+    public Result adminFindRiskCompanyList(RiskCompanySearch riskCompanySearch, Long sessionCompanyId, Page page) {
         if (sessionCompanyId.longValue() != 0) {
             return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
         }
-        return findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id, page);
+        List<CompanyObject> companyObjectList = findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id, riskCompanySearch);
+        page.setTotal((long) companyObjectList.size());
+        int toIndex = page.getPage() * page.getCount() < companyObjectList.size() ? page.getPage() * page.getCount() : companyObjectList.size();
+        return Result.success().setData(companyObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
     }
 
     /**
      * 根据角色获取公司列表
      */
-    public Result findCompanyListByRole(int type) {
-        List<Company> companyList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
-        return Result.success().setData(changeCompanyObject(companyList));
-    }
-
-    /**
-     * 根据角色获取公司列表
-     */
-    public Result findCompanyListByRole(int type, Page page) {
-        List<Company> companyList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
-        page.setTotal((long) companyList.size());
-        int toIndex = page.getPage() * page.getCount() < companyList.size() ? page.getPage() * page.getCount() : companyList.size();
-        return Result.success().setData(changeCompanyObject(companyList.subList(page.getOffset(), toIndex))).setMeta(page);
+    public List<CompanyObject> findCompanyListByRole(int type, RiskCompanySearch riskCompanySearch) {
+        List<CompanyObject> companyObjectList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
+        System.out.println(riskCompanySearch == null);
+        System.out.println(riskCompanySearch.toString());
+        if (riskCompanySearch != null) {
+            if (!StringUtils.isEmpty(riskCompanySearch.getName()) && !StringUtils.isEmpty(riskCompanySearch.getAdminName())) {
+                companyObjectList = companyObjectList.parallelStream().filter(company -> company.getName().contains(riskCompanySearch.getName()) && company.getAdminName().contains(riskCompanySearch.getAdminName())).collect(Collectors.toList());
+            } else if (!StringUtils.isEmpty(riskCompanySearch.getName())) {
+                companyObjectList = companyObjectList.parallelStream().filter(company -> company.getName().contains(riskCompanySearch.getName())).collect(Collectors.toList());
+            } else if (!StringUtils.isEmpty(riskCompanySearch.getAdminName())) {
+                companyObjectList = companyObjectList.parallelStream().filter(company -> company.getAdminName().contains(riskCompanySearch.getAdminName())).collect(Collectors.toList());
+            }
+        }
+        return companyObjectList;
     }
 
     /**
@@ -200,8 +207,8 @@ public class AdminCompanyServiceImpl {
         return Result.success().setData(companyObject);
     }
 
-    public List<Company> getNormalCompanyListByIdList(List<Long> companyIdList) {
-        List<Company> companyList = new ArrayList<>();
+    public List<CompanyObject> getNormalCompanyListByIdList(List<Long> companyIdList) {
+        final List<Company> companyList = new ArrayList<>();
         if (companyIdList != null && companyIdList.size() != 0) {
             companyIdList.parallelStream().forEach(id -> {
                 Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
@@ -209,8 +216,9 @@ public class AdminCompanyServiceImpl {
                     companyList.add(company);
                 }
             });
+            companyList.sort(Comparator.comparing(Company :: getId));
         }
-        return companyList;
+        return changeCompanyObject(companyList);
     }
 
 }

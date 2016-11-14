@@ -2,6 +2,7 @@ package com.yimei.finance.controllers.admin.restfulapi.company;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.representation.admin.company.object.CompanyObject;
+import com.yimei.finance.representation.admin.company.object.RiskCompanySearch;
 import com.yimei.finance.representation.admin.company.validated.CreateCompany;
 import com.yimei.finance.representation.admin.company.validated.EditCompany;
 import com.yimei.finance.representation.common.result.Page;
@@ -43,8 +44,8 @@ public class CompanyController {
 
     @RequestMapping(value = "/risk", method = RequestMethod.GET)
     @ApiOperation(value = "获取风控线列表", response = CompanyObject.class, responseContainer = "List")
-    public Result findRiskOrganizationListMethod(Page page) {
-        return companyService.adminFindRiskCompanyList(adminSession.getUser().getCompanyId(), page);
+    public Result findRiskOrganizationListMethod(RiskCompanySearch riskCompanySearch, Page page) {
+        return companyService.adminFindRiskCompanyList(riskCompanySearch, adminSession.getUser().getCompanyId(), page);
     }
 
     @RequestMapping(method = RequestMethod.POST)

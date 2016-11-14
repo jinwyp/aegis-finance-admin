@@ -30,6 +30,7 @@ public enum EnumAdminFinanceError {
     此合同不存在,
     你没有权限查看此合同,
     当前业务不能完善合同,
+    你没有权限查看此任务,
     ;
 
 }

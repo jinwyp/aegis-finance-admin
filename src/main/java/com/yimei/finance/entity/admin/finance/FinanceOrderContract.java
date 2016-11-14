@@ -88,6 +88,12 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     @Column(name = "quantity_remark")
     private String quantityRemark;                                   //数量备注/备注说明  
 
+    @Column(name = "coal_index_ncv")
+    private String CoalIndex_NCV;                                    //煤炭指标   - 热值
+
+    @Column(name = "coal_index_rs")
+    private String CoalIndex_RS;                                     //煤炭指标   - 硫分
+
     @Column(name = "coal_index")
     private String coalIndex;                                        //煤炭指标  
 

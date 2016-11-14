@@ -225,12 +225,17 @@ public class FinanceOrderServiceImpl {
     }
 
     public void changeFinanceOrderRiskManagerInfoContractStatus(Long financeId, int type, int status) {
-        if (type == 1) {
-            riskRepository.updateUpstreamContractStatusByFinanceId(financeId, status);
-            System.out.println();
-        } else if (type == 2) {
-            riskRepository.updateDownstreamContractStatusByFinanceId(financeId, status);
+        FinanceOrderRiskManagerInfo riskManagerInfo = riskRepository.findByFinanceId(financeId);
+        if (riskManagerInfo == null) {
+            riskManagerInfo = new FinanceOrderRiskManagerInfo();
+            riskManagerInfo.setFinanceId(financeId);
         }
+        if (type == 1) {
+            riskManagerInfo.setUpstreamContractStatus(status);
+        } else if (type == 2) {
+            riskManagerInfo.setDownstreamContractStatus(status);
+        }
+        riskRepository.save(riskManagerInfo);
     }
 
     /**

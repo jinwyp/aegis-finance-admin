@@ -148,7 +148,6 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     private String specialRemark;                                    //特别约定/特殊说明  
 
     @Range(min = 1, max = 100, message = "附件个数 应在 {min}-{max} 个之间", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "附件个数 不能为空", groups = {SubmitFinanceContract.class})
     private int attachmentNumber;                                    //附件个数  
 
     @Size(min = 1, max = 250, message = "附件名称 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})

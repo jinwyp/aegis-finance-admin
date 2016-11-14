@@ -40,8 +40,8 @@ public class FinanceOrderRiskManagerInfoObject extends BaseObject implements Ser
     private Integer approveStateId;                                  //审批状态Id  0:审核不通过, 1:审核通过
     private String approveState;                                     //审批状态
 
-    private Integer upstreamContractStatus;                          //上游合同状态, 0:未填写,  2:已经提交
-    private Integer downstreamContractStatus;                        //下游合同状态, 0:未填写,  2:已经提交
+    private int upstreamContractStatus;                              //上游合同状态, 0:未填写,  2:已经提交
+    private int downstreamContractStatus;                            //下游合同状态, 0:未填写,  2:已经提交
 
     List<AttachmentObject> attachmentList1;                          //附件列表
     List<AttachmentObject> attachmentList2;                          //补充材料/附件列表

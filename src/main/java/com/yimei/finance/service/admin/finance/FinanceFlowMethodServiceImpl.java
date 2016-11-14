@@ -2,6 +2,7 @@ package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.admin.activiti.HistoryTaskObject;
 import com.yimei.finance.representation.admin.activiti.HistoryVariableObject;
@@ -45,6 +46,16 @@ public class FinanceFlowMethodServiceImpl {
     private AdminUserServiceImpl userService;
     @Autowired
     private IdentityService identityService;
+
+    public Result findTaskByTaskId(String taskId, Long sessionCompanyId) {
+        HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
+        if (taskInstance == null) return Result.error(EnumAdminFinanceError.不存在此任务.toString());
+        TaskObject taskObject = (TaskObject) changeHistoryTaskObject(taskInstance).getData();
+        if (sessionCompanyId.longValue() == 0L || (sessionCompanyId.longValue() == taskObject.getRiskCompanyId().longValue())) {
+            return Result.success().setData(taskObject);
+        }
+        return Result.error(EnumAdminFinanceError.你没有权限查看此任务.toString());
+    }
 
     /**
      * 添加附件方法

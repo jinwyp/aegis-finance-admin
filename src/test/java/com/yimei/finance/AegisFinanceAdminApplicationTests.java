@@ -64,7 +64,7 @@ public class AegisFinanceAdminApplicationTests {
         System.out.println(" ------------------------------------ ");
         System.out.println(" ------------------------------------ ");
 
-        System.out.println(user.toString());
+        financeOrderService.changeFinanceOrderRiskManagerInfoContractStatus(6L, 1, 2);
 
 	}
 
