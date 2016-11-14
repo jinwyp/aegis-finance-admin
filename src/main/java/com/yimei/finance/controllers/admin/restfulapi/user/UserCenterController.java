@@ -118,15 +118,16 @@ public class UserCenterController {
             }
         }
         TaskObject taskObject = (TaskObject) financeFlowMethodService.changeTaskObject(task).getData();
-        if (taskObject.getRiskCompanyId().longValue() != adminSession.getUser().getCompanyId().longValue() && adminSession.getUser().getCompanyId().longValue() != 0) return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
-        List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
-        List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
-        for (IdentityLink identityLink : identityLinkList) {
-            for (Group group : groupList) {
-                if (identityLink.getGroupId().equals(group.getId())) {
-                    taskService.setOwner(task.getId(), adminSession.getUser().getId());
-                    taskService.claim(task.getId(), adminSession.getUser().getId());
-                    return Result.success().setData(true);
+        if (adminSession.getUser().getCompanyId().longValue() == 0 || taskObject.getRiskCompanyId().longValue() != adminSession.getUser().getCompanyId().longValue()) {
+            List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
+            List<Group> groupList = identityService.createGroupQuery().groupMember(adminSession.getUser().getId()).list();
+            for (IdentityLink identityLink : identityLinkList) {
+                for (Group group : groupList) {
+                    if (identityLink.getGroupId().equals(group.getId())) {
+                        taskService.setOwner(task.getId(), adminSession.getUser().getId());
+                        taskService.claim(task.getId(), adminSession.getUser().getId());
+                        return Result.success().setData(true);
+                    }
                 }
             }
         }
