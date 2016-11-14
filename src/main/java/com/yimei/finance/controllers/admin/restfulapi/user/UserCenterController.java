@@ -56,9 +56,7 @@ public class UserCenterController {
     @ApiOperation(value = "通过 id 查询任务对象", notes = "通过 id 查询任务对象", response = TaskObject.class)
     @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
     public Result getTaskByIdMethod(@PathVariable(value = "taskId") String taskId) {
-        HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
-        if (taskInstance == null) return Result.error(EnumAdminFinanceError.不存在此任务.toString());
-        return financeFlowMethodService.changeHistoryTaskObject(taskInstance);
+        return financeFlowMethodService.findTaskByTaskId(taskId, adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(method = RequestMethod.GET)
