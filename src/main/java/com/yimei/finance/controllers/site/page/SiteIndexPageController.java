@@ -67,58 +67,7 @@ public class SiteIndexPageController {
         financeOrderService.customerExportFinanceOrder(Long.valueOf(userSession.getUser().getId()), Long.valueOf(userSession.getUser().getCompanyId()), response, request);
     }
 
-    /**
-     * 网站供应链金融 - 个人中心 - 我的仓押
-     */
-    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的仓押", notes = "供应链金融 我的融资 煤易贷 仓押列表")
-    @LoginRequired
-    @RequestMapping(value = "/finance/user/cangya", method = RequestMethod.GET)
-    public String personCenterCangYaList(Model model) {
-        model.addAttribute("currentMenu", 12);
-        return "site/user/cangyaList";
-    }
 
-    /**
-     * 网站供应链金融 - 个人中心 - 我的仓押 - 业务详情
-     */
-    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的仓押 - 业务详情", notes = "供应链金融 我的融资 煤易贷 仓押详情页面")
-    @LoginRequired
-    @RequestMapping(value = "/finance/user/cangya/{id}", method = RequestMethod.GET)
-    public String personCenterCangYaRequest(@PathVariable("id") int id, Model model) {
-        model.addAttribute("currentMenu", 12);
-        return "site/user/cangyaInfo";
-    }
 
-    /**
-     * 网站供应链金融 - 个人中心 - 我的仓押 - 业务详情 - 填写合同
-     */
-    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的仓押 - 业务详情 - 填写合同", notes = "供应链金融 我的融资 煤易贷 仓押详情 填写合同页面")
-    @LoginRequired
-    @RequestMapping(value = "/finance/user/cangya/{id}/contact", method = RequestMethod.GET)
-    public String personCenterCangYaContact(@PathVariable("id") int id, Model model) {
-        model.addAttribute("currentMenu", 12);
-        return "site/user/cangyaInfoContact";
-    }
 
-    /**
-     * 网站供应链金融 - 个人中心 - 我的合同
-     */
-    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同", notes = "供应链金融 我的融资 煤易贷 合同列表")
-    @LoginRequired
-    @RequestMapping(value = "/finance/user/contact", method = RequestMethod.GET)
-    public String personCenterContactList(Model model) {
-        model.addAttribute("currentMenu", 21);
-        return "site/user/contactList";
-    }
-
-    /**
-     * 网站供应链金融 - 个人中心 - 我的合同 - 业务详情
-     */
-    @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 业务详情", notes = "供应链金融 我的融资 煤易贷 合同详情页面")
-    @LoginRequired
-    @RequestMapping(value = "/finance/user/contact/{id}", method = RequestMethod.GET)
-    public String personCenterContactInfo(@PathVariable("id") int id, Model model) {
-        model.addAttribute("currentMenu", 21);
-        return "site/user/contactInfo";
-    }
 }

@@ -12,6 +12,7 @@ import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.service.common.file.PDF;
 import com.yimei.finance.service.site.finance.SiteFinanceOrderServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,7 @@ import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.Map;
 
+@Api(tags = {"site-page"})
 @Controller("financePageController")
 public class SiteFinancePageController {
     @Autowired
