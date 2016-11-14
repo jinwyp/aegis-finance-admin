@@ -23,6 +23,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -201,15 +202,15 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<Company> getNormalCompanyListByIdList(List<Long> companyIdList) {
-        List<Company> companyList = new ArrayList<>();
+        final List<Company> companyList = new ArrayList<>();
         if (companyIdList != null && companyIdList.size() != 0) {
             companyIdList.parallelStream().forEach(id -> {
                 Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
-                System.out.println(" ------11111111111111111111111111111111111----- " + (company==null));
                 if (company != null) {
-                    companyList.add(companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id));
+                    companyList.add(company);
                 }
             });
+            companyList.sort(Comparator.comparing(Company :: getId));
         }
         return companyList;
     }
