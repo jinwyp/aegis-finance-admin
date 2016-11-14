@@ -158,7 +158,7 @@ public class AdminGroupServiceImpl {
         if (groupList == null || groupList.size() == 0) return null;
         List<GroupObject> groupObjectList = DozerUtils.copy(groupList, GroupObject.class);
         groupObjectList.parallelStream().forEach(group -> {
-            group.setMemberNums(identityService.createUserQuery().memberOfGroup(groupObject.getId()).count());
+            group.setMemberNums(identityService.createUserQuery().memberOfGroup(group.getId()).count());
         });
         return groupObjectList;
     }
