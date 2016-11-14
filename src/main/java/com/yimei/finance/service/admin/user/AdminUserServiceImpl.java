@@ -448,8 +448,14 @@ public class AdminUserServiceImpl {
         if (userList == null || userList.size() == 0) return null;
         List<UserObject> userObjectList = DozerUtils.copy(userList, UserObject.class);
         userObjectList.parallelStream().forEach(userObject -> {
-            userObject.setCompanyId(Long.valueOf(identityService.getUserInfo(userObject.getId(), "companyId")));
-            userObject.setStatus(identityService.getUserInfo(userObject.getId(), "status"));
+            String companyId = identityService.getUserInfo(userObject.getId(), "companyId");
+            if (!StringUtils.isEmpty(companyId) && !companyId.equals("null")) {
+                userObject.setCompanyId(Long.valueOf(companyId));
+            }
+            String companyName = identityService.getUserInfo(userObject.getId(), "companyName");
+            if (!StringUtils.isEmpty(companyName) && !companyName.equals("null")) {
+                userObject.setCompanyName(companyName);
+            }
         });
         return userObjectList;
     }
@@ -468,8 +474,8 @@ public class AdminUserServiceImpl {
         userObject.setPhone(identityService.getUserInfo(userObject.getId(), "phone"));
         userObject.setName(identityService.getUserInfo(userObject.getId(), "name"));
         userObject.setDepartment(identityService.getUserInfo(userObject.getId(), "department"));
-        String companyId = identityService.getUserInfo(userObject.getId(), "companyId");
         userObject.setStatus(identityService.getUserInfo(userObject.getId(), "status"));
+        String companyId = identityService.getUserInfo(userObject.getId(), "companyId");
         if (companyId != null && !companyId.equals("null")) {
             userObject.setCompanyId(Long.valueOf(companyId));
         }

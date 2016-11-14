@@ -37,13 +37,13 @@ public class CompanyController {
 
     @RequestMapping(value = "/risk/all", method = RequestMethod.GET)
     @ApiOperation(value = "获取风控线列表", response = CompanyObject.class, responseContainer = "List")
-    public Result findAllFundOrganizationListMethod() {
+    public Result findAllRiskOrganizationListMethod() {
         return companyService.adminFindRiskCompanyList(adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(value = "/risk", method = RequestMethod.GET)
     @ApiOperation(value = "获取风控线列表", response = CompanyObject.class, responseContainer = "List")
-    public Result findFundOrganizationListMethod(Page page) {
+    public Result findRiskOrganizationListMethod(Page page) {
         return companyService.adminFindRiskCompanyList(adminSession.getUser().getCompanyId(), page);
     }
 
