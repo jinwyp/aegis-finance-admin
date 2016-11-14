@@ -74,16 +74,16 @@ class ContractService {
         private http: Http
     ) { }
 
-    getContractById(id: number) {
-        return this.http.get(API.risk + '/' + id).toPromise()
+    getContractById(financeId: number, type : number) {
+        return this.http.get(`${API.orders}/${financeId}/riskmanager/contract/${type}`).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }
 
-    add(contract: Contract) {
+    add(contract: Contract, taskId, type : number) {
         let headers = new Headers({'Content-Type': 'application/json'});
 
-        return this.http.post(API.tasksMYD + '/riskmanager/audit/contract', JSON.stringify(contract), {headers: headers}).toPromise()
+        return this.http.post(`${API.tasksMYD}/riskmanager/audit/${taskId}/contract?type=${type}`, JSON.stringify(contract), {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
             .catch(GlobalPromiseHttpCatch);
     }
