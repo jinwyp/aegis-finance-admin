@@ -102,6 +102,7 @@ public class AdminUserServiceImpl {
     public Result addUser(UserObject user, UserObject sessionUser) {
         Result result = checkOperateGroupsAuthority(user.getGroupIds(), sessionUser.getId());
         if (!result.isSuccess()) return result;
+        if (user.getGroupIds() == null || user.getGroupIds().size() == 0) return Result.error(EnumAdminUserError.用户角色不能为空.toString());
         Result result0 = checkUsername(user.getUsername());
         if (!result0.isSuccess()) return result;
         Result result1 = checkUserEmail(user.getEmail());
@@ -154,6 +155,7 @@ public class AdminUserServiceImpl {
         UserObject oldUserObject = changeUserObject(oldUser);
         Result result = checkOperateUserAuthority(oldUserObject, sessionUser);
         if (!result.isSuccess()) return result;
+        if (user.getGroupIds() == null || user.getGroupIds().size() == 0) return Result.error(EnumAdminUserError.用户角色不能为空.toString());
         if (oldUserObject.getStatus().equals(EnumAdminUserStatus.Deleted.toString()))
             return Result.error(EnumAdminUserError.此用户已删除.toString());
         Result result1 = checkUserEmail(user.getEmail(), id);
