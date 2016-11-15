@@ -435,6 +435,7 @@ public class AdminUserServiceImpl {
      * 封装 user, 从 User 到 UserObject
      */
     public UserObject changeUserObject(User user) {
+        if (user == null) return null;
         return improveUserObject(DozerUtils.copy(user, UserObject.class), null);
     }
 
@@ -445,6 +446,19 @@ public class AdminUserServiceImpl {
             userObject = improveUserObject(userObject, null);
         });
         return userObjectList;
+    }
+
+    public UserObject changeUserObjectSimple(User user) {
+        if (user == null) return null;
+        UserObject userObject = DozerUtils.copy(user, UserObject.class);
+        String companyId = identityService.getUserInfo(userObject.getId(), "companyId");
+        if (!StringUtils.isEmpty(companyId) && !companyId.equals("null")) {
+            userObject.setCompanyId(Long.valueOf(companyId));
+        } else {
+            userObject.setCompanyId(-1L);
+        }
+        userObject.setStatus(identityService.getUserInfo(userObject.getId(), "status"));
+        return userObject;
     }
 
     public List<UserObject> changeUserObjectSimple(List<User> userList) {

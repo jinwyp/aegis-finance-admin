@@ -95,13 +95,13 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     @NotBlank(message = "质量备注 不能为空", groups = {SubmitFinanceContract.class})
     private String qualityRemark;                                    //质量备注/其它质量标准
 
-    @Range(min = 1, max = 4, message = "热值 应在 {min}-{max} 个之间", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "热值 不能为空", groups = {SubmitFinanceContract.class})
-    private String CoalIndex_NCV;                                    //煤炭指标   - 热值
+    @Range(min = 1, max = 9999, message = "热值 应在 {min}-{max} 个之间", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "热值 不能为空", groups = {SubmitFinanceContract.class})
+    private int coalIndex_NCV;                                    //煤炭指标   - 热值
 
     @Digits(integer = 2, fraction = 2, message = "硫分 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "硫分 不能为空", groups = {SubmitFinanceContract.class})
-    private String CoalIndex_RS;                                     //煤炭指标   - 硫分
+//    @NotBlank(message = "硫分 不能为空", groups = {SubmitFinanceContract.class})
+    private BigDecimal coalIndex_RS;                                 //煤炭指标   - 硫分
 
     @Size(min = 1, max = 5000, message = "数量验收标准 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
     @NotBlank(message = "数量验收标准 不能为空", groups = {SubmitFinanceContract.class})
