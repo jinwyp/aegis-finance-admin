@@ -137,6 +137,9 @@ public class FinanceFlowMethodServiceImpl {
         return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
     }
 
+    /**
+     * 管理员分配任务
+     */
     public Result adminAssignTask(String sessionUserId, Long sessionCompanyId, String taskId, String userId) {
         TaskObject taskObject = (TaskObject) changeTaskObject(taskService.createTaskQuery().taskAssignee(sessionUserId).taskId(taskId).active().singleResult()).getData();
         if (taskObject == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
