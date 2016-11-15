@@ -107,10 +107,10 @@
             </td>
         </tr>
 
-        <tr class="item-title">
+        <tr *ngIf="currentTask.applyType=='MYD'" class="item-title">
             <td colspan="4"><span class="fs-16">合同信息（编辑合同前、后都可以预览合同，您可以根据新窗口打开的合同继续编辑）</span></td>
         </tr>
-        <tr class="item-title">
+        <tr *ngIf="currentTask.applyType=='MYD'" class="item-title">
             <td colspan="4">
                 <div class="contract">
                     <span class="word_icon"></span>《仓押上游采购合同》<span class="word_line"></span>

@@ -89,9 +89,9 @@ class Contract {
     settlementPrice : number = 1;                                   //结算价格  
     settlementAmount : number = 1;                                  //结算吨数
     cashDeposit : number = 1;                                       //保证金
-    sellerReceiptPrice : number = 1;                                //卖家开票价格  
-    sellerReceiptAmount : number = 1;                               //卖家开票吨数  
-    sellerReceiptMoney : number = 1;                                //卖家开票金额  
+    sellerReceiptPrice : any = 1;                                //卖家开票价格  
+    sellerReceiptAmount : any = 1;                               //卖家开票吨数  
+    sellerReceiptMoney : any = 1;                                //卖家开票金额  
     buyerSettlementMoney : number = 1;                              //买家已经结清金额  
     specialRemark : string = 'aaa';                                     //特别约定/特殊说明  
     attachmentNumber : number = 1;                                  //附件个数  
@@ -139,6 +139,32 @@ class ContractService {
         return this.http.post(`${API.tasksMYD}/riskmanager/audit/${taskId}/contract?type=${type}`, JSON.stringify(contract), {headers: headers}).toPromise()
             .then(res => res.json() as HttpResponse )
             .catch(GlobalPromiseHttpCatch);
+    }
+
+    parserMoneyCN(money) {
+        let moneyStr = '';
+        if (money === null || money === '' || money.length === 0) {
+            moneyStr = '';
+        } else if (/^(0|[1-9]\d*)(\.\d{1,2})?$/.test(money)) {
+            if (Number(money) === 0) {
+                moneyStr = '零元整';
+            } else {
+                var unit = "千百拾亿千百拾万千百拾元角分", str = "";
+                money += "00";
+                var p    = money.indexOf('.');
+                if (p >= 0) {
+                    money = money.substring(0, p) + money.substr(p + 1, 2);
+                }
+                unit = unit.substr(unit.length - money.length);
+                for (var i = 0; i < money.length; i++)
+                    str += '零壹贰叁肆伍陆柒捌玖'.charAt(money.charAt(i)) + unit.charAt(i);
+
+                moneyStr = str.replace(/零(千|百|拾|角)/g, "零").replace(/(零)+/g, "零").replace(/零(万|亿|元)/g, "$1").replace(/(亿)万|壹(拾)/g, "$1$2").replace(/^元零?|零分/g, "").replace(/元$/g, "元整");
+            }
+        } else {
+            moneyStr = '金额格式错误';
+        }
+        return moneyStr;
     }
 
 }

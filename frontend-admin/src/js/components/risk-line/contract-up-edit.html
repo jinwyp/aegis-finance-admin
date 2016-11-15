@@ -114,10 +114,10 @@
             <div class="table-label money-label">卖方开票价格：</div>
         </td>
         <td colspan="3">
-            <input type="text" class="div-150" [(ngModel)]="contract.sellerReceiptPrice" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元/吨&nbsp;&nbsp;X&nbsp;&nbsp;</span>
-            <input type="text" class="div-150" [(ngModel)]="contract.sellerReceiptAmount" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;吨&nbsp;&nbsp;=&nbsp;&nbsp;</span>
+            <input type="text" class="div-150" [(ngModel)]="contract.sellerReceiptPrice" (ngModelChange)="setSellerReceiptMoneyCN()" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元/吨&nbsp;&nbsp;X&nbsp;&nbsp;</span>
+            <input type="text" class="div-150" [(ngModel)]="contract.sellerReceiptAmount" (ngModelChange)="setSellerReceiptMoneyCN()" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;吨&nbsp;&nbsp;=&nbsp;&nbsp;</span>
             <input type="text" class="div-180 input-rl" readonly [(ngModel)]="contract.sellerReceiptMoney" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元</span>
-            <div class="money-zh">大写金额：</div>
+            <div class="money-zh">大写金额：{{sellerReceiptMoneyCN}}</div>
         </td>
     </tr>
 
@@ -126,8 +126,8 @@
             <div class="table-label money-label">买方结算：</div>
         </td>
         <td colspan="3">
-            <input type="text" [(ngModel)]="contract.buyerSettlementMoney" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元</span>
-            <div class="money-zh">大写金额：</div>
+            <input type="text" [(ngModel)]="contract.buyerSettlementMoney" (ngModelChange)="setBuyerSettlementMoneyCN($event)" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元</span>
+            <div class="money-zh">大写金额：{{buyerSettlementMoneyCN}}</div>
         </td>
     </tr>
 
