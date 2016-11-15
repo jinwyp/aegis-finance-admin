@@ -316,16 +316,16 @@ public class AdminUserServiceImpl {
     public void addUserGroupMemberShip(String userId, List<String> groupIds) {
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
         if (groupList != null && groupList.size() != 0) {
-            groupList.parallelStream().forEach(group -> {
+            for (Group group : groupList) {
                 identityService.deleteMembership(userId, group.getId());
-            });
+            }
         }
         if (groupIds != null && groupIds.size() != 0) {
-            groupIds.parallelStream().forEach(id -> {
-                if (identityService.createGroupQuery().groupId(id).singleResult() == null)
+            for (String gid : groupIds) {
+                if (identityService.createGroupQuery().groupId(gid).singleResult() == null)
                     throw new BusinessException(EnumAdminGroupError.此组不存在.toString());
-                identityService.createMembership(userId, id);
-            });
+                identityService.createMembership(userId, gid);
+            }
         }
     }
 
