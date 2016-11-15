@@ -286,19 +286,21 @@ public class AdminUserServiceImpl {
      * 用户登陆
      */
     public Result loginMethod(UserLoginObject userLoginObject) {
-        User user = identityService.createUserQuery().userFirstName(userLoginObject.getUsername()).singleResult();
-        if (user != null) {
-            UserObject userObject = changeUserObject(user);
+        List<User> userList = identityService.createUserQuery().userFirstName(userLoginObject.getUsername()).list();
+        if (userList == null || userList.size() == 0) {
+            return Result.error(401, EnumAdminUserError.该用户不存在或者已经被禁用.toString());
+        } else if (userList.size() == 1) {
+            UserObject userObject = changeUserObject(userList.get(0));
             if (!userObject.getStatus().equals(EnumAdminUserStatus.Normal.toString()))
                 return Result.error(EnumAdminUserError.您的账号已被删除.toString());
-            if (identityService.checkPassword(user.getId(), securePassword(userLoginObject.getPassword()))) {
+            if (identityService.checkPassword(userObject.getId(), securePassword(userLoginObject.getPassword()))) {
                 loginRecordRepository.save(new UserLoginRecord(userObject.getId(), userObject.getUsername(), new Date()));
                 return Result.success().setData(userObject);
             } else {
                 return Result.error(401, EnumAdminUserError.用户名或者密码错误.toString());
             }
         } else {
-            return Result.error(401, EnumAdminUserError.该用户不存在或者已经被禁用.toString());
+            return Result.error(401, EnumCommonError.Admin_System_Error);
         }
     }
 
