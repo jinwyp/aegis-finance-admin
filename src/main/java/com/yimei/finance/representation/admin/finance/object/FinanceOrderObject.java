@@ -105,6 +105,7 @@ public class FinanceOrderObject extends BaseObject implements Serializable {
     private Date endTime;                                            //结束时间
     @NotBlank(message = "风控线不能为空", groups = {SubmitFinanceOrder.class})
     private Long riskCompanyId;                                      //风控线id
+    private String riskCompanyName;                                  //风控线名称
     private List<AttachmentObject> attachmentList1;                  //附件列表
 
     public String getApplyTypeName() {
