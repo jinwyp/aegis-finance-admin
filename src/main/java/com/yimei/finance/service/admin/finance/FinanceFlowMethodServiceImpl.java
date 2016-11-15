@@ -5,11 +5,9 @@ import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.activiti.HistoryTaskObject;
 import com.yimei.finance.representation.admin.activiti.HistoryVariableObject;
 import com.yimei.finance.representation.admin.activiti.TaskObject;
-import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
-import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
-import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEndType;
-import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEventType;
+import com.yimei.finance.representation.admin.finance.enums.*;
 import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
+import com.yimei.finance.representation.admin.user.enums.EnumAdminUserError;
 import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.file.AttachmentObject;
@@ -24,8 +22,11 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricActivityInstance;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.activiti.engine.history.HistoricTaskInstance;
+import org.activiti.engine.identity.Group;
+import org.activiti.engine.identity.User;
 import org.activiti.engine.runtime.ProcessInstance;
 import org.activiti.engine.task.Attachment;
+import org.activiti.engine.task.IdentityLink;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,6 +77,9 @@ public class FinanceFlowMethodServiceImpl {
         return Result.success().setData(taskObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
     }
 
+    /**
+     * 查看个人待领取任务列表
+     */
     public Result findSelfWaitClaimTaskList(String sessionUserId, Long sessionCompanyId, Page page) {
         List<String> groupIds = userService.getUserGroupIdList(sessionUserId);
         if (groupIds != null && groupIds.size() != 0) {
@@ -90,6 +94,9 @@ public class FinanceFlowMethodServiceImpl {
         return Result.success().setData(null).setMeta(page);
     }
 
+    /**
+     * 查看个人处理历史列表
+     */
     public Result findSelfHistoryTaskList(String sessionUserId, Page page) {
         List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(sessionUserId).finished().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
         page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
@@ -98,6 +105,64 @@ public class FinanceFlowMethodServiceImpl {
         if (!result.isSuccess()) return result;
         List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
         return Result.success().setData(taskList).setMeta(page);
+    }
+
+    /**
+     * 管理员领取任务
+     */
+    public Result adminClaimTask(String sessionUserId, Long sessionCompanyId, String taskId) {
+        Task task = taskService.createTaskQuery().taskId(taskId).active().singleResult();
+        if (task == null) return Result.error(EnumAdminFinanceError.此任务不存在或者已经完成.toString());
+        if (!StringUtils.isEmpty(task.getAssignee())) {
+            if (task.getAssignee().equals(sessionUserId)) {
+                return Result.error(EnumAdminFinanceError.你已经处理此任务.toString());
+            } else {
+                return Result.error(EnumAdminFinanceError.此任务已经被其他人处理.toString());
+            }
+        }
+        TaskObject taskObject = (TaskObject) changeTaskObject(task).getData();
+        if (sessionCompanyId.longValue() == 0 || taskObject.getRiskCompanyId().longValue() == sessionCompanyId.longValue()) {
+            List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
+            List<Group> groupList = identityService.createGroupQuery().groupMember(sessionUserId).list();
+            for (IdentityLink identityLink : identityLinkList) {
+                for (Group group : groupList) {
+                    if (identityLink.getGroupId().equals(group.getId())) {
+                        taskService.setOwner(task.getId(), sessionUserId);
+                        taskService.claim(task.getId(), sessionUserId);
+                        return Result.success().setData(true);
+                    }
+                }
+            }
+        }
+        return Result.error(EnumAdminFinanceError.你没有权限领取此任务.toString());
+    }
+
+    public Result adminAssignTask(String sessionUserId, Long sessionCompanyId, String taskId, String userId) {
+        Task task = taskService.createTaskQuery().taskAssignee(sessionUserId).taskId(taskId).active().singleResult();
+        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
+        User user = identityService.createUserQuery().userId(userId).singleResult();
+        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
+        List<User> userList = new ArrayList<>();
+        String financeEventType = "";
+        for (EnumFinanceAssignType type : EnumFinanceAssignType.values()) {
+            if (task.getTaskDefinitionKey().equals(type.toString())) {
+                userList = identityService.createUserQuery().memberOfGroup(type.id).list();
+                financeEventType = type.nextStep;
+                break;
+            }
+        }
+        if (StringUtils.isEmpty(financeEventType)) return Result.error(EnumCommonError.Admin_System_Error);
+        for (User u : userList) {
+            if (u.getId().equals(userId)) {
+                taskService.complete(task.getId());
+                Task t = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).taskDefinitionKey(financeEventType).active().singleResult();
+                if (t == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+                taskService.setOwner(t.getId(), userId);
+                taskService.setAssignee(t.getId(), userId);
+                return Result.success().setData(true);
+            }
+        }
+        return Result.error(EnumAdminFinanceError.你没有处理此金融单的权限.toString());
     }
 
     /**
