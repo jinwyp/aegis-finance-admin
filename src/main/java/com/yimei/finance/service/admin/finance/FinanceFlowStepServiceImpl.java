@@ -275,7 +275,7 @@ public class FinanceFlowStepServiceImpl {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAudit.toString())) return Result.error(EnumAdminFinanceError.当前业务不能完善合同.toString());
         orderService.saveFinanceOrderContract(userId, financeOrderContractObject);
         if (submit) {
-            orderService.changeFinanceOrderRiskManagerInfoContractStatus(financeOrderContractObject.getFinanceId(), financeOrderContractObject.getType(), EnumFinanceContractStatus.Submitted.id);
+            orderService.changeFinanceOrderRiskManagerInfoContractStatus(userId, financeOrderContractObject.getFinanceId(), financeOrderContractObject.getType(), EnumFinanceContractStatus.Submitted.id);
         }
         return Result.success();
     }

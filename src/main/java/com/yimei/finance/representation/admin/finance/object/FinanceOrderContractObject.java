@@ -76,11 +76,11 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     private String deliveryPlace;                                    //交货地点  
 
     @Digits(integer = 9, fraction = 2, message = "煤炭吨数 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "煤炭吨数 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "煤炭吨数 不能为空", groups = {SubmitFinanceContract.class})
     private BigDecimal coalTon;                                      //煤炭吨数  
 
     @Digits(integer = 9, fraction = 2, message = "煤炭数量 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "煤炭数量 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "煤炭数量 不能为空", groups = {SubmitFinanceContract.class})
     private BigDecimal coalAmount;                                   //煤炭数量  
 
     @Size(min = 1, max = 100, message = "煤炭品种 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
@@ -116,31 +116,31 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     private int paymentPeriod;                                       //付款提货期限
 
     @Digits(integer = 7, fraction = 2, message = "结算价格 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "结算价格 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "结算价格 不能为空", groups = {SubmitFinanceContract.class})
     private BigDecimal settlementPrice;                              //结算价格  
 
     @Digits(integer = 9, fraction = 2, message = "结算吨数 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "结算吨数 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "结算吨数 不能为空", groups = {SubmitFinanceContract.class})
     private BigDecimal settlementAmount;                             //结算吨数
 
     @Digits(integer = 16, fraction = 2, message = "保证金 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "保证金 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "保证金 不能为空", groups = {SubmitFinanceContract.class})
     private BigDecimal cashDeposit;                                  //保证金
 
     @Digits(integer = 7, fraction = 2, message = "卖家开票价格 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "卖家开票价格 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "卖家开票价格 不能为空", groups = {SubmitFinanceContract.class})
     private BigDecimal sellerReceiptPrice;                           //卖家开票价格  
 
     @Digits(integer = 9, fraction = 2, message = "卖家开票吨数 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "卖家开票吨数 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "卖家开票吨数 不能为空", groups = {SubmitFinanceContract.class})
     private BigDecimal sellerReceiptAmount;                          //卖家开票吨数  
 
     @Digits(integer = 16, fraction = 2, message = "卖家开票金额 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "卖家开票金额 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "卖家开票金额 不能为空", groups = {SubmitFinanceContract.class})
     private BigDecimal sellerReceiptMoney;                           //卖家开票金额  
 
     @Digits(integer = 16, fraction = 2, message = "买家已结清金额 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "买家已结清金额 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "买家已结清金额 不能为空", groups = {SubmitFinanceContract.class})
     private BigDecimal buyerSettlementMoney;                         //买家已经结清金额  
 
     @Size(min = 1, max = 5000, message = "特别约定 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
