@@ -172,8 +172,6 @@ public class AdminCompanyServiceImpl {
      */
     public List<CompanyObject> findCompanyListByRole(int type, RiskCompanySearch riskCompanySearch) {
         List<CompanyObject> companyObjectList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
-        System.out.println(riskCompanySearch == null);
-        System.out.println(riskCompanySearch.toString());
         if (riskCompanySearch != null) {
             if (!StringUtils.isEmpty(riskCompanySearch.getName()) && !StringUtils.isEmpty(riskCompanySearch.getAdminName())) {
                 companyObjectList = companyObjectList.parallelStream().filter(company -> company.getName().contains(riskCompanySearch.getName()) && company.getAdminName().contains(riskCompanySearch.getAdminName())).collect(Collectors.toList());
