@@ -218,6 +218,8 @@ public class FinanceOrderServiceImpl {
         riskManagerInfo.setId(null);
         if (riskManagerOrder != null) {
             riskManagerInfo.setId(riskManagerOrder.getId());
+            riskManagerInfo.setUpstreamContractStatus(riskManagerOrder.getUpstreamContractStatus());
+            riskManagerInfo.setDownstreamContractStatus(riskManagerOrder.getDownstreamContractStatus());
         }
         riskManagerInfo.setLastUpdateManId(userId);
         riskManagerInfo.setLastUpdateTime(new Date());

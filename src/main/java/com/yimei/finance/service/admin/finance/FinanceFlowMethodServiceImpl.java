@@ -50,6 +50,9 @@ public class FinanceFlowMethodServiceImpl {
     @Autowired
     private IdentityService identityService;
 
+    /**
+     * 根据 taskId 查询任务
+     */
     public Result findTaskByTaskId(String taskId, Long sessionCompanyId) {
         HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
         if (taskInstance == null) return Result.error(EnumAdminFinanceError.不存在此任务.toString());
@@ -60,6 +63,9 @@ public class FinanceFlowMethodServiceImpl {
         return Result.error(EnumAdminFinanceError.你没有权限查看此任务.toString());
     }
 
+    /**
+     * 查看个人待办任务列表
+     */
     public Result findSelfTaskList(String sessionUserId, Long sessionCompanyId, Page page) {
         List<Task> taskList = taskService.createTaskQuery().taskAssignee(sessionUserId).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
         Result result = changeTaskObject(taskList, sessionCompanyId);
