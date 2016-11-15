@@ -60,7 +60,7 @@ export class ContractDownEditComponent {
         this.contractService.getContractById(financeId, 2).then(result=>{
             if(result.success&&result.data){
                 this.contract = result.data;
-                this.selectedDateInline = result.data.signDate;
+                this.selectedDateInline = result.data.signDate||'';
             }
         });
     }

@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Task, TaskService, TaskStatus } from '../../service/task';
 import { User, UserService } from '../../service/user';
-import {isNumber} from "@angular/core/testing/facade/lang";
 
 
 
@@ -64,6 +63,8 @@ export class AuditInvestigatorComponent {
     currentOrder : Task = new Task();
 
     isApprovedRadio : number = -1;
+
+    btnText : string = '点击上传';
 
     constructor(
         private location: Location,

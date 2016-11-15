@@ -179,7 +179,7 @@
                         <span class="glyphicon glyphicon-trash" aria-hidden="true" (click)="delAttachmentList1(pic)" *ngIf="!css.isReadOnly"></span>
                         <a [href]="'/finance/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
                     </div>
-                    <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
+                    <file-upload *ngIf="!css.isReadOnly" [btnText]="btnText" (onFinished)="finishedUpload($event)"></file-upload>
                 </div>
             </td>
         </tr>

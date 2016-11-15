@@ -42,6 +42,8 @@ export class AuditSupervisorComponent {
     currentTask : Task = new Task();
     isApprovedRadio : number = -1;
 
+    btnText : string = '点击上传';
+
     constructor(
         private location: Location,
         private activatedRoute: ActivatedRoute,
