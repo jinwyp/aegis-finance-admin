@@ -9,7 +9,7 @@ import {getContractInfo} from 'js/service/http.js';
 
 var financeInfo = ()=> {
 
-    var url = window.location.href.match(/\/user\/\d{1,8}/);
+    var url = window.location.href.match(/\/order\/\d{1,8}/);
     var financeInfoId = 0;
     if (url) financeInfoId = Number(url[0].split('/')[2]);
 
