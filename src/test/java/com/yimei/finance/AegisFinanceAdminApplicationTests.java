@@ -3,6 +3,8 @@ package com.yimei.finance;
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
+import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
 import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
@@ -61,16 +63,11 @@ public class AegisFinanceAdminApplicationTests {
         System.out.println(" ------------------------------------- ");
         System.out.println(" ------------------------------------- ");
 
-        System.out.println(" ------------------------------------ ");
-        System.out.println(" ------------------------------------ ");
-        System.out.println(" ------------------------------------ ");
-
 //		List<Attachment> attachmentList = taskService.getTaskAttachments("c24upstream");
 
 
-
-		taskService.createAttachment("cccc", "7565", "c24upstream", "ccc", "cccccc", "cccccc");
-		taskService.createAttachment("cccc", "10161", "c24upstream", "ccc", "cccccc", "cccccc");
+		FinanceOrderObject financeOrder = (FinanceOrderObject) financeOrderService.findById(25L, EnumFinanceAttachment.OnlineTraderAuditAttachment, 0L).getData();
+		System.out.println(financeOrder.toString());
 
 
 	}

@@ -99,12 +99,12 @@ public class FinanceOrderServiceImpl {
     /**
      * 获取金融申请单详细
      */
-    public Result findById(Long id, EnumFinanceAttachment attachmentType, Long sessionCompanyId) {
+    public Result findById(Long id, EnumFinanceAttachment attachment, Long sessionCompanyId) {
         FinanceOrderObject financeOrderObject = DozerUtils.copy(financeOrderRepository.findOne(id), FinanceOrderObject.class);
         if (financeOrderObject == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         if (sessionCompanyId.longValue() == 0 || sessionCompanyId.longValue() == financeOrderObject.getRiskCompanyId().longValue()) {
-            financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdType(id, attachmentType));
-            if (financeOrderObject.getRiskCompanyId().longValue() != 0) {
+            financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdType(id, attachment));
+            if (financeOrderObject.getRiskCompanyId() != null && financeOrderObject.getRiskCompanyId().longValue() != 0) {
                 Company company = companyRepository.findOne(financeOrderObject.getRiskCompanyId());
                 if (company != null) financeOrderObject.setRiskCompanyName(company.getName());
             }
