@@ -53,9 +53,9 @@ public class FinanceFlowMethodServiceImpl {
     public Result findTaskByTaskId(String taskId, Long sessionCompanyId) {
         HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
         if (taskInstance == null) return Result.error(EnumAdminFinanceError.不存在此任务.toString());
-        TaskObject taskObject = (TaskObject) changeHistoryTaskObject(taskInstance).getData();
-        if (sessionCompanyId.longValue() == 0 || (sessionCompanyId.longValue() == taskObject.getRiskCompanyId().longValue())) {
-            return Result.success().setData(taskObject);
+        HistoryTaskObject historyTaskObject = (HistoryTaskObject) changeHistoryTaskObject(taskInstance).getData();
+        if (sessionCompanyId.longValue() == 0 || (sessionCompanyId.longValue() == historyTaskObject.getRiskCompanyId().longValue())) {
+            return Result.success().setData(historyTaskObject);
         }
         return Result.error(EnumAdminFinanceError.你没有权限查看此任务.toString());
     }
