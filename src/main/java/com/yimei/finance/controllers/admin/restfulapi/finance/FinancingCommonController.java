@@ -120,7 +120,7 @@ public class FinancingCommonController {
         HistoricProcessInstance processInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
         if (processInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
         Long riskCompanyId = orderRepository.findRiskCompanyIdById(Long.valueOf(processInstance.getBusinessKey()));
-        if (adminSession.getUser().getCompanyId() != 0 && riskCompanyId != adminSession.getUser().getCompanyId()) throw new BusinessException(EnumAdminFinanceError.你没有查看此流程的权限.toString());
+        if (adminSession.getUser().getCompanyId().longValue() != 0 && riskCompanyId.longValue() != adminSession.getUser().getCompanyId().longValue()) throw new BusinessException(EnumAdminFinanceError.你没有查看此流程的权限.toString());
         BpmnModel bpmnModel = repositoryService.getBpmnModel(processInstance.getProcessDefinitionId());
         InputStream inputStream = null;
         if (processInstance.getEndTime() == null) {
