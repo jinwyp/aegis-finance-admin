@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.IOException;
 import java.net.URLEncoder;
@@ -52,7 +51,7 @@ public class FinancePageController {
     @RequestMapping(value = "/finance/{financeId}/contract/{type}/download", method = RequestMethod.GET)
     @ApiOperation(value = "下载金融合同", notes = "下载金融合同")
     public HttpEntity<byte[]> financeContractDownload(@PathVariable("financeId") Long financeId,
-                                        @PathVariable("type") int type, HttpServletResponse response) throws IOException, DocumentException {
+                                                      @PathVariable("type") int type) throws IOException, DocumentException {
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
         FinanceOrderContract financeOrderContract = orderContractRepository.findByFinanceIdAndType(financeId, type);
         String contract = "";
