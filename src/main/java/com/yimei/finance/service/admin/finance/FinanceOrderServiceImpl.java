@@ -226,12 +226,16 @@ public class FinanceOrderServiceImpl {
         riskRepository.save(DozerUtils.copy(riskManagerInfo, FinanceOrderRiskManagerInfo.class));
     }
 
-    public void changeFinanceOrderRiskManagerInfoContractStatus(Long financeId, int type, int status) {
+    public void changeFinanceOrderRiskManagerInfoContractStatus(String userId, Long financeId, int type, int status) {
         FinanceOrderRiskManagerInfo riskManagerInfo = riskRepository.findByFinanceId(financeId);
         if (riskManagerInfo == null) {
             riskManagerInfo = new FinanceOrderRiskManagerInfo();
             riskManagerInfo.setFinanceId(financeId);
+            riskManagerInfo.setCreateManId(userId);
+            riskManagerInfo.setCreateTime(new Date());
         }
+        riskManagerInfo.setLastUpdateManId(userId);
+        riskManagerInfo.setLastUpdateTime(new Date());
         if (type == 1) {
             riskManagerInfo.setUpstreamContractStatus(status);
         } else if (type == 2) {
