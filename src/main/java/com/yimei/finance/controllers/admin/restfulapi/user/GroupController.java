@@ -35,7 +35,7 @@ public class GroupController {
     }
 
     @ApiOperation(value = "通过 groupId 查询用户组下,本公司的用户", notes = "通过 groupId 查询该用户组下,本公司的用户", response = UserObject.class, responseContainer = "List")
-    @ApiImplicitParam(name = "groupId", value = "GroupId", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "groupId", value = "用户组 Id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{groupId}/users", method = RequestMethod.GET)
     public Result getCompanyUserListByGroupIdMethod(@PathVariable(value = "groupId") String groupId) {
         return groupService.findCompanyUserListByGroupId(groupId, adminSession.getUser());
@@ -70,7 +70,7 @@ public class GroupController {
     }
 
     @ApiOperation(value = "修改用户组", notes = "根据Group Id 修改用户组", response = GroupObject.class)
-    @ApiImplicitParam(name = "id", value = "Group 用户组id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "用户组 id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     public Result updateGroupMethod(@PathVariable("id") String id,
                                     @ApiParam(name = "group", value = "用户组对象", required = true) @Validated @RequestBody GroupObject groupObject) {
@@ -78,7 +78,7 @@ public class GroupController {
     }
 
     @ApiOperation(value = "删除用户组", notes = "根据Group Id 删除用户组", response = GroupObject.class)
-    @ApiImplicitParam(name = "id", value = "Group 用户组Id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "用户组 id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Result deleteGroupMethod(@PathVariable("id") String id) {
         return groupService.deleteGroup(adminSession.getUser().getId(), id);

@@ -281,7 +281,7 @@ public class AdminUserServiceImpl {
      */
     public List<UserObject> getUserByRiskCompanyId(Long companyId) {
         List<UserObject> userList = changeUserObject(identityService.createUserQuery().list());
-        userList = userList.parallelStream().filter(user -> 
+        userList = userList.parallelStream().filter(user ->
                 user.getCompanyId().longValue() == companyId.longValue() && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
         ).collect(Collectors.toList());
         return userList;
@@ -316,9 +316,9 @@ public class AdminUserServiceImpl {
     public void addUserGroupMemberShip(String userId, List<String> groupIds) {
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
         if (groupList != null && groupList.size() != 0) {
-            for (Group group : groupList) {
+            groupList.stream().forEach(group -> {
                 identityService.deleteMembership(userId, group.getId());
-            }
+            });
         }
         if (groupIds != null && groupIds.size() != 0) {
             for (String gid : groupIds) {

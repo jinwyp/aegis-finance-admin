@@ -3,10 +3,6 @@ package com.yimei.finance;
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
-import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
-import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
-import com.yimei.finance.representation.admin.user.object.UserObject;
-import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
@@ -21,7 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import java.util.List;
+import java.util.stream.IntStream;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -47,27 +43,30 @@ public class AegisFinanceAdminApplicationTests {
 
 	@Test
 	public void test001() {
-		System.out.println(" ------------------------------------ ");
-		System.out.println(" ------------------------------------ ");
-		System.out.println(" ------------------------------------ ");
-		System.out.println(" ------------------------------------ ");
-		System.out.println(" ------------------------------------ ");
-		System.out.println(" ------------------------------------ ");
-		Page page = new Page();
-		UserObject user = new UserObject("14", 0L);
-
-        List<String> keyList = identityService.getUserInfoKeys("14");
-        System.out.println(" ------- " + keyList);
-
-        System.out.println(" ------------------------------------- ");
-        System.out.println(" ------------------------------------- ");
-        System.out.println(" ------------------------------------- ");
+//		System.out.println(" ------------------------------------ ");
+//		System.out.println(" ------------------------------------ ");
+//		System.out.println(" ------------------------------------ ");
+//		System.out.println(" ------------------------------------ ");
+//		System.out.println(" ------------------------------------ ");
+//		System.out.println(" ------------------------------------ ");
+//		Page page = new Page();
+//		UserObject user = new UserObject("14", 0L);
+//
+//        List<String> keyList = identityService.getUserInfoKeys("14");
+//        System.out.println(" ------- " + keyList);
+//
+//        System.out.println(" ------------------------------------- ");
+//        System.out.println(" ------------------------------------- ");
+//        System.out.println(" ------------------------------------- ");
 
 //		List<Attachment> attachmentList = taskService.getTaskAttachments("c24upstream");
 
 
-		FinanceOrderObject financeOrder = (FinanceOrderObject) financeOrderService.findById(25L, EnumFinanceAttachment.OnlineTraderAuditAttachment, 0L).getData();
-		System.out.println(financeOrder.toString());
+		IntStream.range(1, 1000).mapToObj(num -> {
+			return "c" + num;
+		}).forEach(num -> System.out.println(" ------ " + num));
+
+
 
 
 	}

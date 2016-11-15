@@ -99,7 +99,7 @@ public class UserController {
     @ApiOperation(value = "管理员帮助用户重置密码", notes = "管理员帮助用户重置密码, 生成随机密码, 发送到用户邮箱.", response = Boolean.class)
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}/password", method = RequestMethod.POST)
-    public Result resetUserPasswordMethod(@PathVariable("id")String id) {
+    public Result resetUserPasswordMethod(@PathVariable("id") String id) {
         return userService.adminResetUserPassword(id, adminSession.getUser());
     }
 

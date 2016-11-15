@@ -27,7 +27,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -104,7 +103,7 @@ public class FinancingCommonController {
 
     @RequestMapping(value = "/finance/{financeId}/tasks", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 获取所有任务步骤列表", notes = "通过 金融单id 获取所有任务步骤列表")
-    @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "Long", paramType = "path")
     public Result getAllTasksByFinanceIdMethod(@PathVariable(value = "financeId") Long financeId) {
         FinanceOrder financeOrder = orderRepository.findOne(financeId);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
@@ -114,7 +113,7 @@ public class FinancingCommonController {
     @RequestMapping(value = "/finance/process/{processInstanceId}/image", method = RequestMethod.GET)
     @ApiOperation(value = "通过流程实例id获取流程图", notes = "通过流程实例id获取流程图")
     @ApiImplicitParam(name = "processInstanceId", value = "流程实例id", required = true, dataType = "String", paramType = "path")
-    public void getProcessDiagramMethod(@PathVariable("processInstanceId") String processInstanceId, HttpServletRequest request, HttpServletResponse response) throws IOException {
+    public void getProcessDiagramMethod(@PathVariable("processInstanceId") String processInstanceId, HttpServletResponse response) throws IOException {
         response.setContentType("image/gif");
         OutputStream out = response.getOutputStream();
         HistoricProcessInstance processInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();

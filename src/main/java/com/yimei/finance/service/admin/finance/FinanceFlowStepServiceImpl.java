@@ -237,7 +237,7 @@ public class FinanceFlowStepServiceImpl {
         riskManagerInfo.setCreateTime(new Date());
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.RiskManagerAuditAttachment.toString());
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList3(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.Upstream_Contract_Attachment.toString());
-        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList4(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Downstream_Contract_Attachment, EnumFinanceAttachment.Downstream_Contract_Attachment.toString());
+        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList4(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.Downstream_Contract_Attachment.toString());
         if (submit) {
             FinanceOrderRiskManagerInfo financeOrderRiskManagerInfo = financeOrderRiskRepository.findByFinanceId(riskManagerInfo.getFinanceId());
             if (financeOrderRiskManagerInfo == null) return Result.error(EnumAdminFinanceError.你还没有提交合同信息.toString());
