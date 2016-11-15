@@ -98,9 +98,9 @@ public class AdminCompanyServiceImpl {
      */
     public Result findById(Long id) {
         Company company = companyRepository.findOne(id);
+        if (company == null) return Result.error(EnumCompanyError.对象不存在.toString());
         if (company.getStatusId() == EnumCompanyStatus.Deleted.id) return Result.error(EnumCompanyError.已经被删除.toString());
-        CompanyObject companyObject = new CompanyObject();
-        if (companyObject != null) companyObject = changeCompanyObject(company);
+        CompanyObject companyObject = changeCompanyObject(company);
         return Result.success().setData(companyObject);
     }
 
@@ -114,33 +114,30 @@ public class AdminCompanyServiceImpl {
      * 封装公司对象
      */
     public CompanyObject changeCompanyObject(Company company) {
-        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> (user.getStatus().equals(EnumAdminUserStatus.Normal.toString()))).collect(Collectors.toList());
+        if (company == null) return null;
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
-        if (company != null) {
-            List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
-            if (roleList != null && roleList.size() != 0) {
-                String roleName = "";
-                for (String role : roleList) {
-                    roleName += EnumCompanyRole.valueOf(role).name + " ";
-                }
-                companyObject.setRoleName(roleName);
+        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> (user.getStatus().equals(EnumAdminUserStatus.Normal.toString()))).collect(Collectors.toList());
+        List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
+        if (roleList != null && roleList.size() != 0) {
+            String roleName = "";
+            for (String role : roleList) {
+                roleName += EnumCompanyRole.valueOf(role).name + " ";
             }
-            companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
-            companyObject.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
+            companyObject.setRoleName(roleName);
         }
+        companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
+        companyObject.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
         return companyObject;
     }
 
     public List<CompanyObject> changeCompanyObject(List<Company> companyList) {
-        List<CompanyObject> companyObjectList = new ArrayList<>();
-        if (companyList != null && companyList.size() != 0) {
-            List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString())).collect(Collectors.toList());
-            companyObjectList = DozerUtils.copy(companyList, CompanyObject.class);
-            companyObjectList.parallelStream().forEach(company -> {
-                company.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
-                company.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
-            });
-        }
+        if (companyList == null || companyList.size() == 0) return null;
+        List<CompanyObject> companyObjectList = DozerUtils.copy(companyList, CompanyObject.class);
+        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString())).collect(Collectors.toList());
+        companyObjectList.parallelStream().forEach(company -> {
+            company.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
+            company.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
+        });
         return companyObjectList;
     }
 
@@ -148,9 +145,7 @@ public class AdminCompanyServiceImpl {
      * 超级管理员, 交易员获取风控线列表
      */
     public Result adminFindRiskCompanyList(Long sessionCompanyId) {
-        if (sessionCompanyId.longValue() != 0) {
-            return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
-        }
+        if (sessionCompanyId.longValue() != 0) return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
         return Result.success().setData(findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id, null));
     }
 
@@ -158,9 +153,7 @@ public class AdminCompanyServiceImpl {
      * 超级管理员, 交易员获取风控线列表
      */
     public Result adminFindRiskCompanyList(RiskCompanySearch riskCompanySearch, Long sessionCompanyId, Page page) {
-        if (sessionCompanyId.longValue() != 0) {
-            return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
-        }
+        if (sessionCompanyId.longValue() != 0) return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
         List<CompanyObject> companyObjectList = findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id, riskCompanySearch);
         page.setTotal((long) companyObjectList.size());
         int toIndex = page.getPage() * page.getCount() < companyObjectList.size() ? page.getPage() * page.getCount() : companyObjectList.size();
@@ -206,16 +199,16 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<CompanyObject> getNormalCompanyListByIdList(List<Long> companyIdList) {
-        final List<Company> companyList = new ArrayList<>();
-        if (companyIdList != null && companyIdList.size() != 0) {
-            companyIdList.parallelStream().forEach(id -> {
-                Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
-                if (company != null) {
-                    companyList.add(company);
-                }
-            });
-            companyList.sort(Comparator.comparing(Company :: getId));
-        }
+        if (companyIdList == null || companyIdList.size() == 0) return null;
+        List<Company> companyList = new ArrayList<>();
+//        for (Long id : companyIdList) {
+//            Company company = companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id);
+//            if (company != null) companyList.add(company);
+//        }
+        companyIdList.parallelStream().filter(id -> companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id) != null).forEach(id -> {
+            companyList.add(companyRepository.findOne(id));
+        });
+        companyList.sort(Comparator.comparing(Company :: getId).reversed());
         return changeCompanyObject(companyList);
     }
 
