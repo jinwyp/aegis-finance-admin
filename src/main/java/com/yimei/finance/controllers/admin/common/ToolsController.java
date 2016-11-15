@@ -4,19 +4,19 @@ import com.yimei.finance.entity.common.DataBook;
 import com.yimei.finance.repository.common.DataBookRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumMYRFinanceAllSteps;
 import com.yimei.finance.representation.common.databook.EnumDataBookType;
-import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.common.result.MapObject;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.common.file.LocalStorage;
 import com.yimei.finance.utils.StoreUtils;
 import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.engine.TaskService;
-import org.activiti.engine.task.Attachment;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
@@ -56,15 +56,15 @@ public class ToolsController {
         return Result.success().setData(StoreUtils.save(localStorage, file, "finance"));
     }
 
-    @RequestMapping(value = "/files/{attachmentId}", method = RequestMethod.DELETE)
-    @ApiOperation(value = "删除文件", notes = "删除文件", response = AttachmentObject.class)
-    @ApiImplicitParam(name = "attachmentId", value = "文件id", required = true, dataType = "String", paramType = "path")
-    public Result deleteFileMethod(@PathVariable("attachmentId")String attachmentId) {
-        Attachment attachment = taskService.getAttachment(attachmentId);
-        if (attachment == null) return Result.error(EnumCommonError.此文件不存在.toString());
-        taskService.deleteAttachment(attachmentId);
-        return Result.success().setData(attachmentId);
-    }
+//    @RequestMapping(value = "/files/{attachmentId}", method = RequestMethod.DELETE)
+//    @ApiOperation(value = "删除文件", notes = "删除文件", response = AttachmentObject.class)
+//    @ApiImplicitParam(name = "attachmentId", value = "文件id", required = true, dataType = "String", paramType = "path")
+//    public Result deleteFileMethod(@PathVariable("attachmentId")String attachmentId) {
+//        Attachment attachment = taskService.getAttachment(attachmentId);
+//        if (attachment == null) return Result.error(EnumCommonError.此文件不存在.toString());
+//        taskService.deleteAttachment(attachmentId);
+//        return Result.success().setData(attachmentId);
+//    }
 
 
 
