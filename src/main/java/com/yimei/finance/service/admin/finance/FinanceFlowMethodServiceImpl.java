@@ -138,28 +138,30 @@ public class FinanceFlowMethodServiceImpl {
     }
 
     public Result adminAssignTask(String sessionUserId, Long sessionCompanyId, String taskId, String userId) {
-        Task task = taskService.createTaskQuery().taskAssignee(sessionUserId).taskId(taskId).active().singleResult();
-        if (task == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
-        User user = identityService.createUserQuery().userId(userId).singleResult();
-        if (user == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
-        List<User> userList = new ArrayList<>();
-        String financeEventType = "";
-        for (EnumFinanceAssignType type : EnumFinanceAssignType.values()) {
-            if (task.getTaskDefinitionKey().equals(type.toString())) {
-                userList = identityService.createUserQuery().memberOfGroup(type.id).list();
-                financeEventType = type.nextStep;
-                break;
+        TaskObject taskObject = (TaskObject) changeTaskObject(taskService.createTaskQuery().taskAssignee(sessionUserId).taskId(taskId).active().singleResult()).getData();
+        if (taskObject == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
+        UserObject userObject = userService.changeUserObjectSimple(identityService.createUserQuery().userId(userId).singleResult());
+        if (userObject == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
+        if (sessionCompanyId == 0 || (sessionCompanyId.longValue() == userObject.getCompanyId().longValue())) {
+            List<User> userList = new ArrayList<>();
+            String financeEventType = "";
+            for (EnumFinanceAssignType type : EnumFinanceAssignType.values()) {
+                if (taskObject.getTaskDefinitionKey().equals(type.toString())) {
+                    userList = identityService.createUserQuery().memberOfGroup(type.id).list();
+                    financeEventType = type.nextStep;
+                    break;
+                }
             }
-        }
-        if (StringUtils.isEmpty(financeEventType)) return Result.error(EnumCommonError.Admin_System_Error);
-        for (User u : userList) {
-            if (u.getId().equals(userId)) {
-                taskService.complete(task.getId());
-                Task t = taskService.createTaskQuery().processInstanceId(task.getProcessInstanceId()).taskDefinitionKey(financeEventType).active().singleResult();
-                if (t == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
-                taskService.setOwner(t.getId(), userId);
-                taskService.setAssignee(t.getId(), userId);
-                return Result.success().setData(true);
+            if (StringUtils.isEmpty(financeEventType)) return Result.error(EnumCommonError.Admin_System_Error);
+            for (User u : userList) {
+                if (u.getId().equals(userId)) {
+                    taskService.complete(taskObject.getId());
+                    Task t = taskService.createTaskQuery().processInstanceId(taskObject.getProcessInstanceId()).taskDefinitionKey(financeEventType).active().singleResult();
+                    if (t == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+                    taskService.setOwner(t.getId(), userId);
+                    taskService.setAssignee(t.getId(), userId);
+                    return Result.success().setData(true);
+                }
             }
         }
         return Result.error(EnumAdminFinanceError.你没有处理此金融单的权限.toString());
@@ -268,22 +270,25 @@ public class FinanceFlowMethodServiceImpl {
      */
     public Result changeTaskObject(Task task) {
         TaskObject taskObject = DozerUtils.copy(task, TaskObject.class);
-        ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-        if (processInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
-        if (StringUtils.isEmpty(processInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
-        FinanceOrderObject financeOrderObject = DozerUtils.copy(orderRepository.findOne(Long.valueOf(processInstance.getBusinessKey())), FinanceOrderObject.class);
-        if (financeOrderObject == null) return Result.error(EnumCommonError.Admin_System_Error);
-        taskObject.setFinanceId(financeOrderObject.getId());
-        taskObject.setApplyCompanyName(financeOrderObject.getApplyCompanyName());
-        taskObject.setApplyType(financeOrderObject.getApplyType());
-        taskObject.setApplyTypeName(financeOrderObject.getApplyTypeName());
-        taskObject.setFinancingAmount(financeOrderObject.getFinancingAmount());
-        taskObject.setSourceId(financeOrderObject.getSourceId());
-        taskObject.setRiskCompanyId(financeOrderObject.getRiskCompanyId());
-        if (!StringUtils.isEmpty(task.getAssignee())) {
-            UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
-            taskObject.setAssigneeName(user.getUsername());
-            taskObject.setAssigneeDepartment(user.getDepartment());
+        if (task != null) {
+            ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
+            if (processInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
+            if (StringUtils.isEmpty(processInstance.getBusinessKey()))
+                return Result.error(EnumCommonError.Admin_System_Error);
+            FinanceOrderObject financeOrderObject = DozerUtils.copy(orderRepository.findOne(Long.valueOf(processInstance.getBusinessKey())), FinanceOrderObject.class);
+            if (financeOrderObject == null) return Result.error(EnumCommonError.Admin_System_Error);
+            taskObject.setFinanceId(financeOrderObject.getId());
+            taskObject.setApplyCompanyName(financeOrderObject.getApplyCompanyName());
+            taskObject.setApplyType(financeOrderObject.getApplyType());
+            taskObject.setApplyTypeName(financeOrderObject.getApplyTypeName());
+            taskObject.setFinancingAmount(financeOrderObject.getFinancingAmount());
+            taskObject.setSourceId(financeOrderObject.getSourceId());
+            taskObject.setRiskCompanyId(financeOrderObject.getRiskCompanyId());
+            if (!StringUtils.isEmpty(task.getAssignee())) {
+                UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
+                taskObject.setAssigneeName(user.getUsername());
+                taskObject.setAssigneeDepartment(user.getDepartment());
+            }
         }
         return Result.success().setData(taskObject);
     }
