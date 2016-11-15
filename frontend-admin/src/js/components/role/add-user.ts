@@ -205,6 +205,7 @@ export class AddUserComponent {
         this.currentUser.phone      = '';
         this.currentUser.department = '';
         this.currentUser.groupIds   = [];
+        this.riskSelectedItem     = {name : null, id : -1};
         this.partSelectedItem     = {name : null};
         this.css.formActiveForRefresh = false;
         setTimeout(() => this.css.formActiveForRefresh = true, 0);

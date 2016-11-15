@@ -60,14 +60,19 @@ export class AuditTraderComponent {
 
 
     ngOnInit(){
-        this.getRiskLineList();
         this.activatedRoute.data.subscribe( data => {
             this.routeData = data;
             if (this.routeData.routeType === 'info') {
                 this.css.isReadOnly = true;
+            }else{
+                this.css.isReadOnly = false;
+                this.getRiskLineList();
             }
         });
-
+        this.sub = this.activatedRoute.params.subscribe(params => {
+            this.taskId = params['id'];
+            this.getTaskInfo(params['id']);
+        });
         this.getCurrentUser();
     }
 
@@ -89,10 +94,6 @@ export class AuditTraderComponent {
         this.riskService.getRiskSelectList().then((result)=> {
             if (result.success) {
                 this.riskLines = result.data;
-                this.sub = this.activatedRoute.params.subscribe(params => {
-                    this.taskId = params['id'];
-                    this.getTaskInfo(params['id']);
-                });
             }
         });
     }
@@ -105,14 +106,8 @@ export class AuditTraderComponent {
                 this.task.getOrderInfoById(this.currentTask.financeId, 'onlinetrader').then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
-                        this.riskLines.forEach(riskLine => {
-                            console.log(riskLine);
-                            if (this.currentOrder.riskCompanyId===riskLine.id) {
-                                this.riskSelectedItem.name = riskLine.name;
-                                this.riskSelectedItem.id = riskLine.id;
-                            }
-                        });
-                        console.log(this.riskSelectedItem);
+                        this.riskSelectedItem.id = result.data.riskCompanyId;
+                        this.riskSelectedItem.name = result.data.riskCompanyName;
                         if(this.currentOrder.expectDate===0){
                             this.currentOrder.expectDate=null;
                         }
