@@ -1,5 +1,6 @@
 package com.yimei.finance.service.admin.finance;
 
+import com.yimei.finance.entity.admin.company.Company;
 import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.company.CompanyRepository;
@@ -104,7 +105,8 @@ public class FinanceOrderServiceImpl {
         if (sessionCompanyId.longValue() == 0 || sessionCompanyId.longValue() == financeOrderObject.getRiskCompanyId().longValue()) {
             financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdType(id, attachmentType));
             if (financeOrderObject.getRiskCompanyId().longValue() != 0) {
-                financeOrderObject.setRiskCompanyName(companyRepository.findOne(financeOrderObject.getRiskCompanyId()).getName());
+                Company company = companyRepository.findOne(financeOrderObject.getRiskCompanyId());
+                if (company != null) financeOrderObject.setRiskCompanyName(company.getName());
             }
             return Result.success().setData(financeOrderObject);
         } else {
