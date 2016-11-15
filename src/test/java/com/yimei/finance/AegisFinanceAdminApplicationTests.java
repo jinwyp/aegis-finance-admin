@@ -3,12 +3,15 @@ package com.yimei.finance;
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
+import com.yimei.finance.representation.admin.finance.object.FinanceOrderObject;
 import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.service.tpl.JpaRollbackDemo;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.TaskService;
 import org.junit.Assert;
@@ -39,6 +42,8 @@ public class AegisFinanceAdminApplicationTests {
 	private AdminSession adminSession;
 	@Autowired
 	private TaskService taskService;
+	@Autowired
+	private HistoryService historyService;
 
 	@Test
 	public void test001() {
@@ -54,22 +59,15 @@ public class AegisFinanceAdminApplicationTests {
         List<String> keyList = identityService.getUserInfoKeys("14");
         System.out.println(" ------- " + keyList);
 
-        keyList.forEach(key -> {
-            System.out.println(" ---------------- " + key);
-            System.out.println(" ---------------- " + identityService.getUserInfo("14", key));
-        });
-
         System.out.println(" ------------------------------------- ");
         System.out.println(" ------------------------------------- ");
         System.out.println(" ------------------------------------- ");
-
-        System.out.println(" ------------------------------------ ");
-        System.out.println(" ------------------------------------ ");
-        System.out.println(" ------------------------------------ ");
 
 //		List<Attachment> attachmentList = taskService.getTaskAttachments("c24upstream");
 
-		taskService.createAttachment("ccc", "ccc", "ddd", "ccc", "fff", "ggg");
+
+		FinanceOrderObject financeOrder = (FinanceOrderObject) financeOrderService.findById(25L, EnumFinanceAttachment.OnlineTraderAuditAttachment, 0L).getData();
+		System.out.println(financeOrder.toString());
 
 
 	}

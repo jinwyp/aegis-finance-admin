@@ -162,11 +162,11 @@ public class SiteFinanceOrderServiceImpl {
         FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserIdOrCompanyId(id, sessionUserId, sessionCompanyId);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         FinanceOrderObject financeOrderObject = DozerUtils.copy(financeOrder, FinanceOrderObject.class);
-        financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(id, EnumFinanceAttachment.OnlineTraderAuditAttachment));
+        financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdType(id, EnumFinanceAttachment.OnlineTraderAuditAttachment));
         return Result.success().setData(financeOrderObject);
     }
 
-    public List<AttachmentObject> getAttachmentByFinanceIdTypeOnce(Long financeId, EnumFinanceAttachment attachmentType) {
+    public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, EnumFinanceAttachment attachmentType) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
         List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachmentType.type).orderByTaskCreateTime().desc().list();
         if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
@@ -176,6 +176,21 @@ public class SiteFinanceOrderServiceImpl {
             attachmentList.addAll(DozerUtils.copy(attachments, AttachmentObject.class));
         }
         return attachmentList;
+    }
+
+    public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, EnumFinanceAttachment attachment, String type) {
+        List<AttachmentObject> attachmentObjectList = new ArrayList<>();
+        List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).list();
+        if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        taskList.parallelStream().forEach(task -> {
+            List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
+            if (attachments != null && attachments.size() != 0) {
+                attachments.parallelStream().filter(a -> a.getType().equals(type)).forEach(a -> {
+                    attachmentObjectList.add(DozerUtils.copy(a, AttachmentObject.class));
+                });
+            }
+        });
+        return attachmentObjectList;
     }
 
     /**
@@ -279,14 +294,8 @@ public class SiteFinanceOrderServiceImpl {
         if (financeOrderRepository.findByIdAndUserIdOrCompanyId(financeId, sessionUserId, sessionCompanyId) == null)
             return Result.error(EnumAdminFinanceError.你没有权限查看此合同.toString());
         FinanceOrderContractAttachment orderContractAttachment = new FinanceOrderContractAttachment();
-        List<Attachment> attachmentList1 = taskService.getTaskAttachments("c" + financeId + EnumFinanceAttachment.Upstream_Contract_Attachment.type);
-        if (attachmentList1 != null && attachmentList1.size() != 0) {
-            orderContractAttachment.setAttachmentList1(DozerUtils.copy(attachmentList1, AttachmentObject.class));
-        }
-        List<Attachment> attachmentList2 = taskService.getTaskAttachments("c" + financeId + EnumFinanceAttachment.Downstream_Contract_Attachment.type);
-        if (attachmentList2 != null && attachmentList2.size() != 0) {
-            orderContractAttachment.setAttachmentList2(DozerUtils.copy(attachmentList2, AttachmentObject.class));
-        }
+        orderContractAttachment.setAttachmentList1(getAttachmentByFinanceIdType(financeId, EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.Upstream_Contract_Attachment.toString()));
+        orderContractAttachment.setAttachmentList2(getAttachmentByFinanceIdType(financeId, EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.Downstream_Contract_Attachment.toString()));
         return Result.success().setData(orderContractAttachment);
     }
 
@@ -300,8 +309,4 @@ public class SiteFinanceOrderServiceImpl {
         return financeOrderContractObject;
     }
 
-    public void downFinanceOrderContractByFinanceIdAndContractType(Long financeId, int type) {
-        FinanceOrderContract financeOrderContract = orderContractRepository.findByFinanceIdAndType(financeId, type);
-
-    }
 }

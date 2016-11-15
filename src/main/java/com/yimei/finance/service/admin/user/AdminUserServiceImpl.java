@@ -102,8 +102,8 @@ public class AdminUserServiceImpl {
     public Result addUser(UserObject user, UserObject sessionUser) {
         Result result = checkOperateGroupsAuthority(user.getGroupIds(), sessionUser.getId());
         if (!result.isSuccess()) return result;
-        if (identityService.createUserQuery().userFirstName(user.getUsername()).singleResult() != null)
-            return Result.error(EnumAdminUserError.此登录名已经存在.toString());
+        Result result0 = checkUsername(user.getUsername());
+        if (!result0.isSuccess()) return result;
         Result result1 = checkUserEmail(user.getEmail());
         if (!result1.isSuccess()) return result1;
         Result result2 = checkUserPhone(user.getPhone());
@@ -125,8 +125,12 @@ public class AdminUserServiceImpl {
         if (result3.isSuccess() && user.getCompanyId() != null && user.getCompanyId().longValue() != 0 && user.getCompanyId().longValue() != -1) {
             Company company = companyRepository.findOne(user.getCompanyId());
             if (company == null) return Result.error(EnumCommonError.Admin_System_Error);
-            List<UserObject> userObjectList = changeUserObjectSimple(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).list()).parallelStream().filter(u -> (u.getCompanyId().longValue() == user.getCompanyId().longValue() && u.getStatus().equals(EnumAdminUserStatus.Normal.toString()))).collect(Collectors.toList());
-            if (userObjectList != null && userObjectList.size() != 0) return Result.error(EnumAdminUserError.此风控线已经存在系统管理员.toString());
+            List<UserObject> userObjectList = changeUserObjectSimple(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).list());
+            if (userObjectList != null && userObjectList.size() != 0) {
+                userObjectList = userObjectList.parallelStream().filter(u -> (u.getCompanyId().longValue() == user.getCompanyId().longValue() && u.getStatus().equals(EnumAdminUserStatus.Normal.toString()))).collect(Collectors.toList());
+                if (userObjectList != null && userObjectList.size() != 0)
+                    return Result.error(EnumAdminUserError.此风控线已经存在系统管理员.toString());
+            }
             identityService.setUserInfo(newUser.getId(), "companyId", String.valueOf(company.getId()));
             identityService.setUserInfo(newUser.getId(), "companyName", company.getName());
         } else {
@@ -147,11 +151,10 @@ public class AdminUserServiceImpl {
         if (StringUtils.isEmpty(id)) return Result.error(EnumAdminUserError.用户id不能为空.toString());
         User oldUser = identityService.createUserQuery().userId(id).singleResult();
         if (oldUser == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
-        user.setCompanyId(Long.valueOf(identityService.getUserInfo(user.getId(), "companyId")));
-        user.setCompanyName(identityService.getUserInfo(user.getId(), "companyName"));
-        Result result = checkOperateUserAuthority(user, sessionUser);
+        UserObject oldUserObject = changeUserObject(oldUser);
+        Result result = checkOperateUserAuthority(oldUserObject, sessionUser);
         if (!result.isSuccess()) return result;
-        if (identityService.getUserInfo(id, "status").equals(EnumAdminUserStatus.Deleted.toString()))
+        if (oldUserObject.getStatus().equals(EnumAdminUserStatus.Deleted.toString()))
             return Result.error(EnumAdminUserError.此用户已删除.toString());
         Result result1 = checkUserEmail(user.getEmail(), id);
         if (!result1.isSuccess()) return result1;
@@ -238,7 +241,6 @@ public class AdminUserServiceImpl {
                 userList = identityService.createUserQuery().orderByUserId().desc().list();
             }
         }
-
         List<String> sessionUserGroupIdList = getUserGroupIdList(sessionUser.getId());
         if (sessionUserGroupIdList != null && sessionUserGroupIdList.size() != 0) {
             List<UserObject> userObjectList = changeUserObject(userList, sessionUser);
@@ -286,19 +288,21 @@ public class AdminUserServiceImpl {
      * 用户登陆
      */
     public Result loginMethod(UserLoginObject userLoginObject) {
-        User user = identityService.createUserQuery().userFirstName(userLoginObject.getUsername()).singleResult();
-        if (user != null) {
-            UserObject userObject = changeUserObject(user);
+        List<UserObject> userList = changeUserObject(identityService.createUserQuery().userFirstName(userLoginObject.getUsername()).list()).parallelStream().filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString())).collect(Collectors.toList());
+        if (userList == null || userList.size() == 0) {
+            return Result.error(401, EnumAdminUserError.该用户不存在或者已经被禁用.toString());
+        } else if (userList.size() == 1) {
+            UserObject userObject = userList.get(0);
             if (!userObject.getStatus().equals(EnumAdminUserStatus.Normal.toString()))
                 return Result.error(EnumAdminUserError.您的账号已被删除.toString());
-            if (identityService.checkPassword(user.getId(), securePassword(userLoginObject.getPassword()))) {
+            if (identityService.checkPassword(userObject.getId(), securePassword(userLoginObject.getPassword()))) {
                 loginRecordRepository.save(new UserLoginRecord(userObject.getId(), userObject.getUsername(), new Date()));
                 return Result.success().setData(userObject);
             } else {
                 return Result.error(401, EnumAdminUserError.用户名或者密码错误.toString());
             }
         } else {
-            return Result.error(401, EnumAdminUserError.该用户不存在或者已经被禁用.toString());
+            return Result.error(401, EnumCommonError.Admin_System_Error);
         }
     }
 
@@ -506,22 +510,24 @@ public class AdminUserServiceImpl {
             userObject.setOperateAuthority(checkOperateUserAuthority(userObject, sessionUser).isSuccess());
         }
         List<Group> groupList = identityService.createGroupQuery().groupMember(userObject.getId()).list();
-        userObject.setGroupList(DozerUtils.copy(groupList, GroupObject.class));
-        List<String> userGroupIdList = new ArrayList<>();
-        groupList.parallelStream().forEach(group -> {
-            userGroupIdList.add(group.getId());
-        });
-        userObject.setGroupIds(userGroupIdList);
-        if (userGroupIdList != null && userGroupIdList.size() != 0) {
-            if (userGroupIdList.contains(EnumSpecialGroup.SuperAdminGroup.id)) {
-                userObject.setLevel(1);
-            } else if (userGroupIdList.contains(EnumSpecialGroup.SystemAdminGroup.id)) {
-                userObject.setLevel(2);
+        if (groupList != null && groupList.size() != 0) {
+            userObject.setGroupList(DozerUtils.copy(groupList, GroupObject.class));
+            List<String> userGroupIdList = new ArrayList<>();
+            groupList.parallelStream().forEach(group -> {
+                userGroupIdList.add(group.getId());
+            });
+            userObject.setGroupIds(userGroupIdList);
+            if (userGroupIdList != null && userGroupIdList.size() != 0) {
+                if (userGroupIdList.contains(EnumSpecialGroup.SuperAdminGroup.id)) {
+                    userObject.setLevel(1);
+                } else if (userGroupIdList.contains(EnumSpecialGroup.SystemAdminGroup.id)) {
+                    userObject.setLevel(2);
+                } else {
+                    userObject.setLevel(100);
+                }
             } else {
                 userObject.setLevel(100);
             }
-        } else {
-            userObject.setLevel(100);
         }
         return userObject;
     }
@@ -546,6 +552,18 @@ public class AdminUserServiceImpl {
             if (user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && !StringUtils.isEmpty(user.getPhone()) && user.getPhone().equals(phone) && !user.getId().equals(userId))
                 return Result.error(EnumAdminUserError.此手机号已经存在.toString());
         }
+        return Result.success();
+    }
+
+    /**
+     * 检查登录名
+     */
+    public Result checkUsername(String username) {
+        if (StringUtils.isEmpty(username)) return Result.error(EnumAdminUserError.用户登录名不能为空.toString());
+        List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().userFirstName(username).list());
+        if (userObjectList == null || userObjectList.size() == 0) return Result.success();
+        userObjectList = userObjectList.parallelStream().filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString())).collect(Collectors.toList());
+        if (userObjectList != null && userObjectList.size() != 0) return Result.error(EnumAdminUserError.此登录名已经存在.toString());
         return Result.success();
     }
 
@@ -581,17 +599,21 @@ public class AdminUserServiceImpl {
 
     public void updateOldUserData(Company company) {
         List<Group> groupList = identityService.createGroupQuery().groupType(EnumSpecialGroup.SuperAdminGroup.type).list();
-        groupList.parallelStream().forEach(group -> {
-            identityService.createUserQuery().memberOfGroup(group.getId()).list().parallelStream().forEach(user -> {
-                changeSystemUserData(user);
+        if (groupList != null && groupList.size() != 0) {
+            groupList.parallelStream().forEach(group -> {
+                identityService.createUserQuery().memberOfGroup(group.getId()).list().parallelStream().forEach(user -> {
+                    changeSystemUserData(user);
+                });
             });
-        });
+        }
         groupList = identityService.createGroupQuery().groupType(EnumSpecialGroup.SystemAdminGroup.type).list();
-        groupList.parallelStream().forEach(group -> {
-            identityService.createUserQuery().memberOfGroup(group.getId()).list().parallelStream().forEach(user -> {
-                changeRiskCompanyUserData(user, company);
+        if (groupList != null && groupList.size() != 0) {
+            groupList.parallelStream().forEach(group -> {
+                identityService.createUserQuery().memberOfGroup(group.getId()).list().parallelStream().forEach(user -> {
+                    changeRiskCompanyUserData(user, company);
+                });
             });
-        });
+        }
     }
 
     void changeSystemUserData(User user) {

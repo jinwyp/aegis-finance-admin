@@ -1,5 +1,6 @@
 package com.yimei.finance.service.admin.finance;
 
+import com.yimei.finance.entity.admin.company.Company;
 import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.company.CompanyRepository;
@@ -54,9 +55,9 @@ public class FinanceOrderServiceImpl {
     @Autowired
     private CompanyRepository companyRepository;
 
-    public List<AttachmentObject> getAttachmentByFinanceIdTypeOnce(Long financeId, EnumFinanceAttachment attachmentType) {
+    public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, EnumFinanceAttachment attachment) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
-        List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachmentType.type).orderByTaskCreateTime().desc().list();
+        List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).orderByTaskCreateTime().desc().list();
         if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
         HistoricTaskInstance task = taskList.get(0);
         List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
@@ -66,30 +67,46 @@ public class FinanceOrderServiceImpl {
         return attachmentList;
     }
 
-    public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, List<EnumFinanceAttachment> typeList) {
-        List<AttachmentObject> attachmentList = new ArrayList<>();
-        for (EnumFinanceAttachment attachment : typeList) {
+    public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, List<EnumFinanceAttachment> attachmentList) {
+        List<AttachmentObject> attachmentObjectList = new ArrayList<>();
+        for (EnumFinanceAttachment attachment : attachmentList) {
             List<HistoricTaskInstance> tasks = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).list();
             for (HistoricTaskInstance t : tasks) {
                 List<Attachment> attachments = taskService.getTaskAttachments(t.getId());
                 if (attachments != null && attachments.size() != 0) {
-                    attachmentList.addAll(DozerUtils.copy(attachments, AttachmentObject.class));
+                    attachmentObjectList.addAll(DozerUtils.copy(attachments, AttachmentObject.class));
                 }
             }
         }
-        return attachmentList;
+        return attachmentObjectList;
+    }
+
+    public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, EnumFinanceAttachment attachment, String type) {
+        List<AttachmentObject> attachmentObjectList = new ArrayList<>();
+        List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).list();
+        if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        taskList.parallelStream().forEach(task -> {
+            List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
+            if (attachments != null && attachments.size() != 0) {
+                attachments.parallelStream().filter(a -> a.getType().equals(type)).forEach(a -> {
+                    attachmentObjectList.add(DozerUtils.copy(a, AttachmentObject.class));
+                });
+            }
+        });
+        return attachmentObjectList;
     }
 
     /**
      * 获取金融申请单详细
      */
-    public Result findById(Long id, EnumFinanceAttachment attachmentType, Long sessionCompanyId) {
+    public Result findById(Long id, EnumFinanceAttachment attachment, Long sessionCompanyId) {
         FinanceOrderObject financeOrderObject = DozerUtils.copy(financeOrderRepository.findOne(id), FinanceOrderObject.class);
         if (financeOrderObject == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         if (sessionCompanyId.longValue() == 0 || sessionCompanyId.longValue() == financeOrderObject.getRiskCompanyId().longValue()) {
-            financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(id, attachmentType));
-            if (financeOrderObject.getRiskCompanyId().longValue() != 0) {
-                financeOrderObject.setRiskCompanyName(companyRepository.findOne(financeOrderObject.getRiskCompanyId()).getName());
+            financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdType(id, attachment));
+            if (financeOrderObject.getRiskCompanyId() != null && financeOrderObject.getRiskCompanyId().longValue() != 0) {
+                Company company = companyRepository.findOne(financeOrderObject.getRiskCompanyId());
+                if (company != null) financeOrderObject.setRiskCompanyName(company.getName());
             }
             return Result.success().setData(financeOrderObject);
         } else {
@@ -104,7 +121,7 @@ public class FinanceOrderServiceImpl {
         if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
         FinanceOrderSalesmanInfoObject salesmanInfoObject = DozerUtils.copy(salesmanRepository.findByFinanceId(financeId), FinanceOrderSalesmanInfoObject.class);
         if (salesmanInfoObject != null) {
-            salesmanInfoObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(financeId, attachmentType));
+            salesmanInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, attachmentType));
         }
         return Result.success().setData(salesmanInfoObject);
     }
@@ -116,7 +133,7 @@ public class FinanceOrderServiceImpl {
         if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
         FinanceOrderInvestigatorInfoObject investigatorInfoObject = DozerUtils.copy(investigatorRepository.findByFinanceId(financeId), FinanceOrderInvestigatorInfoObject.class);
         if (investigatorInfoObject != null) {
-            investigatorInfoObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(financeId, attachmentType));
+            investigatorInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, attachmentType));
             investigatorInfoObject.setAttachmentList2(getAttachmentByFinanceIdType(financeId, typeList2));
         }
         return Result.success().setData(investigatorInfoObject);
@@ -129,7 +146,7 @@ public class FinanceOrderServiceImpl {
         if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
         FinanceOrderSupervisorInfoObject supervisorInfoObject = DozerUtils.copy(supervisorRepository.findByFinanceId(financeId), FinanceOrderSupervisorInfoObject.class);
         if (supervisorInfoObject != null) {
-            supervisorInfoObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(financeId, attachmentType));
+            supervisorInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, attachmentType));
             supervisorInfoObject.setAttachmentList2(getAttachmentByFinanceIdType(financeId, typeList2));
         }
         return Result.success().setData(supervisorInfoObject);
@@ -138,20 +155,14 @@ public class FinanceOrderServiceImpl {
     /**
      * 获取风控人员填写信息详细
      */
-    public Result findRiskManagerInfoByFinanceId(Long financeId, EnumFinanceAttachment attachmentType, List<EnumFinanceAttachment> typeList2, Long sessionCompanyId) {
+    public Result findRiskManagerInfoByFinanceId(Long financeId, EnumFinanceAttachment attachment, List<EnumFinanceAttachment> attachmentList, Long sessionCompanyId) {
         if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
         FinanceOrderRiskManagerInfoObject riskManagerInfoObject = DozerUtils.copy(riskRepository.findByFinanceId(financeId), FinanceOrderRiskManagerInfoObject.class);
         if (riskManagerInfoObject != null) {
-            riskManagerInfoObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(financeId, attachmentType));
-            riskManagerInfoObject.setAttachmentList2(getAttachmentByFinanceIdType(financeId, typeList2));
-            List<Attachment> attachmentList3 = taskService.getTaskAttachments("c" + financeId + EnumFinanceAttachment.Upstream_Contract_Attachment.type);
-            if (attachmentList3 != null && attachmentList3.size() != 0) {
-                riskManagerInfoObject.setAttachmentList3(DozerUtils.copy(attachmentList3, AttachmentObject.class));
-            }
-            List<Attachment> attachmentList4 = taskService.getTaskAttachments("c" + financeId + EnumFinanceAttachment.Downstream_Contract_Attachment.type);
-            if (attachmentList4 != null && attachmentList4.size() != 0) {
-                riskManagerInfoObject.setAttachmentList4(DozerUtils.copy(attachmentList4, AttachmentObject.class));
-            }
+            riskManagerInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, attachment, EnumFinanceAttachment.RiskManagerAuditAttachment.toString()));
+            riskManagerInfoObject.setAttachmentList2(getAttachmentByFinanceIdType(financeId, attachmentList));
+            riskManagerInfoObject.setAttachmentList3(getAttachmentByFinanceIdType(financeId, attachment, EnumFinanceAttachment.Upstream_Contract_Attachment.toString()));
+            riskManagerInfoObject.setAttachmentList4(getAttachmentByFinanceIdType(financeId, attachment, EnumFinanceAttachment.Downstream_Contract_Attachment.toString()));
         }
         return Result.success().setData(riskManagerInfoObject);
     }

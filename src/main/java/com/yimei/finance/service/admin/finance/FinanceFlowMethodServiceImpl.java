@@ -174,41 +174,36 @@ public class FinanceFlowMethodServiceImpl {
      * 添加附件方法
      */
     @Transactional
-    public void addAttachmentsMethod(List<AttachmentObject> attachmentList, String taskId, String processInstanceId, EnumFinanceAttachment type) {
+    public void addAttachmentsMethod(List<AttachmentObject> attachmentList, String taskId, String processInstanceId, EnumFinanceAttachment attachment) {
         List<Attachment> oldAttachmentList = taskService.getTaskAttachments(taskId);
         if (oldAttachmentList != null && oldAttachmentList.size() != 0) {
-            oldAttachmentList.parallelStream().forEach(attachment -> {
-                taskService.deleteAttachment(attachment.getId());
+            oldAttachmentList.parallelStream().forEach(a -> {
+                taskService.deleteAttachment(a.getId());
             });
         }
         if (attachmentList != null && attachmentList.size() != 0) {
             attachmentList.parallelStream().forEach(attachmentObject -> {
                 if (!StringUtils.isEmpty(attachmentObject.getName()) && !StringUtils.isEmpty(attachmentObject.getUrl())) {
-                    taskService.createAttachment(type.toString(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
+                    taskService.createAttachment(attachment.toString(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
                 }
             });
         }
     }
 
-    /**
-     * 添加附件方法
-     */
     @Transactional
-    public void addAttachmentsMethodSecond(List<AttachmentObject> attachmentList, String taskId, String processInstanceId, EnumFinanceAttachment type) {
+    public void addAttachmentsMethod(List<AttachmentObject> attachmentList, String taskId, String processInstanceId, EnumFinanceAttachment attachment, String type) {
         List<Attachment> oldAttachmentList = taskService.getTaskAttachments(taskId);
         if (oldAttachmentList != null && oldAttachmentList.size() != 0) {
-            oldAttachmentList.forEach(attachment -> {
-                if (attachment.getType().equals(EnumFinanceAttachment.Upstream_Contract_Attachment.toString()) || attachment.getType().equals(EnumFinanceAttachment.Downstream_Contract_Attachment.toString())) {
-                    taskService.deleteAttachment(attachment.getId());
-                }
+            oldAttachmentList.parallelStream().filter(a -> a.getType().equals(type)).forEach(a -> {
+                taskService.deleteAttachment(a.getId());
             });
         }
         if (attachmentList != null && attachmentList.size() != 0) {
-            for (AttachmentObject attachmentObject : attachmentList) {
+            attachmentList.parallelStream().forEach(attachmentObject -> {
                 if (!StringUtils.isEmpty(attachmentObject.getName()) && !StringUtils.isEmpty(attachmentObject.getUrl())) {
-                    taskService.createAttachment(type.toString(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
+                    taskService.createAttachment(attachment.toString(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
                 }
-            }
+            });
         }
     }
 
