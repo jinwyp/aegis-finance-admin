@@ -248,6 +248,7 @@ public class FinanceFlowMethodServiceImpl {
         taskObject.setApplyTypeName(financeOrderObject.getApplyTypeName());
         taskObject.setFinancingAmount(financeOrderObject.getFinancingAmount());
         taskObject.setSourceId(financeOrderObject.getSourceId());
+        taskObject.setRiskCompanyId(financeOrderObject.getRiskCompanyId());
         if (!StringUtils.isEmpty(task.getAssignee())) {
             UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
             taskObject.setAssigneeName(user.getUsername());
