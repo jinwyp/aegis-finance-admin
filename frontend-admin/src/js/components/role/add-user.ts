@@ -141,6 +141,12 @@ export class AddUserComponent {
         this.css.ajaxSuccessHidden     = true;
         this.currentUser.department = this.partSelectedItem.name;
         this.currentUser.companyId = this.riskSelectedItem.id;
+        if(this.currentUser.groupIds===null||this.currentUser.groupIds.length===0){
+            this.css.ajaxErrorHidden = false;
+            this.css.isSubmitted     = false;
+            this.errorMsg = '请选择用户所属角色';
+            return;
+        }
 
         if (this.css.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
