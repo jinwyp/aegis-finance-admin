@@ -281,9 +281,9 @@ public class AdminUserServiceImpl {
      */
     public List<UserObject> getUserByRiskCompanyId(Long companyId) {
         List<UserObject> userList = changeUserObject(identityService.createUserQuery().list());
-        userList = userList.parallelStream().filter(user -> (
+        userList = userList.parallelStream().filter(user -> 
                 user.getCompanyId().longValue() == companyId.longValue() && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
-        )).collect(Collectors.toList());
+        ).collect(Collectors.toList());
         return userList;
     }
 
