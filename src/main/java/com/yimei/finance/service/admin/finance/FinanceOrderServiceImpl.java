@@ -2,6 +2,7 @@ package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.entity.admin.finance.*;
 import com.yimei.finance.exception.BusinessException;
+import com.yimei.finance.repository.admin.company.CompanyRepository;
 import com.yimei.finance.repository.admin.finance.*;
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
@@ -50,6 +51,8 @@ public class FinanceOrderServiceImpl {
     private FinanceOrderContractRepository contractRepository;
     @Autowired
     private NumberServiceImpl numberService;
+    @Autowired
+    private CompanyRepository companyRepository;
 
     public List<AttachmentObject> getAttachmentByFinanceIdTypeOnce(Long financeId, EnumFinanceAttachment attachmentType) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
@@ -85,6 +88,9 @@ public class FinanceOrderServiceImpl {
         if (financeOrderObject == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         if (sessionCompanyId.longValue() == 0 || sessionCompanyId.longValue() == financeOrderObject.getRiskCompanyId().longValue()) {
             financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdTypeOnce(id, attachmentType));
+            if (financeOrderObject.getRiskCompanyId().longValue() != 0) {
+                financeOrderObject.setRiskCompanyName(companyRepository.findOne(financeOrderObject.getRiskCompanyId()).getName());
+            }
             return Result.success().setData(financeOrderObject);
         } else {
             return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());

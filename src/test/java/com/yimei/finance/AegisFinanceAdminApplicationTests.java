@@ -10,6 +10,7 @@ import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.service.tpl.JpaRollbackDemo;
 import org.activiti.engine.IdentityService;
+import org.activiti.engine.TaskService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -36,6 +37,8 @@ public class AegisFinanceAdminApplicationTests {
 	private FinanceOrderServiceImpl financeOrderService;
 	@Autowired
 	private AdminSession adminSession;
+	@Autowired
+	private TaskService taskService;
 
 	@Test
 	public void test001() {
@@ -63,6 +66,10 @@ public class AegisFinanceAdminApplicationTests {
         System.out.println(" ------------------------------------ ");
         System.out.println(" ------------------------------------ ");
         System.out.println(" ------------------------------------ ");
+
+//		List<Attachment> attachmentList = taskService.getTaskAttachments("c24upstream");
+
+		taskService.createAttachment("ccc", "ccc", "ddd", "ccc", "fff", "ggg");
 
 
 	}
