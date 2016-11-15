@@ -101,8 +101,8 @@
             <div class="table-label money-label">保证金：</div>
         </td>
         <td colspan="3">
-            <input type="text" maxlength="12" [(ngModel)]="contract.cashDeposit" (ngModelChange)="parserString($event)" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元</span>
-            <div class="money-zh">大写金额：{{moneyZh}}</div>
+            <input type="text" maxlength="12" [(ngModel)]="contract.cashDeposit" (ngModelChange)="setMoneyCN($event)" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元</span>
+            <div class="money-zh">大写金额：{{cashDepositCN}}</div>
         </td>
     </tr>
 

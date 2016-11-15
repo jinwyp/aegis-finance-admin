@@ -110,7 +110,7 @@ export class AuditRiskManagerComponent {
         this.css.isSubmitted = true;
         console.log(isAudit);
         console.log(this.currentOrder);
-        if (isAudit && (this.currentOrder.upstreamContractStatus === 0
+        if (isAudit && this.currentTask.applyType === 'MYD' && (this.currentOrder.upstreamContractStatus === 0
             || this.currentOrder.downstreamContractStatus === 0
             || this.currentOrder.upstreamContractStatus === null
             || this.currentOrder.downstreamContractStatus === null)) {
