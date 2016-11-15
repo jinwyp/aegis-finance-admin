@@ -238,6 +238,8 @@ export class AuditRiskManagerComponent {
     }
 
     previewContract(financeId : number,type : number){
+        //http://finance-local.yimei180.com:8002/finance/admin
+        console.log('/finance/'+financeId+'/contract/'+type+'/preview');
         window.open('http://finance-local.yimei180.com:8002/finance/admin/finance/'+financeId+'/contract/'+type+'/preview');
     }
 

@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Task, TaskService, TaskStatus } from '../../service/task';
 import { User, UserService } from '../../service/user';
-import {isNumber} from "@angular/core/testing/facade/lang";
 
 
 

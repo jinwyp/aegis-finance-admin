@@ -80,8 +80,8 @@ class Contract {
     coalAmount : number = 1;                                        //煤炭数量  
     coalType : string = 'aaa';                                          //煤炭品种/品类  
     quantityRemark : string = 'aaa';                                    //数量备注,备注说明  
-    CoalIndex_NCV : string = '1000';                                         //煤炭指标  
-    CoalIndex_RS : string = '5';                                         //煤炭指标  
+    coalIndex_NCV : string = '1000';                                         //煤炭指标  
+    coalIndex_RS : string = '5';                                         //煤炭指标  
     qualityRemark : string = 'aaa';                                     //质量备注/质量说明  
     quantityAcceptanceCriteria : string = 'aaa';                        //数量验收标准  
     qualityAcceptanceCriteria : string = 'aaa';                         //质量验收标准  
