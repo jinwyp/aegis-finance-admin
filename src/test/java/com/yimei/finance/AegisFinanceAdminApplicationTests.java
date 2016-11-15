@@ -9,6 +9,7 @@ import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import com.yimei.finance.service.tpl.JpaRollbackDemo;
+import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.TaskService;
 import org.junit.Assert;
@@ -39,6 +40,8 @@ public class AegisFinanceAdminApplicationTests {
 	private AdminSession adminSession;
 	@Autowired
 	private TaskService taskService;
+	@Autowired
+	private HistoryService historyService;
 
 	@Test
 	public void test001() {
@@ -54,11 +57,6 @@ public class AegisFinanceAdminApplicationTests {
         List<String> keyList = identityService.getUserInfoKeys("14");
         System.out.println(" ------- " + keyList);
 
-        keyList.forEach(key -> {
-            System.out.println(" ---------------- " + key);
-            System.out.println(" ---------------- " + identityService.getUserInfo("14", key));
-        });
-
         System.out.println(" ------------------------------------- ");
         System.out.println(" ------------------------------------- ");
         System.out.println(" ------------------------------------- ");
@@ -69,7 +67,10 @@ public class AegisFinanceAdminApplicationTests {
 
 //		List<Attachment> attachmentList = taskService.getTaskAttachments("c24upstream");
 
-		taskService.createAttachment("ccc", "ccc", "ddd", "ccc", "fff", "ggg");
+
+
+		taskService.createAttachment("cccc", "7565", "c24upstream", "ccc", "cccccc", "cccccc");
+		taskService.createAttachment("cccc", "10161", "c24upstream", "ccc", "cccccc", "cccccc");
 
 
 	}

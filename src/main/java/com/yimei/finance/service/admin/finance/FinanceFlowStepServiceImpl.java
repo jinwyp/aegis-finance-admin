@@ -1,15 +1,16 @@
 package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.entity.admin.finance.FinanceOrderRiskManagerInfo;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
-import com.yimei.finance.representation.common.file.AttachmentObject;
+import com.yimei.finance.repository.admin.finance.FinanceOrderRiskRepository;
 import com.yimei.finance.representation.admin.finance.enums.*;
 import com.yimei.finance.representation.admin.finance.object.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.representation.common.result.TaskMap;
-import net.sourceforge.pinyin4j.format.exception.BadHanyuPinyinOutputFormatCombination;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Task;
@@ -30,6 +31,8 @@ public class FinanceFlowStepServiceImpl {
     private FinanceOrderServiceImpl orderService;
     @Autowired
     private FinanceOrderRepository financeOrderRepository;
+    @Autowired
+    private FinanceOrderRiskRepository financeOrderRiskRepository;
 
     /**
      * 线上交易员审核
@@ -232,10 +235,14 @@ public class FinanceFlowStepServiceImpl {
         riskManagerInfo.setFinanceId(financeId);
         riskManagerInfo.setCreateManId(userId);
         riskManagerInfo.setCreateTime(new Date());
-        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment);
-        methodService.addAttachmentsMethodSecond(riskManagerInfo.getAttachmentList3(), "c" + financeId + EnumFinanceAttachment.Upstream_Contract_Attachment.type, task.getProcessInstanceId(), EnumFinanceAttachment.Upstream_Contract_Attachment);
-        methodService.addAttachmentsMethodSecond(riskManagerInfo.getAttachmentList4(), "c" + financeId + EnumFinanceAttachment.Downstream_Contract_Attachment.type, task.getProcessInstanceId(), EnumFinanceAttachment.Downstream_Contract_Attachment);
+        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.RiskManagerAuditAttachment.toString());
+        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList3(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.Upstream_Contract_Attachment.toString());
+        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList4(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Downstream_Contract_Attachment, EnumFinanceAttachment.Downstream_Contract_Attachment.toString());
         if (submit) {
+            FinanceOrderRiskManagerInfo financeOrderRiskManagerInfo = financeOrderRiskRepository.findByFinanceId(riskManagerInfo.getFinanceId());
+            if (financeOrderRiskManagerInfo == null) return Result.error(EnumAdminFinanceError.你还没有提交合同信息.toString());
+            if (financeOrderRiskManagerInfo.getUpstreamContractStatus() != 2) return Result.error(EnumAdminFinanceError.你还没有提交上游合同信息.toString());
+            if (financeOrderRiskManagerInfo.getDownstreamContractStatus() != 2) return Result.error(EnumAdminFinanceError.你还没有提交下游合同信息.toString());
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
             methodService.setTaskVariableMethod(task.getId(), EnumFinanceConditions.needSalesmanSupplyRiskManagerMaterial.toString(), taskMap.need);
             if (taskMap.need == 0) {

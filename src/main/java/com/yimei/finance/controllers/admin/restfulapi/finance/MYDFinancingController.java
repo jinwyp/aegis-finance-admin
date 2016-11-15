@@ -193,9 +193,6 @@ public class MYDFinancingController {
         Result result = checkMYDMethod(taskId);
         if (!result.isSuccess()) return result;
         CombineObject<Task, Long> object = (CombineObject<Task, Long>) result.getData();
-        if (submit) {
-
-        }
         return flowStepService.riskManagerAuditFinanceOrderMethod(adminSession.getUser().getId(), taskMap, riskManagerInfoObject, object.t, object.u, submit);
     }
 
