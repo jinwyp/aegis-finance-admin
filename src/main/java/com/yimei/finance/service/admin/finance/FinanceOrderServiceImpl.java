@@ -95,8 +95,16 @@ public class FinanceOrderServiceImpl {
 //                });
 //            }
 //        });
+        List<Attachment> attachmentList = new ArrayList<>();
+        for (HistoricTaskInstance task : taskList) {
+            List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
+            if (attachments != null) attachmentList.addAll(attachments);
+        }
+        attachmentList = attachmentList.parallelStream().filter(a -> a.getType().equals(type)).collect(Collectors.toList());
 
-        return DozerUtils.copy(taskList.parallelStream().map(task -> taskService.getTaskAttachments(task.getId()).parallelStream().filter(a -> a.getType().equals(type))).collect(Collectors.toList()), AttachmentObject.class);
+//        List<Attachment> attachmentList = taskList.parallelStream().map(task -> taskService.getTaskAttachments(task.getId()).parallelStream().filter(a -> a.getType().equals(type))).collect(Collector.of(Attachment)).collect(Collectors.toList());
+        if (attachmentList == null || attachmentList.size() == 0) return null;
+        return DozerUtils.copy(attachmentList, AttachmentObject.class);
     }
 
     /**
