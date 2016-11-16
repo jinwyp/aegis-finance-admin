@@ -31,7 +31,7 @@
                     <a [href]="'/finance/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
                 </div>
 
-                <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
+                <file-upload *ngIf="!css.isReadOnly" [btnText]="btnText" (onFinished)="finishedUpload($event)"></file-upload>
             </div>
         </div>
     </div>
