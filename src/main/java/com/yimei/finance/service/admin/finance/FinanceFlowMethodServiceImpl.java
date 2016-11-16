@@ -170,28 +170,8 @@ public class FinanceFlowMethodServiceImpl {
         return Result.error(EnumAdminFinanceError.你没有处理此金融单的权限.toString());
     }
 
-    /**
-     * 添加附件方法
-     */
     @Transactional
-    public void addAttachmentsMethod(List<AttachmentObject> attachmentList, String taskId, String processInstanceId, EnumFinanceAttachment attachment) {
-        List<Attachment> oldAttachmentList = taskService.getTaskAttachments(taskId);
-        if (oldAttachmentList != null && oldAttachmentList.size() != 0) {
-            oldAttachmentList.parallelStream().forEach(a -> {
-                taskService.deleteAttachment(a.getId());
-            });
-        }
-        if (attachmentList != null && attachmentList.size() != 0) {
-            attachmentList.parallelStream().forEach(attachmentObject -> {
-                if (!StringUtils.isEmpty(attachmentObject.getName()) && !StringUtils.isEmpty(attachmentObject.getUrl())) {
-                    taskService.createAttachment(attachment.toString(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
-                }
-            });
-        }
-    }
-
-    @Transactional
-    public void addAttachmentsMethod(List<AttachmentObject> attachmentList, String taskId, String processInstanceId, EnumFinanceAttachment attachment, String type) {
+    public void addAttachmentsMethod(List<AttachmentObject> attachmentList, String taskId, String processInstanceId, String type) {
         List<Attachment> oldAttachmentList = taskService.getTaskAttachments(taskId);
         if (oldAttachmentList != null && oldAttachmentList.size() != 0) {
             oldAttachmentList.parallelStream().filter(a -> a.getType().equals(type)).forEach(a -> {
@@ -201,7 +181,7 @@ public class FinanceFlowMethodServiceImpl {
         if (attachmentList != null && attachmentList.size() != 0) {
             attachmentList.parallelStream().forEach(attachmentObject -> {
                 if (!StringUtils.isEmpty(attachmentObject.getName()) && !StringUtils.isEmpty(attachmentObject.getUrl())) {
-                    taskService.createAttachment(attachment.toString(), taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
+                    taskService.createAttachment(type, taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
                 }
             });
         }

@@ -42,7 +42,7 @@ public class FinanceFlowStepServiceImpl {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.onlineTraderAudit.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
         orderService.updateFinanceOrderByOnlineTrader(userId, financeOrder);
-        methodService.addAttachmentsMethod(financeOrder.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.OnlineTraderAuditAttachment);
+        methodService.addAttachmentsMethod(financeOrder.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.OnlineTraderAuditAttachment.toString());
         if (submit) {
             if (taskMap.pass != 0 && taskMap.pass != 1) throw new BusinessException(EnumCommonError.Admin_System_Error);
             methodService.setTaskVariableMethod(task.getId(), EnumFinanceEventType.onlineTraderAudit.toString(), taskMap.pass);
@@ -67,7 +67,7 @@ public class FinanceFlowStepServiceImpl {
         salesmanInfo.setFinanceId(financeId);
         salesmanInfo.setCreateManId(userId);
         salesmanInfo.setCreateTime(new Date());
-        methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment);
+        methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment.toString());
         if (submit) {
             if (taskMap.pass != 0 && taskMap.pass != 1) throw new BusinessException(EnumCommonError.Admin_System_Error);
             methodService.setTaskVariableMethod(task.getId(), EnumFinanceEventType.salesmanAudit.toString(), taskMap.pass);
@@ -96,7 +96,7 @@ public class FinanceFlowStepServiceImpl {
     public Result salesmanSupplyInvestigationMaterialFinanceOrderMethod(String userId, List<AttachmentObject> attachmentList, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanSupplyInvestigationMaterial.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行业务员补充尽调员材料操作.toString());
-        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanSupplyAttachment_Investigator);
+        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanSupplyAttachment_Investigator.toString());
         taskService.complete(task.getId());
         Result result1 = orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
         if (!result1.isSuccess()) return result1;
@@ -119,7 +119,7 @@ public class FinanceFlowStepServiceImpl {
         investigatorInfo.setApplyCompanyName(financeOrder.getApplyCompanyName());
         investigatorInfo.setCreateManId(userId);
         investigatorInfo.setCreateTime(new Date());
-        methodService.addAttachmentsMethod(investigatorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorAuditAttachment);
+        methodService.addAttachmentsMethod(investigatorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorAuditAttachment.toString());
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
             methodService.setTaskVariableMethod(task.getId(), EnumFinanceConditions.needSalesmanSupplyInvestigationMaterial.toString(), taskMap.need);
@@ -157,7 +157,7 @@ public class FinanceFlowStepServiceImpl {
     public Result salesmanSupplySupervisionMaterialFinanceOrderMethod(String userId, List<AttachmentObject> attachmentList, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanSupplySupervisionMaterial.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行业务员补充监管员材料操作.toString());
-        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanSupplyAttachment_Supervisor);
+        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanSupplyAttachment_Supervisor.toString());
         taskService.complete(task.getId());
         Result result1 = orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
         if (!result1.isSuccess()) return result1;
@@ -177,7 +177,7 @@ public class FinanceFlowStepServiceImpl {
         supervisorInfo.setFinanceId(financeId);
         supervisorInfo.setCreateManId(userId);
         supervisorInfo.setCreateTime(new Date());
-        methodService.addAttachmentsMethod(supervisorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorAuditAttachment);
+        methodService.addAttachmentsMethod(supervisorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorAuditAttachment.toString());
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
             methodService.setTaskVariableMethod(task.getId(), EnumFinanceConditions.needSalesmanSupplySupervisionMaterial.toString(), taskMap.need);
@@ -215,7 +215,7 @@ public class FinanceFlowStepServiceImpl {
     public Result salesmanSupplyRiskMaterialFinanceOrderMethod(String userId, List<AttachmentObject> attachmentList, Task task, Long financeId) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.salesmanSupplyRiskManagerMaterial.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行业务员补充风控人员要求的材料操作.toString());
-        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanSupplyAttachment_RiskManager);
+        methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanSupplyAttachment_RiskManager.toString());
         taskService.complete(task.getId());
         Result result1 = orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
         if (!result1.isSuccess()) return result1;
@@ -235,9 +235,9 @@ public class FinanceFlowStepServiceImpl {
         riskManagerInfo.setFinanceId(financeId);
         riskManagerInfo.setCreateManId(userId);
         riskManagerInfo.setCreateTime(new Date());
-        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.RiskManagerAuditAttachment.toString());
-        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList3(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.Upstream_Contract_Attachment.toString());
-        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList4(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.Downstream_Contract_Attachment.toString());
+        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment.toString());
+        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList3(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Upstream_Contract_Attachment.toString());
+        methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList4(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Downstream_Contract_Attachment.toString());
         if (submit) {
             FinanceOrderRiskManagerInfo financeOrderRiskManagerInfo = financeOrderRiskRepository.findByFinanceId(riskManagerInfo.getFinanceId());
             if (financeOrderRiskManagerInfo == null) return Result.error(EnumAdminFinanceError.你还没有提交合同信息.toString());
