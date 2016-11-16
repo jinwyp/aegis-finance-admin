@@ -244,36 +244,37 @@ public class AdminUserServiceImpl {
                 userList = identityService.createUserQuery().orderByUserId().desc().list();
             }
         }
-        List<String> sessionUserGroupIdList = getUserGroupIdList(sessionUser.getId());
-        if (userList != null && userList.size() != 0 && sessionUserGroupIdList != null && sessionUserGroupIdList.size() != 0) {
-            List<UserObject> userObjectList = changeUserObject(userList, sessionUser);
-            if (sessionUserGroupIdList.contains(EnumSpecialGroup.SuperAdminGroup.id)) {
-                if (!StringUtils.isEmpty(userSearch.getName())) {
-                    userObjectList = userObjectList.parallelStream().filter(user ->
-                            user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName())
-                    ).collect(Collectors.toList());
+        if (userList != null && userList.size() != 0) {
+            List<String> sessionUserGroupIdList = getUserGroupIdList(sessionUser.getId());
+            if (sessionUserGroupIdList != null && sessionUserGroupIdList.size() != 0) {
+                List<UserObject> userObjectList = changeUserObject(userList, sessionUser);
+                if (sessionUserGroupIdList.contains(EnumSpecialGroup.SuperAdminGroup.id)) {
+                    if (!StringUtils.isEmpty(userSearch.getName())) {
+                        userObjectList = userObjectList.parallelStream().filter(user ->
+                                user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName())
+                        ).collect(Collectors.toList());
+                    } else {
+                        userObjectList = userObjectList.parallelStream().filter(user ->
+                                user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
+                        ).collect(Collectors.toList());
+                    }
                 } else {
-                    userObjectList = userObjectList.parallelStream().filter(user ->
-                            user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
-                    ).collect(Collectors.toList());
+                    if (!StringUtils.isEmpty(userSearch.getName())) {
+                        userObjectList = userObjectList.parallelStream().filter(user ->
+                                user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
+                        ).collect(Collectors.toList());
+                    } else {
+                        userObjectList = userObjectList.parallelStream().filter(user ->
+                                user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
+                        ).collect(Collectors.toList());
+                    }
                 }
-            } else {
-                if (!StringUtils.isEmpty(userSearch.getName())) {
-                    userObjectList = userObjectList.parallelStream().filter(user ->
-                            user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
-                    ).collect(Collectors.toList());
-                } else {
-                    userObjectList = userObjectList.parallelStream().filter(user ->
-                            user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue()
-                    ).collect(Collectors.toList());
-                }
+                page.setTotal(Long.valueOf(userObjectList.size()));
+                int toIndex = page.getPage() * page.getCount() < userObjectList.size() ? page.getPage() * page.getCount() : userObjectList.size();
+                return Result.success().setData(userObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
             }
-            page.setTotal(Long.valueOf(userObjectList.size()));
-            int toIndex = page.getPage() * page.getCount() < userObjectList.size() ? page.getPage() * page.getCount() : userObjectList.size();
-            return Result.success().setData(userObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
-        } else {
-            return Result.success().setData(null).setMeta(page);
         }
+        return Result.success().setData(null).setMeta(page);
     }
 
     /**
