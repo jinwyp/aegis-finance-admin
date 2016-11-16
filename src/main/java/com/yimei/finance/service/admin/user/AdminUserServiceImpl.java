@@ -336,9 +336,11 @@ public class AdminUserServiceImpl {
     public String findCompanyFirstAdminName(Long companyId) {
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).orderByUserId().desc().list());
         if (userObjectList == null || userObjectList.size() == 0) return null;
-        return userObjectList.parallelStream().filter(user -> (
+        List<String> userNameList = userObjectList.parallelStream().filter(user -> (
                 user.getCompanyId().longValue() == companyId.longValue() && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
-        )).limit(1).map(userObject -> userObject.getUsername()).toString();
+        )).map(userObject -> userObject.getUsername()).collect(Collectors.toList());
+        if (userNameList == null || userNameList.size() == 0) return null;
+        return userNameList.get(0);
     }
 
     /**
