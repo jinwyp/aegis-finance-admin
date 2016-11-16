@@ -26,7 +26,7 @@ export class AuditRiskManagerComponent {
 
     currentUserSession : User = new User();
 
-    isApprovedRadio : number;
+    isApprovedRadio : number = -1;
 
     css = {
         isSubmitted : false,
@@ -123,7 +123,7 @@ export class AuditRiskManagerComponent {
         let body : any = {
             t : {
                 pass : this.isApprovedRadio,
-                need : this.isApprovedRadio === 2 ? 1 : 0
+                need : this.isApprovedRadio === 2 ? 1 : -1
             },
             u : this.currentOrder
         };
@@ -238,9 +238,8 @@ export class AuditRiskManagerComponent {
     }
 
     previewContract(financeId : number,type : number){
-        //http://finance-local.yimei180.com:8002/finance/admin
-        console.log('/finance/'+financeId+'/contract/'+type+'/preview');
-        window.open('http://finance-local.yimei180.com:8002/finance/admin/finance/'+financeId+'/contract/'+type+'/preview');
+        // (click)="previewContract(currentOrder.id, 1)"
+        window.open('/finance/admin/finance/'+financeId+'/contract/'+type+'/preview');
     }
 
     editUp(financeId : number){

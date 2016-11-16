@@ -7,7 +7,7 @@
         <td width="140">
             <div class="table-label">合同编号：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.contractNo" disabled [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" class="contract-disabled" [(ngModel)]="contract.contractNo" disabled [ngModelOptions]="{standalone: true}"/></td>
         <td width="140">
             <div class="table-label">签订日期：</div>
         </td>
@@ -74,7 +74,7 @@
         <td>
             <div class="table-label">主要质量标准：</div>
         </td>
-        <td><span>热值：</span><input type="text" class="div-205" [(ngModel)]="contract.coalIndex_NCV" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;K</span></td>
+        <td><span>热值：</span><input type="text" class="div-195" [(ngModel)]="contract.coalIndex_NCV" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;kcal</span></td>
         <td>
             <div class="table-label">硫分：</div>
         </td>
