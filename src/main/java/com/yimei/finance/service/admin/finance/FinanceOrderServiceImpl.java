@@ -100,6 +100,7 @@ public class FinanceOrderServiceImpl {
             List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
             if (attachments != null) attachmentList.addAll(attachments);
         }
+
         attachmentList = attachmentList.parallelStream().filter(a -> a.getType().equals(type)).collect(Collectors.toList());
 
 //        List<Attachment> attachmentList = taskList.parallelStream().map(task -> taskService.getTaskAttachments(task.getId()).parallelStream().filter(a -> a.getType().equals(type))).collect(Collector.of(Attachment)).collect(Collectors.toList());

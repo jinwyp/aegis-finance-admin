@@ -372,10 +372,10 @@ public class AdminUserServiceImpl {
      * 获取一个用户 有权限操作的 组 list
      */
     public List<GroupObject> getCanOperateGroupList(String userId) {
-        List<GroupObject> groupObjectList = new ArrayList<>();
-        getCanOperateGroupIdList(userId).parallelStream().forEach(gid -> {
-            groupObjectList.add(groupService.changeGroupObject(identityService.createGroupQuery().groupId(gid).singleResult()));
-        });
+        List<GroupObject> groupObjectList = getCanOperateGroupIdList(userId)
+                .parallelStream()
+                .map(gid -> groupService.changeGroupObject(identityService.createGroupQuery().groupId(gid).singleResult()))
+                .collect(Collectors.toList());
         return groupObjectList;
     }
 
@@ -383,38 +383,35 @@ public class AdminUserServiceImpl {
      * 获取一个用户 有权限添加 用户的组id list
      */
     public List<String> getCanOperateGroupIdList(String userId) {
-        List<Group> groupList = new ArrayList<>();
         List<String> groupIds = getUserGroupIdList(userId);
-        List<String> sonGroupIds = new ArrayList<>();
         if (groupIds.contains(EnumSpecialGroup.SuperAdminGroup.id)) {
-            groupList = identityService.createGroupQuery().list();
-            groupList.parallelStream().forEach(group -> {
-                sonGroupIds.add(group.getId());
-            });
+            return identityService.createGroupQuery().list()
+                    .parallelStream()
+                    .map(group -> group.getId())
+                    .collect(Collectors.toList());
         } else if (groupIds.contains(EnumSpecialGroup.SystemAdminGroup.id)) {
-            groupList = identityService.createGroupQuery().groupType(EnumGroupType.Business_Company_Group.id).list();
-            groupList.parallelStream().forEach(group -> {
-                sonGroupIds.add(group.getId());
-            });
-            sonGroupIds.remove(EnumSpecialGroup.SystemAdminGroup.id);
+            return identityService.createGroupQuery().groupType(EnumGroupType.Business_Company_Group.id).list()
+                    .parallelStream()
+                    .filter(group -> !group.getId().equals(EnumSpecialGroup.SystemAdminGroup.id))
+                    .map(group -> group.getId())
+                    .collect(Collectors.toList());
         } else {
-            groupList = identityService.createGroupQuery().groupMember(userId).list();
-            groupList.parallelStream().filter(group -> EnumSpecialGroup.getSonGroup(group.getId()) != null).forEach(group -> {
-                sonGroupIds.add(EnumSpecialGroup.getSonGroup(group.getId()).id);
-            });
+            return identityService.createGroupQuery().groupMember(userId).list()
+                    .parallelStream()
+                    .filter(group -> EnumSpecialGroup.getSonGroup(group.getId()) != null)
+                    .map(group -> EnumSpecialGroup.getSonGroup(group.getId()).id)
+                    .collect(Collectors.toList());
         }
-        return sonGroupIds;
     }
 
     /**
      * 获取一个用户所有组id list
      */
     public List<String> getUserGroupIdList(String userId) {
-        List<String> groupIds = new ArrayList<>();
-        identityService.createGroupQuery().groupMember(userId).list().parallelStream().forEach(group -> {
-            groupIds.add(group.getId());
-        });
-        return groupIds;
+        return identityService.createGroupQuery().groupMember(userId).list()
+                .parallelStream()
+                .map(group -> group.getId())
+                .collect(Collectors.toList());
     }
 
     public Result checkOperateGroupsAuthority(List<String> groupIdList, String userId) {

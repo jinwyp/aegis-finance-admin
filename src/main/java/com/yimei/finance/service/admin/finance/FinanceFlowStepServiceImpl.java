@@ -239,10 +239,17 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList3(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Upstream_Contract_Attachment.toString());
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList4(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Downstream_Contract_Attachment.toString());
         if (submit) {
-            FinanceOrderRiskManagerInfo financeOrderRiskManagerInfo = financeOrderRiskRepository.findByFinanceId(riskManagerInfo.getFinanceId());
-            if (financeOrderRiskManagerInfo == null) return Result.error(EnumAdminFinanceError.你还没有提交合同信息.toString());
-            if (financeOrderRiskManagerInfo.getUpstreamContractStatus() != 2) return Result.error(EnumAdminFinanceError.你还没有提交上游合同信息.toString());
-            if (financeOrderRiskManagerInfo.getDownstreamContractStatus() != 2) return Result.error(EnumAdminFinanceError.你还没有提交下游合同信息.toString());
+            FinanceOrder financeOrder = financeOrderRepository.findOne(riskManagerInfo.getFinanceId());
+            if (financeOrder == null) return Result.error(EnumCommonError.Admin_System_Error);
+            if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
+                FinanceOrderRiskManagerInfo financeOrderRiskManagerInfo = financeOrderRiskRepository.findByFinanceId(riskManagerInfo.getFinanceId());
+                if (financeOrderRiskManagerInfo == null)
+                    return Result.error(EnumAdminFinanceError.你还没有提交合同信息.toString());
+                if (financeOrderRiskManagerInfo.getUpstreamContractStatus() != 2)
+                    return Result.error(EnumAdminFinanceError.你还没有提交上游合同信息.toString());
+                if (financeOrderRiskManagerInfo.getDownstreamContractStatus() != 2)
+                    return Result.error(EnumAdminFinanceError.你还没有提交下游合同信息.toString());
+            }
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
             methodService.setTaskVariableMethod(task.getId(), EnumFinanceConditions.needSalesmanSupplyRiskManagerMaterial.toString(), taskMap.need);
             if (taskMap.need == 0) {
