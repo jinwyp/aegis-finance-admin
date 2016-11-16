@@ -47,7 +47,8 @@ public class CompanyController {
             @ApiImplicitParam(name = "name", value = "风控线名称", required = false, dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "adminName", value = "风控线管理员名称", required = false, dataType = "String", paramType = "query")
     })
-    public Result findRiskOrganizationListMethod(RiskCompanySearch riskCompanySearch, Page page) {
+    public Result findRiskOrganizationListMethod(RiskCompanySearch riskCompanySearch,
+                                                 @ApiParam(name = "page", value = "分页参数", required = false) Page page) {
         return companyService.adminFindRiskCompanyList(riskCompanySearch, adminSession.getUser().getCompanyId(), page);
     }
 

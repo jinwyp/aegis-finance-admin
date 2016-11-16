@@ -245,7 +245,7 @@ public class AdminUserServiceImpl {
             }
         }
         List<String> sessionUserGroupIdList = getUserGroupIdList(sessionUser.getId());
-        if (sessionUserGroupIdList != null && sessionUserGroupIdList.size() != 0) {
+        if (userList != null && userList.size() != 0 && sessionUserGroupIdList != null && sessionUserGroupIdList.size() != 0) {
             List<UserObject> userObjectList = changeUserObject(userList, sessionUser);
             if (sessionUserGroupIdList.contains(EnumSpecialGroup.SuperAdminGroup.id)) {
                 if (!StringUtils.isEmpty(userSearch.getName())) {

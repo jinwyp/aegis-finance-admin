@@ -31,9 +31,8 @@ public class UserController {
             @ApiImplicitParam(name = "username", value = "用户账号", required = false, defaultValue = "", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "name", value = "用户姓名", required = false, defaultValue = "", dataType = "String", paramType = "query"),
             @ApiImplicitParam(name = "groupId", value = "组id名", required = false, defaultValue = "", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "page", value = "当前页数", required = false, defaultValue = "1", dataType = "int", paramType = "query")
     })
-    public Result getAllUsersMethod(AdminUserSearch userSearch, Page page) {
+    public Result getAllUsersMethod(AdminUserSearch userSearch, @ApiParam(name = "page", value = "分页参数", required = false) Page page) {
         return userService.getUserListBySelect(adminSession.getUser(), userSearch, page);
     }
 
@@ -47,14 +46,14 @@ public class UserController {
     @ApiOperation(value = "查询用户所在的组", notes = "查询某个用户所在的组", response = GroupObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
     @RequestMapping(value = "/{id}/groups", method = RequestMethod.GET)
-    public Result getUserGroupsMethod(@PathVariable("id") String id, Page page) {
+    public Result getUserGroupsMethod(@PathVariable("id") String id, @ApiParam(name = "page", value = "分页参数", required = false)Page page) {
         return userService.findUserGroupList(id, adminSession.getUser(), page);
     }
 
     @ApiOperation(value = "查询当前用户有权限操作的组列表", notes = "查询当前用户有权限操作的组列表", response = GroupObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     @RequestMapping(value = "/self/groups", method = RequestMethod.GET)
-    public Result getHaveRightGroupListMethod(Page page) {
+    public Result getHaveRightGroupListMethod(@ApiParam(name = "page", value = "分页参数", required = false)Page page) {
         return userService.findHaveRightGroupList(adminSession.getUser().getId(), page);
     }
 

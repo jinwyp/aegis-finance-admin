@@ -23,7 +23,7 @@ public class GroupController {
     @ApiOperation(value = "查询所有的用户组", notes = "查询所有用户组列表", response = GroupObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     @RequestMapping(method = RequestMethod.GET)
-    public Result getGroupListMethod(Page page) {
+    public Result getGroupListMethod(@ApiParam(name = "page", value = "分页参数", required = false) Page page) {
         return groupService.findAllGroupList(adminSession.getUser().getId(), page);
     }
 

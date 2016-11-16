@@ -6,10 +6,7 @@ import com.yimei.finance.representation.admin.activiti.TaskObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.finance.FinanceFlowMethodServiceImpl;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -35,21 +32,21 @@ public class UserCenterController {
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "个人待办任务列表", notes = "个人待办任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
-    public Result getPersonalTasksMethod(Page page) {
+    public Result getPersonalTasksMethod(@ApiParam(name = "page", value = "分页参数", required = false) Page page) {
         return financeFlowMethodService.findSelfTaskList(adminSession.getUser().getId(), adminSession.getUser().getCompanyId(), page);
     }
 
     @RequestMapping(value = "/unclaimed", method = RequestMethod.GET)
     @ApiOperation(value = "给分配管理员查看待领取任务列表", notes = "给线上交易员管理组, 业务员管理组, 尽调员管理组, 监管员管理组, 风控管理组, 查看待领取任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
-    public Result getPersonalWaitClaimTasksMethod(Page page) {
+    public Result getPersonalWaitClaimTasksMethod(@ApiParam(name = "page", value = "分页参数", required = false) Page page) {
         return financeFlowMethodService.findSelfWaitClaimTaskList(adminSession.getUser().getId(), adminSession.getUser().getCompanyId(), page);
     }
 
     @RequestMapping(value = "/history", method = RequestMethod.GET)
     @ApiOperation(value = "个人已处理任务列表", notes = "个人已处理任务列表", response = HistoryTaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
-    public Result getPersonalHistoryTasksMethod(Page page) {
+    public Result getPersonalHistoryTasksMethod(@ApiParam(name = "page", value = "分页参数", required = false) Page page) {
         return financeFlowMethodService.findSelfHistoryTaskList(adminSession.getUser().getId(), page);
     }
 
