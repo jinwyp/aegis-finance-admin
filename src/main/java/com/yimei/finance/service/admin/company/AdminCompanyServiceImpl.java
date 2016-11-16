@@ -114,7 +114,10 @@ public class AdminCompanyServiceImpl {
     public CompanyObject changeCompanyObject(Company company) {
         if (company == null) return null;
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
-        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> (user.getStatus().equals(EnumAdminUserStatus.Normal.toString()))).collect(Collectors.toList());
+        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list())
+                .parallelStream()
+                .filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString()))
+                .collect(Collectors.toList());
         List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
         if (roleList != null && roleList.size() != 0) {
             String roleName = "";
