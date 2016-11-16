@@ -3,7 +3,9 @@ package com.yimei.finance;
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
-import com.yimei.finance.representation.admin.finance.enums.EnumFinanceAttachment;
+import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
+import com.yimei.finance.representation.admin.user.enums.EnumAdminUserStatus;
+import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
@@ -17,6 +19,9 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -60,9 +65,29 @@ public class AegisFinanceAdminApplicationTests {
 
 //		List<Attachment> attachmentList = taskService.getTaskAttachments("c24upstream");
 
-		financeOrderService.getAttachmentByFinanceIdType(13L, EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.RiskManagerAuditAttachment.toString());
 
+		List<UserObject> userObjectList = userService.changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).orderByUserId().desc().list());
+		if (userObjectList != null && userObjectList.size() != 0) {
+			System.out.println(" ----------------------------- ");
+			System.out.println(" ----------------------------- ");
+			System.out.println(" ----------------------------- ");
+			System.out.println(" ----------------------------- ");
+			System.out.println(" ----------------------------- ");
+			System.out.println(" ----------------------------- ");
+			String userName = userObjectList.parallelStream()
+					.filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString()))
+					.map(userObject -> userObject.getUsername().toString())
+					.collect(Collectors.toList()).get(0);
+			System.out.println(userName);
+			System.out.println();
+			System.out.println();
+			System.out.println();
+			System.out.println();
+			System.out.println();
 
+			System.out.println();
+			System.out.println();
+		}
 
 
 	}
