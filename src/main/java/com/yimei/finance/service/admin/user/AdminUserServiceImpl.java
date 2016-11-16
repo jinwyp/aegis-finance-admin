@@ -317,16 +317,16 @@ public class AdminUserServiceImpl {
     public void addUserGroupMemberShip(String userId, List<String> groupIds) {
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
         if (groupList != null && groupList.size() != 0) {
-            groupList.stream().forEach(group -> {
+            groupList.parallelStream().forEach(group -> {
                 identityService.deleteMembership(userId, group.getId());
             });
         }
         if (groupIds != null && groupIds.size() != 0) {
-            for (String gid : groupIds) {
+            groupIds.stream().forEach(gid -> {
                 if (identityService.createGroupQuery().groupId(gid).singleResult() == null)
                     throw new BusinessException(EnumAdminGroupError.此组不存在.toString());
                 identityService.createMembership(userId, gid);
-            }
+            });
         }
     }
 
@@ -336,11 +336,9 @@ public class AdminUserServiceImpl {
     public String findCompanyFirstAdminName(Long companyId) {
         List<UserObject> userObjectList = changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).orderByUserId().desc().list());
         if (userObjectList == null || userObjectList.size() == 0) return null;
-        userObjectList = userObjectList.parallelStream().filter(user -> (
+        return userObjectList.parallelStream().filter(user -> (
                 user.getCompanyId().longValue() == companyId.longValue() && user.getStatus().equals(EnumAdminUserStatus.Normal.toString())
-        )).collect(Collectors.toList());
-        if (userObjectList == null || userObjectList.size() == 0) return null;
-        return userObjectList.get(0).getUsername();
+        )).limit(1).map(userObject -> userObject.getUsername()).toString();
     }
 
     /**
@@ -373,11 +371,10 @@ public class AdminUserServiceImpl {
      * 获取一个用户 有权限操作的 组 list
      */
     public List<GroupObject> getCanOperateGroupList(String userId) {
-        List<GroupObject> groupObjectList = getCanOperateGroupIdList(userId)
+        return getCanOperateGroupIdList(userId)
                 .parallelStream()
                 .map(gid -> groupService.changeGroupObject(identityService.createGroupQuery().groupId(gid).singleResult()))
                 .collect(Collectors.toList());
-        return groupObjectList;
     }
 
     /**
@@ -417,12 +414,8 @@ public class AdminUserServiceImpl {
 
     public Result checkOperateGroupsAuthority(List<String> groupIdList, String userId) {
         List<String> canGroupIds = getCanOperateGroupIdList(userId);
-        for (String gid : groupIdList) {
-            if (!canGroupIds.contains(gid)) {
-                EnumSpecialGroup group = EnumSpecialGroup.getGroupById(gid);
-                return Result.error("您没有操作 " + group.name + " 用户的权限");
-            }
-        }
+        groupIdList = groupIdList.parallelStream().filter(gid -> !canGroupIds.contains(gid)).collect(Collectors.toList());
+        if (groupIdList != null && groupIdList.size() != 0) return Result.error("你没有操作 " + EnumSpecialGroup.getGroupById(groupIdList.get(0)).name + "组 的权限!");
         return Result.success();
     }
 
