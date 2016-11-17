@@ -221,7 +221,7 @@ public class FinanceFlowMethodServiceImpl {
         List<Attachment> attachmentList = taskService.getTaskAttachments(historyTaskList.get(0).getId());
         if (attachmentList != null && attachmentList.size() != 0) {
             for (Attachment attachment : attachmentList) {
-                taskService.createAttachment(attachment.getType(), newTaskId, processInstanceId, attachment.getName(), attachment.getDescription(), attachment.getUrl());
+                taskService.createAttachment(attachment.getType(), newTaskId, attachment.getProcessInstanceId(), attachment.getName(), attachment.getDescription(), attachment.getUrl());
             }
         }
         return Result.success();

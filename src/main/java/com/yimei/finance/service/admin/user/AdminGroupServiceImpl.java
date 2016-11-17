@@ -3,6 +3,7 @@ package com.yimei.finance.service.admin.user;
 import com.yimei.finance.representation.admin.group.EnumAdminGroupError;
 import com.yimei.finance.representation.admin.group.GroupObject;
 import com.yimei.finance.representation.admin.user.enums.EnumAdminUserError;
+import com.yimei.finance.representation.admin.user.enums.EnumAdminUserStatus;
 import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.representation.common.result.Result;
@@ -141,7 +142,7 @@ public class AdminGroupServiceImpl {
         if (identityService.createGroupQuery().groupId(groupId).singleResult() == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
         List<UserObject> userList = userService.changeUserObject(identityService.createUserQuery().memberOfGroup(groupId).orderByUserId().desc().list());
         if (sessionUser.getCompanyId() != null) {
-            userList = userList.parallelStream().filter(user -> (user.getCompanyId() != null && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue())).collect(Collectors.toList());
+            userList = userList.parallelStream().filter(user -> (user.getCompanyId() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getCompanyId().longValue() == sessionUser.getCompanyId().longValue())).collect(Collectors.toList());
         }
         return Result.success().setData(userList);
     }

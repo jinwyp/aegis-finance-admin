@@ -69,4 +69,5 @@ public class UserObject implements Serializable {
         this.companyId = companyId;
     }
 
+
 }
