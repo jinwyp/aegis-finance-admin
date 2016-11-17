@@ -218,9 +218,9 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(attachmentList, task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanSupplyAttachment_RiskManager.toString());
         taskService.complete(task.getId());
         Result result1 = orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.Auditing, userId);
-        if (!result1.isSuccess()) return result1;
+        if (!result1.isSuccess()) throw new BusinessException(result1.getError().getMessage());
         Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString());
-        if (!result.isSuccess()) return result;
+        if (!result.isSuccess()) throw new BusinessException(result.getError().getMessage());
         Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
         String newTaskId = String.valueOf(result2.getData());
         return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.riskManagerAudit);

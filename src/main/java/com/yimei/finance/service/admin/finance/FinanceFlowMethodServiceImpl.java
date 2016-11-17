@@ -179,9 +179,9 @@ public class FinanceFlowMethodServiceImpl {
             });
         }
         if (attachmentList != null && attachmentList.size() != 0) {
-            attachmentList.parallelStream().forEach(attachmentObject -> {
-                if (!StringUtils.isEmpty(attachmentObject.getName()) && !StringUtils.isEmpty(attachmentObject.getUrl())) {
-                    taskService.createAttachment(type, taskId, processInstanceId, attachmentObject.getName(), attachmentObject.getDescription(), attachmentObject.getUrl());
+            attachmentList.parallelStream().forEach(a -> {
+                if (!StringUtils.isEmpty(a.getName()) && !StringUtils.isEmpty(a.getUrl())) {
+                    taskService.createAttachment(type, taskId, processInstanceId, a.getName(), a.getDescription(), a.getUrl());
                 }
             });
         }
@@ -220,9 +220,9 @@ public class FinanceFlowMethodServiceImpl {
         if (historyTaskList == null || historyTaskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
         List<Attachment> attachmentList = taskService.getTaskAttachments(historyTaskList.get(0).getId());
         if (attachmentList != null && attachmentList.size() != 0) {
-            for (Attachment attachment : attachmentList) {
-                taskService.createAttachment(attachment.getType(), newTaskId, attachment.getProcessInstanceId(), attachment.getName(), attachment.getDescription(), attachment.getUrl());
-            }
+            attachmentList.parallelStream().forEach(a -> {
+                taskService.createAttachment(a.getType(), newTaskId, a.getProcessInstanceId(), a.getName(), a.getDescription(), a.getUrl());
+            });
         }
         return Result.success();
     }
@@ -230,6 +230,7 @@ public class FinanceFlowMethodServiceImpl {
     /**
      * 获取 上一次完成该任务的 userId
      */
+    @Transactional
     public Result getLastCompleteTaskUserId(String processInstanceId, String financeEventType) {
         List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceId(processInstanceId).taskDefinitionKey(financeEventType).orderByTaskCreateTime().desc().list();
         if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);

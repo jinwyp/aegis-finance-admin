@@ -57,15 +57,20 @@ public class FinanceOrderServiceImpl {
     private CompanyRepository companyRepository;
 
     public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, EnumFinanceAttachment attachment) {
-        List<AttachmentObject> attachmentList = new ArrayList<>();
         List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).orderByTaskCreateTime().desc().list();
         if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
-        HistoricTaskInstance task = taskList.get(0);
-        List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
-        if (attachments != null && attachments.size() != 0) {
-            attachmentList.addAll(DozerUtils.copy(attachments, AttachmentObject.class));
-        }
-        return attachmentList;
+        List<Attachment> attachments = taskService.getTaskAttachments(taskList.get(0).getId());
+        if (attachments == null || attachments.size() == 0) return null;
+        return DozerUtils.copy(attachments, AttachmentObject.class);
+    }
+
+    public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, EnumFinanceAttachment attachment, String type) {
+        List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).orderByTaskCreateTime().desc().list();
+        if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        List<Attachment> attachmentList = taskService.getTaskAttachments(taskList.get(0).getId());
+        if (attachmentList == null || attachmentList.size() == 0) return null;
+        attachmentList = attachmentList.parallelStream().filter(a -> a.getType().equals(type)).collect(Collectors.toList());
+        return DozerUtils.copy(attachmentList, AttachmentObject.class);
     }
 
     public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, List<EnumFinanceAttachment> attachmentList) {
@@ -80,19 +85,6 @@ public class FinanceOrderServiceImpl {
             }
         }
         return attachmentObjectList;
-    }
-
-    public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, EnumFinanceAttachment attachment, String type) {
-        List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).list();
-        if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
-        List<Attachment> attachmentList = new ArrayList<>();
-        for (HistoricTaskInstance task : taskList) {
-            List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
-            if (attachments != null) attachmentList.addAll(attachments);
-        }
-        attachmentList = attachmentList.parallelStream().filter(a -> a.getType().equals(type)).collect(Collectors.toList());
-        if (attachmentList == null || attachmentList.size() == 0) return null;
-        return DozerUtils.copy(attachmentList, AttachmentObject.class);
     }
 
     /**
