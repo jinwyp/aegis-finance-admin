@@ -200,15 +200,12 @@ public class FinanceFlowMethodServiceImpl {
      */
     @Transactional
     public Result setAssignUserMethod(String processInstanceId, String financeEventType, String userId) {
-        List<Task> taskList = taskService.createTaskQuery().processInstanceId(processInstanceId).active().list();
-        for (Task task : taskList) {
-            if (task.getTaskDefinitionKey().equals(financeEventType)) {
-                taskService.setOwner(task.getId(), userId);
-                taskService.setAssignee(task.getId(), userId);
-                return Result.success().setData(task.getId());
-            }
-        }
-        throw new BusinessException(EnumCommonError.Admin_System_Error);
+        List<Task> taskList = taskService.createTaskQuery().processInstanceId(processInstanceId).active().taskDefinitionKey(financeEventType).list();
+        if (taskList == null || taskList.size() == 0 || taskList.size() > 1) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        taskService.setOwner(taskList.get(0).getId(), userId);
+        taskService.setAssignee(taskList.get(0).getId(), userId);
+        return Result.success().setData(taskList.get(0).getId());
+
     }
 
     /**
