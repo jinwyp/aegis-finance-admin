@@ -105,7 +105,7 @@ public class FinanceFlowStepServiceImpl {
         Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.investigatorAudit.toString(), String.valueOf(result.getData()));
         if (!result2.isSuccess()) return result2;
         String newTaskId = String.valueOf(result2.getData());
-        return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.investigatorAudit, EnumFinanceAttachment.InvestigatorAuditAttachment);
+        return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.investigatorAudit);
     }
 
     /**
@@ -165,7 +165,7 @@ public class FinanceFlowStepServiceImpl {
         if (!result.isSuccess()) return result;
         Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString(), String.valueOf(result.getData()));
         String newTaskId = String.valueOf(result2.getData());
-        return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.supervisorAudit, EnumFinanceAttachment.SupervisorAuditAttachment);
+        return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.supervisorAudit);
     }
 
     /**
@@ -223,7 +223,7 @@ public class FinanceFlowStepServiceImpl {
         if (!result.isSuccess()) return result;
         Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
         String newTaskId = String.valueOf(result2.getData());
-        return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.riskManagerAudit, EnumFinanceAttachment.RiskManagerAuditAttachment);
+        return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.riskManagerAudit);
     }
 
     /**

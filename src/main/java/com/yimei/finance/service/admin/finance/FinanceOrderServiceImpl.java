@@ -85,25 +85,12 @@ public class FinanceOrderServiceImpl {
     public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, EnumFinanceAttachment attachment, String type) {
         List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).list();
         if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
-//        taskList.parallelStream().forEach(task -> {
-//            List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
-//            if (attachments != null && attachments.size() != 0) {
-//                List<AttachmentObject> attachmentObjectList = attachments.parallelStream()
-//                        .filter(a -> a.getType().equals(type))
-//                        .map(a -> (DozerUtils.copy(a, AttachmentObject.class)))
-//                        .collect(Collectors.toList());
-//                });
-//            }
-//        });
         List<Attachment> attachmentList = new ArrayList<>();
         for (HistoricTaskInstance task : taskList) {
             List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
             if (attachments != null) attachmentList.addAll(attachments);
         }
-
         attachmentList = attachmentList.parallelStream().filter(a -> a.getType().equals(type)).collect(Collectors.toList());
-
-//        List<Attachment> attachmentList = taskList.parallelStream().map(task -> taskService.getTaskAttachments(task.getId()).parallelStream().filter(a -> a.getType().equals(type))).collect(Collector.of(Attachment)).collect(Collectors.toList());
         if (attachmentList == null || attachmentList.size() == 0) return null;
         return DozerUtils.copy(attachmentList, AttachmentObject.class);
     }
