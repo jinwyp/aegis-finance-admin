@@ -195,7 +195,7 @@ export class AuditInvestigatorComponent {
             "type": event.value.type,
             "processInstanceId": this.currentTask.processInstanceId,
             "taskId": this.currentTask.id
-        })
+        });
     }
 
     delAttachmentList1(file, isAttachmentList2 : boolean = false){

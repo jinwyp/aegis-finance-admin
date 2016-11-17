@@ -214,13 +214,14 @@ export class AuditTraderComponent {
 
 
     finishedUpload (event) {
+        if (!this.currentOrder.attachmentList1) {this.currentOrder.attachmentList1 = []}
         this.currentOrder.attachmentList1.push({
             "url": event.value.url,
             "name": event.value.name,
             "type": event.value.type,
             "processInstanceId": this.currentTask.processInstanceId,
             "taskId": this.currentTask.id
-        })
+        });
     }
 
     delAttachmentList1(file){
