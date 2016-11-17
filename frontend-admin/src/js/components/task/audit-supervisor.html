@@ -133,7 +133,7 @@
             </td>
         </tr>
 
-        <tr class="item-title" *ngIf="currentOrder.needSupplyMaterial==1">
+        <tr class="item-title" *ngIf="currentOrder.attachmentList2.length > 0">
             <td colspan="4"><span>业务员补充材料:<span *ngIf="currentOrder.attachmentList2.length < 1">无</span></span></td>
         </tr>
         <tr class="item-max" *ngIf="currentOrder.attachmentList2.length >0">
