@@ -238,7 +238,7 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment.toString());
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList3(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Upstream_Contract_Attachment.toString());
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList4(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Downstream_Contract_Attachment.toString());
-        if (submit) {
+        if (submit && taskMap.need == 0) {
             FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
             if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
                 FinanceOrderRiskManagerInfo financeOrderRiskManagerInfo = financeOrderRiskRepository.findByFinanceId(riskManagerInfo.getFinanceId());
