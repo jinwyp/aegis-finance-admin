@@ -208,7 +208,6 @@ public class FinanceFlowMethodServiceImpl {
         taskService.setOwner(taskList.get(0).getId(), userId);
         taskService.setAssignee(taskList.get(0).getId(), userId);
         return Result.success().setData(taskList.get(0).getId());
-
     }
 
     /**
@@ -220,7 +219,7 @@ public class FinanceFlowMethodServiceImpl {
         if (historyTaskList == null || historyTaskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
         List<Attachment> attachmentList = taskService.getTaskAttachments(historyTaskList.get(0).getId());
         if (attachmentList != null && attachmentList.size() != 0) {
-            attachmentList.stream().forEach(a -> {
+            attachmentList.parallelStream().forEach(a -> {
                 taskService.createAttachment(a.getType(), newTaskId, a.getProcessInstanceId(), a.getName(), a.getDescription(), a.getUrl());
             });
         }
