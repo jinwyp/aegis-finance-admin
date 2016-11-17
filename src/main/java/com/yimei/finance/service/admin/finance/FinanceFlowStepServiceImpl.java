@@ -164,6 +164,7 @@ public class FinanceFlowStepServiceImpl {
         Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString());
         if (!result.isSuccess()) return result;
         Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.supervisorAudit.toString(), String.valueOf(result.getData()));
+        if (!result2.isSuccess()) throw new BusinessException(EnumCommonError.Admin_System_Error);
         String newTaskId = String.valueOf(result2.getData());
         return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.supervisorAudit);
     }
@@ -222,6 +223,7 @@ public class FinanceFlowStepServiceImpl {
         Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString());
         if (!result.isSuccess()) throw new BusinessException(result.getError().getMessage());
         Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
+        if (!result2.isSuccess()) throw new BusinessException(EnumCommonError.Admin_System_Error);
         String newTaskId = String.valueOf(result2.getData());
         return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.riskManagerAudit);
     }
