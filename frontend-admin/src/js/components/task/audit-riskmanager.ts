@@ -107,7 +107,7 @@ export class AuditRiskManagerComponent {
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
-        if (isAudit && this.currentTask.applyType === 'MYD' && (this.currentOrder.upstreamContractStatus === 0
+        if (isAudit && this.isApprovedRadio ===1 && this.currentTask.applyType === 'MYD' && (this.currentOrder.upstreamContractStatus === 0
             || this.currentOrder.downstreamContractStatus === 0
             || this.currentOrder.upstreamContractStatus === null
             || this.currentOrder.downstreamContractStatus === null)) {
@@ -202,7 +202,6 @@ export class AuditRiskManagerComponent {
                 this.currentOrder.attachmentList2.splice(index, 1);
             }else {
                 this.currentOrder.attachmentList1.splice(index, 1);
-                console.log(this.currentOrder);
             }
         }
     }
