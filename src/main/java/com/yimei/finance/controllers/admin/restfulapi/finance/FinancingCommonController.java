@@ -107,6 +107,7 @@ public class FinancingCommonController {
     public Result getAllTasksByFinanceIdMethod(@PathVariable(value = "financeId") Long financeId) {
         FinanceOrder financeOrder = orderRepository.findOne(financeId);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
+        if (adminSession.getUser().getCompanyId().longValue() != 0 && financeOrder.getRiskCompanyId().longValue() != adminSession.getUser().getCompanyId()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
         return methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).orderByTaskCreateTime().asc().list());
     }
 
