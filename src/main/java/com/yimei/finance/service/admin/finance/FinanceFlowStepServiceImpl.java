@@ -221,8 +221,8 @@ public class FinanceFlowStepServiceImpl {
         if (!result1.isSuccess()) throw new BusinessException(result1.getError().getMessage());
         Result result = methodService.getLastCompleteTaskUserId(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString());
         if (!result.isSuccess()) throw new BusinessException(result.getError().getMessage());
-        Result result2 = methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
-        String newTaskId = String.valueOf(result2.getData());
+        methodService.setAssignUserMethod(task.getProcessInstanceId(), EnumFinanceEventType.riskManagerAudit.toString(), String.valueOf(result.getData()));
+        String newTaskId = String.valueOf(result.getData());
         return methodService.addAttachmentListToNewTask(task.getProcessInstanceId(), newTaskId, EnumFinanceEventType.riskManagerAudit);
     }
 

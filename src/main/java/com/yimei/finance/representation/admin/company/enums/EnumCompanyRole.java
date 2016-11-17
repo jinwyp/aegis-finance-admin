@@ -5,6 +5,7 @@ import java.util.List;
 
 public enum EnumCompanyRole {
     RiskManager_Organization(1, "风控线"),
+    CCCCCCCC(1, "CCC"),
     ;
 
     public int id;
