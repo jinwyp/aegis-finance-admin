@@ -97,7 +97,8 @@ public class AdminCompanyServiceImpl {
     public Result findById(Long id) {
         Company company = companyRepository.findOne(id);
         if (company == null) return Result.error(EnumCompanyError.对象不存在.toString());
-        if (company.getStatusId() == EnumCompanyStatus.Deleted.id) return Result.error(EnumCompanyError.已经被删除.toString());
+        if (company.getStatusId() == EnumCompanyStatus.Deleted.id)
+            return Result.error(EnumCompanyError.已经被删除.toString());
         CompanyObject companyObject = changeCompanyObject(company);
         return Result.success().setData(companyObject);
     }
@@ -114,20 +115,9 @@ public class AdminCompanyServiceImpl {
     public CompanyObject changeCompanyObject(Company company) {
         if (company == null) return null;
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
-        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list())
-                .parallelStream()
-                .filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString()))
-                .collect(Collectors.toList());
-        List<String> roleList = companyRoleRelationShipRepository.findRoleByCompanyId(company.getId());
-        if (roleList != null && roleList.size() != 0) {
-            String roleName = "";
-            for (String role : roleList) {
-                roleName += EnumCompanyRole.valueOf(role).name + " ";
-            }
-            companyObject.setRoleName(roleName);
-        }
+        List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list());
+        companyObject.setPersonNum(userObjectList.parallelStream().filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getCompanyId().longValue() == company.getId().longValue()).count());
         companyObject.setAdminName(userService.findCompanyFirstAdminName(company.getId()));
-        companyObject.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
         return companyObject;
     }
 
@@ -187,7 +177,8 @@ public class AdminCompanyServiceImpl {
         if (!result.isSuccess()) return result;
         Company company = companyRepository.findOne(id);
         if (company == null) return Result.error(EnumCompanyError.对象不存在.toString());
-        if (company.getStatusId() == EnumCompanyStatus.Deleted.id) return Result.error(EnumCompanyError.已经被删除.toString());
+        if (company.getStatusId() == EnumCompanyStatus.Deleted.id)
+            return Result.error(EnumCompanyError.已经被删除.toString());
         company.setStatusId(EnumCompanyStatus.Deleted.id);
         company.setStatus(EnumCompanyStatus.Deleted.toString());
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);

@@ -37,6 +37,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import javax.persistence.EntityManager;
@@ -75,6 +76,7 @@ public class SiteFinanceOrderServiceImpl {
     /**
      * 客户申请金融单
      */
+    @Transactional
     public Result customerApplyFinanceOrder(FinanceOrderObject financeOrderObject, User sessionUser) {
         FinanceOrder financeOrder = new FinanceOrder();
         financeOrder.setApplyType(financeOrderObject.getApplyType());

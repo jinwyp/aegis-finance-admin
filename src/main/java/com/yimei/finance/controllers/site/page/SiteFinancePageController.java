@@ -10,7 +10,6 @@ import com.yimei.finance.representation.admin.finance.object.FinanceOrderContrac
 import com.yimei.finance.representation.common.contract.ContractServiceImpl;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.service.common.file.PDF;
-import com.yimei.finance.service.site.finance.SiteFinanceOrderServiceImpl;
 import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -31,10 +30,8 @@ import java.net.URLEncoder;
 import java.util.Map;
 
 @Api(tags = {"site-page"})
-@Controller("financePageController")
+@Controller("siteFinancePageController")
 public class SiteFinancePageController {
-    @Autowired
-    private SiteFinanceOrderServiceImpl financeOrderService;
     @Autowired
     private FinanceOrderContractRepository financeOrderContractRepository;
     @Autowired
