@@ -11,97 +11,97 @@
         <td width="140">
             <div class="table-label">签订日期：</div>
         </td>
-        <td><my-date-picker  [options]="myDatePickerOptions" [selDate]="selectedDateInline" (dateChanged)="onDateChanged($event)"></my-date-picker></td>
+        <td><my-date-picker  [options]="myDatePickerOptions" [selDate]="selectedDateInline" required (dateChanged)="onDateChanged($event)"></my-date-picker></td>
     </tr>
     <tr>
         <td>
             <div class="table-label">签订地：</div>
         </td>
-        <td colspan="3"><input type="text" [(ngModel)]="contract.signPlace" [ngModelOptions]="{standalone: true}"/></td>
+        <td colspan="3"><input type="text" [(ngModel)]="contract.signPlace" required [ngModelOptions]="{standalone: true}"/></td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label">船名：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.shipName" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.shipName" required [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">船次：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.shipNo" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.shipNo" required [ngModelOptions]="{standalone: true}"/></td>
     </tr>
     <tr>
         <td>
             <div class="table-label">购货地点：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.purchasePlace" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.purchasePlace" required [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">煤炭吨数：</div>
         </td>
-        <td><input type="text" class="div-250" [(ngModel)]="contract.coalTon" [ngModelOptions]="{standalone: true}"/>&nbsp;&nbsp;吨</td>
+        <td><input type="text" class="div-250" [(ngModel)]="contract.coalTon" required [ngModelOptions]="{standalone: true}"/>&nbsp;&nbsp;吨</td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label">品种：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.coalType" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.coalType" required [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">数量：</div>
         </td>
-        <td><input type="text" class="div-250" [(ngModel)]="contract.coalAmount" [ngModelOptions]="{standalone: true}"/>&nbsp;&nbsp;吨</td>
+        <td><input type="text" class="div-250" [(ngModel)]="contract.coalAmount" required [ngModelOptions]="{standalone: true}"/>&nbsp;&nbsp;吨</td>
     </tr>
     <tr>
         <td>
             <div class="table-label textarea-label">备注说明：</div>
         </td>
-        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.quantityRemark" [ngModelOptions]="{standalone: true}"></textarea></td>
+        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.quantityRemark" required [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>
     <tr>
         <td>
             <div class="table-label">主要质量标准：</div>
         </td>
-        <td><span>热值：</span><input type="text" class="div-195" [(ngModel)]="contract.coalIndex_NCV" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;kcal</span></td>
+        <td><span>热值：</span><input type="text" class="div-170" required [(ngModel)]="contract.coalIndex_NCV" placeholder="热值为1-7500之间的整数" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;kcal/kg </span></td>
         <td>
             <div class="table-label">硫分：</div>
         </td>
-        <td><input type="text" class="div-250" [(ngModel)]="contract.coalIndex_RS" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;%</span></td>
+        <td><input type="text" class="div-250" required [(ngModel)]="contract.coalIndex_RS" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;%</span></td>
     </tr>
     <tr>
         <td>
             <div class="table-label textarea-label">其他质量标准：</div>
         </td>
-        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.qualityAcceptanceCriteria" [ngModelOptions]="{standalone: true}"></textarea></td>
+        <td colspan="3"><textarea rows="5" required [(ngModel)]="contract.qualityAcceptanceCriteria" [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label">交货地点：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.deliveryPlace" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.deliveryPlace" required [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">付款提货期限：</div>
         </td>
-        <td><input type="text" class="div-250" [(ngModel)]="contract.paymentPeriod" [ngModelOptions]="{standalone: true}"/>&nbsp;&nbsp;天</td>
+        <td><input type="text" class="div-250" [(ngModel)]="contract.paymentPeriod" required [ngModelOptions]="{standalone: true}"/>&nbsp;&nbsp;天</td>
     </tr>
     <tr>
         <td>
             <div class="table-label textarea-label">数量验收标准：</div>
         </td>
-        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.quantityAcceptanceCriteria" [ngModelOptions]="{standalone: true}"></textarea></td>
+        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.quantityAcceptanceCriteria" required [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>
     <tr>
         <td>
             <div class="table-label">最终结算价格：</div>
         </td>
-        <td colspan="3"><input type="text" [(ngModel)]="contract.settlementPrice" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元/吨(一票含税)</span></td>
+        <td colspan="3"><input type="text" [(ngModel)]="contract.settlementPrice" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元/吨(一票含税)</span></td>
     </tr>
     <tr>
         <td>
             <div class="table-label money-label">保证金：</div>
         </td>
         <td colspan="3">
-            <input type="text" maxlength="12" [(ngModel)]="contract.cashDeposit" (ngModelChange)="setMoneyCN($event)" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元</span>
+            <input type="text" maxlength="12" [(ngModel)]="contract.cashDeposit" required (ngModelChange)="setMoneyCN($event)" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元</span>
             <div class="money-zh">大写金额：{{cashDepositCN}}</div>
         </td>
     </tr>
@@ -110,61 +110,61 @@
         <td>
             <div class="table-label textarea-label">特别约定：</div>
         </td>
-        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.specialRemark" [ngModelOptions]="{standalone: true}"></textarea></td>
+        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.specialRemark" required [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label">合同附件份数：</div>
         </td>
-        <td colspan="3"><input type="text" [(ngModel)]="contract.attachmentNumber" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;份</span></td>
+        <td colspan="3"><input type="text" [(ngModel)]="contract.attachmentNumber" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;份</span></td>
     </tr>
     <tr>
         <td>
             <div class="table-label textarea-label">合同附件名称：</div>
         </td>
-        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.attachmentNames" [ngModelOptions]="{standalone: true}"></textarea></td>
+        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.attachmentNames" required [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label">卖方公司名称：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerCompanyName" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerCompanyName" required [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">卖方联系人：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerLinkmanName" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerLinkmanName" required [ngModelOptions]="{standalone: true}"/></td>
     </tr>
     <tr>
         <td>
             <div class="table-label">联系手机：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerLinkmanPhone" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerLinkmanPhone" required [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">联系邮箱：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerLinkmanEmail" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerLinkmanEmail" required [ngModelOptions]="{standalone: true}"/></td>
     </tr>
     <tr>
         <td>
             <div class="table-label">卖方公司地址：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerCompanyAddress" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerCompanyAddress" required [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">法定代表人：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerLegalPerson" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerLegalPerson" required [ngModelOptions]="{standalone: true}"/></td>
     </tr>
     <tr>
         <td>
             <div class="table-label">开户行：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerBankName" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerBankName" required [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">帐号：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerBankAccount" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerBankAccount" required [ngModelOptions]="{standalone: true}"/></td>
     </tr>
 
     <tr>
@@ -213,11 +213,18 @@
 
     <tr>
         <td colspan="4">
+            <div class="alert alert-success mt-50" [class.hidden]="css.ajaxSuccessHidden" role="alert" >保存成功!</div>
+            <div class="alert alert-danger mt-50" [class.hidden]="css.ajaxErrorHidden" role="alert" >{{errorMsg}}!</div>
+        </td>
+    </tr>
+
+    <tr>
+        <td colspan="4">
             <div class="btn-option">
                 <!--<span class="notice"><span class="notice-icon"></span>保存后，可以刷新预览页面查看保存后的内容。</span>-->
                 <button type="button" class="btn btn-default commit" (click)="save(0)" [disabled]="!contractForm.form.valid">保存</button>
                 <button type="submit" class="btn btn-default commit ml-40" [disabled]="!contractForm.form.valid">保存并提交</button>
-                <button type="button" class="btn btn-default cancel ml-40" (click)="goBack()" [disabled]="!contractForm.form.valid">返回</button>
+                <button type="button" class="btn btn-default cancel ml-40" (click)="goBack()">返回</button>
                 <!--<span class="btn cancel ml-40">关闭</span>-->
             </div>
         </td>

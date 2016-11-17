@@ -74,7 +74,7 @@
         <td>
             <div class="table-label">主要质量标准：</div>
         </td>
-        <td><span>热值：</span><input type="text" class="div-195" [(ngModel)]="contract.coalIndex_NCV" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;kcal</span></td>
+        <td><span>热值：</span><input type="text" class="div-170" [(ngModel)]="contract.coalIndex_NCV" required placeholder="热值为1-7500之间的整数" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;kcal/kg </span></td>
         <td>
             <div class="table-label">硫分：</div>
         </td>
@@ -242,6 +242,13 @@
         <td><input type="text" [(ngModel)]="contract.sellerBankAccount" required [ngModelOptions]="{standalone: true}"/></td>
     </tr>
 
+    <tr>
+        <td colspan="4">
+            <div class="alert alert-success mt-50" [class.hidden]="css.ajaxSuccessHidden" role="alert" >保存成功!</div>
+            <div class="alert alert-danger mt-50" [class.hidden]="css.ajaxErrorHidden" role="alert" >{{errorMsg}}!</div>
+        </td>
+    </tr>
+
 
     <tr>
         <td colspan="4">
@@ -249,7 +256,7 @@
                 <!--<span class="notice"><span class="notice-icon"></span>保存后，可以刷新预览页面查看保存后的内容。</span>-->
                 <button type="button" class="btn btn-default commit" (click)="save(0)" [disabled]="!contractForm.form.valid">保存</button>
                 <button type="submit" class="btn btn-default commit ml-40" [disabled]="!contractForm.form.valid">保存并提交</button>
-                <button type="button" class="btn btn-default cancel ml-40" (click)="goBack()" [disabled]="!contractForm.form.valid">返回</button>
+                <button type="button" class="btn btn-default cancel ml-40" (click)="goBack()">返回</button>
                 <!--<span class="btn cancel ml-40">关闭</span>-->
             </div>
         </td>

@@ -93,7 +93,6 @@ export class AuditRiskManagerComponent {
                 this.task.getOrderInfoById(this.currentTask.financeId, 'riskmanager').then((result)=>{
                     if (result.success && result.data){
                         this.currentOrder = result.data;
-                        console.log(this.currentOrder);
                     }else{
 
                     }
@@ -108,8 +107,6 @@ export class AuditRiskManagerComponent {
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
-        console.log(isAudit);
-        console.log(this.currentOrder);
         if (isAudit && this.currentTask.applyType === 'MYD' && (this.currentOrder.upstreamContractStatus === 0
             || this.currentOrder.downstreamContractStatus === 0
             || this.currentOrder.upstreamContractStatus === null
@@ -123,7 +120,7 @@ export class AuditRiskManagerComponent {
         let body : any = {
             t : {
                 pass : this.isApprovedRadio,
-                need : this.isApprovedRadio === 2 ? 1 : -1
+                need : this.isApprovedRadio === 2 ? 1 : 0
             },
             u : this.currentOrder
         };
@@ -141,7 +138,6 @@ export class AuditRiskManagerComponent {
             this.task.audit(this.taskId, this.currentTask.applyType, auditType, isAudit, body).then((result)=>{
                 if (result.success){
                     if(type===1){
-                        console.log(typeof this.currentOrder.financeId);
                         this.router.navigate(['/contractup/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId}]);
                     }else if(type===2){
                         this.router.navigate(['/contractdown/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId}]);
@@ -172,7 +168,7 @@ export class AuditRiskManagerComponent {
             "type": event.value.type,
             "processInstanceId": this.currentTask.processInstanceId,
             "taskId": this.currentTask.id
-        })
+        });
     }
 
     finishedUpload3 (event) {
@@ -183,7 +179,7 @@ export class AuditRiskManagerComponent {
             "type": event.value.type,
             "processInstanceId": this.currentTask.processInstanceId,
             "taskId": this.currentTask.id
-        })
+        });
     }
 
     finishedUpload4 (event) {
@@ -194,7 +190,7 @@ export class AuditRiskManagerComponent {
             "type": event.value.type,
             "processInstanceId": this.currentTask.processInstanceId,
             "taskId": this.currentTask.id
-        })
+        });
     }
 
     delAttachmentList1(file, isAttachmentList2 : boolean = false){
@@ -206,6 +202,7 @@ export class AuditRiskManagerComponent {
                 this.currentOrder.attachmentList2.splice(index, 1);
             }else {
                 this.currentOrder.attachmentList1.splice(index, 1);
+                console.log(this.currentOrder);
             }
         }
     }
@@ -235,19 +232,6 @@ export class AuditRiskManagerComponent {
 
     goBack() {
         this.location.back();
-    }
-
-    previewContract(financeId : number,type : number){
-        // (click)="previewContract(currentOrder.id, 1)"
-        window.open('/finance/admin/finance/'+financeId+'/contract/'+type+'/preview');
-    }
-
-    editUp(financeId : number){
-        this.router.navigate(['/contractup/edit',{financeId : financeId, taskId : this.taskId}]);
-    }
-
-    editDown(financeId : number){
-        this.router.navigate(['/contractdown', financeId, 'edit']);
     }
 
 }

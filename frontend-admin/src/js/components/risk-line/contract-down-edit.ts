@@ -38,6 +38,14 @@ export class ContractDownEditComponent {
     contract : Contract = new Contract();
 
 
+    errorMsg : string = '';
+    css = {
+        ajaxSuccessHidden : true,
+        ajaxErrorHidden : true,
+        isSubmitted : false
+    };
+
+
     private sub: Subscription;
 
     constructor(
@@ -65,18 +73,44 @@ export class ContractDownEditComponent {
     }
 
     save(type : number){
+        if(type === 1&&this.selectedDateInline.length===0){
+            this.errorMsg = '请选择合同签订时间';
+            this.css.ajaxErrorHidden = false;
+            return;
+        }
+        if(type === 1&&(this.contract.coalIndex_NCV<1||this.contract.coalIndex_NCV>7500)){
+            this.errorMsg = '热值为1-7500之间的整数';
+            this.css.ajaxErrorHidden = false;
+            return;
+        }
+        if(type === 1&&(this.contract.coalIndex_RS<0||this.contract.coalIndex_RS>=10)){
+            this.errorMsg = '硫分为0-10之间的值';
+            this.css.ajaxErrorHidden = false;
+            return;
+        }
+        if(type === 1&&!this.contractService.checkPhone(this.contract.buyerLinkmanPhone)){
+            this.errorMsg = '买家联系手机号码格式错误';
+            this.css.ajaxErrorHidden = false;
+            return;
+        }
+        if(type === 1&&(!this.contractService.checkEmail(this.contract.buyerLinkmanEmail))){
+            this.errorMsg = '买家邮箱格式错误';
+            this.css.ajaxErrorHidden = false;
+            return;
+        }
+        if(type === 1&&!this.contractService.checkPhone(this.contract.sellerLinkmanPhone)){
+            this.errorMsg = '卖家联系手机号码格式错误';
+            this.css.ajaxErrorHidden = false;
+            return;
+        }
+        if(type === 1&&(!this.contractService.checkEmail(this.contract.sellerLinkmanEmail))){
+            this.errorMsg = '卖家邮箱格式错误';
+            this.css.ajaxErrorHidden = false;
+            return;
+        }
+
         this.contract.signDate = this.selectedDateInline;
         this.contract.type = 2;
-        console.log(this.contract);
-        this.contractService.add(this.contract, this.taskId, type).then(result=>{
-            if(result.success){
-                this.goBack();
-            }
-        });
-    }
-
-    saveAndCommitContract(type : number){
-        this.contract.signDate = this.selectedDateInline;
         console.log(this.contract);
         this.contractService.add(this.contract, this.taskId, type).then(result=>{
             if(result.success){

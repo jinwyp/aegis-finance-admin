@@ -80,8 +80,8 @@ class Contract {
     coalAmount : number = 1;                                        //煤炭数量  
     coalType : string = 'aaa';                                          //煤炭品种/品类  
     quantityRemark : string = 'aaa';                                    //数量备注,备注说明  
-    coalIndex_NCV : string = '1000';                                         //煤炭指标  
-    coalIndex_RS : string = '5';                                         //煤炭指标  
+    coalIndex_NCV : any = 1000;                                         //煤炭指标  
+    coalIndex_RS : any = 5;                                         //煤炭指标  
     qualityRemark : string = 'aaa';                                     //质量备注/质量说明  
     quantityAcceptanceCriteria : string = 'aaa';                        //数量验收标准  
     qualityAcceptanceCriteria : string = 'aaa';                         //质量验收标准  
@@ -165,6 +165,24 @@ class ContractService {
             moneyStr = '金额格式错误';
         }
         return moneyStr;
+    }
+
+    checkPhone(phone : string){
+        phone = phone.replace(/\s+/g,"");
+        if(/^0?(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/.test(phone)){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    checkEmail(email : string){
+        email = email.replace(/\s+/g,"");
+        if(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(email)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }
