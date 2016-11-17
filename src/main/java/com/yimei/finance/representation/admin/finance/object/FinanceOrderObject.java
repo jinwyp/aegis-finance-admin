@@ -112,5 +112,8 @@ public class FinanceOrderObject extends BaseObject implements Serializable {
         return EnumFinanceOrderType.getName(EnumFinanceOrderType.valueOf(applyType));
     }
 
+    public FinanceOrderObject(String applyType) {
+        this.applyType = applyType;
+    }
 
 }
