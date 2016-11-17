@@ -18,7 +18,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 @ApiModel(description = "金融单-合同内容")
@@ -49,7 +49,11 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
 
     @DateTimeFormat(pattern = EnumCommonString.LocalDate_Pattern)
     @JsonFormat(pattern = EnumCommonString.LocalDate_Pattern, timezone = EnumCommonString.GMT_8)
-    private Date signDate;                                           //签订时间  
+    private LocalDate signDate;                                      //签订时间  
+
+    private Integer signDate_Year;
+    private Integer signDate_Month;
+    private Integer signDate_Day;
 
     @Size(min = 1, max = 100, message = "船名 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
     @NotBlank(message = "船名 不能为空", groups = {SubmitFinanceContract.class})
@@ -240,4 +244,18 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
         return EnumFinanceOrderType.getName(EnumFinanceOrderType.valueOf(financeType));
     }
 
+    public Integer getSignDate_Year() {
+        if (signDate != null) return signDate.getYear();
+        return null;
+    }
+
+    public Integer getSignDate_Month() {
+        if (signDate != null) return signDate.getMonthValue();
+        return null;
+    }
+
+    public Integer getSignDate_Day() {
+        if (signDate != null) return signDate.getDayOfMonth();
+        return null;
+    }
 }
