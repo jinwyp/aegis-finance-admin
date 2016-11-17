@@ -134,7 +134,7 @@ export class ContractUpEditComponent {
             money = '';
             this.contract.sellerReceiptMoney = '';
         }else{
-            money = this.contract.sellerReceiptPrice*this.contract.sellerReceiptAmount;
+            money = this.contractService.floatMul(this.contract.sellerReceiptPrice, this.contract.sellerReceiptAmount);
             this.contract.sellerReceiptMoney = money;
         }
         console.log(money);
