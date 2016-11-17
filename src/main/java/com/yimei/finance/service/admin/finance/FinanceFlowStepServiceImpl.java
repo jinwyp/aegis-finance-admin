@@ -267,6 +267,7 @@ public class FinanceFlowStepServiceImpl {
             } else if (taskMap.pass == 1) {
                 riskManagerInfo.setApproveStateId(EnumFinanceStatus.AuditPass.id);
                 riskManagerInfo.setApproveState(EnumFinanceStatus.AuditPass.name);
+                orderService.saveFinanceOrderRiskManagerInfo(userId, riskManagerInfo);
                 return orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditPass, userId);
             } else {
                 riskManagerInfo.setApproveStateId(EnumFinanceStatus.AuditNotPass.id);
