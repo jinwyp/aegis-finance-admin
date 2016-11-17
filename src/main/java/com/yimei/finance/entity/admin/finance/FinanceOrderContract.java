@@ -118,6 +118,9 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     @Column(name = "cash_deposit")
     private BigDecimal cashDeposit;                                  //保证金
 
+    @Column(name = "cash_deposit_capital")
+    private String cashDepositCapital;
+
     @Column(name = "seller_receipt_price")
     private BigDecimal sellerReceiptPrice;                           //卖家开票价格  
 
@@ -127,8 +130,14 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     @Column(name = "seller_receipt_money")
     private BigDecimal sellerReceiptMoney;                           //卖家开票金额  
 
+    @Column(name = "seller_receipt_money_capital")
+    public String sellerReceiptMoneyCapital;
+
     @Column(name = "buyer_settlement_money")
     private BigDecimal buyerSettlementMoney;                         //买家已经结清金额  
+
+    @Column(name = "buyer_settlement_money_capital")
+    public String buyerSettlementMoneyCapital;
 
     @Column(name = "special_remark")
     private String specialRemark;                                    //特别约定/特殊说明  
