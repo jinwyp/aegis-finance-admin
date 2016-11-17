@@ -37,11 +37,28 @@ export class UserListComponent {
     userId : string       = '';
     modalShowText : string       = '';
 
+    css = {
+        isAdminUser : false,
+    };
+
 
     ngOnInit() {
         this.pageObj = new Page();
         this.getUserList(this.pageObj.page);
         this.getGroupList();
+
+        this.user.getUserSessionObservable.subscribe(
+            result => {
+                if (result && result.success) {
+                    if(result.data.level==1){
+                        this.css.isAdminUser = true;
+                    }else{
+                        this.css.isAdminUser = false;
+                    }
+                }
+            },
+            error => console.error(error)
+        )
     }
 
 
