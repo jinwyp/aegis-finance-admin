@@ -114,9 +114,9 @@
             <td colspan="4">
                 <div class="contract">
                     <span class="word_icon"></span>《仓押上游采购合同》<span class="word_line"></span>
-                    <a class="a-padding" target="_blank" [href]="'/finance/admin/finance/'+currentOrder.id+'/contract/1/preview'">预览</a>
-                    <a *ngIf="currentOrder.upstreamContractStatus===2" class="a-padding a-line mr-20" (click)="audit(false, 1)">编辑(已完成)</a>
-                    <a *ngIf="currentOrder.upstreamContractStatus!==2" class="a-padding a-line mr-20" (click)="audit(false, 1)">编辑(未完成)</a>
+                    <a class="a-padding a-line" target="_blank" [href]="'/finance/admin/finance/'+currentOrder.id+'/contract/1/preview'">预览</a>
+                    <a *ngIf="currentOrder.upstreamContractStatus===2" class="a-padding mr-20" [class.a-line]="!css.isReadOnly" (click)="audit(false, 1)">编辑(已完成)</a>
+                    <a *ngIf="currentOrder.upstreamContractStatus!==2" class="a-padding mr-20" [class.a-line]="!css.isReadOnly" (click)="audit(false, 1)">编辑(未完成)</a>
                     <file-upload *ngIf="!css.isReadOnly" [btnText]="btnText2" (onFinished)="finishedUpload3($event)"></file-upload>
                     <!--<a class="a-padding">+&nbsp;添加附件</a>-->
                 </div>
@@ -129,9 +129,9 @@
                 </div>
                 <div class="contract">
                     <span class="word_icon"></span>《仓押下游采购合同》<span class="word_line"></span>
-                    <a class="a-padding" target="_blank" [href]="'/finance/admin/finance/'+currentOrder.id+'/contract/2/preview'">预览</a>
-                    <a *ngIf="currentOrder.downstreamContractStatus===2" class="a-padding a-line mr-20" (click)="audit(false, 2)">编辑(已完成)</a>
-                    <a *ngIf="currentOrder.downstreamContractStatus!==2" class="a-padding a-line mr-20" (click)="audit(false, 2)">编辑(未完成)</a>
+                    <a class="a-padding a-line" target="_blank" [href]="'/finance/admin/finance/'+currentOrder.id+'/contract/2/preview'">预览</a>
+                    <a *ngIf="currentOrder.downstreamContractStatus===2" class="a-padding mr-20" [class.a-line]="!css.isReadOnly" (click)="audit(false, 2)">编辑(已完成)</a>
+                    <a *ngIf="currentOrder.downstreamContractStatus!==2" class="a-padding mr-20" [class.a-line]="!css.isReadOnly" (click)="audit(false, 2)">编辑(未完成)</a>
                     <file-upload *ngIf="!css.isReadOnly" [btnText]="btnText2" (onFinished)="finishedUpload4($event)"></file-upload>
                     <!--<a class="a-padding">+&nbsp;添加附件</a>-->
                 </div>
