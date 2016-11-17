@@ -240,7 +240,7 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList4(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Downstream_Contract_Attachment.toString());
         if (submit) {
             FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
-            if (financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
+            if (taskMap.need == 0 && financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
                 FinanceOrderRiskManagerInfo financeOrderRiskManagerInfo = financeOrderRiskRepository.findByFinanceId(riskManagerInfo.getFinanceId());
                 if (financeOrderRiskManagerInfo == null)
                     return Result.error(EnumAdminFinanceError.你还没有提交合同信息.toString());
