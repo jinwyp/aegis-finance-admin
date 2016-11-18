@@ -68,7 +68,11 @@ public class CodeUtils {
                     throw new BusinessException(EnumCommonError.Admin_System_Error);
                 }
             } else {
-                pinyinName += Character.toString(nameChar[i]);
+                if (upper) {
+                    pinyinName += Character.toString(nameChar[i]).toUpperCase();
+                } else {
+                    pinyinName += Character.toString(nameChar[i]).toLowerCase();
+                }
             }
         }
         return pinyinName;
