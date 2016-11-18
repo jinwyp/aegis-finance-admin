@@ -107,54 +107,62 @@ export class AuditRiskManagerComponent {
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
-        if (isAudit && this.isApprovedRadio ===1 && this.currentTask.applyType === 'MYD' && (this.currentOrder.upstreamContractStatus === 0
-            || this.currentOrder.downstreamContractStatus === 0
-            || this.currentOrder.upstreamContractStatus === null
-            || this.currentOrder.downstreamContractStatus === null)) {
-            this.css.ajaxErrorHidden = false;
-            this.errorMsg            = '请编辑合同信息';
-            this.css.isSubmitted     = false;
-            return;
-        }
+        if(this.css.isReadOnly){
+            if(type===1){
+                this.router.navigate(['/contractup/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId}]);
+            }else if(type===2){
+                this.router.navigate(['/contractdown/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId}]);
+            }
+        }else{
+            if (isAudit && this.isApprovedRadio ===1 && this.currentTask.applyType === 'MYD' && (this.currentOrder.upstreamContractStatus === 0
+                || this.currentOrder.downstreamContractStatus === 0
+                || this.currentOrder.upstreamContractStatus === null
+                || this.currentOrder.downstreamContractStatus === null)) {
+                this.css.ajaxErrorHidden = false;
+                this.errorMsg            = '请编辑合同信息';
+                this.css.isSubmitted     = false;
+                return;
+            }
 
-        let body : any = {
-            t : {
-                pass : this.isApprovedRadio,
-                need : this.isApprovedRadio === 2 ? 1 : 0
-            },
-            u : this.currentOrder
-        };
+            let body : any = {
+                t : {
+                    pass : this.isApprovedRadio,
+                    need : this.isApprovedRadio === 2 ? 1 : 0
+                },
+                u : this.currentOrder
+            };
 
-        if (this.isApprovedRadio === 2) {
-            this.currentOrder.needSupplyMaterial = 1;
-            body.t.pass = 0;
-        }
+            if (this.isApprovedRadio === 2) {
+                this.currentOrder.needSupplyMaterial = 1;
+                body.t.pass = 0;
+            }
 
 
-        let auditType : string = '';
-        if (this.currentTask.taskDefinitionKey === TaskStatus.riskManagerAudit) auditType = 'riskmanager'; // 风控人员审核
+            let auditType : string = '';
+            if (this.currentTask.taskDefinitionKey === TaskStatus.riskManagerAudit) auditType = 'riskmanager'; // 风控人员审核
 
-        if (this.currentTask.taskDefinitionKey && auditType) {
-            this.task.audit(this.taskId, this.currentTask.applyType, auditType, isAudit, body).then((result)=>{
-                if (result.success){
-                    if(type===1){
-                        this.router.navigate(['/contractup/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId}]);
-                    }else if(type===2){
-                        this.router.navigate(['/contractdown/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId}]);
-                    }else{
-                        if(!isAudit){
-                            this.css.isSubmitted = false;
+            if (this.currentTask.taskDefinitionKey && auditType) {
+                this.task.audit(this.taskId, this.currentTask.applyType, auditType, isAudit, body).then((result)=>{
+                    if (result.success){
+                        if(type===1){
+                            this.router.navigate(['/contractup/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId}]);
+                        }else if(type===2){
+                            this.router.navigate(['/contractdown/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId}]);
+                        }else{
+                            if(!isAudit){
+                                this.css.isSubmitted = false;
+                            }
+                            this.css.ajaxSuccessHidden=false;
+                            setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
                         }
-                        this.css.ajaxSuccessHidden=false;
-                        setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
+                    }else{
+                        this.css.isSubmitted = false;
+                        this.css.ajaxErrorHidden=false;
+                        this.errorMsg = result.error.message;
                     }
-                }else{
-                    this.css.isSubmitted = false;
-                    this.css.ajaxErrorHidden=false;
-                    this.errorMsg = result.error.message;
-                }
 
-            });
+                });
+            }
         }
 
     }

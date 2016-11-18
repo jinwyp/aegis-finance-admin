@@ -30,7 +30,8 @@ export class ContractDownEditComponent {
         height: '31px',
         width: '200px',
         inline: false,
-        disableUntil: {year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+1, day: this.currentDate.getDate()-1},
+        // disableUntil: {year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+1, day: this.currentDate.getDate()-1},
+        disableUntil: {year: 1900, month: 1, day: 1},
         selectionTxtFontSize: '14px'
     };
 
