@@ -82,7 +82,7 @@ public class AegisFinanceApplication {
 				}
 				final Company finalCompany = company;
 				userService.updateOldUserData(finalCompany);
-				List<FinanceOrder> financeOrderList = financeOrderRepository.findByCreateTimeBeforeAndApproveStateIdNot(java.sql.Date.valueOf("2016-11-05"), EnumFinanceStatus.WaitForAudit.id);
+				List<FinanceOrder> financeOrderList = financeOrderRepository.findByCreateTimeBeforeAndApproveStateIdNot(java.sql.Date.valueOf("2016-11-19"), EnumFinanceStatus.WaitForAudit.id);
 				financeOrderList.parallelStream().forEach(financeOrder -> {
 					if (financeOrder.getRiskCompanyId() == null) {
 						financeOrder.setRiskCompanyId(finalCompany.getId());

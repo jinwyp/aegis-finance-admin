@@ -7,7 +7,7 @@ import com.yimei.finance.repository.admin.finance.FinanceOrderContractRepository
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceContractType;
 import com.yimei.finance.representation.admin.finance.object.FinanceOrderContractObject;
-import com.yimei.finance.representation.common.contract.ContractServiceImpl;
+import com.yimei.finance.service.common.contract.ContractServiceImpl;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.service.common.file.PDF;
 import com.yimei.finance.utils.DozerUtils;

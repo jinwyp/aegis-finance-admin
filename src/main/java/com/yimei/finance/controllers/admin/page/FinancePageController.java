@@ -5,7 +5,7 @@ import com.yimei.finance.entity.admin.finance.FinanceOrderContract;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.repository.admin.finance.FinanceOrderContractRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceContractType;
-import com.yimei.finance.representation.common.contract.ContractServiceImpl;
+import com.yimei.finance.service.common.contract.ContractServiceImpl;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.service.common.file.PDF;
 import io.swagger.annotations.Api;

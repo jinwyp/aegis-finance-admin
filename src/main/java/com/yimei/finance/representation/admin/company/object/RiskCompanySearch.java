@@ -8,6 +8,6 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 public class RiskCompanySearch implements Serializable {
-    private String name;                                     //风控线名称
-    private String adminName;                                //风控线管理员账号
+    private String name;                                 //风控线名称
+    private String adminName;                            //风控线管理员账号
 }
