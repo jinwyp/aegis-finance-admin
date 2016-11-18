@@ -7,7 +7,7 @@
         <td width="140">
             <div class="table-label">合同编号：</div>
         </td>
-        <td><input type="text" readonly [(ngModel)]="contract.contractNo" [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" class="contract-disabled" disabled [(ngModel)]="contract.contractNo" [ngModelOptions]="{standalone: true}"/></td>
         <td width="140">
             <div class="table-label">签订日期：</div>
         </td>
@@ -71,7 +71,7 @@
         <td>
             <div class="table-label textarea-label">其他质量标准：</div>
         </td>
-        <td colspan="3"><textarea rows="5" required [(ngModel)]="contract.qualityAcceptanceCriteria" [ngModelOptions]="{standalone: true}"></textarea></td>
+        <td colspan="3"><textarea rows="5" required [(ngModel)]="contract.qualityRemark" [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>
 
     <tr>
@@ -86,7 +86,7 @@
     </tr>
     <tr>
         <td>
-            <div class="table-label textarea-label">数量验收标准：</div>
+            <div class="table-label textarea-label">数量验收依据：</div>
         </td>
         <td colspan="3"><textarea rows="5" [(ngModel)]="contract.quantityAcceptanceCriteria" required [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>

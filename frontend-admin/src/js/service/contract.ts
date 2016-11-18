@@ -70,6 +70,9 @@ class Contract {
     type : number = 1;                                              //合同类型
     signPlace : string = 'aaa';                                         //签订地点  
     signDate : string = 'aaa';                                          //签订时间  
+    signDate_Year : any = '2016';
+    signDate_Month : any = '11';
+    signDate_Day : any = '21';
     shipName : string = 'aaa';                                          //船名  
     shipNo : string = 'aaa';                                            //船次  
     purchasePlace : string = 'aaa';                                     //购货地点  
@@ -89,6 +92,7 @@ class Contract {
     settlementPrice : number = 1;                                   //结算价格  
     settlementAmount : number = 1;                                  //结算吨数
     cashDeposit : number = 1;                                       //保证金
+    cashDepositCapital : string ='壹万元整'
     sellerReceiptPrice : any = 1;                                //卖家开票价格  
     sellerReceiptAmount : any = 1;                               //卖家开票吨数  
     sellerReceiptMoney : any = 1;                                //卖家开票金额  

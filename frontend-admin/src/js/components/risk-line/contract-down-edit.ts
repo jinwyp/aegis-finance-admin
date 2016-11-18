@@ -74,7 +74,7 @@ export class ContractDownEditComponent {
     }
 
     save(type : number){
-        if(this.selectedDateInline.length===0){
+        if(type === 1 && this.selectedDateInline.length===0){
             this.errorMsg = '请选择合同签订时间';
             this.css.ajaxErrorHidden = false;
             return;

@@ -87,7 +87,7 @@
                                     <div class="borderBottom">
                                         <span><em></em>《{{annex.name}}》</span>
                                         <p class="floatR">
-                                            <a ms-attr="{href:annex.url}"><em></em>下载</a>
+                                            <a ms-attr="{href:'/finance/files?url='+annex.url}"><em></em>下载</a>
                                         </p>
                                     </div>
                                 </li>
@@ -100,7 +100,7 @@
                                     <div class="borderBottom">
                                         <span><em></em>《{{annex.name}}》</span>
                                         <p class="floatR">
-                                            <a ms-attr="{href:annex.url}"><em></em>下载</a>
+                                            <a ms-attr="{href:'/finance/files?url='+annex.url}"><em></em>下载</a>
                                         </p>
                                     </div>
                                 </li>
