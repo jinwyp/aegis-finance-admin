@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="/static/admin/libs/bootstrap/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/page/login.css"/>
 
-    <link type="image/x-icon" rel="shortcut icon" href="/static/admin/css/images/favicon.ico" />
+    <link type="image/x-icon" rel="shortcut icon" href="/static/admin/css/images/favicon.png" />
     
 </head>
 <body>
