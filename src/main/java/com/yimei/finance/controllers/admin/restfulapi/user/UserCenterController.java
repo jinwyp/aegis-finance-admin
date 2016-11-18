@@ -33,7 +33,7 @@ public class UserCenterController {
     @ApiOperation(value = "个人待办任务列表", notes = "个人待办任务列表", response = TaskObject.class, responseContainer = "List")
     @ApiImplicitParam(name = "page", value = "当前页数", required = false, dataType = "int", paramType = "query")
     public Result getPersonalTasksMethod(@ApiParam(name = "page", value = "分页参数", required = false) Page page) {
-        return financeFlowMethodService.findSelfTaskList(adminSession.getUser().getId(), adminSession.getUser().getCompanyId(), page);
+        return financeFlowMethodService.findSelfTaskList(adminSession.getUser().getId(), page);
     }
 
     @RequestMapping(value = "/unclaimed", method = RequestMethod.GET)

@@ -14,7 +14,7 @@
     <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/main.css"/>
     <link rel="stylesheet" type="text/css" href="/static/admin/css/stylesheets/page/adminHome.css"/>
 
-    <link type="image/x-icon" rel="shortcut icon" href="/static/admin/css/images/favicon.ico" />
+    <link type="image/x-icon" rel="shortcut icon" href="/static/admin/css/images/favicon.png" />
 
     <base href="/finance/admin/home">
 </head>

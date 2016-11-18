@@ -28,6 +28,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     private Long id;                                                 //主键  
     private Long financeId;                                          //金融单id  
     private String contractNo;                                       //合同编号  
+    private String upstreamContractNo;                               //上游合同编号
 
     private String financeType;                                      //金融单类型
     private String financeTypeName;                                  //金融单类型名称
@@ -110,6 +111,9 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     @Size(min = 1, max = 5000, message = "数量验收标准 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
     @NotBlank(message = "数量验收标准 不能为空", groups = {SubmitFinanceContract.class})
     private String quantityAcceptanceCriteria;                       //数量验收标准  
+
+    @Digits(integer = 9, fraction = 2, message = "数量验收依据 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
+    private BigDecimal quantityAcceptanceBasis;                      //数量验收依据-吨数
 
     @Size(min = 1, max = 5000, message = "质量验收标准 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
     @NotBlank(message = "质量验收标准 不能为空", groups = {SubmitFinanceContract.class})
@@ -231,6 +235,9 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     @Size(min = 1, max = 100, message = "卖家银行账号 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
     @NotBlank(message = "卖家银行账号 不能为空", groups = {SubmitFinanceContract.class})
     private String sellerBankAccount;                                //卖家银行账号    
+
+    @Size(min = 1, max = 100, message = "供应商 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
+    private String coalSupplier;                                     //供应商
 
     List<AttachmentObject> attachmentList;                           //合同附件list
 
