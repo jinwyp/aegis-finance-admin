@@ -3,6 +3,7 @@ package com.yimei.finance;
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
+import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
@@ -17,6 +18,10 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
+
+import java.util.List;
+import java.util.function.BinaryOperator;
+import java.util.stream.Collectors;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -51,9 +56,16 @@ public class AegisFinanceAdminApplicationTests {
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 
-//		(int a, int b) -> {
-//			return a + b;
-//		};
+		BinaryOperator<Long> add = (x, y) -> x + y;
+
+		List<UserObject> userObjectList = userService.changeUserObject(identityService.createUserQuery().orderByUserId().desc().list());
+
+		 userObjectList.stream().filter(user -> {
+//			System.out.println(" ------- " + user != null ? user.toString() : "null");
+//			System.out.println(user != null ? user.getEmail() : "null" + " ----- ");
+			return user != null ? user.getCompanyId().longValue() == 0 : false;
+		}).collect(Collectors.toList()).forEach(user -> System.out.println(user.toString()));
+
 
 //		Page page = new Page();
 //		UserObject user = new UserObject("14", 0L);
