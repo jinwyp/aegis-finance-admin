@@ -36,8 +36,8 @@ export class ContractDownEditComponent {
     };
 
     taskId : string = '';
+    status : number = 0;
     contract : Contract = new Contract();
-
 
     errorMsg : string = '';
     css = {
@@ -60,6 +60,7 @@ export class ContractDownEditComponent {
             console.log(param);
             this.contract.financeId = param['financeId'];
             this.taskId = param['taskId'];
+            this.status = param['status'];
             this.getContractById(param['financeId']);
         });
     }
@@ -69,6 +70,7 @@ export class ContractDownEditComponent {
             if(result.success&&result.data){
                 this.contract = result.data;
                 this.selectedDateInline = result.data.signDate||'';
+                this.contract.cashDepositCapital = result.data.cashDepositCapital || this.contractService.parserMoneyCN(this.contract.cashDeposit);
             }
         });
     }
@@ -112,6 +114,7 @@ export class ContractDownEditComponent {
 
         this.contract.signDate = this.selectedDateInline;
         this.contract.type = 2;
+        this.contract.cashDepositCapital = this.contractService.parserMoneyCN(this.contract.cashDeposit);
         console.log(this.contract);
         this.contractService.add(this.contract, this.taskId, type).then(result=>{
             if(result.success){
@@ -126,10 +129,8 @@ export class ContractDownEditComponent {
         this.selectedDateInline = event.formatted;
     }
 
-    cashDepositCN = '';
-
     setMoneyCN(money){
-        this.cashDepositCN=this.contractService.parserMoneyCN(money);
+        this.contract.cashDepositCapital=this.contractService.parserMoneyCN(money);
     }
 
     goBack(){
