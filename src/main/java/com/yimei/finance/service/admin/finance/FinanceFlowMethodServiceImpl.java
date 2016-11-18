@@ -37,6 +37,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 @Service("financeFlowMethodService")
 public class FinanceFlowMethodServiceImpl {
@@ -69,30 +70,29 @@ public class FinanceFlowMethodServiceImpl {
     /**
      * 查看个人待办任务列表
      */
-    public Result findSelfTaskList(String sessionUserId, Long sessionCompanyId, Page page) {
+    public Result findSelfTaskList(String sessionUserId, Page page) {
+        List<TaskObject> taskObjectList = new ArrayList<>();
         page.setTotal(taskService.createTaskQuery().taskAssignee(sessionUserId).active().count());
+        if (page.getTotal() == 0) return Result.success().setData(taskObjectList);
         Long toIndex = page.getPage() * page.getCount() < page.getTotal() ? page.getPage() * page.getCount() : page.getTotal();
         List<Task> taskList = taskService.createTaskQuery().taskAssignee(sessionUserId).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().listPage(page.getOffset(), Math.toIntExact(toIndex));
-        Result result = changeTaskObject(taskList, sessionCompanyId);
-        if (!result.isSuccess()) return result;
-        return Result.success().setData(result.getData()).setMeta(page);
+        taskObjectList = changeTaskObject(taskList);
+        return Result.success().setData(taskObjectList).setMeta(page);
     }
 
     /**
      * 查看个人待领取任务列表
      */
     public Result findSelfWaitClaimTaskList(String sessionUserId, Long sessionCompanyId, Page page) {
+        List<TaskObject> taskObjectList = new ArrayList<>();
         List<String> groupIds = userService.getUserGroupIdList(sessionUserId);
-        if (groupIds != null && groupIds.size() != 0) {
-            List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
-            Result result = changeTaskObject(taskList, sessionCompanyId);
-            if (!result.isSuccess()) return result;
-            List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
-            page.setTotal(Long.valueOf(taskObjectList.size()));
-            int toIndex = page.getPage() * page.getCount() < taskObjectList.size() ? page.getPage() * page.getCount() : taskObjectList.size();
-            return Result.success().setData(taskObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
-        }
-        return Result.success().setData(null).setMeta(page);
+        if (groupIds == null || groupIds.size() == 0) return Result.success().setData(taskObjectList);
+        List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
+        if (taskList == null || taskList.size() == 0) return Result.success().setData(taskObjectList);
+        taskObjectList = changeTaskObject(taskList).parallelStream().filter(task -> (sessionCompanyId.longValue() == 0 || task.getRiskCompanyId().longValue() == sessionCompanyId.longValue())).collect(Collectors.toList());
+        page.setTotal(Long.valueOf(taskObjectList.size()));
+        int toIndex = page.getPage() * page.getCount() < taskObjectList.size() ? page.getPage() * page.getCount() : taskObjectList.size();
+        return Result.success().setData(taskObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
     }
 
     /**
@@ -121,7 +121,7 @@ public class FinanceFlowMethodServiceImpl {
                 return Result.error(EnumAdminFinanceError.此任务已被其他人处理.toString());
             }
         }
-        TaskObject taskObject = (TaskObject) changeTaskObject(task).getData();
+        TaskObject taskObject = changeTaskObject(task);
         if (sessionCompanyId.longValue() == 0 || taskObject.getRiskCompanyId().longValue() == sessionCompanyId.longValue()) {
             List<IdentityLink> identityLinkList = taskService.getIdentityLinksForTask(task.getId());
             List<String> groupIdList = userService.getUserGroupIdList(sessionUserId);
@@ -142,7 +142,7 @@ public class FinanceFlowMethodServiceImpl {
      * 管理员分配任务
      */
     public Result adminAssignTask(String sessionUserId, Long sessionCompanyId, String taskId, String userId) {
-        TaskObject taskObject = (TaskObject) changeTaskObject(taskService.createTaskQuery().taskAssignee(sessionUserId).taskId(taskId).active().singleResult()).getData();
+        TaskObject taskObject = changeTaskObject(taskService.createTaskQuery().taskAssignee(sessionUserId).taskId(taskId).active().singleResult());
         if (taskObject == null) return Result.error(EnumAdminFinanceError.你没有权限处理此任务或者你已经处理过.toString());
         UserObject userObject = userService.changeUserObjectSimple(identityService.createUserQuery().userId(userId).singleResult());
         if (userObject == null) return Result.error(EnumAdminUserError.此用户不存在.toString());
@@ -245,15 +245,13 @@ public class FinanceFlowMethodServiceImpl {
     /**
      * 封装 task, 从 Task 到 TaskObject
      */
-    public Result changeTaskObject(Task task) {
+    public TaskObject changeTaskObject(Task task) {
         TaskObject taskObject = DozerUtils.copy(task, TaskObject.class);
         if (task != null) {
             ProcessInstance processInstance = runtimeService.createProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-            if (processInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
-            if (StringUtils.isEmpty(processInstance.getBusinessKey()))
-                return Result.error(EnumCommonError.Admin_System_Error);
+            if (processInstance == null || StringUtils.isEmpty(processInstance.getBusinessKey())) throw new BusinessException(EnumCommonError.Admin_System_Error);
             FinanceOrderObject financeOrderObject = DozerUtils.copy(orderRepository.findOne(Long.valueOf(processInstance.getBusinessKey())), FinanceOrderObject.class);
-            if (financeOrderObject == null) return Result.error(EnumCommonError.Admin_System_Error);
+            if (financeOrderObject == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
             taskObject.setFinanceId(financeOrderObject.getId());
             taskObject.setApplyCompanyName(financeOrderObject.getApplyCompanyName());
             taskObject.setApplyType(financeOrderObject.getApplyType());
@@ -262,27 +260,20 @@ public class FinanceFlowMethodServiceImpl {
             taskObject.setSourceId(financeOrderObject.getSourceId());
             taskObject.setRiskCompanyId(financeOrderObject.getRiskCompanyId());
             if (!StringUtils.isEmpty(task.getAssignee())) {
-                UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
+                UserObject user = userService.changeUserObjectTask(identityService.createUserQuery().userId(task.getAssignee()).singleResult());
                 taskObject.setAssigneeName(user.getUsername());
                 taskObject.setAssigneeDepartment(user.getDepartment());
             }
         }
-        return Result.success().setData(taskObject);
+        return taskObject;
     }
 
-    public Result changeTaskObject(List<Task> taskList, Long sessionCompanyId) {
-        List<TaskObject> taskObjectList = new ArrayList<>();
-        if (taskList != null && taskList.size() != 0) {
-            for (Task task : taskList) {
-                Result result = changeTaskObject(task);
-                if (!result.isSuccess()) return result;
-                TaskObject taskObject = (TaskObject) result.getData();
-                if (sessionCompanyId.longValue() == 0 || (taskObject.getRiskCompanyId().longValue() == sessionCompanyId.longValue())) {
-                    taskObjectList.add((TaskObject) result.getData());
-                }
-            }
-        }
-        return Result.success().setData(taskObjectList);
+    public List<TaskObject> changeTaskObject(List<Task> taskList) {
+        if (taskList == null || taskList.size() == 0) return null;
+        List<TaskObject> taskObjectList = taskList.parallelStream()
+                .map(task -> changeTaskObject(task))
+                .collect(Collectors.toList());
+        return taskObjectList;
     }
 
     /**

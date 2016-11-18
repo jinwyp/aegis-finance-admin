@@ -448,6 +448,15 @@ public class AdminUserServiceImpl {
         return userObjectList;
     }
 
+    public List<UserObject> changeUserObject(List<User> userList, UserObject sessionUser) {
+        if (userList == null || userList.size() == 0) return null;
+        List<UserObject> userObjectList = DozerUtils.copy(userList, UserObject.class);
+        userObjectList.parallelStream().forEach(userObject -> {
+            improveUserObject(userObject, sessionUser);
+        });
+        return userObjectList;
+    }
+
     public UserObject changeUserObjectSimple(User user) {
         if (user == null) return null;
         UserObject userObject = DozerUtils.copy(user, UserObject.class);
@@ -476,11 +485,20 @@ public class AdminUserServiceImpl {
         return userObjectList;
     }
 
-    public List<UserObject> changeUserObject(List<User> userList, UserObject sessionUser) {
+    public UserObject changeUserObjectTask(User user) {
+        if (user == null) return null;
+        UserObject userObject = DozerUtils.copy(user, UserObject.class);
+        userObject.setUsername(identityService.getUserInfo(user.getId(), "username"));
+        userObject.setDepartment(identityService.getUserInfo(user.getId(), "department"));
+        return userObject;
+    }
+
+    public List<UserObject> changeUserObjectTask(List<User> userList) {
         if (userList == null || userList.size() == 0) return null;
         List<UserObject> userObjectList = DozerUtils.copy(userList, UserObject.class);
-        userObjectList.parallelStream().forEach(userObject -> {
-            improveUserObject(userObject, sessionUser);
+        userObjectList.parallelStream().forEach(user -> {
+            user.setUsername(identityService.getUserInfo(user.getId(), "username"));
+            user.setDepartment(identityService.getUserInfo(user.getId(), "department"));
         });
         return userObjectList;
     }
