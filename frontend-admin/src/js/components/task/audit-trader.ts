@@ -172,7 +172,7 @@ export class AuditTraderComponent {
             }
         }
 
-        if(this.riskSelectedItem.id < 1){
+        if(isAudit && this.isApprovedRadio===1 && this.riskSelectedItem.id < 1){
             this.css.ajaxErrorHidden = false;
             this.errorMsg = '请选择风控线';
             this.css.isSubmitted = false;
