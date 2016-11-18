@@ -8,6 +8,7 @@ import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Table(name = "t_finance_order_contract")
@@ -59,7 +60,7 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     private String signPlace;                                        //签订地点  
 
     @Column(name = "sign_date")
-    private LocalDate signDate;                                      //签订时间  
+    private Date signDate;                                           //签订时间  
 
     @Column(name = "ship_name")
     private String shipName;                                         //船名  

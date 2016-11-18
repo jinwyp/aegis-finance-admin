@@ -19,6 +19,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.Date;
 import java.util.List;
 
 @ApiModel(description = "金融单-合同内容")
@@ -50,7 +51,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
 
     @DateTimeFormat(pattern = EnumCommonString.LocalDate_Pattern)
     @JsonFormat(pattern = EnumCommonString.LocalDate_Pattern, timezone = EnumCommonString.GMT_8)
-    private LocalDate signDate;                                      //签订时间  
+    private Date signDate;                                      //签订时间  
 
     private Integer signDate_Year;
     private Integer signDate_Month;
@@ -252,17 +253,17 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     }
 
     public Integer getSignDate_Year() {
-        if (signDate != null) return signDate.getYear();
+        if (signDate != null) return LocalDate.parse(String.valueOf(signDate)).getYear();
         return null;
     }
 
     public Integer getSignDate_Month() {
-        if (signDate != null) return signDate.getMonthValue();
+        if (signDate != null) return LocalDate.parse(String.valueOf(signDate)).getMonthValue();
         return null;
     }
 
     public Integer getSignDate_Day() {
-        if (signDate != null) return signDate.getDayOfMonth();
+        if (signDate != null) return LocalDate.parse(String.valueOf(signDate)).getDayOfMonth();
         return null;
     }
 }
