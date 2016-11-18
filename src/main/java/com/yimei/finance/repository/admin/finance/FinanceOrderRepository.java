@@ -25,7 +25,8 @@ public interface FinanceOrderRepository extends JpaRepository<FinanceOrder, Long
     @Query(" select f.riskCompanyId from FinanceOrder f where f.id = ?1")
     Long findRiskCompanyIdById(@Param("id") Long id);
 
-    List<FinanceOrder> findByCreateTimeBeforeAndApproveStateIdNot(@Param("createTime") Date createTime, @Param("approveStateId") Integer approveStateId);
+    List<FinanceOrder> findByCreateTimeBeforeAndApproveStateIdNot(@Param("createTime") Date createTime,
+                                                                  @Param("approveStateId") Integer approveStateId);
 
 
 }

@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.common.contract;
+package com.yimei.finance.service.common.contract;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -9,9 +9,6 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.Map;
 
-/**
- * Created by hary on 16/3/14.
- */
 @Component
 public class FreeMarker {
     @Autowired

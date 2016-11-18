@@ -1,8 +1,8 @@
 package com.yimei.finance.representation.admin.company.object;
 
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
-import com.yimei.finance.representation.admin.company.validated.CreateCompany;
-import com.yimei.finance.representation.admin.company.validated.EditCompany;
+import com.yimei.finance.representation.admin.company.object.validated.CreateCompany;
+import com.yimei.finance.representation.admin.company.object.validated.EditCompany;
 import com.yimei.finance.representation.common.base.BaseObject;
 import lombok.Data;
 import lombok.NoArgsConstructor;

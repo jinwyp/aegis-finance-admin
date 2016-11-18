@@ -16,7 +16,6 @@ public class ErrorPageController {
         return "admin/http/404";
     }
 
-
     @ApiOperation(value = "网站管理后台 500 页面", notes = "网站管理后台 500 页面 Page Not Found")
     @RequestMapping(value = "/finance/admin/500", method = RequestMethod.GET)
     public String Page500() {

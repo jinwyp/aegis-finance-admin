@@ -107,7 +107,7 @@ public class FinancingCommonController {
     public Result getAllTasksByFinanceIdMethod(@PathVariable(value = "financeId") Long financeId) {
         FinanceOrder financeOrder = orderRepository.findOne(financeId);
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        if (adminSession.getUser().getCompanyId().longValue() != 0 && financeOrder.getRiskCompanyId().longValue() != adminSession.getUser().getCompanyId()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
+        if (adminSession.getUser().getCompanyId().longValue() != 0 && financeOrder.getRiskCompanyId().longValue() != adminSession.getUser().getCompanyId()) return Result.error(EnumAdminFinanceError.你没有权限查看此金融单.toString());
         return methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).orderByTaskCreateTime().asc().list());
     }
 
@@ -120,7 +120,7 @@ public class FinancingCommonController {
         HistoricProcessInstance processInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(processInstanceId).singleResult();
         if (processInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
         Long riskCompanyId = orderRepository.findRiskCompanyIdById(Long.valueOf(processInstance.getBusinessKey()));
-        if (adminSession.getUser().getCompanyId().longValue() != 0 && riskCompanyId.longValue() != adminSession.getUser().getCompanyId().longValue()) throw new BusinessException(EnumAdminFinanceError.你没有查看此流程的权限.toString());
+        if (adminSession.getUser().getCompanyId().longValue() != 0 && riskCompanyId.longValue() != adminSession.getUser().getCompanyId().longValue()) throw new BusinessException(EnumAdminFinanceError.你没有权限查看此流程.toString());
         BpmnModel bpmnModel = repositoryService.getBpmnModel(processInstance.getProcessDefinitionId());
         InputStream inputStream = null;
         if (processInstance.getEndTime() == null) {

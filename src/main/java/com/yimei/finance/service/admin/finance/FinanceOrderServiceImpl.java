@@ -101,7 +101,7 @@ public class FinanceOrderServiceImpl {
             }
             return Result.success().setData(financeOrderObject);
         } else {
-            return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
+            return Result.error(EnumAdminFinanceError.你没有权限查看此金融单.toString());
         }
     }
 
@@ -109,7 +109,7 @@ public class FinanceOrderServiceImpl {
      * 获取业务员填写信息详细
      */
     public Result findSalesmanInfoByFinanceId(Long financeId, EnumFinanceAttachment attachmentType, Long sessionCompanyId) {
-        if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
+        if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有权限查看此金融单.toString());
         FinanceOrderSalesmanInfoObject salesmanInfoObject = DozerUtils.copy(salesmanRepository.findByFinanceId(financeId), FinanceOrderSalesmanInfoObject.class);
         if (salesmanInfoObject != null) {
             salesmanInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, attachmentType));
@@ -121,7 +121,7 @@ public class FinanceOrderServiceImpl {
      * 获取尽调员填写信息详细
      */
     public Result findInvestigatorInfoByFinanceId(Long financeId, EnumFinanceAttachment attachmentType, List<EnumFinanceAttachment> typeList2, Long sessionCompanyId) {
-        if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
+        if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有权限查看此金融单.toString());
         FinanceOrderInvestigatorInfoObject investigatorInfoObject = DozerUtils.copy(investigatorRepository.findByFinanceId(financeId), FinanceOrderInvestigatorInfoObject.class);
         if (investigatorInfoObject != null) {
             investigatorInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, attachmentType));
@@ -134,7 +134,7 @@ public class FinanceOrderServiceImpl {
      * 获取监管员填写信息详细
      */
     public Result findSupervisorInfoByFinanceId(Long financeId, EnumFinanceAttachment attachmentType, List<EnumFinanceAttachment> typeList2, Long sessionCompanyId) {
-        if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
+        if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有权限查看此金融单.toString());
         FinanceOrderSupervisorInfoObject supervisorInfoObject = DozerUtils.copy(supervisorRepository.findByFinanceId(financeId), FinanceOrderSupervisorInfoObject.class);
         if (supervisorInfoObject != null) {
             supervisorInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, attachmentType));
@@ -147,7 +147,7 @@ public class FinanceOrderServiceImpl {
      * 获取风控人员填写信息详细
      */
     public Result findRiskManagerInfoByFinanceId(Long financeId, EnumFinanceAttachment attachment, List<EnumFinanceAttachment> attachmentList, Long sessionCompanyId) {
-        if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
+        if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有权限查看此金融单.toString());
         FinanceOrderRiskManagerInfoObject riskManagerInfoObject = DozerUtils.copy(riskRepository.findByFinanceId(financeId), FinanceOrderRiskManagerInfoObject.class);
         if (riskManagerInfoObject != null) {
             riskManagerInfoObject.setAttachmentList1(getAttachmentByFinanceIdType(financeId, attachment, EnumFinanceAttachment.RiskManagerAuditAttachment.toString()));
@@ -162,7 +162,7 @@ public class FinanceOrderServiceImpl {
      * 获取合同
      */
     public Result findFinanceOrderRiskManagerContractByFinanceIdAndType(Long financeId, int type, Long sessionCompanyId) {
-        if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有查看此金融单的权限.toString());
+        if (financeOrderRepository.findRiskCompanyIdById(financeId).longValue() != sessionCompanyId.longValue()) return Result.error(EnumAdminFinanceError.你没有权限查看此金融单.toString());
         FinanceOrderContractObject financeOrderContractObject = DozerUtils.copy(contractRepository.findByFinanceIdAndType(financeId, type), FinanceOrderContractObject.class);
         return Result.success().setData(financeOrderContractObject);
     }

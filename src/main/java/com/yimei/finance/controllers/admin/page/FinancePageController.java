@@ -5,7 +5,7 @@ import com.yimei.finance.entity.admin.finance.FinanceOrderContract;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.repository.admin.finance.FinanceOrderContractRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceContractType;
-import com.yimei.finance.representation.common.contract.ContractServiceImpl;
+import com.yimei.finance.service.common.contract.ContractServiceImpl;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.service.common.file.PDF;
 import io.swagger.annotations.Api;
@@ -33,7 +33,6 @@ public class FinancePageController {
     private FinanceOrderContractRepository orderContractRepository;
     @Autowired
     private ContractServiceImpl contractService;
-
 
     @RequestMapping(value = "/finance/{financeId}/contract/{type}/preview", method = RequestMethod.GET)
     @ApiOperation(value = "预览金融合同页面", notes = "预览金融合同页面")

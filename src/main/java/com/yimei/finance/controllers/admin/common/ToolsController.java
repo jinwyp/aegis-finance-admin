@@ -11,7 +11,6 @@ import com.yimei.finance.service.common.file.LocalStorage;
 import com.yimei.finance.utils.StoreUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.activiti.engine.TaskService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -31,8 +30,6 @@ public class ToolsController {
     private DataBookRepository dataBookRepository;
     @Autowired
     private LocalStorage localStorage;
-    @Autowired
-    private TaskService taskService;
 
     @RequestMapping(value = "/transportmodes", method = RequestMethod.GET)
     @ApiOperation(value = "获取运输方式列表", notes = "获取运输方式列表数据", response = DataBook.class, responseContainer = "List")
@@ -55,18 +52,5 @@ public class ToolsController {
     public Result uploadFileMethod(@RequestParam("file") MultipartFile file) throws IOException {
         return Result.success().setData(StoreUtils.save(localStorage, file, "finance"));
     }
-
-//    @RequestMapping(value = "/files/{attachmentId}", method = RequestMethod.DELETE)
-//    @ApiOperation(value = "删除文件", notes = "删除文件", response = AttachmentObject.class)
-//    @ApiImplicitParam(name = "attachmentId", value = "文件id", required = true, dataType = "String", paramType = "path")
-//    public Result deleteFileMethod(@PathVariable("attachmentId")String attachmentId) {
-//        Attachment attachment = taskService.getAttachment(attachmentId);
-//        if (attachment == null) return Result.error(EnumCommonError.此文件不存在.toString());
-//        taskService.deleteAttachment(attachmentId);
-//        return Result.success().setData(attachmentId);
-//    }
-
-
-
 
 }

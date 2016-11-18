@@ -70,13 +70,12 @@ public class FinanceFlowMethodServiceImpl {
      * 查看个人待办任务列表
      */
     public Result findSelfTaskList(String sessionUserId, Long sessionCompanyId, Page page) {
-        List<Task> taskList = taskService.createTaskQuery().taskAssignee(sessionUserId).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
+        page.setTotal(taskService.createTaskQuery().taskAssignee(sessionUserId).active().count());
+        Long toIndex = page.getPage() * page.getCount() < page.getTotal() ? page.getPage() * page.getCount() : page.getTotal();
+        List<Task> taskList = taskService.createTaskQuery().taskAssignee(sessionUserId).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().listPage(page.getOffset(), Math.toIntExact(toIndex));
         Result result = changeTaskObject(taskList, sessionCompanyId);
         if (!result.isSuccess()) return result;
-        List<TaskObject> taskObjectList = (List<TaskObject>) result.getData();
-        page.setTotal((long) taskObjectList.size());
-        int toIndex = page.getPage() * page.getCount() < taskObjectList.size() ? page.getPage() * page.getCount() : taskObjectList.size();
-        return Result.success().setData(taskObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
+        return Result.success().setData(result.getData()).setMeta(page);
     }
 
     /**
@@ -100,13 +99,12 @@ public class FinanceFlowMethodServiceImpl {
      * 查看个人处理历史列表
      */
     public Result findSelfHistoryTaskList(String sessionUserId, Page page) {
-        List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(sessionUserId).finished().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
-        page.setTotal(Long.valueOf(historicTaskInstanceList.size()));
+        page.setTotal(historyService.createHistoricTaskInstanceQuery().taskAssignee(sessionUserId).finished().count());
         Long toIndex = page.getPage() * page.getCount() < page.getTotal() ? page.getPage() * page.getCount() : page.getTotal();
-        Result result = changeHistoryTaskObject(historicTaskInstanceList.subList(page.getOffset(), Math.toIntExact(toIndex)));
+        List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(sessionUserId).finished().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().listPage(page.getOffset(), Math.toIntExact(toIndex));
+        Result result = changeHistoryTaskObject(historicTaskInstanceList);
         if (!result.isSuccess()) return result;
-        List<HistoryTaskObject> taskList = (List<HistoryTaskObject>) result.getData();
-        return Result.success().setData(taskList).setMeta(page);
+        return Result.success().setData(result.getData()).setMeta(page);
     }
 
     /**
@@ -208,6 +206,7 @@ public class FinanceFlowMethodServiceImpl {
         taskService.setOwner(taskList.get(0).getId(), userId);
         taskService.setAssignee(taskList.get(0).getId(), userId);
         return Result.success().setData(taskList.get(0).getId());
+
     }
 
     /**

@@ -1,4 +1,4 @@
-package com.yimei.finance.representation.common.contract;
+package com.yimei.finance.service.common.contract;
 
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.FinanceOrderContractRepository;
@@ -7,11 +7,11 @@ import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.utils.DozerUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
 
-@Component("financeContractService")
+@Service("financeContractService")
 public class ContractServiceImpl {
 
     private Logger logger = org.slf4j.LoggerFactory.getLogger(ContractServiceImpl.class) ;
