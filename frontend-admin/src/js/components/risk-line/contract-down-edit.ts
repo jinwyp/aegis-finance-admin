@@ -36,7 +36,7 @@ export class ContractDownEditComponent {
     };
 
     taskId : string = '';
-    status : number = 0;
+    status : string = '';
     contract : Contract = new Contract();
 
     errorMsg : string = '';
