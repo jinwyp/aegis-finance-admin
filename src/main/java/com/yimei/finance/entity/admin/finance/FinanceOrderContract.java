@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "t_finance_order_contract")
@@ -47,7 +47,7 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     private String financeType;                                      //金融类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
 
     @Column(name = "type")
-    private Integer type;                                                //合同类型
+    private Integer type;                                            //合同类型
 
     @Column(name = "type_name")
     private String typeName;                                         //合同类型名称
@@ -56,7 +56,7 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     private String signPlace;                                        //签订地点  
 
     @Column(name = "sign_date")
-    private Date signDate;                                           //签订时间  
+    private LocalDate signDate;                                      //签订时间  
 
     @Column(name = "ship_name")
     private String shipName;                                         //船名  
