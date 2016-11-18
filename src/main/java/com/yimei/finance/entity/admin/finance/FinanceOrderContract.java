@@ -25,6 +25,9 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     @Column(name = "contract_no")
     private String contractNo;                                       //合同编号  
 
+    @Column(name = "upstream_contract_no")
+    private String upstreamContractNo;                               //上游合同编号
+
     @Column(name = "finance_source_id")
     private String financeSourceId;                                  //流水号，编号
 
@@ -102,6 +105,9 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
 
     @Column(name = "quantity_acceptance_criteria")
     private String quantityAcceptanceCriteria;                       //数量验收标准  
+
+    @Column(name = "quantity_acceptance_basis")
+    private BigDecimal quantityAcceptanceBasis;                      //数量验收依据-吨数
 
     @Column(name = "quality_acceptance_criteria")
     private String qualityAcceptanceCriteria;                        //质量验收标准  
@@ -195,5 +201,8 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
 
     @Column(name = "seller_bank_account")
     private String sellerBankAccount;                                //卖家银行账号    
+
+    @Column(name = "coal_supplier")
+    private String coalSupplier;                                     //供应商
 
 }
