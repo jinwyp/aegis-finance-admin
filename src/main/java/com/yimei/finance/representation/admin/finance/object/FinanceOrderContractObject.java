@@ -19,7 +19,6 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.sql.Date;
-import java.time.LocalDate;
 import java.util.List;
 
 @ApiModel(description = "金融单-合同内容")
