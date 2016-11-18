@@ -35,6 +35,7 @@ export class ContractUpEditComponent {
     };
 
     taskId : number = 0;
+    status : number = 0;
     contract : Contract = new Contract();
     sellerReceiptMoneyCN : string ='';
     buyerSettlementMoneyCN : string ='';
@@ -60,6 +61,7 @@ export class ContractUpEditComponent {
            console.log(param);
             this.contract.financeId = Number(param['financeId']);
             this.taskId = Number(param['taskId']);
+            this.status = param['status'];
             this.getContractById(this.contract.financeId);
         });
     }
