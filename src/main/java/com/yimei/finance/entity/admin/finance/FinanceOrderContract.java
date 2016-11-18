@@ -7,8 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "t_finance_order_contract")

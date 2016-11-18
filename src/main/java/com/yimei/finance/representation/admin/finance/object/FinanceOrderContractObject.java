@@ -18,8 +18,8 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.sql.Date;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 @ApiModel(description = "金融单-合同内容")
@@ -253,17 +253,17 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     }
 
     public Integer getSignDate_Year() {
-        if (signDate != null) return LocalDate.parse(String.valueOf(signDate)).getYear();
+        if (signDate != null) return signDate.toLocalDate().getYear();
         return null;
     }
 
     public Integer getSignDate_Month() {
-        if (signDate != null) return LocalDate.parse(String.valueOf(signDate)).getMonthValue();
+        if (signDate != null) return signDate.toLocalDate().getMonthValue();
         return null;
     }
 
     public Integer getSignDate_Day() {
-        if (signDate != null) return LocalDate.parse(String.valueOf(signDate)).getDayOfMonth();
+        if (signDate != null) return signDate.toLocalDate().getDayOfMonth();
         return null;
     }
 }
