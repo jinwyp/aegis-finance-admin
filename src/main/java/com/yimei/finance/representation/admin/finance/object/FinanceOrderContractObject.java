@@ -39,7 +39,6 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     private Long applyCompanyId;                                     //申请人公司id
     private String applyCompanyName;                                 //申请公司名称
 
-
     @Range(min = 1, max = 100, message = "合同类型 应在 {min}-{max} 之间", groups = {SubmitFinanceContract.class})
     private Integer type;                                            //合同类型
     private String typeName;                                         //合同类型名称

@@ -60,7 +60,7 @@ public class FinanceFlowMethodServiceImpl {
     public Result findTaskByTaskId(String taskId, Long sessionCompanyId) {
         HistoricTaskInstance taskInstance = historyService.createHistoricTaskInstanceQuery().taskId(taskId).singleResult();
         if (taskInstance == null) return Result.error(EnumAdminFinanceError.不存在此任务.toString());
-        HistoryTaskObject historyTaskObject = (HistoryTaskObject) changeHistoryTaskObject(taskInstance).getData();
+        HistoryTaskObject historyTaskObject = changeHistoryTaskObject(taskInstance);
         if (sessionCompanyId.longValue() == 0 || (sessionCompanyId.longValue() == historyTaskObject.getRiskCompanyId().longValue())) {
             return Result.success().setData(historyTaskObject);
         }
@@ -84,12 +84,12 @@ public class FinanceFlowMethodServiceImpl {
      * 查看个人待领取任务列表
      */
     public Result findSelfWaitClaimTaskList(String sessionUserId, Long sessionCompanyId, Page page) {
-        List<TaskObject> taskObjectList = new ArrayList<>();
+
         List<String> groupIds = userService.getUserGroupIdList(sessionUserId);
-        if (groupIds == null || groupIds.size() == 0) return Result.success().setData(taskObjectList);
+        if (groupIds == null || groupIds.size() == 0) return Result.success().setData(new ArrayList<>());
         List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
-        if (taskList == null || taskList.size() == 0) return Result.success().setData(taskObjectList);
-        taskObjectList = changeTaskObject(taskList).parallelStream().filter(task -> (sessionCompanyId.longValue() == 0 || task.getRiskCompanyId().longValue() == sessionCompanyId.longValue())).collect(Collectors.toList());
+        if (taskList == null || taskList.size() == 0) return Result.success().setData(new ArrayList<>());
+        List<TaskObject> taskObjectList = changeTaskObject(taskList).parallelStream().filter(task -> (sessionCompanyId.longValue() == 0 || task.getRiskCompanyId().longValue() == sessionCompanyId.longValue())).collect(Collectors.toList());
         page.setTotal(Long.valueOf(taskObjectList.size()));
         int toIndex = page.getPage() * page.getCount() < taskObjectList.size() ? page.getPage() * page.getCount() : taskObjectList.size();
         return Result.success().setData(taskObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
@@ -102,9 +102,7 @@ public class FinanceFlowMethodServiceImpl {
         page.setTotal(historyService.createHistoricTaskInstanceQuery().taskAssignee(sessionUserId).finished().count());
         Long toIndex = page.getPage() * page.getCount() < page.getTotal() ? page.getPage() * page.getCount() : page.getTotal();
         List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(sessionUserId).finished().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().listPage(page.getOffset(), Math.toIntExact(toIndex));
-        Result result = changeHistoryTaskObject(historicTaskInstanceList);
-        if (!result.isSuccess()) return result;
-        return Result.success().setData(result.getData()).setMeta(page);
+        return Result.success().setData(changeHistoryTaskObject(historicTaskInstanceList)).setMeta(page);
     }
 
     /**
@@ -279,13 +277,13 @@ public class FinanceFlowMethodServiceImpl {
     /**
      * 封装 HistoryTask, 从 HistoryTask 到 HistoryTaskObject
      */
-    public Result changeHistoryTaskObject(HistoricTaskInstance task) {
+    public HistoryTaskObject changeHistoryTaskObject(HistoricTaskInstance task) {
         HistoryTaskObject taskObject = DozerUtils.copy(task, HistoryTaskObject.class);
         HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-        if (historicProcessInstance == null) return Result.error(EnumCommonError.Admin_System_Error);
-        if (StringUtils.isEmpty(historicProcessInstance.getBusinessKey())) return Result.error(EnumCommonError.Admin_System_Error);
+        if (historicProcessInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        if (StringUtils.isEmpty(historicProcessInstance.getBusinessKey())) throw new BusinessException(EnumCommonError.Admin_System_Error);
         FinanceOrderObject financeOrderObject = DozerUtils.copy(orderRepository.findOne(Long.valueOf(historicProcessInstance.getBusinessKey())), FinanceOrderObject.class);
-        if (financeOrderObject == null) return Result.error(EnumCommonError.Admin_System_Error);
+        if (financeOrderObject == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
         taskObject.setFinanceId(financeOrderObject.getId());
         taskObject.setApplyCompanyName(financeOrderObject.getApplyCompanyName());
         taskObject.setApplyType(financeOrderObject.getApplyType());
@@ -300,7 +298,7 @@ public class FinanceFlowMethodServiceImpl {
         }
         if (historicProcessInstance.getEndTime() == null) {
             List<Task> taskList = taskService.createTaskQuery().active().processInstanceId(historicProcessInstance.getId()).orderByTaskCreateTime().desc().list();
-            if (taskList == null || taskList.size() == 0) return Result.error(EnumCommonError.Admin_System_Error);
+            if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
             String currentName = "";
             for (Task t : taskList) {
                 currentName += t.getName() + ",";
@@ -316,7 +314,7 @@ public class FinanceFlowMethodServiceImpl {
             }
         } else {
             List<HistoricActivityInstance> activityInstanceList = historyService.createHistoricActivityInstanceQuery().processInstanceId(historicProcessInstance.getId()).orderByHistoricActivityInstanceStartTime().desc().list();
-            if (activityInstanceList == null || activityInstanceList.size() == 0) return Result.error(EnumCommonError.Admin_System_Error);
+            if (activityInstanceList == null || activityInstanceList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
             for (HistoricActivityInstance instance : activityInstanceList) {
                 if (instance.getActivityId().equals(EnumFinanceEndType.completeWorkFlowSuccess.toString())
                         || instance.getActivityId().equals(EnumFinanceEndType.EndByOnlineTrader.toString())
@@ -329,17 +327,12 @@ public class FinanceFlowMethodServiceImpl {
             }
         }
         taskObject.setTaskLocalVariables(DozerUtils.copy(historyService.createHistoricVariableInstanceQuery().taskId(task.getId()).list(), HistoryVariableObject.class));
-        return Result.success().setData(taskObject);
+        return taskObject;
     }
 
-    public Result changeHistoryTaskObject(List<HistoricTaskInstance> taskList) {
-        List<HistoryTaskObject> taskObjectList = new ArrayList<>();
-        for (HistoricTaskInstance task : taskList) {
-            Result result = changeHistoryTaskObject(task);
-            if (!result.isSuccess()) return result;
-            taskObjectList.add((HistoryTaskObject) result.getData());
-        }
-        return Result.success().setData(taskObjectList);
+    public List<HistoryTaskObject> changeHistoryTaskObject(List<HistoricTaskInstance> taskList) {
+        if (taskList == null || taskList.size() == 0) return new ArrayList<>();
+        return taskList.parallelStream().map(task -> changeHistoryTaskObject(task)).collect(Collectors.toList());
     }
 
 
