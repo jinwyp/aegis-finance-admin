@@ -40,8 +40,8 @@ $borderColor:#e4e4e4;
             line-height: 43px;
             font-weight: bold;
             em{
-              width: 20px;
-              height: 20px;
+              width: 18px;
+              height: 18px;
               display: inline-block;
               background: url("#{$assetPath}/css/images/finance/table-title.png") no-repeat center;
               margin: -4px 10px;
@@ -69,11 +69,12 @@ $borderColor:#e4e4e4;
                     vertical-align: middle;
                     //text-align: center;
                     em{
-                      width: 18px;
-                      height: 18px;
+                      width: 20px;
+                      height: 20px;
                       display: inline-block;
-                      background: url("#{$assetPath}/css/images/sprite/word.png") no-repeat;
+                      background: url("#{$assetPath}/css/images/sprite/pdf.png") no-repeat;
                       vertical-align: text-bottom;
+                      background-size: contain;
                     }
                   }
                   .floatR{

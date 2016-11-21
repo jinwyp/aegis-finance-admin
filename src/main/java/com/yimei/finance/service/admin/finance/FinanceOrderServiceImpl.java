@@ -93,16 +93,14 @@ public class FinanceOrderServiceImpl {
     public Result findById(Long id, EnumFinanceAttachment attachment, Long sessionCompanyId) {
         FinanceOrderObject financeOrderObject = DozerUtils.copy(financeOrderRepository.findOne(id), FinanceOrderObject.class);
         if (financeOrderObject == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        if (sessionCompanyId.longValue() == 0 || sessionCompanyId.longValue() == financeOrderObject.getRiskCompanyId().longValue()) {
-            financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdType(id, attachment));
-            if (financeOrderObject.getRiskCompanyId() != null && financeOrderObject.getRiskCompanyId().longValue() != 0) {
-                Company company = companyRepository.findOne(financeOrderObject.getRiskCompanyId());
-                if (company != null) financeOrderObject.setRiskCompanyName(company.getName());
-            }
-            return Result.success().setData(financeOrderObject);
-        } else {
+        if (sessionCompanyId.longValue() != 0 && (sessionCompanyId.longValue() != financeOrderObject.getRiskCompanyId().longValue()))
             return Result.error(EnumAdminFinanceError.你没有权限查看此金融单.toString());
+        financeOrderObject.setAttachmentList1(getAttachmentByFinanceIdType(id, attachment));
+        if (financeOrderObject.getRiskCompanyId() != null && financeOrderObject.getRiskCompanyId().longValue() != 0) {
+            Company company = companyRepository.findOne(financeOrderObject.getRiskCompanyId());
+            if (company != null) financeOrderObject.setRiskCompanyName(company.getName());
         }
+        return Result.success().setData(financeOrderObject);
     }
 
     /**

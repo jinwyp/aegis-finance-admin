@@ -614,16 +614,16 @@ public class AdminUserServiceImpl {
     public void updateOldUserData(Company company) {
         List<Group> groupList = identityService.createGroupQuery().groupType(EnumSpecialGroup.SuperAdminGroup.type).list();
         if (groupList != null && groupList.size() != 0) {
-            groupList.parallelStream().forEach(group -> {
-                identityService.createUserQuery().memberOfGroup(group.getId()).list().parallelStream().forEach(user -> {
+            groupList.stream().forEach(group -> {
+                identityService.createUserQuery().memberOfGroup(group.getId()).list().stream().filter(user -> user != null).forEach(user -> {
                     changeSystemUserData(user);
                 });
             });
         }
         groupList = identityService.createGroupQuery().groupType(EnumSpecialGroup.SystemAdminGroup.type).list();
         if (groupList != null && groupList.size() != 0) {
-            groupList.parallelStream().forEach(group -> {
-                identityService.createUserQuery().memberOfGroup(group.getId()).list().parallelStream().forEach(user -> {
+            groupList.stream().forEach(group -> {
+                identityService.createUserQuery().memberOfGroup(group.getId()).list().stream().filter(user -> user != null).forEach(user -> {
                     changeRiskCompanyUserData(user, company);
                 });
             });
@@ -641,7 +641,7 @@ public class AdminUserServiceImpl {
     }
 
     void changeRiskCompanyUserData(User user, Company company) {
-        if ((StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) | Integer.valueOf(identityService.getUserInfo(user.getId(), "companyId")) == 0) {
+        if (StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyId")) && StringUtils.isEmpty(identityService.getUserInfo(user.getId(), "companyName"))) {
             identityService.setUserInfo(user.getId(), "companyId", String.valueOf(company.getId()));
             identityService.setUserInfo(user.getId(), "companyName", company.getName());
         }
