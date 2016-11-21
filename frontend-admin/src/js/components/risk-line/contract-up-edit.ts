@@ -58,10 +58,9 @@ export class ContractUpEditComponent {
     ngOnInit(){
         this.sub = this.activatedRoute.params.subscribe(param=>{
            console.log(param);
-            this.contract.financeId = Number(param['financeId']);
-            this.taskId = Number(param['taskId']);
-            this.status = Number(param['status']);
-
+            this.contract.financeId = Number(param['financeId'])===NaN ? 0:Number(param['financeId']);
+            this.taskId = Number(param['taskId'])===NaN ? 0:Number(param['taskId']);
+            this.status = Number(param['status'])===NaN ? 0:Number(param['status']);
             this.getContractById(this.contract.financeId);
         });
     }
@@ -132,7 +131,7 @@ export class ContractUpEditComponent {
         console.log(this.contract);
         this.contractService.add(this.contract, this.taskId, type).then(result=>{
             if(result.success){
-                this.goBack();
+                // this.goBack();
             }
         });
     }

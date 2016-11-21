@@ -53,12 +53,12 @@
 
 <div style="width: 700px;margin: 0 auto 50px;">
     <h1 style="text-align: center;">煤炭购销合同</h1>
-        <div style="line-height: 32px;text-align: right;">合同编号：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 160px;">${contract.contractNo!''}</span></div>
-        <div style="line-height: 32px;text-align: right;">签订地：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 160px;">${contract.signPlace!''}</span></div>
-        <div style="line-height: 32px;text-align: right;">签订日期：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 160px;">${contract.signDate!''}</span></div>
+        <div style="line-height: 32px;text-align: right;">合同编号：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 200px;text-align: center;min-height: 32px;">${contract.contractNo!''}</span></div>
+        <div style="line-height: 32px;text-align: right;">签订地：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 200px;text-align: center;min-height: 32px;">${contract.signPlace!''}</span></div>
+        <div style="line-height: 32px;text-align: right;">签订日期：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 200px;text-align: center;min-height: 32px;">${contract.signDate!''}</span></div>
 
-        <div style="line-height: 32px;font-size: 18px;font-weight: bold;margin-top: 20px;">卖方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 160px;">${contract.sellerCompanyName!''}</span></div>
-        <div style="line-height: 32px;font-size: 18px;font-weight: bold;margin-top: 10px;">买方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 160px;">${contract.buyerCompanyName!''}</span></div>
+        <div style="line-height: 32px;font-size: 18px;font-weight: bold;margin-top: 20px;">卖方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 250px;text-align: center;min-height: 32px;">${contract.sellerCompanyName!''}</span></div>
+        <div style="line-height: 32px;font-size: 18px;font-weight: bold;margin-top: 10px;">买方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 250px;text-align: center;min-height: 32px;">${contract.buyerCompanyName!''}</span></div>
 
         <div style="line-height:24px;margin-top: 10px;">买、卖双方经过平等、自愿、友好协商，就卖方（船名：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.shipName!''}</span> ,航次 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.shipNo!''}</span>) 中的 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"><#if contract.coalTon??>${contract.coalTon?c}</#if></span> 吨煤炭（以下简称该批煤炭），该批煤炭卖方卸至 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.unloadedPlace!''}</span>(以下简称 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.unloadedPlaceShort!''}</span> 港/码头)后，买方就向卖方购买该批煤炭的购销事宜达成以下一致意见，特签订本合同，以资双方共同遵守。</div>
 
@@ -119,16 +119,16 @@
         <div style="line-height:24px;margin-top: 10px;">（以下无正文，为买卖双方于 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"><#if contract.signDate_Year??>${contract.signDate_Year?c}</#if></span> 年 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.signDate_Month!''}</span> 月 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.signDate_Day!''}</span> 日签订的编号为 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 250px;">${contract.contractNo!''}</span>《煤炭购销合同》的签署页）</div>
 
         <div style="line-height:24px;margin-top: 20px;">
-            <div style="display: inline-block;width: 49%;vertical-align: middle;">卖方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 268px;">${contract.sellerCompanyName!''}</span> </div>
-            <div style="display: inline-block;width: 49%;vertical-align: middle;">买方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 268px;">${contract.buyerCompanyName!''}</span> </div>
+            <div style="display: inline-block;width: 49%;vertical-align: middle;">卖方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 268px;min-height: 24px;">${contract.sellerCompanyName!''}</span> </div>
+            <div style="display: inline-block;width: 49%;vertical-align: middle;">买方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 268px;min-height: 24px;">${contract.buyerCompanyName!''}</span> </div>
         </div>
         <div style="line-height:24px;margin-top: 20px;">
-            <div style="display: inline-block;width: 49%;vertical-align: middle;">地址：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 268px;">${contract.sellerCompanyAddress!''}</span> </div>
-            <div style="display: inline-block;width: 49%;vertical-align: middle;">地址：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 268px;">${contract.buyerCompanyAddress!''}</span> </div>
+            <div style="display: inline-block;width: 49%;vertical-align: middle;">地址：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 268px;min-height: 24px;">${contract.sellerCompanyAddress!''}</span> </div>
+            <div style="display: inline-block;width: 49%;vertical-align: middle;">地址：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 268px;min-height: 24px;">${contract.buyerCompanyAddress!''}</span> </div>
         </div>
         <div style="line-height:24px;margin-top: 20px;">
-            <div style="display: inline-block;width: 49%;vertical-align: middle;">法定代表人：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 220px;">${contract.sellerLegalPerson!''}</span> </div>
-            <div style="display: inline-block;width: 49%;vertical-align: middle;">法定代表人：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 220px;">${contract.buyerLegalPerson!''}</span> </div>
+            <div style="display: inline-block;width: 49%;vertical-align: middle;">法定代表人：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 220px;min-height: 24px;">${contract.sellerLegalPerson!''}</span> </div>
+            <div style="display: inline-block;width: 49%;vertical-align: middle;">法定代表人：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 220px;min-height: 24px;">${contract.buyerLegalPerson!''}</span> </div>
         </div>
 </div>
 </body>
