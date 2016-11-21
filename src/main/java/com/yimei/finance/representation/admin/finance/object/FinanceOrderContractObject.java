@@ -71,7 +71,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
 //    @NotBlank(message = "卸货地点 不能为空", groups = {SubmitFinanceContract.class})
     private String unloadedPlace;                                    //卸货地点  
 
-    @Size(min = 1, max = 200, message = "卸货地点简称 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
+    @Size(min = 0, max = 200, message = "卸货地点简称 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
 //    @NotBlank(message = "卸货地点简称 不能为空", groups = {SubmitFinanceContract.class})
     private String unloadedPlaceShort;                               //卸货地点简称  
 
