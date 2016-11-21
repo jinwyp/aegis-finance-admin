@@ -13,7 +13,6 @@ import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Properties;
 
@@ -101,9 +100,9 @@ public class MailServiceImpl {
             helper = new MimeMessageHelper(msg, true, "utf-8");
             helper.setFrom(USERNAME);
             helper.setTo(to);
-            helper.setSubject("来自易煤网的激活邮件");
-            final String date = LocalDate.now().getYear() + "年" + LocalDate.now().getMonthValue() + "月" + LocalDate.now().getDayOfMonth() + "日";
-            String text = null;
+            helper.setSubject(subject);
+//            final String date = LocalDate.now().getYear() + "年" + LocalDate.now().getMonthValue() + "月" + LocalDate.now().getDayOfMonth() + "日";
+//            String text = null;
 //            text = freeMarker.render("/email/email", new HashMap<String, Object>() {{
 //                put("email", to);
 //                put("date", date);
