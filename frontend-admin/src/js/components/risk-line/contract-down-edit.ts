@@ -35,8 +35,8 @@ export class ContractDownEditComponent {
         selectionTxtFontSize: '14px'
     };
 
-    taskId : string = '';
-    status : string = '';
+    taskId : number = 0;
+    status : number = 0;
     contract : Contract = new Contract();
 
     errorMsg : string = '';
@@ -58,10 +58,10 @@ export class ContractDownEditComponent {
     ngOnInit(){
         this.sub = this.activatedRoute.params.subscribe(param=>{
             console.log(param);
-            this.contract.financeId = param['financeId'];
-            this.taskId = param['taskId'];
-            this.status = param['status'];
-            this.getContractById(param['financeId']);
+            this.contract.financeId = Number(param['financeId']);
+            this.taskId = Number(param['taskId']);
+            this.status = Number(param['status']);
+            this.getContractById(this.contract.financeId);
         });
     }
 

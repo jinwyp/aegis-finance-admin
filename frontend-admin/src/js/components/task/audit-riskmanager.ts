@@ -109,9 +109,9 @@ export class AuditRiskManagerComponent {
         this.css.isSubmitted = true;
         if(this.css.isReadOnly){
             if(type===1){
-                this.router.navigate(['/contractup/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId, status : 1}]);
+                this.router.navigate(['/contractup/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId, status : this.currentOrder.upstreamContractStatus}]);
             }else if(type===2){
-                this.router.navigate(['/contractdown/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId, status : 1}]);
+                this.router.navigate(['/contractdown/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId, status : this.currentOrder.downstreamContractStatus}]);
             }
         }else{
             if (isAudit && this.isApprovedRadio ===1 && this.currentTask.applyType === 'MYD' && (this.currentOrder.upstreamContractStatus === 0
@@ -145,9 +145,9 @@ export class AuditRiskManagerComponent {
                 this.task.audit(this.taskId, this.currentTask.applyType, auditType, isAudit, body).then((result)=>{
                     if (result.success){
                         if(type===1){
-                            this.router.navigate(['/contractup/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId, status : 0}]);
+                            this.router.navigate(['/contractup/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId, status : this.currentOrder.upstreamContractStatus}]);
                         }else if(type===2){
-                            this.router.navigate(['/contractdown/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId, status : 0}]);
+                            this.router.navigate(['/contractdown/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId, status : this.currentOrder.downstreamContractStatus}]);
                         }else{
                             if(!isAudit){
                                 this.css.isSubmitted = false;
