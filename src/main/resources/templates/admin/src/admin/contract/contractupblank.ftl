@@ -65,9 +65,19 @@
     <h4>第一条  合同标的：煤炭</h4>
 
     <div style="line-height:24px;">1.1 品种：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span></div>
-    <div style="line-height:24px;margin-top: 10px;">1.2 数量：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span> 吨,<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span></div>
+    <div style="line-height:24px;margin-top: 10px;">1.2 数量：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span> 吨。</div>
+    <div style="line-height:24px;margin-top: 10px;">数量备注说明：</div>
+    <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+    <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+    <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+
     <div style="line-height:24px;margin-top: 10px;">1.3 质量标准</div>
-    <div style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></div>
+    <div style="line-height:24px;margin-top: 10px;">热值：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;"></span> kcal/kg。</div>
+    <div style="line-height:24px;margin-top: 10px;">硫分：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;"></span> %。</div>
+    <div style="line-height:24px;margin-top: 10px;">其它质量标准：</div>
+    <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+    <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+    <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
 
     <h4>第二条  交货地点和交提货方式</h4>
     <div style="line-height:24px;">2.1 交货地点：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span>港/码头（以下简称交货港）</div>
@@ -94,8 +104,12 @@
     <div style="line-height:24px;margin-top: 10px;">6.3 其他的特别约定</div>
     <div style="line-height:24px;margin-top: 10px;">（1）卖方保证其向买方转移的煤炭所有权合法、完整、无瑕疵，即卖方保证其销售给买方的本合同标的煤炭拥有完整的、合法的、无可争辩的所有权，且不存在抵押、留置等任何第三方权利。如遇货物的有关权利（包括但不限于所有权、知识产权）而引起的有关争议，卖方应负责解决并承担由此产生的费用，并赔偿由此给买方造成的所有损失，买方拥有向卖方追索已付货款本金、资金利息（按照日万分之五计息）及其它一切损失的权利。</div>
     <div style="line-height:24px;margin-top: 10px;">（2）合同项下货物在港口存在灭失风险，买卖双方特别约定卖方将煤炭所有权转移给买方后，至买方销售完该批货物前，本合同项下煤炭货物的灭失等风险仍由卖方承担全部责任。</div>
+
     <div style="line-height:24px;margin-top: 10px;">特别约定</div>
-    <div style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></div>
+    <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+    <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+    <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+
 
     <h4>第七条  争议解决</h4>
     <div style="line-height:24px;">7.1 其它未尽事宜，由双方另行协商解决并签订补充协议合并执行。</div>

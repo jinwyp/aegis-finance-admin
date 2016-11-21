@@ -53,7 +53,7 @@
     </tr>
     <tr>
         <td>
-            <div class="table-label textarea-label">备注说明：</div>
+            <div class="table-label textarea-label">数量备注说明：</div>
         </td>
         <td colspan="3"><textarea rows="5" [(ngModel)]="contract.quantityRemark" required placeholder="请对数量进行大致的说明，如没有请填'无'" [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>
@@ -71,7 +71,7 @@
         <td>
             <div class="table-label textarea-label">其他质量标准：</div>
         </td>
-        <td colspan="3"><textarea rows="5" required [(ngModel)]="contract.qualityRemark" placeholder="请描述质量标准" [ngModelOptions]="{standalone: true}"></textarea></td>
+        <td colspan="3"><textarea rows="5" required [(ngModel)]="contract.qualityRemark" placeholder="请描述质量标准,如没有请填'无'" [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>
 
     <tr>
