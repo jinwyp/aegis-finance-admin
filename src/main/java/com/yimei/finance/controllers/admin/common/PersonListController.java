@@ -1,12 +1,12 @@
 package com.yimei.finance.controllers.admin.common;
 
-import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
-import com.yimei.finance.representation.admin.user.UserObject;
+import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
+import com.yimei.finance.representation.admin.user.object.UserObject;
 import com.yimei.finance.representation.common.result.Result;
-import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
+import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
-import org.activiti.engine.IdentityService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,38 +17,38 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController("adminPersonListController")
 public class PersonListController {
     @Autowired
-    private IdentityService identityService;
+    private AdminSession adminSession;
     @Autowired
-    private AdminUserServiceImpl userService;
+    private AdminGroupServiceImpl groupService;
 
     @RequestMapping(value = "/trader", method = RequestMethod.GET)
-    @ApiOperation(value = "获取交易员列表", notes = "获取交易员列表数据", response = UserObject.class, responseContainer = "List")
+    @ApiOperation(value = "获取本公司交易员列表", notes = "获取交易员列表数据", response = UserObject.class, responseContainer = "List")
     public Result getFinanceOnlineTraderListMethod() {
-        return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.OnlineTraderGroup.id).list()));
+        return groupService.findCompanyUserListByGroupId(EnumSpecialGroup.OnlineTraderGroup.id, adminSession.getUser());
     }
 
     @RequestMapping(value = "/salesman", method = RequestMethod.GET)
-    @ApiOperation(value = "获取业务员列表", notes = "获取业务员列表数据", response = UserObject.class, responseContainer = "List")
+    @ApiOperation(value = "获取本公司业务员列表", notes = "获取业务员列表数据", response = UserObject.class, responseContainer = "List")
     public Result getFinanceSalesmanListMethod() {
-        return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SalesmanGroup.id).list()));
+        return groupService.findCompanyUserListByGroupId(EnumSpecialGroup.SalesmanGroup.id, adminSession.getUser());
     }
 
     @RequestMapping(value = "/investigator", method = RequestMethod.GET)
-    @ApiOperation(value = "获取尽调员列表", notes = "获取尽调员列表数据", response = UserObject.class, responseContainer = "List")
+    @ApiOperation(value = "获取本公司尽调员列表", notes = "获取尽调员列表数据", response = UserObject.class, responseContainer = "List")
     public Result getFinanceInvestigatorListMethod() {
-        return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.InvestigatorGroup.id).list()));
+        return groupService.findCompanyUserListByGroupId(EnumSpecialGroup.InvestigatorGroup.id, adminSession.getUser());
     }
 
     @RequestMapping(value = "/supervisor", method = RequestMethod.GET)
-    @ApiOperation(value = "获取监管员列表", notes = "获取监管员列表数据", response = UserObject.class, responseContainer = "List")
+    @ApiOperation(value = "获取本公司监管员列表", notes = "获取监管员列表数据", response = UserObject.class, responseContainer = "List")
     public Result getFinanceSupervisorListMethod() {
-        return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SupervisorGroup.id).list()));
+        return groupService.findCompanyUserListByGroupId(EnumSpecialGroup.SupervisorGroup.id, adminSession.getUser());
     }
 
     @RequestMapping(value = "/riskmanager", method = RequestMethod.GET)
-    @ApiOperation(value = "获取风控人员列表", notes = "获取风控人员列表数据", response = UserObject.class, responseContainer = "List")
+    @ApiOperation(value = "获取本公司风控人员列表", notes = "获取风控人员列表数据", response = UserObject.class, responseContainer = "List")
     public Result getRiskManagerListMethod() {
-        return Result.success().setData(userService.changeUserObject(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.RiskGroup.id).list()));
+        return groupService.findCompanyUserListByGroupId(EnumSpecialGroup.RiskGroup.id, adminSession.getUser());
     }
 
 }

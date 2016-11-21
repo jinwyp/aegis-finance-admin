@@ -17,7 +17,7 @@
 
     <table class="table table-bordered apply-table">
         <tr class="item-max">
-            <td class="td-label">选择融资类型:</td>
+            <td class="td-label">融资类型:</td>
             <td class="td-val finance-types" colspan="3">
                 <div class="finance-type" [class.selected]="currentOrder.applyType==='MYR'">
                     <div><label><input type="radio" disabled [checked]="currentOrder.applyType==='MYR'" >煤易融</label></div>
@@ -82,6 +82,7 @@
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.ourContractCompany||'--'}}</span>
             </td>
         </tr>
+
         <tr *ngIf="currentOrder.applyType==='MYR'" class="item-min">
             <td class="td-label">下游签约单位全称:</td>
             <td class="td-val">
@@ -109,6 +110,7 @@
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.coalSource||'--'}}</span>
             </td>
         </tr>
+
         <tr *ngIf="currentOrder.applyType==='MYD'" class="item-min">
             <td class="td-label">单吨市场报价(元/吨):</td>
             <td class="td-val">
@@ -136,6 +138,7 @@
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.upstreamResource||'--'}}</span>
             </td>
         </tr>
+
         <tr *ngIf="currentOrder.applyType==='MYG'" class="item-min">
             <td class="td-label">中转港口全称:</td>
             <td colspan="3" class="td-val">
@@ -157,11 +160,12 @@
                         <a [href]="'/finance/admin/files?url=' + pic.url" target="_blank">{{pic.name}}</a>
                     </div>
 
-                    <file-upload *ngIf="!css.isReadOnly" (onFinished)="finishedUpload($event)"></file-upload>
+                    <file-upload *ngIf="!css.isReadOnly" [btnText]="btnText" (onFinished)="finishedUpload($event)"></file-upload>
                 </div>
 
             </td>
         </tr>
+
         <tr class="item-min">
             <td class="td-label">备注说明:</td>
             <td class="td-val td-textarea" colspan="3">
@@ -170,14 +174,28 @@
             </td>
         </tr>
 
+        <tr *ngIf="!css.isReadOnly" class="item-max risk-line">
+            <td class="td-label"><span>选择风控线:</span></td>
+            <td colspan="3">
+                <custom-select  [optionList]="riskLines" [(ngModel)]="riskSelectedItem" [ngModelOptions]="{standalone: true}"></custom-select>
+            </td>
+        </tr>
+
+        <tr *ngIf="css.isReadOnly" class="item-min">
+            <td class="td-label">所属风控线:</td>
+            <td colspan="3" class="td-val">
+                <span class="span-read">{{currentOrder.riskCompanyName}}</span>
+            </td>
+        </tr>
+
         <tr *ngIf="!css.isReadOnly" class="item-title">
-        <tr class="item-title" *ngIf="!css.isReadOnly">
             <td class="td-label"><span>审核意见:</span></td>
             <td colspan="3">
                 <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" required [value]="1">审核通过</label>
                 <label><input type="radio" name="isApproved" [(ngModel)]="isApprovedRadio" required [value]="0">审核不通过(融资类型错误)</label>
             </td>
         </tr>
+
         <tr class="item-title" *ngIf="css.isReadOnly">
             <td colspan="4">
                 <span>审核意见: {{currentOrder.approveState}}</span>

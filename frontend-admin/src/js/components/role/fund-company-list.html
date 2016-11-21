@@ -1,0 +1,58 @@
+<div class="item-margin breadcrumb-box">
+    <ol class="breadcrumb">
+        <li>权限设置</li>
+        <li>&gt;</li>
+        <li class="active">资金方管理</li>
+    </ol>
+</div>
+
+<div class="item-margin">
+    <div class="row-search">
+        <!--<div style="display: inline-block; width: 250px;">-->
+            <!--<input style="width: 100%;;margin-left: 0px;" type="text"/>-->
+            <!--<ul style="max-height: 120px;overflow: auto;">-->
+                <!--<li>fdsfdsfsdfds</li>-->
+                <!--<li>fdsfdsfsdfds</li>-->
+                <!--<li>fdsfdsfsdfds</li>-->
+                <!--<li>fdsfdsfsdfds</li>-->
+                <!--<li>fdsfdsfsdfds</li>-->
+                <!--<li>fdsfdsfsdfds</li>-->
+                <!--<li>fdsfdsfsdfds</li>-->
+                <!--<li>fdsfdsfsdfds</li>-->
+                <!--<li>fdsfdsfsdfds</li>-->
+                <!--<li>fdsfdsfsdfds</li>-->
+                <!--<li>fdsfdsfsdfds</li>-->
+                <!--<li>fdsfdsfsdfds</li>-->
+            <!--</ul>-->
+        <!--</div>-->
+        <span>资金方公司名称:</span><input type="text" [(ngModel)]="username">
+        <span>资金方公司帐号:</span><input type="text" [(ngModel)]="name">
+        <!--<span>角色名称:</span><custom-select  [optionList]="groups" [(ngModel)]="selectedItem" [ngModelOptions]="{standalone: true}"></custom-select>-->
+        <button class="btn btn-default" type="button" (click)="getUserList()">查询</button>
+        <button type="button" class="btn btn-default btn-addrole" [routerLink]="['/fundcompany/add']">
+            <span class="glyphicon glyphicon-plus" aria-hidden="true"></span> 添加资金方
+        </button>
+    </div>
+    <table class="table table-striped mt-20 info-table">
+        <tr class="head">
+            <th width="80">资金方公司名称</th>
+            <th width="100">资金方公司帐号</th>
+            <th width="100">操作</th>
+        </tr>
+        <tr class="item" *ngIf="!fundCompanyList||fundCompanyList.length < 1"><td colspan="6">暂无资金方数据数据</td></tr>
+        <tr class="item" *ngFor="let fundCompany of fundCompanyList">
+            <td>{{fundCompany.name}}</td>
+            <td>{{fundCompany.adminName||'--'}}</td>
+            <td class="operation">
+                <span *ngIf="!fundCompany.adminName" class="right-border" [routerLink]="['/users/add', {'companyId' : fundCompany.id}]">绑定帐号</span>
+                <span *ngIf="fundCompany.adminName" class="right-border" (click)="showResetModal(fundCompany.id,'确认重置用户密码吗?')">重置密码</span>
+                <span [routerLink]="['/fundcompany', fundCompany.id, 'edit']">编辑</span>
+                <!--<span *ngIf="user.operateAuthority" (click)="showDelModal(user.id,'确认删除该用户吗?')">删除</span>-->
+            </td>
+        </tr>
+    </table>
+    <pagination [pageObj]="pageObj" (pageClick)="getPageData($event)" ></pagination>
+</div>
+<custom-modal [(ngModel)]="isHiddenDelModal" [modalShowText]="modalShowText" (cancel)="hiddenModal()" (confirm)="delUser()"></custom-modal>
+<custom-modal [(ngModel)]="isHiddenResetModal" [modalShowText]="modalShowText" (cancel)="hiddenModal()" (confirm)="resetPwd()"></custom-modal>
+<custom-modal [(ngModel)]="isHiddenMsgModal" [modalShowText]="modalShowText" (cancel)="hiddenModal()" (confirm)="hiddenModal()"></custom-modal>

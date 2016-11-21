@@ -1,0 +1,1 @@
+ALTER TABLE t_finance_order_riskmanager_info MODIFY `edit_contract` INT(11) DEFAULT NULL COMMENT '是否修改合同';

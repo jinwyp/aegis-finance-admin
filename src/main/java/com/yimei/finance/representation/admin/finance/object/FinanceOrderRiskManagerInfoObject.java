@@ -1,9 +1,9 @@
 package com.yimei.finance.representation.admin.finance.object;
 
-import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceRiskManagerInfo;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceRiskManagerInfo;
 import com.yimei.finance.representation.common.base.BaseObject;
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -37,11 +37,16 @@ public class FinanceOrderRiskManagerInfoObject extends BaseObject implements Ser
 
     @Size(max = 5000, message = "补充材料说明不能超过 {max} 个字符", groups = {SaveFinanceRiskManagerInfo.class, SubmitFinanceRiskManagerInfo.class})
     private String supplyMaterialIntroduce;                          //补充材料说明
-    private int editContract;                                        //编辑合同     1: 需要编辑, 0: 不需要编辑
     private Integer approveStateId;                                  //审批状态Id  0:审核不通过, 1:审核通过
     private String approveState;                                     //审批状态
+
+    private int upstreamContractStatus;                              //上游合同状态, 0:未填写,  2:已经提交
+    private int downstreamContractStatus;                            //下游合同状态, 0:未填写,  2:已经提交
+
     List<AttachmentObject> attachmentList1;                          //附件列表
     List<AttachmentObject> attachmentList2;                          //补充材料/附件列表
+    List<AttachmentObject> attachmentList3;                          //上游合同附件
+    List<AttachmentObject> attachmentList4;                          //下游合同附件
 
 
 }

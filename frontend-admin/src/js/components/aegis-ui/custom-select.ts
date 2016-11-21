@@ -36,7 +36,7 @@ export class CustomSelectComponent implements ControlValueAccessor{
 
 
     ngOnInit() {
-        console.log(this.innerSelectedItem);
+        // console.log(this.innerSelectedItem);
     }
 
     //get accessor

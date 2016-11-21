@@ -1,6 +1,6 @@
 package com.yimei.finance.config.session;
 
-import com.yimei.finance.representation.admin.user.UserObject;
+import com.yimei.finance.representation.admin.user.object.UserObject;
 import org.springframework.context.annotation.Scope;
 import org.springframework.context.annotation.ScopedProxyMode;
 import org.springframework.stereotype.Component;

@@ -1,0 +1,1 @@
+module.exports = require("npm:webuploader@0.1.8/dist/webuploader.fis.js");

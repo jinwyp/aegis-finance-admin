@@ -24,4 +24,14 @@ public class NumberServiceImpl {
         else numsStr = "000" + nums;
         return type + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + numsStr;
     }
+
+    public String generateContractNo(String type) {
+        Number number = new Number(type, LocalDate.now());
+        numberRepository.save(number);
+        int nums = numberRepository.findByTypeAndCreateDateAndIdLessThan(type, LocalDate.now(), number.getId()+1).size();
+        String numsStr = "";
+        if (nums > 9) numsStr = String.valueOf(nums);
+        else numsStr = "0" + nums;
+        return type + "-" + LocalDate.now().format(DateTimeFormatter.ofPattern("yyyyMMdd")) + "-" + numsStr;
+    }
 }

@@ -13,6 +13,8 @@ import { routing, homePageRouterProviders } from './home.routes';
 import { UserService, UserGroupService } from '../service/user';
 import { TaskService } from '../service/task';
 import { FileUploadService } from '../service/file-upload';
+import { RiskService } from "../service/risk";
+import { ContractService } from "../service/contract";
 
 
 import { FileUploadComponent } from '../components/aegis-ui/file-upload';
@@ -51,6 +53,11 @@ import { AuditInvestigatorComponent } from '../components/task/audit-investigato
 import { AuditSupervisorComponent } from '../components/task/audit-supervisor';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
 import { MaterialDetailComponent} from "../components/task/material-detail";
+import { AddRiskLineComponent } from "../components/risk-line/add-risk-line";
+import { FundCompanyListComponent } from "../components/role/fund-company-list";
+import { RiskLineListComponent } from "../components/risk-line/risk-line-list";
+import { ContractUpEditComponent } from "../components/risk-line/contract-up-edit";
+import { ContractDownEditComponent } from "../components/risk-line/contract-down-edit";
 
 
 
@@ -64,9 +71,10 @@ import { MaterialDetailComponent} from "../components/task/material-detail";
         UserListComponent, AddUserComponent, UserInfoComponent,
         TaskListComponent, AssignPersonComponent, ProcessTabComponent,
         AuditTraderComponent, AuditSalesmanComponent, AuditInvestigatorComponent, AuditSupervisorComponent, AuditRiskManagerComponent,
-        CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent, MaterialDetailComponent
+        CustomSelectComponent,CustomModalComponent, CustomCheckboxComponent, MaterialDetailComponent, FundCompanyListComponent,
+        RiskLineListComponent, AddRiskLineComponent, ContractUpEditComponent, ContractDownEditComponent
     ],
-    providers: [ FileUploadService, homePageRouterProviders, TaskService, UserService, UserGroupService ],
+    providers: [ FileUploadService, homePageRouterProviders, TaskService, UserService, UserGroupService, RiskService, ContractService ],
     bootstrap: [ HomeComponent ]
 })
 export class HomeModule { }

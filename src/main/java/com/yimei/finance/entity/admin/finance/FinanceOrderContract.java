@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.sql.Date;
 
 @Entity
 @Table(name = "t_finance_order_contract")
@@ -25,11 +25,35 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     @Column(name = "contract_no")
     private String contractNo;                                       //合同编号  
 
+    @Column(name = "upstream_contract_no")
+    private String upstreamContractNo;                               //上游合同编号
+
+    @Column(name = "finance_source_id")
+    private String financeSourceId;                                  //流水号，编号
+
+    @Column(name = "apply_user_id")
+    private Long applyUserId;                                        //申请人用户id
+
+    @Column(name = "apply_user_name")
+    private String applyUserName;                                    //申请人姓名
+
+    @Column(name = "apply_user_phone")
+    private String applyUserPhone;                                   //申请人手机号
+
+    @Column(name = "apply_company_id")
+    private Long applyCompanyId;                                     //申请人公司id
+
+    @Column(name = "apply_company_name")
+    private String applyCompanyName;                                 //申请公司名称
+
+    @Column(name = "finance_type")
+    private String financeType;                                      //金融类型(煤易融：MYR 煤易贷: MYD 煤易购: MYG)
+
     @Column(name = "type")
-    private int type;                                                //合同类型
+    private Integer type;                                            //合同类型
 
     @Column(name = "type_name")
-    private int typeName;                                            //合同类型名称
+    private String typeName;                                         //合同类型名称
 
     @Column(name = "sign_place")
     private String signPlace;                                        //签订地点  
@@ -67,6 +91,12 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     @Column(name = "quantity_remark")
     private String quantityRemark;                                   //数量备注/备注说明  
 
+    @Column(name = "coal_index_ncv")
+    private Integer coalIndex_NCV;                                  //煤炭指标   - 热值
+
+    @Column(name = "coal_index_rs")
+    private BigDecimal coalIndex_RS;                                 //煤炭指标   - 硫分
+
     @Column(name = "coal_index")
     private String coalIndex;                                        //煤炭指标  
 
@@ -75,6 +105,9 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
 
     @Column(name = "quantity_acceptance_criteria")
     private String quantityAcceptanceCriteria;                       //数量验收标准  
+
+    @Column(name = "quantity_acceptance_basis")
+    private BigDecimal quantityAcceptanceBasis;                      //数量验收依据-吨数
 
     @Column(name = "quality_acceptance_criteria")
     private String qualityAcceptanceCriteria;                        //质量验收标准  
@@ -91,6 +124,9 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     @Column(name = "cash_deposit")
     private BigDecimal cashDeposit;                                  //保证金
 
+    @Column(name = "cash_deposit_capital")
+    private String cashDepositCapital;
+
     @Column(name = "seller_receipt_price")
     private BigDecimal sellerReceiptPrice;                           //卖家开票价格  
 
@@ -100,8 +136,14 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     @Column(name = "seller_receipt_money")
     private BigDecimal sellerReceiptMoney;                           //卖家开票金额  
 
+    @Column(name = "seller_receipt_money_capital")
+    public String sellerReceiptMoneyCapital;
+
     @Column(name = "buyer_settlement_money")
     private BigDecimal buyerSettlementMoney;                         //买家已经结清金额  
+
+    @Column(name = "buyer_settlement_money_capital")
+    public String buyerSettlementMoneyCapital;
 
     @Column(name = "special_remark")
     private String specialRemark;                                    //特别约定/特殊说明  
@@ -159,5 +201,8 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
 
     @Column(name = "seller_bank_account")
     private String sellerBankAccount;                                //卖家银行账号    
+
+    @Column(name = "coal_supplier")
+    private String coalSupplier;                                     //供应商
 
 }

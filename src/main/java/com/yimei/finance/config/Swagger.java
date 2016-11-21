@@ -36,6 +36,7 @@ public class Swagger {
                     new Tag("admin-api-user", "管理后台 RESTful API 用户登录与信息"),
                     new Tag("admin-api-permission", "管理后台 RESTful API 权限"),
                     new Tag("admin-api-group", "管理后台 RESTful API 用户组"),
+                    new Tag("admin-api-company", "管理后台 RESTful API 业务线"),
                     new Tag("admin-api-flow", "管理后台 RESTful API 融资流程"),
                     new Tag("admin-api-flow-myr", "管理后台 RESTful API 煤易融相关接口"),
                     new Tag("admin-api-flow-myd", "管理后台 RESTful API 煤易贷相关接口"),

@@ -42,4 +42,12 @@ public class User implements Serializable {
         this.securephone = securephone;
     }
 
+    public User(int id, String securephone, int companyId, String companyName, String verifystatus) {
+        this.id = id;
+        this.securephone = securephone;
+        this.companyId = companyId;
+        this.companyName = companyName;
+        this.verifystatus = verifystatus;
+    }
+
 }

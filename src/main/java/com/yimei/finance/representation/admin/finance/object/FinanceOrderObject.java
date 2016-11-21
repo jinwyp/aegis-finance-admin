@@ -1,13 +1,13 @@
 package com.yimei.finance.representation.admin.finance.object;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.object.validated.CreateFinanceOrder;
 import com.yimei.finance.representation.admin.finance.object.validated.SaveFinanceOrder;
 import com.yimei.finance.representation.admin.finance.object.validated.SubmitFinanceOrder;
 import com.yimei.finance.representation.common.base.BaseObject;
 import com.yimei.finance.representation.common.enums.EnumCommonString;
+import com.yimei.finance.representation.common.file.AttachmentObject;
 import io.swagger.annotations.ApiModel;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -99,14 +99,21 @@ public class FinanceOrderObject extends BaseObject implements Serializable {
     private String sourceId;                                         //流水号，编号
     private String applyUserName;                                    //申请人姓名
     private String applyUserPhone;                                   //申请人手机号
+    private Long applyCompanyId;                                     //申请人公司id
     private String applyCompanyName;                                 //申请公司名称
     @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     private Date endTime;                                            //结束时间
+    @NotBlank(message = "风控线不能为空", groups = {SubmitFinanceOrder.class})
+    private Long riskCompanyId;                                      //风控线id
+    private String riskCompanyName;                                  //风控线名称
     private List<AttachmentObject> attachmentList1;                  //附件列表
 
     public String getApplyTypeName() {
         return EnumFinanceOrderType.getName(EnumFinanceOrderType.valueOf(applyType));
     }
 
+    public FinanceOrderObject(String applyType) {
+        this.applyType = applyType;
+    }
 
 }

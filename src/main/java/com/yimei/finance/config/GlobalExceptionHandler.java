@@ -80,7 +80,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ResponseBody
     public Result process404Error(NotFoundException ex) {
-        log.error("404 Exception: ", ex);
+        log.error("404 NotFoundException : ", ex);
         return Result.error(404, ex.getMessage());
     }
 
@@ -88,7 +88,7 @@ public class GlobalExceptionHandler {
     @ResponseStatus(value = HttpStatus.NOT_FOUND)
     @ResponseBody
     public Result requestHandlingNoHandlerFound(NoHandlerFoundException ex, HttpServletRequest request, HttpServletResponse response) throws IOException {
-        log.error("404 Exception: ", ex);
+        log.error("404 NoHandlerFoundException: ", ex);
         String AJAX = request.getHeader("X-Requested-With");
         String currentUrl = request.getRequestURL().toString();
 

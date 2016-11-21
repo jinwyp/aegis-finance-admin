@@ -1,4 +1,5 @@
 @import '../helpers/_variables.scss';
+@import '../layout/leftmenu.scss';
 $assetPath : "/static/site";
 
 $borderColor:#e4e4e4;
@@ -8,53 +9,6 @@ $borderColor:#e4e4e4;
   .financeManage{
     width: 1200px;
     margin: 0 auto;
-    //侧边栏样式开始
-    .finance_sideBar{
-      width: 130px;
-      background: #ffffff;
-      padding: 26px 0 0 26px;
-      min-height: 400px;
-      float: left;
-      h3{
-        font-size: 18px;
-        font-weight: bold;
-        margin-bottom: 25px;
-      }
-      ul{
-        li{
-          margin-bottom: 25px;
-          &:hover{
-            a{
-              color: #00b7ec;
-            }
-            span{
-              background-position: 0px center;
-            }
-          }
-          a{
-            color: #333333;
-            text-decoration: none;
-          }
-          span{
-            width: 8px;
-            height: 10px;
-            display: inline-block;
-            margin-left: 10px;
-            background: url("#{$assetPath}/css/images/finance/sideBar-trigle.png") no-repeat -8px center;
-          }
-        }
-        .active{
-          a{
-            color: #00b7ec;
-          }
-          span{
-            background-position: 0px center;
-          }
-        }
-      }
-    }
-    //侧边栏样式结束
-
     //我的申请右侧内容样式开始
     .financeCon{
       background: #ffffff;
@@ -205,18 +159,27 @@ $borderColor:#e4e4e4;
               }
             }
           }
-          .back{
+          .btn{
             width: 180px;
             height: 40px;
-            line-height: 40px;
+            line-height: 25px;
             text-align: center;
             display: inline-block;
             background: #aabfc5;
             color: #ffffff;
             border-radius: 2px;
             font-size: 16px;
-            margin: 50px 0 100px 174px;
+            margin: 50px 0 100px 50px;
             text-decoration: none;
+            &:hover{
+              opacity: 0.7;
+            }
+          }
+          .back{
+            background: #aabfc5;
+          }
+          .blue{
+            background-color: #1fb8ea;
           }
         }
 

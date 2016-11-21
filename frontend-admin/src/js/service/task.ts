@@ -151,6 +151,9 @@ class Task {
     name :string;
     sourceId :string;
 
+    riskCompanyId : number;
+    riskCompanyName : string;
+
     processInstanceId : string;
     taskDefinitionKey : string;
     startTime : string;
@@ -167,6 +170,9 @@ class Task {
     currentName : string;
     currentTaskDefinitionKey : string;
 
+    downstreamContractStatus : number;
+    upstreamContractStatus : number;
+
 
     // finance Order 字段
     applyType : string;
@@ -177,6 +183,8 @@ class Task {
     taskList : Task[] ;
     attachmentList1 : Array<any>;
     attachmentList2 : Array<any>;
+    attachmentList3 : Array<any>;
+    attachmentList4 : Array<any>;
 
     //公用字段
     financingAmount : number;               //拟融资金额（单位：万元）

@@ -25,13 +25,16 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     private String sourceId;                                         //流水号，编号
 
     @Column(name = "user_id")
-    private int userId;                                              //申请人用户id
+    private Long userId;                                              //申请人用户id
 
     @Column(name = "apply_user_name")
     private String applyUserName;                                    //申请人姓名
 
     @Column(name = "apply_user_phone")
     private String applyUserPhone;                                   //申请人手机号
+
+    @Column(name = "apply_company_id")
+    private Long applyCompanyId;                                     //申请人公司id
 
     @Column(name = "apply_company_name")
     private String applyCompanyName;                                 //申请公司名称
@@ -96,5 +99,7 @@ public class FinanceOrder extends BaseEntity implements Serializable {
     @Column(name = "end_time")
     private Date endTime;                                            //结束时间
 
+    @Column(name = "risk_company_id")
+    private Long riskCompanyId;                                      //风控线id
 
 }

@@ -36,6 +36,8 @@ export class MaterialDetailComponent {
     currentOrder : Task = new Task();
     attachmentList : Array<any> = [];
 
+    btnText : string = '点击上传';
+
     constructor(
         private activatedRoute: ActivatedRoute,
         private task: TaskService

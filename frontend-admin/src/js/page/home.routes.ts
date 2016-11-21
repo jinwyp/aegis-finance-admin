@@ -20,7 +20,12 @@ import { AuditSalesmanComponent } from '../components/task/audit-salesman';
 import { AuditInvestigatorComponent } from '../components/task/audit-investigator';
 import { AuditSupervisorComponent } from '../components/task/audit-supervisor';
 import { AuditRiskManagerComponent } from '../components/task/audit-riskmanager';
-import {MaterialDetailComponent} from "../components/task/material-detail";
+import { MaterialDetailComponent } from "../components/task/material-detail";
+import { AddRiskLineComponent } from "../components/risk-line/add-risk-line";
+import { FundCompanyListComponent } from "../components/role/fund-company-list";
+import { RiskLineListComponent } from "../components/risk-line/risk-line-list";
+import { ContractUpEditComponent } from "../components/risk-line/contract-up-edit";
+import { ContractDownEditComponent } from "../components/risk-line/contract-down-edit";
 
 const routes: Routes = [
     {
@@ -65,9 +70,24 @@ const routes: Routes = [
         data: { routeType : 'list', title: '用户列表' }
     },
     {
+        path: 'fundcompanys',
+        component: FundCompanyListComponent,
+        data: { routeType : 'list', title: '资金方公司列表' }
+    },
+    {
+        path: 'risklines',
+        component: RiskLineListComponent,
+        data: { routeType : 'list', title: '风控线列表' }
+    },
+    {
         path: 'users/add',
         component: AddUserComponent,
         data: { routeType : 'add', title: '用户 - 添加' }
+    },
+    {
+        path: 'users/:id/edit',
+        component: AddUserComponent,
+        data: { routeType : 'edit', title: '用户 - 编辑' }
     },
     {
         path: 'users/:id',
@@ -75,30 +95,34 @@ const routes: Routes = [
         data: { routeType : 'list', title: '用户 - 查看信息'}
     },
     {
-        path: 'users/:id/edit',
-        component: AddUserComponent,
-        data: { routeType : 'edit', title: '用户 - 编辑' }
+        path: 'riskline/add',
+        component: AddRiskLineComponent,
+        data: { routeType : 1, title: '风控线 - 添加' }
     },
-
-
+    {
+        path: 'riskline/:id/edit',
+        component: AddRiskLineComponent,
+        data: { routeType : 2, title: '风控线 - 编辑' }
+    },
+    {
+        path: 'riskline/:id',
+        component: AddRiskLineComponent,
+        data: { routeType : 3, title: '风控线 - 查看信息'}
+    },
     {
         path: 'tasks/pending',
         component: TaskListComponent,
         data: { routeType : 'pending', title: '待办任务' }
     },
-
     {
         path: 'tasks/all',
         component: TaskListComponent,
         data: {routeType : 'all', title: '全部任务' }
     },
-
     {
         path: 'tasks/:id/assign',
         component: AssignPersonComponent
     },
-
-
     {
         path: 'tasks/:id/trader',
         component: AuditTraderComponent,
@@ -157,6 +181,22 @@ const routes: Routes = [
         path: 'tasks/:id/riskmanager/info',
         component: AuditRiskManagerComponent,
         data: { routeType : 'info', title: '任务 - 查看详情' }
+    },
+    {
+        path: 'contractup/edit',
+        component: ContractUpEditComponent
+    },
+    {
+        path: 'contractdown/edit',
+        component: ContractDownEditComponent
+    },
+    {
+        path: 'contractup/:id/edit',
+        component: ContractUpEditComponent
+    },
+    {
+        path: 'contractdown/:id/edit',
+        component: ContractDownEditComponent
     },
     {
         path: '**',

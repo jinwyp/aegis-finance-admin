@@ -1,6 +1,6 @@
 package com.yimei.finance.representation.admin.finance.enums;
 
-import com.yimei.finance.representation.admin.user.EnumSpecialGroup;
+import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
 
 public enum EnumFinanceAssignType {
     assignOnlineTrader(EnumSpecialGroup.OnlineTraderGroup.id, EnumFinanceEventType.onlineTraderAudit.toString(), "分配线上交易员"),

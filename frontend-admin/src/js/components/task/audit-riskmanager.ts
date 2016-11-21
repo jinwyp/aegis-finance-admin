@@ -4,7 +4,7 @@
 
 
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { Location } from '@angular/common';
 
 import { Subscription } from 'rxjs/Subscription';
@@ -26,7 +26,7 @@ export class AuditRiskManagerComponent {
 
     currentUserSession : User = new User();
 
-    isApprovedRadio : number;
+    isApprovedRadio : number = -1;
 
     css = {
         isSubmitted : false,
@@ -46,11 +46,15 @@ export class AuditRiskManagerComponent {
     currentTask : Task = new Task();
     currentOrder : Task = new Task();
 
+    btnText1 : string = '点击上传';
+    btnText2 : string = '+ 添加附件';
+
     constructor(
-        private location: Location,
-        private activatedRoute: ActivatedRoute,
-        private task: TaskService,
-        private user: UserService
+        private location : Location,
+        private router : Router,
+        private activatedRoute : ActivatedRoute,
+        private task : TaskService,
+        private user : UserService
     ) {}
 
 
@@ -99,43 +103,66 @@ export class AuditRiskManagerComponent {
         });
     }
 
-    audit (isAudit : boolean){
+    audit (isAudit : boolean, type : number){
         this.css.ajaxErrorHidden = true;
         this.css.ajaxSuccessHidden = true;
         this.css.isSubmitted = true;
+        if(this.css.isReadOnly){
+            if(type===1){
+                this.router.navigate(['/contractup/edit',{financeId : this.currentOrder.financeId||0, taskId : this.taskId||0, status : this.currentOrder.upstreamContractStatus||0}]);
+            }else if(type===2){
+                this.router.navigate(['/contractdown/edit',{financeId : this.currentOrder.financeId||0, taskId : this.taskId||0, status : this.currentOrder.downstreamContractStatus||0}]);
+            }
+        }else{
+            if (isAudit && this.isApprovedRadio ===1 && this.currentTask.applyType === 'MYD' && (this.currentOrder.upstreamContractStatus === 0
+                || this.currentOrder.downstreamContractStatus === 0
+                || this.currentOrder.upstreamContractStatus === null
+                || this.currentOrder.downstreamContractStatus === null)) {
+                this.css.ajaxErrorHidden = false;
+                this.errorMsg            = '请编辑合同信息';
+                this.css.isSubmitted     = false;
+                return;
+            }
 
-        let body : any = {
-            t : {
-                pass : this.isApprovedRadio,
-                need : this.isApprovedRadio === 2 ? 1 : 0
-            },
-            u : this.currentOrder
-        };
+            let body : any = {
+                t : {
+                    pass : this.isApprovedRadio,
+                    need : this.isApprovedRadio === 2 ? 1 : 0
+                },
+                u : this.currentOrder
+            };
 
-        if (this.isApprovedRadio === 2) {
-            this.currentOrder.needSupplyMaterial = 1;
-            body.t.pass = 0;
-        }
+            if (this.isApprovedRadio === 2) {
+                this.currentOrder.needSupplyMaterial = 1;
+                body.t.pass = 0;
+            }
 
 
-        let auditType : string = '';
-        if (this.currentTask.taskDefinitionKey === TaskStatus.riskManagerAudit) auditType = 'riskmanager'; // 风控人员审核
+            let auditType : string = '';
+            if (this.currentTask.taskDefinitionKey === TaskStatus.riskManagerAudit) auditType = 'riskmanager'; // 风控人员审核
 
-        if (this.currentTask.taskDefinitionKey && auditType) {
-            this.task.audit(this.taskId, this.currentTask.applyType, auditType, isAudit, body).then((result)=>{
-                if (result.success){
-                    if(!isAudit){
+            if (this.currentTask.taskDefinitionKey && auditType) {
+                this.task.audit(this.taskId, this.currentTask.applyType, auditType, isAudit, body).then((result)=>{
+                    if (result.success){
+                        if(type===1){
+                            this.router.navigate(['/contractup/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId, status : this.currentOrder.upstreamContractStatus}]);
+                        }else if(type===2){
+                            this.router.navigate(['/contractdown/edit',{financeId : this.currentOrder.financeId, taskId : this.taskId, status : this.currentOrder.downstreamContractStatus}]);
+                        }else{
+                            if(!isAudit){
+                                this.css.isSubmitted = false;
+                            }
+                            this.css.ajaxSuccessHidden=false;
+                            setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
+                        }
+                    }else{
                         this.css.isSubmitted = false;
+                        this.css.ajaxErrorHidden=false;
+                        this.errorMsg = result.error.message;
                     }
-                    this.css.ajaxSuccessHidden=false;
-                    setTimeout(() => this.css.ajaxSuccessHidden = true, 5000);
-                }else{
-                    this.css.isSubmitted = false;
-                    this.css.ajaxErrorHidden=false;
-                    this.errorMsg = result.error.message;
-                }
 
-            });
+                });
+            }
         }
 
     }
@@ -149,7 +176,29 @@ export class AuditRiskManagerComponent {
             "type": event.value.type,
             "processInstanceId": this.currentTask.processInstanceId,
             "taskId": this.currentTask.id
-        })
+        });
+    }
+
+    finishedUpload3 (event) {
+        if (!this.currentOrder.attachmentList3) {this.currentOrder.attachmentList3 = []}
+        this.currentOrder.attachmentList3.push({
+            "url": event.value.url,
+            "name": event.value.name,
+            "type": event.value.type,
+            "processInstanceId": this.currentTask.processInstanceId,
+            "taskId": this.currentTask.id
+        });
+    }
+
+    finishedUpload4 (event) {
+        if (!this.currentOrder.attachmentList4) {this.currentOrder.attachmentList4 = []}
+        this.currentOrder.attachmentList4.push({
+            "url": event.value.url,
+            "name": event.value.name,
+            "type": event.value.type,
+            "processInstanceId": this.currentTask.processInstanceId,
+            "taskId": this.currentTask.id
+        });
     }
 
     delAttachmentList1(file, isAttachmentList2 : boolean = false){
@@ -164,6 +213,28 @@ export class AuditRiskManagerComponent {
             }
         }
     }
+
+    delAttachmentList(file, attachmentListType : number){
+        let index = -1;
+        if(attachmentListType===1){
+            index = this.currentOrder.attachmentList1.indexOf(file);
+        }else if(attachmentListType===3){
+            index = this.currentOrder.attachmentList3.indexOf(file);
+        }else if(attachmentListType===4){
+            index = this.currentOrder.attachmentList4.indexOf(file);
+        }
+        if(index<0){
+            return;
+        }
+        if(attachmentListType===1){
+            this.currentOrder.attachmentList1.splice(index, 1);
+        }else if(attachmentListType===3){
+            this.currentOrder.attachmentList3.splice(index, 1);
+        }else if(attachmentListType===4){
+            this.currentOrder.attachmentList4.splice(index, 1);
+        }
+    }
+
 
 
     goBack() {

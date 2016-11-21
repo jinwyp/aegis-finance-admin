@@ -1,8 +1,16 @@
 package com.yimei.finance;
 
+import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
+import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
+import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
+import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
+import com.yimei.finance.service.site.finance.SiteFinanceOrderServiceImpl;
 import com.yimei.finance.service.tpl.JpaRollbackDemo;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.TaskService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,20 +18,70 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
+import java.sql.Date;
+import java.util.function.BinaryOperator;
+
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = AegisFinanceApplication.class)
 public class AegisFinanceAdminApplicationTests {
-
-	@Test
-	public void contextLoads() {
-	}
-
 	@Autowired
 	private JpaRepositoryDemo userRepository;
-
     @Autowired
     private JpaRollbackDemo jpaRollbackDemo;
+	@Autowired
+	private AdminGroupServiceImpl groupService;
+	@Autowired
+	private AdminUserServiceImpl userService;
+	@Autowired
+	private IdentityService identityService;
+	@Autowired
+	private FinanceOrderServiceImpl financeOrderService;
+	@Autowired
+	private AdminSession adminSession;
+	@Autowired
+	private TaskService taskService;
+	@Autowired
+	private HistoryService historyService;
+	@Autowired
+	private SiteFinanceOrderServiceImpl siteFinanceOrderService;
 
+	@Test
+	public void test001() {
+		System.out.println(" ------------------------------------ ");
+		System.out.println(" ------------------------------------ ");
+		System.out.println(" ------------------------------------ ");
+		System.out.println(" ------------------------------------ ");
+		System.out.println(" ------------------------------------ ");
+		Date aaa = new Date(System.currentTimeMillis());
+		System.out.println(" ------------------------------------ " + (aaa.toLocalDate().getYear()));
+
+		BinaryOperator<Long> add = (x, y) -> x + y;
+
+
+
+
+//		Page page = new Page();
+//		UserObject user = new UserObject("14", 0L);
+
+//
+//        List<String> keyList = identityService.getUserInfoKeys("14");
+//        System.out.println(" ------- " + keyList);
+//
+//        System.out.println(" ------------------------------------- ");
+//        System.out.println(" ------------------------------------- ");
+//        System.out.println(" ------------------------------------- ");
+
+//		List<Attachment> attachmentList = taskService.getTaskAttachments("c24upstream");
+
+//		FinanceOrderObject financeOrderObject = new FinanceOrderObject("MYD");
+//
+//		User user = new User(1, "15618177577", 1, "易煤网", "审核通过");
+//		for (int i=0; i<100; i++) {
+//			siteFinanceOrderService.customerApplyFinanceOrder(financeOrderObject, user);
+//		}
+
+
+	}
 
     @Test
     public void testRollback() {

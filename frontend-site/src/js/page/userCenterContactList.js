@@ -7,6 +7,7 @@ import avalon from 'avalon2';
 import 'js/common-libs/pagination';
 import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 
+import {getContractList} from 'js/service/http.js';
 
 
 var contactList = () => {
@@ -33,7 +34,7 @@ var contactList = () => {
             totalPages:1,
             changePageNo : function(page){
                 vm.searchQuery.page = page;
-                getFinanceList({
+                getList({
                     applyType : applyTypeList.find(type => { return type.text === vm.searchQuery.applyType}).name,
                     sourceId : vm.searchQuery.sourceId,
                     page : vm.searchQuery.page
@@ -42,13 +43,12 @@ var contactList = () => {
         },
 
 
-
         clickType : (value)=>{
             vm.searchQuery.applyType = value;
         },
 
         searchFinanceOrder : (event)=>{
-            getFinanceList({
+            getList({
                 applyType : applyTypeList.find(type => { return type.text === vm.searchQuery.applyType}).name,
                 sourceId : vm.searchQuery.sourceId,
                 page : vm.searchQuery.page
@@ -59,27 +59,20 @@ var contactList = () => {
 
 
     //查询
-    var getFinanceList = (query) => {
+    var getList = (query) => {
         console.log('查询参数:', query);
-        var params = $.extend({}, query);
 
-        $.ajax({
-            url      : '/api/financing/list',
-            method   : 'GET',
-            dataType : 'json',
-            data     : params,
-            success  : (data)=> {
-                if (data.success){
-                    vm.contactList = data.data;
-                    vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
-                }else{
+        getContractList(query).done(function(data, textStatus, jqXHR) {
+            if (data.success){
+                vm.contactList = data.data;
+                vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
+            }else{
 
-                }
             }
-        });
+        })
     };
 
-    getFinanceList();
+    getList();
 
 
 

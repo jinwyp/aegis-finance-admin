@@ -11,7 +11,6 @@ import { Subscription } from 'rxjs/Subscription';
 
 import { Task, TaskService, TaskStatus } from '../../service/task';
 import { User, UserService } from '../../service/user';
-import {isNumber} from "@angular/core/testing/facade/lang";
 
 
 
@@ -39,7 +38,8 @@ export class AuditInvestigatorComponent {
         height: '31px',
         width: '200px',
         inline: false,
-        disableUntil: {year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+1, day: this.currentDate.getDate()-1},
+        // disableUntil: {year: this.currentDate.getFullYear(), month: this.currentDate.getMonth()+1, day: this.currentDate.getDate()-1},
+        disableUntil: {year: 1900, month: 1, day: 1},
         selectionTxtFontSize: '14px'
     };
 
@@ -64,6 +64,8 @@ export class AuditInvestigatorComponent {
     currentOrder : Task = new Task();
 
     isApprovedRadio : number = -1;
+
+    btnText : string = '点击上传';
 
     constructor(
         private location: Location,
@@ -194,7 +196,7 @@ export class AuditInvestigatorComponent {
             "type": event.value.type,
             "processInstanceId": this.currentTask.processInstanceId,
             "taskId": this.currentTask.id
-        })
+        });
     }
 
     delAttachmentList1(file, isAttachmentList2 : boolean = false){

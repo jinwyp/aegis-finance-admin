@@ -12,6 +12,8 @@ import  {jQuery as $} from 'js/jquery-plugin/bootstrap.js';
 
 var cangyaList = () => {
 
+    var urlPrefix = 'http://192.168.1.180:2403/orders';
+
     // var applyTypeList = [
     //     {'name' : '', text : '全部'},
     //     {'name' : 'MYR', text : '煤易融'},
@@ -30,6 +32,7 @@ var cangyaList = () => {
         {'name' : '10', text : '放款审核未通过'},
         {'name' : '10', text : '货权已处置'},
     ];
+
     var vm = avalon.define({
         $id   : 'cangyaList',
         cangyaList : [],
@@ -87,21 +90,21 @@ var cangyaList = () => {
 
     //查询
     var getFinanceList = (query) => {
-        console.log('查询参数:', query);
+        // console.log('查询参数:', query);
         var params = $.extend({}, query);
 
         $.ajax({
-            url      : '/api/financing/list',
+            url      : urlPrefix + '?startDate=JR201610170001', //http://localhost:2403/orders?sourceId=JR201610170001&requestUser=user1
             method   : 'GET',
             dataType : 'json',
             data     : params,
-            success  : (data)=> {
-                if (data.success){
-                    vm.cangyaList = data.data;
-                    vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
-                }else{
-
-                }
+            success  : (data)=> {vm.cangyaList = data;
+                // if (data.success){
+                //
+                //     vm.configPagination.totalPages = Math.ceil(data.meta.total / data.meta.count);
+                // }else{
+                //
+                // }
             }
         });
     };
@@ -145,7 +148,6 @@ var cangyaList = () => {
     $('#excel').click(()=>{
         location.href="/finance/user/financing/excel"
     })
-
 
 
 

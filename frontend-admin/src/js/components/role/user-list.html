@@ -22,6 +22,7 @@
             <th width="70">用户姓名</th>
             <th width="120">所在部门</th>
             <th >所属角色</th>
+            <th *ngIf="css.isAdminUser" width="130">所属风控线</th>
             <th width="130">最后一次登录</th>
             <th width="180">操作</th>
         </tr>
@@ -31,6 +32,7 @@
             <td>{{user.name||'--'}}</td>
             <td>{{user.department||'--'}}</td>
             <td><span *ngFor="let usergroup of user.groupList">{{usergroup.name}}&nbsp;</span></td>
+            <td *ngIf="css.isAdminUser">{{user.companyName || '--'}}</td>
             <td>{{user.lastLoginTime || '--'}}</td>
             <td class="operation">
                 <span *ngIf="!user.operateAuthority" class="operate-forbid">无法操作</span>

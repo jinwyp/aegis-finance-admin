@@ -244,7 +244,8 @@
                         <!--</table>-->
                     <!--</div>-->
                     <!--补充材料结束-->
-                    <a href="/finance/user/financing" class="back">返回</a>
+                    <a ms-attr="{href:'/finance/user/order/'+@financeInfo.id+'/contract'}" class="btn blue"  ms-visible="@financeInfo.approveStateId===8">合同下载</a>
+                    <a href="/finance/user/financing" class="btn back">返回</a>
                 </div>
             </div>
         </div>

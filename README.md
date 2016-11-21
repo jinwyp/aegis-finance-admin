@@ -36,7 +36,7 @@
 
 
 ## 仓押 管理后台 frontend-cangya 前端环境
-
+- 已经转移到 aegis-finance-cang项目
 - 使用Gulp 作为前端编译工具  ``` npm install gulp -g ```  
 - 使用webpack 前端打包管理工具  ``` npm install webpack webpack-dev-server -g ``` 
 - 进入 frontend-cangya/src 下运行 ``` npm install ```  安装前端代码编译工具依赖库 ``` SASS_BINARY_SITE=https://npm.taobao.org/mirrors/node-sass/ npm install --registry=https://registry.npm.taobao.org --phantomjs_cdnurl=https://npm.taobao.org/mirrors/phantomjs ```

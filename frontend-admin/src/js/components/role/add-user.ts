@@ -4,10 +4,12 @@
 
 
 import {Component} from '@angular/core';
-import {ActivatedRoute, Router}      from '@angular/router';
+import {ActivatedRoute}      from '@angular/router';
+import { Location } from '@angular/common';
 import {Subscription} from 'rxjs/Subscription';
 
 import {User, UserService, UserGroupService} from '../../service/user';
+import { RiskService } from '../../service/risk'
 
 
 declare var __moduleName:string;
@@ -23,9 +25,10 @@ export class AddUserComponent {
     private sub:Subscription;
 
     constructor(
-        private router : Router,
+        private location: Location,
         private activatedRoute: ActivatedRoute,
         private userService: UserService,
+        private riskService: RiskService,
         private groupService:UserGroupService
     ) {}
 
@@ -36,7 +39,8 @@ export class AddUserComponent {
         isSubmitted :      false,
         isHiddenResetModal : true,
         isHiddenMsgModal : true,
-        isAddStatus :  false
+        isAddStatus :  false,
+        isAdminUser :  false
     };
     errorMsg = '';
 
@@ -45,10 +49,30 @@ export class AddUserComponent {
 
     groups       = [];
     departments  = [];
-    selectedItem = {name : null};
+    riskLines = [];
+    partSelectedItem = {name : null};
+    riskSelectedItem = {name : null, id : -1};
     modalShowText : string ='';
 
     ngOnInit() {
+
+        this.userService.getUserSessionObservable.subscribe(
+            result => {
+                if (result && result.success) {
+                    if(result.data.level==1){
+                        this.css.isAdminUser = true;
+                    }else{
+                        this.css.isAdminUser = false;
+                    }
+                }
+            },
+            error => console.error(error)
+        )
+
+
+        this.sub = this.activatedRoute.params.subscribe(params => {
+            this.currentUser.companyId = params['companyId'] || -1;
+        });
 
         if (this.activatedRoute.routeConfig.path.indexOf('add') > -1) {
             this.css.isAddStatus  = true;
@@ -59,6 +83,7 @@ export class AddUserComponent {
             });
         }
         this.getDepartmentList();
+        this.getRiskLineList();
     }
 
 
@@ -73,6 +98,14 @@ export class AddUserComponent {
         this.groupService.getList().then((result)=> {
             if (result.success) {
                 this.groups = result.data;
+            }
+        });
+    }
+
+    getRiskLineList() {
+        this.riskService.getRiskSelectList().then((result)=> {
+            if (result.success) {
+                this.riskLines = result.data;
             }
         });
     }
@@ -93,7 +126,7 @@ export class AddUserComponent {
         this.userService.getUserById(id).then((result)=> {
             if (result.success) {
                 this.currentUser = result.data;
-                this.selectedItem = {name : this.currentUser.department};
+                this.partSelectedItem = {name : this.currentUser.department};
                 this.getGroupList();
             } else {
 
@@ -102,11 +135,18 @@ export class AddUserComponent {
     }
 
 
-    addUser(form) {
+    addUser() {
         this.css.isSubmitted     = true;
         this.css.ajaxErrorHidden     = true;
         this.css.ajaxSuccessHidden     = true;
-        this.currentUser.department = this.selectedItem.name;
+        this.currentUser.department = this.partSelectedItem.name;
+        this.currentUser.companyId = this.riskSelectedItem.id;
+        if(this.currentUser.groupIds===null||this.currentUser.groupIds.length===0){
+            this.css.ajaxErrorHidden = false;
+            this.css.isSubmitted     = false;
+            this.errorMsg = '请选择用户所属角色';
+            return;
+        }
 
         if (this.css.isAddStatus) {
             this.userService.add(this.currentUser).then((result)=> {
@@ -125,8 +165,7 @@ export class AddUserComponent {
                 this.css.isSubmitted     = false;
                 if (result.success) {
                     this.css.ajaxSuccessHidden=false;
-                    this.router.navigate(['/users']);
-                    // setTimeout(() => this.css.ajaxSuccessHidden = true, 3000);
+                    this.back();
                 } else {
                     this.css.ajaxErrorHidden = false;
                     this.errorMsg = result.error.message;
@@ -166,9 +205,14 @@ export class AddUserComponent {
         this.currentUser.phone      = '';
         this.currentUser.department = '';
         this.currentUser.groupIds   = [];
-        this.selectedItem     = {name : null};
+        this.riskSelectedItem     = {name : null, id : -1};
+        this.partSelectedItem     = {name : null};
         this.css.formActiveForRefresh = false;
         setTimeout(() => this.css.formActiveForRefresh = true, 0);
+    }
+
+    back(){
+        this.location.back();
     }
 
 

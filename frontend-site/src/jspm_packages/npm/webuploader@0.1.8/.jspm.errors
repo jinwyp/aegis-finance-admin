@@ -1,0 +1,11 @@
+MultipleErrors: /Users/helue/.jspm/packages/npm/webuploader@0.1.8/build/fis/intro.js:103:1: Unexpected token End of File
+/Users/helue/.jspm/packages/npm/webuploader@0.1.8/build/fis/intro.js:103:1: Unexpected token End of File
+
+MultipleErrors: /Users/helue/.jspm/packages/npm/webuploader@0.1.8/build/intro.js:128:1: Unexpected token End of File
+/Users/helue/.jspm/packages/npm/webuploader@0.1.8/build/intro.js:128:1: Unexpected token End of File
+
+MultipleErrors: /Users/helue/.jspm/packages/npm/webuploader@0.1.8/build/outro.js:2:5: Illegal return statement
+/Users/helue/.jspm/packages/npm/webuploader@0.1.8/build/outro.js:3:1: Unexpected token }
+
+MultipleErrors: /Users/helue/.jspm/packages/npm/webuploader@0.1.8/build/fis/outro.js:4:5: Illegal return statement
+/Users/helue/.jspm/packages/npm/webuploader@0.1.8/build/fis/outro.js:5:1: Unexpected token }

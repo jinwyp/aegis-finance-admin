@@ -37,6 +37,15 @@
                 <span class="help-block" [class.hidden]="true">请选择角色!</span>
             </div>
         </div>
+
+        <!--选择风控线-->
+        <div *ngIf="css.isAdminUser" class="row info-item">
+            <label class="col-sm-2 info-label-input"><span>所属风控线:</span></label>
+            <div class="col-sm-10 info-val">
+                <custom-select  [optionList]="riskLines" [(ngModel)]="riskSelectedItem" [ngModelOptions]="{standalone: true}"></custom-select>
+            </div>
+        </div>
+
         <div class="row info-item">
             <label class="col-sm-2 info-label-input" for="emailInput"><span class="orange">*</span><span>公司邮箱:</span></label>
             <div class="col-sm-10 info-val">
@@ -55,7 +64,7 @@
         <div class="row info-item">
             <label class="col-sm-2 info-label-input"><span>所属部门:</span></label>
             <div class="col-sm-10 info-val">
-                <custom-select  [optionList]="departments" [(ngModel)]="selectedItem" [ngModelOptions]="{standalone: true}"></custom-select>
+                <custom-select  [optionList]="departments" [(ngModel)]="partSelectedItem" [ngModelOptions]="{standalone: true}"></custom-select>
             </div>
         </div>
         <div class="row info-item mb-50">
@@ -66,7 +75,7 @@
 
             <div class="col-sm-offset-2 col-sm-8 info-val no-bottom-border">
                 <button type="submit" class="btn btn-default btn-lg btn-sure mr-20" [disabled]="addUserForm.form.invalid || css.isSubmitted"  >保存</button>
-                <button type="button" class="btn btn-default btn-lg btn-return" [routerLink]="['/users']">返回</button>
+                <button type="button" class="btn btn-default btn-lg btn-return" (click)="back()">返回</button>
                 <div class="mt-20 fs-14"><span class="hint">注:确认保存后,该系统用户的密码将 <span class="orange">发送至填写的公司邮箱中。</span></span></div>
             </div>
         </div>
