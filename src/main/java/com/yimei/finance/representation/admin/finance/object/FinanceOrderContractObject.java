@@ -119,9 +119,9 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     @NotBlank(message = "质量验收标准 不能为空", groups = {SubmitFinanceContract.class})
     private String qualityAcceptanceCriteria;                        //质量验收标准  
 
-    @Range(min = 1, max = 3650, message = "付款提货期限 应在 {min}-{max} 天之间", groups = {SubmitFinanceContract.class})
+//    @Range(min = 1, max = 3650, message = "付款提货期限 应在 {min}-{max} 天之间", groups = {SubmitFinanceContract.class})
 //    @NotBlank(message = "付款提货期限 不能为空", groups = {SubmitFinanceContract.class})
-    private int paymentPeriod;                                       //付款提货期限
+    private Integer paymentPeriod;                                   //付款提货期限
 
     @Digits(integer = 7, fraction = 2, message = "结算价格 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
 //    @NotBlank(message = "结算价格 不能为空", groups = {SubmitFinanceContract.class})
