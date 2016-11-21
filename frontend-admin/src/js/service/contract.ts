@@ -163,8 +163,9 @@ class ContractService {
     }
 
     parserMoneyCN(money) {
+        console.log(money);
         let moneyStr = '';
-        if (money === null || money === '' || money.length === 0) {
+        if (money === undefined || money === null || money === '' || money.length === 0) {
             moneyStr = '';
         } else if (/^(0|[1-9]\d*)(\.\d{1,2})?$/.test(money)) {
             if (Number(money) === 0) {
