@@ -203,7 +203,7 @@ public class AdminUserServiceImpl {
         String password = CodeUtils.CreateNumLetterCode();
         user.setPassword(securePassword(password));
         identityService.saveUser(user);
-        String content = "你好: " + user.getFirstName() + ", 管理员为你重置密码, 新密码是: " + password + " . [易煤网金融系统]";
+        String content = "你好: " + user.getFirstName() + ", 管理员为你重置密码, 新密码是: " + password + " . <a href='https://fadmin.yimei180.com/finance/admin/login'>[易煤网金融系统]</a>";
         messageService.sendHtmlMail(user.getEmail(), subject, content);
         return Result.success().setData(true);
     }
