@@ -85,7 +85,7 @@
                             <ul>
                                 <li ms-for="(index, annex) in @financeInfo.attachmentList1">
                                     <div class="borderBottom">
-                                        <span><em></em>《{{annex.name}}》</span>
+                                        <span>《{{annex.name}}》</span>
                                         <p class="floatR">
                                             <a ms-attr="{href:'/finance/files?url='+annex.url}"><em></em>下载</a>
                                         </p>
@@ -98,7 +98,7 @@
                             <ul>
                                 <li ms-for="(index, annex) in @financeInfo.attachmentList2">
                                     <div class="borderBottom">
-                                        <span><em></em>《{{annex.name}}》</span>
+                                        <span>《{{annex.name}}》</span>
                                         <p class="floatR">
                                             <a ms-attr="{href:'/finance/files?url='+annex.url}"><em></em>下载</a>
                                         </p>
