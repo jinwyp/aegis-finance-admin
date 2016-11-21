@@ -7,11 +7,11 @@ import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.utils.DozerUtils;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Component;
 
 import java.util.HashMap;
 
-@Service("financeContractService")
+@Component("financeSystemContractService")
 public class ContractServiceImpl {
 
     private Logger logger = org.slf4j.LoggerFactory.getLogger(ContractServiceImpl.class) ;

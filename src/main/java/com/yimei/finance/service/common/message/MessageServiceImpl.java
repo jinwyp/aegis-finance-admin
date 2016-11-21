@@ -24,15 +24,12 @@ public class MessageServiceImpl {
         mailService.sendSimpleMail(to, subject, content);
     }
 
-//    /**
-//     * 发送 Html 邮件
-//     * @param to                  收件人
-//     * @param uuid
-//     */
-//    @Override
-//    public void sendHtmlMail(String to, String uuid) {
-//        mailService.sendHtmlMail(to, uuid);
-//    }
+    /**
+     * 发送 Html 邮件
+     */
+    public void sendHtmlMail(String to, String subject, String content) {
+        mailService.sendHtmlMail(to, subject, content);
+    }
 
     /**
      * 发送短信
