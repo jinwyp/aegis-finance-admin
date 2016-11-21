@@ -76,6 +76,16 @@ export class ContractDownEditComponent {
     }
 
     save(type : number){
+        if(this.contract.buyerCompanyName.length===0){
+            this.errorMsg = '请填写买家公司名称';
+            this.css.ajaxErrorHidden = false;
+            return;
+        }
+        if(this.contract.sellerCompanyName.length===0){
+            this.errorMsg = '请填写卖家公司名称';
+            this.css.ajaxErrorHidden = false;
+            return;
+        }
         if(type === 1 && this.selectedDateInline.length===0){
             this.errorMsg = '请选择合同签订时间';
             this.css.ajaxErrorHidden = false;

@@ -58,7 +58,7 @@
     <div style="line-height: 32px;text-align: right;">签订日期：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 160px;"></span></div>
 
     <div style="line-height: 32px;font-size: 18px;font-weight: bold;margin-top: 20px;">卖方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 160px;"></span></div>
-    <div style="line-height: 32px;font-size: 18px;font-weight: bold;margin-top: 10px;">买方：上海瑞易供应链管理有限公司</div>
+    <div style="line-height: 32px;font-size: 18px;font-weight: bold;margin-top: 10px;">买方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 160px;"></span></div>
 
     <div style="line-height:24px;margin-top: 10px;">买、卖双方经过平等、自愿、友好协商，就卖方（船名：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span> ,航次 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span>) 中的 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span> 吨煤炭（以下简称该批煤炭），该批煤炭卖方卸至 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span>(以下简称 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span> 港/码头)后，买方就向卖方购买该批煤炭的购销事宜达成以下一致意见，特签订本合同，以资双方共同遵守。</div>
 
@@ -94,6 +94,8 @@
     <div style="line-height:24px;margin-top: 10px;">6.3 其他的特别约定</div>
     <div style="line-height:24px;margin-top: 10px;">（1）卖方保证其向买方转移的煤炭所有权合法、完整、无瑕疵，即卖方保证其销售给买方的本合同标的煤炭拥有完整的、合法的、无可争辩的所有权，且不存在抵押、留置等任何第三方权利。如遇货物的有关权利（包括但不限于所有权、知识产权）而引起的有关争议，卖方应负责解决并承担由此产生的费用，并赔偿由此给买方造成的所有损失，买方拥有向卖方追索已付货款本金、资金利息（按照日万分之五计息）及其它一切损失的权利。</div>
     <div style="line-height:24px;margin-top: 10px;">（2）合同项下货物在港口存在灭失风险，买卖双方特别约定卖方将煤炭所有权转移给买方后，至买方销售完该批货物前，本合同项下煤炭货物的灭失等风险仍由卖方承担全部责任。</div>
+    <div style="line-height:24px;margin-top: 10px;">特别约定</div>
+    <div style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></div>
 
     <h4>第七条  争议解决</h4>
     <div style="line-height:24px;">7.1 其它未尽事宜，由双方另行协商解决并签订补充协议合并执行。</div>
@@ -103,9 +105,9 @@
     <div style="line-height:24px;">卖方公司名称：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 250px;"></span></div>
     <div style="line-height:24px;margin-top: 10px;">开户行：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 299px;"></span></div>
     <div style="line-height:24px;margin-top: 10px;">账号：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 315px;"></span></div>
-    <div style="line-height:24px;margin-top: 10px;">买方公司名称：<b>上海瑞易供应链管理有限公司</b></div>
-    <div style="line-height:24px;margin-top: 10px;">开户行：<b>中国农业银行股份有限公司上海瑞金二路支行</b></div>
-    <div style="line-height:24px;margin-top: 10px;">账号：<b>03309200040016801</b></div>
+    <div style="line-height:24px;margin-top: 10px;">买方公司名称：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 250px;"></span></div>
+    <div style="line-height:24px;margin-top: 10px;">开户行：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 299px;"></span></div>
+    <div style="line-height:24px;margin-top: 10px;">账号：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 315px;"></span></div>
     <div style="line-height:24px;margin-top: 10px;">买卖双方一致认可，以上收款信息为本合同项下交易双方的实际收付款账户信息，如因卖方收款账户信息提供错误导致买方付款错误的，所有风险由卖方承担。</div>
 
     <h4>第九条  合同生效</h4>
@@ -126,7 +128,7 @@
     </div>
     <div style="line-height:24px;margin-top: 20px;">
         <div style="display: inline-block;width: 49%;vertical-align: middle;">法定代表人：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 267px;"></span> </div>
-        <div style="display: inline-block;width: 49%;vertical-align: middle;">法定代表人：王星燃 </div>
+        <div style="display: inline-block;width: 49%;vertical-align: middle;">法定代表人：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 267px;"></span> </div>
     </div>
 </div>
 </body>
