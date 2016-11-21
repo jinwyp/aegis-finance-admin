@@ -51,8 +51,8 @@ public class CommonPageController {
         System.out.println(" ------------------------------ " + email);
         System.out.println(" ------------------------------ " + email);
         String subject = "测试邮件";
-        String content = "测试 --------------- 你好: 你的账号已开通, 用户名 请修改密码. [易煤网金融系统]";
-        messageService.sendSimpleMail(email, subject, content);
+        String content = "测试 --------------- 测试邮件  -------------------  <a href='https://fadmin.yimei180.com/finance/admin/login'>[易煤网金融系统]</a>";
+        messageService.sendHtmlMail(email, subject, content);
         return Result.success();
     }
 

@@ -141,8 +141,8 @@ public class AdminUserServiceImpl {
         }
         addUserGroupMemberShip(newUser.getId(), user.getGroupIds());
         String subject = "开通账户通知邮件";
-        String content = "你好: 你的账号已开通, 用户名:" + user.getUsername() + ", 初始密码:" + password + ", 请修改密码. [易煤网金融系统]";
-        messageService.sendSimpleMail(user.getEmail(), subject, content);
+        String content = "你好: 你的账号已开通, 用户名:" + user.getUsername() + ", 初始密码:" + password + ", 请修改密码. <a href='https://fadmin.yimei180.com/finance/admin/login'>[易煤网金融系统]</a>";
+        messageService.sendHtmlMail(user.getEmail(), subject, content);
         return Result.success().setData(changeUserObject(identityService.createUserQuery().userId(newUser.getId()).singleResult()));
     }
 

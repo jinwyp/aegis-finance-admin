@@ -1,12 +1,19 @@
 package com.yimei.finance.service.common.message;
 
+import com.yimei.finance.service.common.contract.FreeMarker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Properties;
 
@@ -14,10 +21,13 @@ import java.util.Properties;
  * Created by fanjun on 15-6-1.
  */
 @Service
-public class MailServiceImpl  {
+public class MailServiceImpl {
 
-    Logger logger  = LoggerFactory.getLogger(MailServiceImpl.class) ;
+    Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
     protected JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
+
+    @Autowired
+    FreeMarker freeMarker;
 
     @Value("${notice_server_mail.name}")
     private String USERNAME;
@@ -34,9 +44,10 @@ public class MailServiceImpl  {
 
     /**
      * 发送 Simple 邮件
-     * @param to               收件人
+     *
+     * @param to      收件人
      * @param subject
-     * @param content          内容
+     * @param content 内容
      */
     public void sendSimpleMail(String to, String subject, String content) {
         SimpleMailMessage msg = new SimpleMailMessage();
@@ -68,9 +79,55 @@ public class MailServiceImpl  {
         }
     }
 
+    /**
+     * 发送 Html 邮件
+     *
+     * @param to 收件人
+     */
+    public void sendHtmlMail(final String to, String subject, String content) {
+        javaMailSender.setHost(Mail_Server_Smtp);
+        javaMailSender.setPort(25);
+        javaMailSender.setUsername(USERNAME);
+        javaMailSender.setPassword(PASSWORD);
+        javaMailSender.setJavaMailProperties(new Properties() {{
+            put(Mail_Transport_Protocol, "smtp");
+            put(Mail_Smtp_Auth, true);
+            put(Mail_Smtp_Starttls_Enable, true);
+            put(Mail_Debug, true);
+        }});
+        MimeMessage msg = javaMailSender.createMimeMessage();
+        MimeMessageHelper helper = null;
+        try {
+            helper = new MimeMessageHelper(msg, true, "utf-8");
+            helper.setFrom(USERNAME);
+            helper.setTo(to);
+            helper.setSubject("来自易煤网的激活邮件");
+            final String date = LocalDate.now().getYear() + "年" + LocalDate.now().getMonthValue() + "月" + LocalDate.now().getDayOfMonth() + "日";
+            String text = null;
+//            text = freeMarker.render("/email/email", new HashMap<String, Object>() {{
+//                put("email", to);
+//                put("date", date);
+//                put("uuid", uuid);
+//            }});
+            helper.setText(content, true);
+            javaMailSender.send(msg);
+//            logPrint(to, "激活邮件", "激活码:"+uuid);
+        } catch (MailException e) {
+            String message = "";
+            if (e.getMessage().indexOf("Invalid Addresses") > 0) {
+                message = "不存在的邮箱!";
+            } else {
+                message = e.getMessage();
+            }
+
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void logPrint(String email, String mailType, String content) {
         logger.info("************");
-        logger.info(LocalDateTime.now()+":系统向用户邮箱" + email + "发送" + mailType + "成功!");
+        logger.info(LocalDateTime.now() + ":系统向用户邮箱" + email + "发送" + mailType + "成功!");
         logger.info("内容: " + content);
     }
 
