@@ -117,7 +117,7 @@
             <input type="text" class="div-150" [(ngModel)]="contract.sellerReceiptPrice" (ngModelChange)="setSellerReceiptMoneyCN()" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元/吨&nbsp;&nbsp;X&nbsp;&nbsp;</span>
             <input type="text" class="div-150" [(ngModel)]="contract.sellerReceiptAmount" (ngModelChange)="setSellerReceiptMoneyCN()" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;吨&nbsp;&nbsp;=&nbsp;&nbsp;</span>
             <input type="text" class="div-180 input-rl" readonly [(ngModel)]="contract.sellerReceiptMoney" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元</span>
-            <div class="money-zh">大写金额：{{sellerReceiptMoneyCN}}</div>
+            <div class="money-zh">大写金额：{{contract.sellerReceiptMoneyCapital}}</div>
         </td>
     </tr>
 
@@ -127,7 +127,7 @@
         </td>
         <td colspan="3">
             <input type="text" [(ngModel)]="contract.buyerSettlementMoney" (ngModelChange)="setBuyerSettlementMoneyCN($event)" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元</span>
-            <div class="money-zh">大写金额：{{buyerSettlementMoneyCN}}</div>
+            <div class="money-zh">大写金额：{{contract.buyerSettlementMoneyCapital}}</div>
         </td>
     </tr>
 

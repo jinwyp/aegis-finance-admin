@@ -8,6 +8,7 @@ import { Headers, Http } from '@angular/http';
 import 'rxjs/add/operator/toPromise';
 
 import {GlobalPromiseHttpCatch, HttpResponse, API } from './http';
+import {isEmpty} from "rxjs/operator/isEmpty";
 
 class Contract {
 
@@ -188,7 +189,8 @@ class ContractService {
     }
 
     checkPhone(phone : string){
-        phone = phone.replace(/\s+/g,"");
+        // phone = phone.replace(/\s+/g,"");
+        // console.log(/^0?(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/.test(phone));
         if(/^0?(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/.test(phone)){
             return true;
         }else{
@@ -197,7 +199,8 @@ class ContractService {
     }
 
     checkEmail(email : string){
-        email = email.replace(/\s+/g,"");
+        // email = email.replace(/\s+/g,"");
+        // console.log(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(email));
         if(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(email)){
             return true;
         }else{
@@ -211,6 +214,14 @@ class ContractService {
         try{m+=s2.split(".")[1].length}catch(e){}
         return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)
 
+    }
+
+    isEmpty(obj : any){
+        if(obj===undefined||obj===null||obj.length===0){
+            return true;
+        }else{
+            return false;
+        }
     }
 
 }
