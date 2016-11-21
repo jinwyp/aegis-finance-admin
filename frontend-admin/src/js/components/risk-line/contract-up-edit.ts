@@ -131,7 +131,7 @@ export class ContractUpEditComponent {
         console.log(this.contract);
         this.contractService.add(this.contract, this.taskId, type).then(result=>{
             if(result.success){
-                // this.goBack();
+                this.goBack();
             }
         });
     }
