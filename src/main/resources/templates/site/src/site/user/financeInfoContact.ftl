@@ -80,7 +80,7 @@
                                 </div>
                             </li>
                         </ul>
-                        <div >
+                        <div ms-visible="@financeInfo.attachmentList1 != '' ">
                             <h3>上游合同附件:</h3>
                             <ul>
                                 <li ms-for="(index, annex) in @financeInfo.attachmentList1">
@@ -93,7 +93,7 @@
                                 </li>
                             </ul>
                         </div>
-                        <div ms-visible="@financeInfo.attachmentList1 != '' ">
+                        <div ms-visible="@financeInfo.attachmentList2 != '' ">
                             <h3>下游合同附件:</h3>
                             <ul>
                                 <li ms-for="(index, annex) in @financeInfo.attachmentList2">
