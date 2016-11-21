@@ -78,7 +78,7 @@
         <td>
             <div class="table-label">交货地点：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.deliveryPlace" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.deliveryPlace" required placeholder="请填写交货地点" [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">付款提货期限：</div>
         </td>
@@ -88,7 +88,7 @@
         <td>
             <div class="table-label">数量验收依据：</div>
         </td>
-        <td colspan="3"><input type="text" class="div-250" required [(ngModel)]="contract.quantityAcceptanceBasis" placeholder="请填写数量结算依据" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;吨 </span></td>
+        <td colspan="3"><input type="text" class="div-250" required [(ngModel)]="contract.quantityAcceptanceBasis" placeholder="请填写数量验收依据" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;吨 </span></td>
     </tr>
     <tr>
         <td>
@@ -128,7 +128,7 @@
         <td>
             <div class="table-label">合同附件份数：</div>
         </td>
-        <td colspan="3"><input type="text" [(ngModel)]="contract.attachmentNumber" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;份</span></td>
+        <td colspan="3"><input type="text" [(ngModel)]="contract.attachmentNumber" required placeholder="请填写附件数量" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;份</span></td>
     </tr>
     <tr>
         <td>
