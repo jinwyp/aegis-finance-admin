@@ -73,6 +73,7 @@ export class ContractUpEditComponent {
                 this.contract = result.data;
                 this.contract.sellerReceiptMoneyCapital = this.contractService.parserMoneyCN(this.contract.sellerReceiptMoney);
                 this.contract.buyerSettlementMoneyCapital = this.contractService.parserMoneyCN(this.contract.buyerSettlementMoney);
+                this.contract.attachmentNumber = this.contract.attachmentNumber===0 ? null : this.contract.attachmentNumber;
                 console.log(this.contract);
             }
         });
@@ -131,7 +132,7 @@ export class ContractUpEditComponent {
         console.log(this.contract);
         this.contractService.add(this.contract, this.taskId, type).then(result=>{
             if(result.success){
-                this.goBack();
+                // this.goBack();
             }
         });
     }
@@ -144,9 +145,9 @@ export class ContractUpEditComponent {
 
     setSellerReceiptMoneyCN(){
         let money;
-        if(this.contract.sellerReceiptPrice==''||this.contract.sellerReceiptAmount==''){
-            money = '';
-            this.contract.sellerReceiptMoney = '';
+        if(this.contract.sellerReceiptPrice==''||this.contract.sellerReceiptPrice==null||this.contract.sellerReceiptAmount==''||this.contract.sellerReceiptAmount==null){
+            money = null;
+            this.contract.sellerReceiptMoney = null;
         }else{
             money = this.contractService.floatMul(this.contract.sellerReceiptPrice, this.contract.sellerReceiptAmount);
             this.contract.sellerReceiptMoney = money;
