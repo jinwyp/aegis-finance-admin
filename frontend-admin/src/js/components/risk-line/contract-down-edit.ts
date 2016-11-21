@@ -35,8 +35,8 @@ export class ContractDownEditComponent {
         selectionTxtFontSize: '14px'
     };
 
-    taskId : string = '';
-    status : string = '';
+    taskId : number = 0;
+    status : number = 0;
     contract : Contract = new Contract();
 
     errorMsg : string = '';
@@ -58,10 +58,10 @@ export class ContractDownEditComponent {
     ngOnInit(){
         this.sub = this.activatedRoute.params.subscribe(param=>{
             console.log(param);
-            this.contract.financeId = param['financeId'];
-            this.taskId = param['taskId'];
-            this.status = param['status'];
-            this.getContractById(param['financeId']);
+            this.contract.financeId = Number(param['financeId']);
+            this.taskId = Number(param['taskId']);
+            this.status = Number(param['status']);
+            this.getContractById(this.contract.financeId);
         });
     }
 
@@ -69,6 +69,8 @@ export class ContractDownEditComponent {
         this.contractService.getContractById(financeId, 2).then(result=>{
             if(result.success&&result.data){
                 this.contract = result.data;
+                this.contract.paymentPeriod = this.contract.paymentPeriod===0 ? null : this.contract.paymentPeriod;
+                this.contract.attachmentNumber = this.contract.attachmentNumber===0 ? null : this.contract.attachmentNumber;
                 this.selectedDateInline = result.data.signDate||'';
                 this.contract.cashDepositCapital = result.data.cashDepositCapital || this.contractService.parserMoneyCN(this.contract.cashDeposit);
             }
@@ -76,47 +78,48 @@ export class ContractDownEditComponent {
     }
 
     save(type : number){
-        if(this.contract.buyerCompanyName.length===0){
+        console.log(this.contract);
+        if(this.contractService.isEmpty(this.contract.buyerCompanyName)){
             this.errorMsg = '请填写买家公司名称';
             this.css.ajaxErrorHidden = false;
             return;
         }
-        if(this.contract.sellerCompanyName.length===0){
+        if(this.contractService.isEmpty(this.contract.sellerCompanyName)){
             this.errorMsg = '请填写卖家公司名称';
             this.css.ajaxErrorHidden = false;
             return;
         }
-        if(type === 1 && this.selectedDateInline.length===0){
+        if(type ===1 && this.contractService.isEmpty(this.selectedDateInline)){
             this.errorMsg = '请选择合同签订时间';
             this.css.ajaxErrorHidden = false;
             return;
         }
-        if(this.contract.coalIndex_NCV<1||this.contract.coalIndex_NCV>7500){
+        if(!this.contractService.isEmpty(this.contract.coalIndex_NCV) && this.contract.coalIndex_NCV<1||this.contract.coalIndex_NCV>7500){
             this.errorMsg = '热值为1-7500之间的整数';
             this.css.ajaxErrorHidden = false;
             return;
         }
-        if(this.contract.coalIndex_RS<0||this.contract.coalIndex_RS>=10){
+        if(!this.contractService.isEmpty(this.contract.coalIndex_RS) && this.contract.coalIndex_RS<0||this.contract.coalIndex_RS>=10){
             this.errorMsg = '硫分为0-10之间的值';
             this.css.ajaxErrorHidden = false;
             return;
         }
-        if(!this.contractService.checkPhone(this.contract.buyerLinkmanPhone)){
+        if(!this.contractService.isEmpty(this.contract.buyerLinkmanPhone) && !this.contractService.checkPhone(this.contract.buyerLinkmanPhone)){
             this.errorMsg = '买家联系手机号码格式错误';
             this.css.ajaxErrorHidden = false;
             return;
         }
-        if(!this.contractService.checkEmail(this.contract.buyerLinkmanEmail)){
+        if(!this.contractService.isEmpty(this.contract.buyerLinkmanEmail) && !this.contractService.checkEmail(this.contract.buyerLinkmanEmail)){
             this.errorMsg = '买家邮箱格式错误';
             this.css.ajaxErrorHidden = false;
             return;
         }
-        if(!this.contractService.checkPhone(this.contract.sellerLinkmanPhone)){
+        if(!this.contractService.isEmpty(this.contract.sellerLinkmanPhone) && !this.contractService.checkPhone(this.contract.sellerLinkmanPhone)){
             this.errorMsg = '卖家联系手机号码格式错误';
             this.css.ajaxErrorHidden = false;
             return;
         }
-        if(!this.contractService.checkEmail(this.contract.sellerLinkmanEmail)){
+        if(!this.contractService.isEmpty(this.contract.sellerLinkmanEmail) && !this.contractService.checkEmail(this.contract.sellerLinkmanEmail)){
             this.errorMsg = '卖家邮箱格式错误';
             this.css.ajaxErrorHidden = false;
             return;
@@ -128,7 +131,7 @@ export class ContractDownEditComponent {
         console.log(this.contract);
         this.contractService.add(this.contract, this.taskId, type).then(result=>{
             if(result.success){
-                this.goBack();
+                // this.goBack();
             }
         });
     }

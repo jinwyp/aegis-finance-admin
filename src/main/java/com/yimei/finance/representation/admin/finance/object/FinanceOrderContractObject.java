@@ -39,7 +39,6 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     private Long applyCompanyId;                                     //申请人公司id
     private String applyCompanyName;                                 //申请公司名称
 
-
     @Range(min = 1, max = 100, message = "合同类型 应在 {min}-{max} 之间", groups = {SubmitFinanceContract.class})
     private Integer type;                                            //合同类型
     private String typeName;                                         //合同类型名称
@@ -64,8 +63,8 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     @NotBlank(message = "船次 不能为空", groups = {SubmitFinanceContract.class})
     private String shipNo;                                           //船次  
 
-    @Size(min = 1, max = 200, message = "购货地点 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "购货地点 不能为空", groups = {SubmitFinanceContract.class})
+    @Size(min = 0, max = 200, message = "购货地点 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "购货地点 不能为空", groups = {SubmitFinanceContract.class})
     private String purchasePlace;                                    //购货地点  
 
     @Size(min = 1, max = 200, message = "卸货地点 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
@@ -109,7 +108,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     private BigDecimal coalIndex_RS;                                 //煤炭指标   - 硫分
 
     @Size(min = 1, max = 5000, message = "数量验收标准 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "数量验收标准 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "数量验收标准 不能为空", groups = {SubmitFinanceContract.class})
     private String quantityAcceptanceCriteria;                       //数量验收标准  
 
     @Digits(integer = 9, fraction = 2, message = "数量验收依据 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
@@ -121,7 +120,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
 
 //    @Range(min = 1, max = 3650, message = "付款提货期限 应在 {min}-{max} 天之间", groups = {SubmitFinanceContract.class})
 //    @NotBlank(message = "付款提货期限 不能为空", groups = {SubmitFinanceContract.class})
-    private Integer paymentPeriod;                                   //付款提货期限
+    private Integer paymentPeriod;                                       //付款提货期限
 
     @Digits(integer = 7, fraction = 2, message = "结算价格 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
 //    @NotBlank(message = "结算价格 不能为空", groups = {SubmitFinanceContract.class})
