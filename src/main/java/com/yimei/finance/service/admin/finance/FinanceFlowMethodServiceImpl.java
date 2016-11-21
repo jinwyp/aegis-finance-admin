@@ -267,11 +267,10 @@ public class FinanceFlowMethodServiceImpl {
     }
 
     public List<TaskObject> changeTaskObject(List<Task> taskList) {
-        if (taskList == null || taskList.size() == 0) return null;
-        List<TaskObject> taskObjectList = taskList.parallelStream()
+        if (taskList == null || taskList.size() == 0) return new ArrayList<>();
+        return taskList.parallelStream()
                 .map(task -> changeTaskObject(task))
                 .collect(Collectors.toList());
-        return taskObjectList;
     }
 
     /**
