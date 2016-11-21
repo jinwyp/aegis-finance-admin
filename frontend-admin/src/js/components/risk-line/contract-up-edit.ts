@@ -9,7 +9,6 @@ import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 
 import { Contract, ContractService } from '../../service/contract';
-import {isBlank} from "@angular/http/src/facade/lang";
 
 declare var __moduleName: string;
 

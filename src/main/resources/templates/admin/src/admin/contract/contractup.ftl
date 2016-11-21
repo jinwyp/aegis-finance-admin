@@ -53,37 +53,57 @@
 
 <div style="width: 700px;margin: 0 auto 50px;">
     <h1 style="text-align: center;">煤炭购销合同</h1>
-        <div style="line-height: 32px;text-align: right;">合同编号：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 200px;text-align: center;min-height: 32px;">${contract.contractNo!''}</span></div>
-        <div style="line-height: 32px;text-align: right;">签订地：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 200px;text-align: center;min-height: 32px;">${contract.signPlace!''}</span></div>
-        <div style="line-height: 32px;text-align: right;">签订日期：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 200px;text-align: center;min-height: 32px;">${contract.signDate!''}</span></div>
+        <div style="line-height: 32px;text-align: right;">合同编号：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 200px;min-height: 33px;vertical-align: middle;text-align: center;">${contract.contractNo!''}</span></div>
+        <div style="line-height: 32px;text-align: right;">签订地：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 200px;min-height: 33px;vertical-align: middle;text-align: center;">${contract.signPlace!''}</span></div>
+        <div style="line-height: 32px;text-align: right;">签订日期：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 200px;min-height: 33px;vertical-align: middle;text-align: center;">${contract.signDate!''}</span></div>
 
-        <div style="line-height: 32px;font-size: 18px;font-weight: bold;margin-top: 20px;">卖方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 250px;text-align: center;min-height: 32px;">${contract.sellerCompanyName!''}</span></div>
-        <div style="line-height: 32px;font-size: 18px;font-weight: bold;margin-top: 10px;">买方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 250px;text-align: center;min-height: 32px;">${contract.buyerCompanyName!''}</span></div>
+        <div style="line-height: 32px;font-size: 18px;font-weight: bold;margin-top: 20px;">卖方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 250px;min-height: 33px;text-align: center;">${contract.sellerCompanyName!''}</span></div>
+        <div style="line-height: 32px;font-size: 18px;font-weight: bold;margin-top: 10px;">买方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 250px;min-height: 33px;text-align: center;">${contract.buyerCompanyName!''}</span></div>
 
-        <div style="line-height:24px;margin-top: 10px;">买、卖双方经过平等、自愿、友好协商，就卖方（船名：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.shipName!''}</span> ,航次 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.shipNo!''}</span>) 中的 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"><#if contract.coalTon??>${contract.coalTon?c}</#if></span> 吨煤炭（以下简称该批煤炭），该批煤炭卖方卸至 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.unloadedPlace!''}</span>(以下简称 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.unloadedPlaceShort!''}</span> 港/码头)后，买方就向卖方购买该批煤炭的购销事宜达成以下一致意见，特签订本合同，以资双方共同遵守。</div>
+        <div style="line-height:24px;margin-top: 10px;">买、卖双方经过平等、自愿、友好协商，就卖方（船名：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.shipName!''}</span> ,航次 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.shipNo!''}</span>) 中的 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;"><#if contract.coalTon??>${contract.coalTon?c}</#if></span> 吨煤炭（以下简称该批煤炭），该批煤炭卖方卸至 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.unloadedPlace!''}</span>(以下简称 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.unloadedPlaceShort!''}</span> 港/码头)后，买方就向卖方购买该批煤炭的购销事宜达成以下一致意见，特签订本合同，以资双方共同遵守。</div>
 
         <h4>第一条  合同标的：煤炭</h4>
 
-        <div style="line-height:24px;">1.1 品种：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.coalType!''}</span></div>
-        <div style="line-height:24px;margin-top: 10px;">1.2 数量：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"><#if contract.coalAmount??>${contract.coalAmount?c}</#if></span> 吨,<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;"><#if contract.quantityRemark??>数量备注说明：${contract.quantityRemark!''}</#if></span></div>
+        <div style="line-height:24px;">1.1 品种：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.coalType!''}</span></div>
+        <div style="line-height:24px;margin-top: 10px;">1.2 数量：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;"><#if contract.coalAmount??>${contract.coalAmount?c}</#if></span> 吨。</div>
+
+        <div style="line-height:24px;margin-top: 10px;">数量备注说明：</div>
+        <#if contract.quantityRemark??>
+            <div style="line-height:24px;margin-top: 10px; width: 100%;text-decoration:underline;min-height: 25px;vertical-align: middle;">${contract.quantityRemark!''}。</div>
+        <#else>
+             <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+             <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+             <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+        </#if>
+
         <div style="line-height:24px;margin-top: 10px;">1.3 质量标准</div>
-        <div style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"><#if contract.coalIndex_NCV??>热值：${contract.coalIndex_NCV?c}kcal/kg；</#if><#if contract.coalIndex_RS??>硫分：${contract.coalIndex_RS?c}%；</#if><#if contract.qualityRemark??>其它质量标准：${contract.qualityRemark!''}；</#if></div>
+        <div style="line-height:24px;margin-top: 10px;">热值：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;"><#if contract.coalIndex_NCV??>${contract.coalIndex_NCV?c}</#if></span> kcal/kg。</div>
+        <div style="line-height:24px;margin-top: 10px;">硫分：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;"><#if contract.coalIndex_RS??>${contract.coalIndex_RS?c}</#if></span> %。</div>
+        <div style="line-height:24px;margin-top: 10px;">其它质量标准：</div>
+        <#if contract.qualityRemark??>
+            <div style="line-height:24px;margin-top: 10px; width: 100%;text-decoration:underline;min-height: 25px;vertical-align: middle;">${contract.qualityRemark!''}。</div>
+        <#else>
+            <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+            <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+            <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+        </#if>
+
 
         <h4>第二条  交货地点和交提货方式</h4>
-        <div style="line-height:24px;">2.1 交货地点：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.deliveryPlace!''}</span>港/码头（以下简称交货港）</div>
+        <div style="line-height:24px;">2.1 交货地点：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.deliveryPlace!''}</span>港/码头（以下简称交货港）</div>
         <div style="line-height:24px;margin-top: 10px;">2.2 交货方式</div>
         <div style="line-height:24px;margin-top: 10px;">卖方向买方在交货港场地交货，直接一次性将本合同标的煤炭所有权转移给买方。</div>
 
         <h4>第三条  质量、数量的验收和考核</h4>
-        <div style="line-height:24px;">3.1 质量验收以 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.qualityAcceptanceCriteria!''}</span> 为准，卖方完全认可且不得对质量检验结果提出任何异议或主张任何权利。</div>
-        <div style="line-height:24px;margin-top: 10px;">3.2 数量验收以 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.quantityAcceptanceCriteria!''}</span> 为准，并以此作为买卖双方的最终数量结算依据。卖方完全认可且不得提出任何异议或主张任何权利。</div>
+        <div style="line-height:24px;">3.1 质量验收以 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.qualityAcceptanceCriteria!''}</span> 为准，卖方完全认可且不得对质量检验结果提出任何异议或主张任何权利。</div>
+        <div style="line-height:24px;margin-top: 10px;">3.2 数量验收以 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.quantityAcceptanceCriteria!''}</span> 为准，并以此作为买卖双方的最终数量结算依据。卖方完全认可且不得提出任何异议或主张任何权利。</div>
 
         <h4>第四条  结算价格</h4>
-        <div style="line-height:24px;">4.1 卖方与买方的结算价格为 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"><#if contract.settlementPrice??>${contract.settlementPrice?c}</#if></span> 元/吨（一票含税）。</div>
+        <div style="line-height:24px;">4.1 卖方与买方的结算价格为 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;"><#if contract.settlementPrice??>${contract.settlementPrice?c}</#if></span> 元/吨（一票含税）。</div>
 
         <h4>第五条  结算方式、付款期限、煤炭所有权转移及违约责任</h4>
-        <div style="line-height:24px;">5.1 结算方式为全现汇。卖方应在本合同签订后一个工作日内一次性将本合同标的煤炭的所有权转移给买方，并按 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"><#if contract.sellerReceiptPrice??>${contract.sellerReceiptPrice?c}</#if></span>（单吨价格）× <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"><#if contract.sellerReceiptAmount??>${contract.sellerReceiptAmount?c}</#if></span>（吨数）= <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"><#if contract.sellerReceiptMoney??>${contract.sellerReceiptMoney?c}</#if></span> 元（大写：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.sellerReceiptMoneyCapital!''}</span>）的金额向买方开具增值税票。</div>
-        <div style="line-height:24px;margin-top: 10px;">5.2 在买方确认收到卖方的所有权转移证明及增值税票后，向卖方结清 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"><#if contract.buyerSettlementMoney??>${contract.buyerSettlementMoney?c}</#if></span> 元（大写：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.buyerSettlementMoneyCapital!''}</span>）货款。</div>
+        <div style="line-height:24px;">5.1 结算方式为全现汇。卖方应在本合同签订后一个工作日内一次性将本合同标的煤炭的所有权转移给买方，并按 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;"><#if contract.sellerReceiptPrice??>${contract.sellerReceiptPrice?c}</#if></span>（单吨价格）× <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;"><#if contract.sellerReceiptAmount??>${contract.sellerReceiptAmount?c}</#if></span>（吨数）= <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;"><#if contract.sellerReceiptMoney??>${contract.sellerReceiptMoney?c}</#if></span> 元（大写：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.sellerReceiptMoneyCapital!''}</span>）的金额向买方开具增值税票。</div>
+        <div style="line-height:24px;margin-top: 10px;">5.2 在买方确认收到卖方的所有权转移证明及增值税票后，向卖方结清 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;"><#if contract.buyerSettlementMoney??>${contract.buyerSettlementMoney?c}</#if></span> 元（大写：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.buyerSettlementMoneyCapital!''}</span>）货款。</div>
         <div style="line-height:24px;margin-top: 10px;">5.3 如果卖方在合同签订后约定时间内，没有及时向买方转移煤炭货物所有权，则买方可向卖方主张要求支付迟延履行合同给买方造成的实际损失。</div>
 
         <h4>第六条  有关交易的特别约定</h4>
@@ -95,7 +115,13 @@
         <div style="line-height:24px;margin-top: 10px;">（1）卖方保证其向买方转移的煤炭所有权合法、完整、无瑕疵，即卖方保证其销售给买方的本合同标的煤炭拥有完整的、合法的、无可争辩的所有权，且不存在抵押、留置等任何第三方权利。如遇货物的有关权利（包括但不限于所有权、知识产权）而引起的有关争议，卖方应负责解决并承担由此产生的费用，并赔偿由此给买方造成的所有损失，买方拥有向卖方追索已付货款本金、资金利息（按照日万分之五计息）及其它一切损失的权利。</div>
         <div style="line-height:24px;margin-top: 10px;">（2）合同项下货物在港口存在灭失风险，买卖双方特别约定卖方将煤炭所有权转移给买方后，至买方销售完该批货物前，本合同项下煤炭货物的灭失等风险仍由卖方承担全部责任。</div>
         <div style="line-height:24px;margin-top: 10px;">特别约定</div>
-        <div style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;">${contract.specialRemark!''}</div>
+        <#if contract.specialRemark??>
+            <div style="line-height:24px;margin-top: 10px; width: 100%;text-decoration:underline;">${contract.specialRemark!''}。</div>
+        <#else>
+            <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+            <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+            <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+        </#if>
 
         <h4>第七条  争议解决</h4>
         <div style="line-height:24px;">7.1 其它未尽事宜，由双方另行协商解决并签订补充协议合并执行。</div>
@@ -113,10 +139,19 @@
         <h4>第九条  合同生效</h4>
         <div style="line-height:24px;">9.1 本合同自买、卖双方盖章后生效。</div>
         <div style="line-height:24px;margin-top: 10px;">9.2 合同正本一式肆份，每方各执两份，传真件、扫描件有效。</div>
-        <div style="line-height:24px;margin-top: 10px;">9.3 本合同附件 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.attachmentNumber!''}</span> 份，分别为：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 350px;">${contract.attachmentNames!''}</span></div>
-        <div style="line-height:24px;margin-top: 10px;">9.4 为履行本合同，卖方指定联系人姓名：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 150px;">${contract.sellerLinkmanName!''}</span>，联系手机：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 150px;">${contract.sellerLinkmanPhone!''}</span>，指定联系邮箱：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 150px;">${contract.sellerLinkmanEmail!''}</span>; 买方指定联系人姓名：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 150px;">${contract.buyerLinkmanName!''}</span>，联系手机：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 150px;">${contract.buyerLinkmanPhone!''}</span>，指定联系邮箱：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 150px;">${contract.buyerLinkmanEmail!''}</span>。</div>
+        <div style="line-height:24px;margin-top: 10px;">9.3 本合同附件 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.attachmentNumber!''}</span> 份，分别为：</div>
 
-        <div style="line-height:24px;margin-top: 10px;">（以下无正文，为买卖双方于 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"><#if contract.signDate_Year??>${contract.signDate_Year?c}</#if></span> 年 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.signDate_Month!''}</span> 月 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;">${contract.signDate_Day!''}</span> 日签订的编号为 <span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 250px;">${contract.contractNo!''}</span>《煤炭购销合同》的签署页）</div>
+        <#if contract.attachmentNames??>
+            <div style="line-height:24px;margin-top: 10px; width: 100%;text-decoration:underline;min-height: 25px;vertical-align: middle;">${contract.attachmentNames!''}。</div>
+        <#else>
+            <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+            <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+            <div style="line-height:24px;margin-top: 10px;"><span style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></span></div>
+        </#if>
+
+
+        <div style="line-height:24px;margin-top: 10px;">9.4 为履行本合同，卖方指定联系人姓名：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 150px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.sellerLinkmanName!''}</span>，联系手机：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 150px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.sellerLinkmanPhone!''}</span>，指定联系邮箱：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 150px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.sellerLinkmanEmail!''}</span>; 买方指定联系人姓名：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 150px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.buyerLinkmanName!''}</span>，联系手机：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 150px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.buyerLinkmanPhone!''}</span>，指定联系邮箱：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 150px;min-height: 25px;vertical-align: middle;text-align: center;">${contract.buyerLinkmanEmail!''}</span>。</div>
+
 
         <div style="line-height:24px;margin-top: 20px;">
             <div style="display: inline-block;width: 49%;vertical-align: middle;">卖方：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 268px;min-height: 24px;">${contract.sellerCompanyName!''}</span> </div>
