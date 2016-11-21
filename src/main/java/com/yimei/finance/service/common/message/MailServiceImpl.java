@@ -96,36 +96,33 @@ public class MailServiceImpl {
         }});
         MimeMessage msg = javaMailSender.createMimeMessage();
         MimeMessageHelper helper = null;
+        logger.info(" ----------------------------------------- email: ");
+        logger.info(" ----------------------------------------- email: ");
+        logger.info(content);
+        logger.info(" ----------------------------------------- email: ");
+        logger.info(" ----------------------------------------- email: ");
         try {
             helper = new MimeMessageHelper(msg, true, "utf-8");
             helper.setFrom(USERNAME);
             helper.setTo(to);
             helper.setSubject(subject);
-//            final String date = LocalDate.now().getYear() + "年" + LocalDate.now().getMonthValue() + "月" + LocalDate.now().getDayOfMonth() + "日";
-//            String text = null;
-//            text = freeMarker.render("/email/email", new HashMap<String, Object>() {{
-//                put("email", to);
-//                put("date", date);
-//                put("uuid", uuid);
-//            }});
             helper.setText(content, true);
             javaMailSender.send(msg);
-//            logPrint(to, "激活邮件", "激活码:"+uuid);
         } catch (MailException e) {
-            String message = "";
+            logger.info(" -------------------------------- ");
+            logger.info(" 邮件发送失败 ");
             if (e.getMessage().indexOf("Invalid Addresses") > 0) {
-                message = "不存在的邮箱!";
+                logger.info("不存在的邮箱!");
             } else {
-                message = e.getMessage();
+                logger.info(e.getMessage());
             }
-
         } catch (MessagingException e) {
             e.printStackTrace();
         }
     }
 
     public void logPrint(String email, String mailType, String content) {
-        logger.info("************");
+        logger.info(" -------------------------------- ");
         logger.info(LocalDateTime.now() + ":系统向用户邮箱" + email + "发送" + mailType + "成功!");
         logger.info("内容: " + content);
     }
