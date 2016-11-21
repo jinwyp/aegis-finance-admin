@@ -131,6 +131,9 @@ export class ContractUpEditComponent {
         this.contractService.add(this.contract, this.taskId, type).then(result=>{
             if(result.success){
                 this.goBack();
+            }else{
+                this.errorMsg = result.data.error;
+                this.css.ajaxErrorHidden = false;
             }
         });
     }
