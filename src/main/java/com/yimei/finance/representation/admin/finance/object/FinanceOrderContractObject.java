@@ -67,12 +67,12 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
 //    @NotBlank(message = "购货地点 不能为空", groups = {SubmitFinanceContract.class})
     private String purchasePlace;                                    //购货地点  
 
-    @Size(min = 1, max = 200, message = "卸货地点 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "卸货地点 不能为空", groups = {SubmitFinanceContract.class})
+    @Size(min = 0, max = 200, message = "卸货地点 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "卸货地点 不能为空", groups = {SubmitFinanceContract.class})
     private String unloadedPlace;                                    //卸货地点  
 
-    @Size(min = 1, max = 200, message = "卸货地点简称 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "卸货地点简称 不能为空", groups = {SubmitFinanceContract.class})
+    @Size(min = 0, max = 200, message = "卸货地点简称 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "卸货地点简称 不能为空", groups = {SubmitFinanceContract.class})
     private String unloadedPlaceShort;                               //卸货地点简称  
 
     @Size(min = 1, max = 200, message = "交货地点 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
@@ -115,7 +115,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     private BigDecimal quantityAcceptanceBasis;                      //数量验收依据-吨数
 
     @Size(min = 1, max = 5000, message = "质量验收标准 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "质量验收标准 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "质量验收标准 不能为空", groups = {SubmitFinanceContract.class})
     private String qualityAcceptanceCriteria;                        //质量验收标准  
 
 //    @Range(min = 1, max = 3650, message = "付款提货期限 应在 {min}-{max} 天之间", groups = {SubmitFinanceContract.class})
