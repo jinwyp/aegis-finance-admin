@@ -55,7 +55,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Service("siteFinanceOrderServiceImpl")
 public class SiteFinanceOrderServiceImpl {
     @Autowired
     private FinanceOrderRepository financeOrderRepository;

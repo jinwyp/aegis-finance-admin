@@ -22,7 +22,7 @@ import java.sql.Date;
 import java.util.function.BinaryOperator;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AegisFinanceApplication.class)
+@SpringBootTest
 public class AegisFinanceAdminApplicationTests {
 	@Autowired
 	private JpaRepositoryDemo userRepository;
