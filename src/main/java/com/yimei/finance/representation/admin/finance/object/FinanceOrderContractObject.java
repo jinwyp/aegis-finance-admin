@@ -108,7 +108,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     private BigDecimal coalIndex_RS;                                 //煤炭指标   - 硫分
 
     @Size(min = 1, max = 5000, message = "数量验收标准 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "数量验收标准 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "数量验收标准 不能为空", groups = {SubmitFinanceContract.class})
     private String quantityAcceptanceCriteria;                       //数量验收标准  
 
     @Digits(integer = 9, fraction = 2, message = "数量验收依据 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
