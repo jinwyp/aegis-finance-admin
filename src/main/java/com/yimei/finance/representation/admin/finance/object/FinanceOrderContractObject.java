@@ -115,7 +115,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     private BigDecimal quantityAcceptanceBasis;                      //数量验收依据-吨数
 
     @Size(min = 1, max = 5000, message = "质量验收标准 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
-    @NotBlank(message = "质量验收标准 不能为空", groups = {SubmitFinanceContract.class})
+//    @NotBlank(message = "质量验收标准 不能为空", groups = {SubmitFinanceContract.class})
     private String qualityAcceptanceCriteria;                        //质量验收标准  
 
 //    @Range(min = 1, max = 3650, message = "付款提货期限 应在 {min}-{max} 天之间", groups = {SubmitFinanceContract.class})
