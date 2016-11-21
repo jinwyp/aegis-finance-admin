@@ -204,7 +204,7 @@ public class AdminUserServiceImpl {
         user.setPassword(securePassword(password));
         identityService.saveUser(user);
         String content = "你好: " + user.getFirstName() + ", 管理员为你重置密码, 新密码是: " + password + " . [易煤网金融系统]";
-        messageService.sendSimpleMail(user.getEmail(), subject, content);
+        messageService.sendHtmlMail(user.getEmail(), subject, content);
         return Result.success().setData(true);
     }
 

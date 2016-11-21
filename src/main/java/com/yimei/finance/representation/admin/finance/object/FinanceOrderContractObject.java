@@ -44,7 +44,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     private Integer type;                                            //合同类型
     private String typeName;                                         //合同类型名称
 
-    @Size(min = 1, max = 200, message = "签订地点 应在 {min}-{max} 个字符之间", groups = {SubmitFinanceContract.class})
+    @Size(min = 1, max = 200, message = "签订地点 应在 {min}-{max} 个字符之间", groups = {SaveFinanceContract.class, SubmitFinanceContract.class})
     @NotBlank(message = "签订地点 不能为空", groups = {SubmitFinanceContract.class})
     private String signPlace;                                        //签订地点  
 
