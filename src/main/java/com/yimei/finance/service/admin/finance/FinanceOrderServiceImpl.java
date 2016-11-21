@@ -266,6 +266,7 @@ public class FinanceOrderServiceImpl {
         financeOrderContract.setId(null);
         if (orderContract != null) {
             financeOrderContract.setId(orderContract.getId());
+            financeOrderContract.setContractNo(orderContract.getContractNo());
         } else {
             financeOrderContract.setContractNo(numberService.generateContractNo(CodeUtils.GeneratePinYinCode(financeOrderContract.getBuyerCompanyName(), 4, true) + "-" + CodeUtils.GeneratePinYinCode(financeOrderContract.getSellerCompanyName(), 4,  true)));
         }
