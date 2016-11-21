@@ -22,7 +22,7 @@ import java.sql.Date;
 import java.util.function.BinaryOperator;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(classes = AegisFinanceApplication.class)
 public class AegisFinanceAdminApplicationTests {
 	@Autowired
 	private JpaRepositoryDemo userRepository;
@@ -56,6 +56,8 @@ public class AegisFinanceAdminApplicationTests {
 		System.out.println(" ------------------------------------ " + (aaa.toLocalDate().getYear()));
 
 		BinaryOperator<Long> add = (x, y) -> x + y;
+
+		() -> (int x, int y) -> x + y;
 
 
 
