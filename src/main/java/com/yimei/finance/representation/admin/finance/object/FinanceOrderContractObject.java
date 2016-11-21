@@ -18,7 +18,7 @@ import javax.validation.constraints.Digits;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.time.LocalDate;
+import java.sql.Date;
 import java.util.List;
 
 @ApiModel(description = "金融单-合同内容")
@@ -50,7 +50,7 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
 
     @DateTimeFormat(pattern = EnumCommonString.LocalDate_Pattern)
     @JsonFormat(pattern = EnumCommonString.LocalDate_Pattern, timezone = EnumCommonString.GMT_8)
-    private LocalDate signDate;                                      //签订时间  
+    private Date signDate;                                      //签订时间  
 
     private Integer signDate_Year;
     private Integer signDate_Month;
@@ -119,9 +119,9 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     @NotBlank(message = "质量验收标准 不能为空", groups = {SubmitFinanceContract.class})
     private String qualityAcceptanceCriteria;                        //质量验收标准  
 
-    @Range(min = 1, max = 3650, message = "付款提货期限 应在 {min}-{max} 天之间", groups = {SubmitFinanceContract.class})
+//    @Range(min = 1, max = 3650, message = "付款提货期限 应在 {min}-{max} 天之间", groups = {SubmitFinanceContract.class})
 //    @NotBlank(message = "付款提货期限 不能为空", groups = {SubmitFinanceContract.class})
-    private int paymentPeriod;                                       //付款提货期限
+    private Integer paymentPeriod;                                   //付款提货期限
 
     @Digits(integer = 7, fraction = 2, message = "结算价格 最大支持 {integer}位整数, {fraction}位小数", groups = {SubmitFinanceContract.class})
 //    @NotBlank(message = "结算价格 不能为空", groups = {SubmitFinanceContract.class})
@@ -252,17 +252,17 @@ public class FinanceOrderContractObject extends BaseObject implements Serializab
     }
 
     public Integer getSignDate_Year() {
-        if (signDate != null) return signDate.getYear();
+        if (signDate != null) return signDate.toLocalDate().getYear();
         return null;
     }
 
     public Integer getSignDate_Month() {
-        if (signDate != null) return signDate.getMonthValue();
+        if (signDate != null) return signDate.toLocalDate().getMonthValue();
         return null;
     }
 
     public Integer getSignDate_Day() {
-        if (signDate != null) return signDate.getDayOfMonth();
+        if (signDate != null) return signDate.toLocalDate().getDayOfMonth();
         return null;
     }
 }

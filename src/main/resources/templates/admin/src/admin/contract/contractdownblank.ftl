@@ -66,7 +66,7 @@
     <div style="line-height:24px;">1.1 品种：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span></div>
     <div style="line-height:24px;margin-top: 10px;">1.2 数量：<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span> 吨,<span style="border-bottom: 1px solid black;padding: 0 10px;display: inline-block;min-width: 100px;"></span></div>
     <div style="line-height:24px;margin-top: 10px;">1.3 质量标准</div>
-    <div style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;">饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近饭店附近</div>
+    <div style="border-bottom: 1px solid black;padding: 10px 10px 0 10px;display: inline-block;min-width: 100%;"></div>
     <div style="line-height:24px;margin-top: 10px;">注：本基准质量指标仅作双方交货的参考，不作为双方的最终结算依据。</div>
 
 
@@ -113,8 +113,6 @@
     <div style="line-height:24px;margin-top: 10px;">③因供货方没有对卖方履行正常交货义务的或因其他原因，导致卖方未能从供货方获得与卖方付款对等价值的煤炭，买方自愿向卖方就此承担连带担保赔偿责任，在卖方产生损失时卖方有权扣除买方的履约保证金进行弥补，在买方履约保证金不足以弥补卖方损失时，卖方有权按照连带担保责任向买方追索或起诉。</div>
     <div style="line-height:24px;margin-top: 10px;">④在卖方向供货方支付货款后，供货方没有及时向卖方交付货物或因为其他原因（包括但不限于供货方交付的货物货权存在瑕疵或争议）导致卖方无法正常提货，只有在供货方将应退还给卖方的货款全部退还后，卖方才有义务向买方退还应退给买方的履约保证金，方式为无息退还。因为卖方向供货方支付货款的金额大于买方的履约保证金，对于其差额部分，按照日万分之五计息，由买方负责向卖方承担支付，卖方有权从买方的履约保证金中直接扣除。</div>
     <div style="line-height:24px;margin-top: 10px;">特别约定</div>
-
-    <div style="line-height:24px;margin-top: 10px;">fffffffffffff</div>
 
 
     <h4>第七条  收款信息</h4>

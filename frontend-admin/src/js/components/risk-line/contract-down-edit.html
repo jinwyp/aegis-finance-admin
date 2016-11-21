@@ -17,45 +17,45 @@
         <td>
             <div class="table-label">签订地：</div>
         </td>
-        <td colspan="3"><input type="text" [(ngModel)]="contract.signPlace" required [ngModelOptions]="{standalone: true}"/></td>
+        <td colspan="3"><input type="text" [(ngModel)]="contract.signPlace" required placeholder="请填写签订合同的地点" [ngModelOptions]="{standalone: true}"/></td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label">船名：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.shipName" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.shipName" required placeholder="请填写运输该货物的船名" [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">船次：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.shipNo" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.shipNo" required placeholder="请填写运输该货物的船的船次" [ngModelOptions]="{standalone: true}"/></td>
     </tr>
     <tr>
         <td>
             <div class="table-label">购货地点：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.purchasePlace" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.purchasePlace" required placeholder="请填写购货地点" [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">煤炭吨数：</div>
         </td>
-        <td><input type="text" class="div-250" [(ngModel)]="contract.coalTon" required [ngModelOptions]="{standalone: true}"/>&nbsp;&nbsp;吨</td>
+        <td><input type="text" class="div-250" [(ngModel)]="contract.coalTon" required placeholder="请填写煤炭吨数" [ngModelOptions]="{standalone: true}"/>&nbsp;&nbsp;吨</td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label">品种：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.coalType" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.coalType" required placeholder="请填写煤炭品种" [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">数量：</div>
         </td>
-        <td><input type="text" class="div-250" [(ngModel)]="contract.coalAmount" required [ngModelOptions]="{standalone: true}"/>&nbsp;&nbsp;吨</td>
+        <td><input type="text" class="div-250" [(ngModel)]="contract.coalAmount" required placeholder="请填写煤炭数量" [ngModelOptions]="{standalone: true}"/>&nbsp;&nbsp;吨</td>
     </tr>
     <tr>
         <td>
             <div class="table-label textarea-label">备注说明：</div>
         </td>
-        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.quantityRemark" required [ngModelOptions]="{standalone: true}"></textarea></td>
+        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.quantityRemark" required placeholder="请对数量进行大致的说明，如没有请填'无'" [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>
     <tr>
         <td>
@@ -65,13 +65,13 @@
         <td>
             <div class="table-label">硫分：</div>
         </td>
-        <td><input type="text" class="div-250" required [(ngModel)]="contract.coalIndex_RS" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;%</span></td>
+        <td><input type="text" class="div-250" required [(ngModel)]="contract.coalIndex_RS" placeholder="硫分为0-10之间的值" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;%</span></td>
     </tr>
     <tr>
         <td>
             <div class="table-label textarea-label">其他质量标准：</div>
         </td>
-        <td colspan="3"><textarea rows="5" required [(ngModel)]="contract.qualityRemark" [ngModelOptions]="{standalone: true}"></textarea></td>
+        <td colspan="3"><textarea rows="5" required [(ngModel)]="contract.qualityRemark" placeholder="请描述质量标准" [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>
 
     <tr>
@@ -82,35 +82,46 @@
         <td>
             <div class="table-label">付款提货期限：</div>
         </td>
-        <td><input type="text" class="div-250" [(ngModel)]="contract.paymentPeriod" required [ngModelOptions]="{standalone: true}"/>&nbsp;&nbsp;天</td>
+        <td><input type="text" class="div-250" [(ngModel)]="contract.paymentPeriod" required placeholder="请填写付款提货的期限" [ngModelOptions]="{standalone: true}"/>&nbsp;&nbsp;天</td>
     </tr>
     <tr>
         <td>
-            <div class="table-label textarea-label">数量验收依据：</div>
+            <div class="table-label">数量验收依据：</div>
         </td>
-        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.quantityAcceptanceCriteria" required [ngModelOptions]="{standalone: true}"></textarea></td>
+        <td colspan="3"><input type="text" class="div-250" required [(ngModel)]="contract.quantityAcceptanceBasis" placeholder="请填写数量结算依据" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;吨 </span></td>
     </tr>
     <tr>
         <td>
             <div class="table-label">最终结算价格：</div>
         </td>
-        <td colspan="3"><input type="text" [(ngModel)]="contract.settlementPrice" required [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元/吨(一票含税)</span></td>
+        <td colspan="3"><input type="text" [(ngModel)]="contract.settlementPrice" required placeholder="请填写最终结算价格" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元/吨(一票含税)</span></td>
     </tr>
     <tr>
         <td>
             <div class="table-label money-label">保证金：</div>
         </td>
         <td colspan="3">
-            <input type="text" maxlength="12" [(ngModel)]="contract.cashDeposit" required (ngModelChange)="setMoneyCN($event)" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元</span>
-            <div class="money-zh">大写金额：{{cashDepositCN}}</div>
+            <input type="text" maxlength="12" [(ngModel)]="contract.cashDeposit" required placeholder="请填写保证金金额" (ngModelChange)="setMoneyCN($event)" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;元</span>
+            <div class="money-zh">大写金额：{{contract.cashDepositCapital}}</div>
         </td>
+    </tr>
+
+    <tr>
+        <td>
+            <div class="table-label">供货方名称：</div>
+        </td>
+        <td><input type="text" [(ngModel)]="contract.coalSupplier" required placeholder="请填写供货方名称" [ngModelOptions]="{standalone: true}"/></td>
+        <td>
+            <div class="table-label">合同签订编号：</div>
+        </td>
+        <td><input type="text" [(ngModel)]="contract.upstreamContractNo" required placeholder="请填写与供货方签订的合同编号" [ngModelOptions]="{standalone: true}"/></td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label textarea-label">特别约定：</div>
         </td>
-        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.specialRemark" required [ngModelOptions]="{standalone: true}"></textarea></td>
+        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.specialRemark" required placeholder="请填写特别约定，如没有请填'无'" [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>
 
     <tr>
@@ -123,92 +134,92 @@
         <td>
             <div class="table-label textarea-label">合同附件名称：</div>
         </td>
-        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.attachmentNames" required [ngModelOptions]="{standalone: true}"></textarea></td>
+        <td colspan="3"><textarea rows="5" [(ngModel)]="contract.attachmentNames" required placeholder="请填写所有附件名称" [ngModelOptions]="{standalone: true}"></textarea></td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label">卖方公司名称：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerCompanyName" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerCompanyName" required placeholder="请填写卖方公司名称" [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">卖方联系人：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerLinkmanName" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerLinkmanName" required placeholder="请填写卖方联系人" [ngModelOptions]="{standalone: true}"/></td>
     </tr>
     <tr>
         <td>
             <div class="table-label">联系手机：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerLinkmanPhone" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerLinkmanPhone" required placeholder="请填写联系手机" [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">联系邮箱：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerLinkmanEmail" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerLinkmanEmail" required placeholder="请填写联系邮箱" [ngModelOptions]="{standalone: true}"/></td>
     </tr>
     <tr>
         <td>
             <div class="table-label">卖方公司地址：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerCompanyAddress" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerCompanyAddress" required placeholder="请填写卖方公司地址" [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">法定代表人：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerLegalPerson" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerLegalPerson" required placeholder="请填写法定代表人" [ngModelOptions]="{standalone: true}"/></td>
     </tr>
     <tr>
         <td>
             <div class="table-label">开户行：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerBankName" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerBankName" required placeholder="请填写公司开户银行" [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">帐号：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.sellerBankAccount" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.sellerBankAccount" required placeholder="请填写开户行帐号" [ngModelOptions]="{standalone: true}"/></td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label">买方公司名称：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.buyerCompanyName" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.buyerCompanyName" required placeholder="请填写买方公司名称" [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">买方联系人：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.buyerLinkmanName" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.buyerLinkmanName" required placeholder="请填写买方联系人" [ngModelOptions]="{standalone: true}"/></td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label">联系手机：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.buyerLinkmanPhone" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.buyerLinkmanPhone" required placeholder="请填写联系手机" [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">联系邮箱：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.buyerLinkmanEmail" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.buyerLinkmanEmail" required placeholder="请填写联系邮箱" [ngModelOptions]="{standalone: true}"/></td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label">买方公司地址：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.buyerCompanyAddress" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.buyerCompanyAddress" required placeholder="请填写买方公司地址" [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">法定代表人：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.buyerLegalPerson" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.buyerLegalPerson" required placeholder="请填写法定代表人" [ngModelOptions]="{standalone: true}"/></td>
     </tr>
 
     <tr>
         <td>
             <div class="table-label">开户行：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.buyerBankName" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.buyerBankName" required placeholder="请填写公司开户银行" [ngModelOptions]="{standalone: true}"/></td>
         <td>
             <div class="table-label">帐号：</div>
         </td>
-        <td><input type="text" [(ngModel)]="contract.buyerBankAccount" required [ngModelOptions]="{standalone: true}"/></td>
+        <td><input type="text" [(ngModel)]="contract.buyerBankAccount" required placeholder="请填写开户行账号" [ngModelOptions]="{standalone: true}"/></td>
     </tr>
 
     <tr>
@@ -222,7 +233,7 @@
         <td colspan="4">
             <div class="btn-option">
                 <!--<span class="notice"><span class="notice-icon"></span>保存后，可以刷新预览页面查看保存后的内容。</span>-->
-                <button type="button" class="btn btn-default commit" (click)="save(0)" [disabled]="!contractForm.form.valid">保存</button>
+                <button type="button" *ngIf="status==='0'" class="btn btn-default commit" (click)="save(0)" [disabled]="!contractForm.form.valid">保存</button>
                 <button type="submit" class="btn btn-default commit ml-40" [disabled]="!contractForm.form.valid">保存并提交</button>
                 <button type="button" class="btn btn-default cancel ml-40" (click)="goBack()">返回</button>
                 <!--<span class="btn cancel ml-40">关闭</span>-->
