@@ -57,7 +57,6 @@ public class AegisFinanceAdminApplicationTests {
 
 		BinaryOperator<Long> add = (x, y) -> x + y;
 
-		() -> (int x, int y) -> x + y;
 
 
 
