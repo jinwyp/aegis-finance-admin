@@ -267,16 +267,19 @@ public class FinanceFlowMethodServiceImpl {
     }
 
     public List<TaskObject> changeTaskObject(List<Task> taskList) {
-        if (taskList == null || taskList.size() == 0) return new ArrayList<>();
-        return taskList.parallelStream()
+        List<TaskObject> taskObjectList = new ArrayList<>();
+        if (taskList == null || taskList.size() == 0) return taskObjectList;
+        taskObjectList = taskList.parallelStream()
                 .map(task -> changeTaskObject(task))
                 .collect(Collectors.toList());
+        return taskObjectList;
     }
 
     /**
      * 封装 HistoryTask, 从 HistoryTask 到 HistoryTaskObject
      */
     public HistoryTaskObject changeHistoryTaskObject(HistoricTaskInstance task) {
+        if (task == null) return null;
         HistoryTaskObject taskObject = DozerUtils.copy(task, HistoryTaskObject.class);
         HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
         if (historicProcessInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
@@ -330,8 +333,10 @@ public class FinanceFlowMethodServiceImpl {
     }
 
     public List<HistoryTaskObject> changeHistoryTaskObject(List<HistoricTaskInstance> taskList) {
-        if (taskList == null || taskList.size() == 0) return new ArrayList<>();
-        return taskList.parallelStream().map(task -> changeHistoryTaskObject(task)).collect(Collectors.toList());
+        List<HistoryTaskObject> taskObjectList = new ArrayList<>();
+        if (taskList == null || taskList.size() == 0) return taskObjectList;
+        taskObjectList = taskList.parallelStream().map(task -> changeHistoryTaskObject(task)).collect(Collectors.toList());
+        return taskObjectList;
     }
 
 
