@@ -185,9 +185,10 @@ public class SiteFinanceOrderServiceImpl {
         List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).orderByTaskCreateTime().desc().list();
         if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
         List<Attachment> attachmentList = taskService.getTaskAttachments(taskList.get(0).getId());
-        if (attachmentList == null || attachmentList.size() == 0) return null;
-        attachmentList = attachmentList.parallelStream().filter(a -> a.getType().equals(type)).collect(Collectors.toList());
-        return DozerUtils.copy(attachmentList, AttachmentObject.class);
+        List<AttachmentObject> attachmentObjectList = new ArrayList<>();
+        if (attachmentList == null || attachmentList.size() == 0) return attachmentObjectList;
+        attachmentObjectList = DozerUtils.copy(attachmentList.parallelStream().filter(a -> a.getType().equals(type)).collect(Collectors.toList()), AttachmentObject.class);
+        return attachmentObjectList;
     }
 
     /**
