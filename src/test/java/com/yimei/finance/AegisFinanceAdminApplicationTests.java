@@ -62,7 +62,7 @@ public class AegisFinanceAdminApplicationTests {
 
 		BinaryOperator<Long> add = (x, y) -> x + y;
 		Page page = new Page();
-		
+
 
 
 //		UserObject user = new UserObject("14", 0L);

@@ -36,8 +36,12 @@ import java.util.Map;
 public class SiteFinancePageController {
     @Autowired
     private FinanceOrderContractRepository financeOrderContractRepository;
-    @Autowired
+//    @Autowired
     private ContractServiceImpl contractService;
+
+    public void setContractService(ContractServiceImpl contractService) {
+        this.contractService = contractService;
+    }
 
     @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 合同详情", notes = "供应链金融 我的融资 煤易贷 合同详情页面")
     @LoginRequired
