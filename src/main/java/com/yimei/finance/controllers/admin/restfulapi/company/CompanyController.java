@@ -44,8 +44,8 @@ public class CompanyController {
     @RequestMapping(value = "/risk", method = RequestMethod.GET)
     @ApiOperation(value = "获取风控线列表", response = CompanyObject.class, responseContainer = "List")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "name", value = "风控线名称", required = false, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "adminName", value = "风控线管理员名称", required = false, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "name", value = "风控线名称", required = false, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "adminName", value = "风控线管理员名称", required = false, dataType = "string", paramType = "query")
     })
     public Result findRiskOrganizationListMethod(RiskCompanySearch riskCompanySearch,
                                                  @ApiParam(name = "page", value = "分页参数", required = false) Page page) {

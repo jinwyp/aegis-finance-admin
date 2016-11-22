@@ -50,7 +50,7 @@ public class MYGFinancingController {
 
     @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "线上交易员填写材料-保存", notes = "线上交易员填写材料-保存", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygOnlineTraderAddMaterialMethod(@PathVariable("taskId") String taskId,
                                                    @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SaveFinanceOrder.class}) @RequestBody FinanceOrderObject financeOrder) {
         return onlineTraderAddMaterialMethod(taskId, null, financeOrder, false);
@@ -58,7 +58,7 @@ public class MYGFinancingController {
 
     @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
     @ApiOperation(value = "线上交易员填写材料-提交", notes = "线上交易员填写材料-提交", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygOnlineTraderAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
                                                            @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SubmitFinanceOrder.class}) @RequestBody CombineObject<TaskMap, FinanceOrderObject> map) {
         return onlineTraderAddMaterialMethod(taskId, map.t, map.u, true);
@@ -74,7 +74,7 @@ public class MYGFinancingController {
 
     @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "业务员审核-保存", notes = "业务员审核-保存", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygSalesmanAddMaterialMethod(@PathVariable("taskId") String taskId,
                                                @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SaveFinanceSalesmanInfo.class}) @RequestBody FinanceOrderSalesmanInfoObject salesmanInfoObject) {
         return salesmanAddMaterialAndAuditMethod(taskId, null, salesmanInfoObject, false);
@@ -82,7 +82,7 @@ public class MYGFinancingController {
 
     @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
     @ApiOperation(value = "业务员审核-提交", notes = "业务员审核-提交", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygSalesmanAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
                                                        @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SubmitFinanceSalesmanInfo.class}) @RequestBody CombineObject<TaskMap, FinanceOrderSalesmanInfoObject> map) {
         return salesmanAddMaterialAndAuditMethod(taskId, map.t, map.u, true);
@@ -97,7 +97,7 @@ public class MYGFinancingController {
 
     @RequestMapping(value = "/salesman/supply/investigation/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
                                                                @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYGMethod(taskId);
@@ -108,7 +108,7 @@ public class MYGFinancingController {
 
     @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "尽调员审核-保存", notes = "尽调员审核-保存", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygInvestigatorAddMaterialMethod(@PathVariable("taskId") String taskId,
                                                    @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SaveFinanceInvestigatorInfo.class}) @RequestBody FinanceOrderInvestigatorInfoObject investigatorInfoObject) {
         return investigatorAddMaterialAndAuditMethod(taskId, null, investigatorInfoObject, false);
@@ -116,7 +116,7 @@ public class MYGFinancingController {
 
     @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
     @ApiOperation(value = "尽调员审核-提交", notes = "尽调员审核-提交", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygInvestigatorAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
                                                            @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SubmitFinanceInvestigatorInfo.class}) @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfoObject> map) {
         return investigatorAddMaterialAndAuditMethod(taskId, map.t, map.u, true);
@@ -131,7 +131,7 @@ public class MYGFinancingController {
 
     @RequestMapping(value = "/salesman/supply/supervision/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "业务员补充监管材料", notes = "业务员补充监管材料")
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygSalesmanSupplySupervisionMaterialMethod(@PathVariable("taskId") String taskId,
                                                              @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYGMethod(taskId);
@@ -142,7 +142,7 @@ public class MYGFinancingController {
 
     @RequestMapping(value = "/supervisor/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "监管员审核-保存", notes = "监管员审核-保存", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygSupervisorAndMaterialMethod(@PathVariable("taskId") String taskId,
                                                  @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SaveFinanceSupervisorInfo.class}) @RequestBody FinanceOrderSupervisorInfoObject supervisorInfoObject) {
         return supervisorAndMaterialAndAuditMethod(taskId, null, supervisorInfoObject, false);
@@ -150,7 +150,7 @@ public class MYGFinancingController {
 
     @RequestMapping(value = "/supervisor/audit/{taskId}", method = RequestMethod.POST, params = "type=1")
     @ApiOperation(value = "监管员审核-提交", notes = "监管员审核-提交", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygSupervisorAndMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
                                                          @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SubmitFinanceSupervisorInfo.class}) @RequestBody CombineObject<TaskMap, FinanceOrderSupervisorInfoObject> map) {
         return supervisorAndMaterialAndAuditMethod(taskId, map.t, map.u, true);
@@ -165,7 +165,7 @@ public class MYGFinancingController {
 
     @RequestMapping(value = "/salesman/supply/riskmanager/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "业务员补充风控材料", notes = "业务员补充风控人员要求的材料")
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygSalesmanSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
                                                              @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYGMethod(taskId);

@@ -113,7 +113,7 @@ public class FinancingCommonController {
 
     @RequestMapping(value = "/finance/process/{processInstanceId}/image", method = RequestMethod.GET)
     @ApiOperation(value = "通过流程实例id获取流程图", notes = "通过流程实例id获取流程图")
-    @ApiImplicitParam(name = "processInstanceId", value = "流程实例id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "processInstanceId", value = "流程实例id", required = true, dataType = "string", paramType = "path")
     public void getProcessDiagramMethod(@PathVariable("processInstanceId") String processInstanceId, HttpServletResponse response) throws IOException {
         response.setContentType("image/gif");
         OutputStream out = response.getOutputStream();
