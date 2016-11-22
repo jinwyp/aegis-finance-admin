@@ -28,23 +28,23 @@ public class UserController {
     @RequestMapping(method = RequestMethod.GET)
     @ApiOperation(value = "查询所有用户", notes = "查询所有用户列表", response = UserObject.class, responseContainer = "List")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", value = "用户账号", required = false, defaultValue = "", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "name", value = "用户姓名", required = false, defaultValue = "", dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "groupId", value = "组id名", required = false, defaultValue = "", dataType = "String", paramType = "query"),
+            @ApiImplicitParam(name = "username", value = "用户账号", required = false, defaultValue = "", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "name", value = "用户姓名", required = false, defaultValue = "", dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "groupId", value = "组id名", required = false, defaultValue = "", dataType = "string", paramType = "query"),
     })
     public Result getAllUsersMethod(AdminUserSearch userSearch, @ApiParam(name = "page", value = "分页参数", required = false) Page page) {
         return userService.getUserListBySelect(adminSession.getUser(), userSearch, page);
     }
 
     @ApiOperation(value = "查询单个用户", notes = "根据id查询用户对象", response = UserObject.class)
-    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "string", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public Result getUserByIdMethod(@PathVariable("id") String id) {
         return userService.findById(id, adminSession.getUser());
     }
 
     @ApiOperation(value = "查询用户所在的组", notes = "查询某个用户所在的组", response = GroupObject.class, responseContainer = "List")
-    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "string", paramType = "path")
     @RequestMapping(value = "/{id}/groups", method = RequestMethod.GET)
     public Result getUserGroupsMethod(@PathVariable("id") String id, @ApiParam(name = "page", value = "分页参数", required = false)Page page) {
         return userService.findUserGroupList(id, adminSession.getUser(), page);
@@ -71,16 +71,15 @@ public class UserController {
     }
 
     @ApiOperation(value = "删除用户", notes = "根据 UserId 删除用户", response = UserObject.class)
-    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "string", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public Result deleteUserMethod(@PathVariable("id") String id) {
         return userService.deleteById(id, adminSession.getUser());
     }
 
     @ApiOperation(value = "修改用户信息", notes = "根据 User Id修改用户", response = UserObject.class)
-    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "string", paramType = "path")
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
-    @Transactional
     public Result updateUserInfoMethod(@PathVariable("id") String id,
                                        @ApiParam(name = "user", value = "用户对象", required = true) @Validated(value = {EditUser.class}) @RequestBody UserObject user) {
         return userService.updateUser(id, user, adminSession.getUser());
@@ -96,7 +95,7 @@ public class UserController {
     }
 
     @ApiOperation(value = "管理员帮助用户重置密码", notes = "管理员帮助用户重置密码, 生成随机密码, 发送到用户邮箱.", response = Boolean.class)
-    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "用户id", required = true, dataType = "string", paramType = "path")
     @RequestMapping(value = "/{id}/password", method = RequestMethod.POST)
     public Result resetUserPasswordMethod(@PathVariable("id") String id) {
         return userService.adminResetUserPassword(id, adminSession.getUser());

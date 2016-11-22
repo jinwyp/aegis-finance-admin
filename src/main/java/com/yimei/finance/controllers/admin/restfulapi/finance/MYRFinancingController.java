@@ -50,7 +50,7 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "线上交易员填写材料-保存", notes = "线上交易员填写材料-保存", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result myrOnlineTraderAddMaterialMethod(@PathVariable("taskId") String taskId,
                                                    @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SaveFinanceOrder.class}) @RequestBody FinanceOrderObject financeOrder) {
         return onlineTraderAddMaterialMethod(taskId, null, financeOrder, false);
@@ -58,7 +58,7 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/onlinetrader/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
     @ApiOperation(value = "线上交易员填写材料-提交", notes = "线上交易员填写材料-提交", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result myrOnlineTraderAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
                                                            @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SubmitFinanceOrder.class}) @RequestBody CombineObject<TaskMap, FinanceOrderObject> map) {
         return onlineTraderAddMaterialMethod(taskId, map.t, map.u, true);
@@ -74,7 +74,7 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "业务员审核-保存", notes = "业务员审核-保存", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result myrSalesmanAddMaterialMethod(@PathVariable("taskId") String taskId,
                                                @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SaveFinanceSalesmanInfo.class}) @RequestBody FinanceOrderSalesmanInfoObject salesmanInfoObject) {
         return salesmanAddMaterialAndAuditMethod(taskId, null, salesmanInfoObject, false);
@@ -82,7 +82,7 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/salesman/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
     @ApiOperation(value = "业务员审核-提交", notes = "业务员审核-提交", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result myrSalesmanAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
                                                        @ApiParam(name = "map", value = "参数body对象", required = true) @Validated(value = {SubmitFinanceSalesmanInfo.class}) @RequestBody CombineObject<TaskMap, FinanceOrderSalesmanInfoObject> map) {
         return salesmanAddMaterialAndAuditMethod(taskId, map.t, map.u, true);
@@ -97,7 +97,7 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/salesman/supply/investigation/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "业务员补充尽调材料", notes = "业务员补充尽调材料", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result myrSalesmanSupplyInvestigationMaterialMethod(@PathVariable("taskId") String taskId,
                                                                @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYRMethod(taskId);
@@ -108,7 +108,7 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "尽调员审核-保存", notes = "尽调员审核-保存", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result myrInvestigatorAddMaterialMethod(@PathVariable("taskId") String taskId,
                                                    @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SaveFinanceInvestigatorInfo.class}) @RequestBody FinanceOrderInvestigatorInfoObject investigatorInfoObject) {
         return investigatorAddMaterialAndAuditMethod(taskId, null, investigatorInfoObject, false);
@@ -116,7 +116,7 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/investigator/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
     @ApiOperation(value = "尽调员审核-提交", notes = "尽调员审核-提交", response = Boolean.class)
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result myrInvestigatorAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
                                                            @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SubmitFinanceInvestigatorInfo.class}) @RequestBody CombineObject<TaskMap, FinanceOrderInvestigatorInfoObject> map) {
         return investigatorAddMaterialAndAuditMethod(taskId, map.t, map.u, true);
@@ -131,7 +131,7 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/salesman/supply/riskmanager/material/{taskId}", method = RequestMethod.POST)
     @ApiOperation(value = "业务员补充风控材料", notes = "业务员补充风控人员要求的材料")
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "String", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result myrSalesmanSupplyRiskManagerMaterialMethod(@PathVariable("taskId") String taskId,
                                                              @ApiParam(name = "attachmentList", value = "附件list", required = true) @Validated @RequestBody List<AttachmentObject> attachmentList) {
         Result result = checkMYRMethod(taskId);
@@ -142,7 +142,7 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "风控人员审核-保存", notes = "风控人员审核-保存")
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result myrRiskManagerAddMaterialMethod(@PathVariable("taskId") String taskId,
                                                   @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SaveFinanceRiskManagerInfo.class}) @RequestBody FinanceOrderRiskManagerInfoObject riskManagerInfoObject) {
         return riskManagerAddMaterialAndAuditMethod(taskId, null, riskManagerInfoObject, false);
@@ -150,7 +150,7 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}", method = RequestMethod.POST, params = {"type=1"})
     @ApiOperation(value = "风控人员审核-提交", notes = "风控人员审核-提交")
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result myrRiskManagerAddMaterialAndAuditMethod(@PathVariable("taskId") String taskId,
                                                           @ApiParam(name = "map", value = "任务相关参数", required = true) @Validated(value = {SubmitFinanceRiskManagerInfo.class}) @RequestBody CombineObject<TaskMap, FinanceOrderRiskManagerInfoObject> map) {
         return riskManagerAddMaterialAndAuditMethod(taskId, map.t, map.u, true);
@@ -165,7 +165,7 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}/contract", method = RequestMethod.POST, params = {"type=0"})
     @ApiOperation(value = "风控人员填写合同内容", notes = "风控人员填写合同内容")
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygRiskManagerAddContractMethod(@PathVariable("taskId") String taskId,
                                                   @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SaveFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) {
         return riskManagerAddContractMethod(taskId, financeOrderContractObject, false);
@@ -173,7 +173,7 @@ public class MYRFinancingController {
 
     @RequestMapping(value = "/riskmanager/audit/{taskId}/contract", method = RequestMethod.POST, params = {"type=1"})
     @ApiOperation(value = "风控人员填写合同内容", notes = "风控人员填写合同内容")
-    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "Integer", paramType = "path")
+    @ApiImplicitParam(name = "taskId", value = "任务id", required = true, dataType = "string", paramType = "path")
     public Result mygRiskManagerAddContractMethodSubmit(@PathVariable("taskId") String taskId,
                                                         @ApiParam(name = "map", value = "合同对象", required = true) @Validated(value = {SubmitFinanceContract.class}) @RequestBody FinanceOrderContractObject financeOrderContractObject) {
         return riskManagerAddContractMethod(taskId, financeOrderContractObject, true);

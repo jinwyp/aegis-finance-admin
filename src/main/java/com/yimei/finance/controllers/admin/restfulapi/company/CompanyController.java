@@ -24,7 +24,7 @@ public class CompanyController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     @ApiOperation(value = "根据id获取公司对象", response = CompanyObject.class)
-    @ApiImplicitParam(name = "id", value = "公司 id", dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "公司 id", dataType = "int", paramType = "path")
     public Result findByIdMethod(@PathVariable("id")Long id) {
         return companyService.findByIdWithAuthority(id, adminSession.getUser().getId());
     }
@@ -44,8 +44,8 @@ public class CompanyController {
     @RequestMapping(value = "/risk", method = RequestMethod.GET)
     @ApiOperation(value = "获取风控线列表", response = CompanyObject.class, responseContainer = "List")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "name", value = "风控线名称", required = false, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "adminName", value = "风控线管理员名称", required = false, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "name", value = "风控线名称", required = false, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "adminName", value = "风控线管理员名称", required = false, dataType = "string", paramType = "query")
     })
     public Result findRiskOrganizationListMethod(RiskCompanySearch riskCompanySearch,
                                                  @ApiParam(name = "page", value = "分页参数", required = false) Page page) {
@@ -60,7 +60,7 @@ public class CompanyController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.PUT)
     @ApiOperation(value = "修改公司", notes = "根据 company 对象修改用户", response = CompanyObject.class)
-    @ApiImplicitParam(name = "id", value = "公司 id", dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "公司 id", dataType = "int", paramType = "path")
     public Result editCompanyMethod(@PathVariable("id") Long id,
                                     @ApiParam(name = "company", value = "公司对象", required = true) @Validated(value = {EditCompany.class}) @RequestBody CompanyObject company) {
         return companyService.editCompany(id, company, adminSession.getUser().getId());
@@ -68,7 +68,7 @@ public class CompanyController {
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     @ApiOperation(value = "删除公司", notes = "根据 id 删除公司", response = CompanyObject.class)
-    @ApiImplicitParam(name = "id", value = "公司 id", dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "公司 id", dataType = "int", paramType = "path")
     public Result deleteCompanyMethod(@PathVariable("id") Long id) {
         return companyService.deleteCompany(id, adminSession.getUser().getId());
     }

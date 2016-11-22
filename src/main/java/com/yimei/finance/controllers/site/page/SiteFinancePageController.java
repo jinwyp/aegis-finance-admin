@@ -12,6 +12,8 @@ import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.service.common.file.PDF;
 import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,6 +50,10 @@ public class SiteFinancePageController {
     @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 合同详情 - 下载合同", notes = "供应链金融 我的融资 煤易贷 合同详情 - 下载合同")
     @LoginRequired
     @RequestMapping(value = "/finance/user/order/{financeId}/contract/{type}/download", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "type", value = "合同类型", required = true, dataType = "int", paramType = "path")
+    })
     public HttpEntity<byte[]> siteFinanceOrderDownloadContractByFinanceIdAndContractType(@PathVariable("financeId") Long financeId,
                                                                            @PathVariable("type") int type) throws IOException, DocumentException {
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
@@ -64,6 +70,10 @@ public class SiteFinancePageController {
     @ApiOperation(value = "网站供应链金融 - 个人中心 - 我的合同 - 合同详情 - 预览合同", notes = "供应链金融 我的融资 煤易贷 合同详情 - 预览合同")
     @LoginRequired
     @RequestMapping(value = "/finance/user/order/{financeId}/contract/{type}/preview", method = RequestMethod.GET)
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "type", value = "合同类型", required = true, dataType = "int", paramType = "path")
+    })
     public String siteFinanceOrderPreviewContractByFinanceIdAndContractType(@PathVariable("financeId") Long financeId,
                                                                             @PathVariable("type") int type, Map<String, Object> model) {
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
