@@ -72,7 +72,7 @@ public class SiteUserCenterController {
     }
 
     @ApiOperation(value = "根据金融单id查看合同附件列表", notes = "根据 金融单id 查看合同附件列表", response = FinanceOrderContractAttachment.class)
-    @ApiImplicitParam(name = "id", value = "合同id", required = true, dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "合同id", required = true, dataType = "int", paramType = "path")
     @LoginRequired
     @RequestMapping(value = "/financeOrder/{financeId}/contract/attachment", method = RequestMethod.GET)
     public Result getFinancingContractAttachmentList(@PathVariable("financeId") Long financeId) {
