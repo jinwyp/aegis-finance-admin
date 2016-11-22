@@ -33,11 +33,11 @@ public class SiteUserCenterController {
     @LoginRequired
     @ApiImplicitParams({
             @ApiImplicitParam(name = "page", value = "页数", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "sourceId", value = "业务编号", required = false, dataType = "String", paramType = "query"),
-            @ApiImplicitParam(name = "startDate", value = "开始时间", required = false, dataType = "Date", paramType = "query"),
-            @ApiImplicitParam(name = "endDate", value = "结束时间", required = false, dataType = "Date", paramType = "query"),
+            @ApiImplicitParam(name = "sourceId", value = "业务编号", required = false, dataType = "string", paramType = "query"),
+            @ApiImplicitParam(name = "startDate", value = "开始时间", required = false, dataType = "date", paramType = "query"),
+            @ApiImplicitParam(name = "endDate", value = "结束时间", required = false, dataType = "date", paramType = "query"),
             @ApiImplicitParam(name = "approveStateId", value = "审批状态id", required = false, defaultValue = "0", dataType = "int", paramType = "query"),
-            @ApiImplicitParam(name = "applyType", value = "业务类型", required = false, dataType = "String", paramType = "query")
+            @ApiImplicitParam(name = "applyType", value = "业务类型", required = false, dataType = "string", paramType = "query")
     })
     @RequestMapping(value = "/financeOrder", method = RequestMethod.GET)
     public Result getFinancingApplyInfoList(FinanceOrderSearch orderSearch, Page page) {
@@ -46,7 +46,7 @@ public class SiteUserCenterController {
     }
 
     @ApiOperation(value = "根据 id 查看金融申请单", notes = "根据 金融申请单id 查看金融申请单", response = FinanceOrder.class)
-    @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "Long", paramType = "path")
+    @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "int", paramType = "path")
     @LoginRequired
     @RequestMapping(value = "/financeOrder/{id}", method = RequestMethod.GET)
     public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
@@ -60,7 +60,10 @@ public class SiteUserCenterController {
     }
 
     @ApiOperation(value = "查看合同详情", notes = "根据 合同金融id 查看合同详情", response = FinanceOrderContract.class)
-    @ApiImplicitParam(name = "id", value = "合同id", required = true, dataType = "Long", paramType = "path")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "type", value = "合同类型", required = true, dataType = "int", paramType = "path")
+    })
     @LoginRequired
     @RequestMapping(value = "/financeOrder/{financeId}/contract/{type}", method = RequestMethod.GET)
     public Result getFinancingContractInfo(@PathVariable("financeId") Long financeId,
