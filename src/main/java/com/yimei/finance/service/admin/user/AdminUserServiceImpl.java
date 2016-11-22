@@ -37,7 +37,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Service("adminUserService")
 public class AdminUserServiceImpl {
     @Autowired
     private IdentityService identityService;

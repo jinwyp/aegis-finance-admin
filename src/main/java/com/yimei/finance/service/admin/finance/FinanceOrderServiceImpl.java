@@ -31,7 +31,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service("financeOrderService")
+@Service("adminFinanceOrderService")
 public class FinanceOrderServiceImpl {
     @Autowired
     private FinanceOrderRepository financeOrderRepository;

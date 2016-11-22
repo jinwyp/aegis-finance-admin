@@ -39,7 +39,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service("financeFlowMethodService")
+@Service("adminFinanceFlowMethodService")
 public class FinanceFlowMethodServiceImpl {
     @Autowired
     private TaskService taskService;

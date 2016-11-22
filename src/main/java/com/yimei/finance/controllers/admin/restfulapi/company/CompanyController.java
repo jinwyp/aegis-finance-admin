@@ -36,13 +36,13 @@ public class CompanyController {
     }
 
     @RequestMapping(value = "/risk/all", method = RequestMethod.GET)
-    @ApiOperation(value = "获取风控线列表", response = CompanyObject.class, responseContainer = "List")
+    @ApiOperation(value = "风控线列表,不分页", response = CompanyObject.class, responseContainer = "List")
     public Result findAllRiskOrganizationListMethod() {
         return companyService.adminFindRiskCompanyList(adminSession.getUser().getCompanyId());
     }
 
     @RequestMapping(value = "/risk", method = RequestMethod.GET)
-    @ApiOperation(value = "获取风控线列表", response = CompanyObject.class, responseContainer = "List")
+    @ApiOperation(value = "风控线列表", response = CompanyObject.class, responseContainer = "List")
     @ApiImplicitParams({
             @ApiImplicitParam(name = "name", value = "风控线名称", required = false, dataType = "string", paramType = "query"),
             @ApiImplicitParam(name = "adminName", value = "风控线管理员名称", required = false, dataType = "string", paramType = "query")

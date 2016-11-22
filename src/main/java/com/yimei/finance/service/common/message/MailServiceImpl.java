@@ -17,7 +17,7 @@ import java.util.Properties;
 /**
  * Created by fanjun on 15-6-1.
  */
-@Service
+@Service("mailService")
 public class MailServiceImpl {
 
     Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);

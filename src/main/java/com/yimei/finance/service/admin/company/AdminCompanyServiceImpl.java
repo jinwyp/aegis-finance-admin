@@ -28,7 +28,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Service("adminCompanyService")
 public class AdminCompanyServiceImpl {
     @Autowired
     private CompanyRepository companyRepository;
