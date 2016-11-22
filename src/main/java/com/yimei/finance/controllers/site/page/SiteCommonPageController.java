@@ -4,6 +4,7 @@ import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.service.common.file.LocalStorage;
 import com.yimei.finance.utils.WebUtils;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -23,6 +24,7 @@ public class SiteCommonPageController {
 
     @RequestMapping(value = "/finance/files", method = RequestMethod.GET)
     @ApiOperation(value = "下载文件", notes = "通过文件url路径下载文件")
+    @ApiImplicitParam(name = "url", value = "文件路径", required = true, dataType = "string", paramType = "query")
     public void siteDownloadFile(@RequestParam(value = "url", required = true) String url, HttpServletResponse response) {
         try {
             if (url != null && url.startsWith("/files/")) {

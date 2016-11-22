@@ -3,6 +3,10 @@ package com.yimei.finance;
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
+import com.yimei.finance.representation.admin.company.object.RiskCompanySearch;
+import com.yimei.finance.representation.common.result.Page;
+import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.service.admin.company.AdminCompanyServiceImpl;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
@@ -22,7 +26,7 @@ import java.sql.Date;
 import java.util.function.BinaryOperator;
 
 @RunWith(SpringRunner.class)
-@SpringBootTest(classes = AegisFinanceApplication.class)
+@SpringBootTest
 public class AegisFinanceAdminApplicationTests {
 	@Autowired
 	private JpaRepositoryDemo userRepository;
@@ -44,6 +48,9 @@ public class AegisFinanceAdminApplicationTests {
 	private HistoryService historyService;
 	@Autowired
 	private SiteFinanceOrderServiceImpl siteFinanceOrderService;
+	@Autowired
+	private AdminCompanyServiceImpl adminCompanyService;
+
 
 	@Test
 	public void test001() {
@@ -56,11 +63,19 @@ public class AegisFinanceAdminApplicationTests {
 		System.out.println(" ------------------------------------ " + (aaa.toLocalDate().getYear()));
 
 		BinaryOperator<Long> add = (x, y) -> x + y;
+		Page page = new Page();
 
 
+		RiskCompanySearch riskCompanySearch = new RiskCompanySearch();
+		riskCompanySearch.setAdminName("d");
+		riskCompanySearch.setName("a");
+
+		Result result = adminCompanyService.adminFindRiskCompanyList(riskCompanySearch, 0L, page);
+
+		System.out.println(result.getData());
+		System.out.println(result.toString());
 
 
-//		Page page = new Page();
 //		UserObject user = new UserObject("14", 0L);
 
 //

@@ -15,10 +15,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Service("adminGroupService")
 public class AdminGroupServiceImpl {
     @Autowired
     private IdentityService identityService;
@@ -108,12 +109,6 @@ public class AdminGroupServiceImpl {
             identityService.deleteMembership(userId, groupId);
             return Result.success().setData(userService.changeUserObject(user));
         });
-//        for (Group group2 : groupList) {
-//            if (group2.getId().equals(groupId)) {
-//                identityService.deleteMembership(userId, groupId);
-//                return Result.success().setData(userService.changeUserObject(user));
-//            }
-//        }
         return Result.error(EnumAdminGroupError.该用户并不在此组中.toString());
     }
 
@@ -128,9 +123,9 @@ public class AdminGroupServiceImpl {
         Group group1 = identityService.createGroupQuery().groupId(groupId).singleResult();
         if (group1 == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
-        for (Group group2 : groupList) {
-            if (group2.getId().equals(groupId)) return Result.error(EnumAdminGroupError.该用户已经在此组中.toString());
-        }
+        groupList.parallelStream().filter(group -> group.getId().equals(groupId)).map(group -> {
+            return Result.error(EnumAdminGroupError.该用户已经在此组中.toString());
+        });
         identityService.createMembership(userId, groupId);
         return Result.success().setData(userService.changeUserObject(user));
     }
@@ -151,14 +146,16 @@ public class AdminGroupServiceImpl {
      * 封装 group, 从 Group 到 GroupObject
      */
     public GroupObject changeGroupObject(Group group) {
+        if (group == null) return null;
         GroupObject groupObject = DozerUtils.copy(group, GroupObject.class);
         groupObject.setMemberNums(identityService.createUserQuery().memberOfGroup(group.getId()).count());
         return groupObject;
     }
 
     public List<GroupObject> changeGroupObject(List<Group> groupList) {
-        if (groupList == null || groupList.size() == 0) return null;
-        List<GroupObject> groupObjectList = DozerUtils.copy(groupList, GroupObject.class);
+        List<GroupObject> groupObjectList = new ArrayList<>();
+        if (groupList == null || groupList.size() == 0) return groupObjectList;
+        groupObjectList = DozerUtils.copy(groupList, GroupObject.class);
         groupObjectList.parallelStream().forEach(group -> {
             group.setMemberNums(identityService.createUserQuery().memberOfGroup(group.getId()).count());
         });

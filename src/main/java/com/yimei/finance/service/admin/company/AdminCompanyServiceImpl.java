@@ -24,11 +24,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
-@Service
+@Service("adminCompanyService")
 public class AdminCompanyServiceImpl {
     @Autowired
     private CompanyRepository companyRepository;
@@ -122,8 +123,9 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<CompanyObject> changeCompanyObject(List<Company> companyList) {
-        if (companyList == null || companyList.size() == 0) return null;
-        List<CompanyObject> companyObjectList = DozerUtils.copy(companyList, CompanyObject.class);
+        List<CompanyObject> companyObjectList = new ArrayList<>();
+        if (companyList == null || companyList.size() == 0) return companyObjectList;
+        companyObjectList = DozerUtils.copy(companyList, CompanyObject.class);
         List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString())).collect(Collectors.toList());
         companyObjectList.parallelStream().forEach(company -> {
             company.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
@@ -146,9 +148,13 @@ public class AdminCompanyServiceImpl {
     public Result adminFindRiskCompanyList(RiskCompanySearch riskCompanySearch, Long sessionCompanyId, Page page) {
         if (sessionCompanyId.longValue() != 0) return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
         List<CompanyObject> companyObjectList = findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id, riskCompanySearch);
-        page.setTotal((long) companyObjectList.size());
-        int toIndex = page.getPage() * page.getCount() < companyObjectList.size() ? page.getPage() * page.getCount() : companyObjectList.size();
-        return Result.success().setData(companyObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
+        if (companyObjectList != null && companyObjectList.size() != 0) {
+            page.setTotal((long) companyObjectList.size());
+            int toIndex = page.getPage() * page.getCount() < companyObjectList.size() ? page.getPage() * page.getCount() : companyObjectList.size();
+            return Result.success().setData(companyObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
+        } else {
+            return Result.success().setData(companyObjectList).setMeta(page);
+        }
     }
 
     /**
@@ -191,12 +197,14 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<CompanyObject> getNormalCompanyListByIdList(List<Long> companyIdList) {
-        if (companyIdList == null || companyIdList.size() == 0) return null;
+        List<CompanyObject> companyObjectList = new ArrayList<>();
+        if (companyIdList == null || companyIdList.size() == 0) return companyObjectList;
         List<Company> companyList = companyIdList.parallelStream()
                 .filter(id -> companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id) != null)
                 .map(id -> companyRepository.findOne(id))
                 .collect(Collectors.toList());
-        return changeCompanyObject(companyList);
+        companyObjectList = changeCompanyObject(companyList);
+        return companyObjectList;
     }
 
 }

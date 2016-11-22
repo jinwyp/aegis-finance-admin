@@ -1,9 +1,7 @@
 package com.yimei.finance.service.common.message;
 
-import com.yimei.finance.service.common.contract.FreeMarker;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -19,14 +17,11 @@ import java.util.Properties;
 /**
  * Created by fanjun on 15-6-1.
  */
-@Service
+@Service("mailService")
 public class MailServiceImpl {
 
     Logger logger = LoggerFactory.getLogger(MailServiceImpl.class);
     protected JavaMailSenderImpl javaMailSender = new JavaMailSenderImpl();
-
-    @Autowired
-    FreeMarker freeMarker;
 
     @Value("${notice_server_mail.name}")
     private String USERNAME;

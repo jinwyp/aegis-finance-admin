@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 /**
  * Created by hary on 16/3/30.
  */
-@Service
+@Service("messageService")
 public class MessageServiceImpl {
     @Autowired
     private MailServiceImpl mailService;
