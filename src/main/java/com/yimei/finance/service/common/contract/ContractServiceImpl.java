@@ -17,7 +17,7 @@ public class ContractServiceImpl {
     private Logger logger = org.slf4j.LoggerFactory.getLogger(ContractServiceImpl.class) ;
 
     @Autowired
-    FreeMarker freeMarker;
+    FreeMarkerFile freeMarkerFile;
     @Autowired
     private FinanceOrderContractRepository orderContractRepository;
 
@@ -27,7 +27,7 @@ public class ContractServiceImpl {
     public String getFinanceOrderContractContent(Long financeId, int type, boolean formal) {
         FinanceOrderContractObject financeOrderContract = DozerUtils.copy(orderContractRepository.findByFinanceIdAndType(financeId, type), FinanceOrderContractObject.class);
         try {
-            return freeMarker.render(getFinanceOrderContentTemplateByType(type, formal), new HashMap<String, Object>() {{
+            return freeMarkerFile.render(getFinanceOrderContentTemplateByType(type, formal), new HashMap<String, Object>() {{
                 if (formal) {
                     put("contract", financeOrderContract);
                 }

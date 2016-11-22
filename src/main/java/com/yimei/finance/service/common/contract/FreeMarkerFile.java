@@ -10,7 +10,7 @@ import java.io.StringWriter;
 import java.util.Map;
 
 @Component
-public class FreeMarker {
+public class FreeMarkerFile {
     @Autowired
     protected freemarker.template.Configuration configuration;
 
