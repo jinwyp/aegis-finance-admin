@@ -84,9 +84,7 @@ export class AddRiskLineComponent {
         this.css.ajaxErrorHidden   = true;
         this.css.ajaxSuccessHidden = true;
 
-        console.log(this.riskLine);
         this.riskLine.type = 1;
-        console.log(this.riskLine);
 
         this.riskService.save(this.riskLine).then((result)=> {
             this.css.isSubmitted = false;

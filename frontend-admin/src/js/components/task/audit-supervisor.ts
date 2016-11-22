@@ -87,9 +87,7 @@ export class AuditSupervisorComponent {
                 this.task.getOrderInfoById(this.currentTask.financeId, 'supervisor').then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
-                        // console.log(this.currentOrder);
                         // this.currentOrder.storageLocation=this.currentTask.storageLocation;
-                        // console.log(this.currentOrder);
                     }else{
 
                     }

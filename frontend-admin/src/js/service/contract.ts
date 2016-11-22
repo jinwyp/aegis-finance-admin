@@ -163,7 +163,6 @@ class ContractService {
     }
 
     parserMoneyCN(money) {
-        console.log(money);
         let moneyStr = '';
         if (money === undefined || money === null || money === '' || money.length === 0) {
             moneyStr = '';
@@ -190,8 +189,6 @@ class ContractService {
     }
 
     checkPhone(phone : string){
-        // phone = phone.replace(/\s+/g,"");
-        // console.log(/^0?(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/.test(phone));
         if(/^0?(13[0-9]|15[0-9]|17[0-9]|18[0-9]|14[57])[0-9]{8}$/.test(phone)){
             return true;
         }else{
@@ -200,8 +197,6 @@ class ContractService {
     }
 
     checkEmail(email : string){
-        // email = email.replace(/\s+/g,"");
-        // console.log(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(email));
         if(/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(email)){
             return true;
         }else{

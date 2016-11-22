@@ -40,7 +40,6 @@ export class CustomCheckboxComponent implements ControlValueAccessor{
     //From ControlValueAccessor interface
     writeValue(value: any) {
         if (value !== this.selectedIds ) {
-            // console.log('外面往组件里面更改数据', value, this.sourceData);
 
             if (Array.isArray(value)){
                 this.selectedIds = value;
@@ -61,7 +60,6 @@ export class CustomCheckboxComponent implements ControlValueAccessor{
 
     //From ControlValueAccessor interface
     registerOnChange(fn: any) {
-        // console.log('从组件里面往外面更改数据');
         this.onChangeCallback = fn;
     }
 
@@ -74,8 +72,6 @@ export class CustomCheckboxComponent implements ControlValueAccessor{
 
     ngOnChanges(changes) {
         for (let propName in changes) {
-            // console.log(propName, changes[propName]);
-
             if (propName === 'sourceData'){
                 this.sourceData.forEach(group => {
 

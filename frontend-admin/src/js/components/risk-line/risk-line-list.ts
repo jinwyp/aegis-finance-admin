@@ -40,7 +40,6 @@ export class RiskLineListComponent {
     getRiskLineList(){
         this.riskService.getRiskLineList(this.riskLine.name, this.riskLine.adminName, this.pageObj.page).then((result)=>{
             if(result.success){
-                console.log(result.data);
                 this.riskLineList = result.data;
             }
         });

@@ -56,7 +56,6 @@ export class ContractUpEditComponent {
 
     ngOnInit(){
         this.sub = this.activatedRoute.params.subscribe(param=>{
-           console.log(param);
             this.contract.financeId = Number(param['financeId'])===NaN ? 0:Number(param['financeId']);
             this.taskId = Number(param['taskId'])===NaN ? 0:Number(param['taskId']);
             this.status = Number(param['status'])===NaN ? 0:Number(param['status']);
@@ -72,13 +71,11 @@ export class ContractUpEditComponent {
                 this.contract.sellerReceiptMoneyCapital = this.contractService.parserMoneyCN(this.contract.sellerReceiptMoney);
                 this.contract.buyerSettlementMoneyCapital = this.contractService.parserMoneyCN(this.contract.buyerSettlementMoney);
                 this.contract.attachmentNumber = this.contract.attachmentNumber===0 ? null : this.contract.attachmentNumber;
-                console.log(this.contract);
             }
         });
     }
 
     save(type : number){
-        console.log(this.contract);
         if(this.contractService.isEmpty(this.contract.buyerCompanyName)){
             this.errorMsg = '请填写买家公司名称';
             this.css.ajaxErrorHidden = false;
@@ -127,7 +124,6 @@ export class ContractUpEditComponent {
 
         this.contract.signDate = this.selectedDateInline;
         this.contract.type = 1;
-        console.log(this.contract);
         this.contractService.add(this.contract, this.taskId, type).then(result=>{
             if(result.success){
                 this.goBack();
@@ -153,7 +149,6 @@ export class ContractUpEditComponent {
             money = this.contractService.floatMul(this.contract.sellerReceiptPrice, this.contract.sellerReceiptAmount);
             this.contract.sellerReceiptMoney = money;
         }
-        console.log(money);
         this.contract.sellerReceiptMoneyCapital=this.contractService.parserMoneyCN(money);
     }
 
