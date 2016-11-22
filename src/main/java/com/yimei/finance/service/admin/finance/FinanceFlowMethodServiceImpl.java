@@ -36,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -282,8 +283,7 @@ public class FinanceFlowMethodServiceImpl {
         if (task == null) return null;
         HistoryTaskObject taskObject = DozerUtils.copy(task, HistoryTaskObject.class);
         HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-        if (historicProcessInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
-        if (StringUtils.isEmpty(historicProcessInstance.getBusinessKey())) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        if (historicProcessInstance == null || StringUtils.isEmpty(historicProcessInstance.getBusinessKey())) throw new BusinessException(EnumCommonError.Admin_System_Error);
         FinanceOrderObject financeOrderObject = DozerUtils.copy(orderRepository.findOne(Long.valueOf(historicProcessInstance.getBusinessKey())), FinanceOrderObject.class);
         if (financeOrderObject == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
         taskObject.setFinanceId(financeOrderObject.getId());
@@ -305,8 +305,7 @@ public class FinanceFlowMethodServiceImpl {
             for (Task t : taskList) {
                 currentName += t.getName() + ",";
             }
-            currentName = currentName.substring(0, currentName.length() - 1);
-            taskObject.setCurrentName(currentName);
+            taskObject.setCurrentName(currentName.substring(0, currentName.length() - 1));
             taskObject.setCurrentTaskDefinitionKey(taskList.get(0).getTaskDefinitionKey());
             if (!StringUtils.isEmpty(taskList.get(0).getAssignee())) {
                 UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(taskList.get(0).getAssignee()).singleResult());
@@ -318,10 +317,8 @@ public class FinanceFlowMethodServiceImpl {
             List<HistoricActivityInstance> activityInstanceList = historyService.createHistoricActivityInstanceQuery().processInstanceId(historicProcessInstance.getId()).orderByHistoricActivityInstanceStartTime().desc().list();
             if (activityInstanceList == null || activityInstanceList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
             for (HistoricActivityInstance instance : activityInstanceList) {
-                if (instance.getActivityId().equals(EnumFinanceEndType.completeWorkFlowSuccess.toString())
-                        || instance.getActivityId().equals(EnumFinanceEndType.EndByOnlineTrader.toString())
-                        || instance.getActivityId().equals(EnumFinanceEndType.EndBySalesman.toString())
-                        || instance.getActivityId().equals(EnumFinanceEndType.EndByRiskManager.toString())) {
+                List<EnumFinanceEndType> endTypeList = Arrays.asList(EnumFinanceEndType.values());
+                if (endTypeList.contains(EnumFinanceEndType.valueOf(instance.getActivityId()))) {
                     taskObject.setCurrentName(instance.getActivityName());
                     taskObject.setCurrentTaskDefinitionKey(instance.getActivityId());
                     break;
