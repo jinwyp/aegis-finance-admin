@@ -43,22 +43,14 @@ class RiskService {
             .catch(GlobalPromiseHttpCatch);
     }
 
-    getRiskLineList(name:string, account:string, page:number) {
-        // let url = `${API.fund}/fund?page=${page||1}&name=${name||''}&account=${account||''}`;
-        let url = `${API.risk}/risk`;
+    getRiskLineList(name:string, adminName:string, page:number) {
+        let url = `${API.risk}/risk?page=${page||1}&name=${name||''}&adminName=${adminName||''}`;
+        // let url = `${API.risk}/risk`;
         return this.http.get(url).toPromise()
             .then(response => response.json() as HttpResponse)
             .catch(GlobalPromiseHttpCatch);
     }
 
-    // getBusinessLineList(name:string, account:string, page:number,) {
-    //     // let url = `${API.fund}/fund?page=${page||1}&name=${name||''}&account=${account||''}`;
-    //     let url = `${API.fund}/business`;
-    //     return this.http.get(url).toPromise()
-    //         .then(response => response.json() as HttpResponse)
-    //         .catch(GlobalPromiseHttpCatch);
-    // }
-    //
     getRiskLineById(id: number) {
         return this.http.get(API.risk + '/' + id).toPromise()
             .then(response => response.json() as HttpResponse)
