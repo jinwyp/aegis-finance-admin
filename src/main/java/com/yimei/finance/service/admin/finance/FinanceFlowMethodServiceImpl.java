@@ -1,5 +1,6 @@
 package com.yimei.finance.service.admin.finance;
 
+import com.sun.org.apache.xpath.internal.operations.String;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.activiti.HistoryTaskObject;
@@ -316,8 +317,7 @@ public class FinanceFlowMethodServiceImpl {
             List<HistoricActivityInstance> activityInstanceList = historyService.createHistoricActivityInstanceQuery().processInstanceId(historicProcessInstance.getId()).orderByHistoricActivityInstanceStartTime().desc().list();
             if (activityInstanceList == null || activityInstanceList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
             for (HistoricActivityInstance instance : activityInstanceList) {
-                List<EnumFinanceEndType> endTypeList = Arrays.asList(EnumFinanceEndType.values());
-                if (endTypeList.contains(EnumFinanceEndType.valueOf(instance.getActivityId()))) {
+                if (EnumFinanceEndType.getAllEndTypeList().contains(instance.getActivityId())) {
                     taskObject.setCurrentName(instance.getActivityName());
                     taskObject.setCurrentTaskDefinitionKey(instance.getActivityId());
                     break;
