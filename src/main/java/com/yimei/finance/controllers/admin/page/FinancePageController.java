@@ -9,6 +9,8 @@ import com.yimei.finance.service.common.contract.ContractServiceImpl;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.service.common.file.PDF;
 import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiImplicitParam;
+import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.io.FileUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -36,6 +38,10 @@ public class FinancePageController {
 
     @RequestMapping(value = "/finance/{financeId}/contract/{type}/preview", method = RequestMethod.GET)
     @ApiOperation(value = "预览金融合同页面", notes = "预览金融合同页面")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "int", paramType = "path"),
+            @ApiImplicitParam(name = "type", value = "合同类型", required = true, dataType = "string", paramType = "path")
+    })
     public String financeContractPreviewPage(@PathVariable("financeId") Long financeId,
                                              @PathVariable("type") int type, Map<String, Object> model) {
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
@@ -49,6 +55,10 @@ public class FinancePageController {
 
     @RequestMapping(value = "/finance/{financeId}/contract/{type}/download", method = RequestMethod.GET)
     @ApiOperation(value = "下载金融合同", notes = "下载金融合同")
+    @ApiImplicitParams({
+            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "type", value = "合同类型", required = true, dataType = "string", paramType = "path")
+    })
     public HttpEntity<byte[]> financeContractDownload(@PathVariable("financeId") Long financeId,
                                                       @PathVariable("type") int type) throws IOException, DocumentException {
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
