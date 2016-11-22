@@ -3,9 +3,8 @@ package com.yimei.finance;
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
-import com.yimei.finance.representation.admin.company.object.RiskCompanySearch;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEndType;
 import com.yimei.finance.representation.common.result.Page;
-import com.yimei.finance.representation.common.result.Result;
 import com.yimei.finance.service.admin.company.AdminCompanyServiceImpl;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.service.admin.user.AdminGroupServiceImpl;
@@ -23,6 +22,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Date;
+import java.util.Arrays;
+import java.util.List;
 import java.util.function.BinaryOperator;
 
 @RunWith(SpringRunner.class)
@@ -66,14 +67,22 @@ public class AegisFinanceAdminApplicationTests {
 		Page page = new Page();
 
 
-		RiskCompanySearch riskCompanySearch = new RiskCompanySearch();
-		riskCompanySearch.setAdminName("d");
-		riskCompanySearch.setName("a");
+		List<EnumFinanceEndType> list = Arrays.asList(EnumFinanceEndType.values());
+		list.parallelStream().forEach(System.out::println);
 
-		Result result = adminCompanyService.adminFindRiskCompanyList(riskCompanySearch, 0L, page);
-
-		System.out.println(result.getData());
-		System.out.println(result.toString());
+		System.out.println(list.contains("EndBySalesman"));
+		System.out.println(list.contains("EndBySalesman"));
+		System.out.println(list.contains(EnumFinanceEndType.EndBySalesman.toString()));
+		System.out.println(list.contains(EnumFinanceEndType.valueOf("EndBySalesman")));
+		System.out.println(list.contains(EnumFinanceEndType.EndBySalesman));
+		if (list.contains("EndBySalesman")) {
+			System.out.println(" contains ");
+			System.out.println(" contains ");
+			System.out.println(" contains ");
+			System.out.println(" contains ");
+			System.out.println(" contains ");
+			System.out.println(" contains ");
+		}
 
 
 //		UserObject user = new UserObject("14", 0L);

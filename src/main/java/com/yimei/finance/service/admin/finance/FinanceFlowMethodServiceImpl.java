@@ -36,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -75,8 +76,7 @@ public class FinanceFlowMethodServiceImpl {
         page.setTotal(taskService.createTaskQuery().taskAssignee(sessionUserId).active().count());
         if (page.getTotal() == 0) return Result.success().setData(taskObjectList);
         Long toIndex = page.getPage() * page.getCount() < page.getTotal() ? page.getPage() * page.getCount() : page.getTotal();
-        List<Task> taskList = taskService.createTaskQuery().taskAssignee(sessionUserId).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().listPage(page.getOffset(), Math.toIntExact(toIndex));
-        taskObjectList = changeTaskObject(taskList);
+        taskObjectList = changeTaskObject(taskService.createTaskQuery().taskAssignee(sessionUserId).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().listPage(page.getOffset(), Math.toIntExact(toIndex)));
         return Result.success().setData(taskObjectList).setMeta(page);
     }
 
@@ -84,12 +84,12 @@ public class FinanceFlowMethodServiceImpl {
      * 查看个人待领取任务列表
      */
     public Result findSelfWaitClaimTaskList(String sessionUserId, Long sessionCompanyId, Page page) {
-
+        List<TaskObject> taskObjectList = new ArrayList<>();
         List<String> groupIds = userService.getUserGroupIdList(sessionUserId);
-        if (groupIds == null || groupIds.size() == 0) return Result.success().setData(new ArrayList<>());
+        if (groupIds == null || groupIds.size() == 0) return Result.success().setData(taskObjectList);
         List<Task> taskList = taskService.createTaskQuery().taskCandidateGroupIn(groupIds).active().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().list();
-        if (taskList == null || taskList.size() == 0) return Result.success().setData(new ArrayList<>());
-        List<TaskObject> taskObjectList = changeTaskObject(taskList).parallelStream().filter(task -> (sessionCompanyId.longValue() == 0 || task.getRiskCompanyId().longValue() == sessionCompanyId.longValue())).collect(Collectors.toList());
+        if (taskList == null || taskList.size() == 0) return Result.success().setData(taskObjectList);
+        taskObjectList = changeTaskObject(taskList).parallelStream().filter(task -> (sessionCompanyId.longValue() == 0 || task.getRiskCompanyId().longValue() == sessionCompanyId.longValue())).collect(Collectors.toList());
         page.setTotal(Long.valueOf(taskObjectList.size()));
         int toIndex = page.getPage() * page.getCount() < taskObjectList.size() ? page.getPage() * page.getCount() : taskObjectList.size();
         return Result.success().setData(taskObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
@@ -101,8 +101,8 @@ public class FinanceFlowMethodServiceImpl {
     public Result findSelfHistoryTaskList(String sessionUserId, Page page) {
         page.setTotal(historyService.createHistoricTaskInstanceQuery().taskAssignee(sessionUserId).finished().count());
         Long toIndex = page.getPage() * page.getCount() < page.getTotal() ? page.getPage() * page.getCount() : page.getTotal();
-        List<HistoricTaskInstance> historicTaskInstanceList = historyService.createHistoricTaskInstanceQuery().taskAssignee(sessionUserId).finished().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().listPage(page.getOffset(), Math.toIntExact(toIndex));
-        return Result.success().setData(changeHistoryTaskObject(historicTaskInstanceList)).setMeta(page);
+        List<HistoryTaskObject> historyTaskObjectList = changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().taskAssignee(sessionUserId).finished().orderByDueDateNullsFirst().asc().orderByProcessInstanceId().desc().orderByTaskCreateTime().desc().listPage(page.getOffset(), Math.toIntExact(toIndex)));
+        return Result.success().setData(historyTaskObjectList).setMeta(page);
     }
 
     /**
@@ -282,8 +282,7 @@ public class FinanceFlowMethodServiceImpl {
         if (task == null) return null;
         HistoryTaskObject taskObject = DozerUtils.copy(task, HistoryTaskObject.class);
         HistoricProcessInstance historicProcessInstance = historyService.createHistoricProcessInstanceQuery().processInstanceId(task.getProcessInstanceId()).singleResult();
-        if (historicProcessInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
-        if (StringUtils.isEmpty(historicProcessInstance.getBusinessKey())) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        if (historicProcessInstance == null || StringUtils.isEmpty(historicProcessInstance.getBusinessKey())) throw new BusinessException(EnumCommonError.Admin_System_Error);
         FinanceOrderObject financeOrderObject = DozerUtils.copy(orderRepository.findOne(Long.valueOf(historicProcessInstance.getBusinessKey())), FinanceOrderObject.class);
         if (financeOrderObject == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
         taskObject.setFinanceId(financeOrderObject.getId());
@@ -305,8 +304,7 @@ public class FinanceFlowMethodServiceImpl {
             for (Task t : taskList) {
                 currentName += t.getName() + ",";
             }
-            currentName = currentName.substring(0, currentName.length() - 1);
-            taskObject.setCurrentName(currentName);
+            taskObject.setCurrentName(currentName.substring(0, currentName.length() - 1));
             taskObject.setCurrentTaskDefinitionKey(taskList.get(0).getTaskDefinitionKey());
             if (!StringUtils.isEmpty(taskList.get(0).getAssignee())) {
                 UserObject user = userService.changeUserObject(identityService.createUserQuery().userId(taskList.get(0).getAssignee()).singleResult());
@@ -318,10 +316,8 @@ public class FinanceFlowMethodServiceImpl {
             List<HistoricActivityInstance> activityInstanceList = historyService.createHistoricActivityInstanceQuery().processInstanceId(historicProcessInstance.getId()).orderByHistoricActivityInstanceStartTime().desc().list();
             if (activityInstanceList == null || activityInstanceList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
             for (HistoricActivityInstance instance : activityInstanceList) {
-                if (instance.getActivityId().equals(EnumFinanceEndType.completeWorkFlowSuccess.toString())
-                        || instance.getActivityId().equals(EnumFinanceEndType.EndByOnlineTrader.toString())
-                        || instance.getActivityId().equals(EnumFinanceEndType.EndBySalesman.toString())
-                        || instance.getActivityId().equals(EnumFinanceEndType.EndByRiskManager.toString())) {
+                List<EnumFinanceEndType> endTypeList = Arrays.asList(EnumFinanceEndType.values());
+                if (endTypeList.contains(EnumFinanceEndType.valueOf(instance.getActivityId()))) {
                     taskObject.setCurrentName(instance.getActivityName());
                     taskObject.setCurrentTaskDefinitionKey(instance.getActivityId());
                     break;
