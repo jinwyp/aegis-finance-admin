@@ -123,8 +123,9 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<CompanyObject> changeCompanyObject(List<Company> companyList) {
-        if (companyList == null || companyList.size() == 0) return null;
-        List<CompanyObject> companyObjectList = DozerUtils.copy(companyList, CompanyObject.class);
+        List<CompanyObject> companyObjectList = new ArrayList<>();
+        if (companyList == null || companyList.size() == 0) return companyObjectList;
+        companyObjectList = DozerUtils.copy(companyList, CompanyObject.class);
         List<UserObject> userObjectList = userService.changeUserObjectSimple(identityService.createUserQuery().list()).parallelStream().filter(user -> user.getStatus().equals(EnumAdminUserStatus.Normal.toString())).collect(Collectors.toList());
         companyObjectList.parallelStream().forEach(company -> {
             company.setPersonNum(userObjectList.parallelStream().filter(u -> u.getCompanyId().longValue() == company.getId().longValue()).count());
@@ -196,12 +197,13 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<CompanyObject> getNormalCompanyListByIdList(List<Long> companyIdList) {
-        if (companyIdList == null || companyIdList.size() == 0) return new ArrayList<>();
-        List<Company> companyList = companyIdList.parallelStream()
+        List<CompanyObject> companyList = new ArrayList<>();
+        if (companyIdList == null || companyIdList.size() == 0) return companyList;
+        companyList = changeCompanyObject(companyIdList.parallelStream()
                 .filter(id -> companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id) != null)
                 .map(id -> companyRepository.findOne(id))
-                .collect(Collectors.toList());
-        return changeCompanyObject(companyList);
+                .collect(Collectors.toList()));
+        return companyList;
     }
 
 }
