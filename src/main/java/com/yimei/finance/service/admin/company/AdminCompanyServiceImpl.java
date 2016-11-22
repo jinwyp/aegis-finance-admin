@@ -24,6 +24,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -146,9 +147,13 @@ public class AdminCompanyServiceImpl {
     public Result adminFindRiskCompanyList(RiskCompanySearch riskCompanySearch, Long sessionCompanyId, Page page) {
         if (sessionCompanyId.longValue() != 0) return Result.error(EnumCompanyError.你没有权限查看风控线列表.toString());
         List<CompanyObject> companyObjectList = findCompanyListByRole(EnumCompanyRole.RiskManager_Organization.id, riskCompanySearch);
-        page.setTotal((long) companyObjectList.size());
-        int toIndex = page.getPage() * page.getCount() < companyObjectList.size() ? page.getPage() * page.getCount() : companyObjectList.size();
-        return Result.success().setData(companyObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
+        if (companyObjectList != null && companyObjectList.size() != 0) {
+            page.setTotal((long) companyObjectList.size());
+            int toIndex = page.getPage() * page.getCount() < companyObjectList.size() ? page.getPage() * page.getCount() : companyObjectList.size();
+            return Result.success().setData(companyObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
+        } else {
+            return Result.success().setData(companyObjectList).setData(companyObjectList);
+        }
     }
 
     /**
@@ -191,7 +196,7 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<CompanyObject> getNormalCompanyListByIdList(List<Long> companyIdList) {
-        if (companyIdList == null || companyIdList.size() == 0) return null;
+        if (companyIdList == null || companyIdList.size() == 0) return new ArrayList<>();
         List<Company> companyList = companyIdList.parallelStream()
                 .filter(id -> companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id) != null)
                 .map(id -> companyRepository.findOne(id))
