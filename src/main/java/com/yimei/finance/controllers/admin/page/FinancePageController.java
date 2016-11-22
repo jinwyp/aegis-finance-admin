@@ -36,10 +36,6 @@ public class FinancePageController {
     @Autowired
     private ContractServiceImpl contractService;
 
-    public void setContractService(ContractServiceImpl contractService) {
-        this.contractService = contractService;
-    }
-
     @RequestMapping(value = "/finance/{financeId}/contract/{type}/preview", method = RequestMethod.GET)
     @ApiOperation(value = "预览金融合同页面", notes = "预览金融合同页面")
     @ApiImplicitParams({
