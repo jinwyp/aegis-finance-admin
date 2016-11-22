@@ -197,13 +197,14 @@ public class AdminCompanyServiceImpl {
     }
 
     public List<CompanyObject> getNormalCompanyListByIdList(List<Long> companyIdList) {
-        List<CompanyObject> companyList = new ArrayList<>();
-        if (companyIdList == null || companyIdList.size() == 0) return companyList;
-        companyList = changeCompanyObject(companyIdList.parallelStream()
+        List<CompanyObject> companyObjectList = new ArrayList<>();
+        if (companyIdList == null || companyIdList.size() == 0) return companyObjectList;
+        List<Company> companyList = companyIdList.parallelStream()
                 .filter(id -> companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id) != null)
                 .map(id -> companyRepository.findOne(id))
-                .collect(Collectors.toList()));
-        return companyList;
+                .collect(Collectors.toList());
+        companyObjectList = changeCompanyObject(companyList);
+        return companyObjectList;
     }
 
 }

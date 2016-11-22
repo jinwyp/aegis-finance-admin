@@ -108,12 +108,6 @@ public class AdminGroupServiceImpl {
             identityService.deleteMembership(userId, groupId);
             return Result.success().setData(userService.changeUserObject(user));
         });
-//        for (Group group2 : groupList) {
-//            if (group2.getId().equals(groupId)) {
-//                identityService.deleteMembership(userId, groupId);
-//                return Result.success().setData(userService.changeUserObject(user));
-//            }
-//        }
         return Result.error(EnumAdminGroupError.该用户并不在此组中.toString());
     }
 
@@ -128,9 +122,9 @@ public class AdminGroupServiceImpl {
         Group group1 = identityService.createGroupQuery().groupId(groupId).singleResult();
         if (group1 == null) return Result.error(EnumAdminGroupError.此组不存在.toString());
         List<Group> groupList = identityService.createGroupQuery().groupMember(userId).list();
-        for (Group group2 : groupList) {
-            if (group2.getId().equals(groupId)) return Result.error(EnumAdminGroupError.该用户已经在此组中.toString());
-        }
+        groupList.parallelStream().filter(group -> group.getId().equals(groupId)).map(group -> {
+            return Result.error(EnumAdminGroupError.该用户已经在此组中.toString());
+        });
         identityService.createMembership(userId, groupId);
         return Result.success().setData(userService.changeUserObject(user));
     }
