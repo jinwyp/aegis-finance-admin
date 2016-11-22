@@ -153,7 +153,7 @@ public class AdminCompanyServiceImpl {
             int toIndex = page.getPage() * page.getCount() < companyObjectList.size() ? page.getPage() * page.getCount() : companyObjectList.size();
             return Result.success().setData(companyObjectList.subList(page.getOffset(), toIndex)).setMeta(page);
         } else {
-            return Result.success().setData(companyObjectList).setData(companyObjectList);
+            return Result.success().setData(companyObjectList).setMeta(page);
         }
     }
 
