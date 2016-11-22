@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -145,14 +146,16 @@ public class AdminGroupServiceImpl {
      * 封装 group, 从 Group 到 GroupObject
      */
     public GroupObject changeGroupObject(Group group) {
+        if (group == null) return null;
         GroupObject groupObject = DozerUtils.copy(group, GroupObject.class);
         groupObject.setMemberNums(identityService.createUserQuery().memberOfGroup(group.getId()).count());
         return groupObject;
     }
 
     public List<GroupObject> changeGroupObject(List<Group> groupList) {
-        if (groupList == null || groupList.size() == 0) return null;
-        List<GroupObject> groupObjectList = DozerUtils.copy(groupList, GroupObject.class);
+        List<GroupObject> groupObjectList = new ArrayList<>();
+        if (groupList == null || groupList.size() == 0) return groupObjectList;
+        groupObjectList = DozerUtils.copy(groupList, GroupObject.class);
         groupObjectList.parallelStream().forEach(group -> {
             group.setMemberNums(identityService.createUserQuery().memberOfGroup(group.getId()).count());
         });

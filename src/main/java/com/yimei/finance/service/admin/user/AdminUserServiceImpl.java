@@ -440,8 +440,9 @@ public class AdminUserServiceImpl {
     }
 
     public List<UserObject> changeUserObject(List<User> userList) {
-        if (userList == null || userList.size() == 0) return null;
-        List<UserObject> userObjectList = DozerUtils.copy(userList, UserObject.class);
+        List<UserObject> userObjectList = new ArrayList<>();
+        if (userList == null || userList.size() == 0) return userObjectList;
+        userObjectList = DozerUtils.copy(userList, UserObject.class);
         userObjectList.parallelStream().forEach(userObject -> {
             userObject = improveUserObject(userObject, null);
         });
@@ -449,8 +450,9 @@ public class AdminUserServiceImpl {
     }
 
     public List<UserObject> changeUserObject(List<User> userList, UserObject sessionUser) {
-        if (userList == null || userList.size() == 0) return null;
-        List<UserObject> userObjectList = DozerUtils.copy(userList, UserObject.class);
+        List<UserObject> userObjectList = new ArrayList<>();
+        if (userList == null || userList.size() == 0) return userObjectList;
+        userObjectList = DozerUtils.copy(userList, UserObject.class);
         userObjectList.parallelStream().forEach(userObject -> {
             improveUserObject(userObject, sessionUser);
         });
@@ -471,8 +473,9 @@ public class AdminUserServiceImpl {
     }
 
     public List<UserObject> changeUserObjectSimple(List<User> userList) {
-        if (userList == null || userList.size() == 0) return null;
-        List<UserObject> userObjectList = DozerUtils.copy(userList, UserObject.class);
+        List<UserObject> userObjectList = new ArrayList<>();
+        if (userList == null || userList.size() == 0) return userObjectList;
+        userObjectList = DozerUtils.copy(userList, UserObject.class);
         userObjectList.parallelStream().forEach(userObject -> {
             String companyId = identityService.getUserInfo(userObject.getId(), "companyId");
             if (!StringUtils.isEmpty(companyId) && !companyId.equals("null")) {
@@ -494,8 +497,9 @@ public class AdminUserServiceImpl {
     }
 
     public List<UserObject> changeUserObjectTask(List<User> userList) {
-        if (userList == null || userList.size() == 0) return null;
-        List<UserObject> userObjectList = DozerUtils.copy(userList, UserObject.class);
+        List<UserObject> userObjectList = new ArrayList<>();
+        if (userList == null || userList.size() == 0) return userObjectList;
+        userObjectList = DozerUtils.copy(userList, UserObject.class);
         userObjectList.parallelStream().forEach(user -> {
             user.setUsername(identityService.getUserInfo(user.getId(), "username"));
             user.setDepartment(identityService.getUserInfo(user.getId(), "department"));
