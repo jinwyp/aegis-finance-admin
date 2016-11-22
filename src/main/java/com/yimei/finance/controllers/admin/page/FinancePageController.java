@@ -56,7 +56,7 @@ public class FinancePageController {
     @RequestMapping(value = "/finance/{financeId}/contract/{type}/download", method = RequestMethod.GET)
     @ApiOperation(value = "下载金融合同", notes = "下载金融合同")
     @ApiImplicitParams({
-            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "Long", paramType = "path"),
+            @ApiImplicitParam(name = "financeId", value = "金融申请单id", required = true, dataType = "int", paramType = "path"),
             @ApiImplicitParam(name = "type", value = "合同类型", required = true, dataType = "string", paramType = "path")
     })
     public HttpEntity<byte[]> financeContractDownload(@PathVariable("financeId") Long financeId,
