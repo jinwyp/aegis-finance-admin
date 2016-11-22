@@ -33,7 +33,7 @@ import java.util.Map;
 public class FinancePageController {
     @Autowired
     private FinanceOrderContractRepository orderContractRepository;
-//    @Autowired
+    @Autowired
     private ContractServiceImpl contractService;
 
     public void setContractService(ContractServiceImpl contractService) {
