@@ -41,6 +41,8 @@ public class FinanceFlowStepServiceImpl {
     public Result onlineTraderAuditFinanceOrderMethod(String userId, TaskMap taskMap, Task task, FinanceOrderObject financeOrder, boolean submit) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.onlineTraderAudit.toString()))
             return Result.error(EnumAdminFinanceError.此任务不能进行交易员审核操作.toString());
+        if (taskMap.pass == 1 && (financeOrder.getRiskCompanyId() == null || financeOrder.getRiskCompanyId().longValue() == 0))
+            throw new BusinessException(EnumAdminFinanceError.请选择风控线.toString());
         orderService.updateFinanceOrderByOnlineTrader(userId, financeOrder);
         methodService.addAttachmentsMethod(financeOrder.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.OnlineTraderAuditAttachment.toString());
         if (submit) {

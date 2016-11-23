@@ -34,6 +34,7 @@ public enum EnumAdminFinanceError {
     你还没有提交合同信息,
     你还没有提交上游合同信息,
     你还没有提交下游合同信息,
+    请选择风控线,
     ;
 
 }

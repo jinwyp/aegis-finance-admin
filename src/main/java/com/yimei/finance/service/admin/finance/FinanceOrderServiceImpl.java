@@ -77,12 +77,7 @@ public class FinanceOrderServiceImpl {
         List<AttachmentObject> attachmentObjectList = new ArrayList<>();
         for (EnumFinanceAttachment attachment : attachmentList) {
             List<HistoricTaskInstance> tasks = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).list();
-            for (HistoricTaskInstance t : tasks) {
-                List<Attachment> attachments = taskService.getTaskAttachments(t.getId());
-                if (attachments != null && attachments.size() != 0) {
-                    attachmentObjectList.addAll(DozerUtils.copy(attachments, AttachmentObject.class));
-                }
-            }
+            attachmentObjectList.addAll(DozerUtils.copy(tasks.stream().flatMap(task -> taskService.getTaskAttachments(task.getId()).stream()).collect(Collectors.toList()), AttachmentObject.class));
         }
         return attachmentObjectList;
     }

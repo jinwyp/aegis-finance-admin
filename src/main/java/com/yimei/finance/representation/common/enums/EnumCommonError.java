@@ -9,4 +9,7 @@ public enum EnumCommonError {
 
     public static final String Admin_System_Error = "系统出错,请联系技术人员";
 
+    public static final String NotSupported_File_Type(String suffix) {
+        return suffix + " 类型文件不支持";
+    }
 }

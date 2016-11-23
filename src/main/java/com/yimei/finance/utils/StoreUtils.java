@@ -1,5 +1,7 @@
 package com.yimei.finance.utils;
 
+import com.yimei.finance.exception.BusinessException;
+import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.representation.common.file.AttachmentObject;
 import com.yimei.finance.service.common.file.Storage;
 import com.yimei.finance.service.common.file.StorageException;
@@ -12,6 +14,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by hary on 16/3/30.
@@ -43,7 +47,7 @@ public class StoreUtils {
     public static String getFileType(MultipartFile file) {
         return file.getOriginalFilename().substring(file.getOriginalFilename().lastIndexOf(".") + 1);
     }
-
+    
     /**
      * @param storage
      * @param file
@@ -52,7 +56,9 @@ public class StoreUtils {
      * @throws IOException
      */
     public static AttachmentObject save(Storage storage, MultipartFile file, String bucket) throws IOException {
+        List<String> unSupportFileSuffix = Arrays.asList(new String[] {"exe", "dmg", "sh", "dat", "com", "sys"});;
         String suffix = getFileType(file);
+        if (unSupportFileSuffix.contains(suffix)) throw new BusinessException(EnumCommonError.NotSupported_File_Type(suffix));
         String fileOriginName = file.getOriginalFilename().substring(0, file.getOriginalFilename().lastIndexOf("."));
         String fileName = Hex.encodeHexString(DigestUtils.md5(file.getInputStream())) + "." + suffix;
         String fileUrl = "/files/" + bucket + "/" + Hex.encodeHexString(DigestUtils.md5(file.getInputStream())) + "." + suffix;
