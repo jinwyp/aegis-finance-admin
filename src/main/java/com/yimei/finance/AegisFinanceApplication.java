@@ -63,7 +63,7 @@ public class AegisFinanceApplication {
 					user.setId(null);
 					user.setFirstName("superadmin");
 					user.setEmail("superadmin@yimei180.com");
-					user.setPassword("82eececf03df8ba84db3286ce0c42331");
+					user.setPassword("3de13d80edbfb2f2523605252803deef");
 					identityService.saveUser(user);
 					identityService.setUserInfo(user.getId(), "username", "superadmin");
 					identityService.setUserInfo(user.getId(), "companyId", "0");
