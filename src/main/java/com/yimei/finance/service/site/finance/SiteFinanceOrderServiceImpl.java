@@ -169,15 +169,14 @@ public class SiteFinanceOrderServiceImpl {
         return Result.success().setData(financeOrderObject);
     }
 
-    public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, EnumFinanceAttachment attachmentType) {
+    public List<AttachmentObject> getAttachmentByFinanceIdType(Long financeId, EnumFinanceAttachment attachment) {
         List<AttachmentObject> attachmentList = new ArrayList<>();
-        List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachmentType.type).orderByTaskCreateTime().desc().list();
+        List<HistoricTaskInstance> taskList = historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).taskDefinitionKey(attachment.type).orderByTaskCreateTime().desc().list();
         if (taskList == null || taskList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
         HistoricTaskInstance task = taskList.get(0);
         List<Attachment> attachments = taskService.getTaskAttachments(task.getId());
-        if (attachments != null && attachments.size() != 0) {
-            attachmentList.addAll(DozerUtils.copy(attachments, AttachmentObject.class));
-        }
+        if (attachments == null || attachments.size() == 0) return attachmentList;
+        attachmentList.addAll(DozerUtils.copy(attachments, AttachmentObject.class));
         return attachmentList;
     }
 
@@ -257,34 +256,12 @@ public class SiteFinanceOrderServiceImpl {
         out.close();
     }
 
-    public Result getFinanceOrderContractObject(Long financeId, Integer type, Long sessionUserId, Long sessionCompanyId) {
-        FinanceOrder financeOrder = financeOrderRepository.findByIdAndUserIdOrCompanyId(financeId, sessionUserId, sessionCompanyId);
-        if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
-        FinanceOrderContract financeOrderContract = orderContractRepository.findByFinanceIdAndType(financeId, type);
-        if (financeOrderContract == null) return Result.error(EnumAdminFinanceError.此合同不存在.toString());
-        FinanceOrderContractObject financeOrderContractObject = changeFinanceOrderContractObject(financeOrderContract);
-        return Result.success().setData(financeOrderContractObject);
-    }
-
     public Result findFinanceContractByFinanceIdUserIdCompanyId(Long financeId, int type, Long sessionUserId, Long sessionCompanyId) {
         FinanceOrderContract financeOrderContract = orderContractRepository.findByFinanceIdAndTypeAndApplyUserIdAndApplyCompanyId(financeId, type, sessionUserId, sessionCompanyId);
         if (financeOrderContract == null) return Result.error(EnumAdminFinanceError.此合同不存在.toString());
         if (financeOrderRepository.findByIdAndUserIdOrCompanyId(financeOrderContract.getFinanceId(), sessionUserId, sessionCompanyId) == null)
             return Result.error(EnumAdminFinanceError.你没有权限查看此合同.toString());
         FinanceOrderContractObject financeOrderContractObject = changeFinanceOrderContractObject(financeOrderContract);
-        if (financeOrderContract.getType() == 1) {
-            List<Attachment> attachmentList1 = taskService.getTaskAttachments("c" + financeId + EnumFinanceAttachment.Upstream_Contract_Attachment.type);
-            if (attachmentList1 != null && attachmentList1.size() != 0) {
-                financeOrderContractObject.setAttachmentList(DozerUtils.copy(attachmentList1, AttachmentObject.class));
-            }
-        } else if (financeOrderContract.getType() == 2) {
-            List<Attachment> attachmentList2 = taskService.getTaskAttachments("c" + financeId + EnumFinanceAttachment.Downstream_Contract_Attachment.type);
-            if (attachmentList2 != null && attachmentList2.size() != 0) {
-                financeOrderContractObject.setAttachmentList(DozerUtils.copy(attachmentList2, AttachmentObject.class));
-            }
-        } else {
-            return Result.error(EnumCommonError.Admin_System_Error);
-        }
         return Result.success().setData(financeOrderContractObject);
     }
 
@@ -304,6 +281,15 @@ public class SiteFinanceOrderServiceImpl {
         if (financeOrder == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
         financeOrderContractObject.setFinanceType(financeOrder.getApplyType());
         financeOrderContractObject.setFinanceSourceId(financeOrder.getSourceId());
+        List<AttachmentObject> attachmentList = new ArrayList<>();
+        if (financeOrderContract.getType() == 1) {
+            attachmentList = getAttachmentByFinanceIdType(financeOrderContract.getFinanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.Upstream_Contract_Attachment.toString());
+        } else if (financeOrderContract.getType() == 2) {
+            attachmentList = getAttachmentByFinanceIdType(financeOrderContract.getFinanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment, EnumFinanceAttachment.Downstream_Contract_Attachment.toString());
+        } else {
+            throw new BusinessException(EnumCommonError.Admin_System_Error);
+        }
+        financeOrderContractObject.setAttachmentList(attachmentList);
         return financeOrderContractObject;
     }
 
