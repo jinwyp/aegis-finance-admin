@@ -22,8 +22,6 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Date;
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.BinaryOperator;
 
 @RunWith(SpringRunner.class)
@@ -66,23 +64,7 @@ public class AegisFinanceAdminApplicationTests {
 		BinaryOperator<Long> add = (x, y) -> x + y;
 		Page page = new Page();
 
-
-		List<EnumFinanceEndType> list = Arrays.asList(EnumFinanceEndType.values());
-		list.parallelStream().forEach(System.out::println);
-
-		System.out.println(list.contains("EndBySalesman"));
-		System.out.println(list.contains("EndBySalesman"));
-		System.out.println(list.contains(EnumFinanceEndType.EndBySalesman.toString()));
-		System.out.println(list.contains(EnumFinanceEndType.valueOf("EndBySalesman")));
-		System.out.println(list.contains(EnumFinanceEndType.EndBySalesman));
-		if (list.contains("EndBySalesman")) {
-			System.out.println(" contains ");
-			System.out.println(" contains ");
-			System.out.println(" contains ");
-			System.out.println(" contains ");
-			System.out.println(" contains ");
-			System.out.println(" contains ");
-		}
+		EnumFinanceEndType.getAllEndTypeList().parallelStream().forEach(System.out::println);
 
 
 //		UserObject user = new UserObject("14", 0L);

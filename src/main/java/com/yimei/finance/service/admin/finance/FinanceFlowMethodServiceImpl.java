@@ -36,7 +36,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -316,8 +315,7 @@ public class FinanceFlowMethodServiceImpl {
             List<HistoricActivityInstance> activityInstanceList = historyService.createHistoricActivityInstanceQuery().processInstanceId(historicProcessInstance.getId()).orderByHistoricActivityInstanceStartTime().desc().list();
             if (activityInstanceList == null || activityInstanceList.size() == 0) throw new BusinessException(EnumCommonError.Admin_System_Error);
             for (HistoricActivityInstance instance : activityInstanceList) {
-                List<EnumFinanceEndType> endTypeList = Arrays.asList(EnumFinanceEndType.values());
-                if (endTypeList.contains(EnumFinanceEndType.valueOf(instance.getActivityId()))) {
+                if (EnumFinanceEndType.getAllEndTypeList().contains(instance.getActivityId())) {
                     taskObject.setCurrentName(instance.getActivityName());
                     taskObject.setCurrentTaskDefinitionKey(instance.getActivityId());
                     break;

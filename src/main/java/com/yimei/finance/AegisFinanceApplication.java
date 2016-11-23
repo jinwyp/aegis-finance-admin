@@ -2,13 +2,11 @@ package com.yimei.finance;
 
 import com.yimei.finance.entity.admin.company.Company;
 import com.yimei.finance.entity.admin.company.CompanyRoleRelationShip;
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.repository.admin.company.CompanyRepository;
 import com.yimei.finance.repository.admin.company.CompanyRoleRelationShipRepository;
 import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyRole;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
-import com.yimei.finance.representation.admin.finance.enums.EnumFinanceStatus;
 import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
 import com.yimei.finance.representation.admin.user.enums.EnumAdminUserStatus;
 import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
@@ -26,7 +24,6 @@ import org.springframework.util.StringUtils;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.util.Date;
-import java.util.List;
 
 
 @SpringBootApplication
@@ -66,7 +63,7 @@ public class AegisFinanceApplication {
 					user.setId(null);
 					user.setFirstName("superadmin");
 					user.setEmail("superadmin@yimei180.com");
-					user.setPassword("82eececf03df8ba84db3286ce0c42331");
+					user.setPassword("3de13d80edbfb2f2523605252803deef");
 					identityService.saveUser(user);
 					identityService.setUserInfo(user.getId(), "username", "superadmin");
 					identityService.setUserInfo(user.getId(), "companyId", "0");
@@ -80,15 +77,15 @@ public class AegisFinanceApplication {
 					companyRepository.save(company);
 					companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), EnumCompanyRole.RiskManager_Organization.id, EnumCompanyRole.RiskManager_Organization.toString(), new Date(), "0", new Date(), "0"));
 				}
-				final Company finalCompany = company;
-				userService.updateOldUserData(finalCompany);
-				List<FinanceOrder> financeOrderList = financeOrderRepository.findByCreateTimeBeforeAndApproveStateIdNot(java.sql.Date.valueOf("2016-11-22"), EnumFinanceStatus.WaitForAudit.id);
-				financeOrderList.parallelStream().forEach(financeOrder -> {
-					if (financeOrder.getRiskCompanyId() == null) {
-						financeOrder.setRiskCompanyId(finalCompany.getId());
-						financeOrderRepository.save(financeOrder);
-					}
-				});
+//				final Company finalCompany = company;
+//				userService.updateOldUserData(finalCompany);
+//				List<FinanceOrder> financeOrderList = financeOrderRepository.findByCreateTimeBeforeAndApproveStateIdNot(java.sql.Date.valueOf("2016-11-23"), EnumFinanceStatus.WaitForAudit.id);
+//				financeOrderList.parallelStream().forEach(financeOrder -> {
+//					if (financeOrder.getRiskCompanyId() == null) {
+//						financeOrder.setRiskCompanyId(finalCompany.getId());
+//						financeOrderRepository.save(financeOrder);
+//					}
+//				});
 			}
         };
     }

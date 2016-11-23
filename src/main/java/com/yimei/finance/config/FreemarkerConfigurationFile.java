@@ -19,7 +19,7 @@ import java.util.Map;
 
 @Configuration
 @AutoConfigureAfter({FreeMarkerAutoConfiguration.class})
-public class FreemarkerConfigurationFile extends FreeMarkerAutoConfiguration.FreeMarkerWebConfiguration {
+public class FreemarkerConfigurationFile {
 
     @Autowired
     protected freemarker.template.Configuration configuration;
