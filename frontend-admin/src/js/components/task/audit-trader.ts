@@ -106,7 +106,7 @@ export class AuditTraderComponent {
                 this.task.getOrderInfoById(this.currentTask.financeId, 'onlinetrader').then((result)=>{
                     if (result.success){
                         this.currentOrder = result.data;
-                        this.riskSelectedItem.id = result.data.riskCompanyId;
+                        this.riskSelectedItem.id = result.data.riskCompanyId||-1;
                         this.riskSelectedItem.name = result.data.riskCompanyName;
                         if(this.currentOrder.expectDate===0){
                             this.currentOrder.expectDate=null;

@@ -87,7 +87,7 @@ export class CustomSelectComponent implements ControlValueAccessor{
 
     hideClick(){
         this.isClose = !this.isClose;
-        this.value = {};
+        this.value = {name : null, id : -1};
         if (this.outputName){
             this.onChangeCallback(this.value[this.outputName]);
         }else{
