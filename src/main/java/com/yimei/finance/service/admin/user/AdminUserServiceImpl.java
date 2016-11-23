@@ -105,7 +105,7 @@ public class AdminUserServiceImpl {
         if (!result.isSuccess()) return result;
         if (user.getGroupIds() == null || user.getGroupIds().size() == 0) return Result.error(EnumAdminUserError.用户角色不能为空.toString());
         Result result0 = checkUsername(user.getUsername());
-        if (!result0.isSuccess()) return result;
+        if (!result0.isSuccess()) return result0;
         Result result1 = checkUserEmail(user.getEmail());
         if (!result1.isSuccess()) return result1;
         Result result2 = checkUserPhone(user.getPhone());

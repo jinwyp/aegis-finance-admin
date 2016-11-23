@@ -1,5 +1,9 @@
 package com.yimei.finance.representation.admin.finance.enums;
 
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
+
 public enum EnumFinanceEndType {
     EndByOnlineTrader("线上交易员审核不通过"),
     EndBySalesman("业务员审核不通过"),
@@ -15,5 +19,9 @@ public enum EnumFinanceEndType {
 
     EnumFinanceEndType(String name) {
         this.name = name;
+    }
+
+    public static List<String> getAllEndTypeList() {
+        return Arrays.asList(EnumFinanceEndType.values()).parallelStream().map(type -> type.toString()).collect(Collectors.toList());
     }
 }
