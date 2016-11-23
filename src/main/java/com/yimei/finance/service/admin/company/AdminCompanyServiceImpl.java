@@ -164,11 +164,11 @@ public class AdminCompanyServiceImpl {
         List<CompanyObject> companyObjectList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
         if (riskCompanySearch != null && companyObjectList != null && companyObjectList.size() != 0) {
             if (!StringUtils.isEmpty(riskCompanySearch.getName()) && !StringUtils.isEmpty(riskCompanySearch.getAdminName())) {
-                companyObjectList = companyObjectList.parallelStream().filter(company -> company.getName().contains(riskCompanySearch.getName()) && company.getAdminName().contains(riskCompanySearch.getAdminName())).collect(Collectors.toList());
+                companyObjectList = companyObjectList.parallelStream().filter(company -> company.getName().contains(riskCompanySearch.getName()) && (!StringUtils.isEmpty(company.getAdminName()) && company.getAdminName().contains(riskCompanySearch.getAdminName()))).collect(Collectors.toList());
             } else if (!StringUtils.isEmpty(riskCompanySearch.getName())) {
                 companyObjectList = companyObjectList.parallelStream().filter(company -> company.getName().contains(riskCompanySearch.getName())).collect(Collectors.toList());
             } else if (!StringUtils.isEmpty(riskCompanySearch.getAdminName())) {
-                companyObjectList = companyObjectList.parallelStream().filter(company -> company.getAdminName().contains(riskCompanySearch.getAdminName())).collect(Collectors.toList());
+                companyObjectList = companyObjectList.parallelStream().filter(company -> !StringUtils.isEmpty(company.getAdminName()) && company.getAdminName().contains(riskCompanySearch.getAdminName())).collect(Collectors.toList());
             }
         }
         return companyObjectList;
