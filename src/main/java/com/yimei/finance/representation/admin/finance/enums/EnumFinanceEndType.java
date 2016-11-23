@@ -2,6 +2,7 @@ package com.yimei.finance.representation.admin.finance.enums;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum EnumFinanceEndType {
     EndByOnlineTrader("线上交易员审核不通过"),
@@ -21,7 +22,6 @@ public enum EnumFinanceEndType {
     }
 
     public static List<String> getAllEndTypeList() {
-        List<String> typeList = Arrays.asList(new String[]{"EndByOnlineTrader", "EndBySalesman", "EndByRiskManager", "completeWorkFlowSuccess"});
-        return typeList;
+        return Arrays.asList(EnumFinanceEndType.values()).parallelStream().map(type -> type.toString()).collect(Collectors.toList());
     }
 }

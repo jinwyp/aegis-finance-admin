@@ -3,6 +3,7 @@ package com.yimei.finance;
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.tpl.UserTest;
 import com.yimei.finance.repository.tpl.JpaRepositoryDemo;
+import com.yimei.finance.representation.admin.finance.enums.EnumFinanceEndType;
 import com.yimei.finance.representation.common.result.Page;
 import com.yimei.finance.service.admin.company.AdminCompanyServiceImpl;
 import com.yimei.finance.service.admin.finance.FinanceOrderServiceImpl;
@@ -63,6 +64,7 @@ public class AegisFinanceAdminApplicationTests {
 		BinaryOperator<Long> add = (x, y) -> x + y;
 		Page page = new Page();
 
+		EnumFinanceEndType.getAllEndTypeList().parallelStream().forEach(System.out::println);
 
 
 //		UserObject user = new UserObject("14", 0L);
