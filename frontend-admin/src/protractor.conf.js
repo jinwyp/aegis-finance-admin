@@ -6,8 +6,9 @@ exports.config = {
     framework: 'jasmine',
     seleniumAddress: 'http://localhost:4444/wd/hub',
     specs: [
-        'testing/e2e/**/*.js'
-        // 'testing/e2e/create-users.js'
+        // 'testing/e2e/**/*.js'
+        // 'testing/e2e/superadmin/create-risk-line.js',
+        'testing/e2e/superadmin/create-users.js'
     ],
 
     baseUrl: 'http://finance-local.yimei180.com:8002',

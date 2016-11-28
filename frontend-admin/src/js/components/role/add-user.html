@@ -42,7 +42,7 @@
         <div *ngIf="css.isAdminUser" class="row info-item">
             <label class="col-sm-2 info-label-input"><span>所属风控线:</span></label>
             <div class="col-sm-10 info-val">
-                <custom-select  [optionList]="riskLines" [(ngModel)]="riskSelectedItem" [ngModelOptions]="{standalone: true}"></custom-select>
+                <custom-select id="riskLine" [optionList]="riskLines" [(ngModel)]="riskSelectedItem" [ngModelOptions]="{standalone: true}"></custom-select>
             </div>
         </div>
 
@@ -64,7 +64,7 @@
         <div class="row info-item">
             <label class="col-sm-2 info-label-input"><span>所属部门:</span></label>
             <div class="col-sm-10 info-val">
-                <custom-select  [optionList]="departments" [(ngModel)]="partSelectedItem" [ngModelOptions]="{standalone: true}"></custom-select>
+                <custom-select id="department" [optionList]="departments" [(ngModel)]="partSelectedItem" [ngModelOptions]="{standalone: true}"></custom-select>
             </div>
         </div>
         <div class="row info-item mb-50">

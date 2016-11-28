@@ -90,7 +90,7 @@ export class AddRiskLineComponent {
             this.css.isSubmitted = false;
             if (result.success) {
                 this.css.ajaxSuccessHidden = false;
-                this.back();
+                // this.back();
             } else {
                 this.css.ajaxErrorHidden = false;
                 this.errorMsg            = result.error.message;

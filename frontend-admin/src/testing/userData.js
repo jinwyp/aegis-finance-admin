@@ -5,9 +5,48 @@
 module.exports = {
 
     admin : {
-        username : 'adminfinance',
-        password : 'financeadmin',
+        username : 'superadmin',
+        password : '111111',
         email : 'admin1@yimei180.com'
+    },
+
+    fkxg1 : {
+        username : 'fkxg1',
+        name : 'fkxg1',
+        password : '111111',
+        phone : '18600000001',
+        email : 'fkxg1@yimei180.com',
+        groupId : 0,
+        groupName : '系统管理员组',
+        department : '系统管理员',
+        companyId : '',
+        companyName : '测试风控线一'
+    },
+
+    fkxg2 : {
+        username : 'fkxg2',
+        name : 'fkxg2',
+        password : '111111',
+        phone : '18600000002',
+        email : 'fkxg2@yimei180.com',
+        groupId : 0,
+        groupName : '系统管理员组',
+        department : '系统管理员',
+        companyId : '',
+        companyName : '测试风控线一'
+    },
+
+    fkxg3 : {
+        username : 'fkxg3',
+        name : 'fkxg3',
+        password : '111111',
+        phone : '18600000003',
+        email : 'fkxg3@yimei180.com',
+        groupId : 0,
+        groupName : '系统管理员组',
+        department : '系统管理员',
+        companyId : '',
+        companyName : '测试风控线一'
     },
 
     adminTrader : {
