@@ -51,61 +51,157 @@ module.exports = {
 
     adminTrader : {
         username : '线上交易员管理组用户1',
-        password : '123456',
+        password : '111111',
         email : 'adminTrader1@yimei180.com'
     },
 
-    adminSalesman : {
+    adminSalesman1 : {
         username : '业务员管理组用户1',
-        password : '123456',
+        password : '111111',
         email : 'adminSalesman1@yimei180.com'
     },
 
-    adminInvestigator : {
+    adminSalesman2 : {
+        username : '业务员管理组用户2',
+        password : '111111',
+        email : 'adminSalesman2@yimei180.com'
+    },
+
+    adminSalesman3 : {
+        username : '业务员管理组用户3',
+        password : '111111',
+        email : 'adminSalesman3@yimei180.com'
+    },
+
+    adminInvestigator1 : {
         username : '尽调员管理组用户1',
-        password : '123456',
+        password : '111111',
         email : 'adminInvestigator1@yimei180.com'
     },
 
-    adminSupervisor : {
+    adminInvestigator2 : {
+        username : '尽调员管理组用户2',
+        password : '111111',
+        email : 'adminInvestigator2@yimei180.com'
+    },
+
+    adminInvestigator3 : {
+        username : '尽调员管理组用户3',
+        password : '111111',
+        email : 'adminInvestigator3@yimei180.com'
+    },
+
+    adminSupervisor1 : {
         username : '监管员管理组用户1',
-        password : '123456',
+        password : '111111',
         email : 'adminSupervisor1@yimei180.com'
     },
 
-    adminRiskmanager : {
+    adminSupervisor2 : {
+        username : '监管员管理组用户2',
+        password : '111111',
+        email : 'adminSupervisor2@yimei180.com'
+    },
+
+    adminSupervisor3 : {
+        username : '监管员管理组用户3',
+        password : '111111',
+        email : 'adminSupervisor3@yimei180.com'
+    },
+
+    adminRiskmanager1 : {
         username : '风控管理组用户1',
-        password : '123456',
+        password : '111111',
         email : 'adminRiskmanager1@yimei180.com'
+    },
+
+    adminRiskmanager2 : {
+        username : '风控管理组用户2',
+        password : '111111',
+        email : 'adminRiskmanager2@yimei180.com'
+    },
+
+    adminRiskmanager3 : {
+        username : '风控管理组用户3',
+        password : '111111',
+        email : 'adminRiskmanager3@yimei180.com'
     },
 
     trader : {
         username : '线上交易员用户1',
-        password : '123456',
+        password : '111111',
         email : 'trader1@yimei180.com'
     },
 
-    salesman : {
+    salesman1 : {
         username : '业务员用户1',
-        password : '123456',
+        password : '111111',
         email : 'salesman1@yimei180.com'
     },
 
-    investigator : {
+    salesman2 : {
+        username : '业务员用户2',
+        password : '111111',
+        email : 'salesman2@yimei180.com'
+    },
+
+    salesman3 : {
+        username : '业务员用户3',
+        password : '111111',
+        email : 'salesman3@yimei180.com'
+    },
+
+    investigator1 : {
         username : '尽调员用户1',
-        password : '123456',
+        password : '111111',
         email : 'investigator1@yimei180.com'
     },
 
-    supervisor : {
+    investigator2 : {
+        username : '尽调员用户2',
+        password : '111111',
+        email : 'investigator2@yimei180.com'
+    },
+
+    investigator3 : {
+        username : '尽调员用户3',
+        password : '111111',
+        email : 'investigator3@yimei180.com'
+    },
+
+    supervisor1 : {
         username : '监管员用户1',
-        password : '123456',
+        password : '111111',
         email : 'supervisor1@yimei180.com'
     },
 
-    riskmanager : {
+    supervisor2 : {
+        username : '监管员用户2',
+        password : '111111',
+        email : 'supervisor2@yimei180.com'
+    },
+
+    supervisor3 : {
+        username : '监管员用户3',
+        password : '111111',
+        email : 'supervisor3@yimei180.com'
+    },
+
+    riskmanager1 : {
         username : '风控用户1',
-        password : '123456',
+        password : '111111',
         email : 'riskmanager1@yimei180.com'
+    },
+
+    riskmanager2 : {
+        username : '风控用户2',
+        password : '111111',
+        email : 'riskmanager2@yimei180.com'
+    },
+
+    riskmanager3 : {
+        username : '风控用户3',
+        password : '111111',
+        email : 'riskmanager3@yimei180.com'
     },
 };

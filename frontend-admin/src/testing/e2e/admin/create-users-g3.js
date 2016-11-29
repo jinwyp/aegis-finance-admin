@@ -28,8 +28,6 @@ describe('Admin Home Page - 管理后台首页', function() {
     var newUsernameInput = element(by.id('usernameInput'));
     var newNameInput = element(by.id('nameInput'));
     var newGroupInput = element(by.tagName('custom-checkbox')).all(by.tagName('label'));
-    var riskLineSelect = element(by.id('riskLine'));
-    var riskLineInput = element(by.id('riskLine')).all(by.tagName('div ul li'));
     var newEmailInput = element(by.id('emailInput'));
     var newPhoneInput = element(by.id('phoneInput'));
 
@@ -38,11 +36,15 @@ describe('Admin Home Page - 管理后台首页', function() {
         newUsernameInput.clear().sendKeys(user.username);
         newNameInput.clear().sendKeys(user.username);
         newGroupInput.get(groupIndex).element(by.tagName('input')).click();
-        riskLineSelect.click();
-        riskLineInput.get(riskIndex).click();
         newEmailInput.clear().sendKeys(user.email);
         expect(newGroupInput.get(groupIndex).getText()).toEqual(groupText);
-
+        if(riskIndex>0){
+            var riskLineSelect = element(by.id('riskLine'));
+            var riskLineInput = element(by.id('riskLine')).all(by.tagName('div ul li'));
+            riskLineSelect.click();
+            riskLineInput.get(riskIndex).click();
+            expect(riskLineInput.get(riskIndex).getText()).toEqual(riskIndex);
+        }
         userSaveButton.click();
 
         if (isSaveSuccess){
@@ -56,8 +58,8 @@ describe('Admin Home Page - 管理后台首页', function() {
 
     beforeAll(function() {
         browser.get('/finance/admin/login');
-        loginUsernameInput.sendKeys(user.admin.username);
-        loginPasswordInput.sendKeys(user.admin.password);
+        loginUsernameInput.sendKeys(user.fkxg3.username);
+        loginPasswordInput.sendKeys(user.fkxg3.password);
 
         loginButton.click();
         util.waitForUrlToChangeTo('/finance/admin/home/tasks/pending');
@@ -96,7 +98,7 @@ describe('Admin Home Page - 管理后台首页', function() {
             newNameInput.clear();
             newEmailInput.clear();
 
-            var inputArray = Object.keys(Array.apply(null,{length:11})).map(Number);
+            var inputArray = Object.keys(Array.apply(null,{length:8})).map(Number);
 
             inputArray.forEach(function(value, index){
                 newGroupInput.get(value).element(by.tagName('input')).isSelected().then(function(selected) {
@@ -105,24 +107,38 @@ describe('Admin Home Page - 管理后台首页', function() {
             });
         });
 
-        it('创建新用户-风控线一管理 成功', function () {
-            inputUserData(true, user.fkxg1, 0, '系统管理员组',3 , '测试风控线一');
+        it('创建新用户-业务员管理组 成功', function () {
+            inputUserData(true, user.adminSalesman3, 0, '业务员管理组', 0 , '请选择');
         });
 
-        it('创建新用户-风控线二管理 成功', function () {
-            inputUserData(true, user.fkxg2, 0, '系统管理员组',2 , '测试风控线二');
+        it('创建新用户-尽调员管理组 成功', function () {
+            inputUserData(true, user.adminInvestigator3, 2, '尽调员管理组', 0 , '请选择');
         });
 
-        it('创建新用户-风控线三管理 成功', function () {
-            inputUserData(true, user.fkxg3, 0, '系统管理员组',1 , '测试风控线三');
+        it('创建新用户-监管员管理组 成功', function () {
+            inputUserData(true, user.adminSupervisor3, 4, '监管员管理组', 0 , '请选择');
         });
 
-        it('创建新用户-线上交易员管理组 成功', function () {
-            inputUserData(true, user.adminTrader, 1, '线上交易员管理组', 0 , '请选择');
+        it('创建新用户-风控管理组 成功', function () {
+            inputUserData(true, user.adminRiskmanager3, 6, '风控管理组', 0 , '请选择');
         });
 
-        it('创建新用户-线上交易员组 成功', function () {
-            inputUserData(true, user.trader, 2, '线上交易员组', 0 , '请选择');
+
+
+        it('创建新用户-业务员组 成功', function () {
+            inputUserData(true, user.salesman3, 1, '业务员组', 0 , '请选择');
+        });
+
+        it('创建新用户-尽调员组 成功', function () {
+            inputUserData(true, user.investigator3, 3, '尽调员组', 0 , '请选择');
+        });
+
+        it('创建新用户-监管员组 成功', function () {
+            inputUserData(true, user.supervisor3, 5, '监管员组', 0 , '请选择');
+        });
+
+        it('创建新用户-风控员组 成功', function () {
+            inputUserData(true, user.riskmanager3, 7, '风控员组', 0 , '请选择');
         });
     });
 

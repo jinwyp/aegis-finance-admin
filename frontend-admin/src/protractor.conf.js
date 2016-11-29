@@ -7,8 +7,9 @@ exports.config = {
     seleniumAddress: 'http://localhost:4444/wd/hub',
     specs: [
         // 'testing/e2e/**/*.js'
-        // 'testing/e2e/superadmin/create-risk-line.js',
-        'testing/e2e/superadmin/create-users.js'
+        // 'testing/e2e/superadmin/**/*.js',
+        'testing/e2e/admin/create-users-g1.js',
+        // 'testing/e2e/admin/**/*.js'
     ],
 
     baseUrl: 'http://finance-local.yimei180.com:8002',
