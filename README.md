@@ -76,6 +76,13 @@ ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
 
 
 
+## e2e创建风控线及流程用户测试
+1. 进入 frontend-admin/src 运行 ``` protractor --params.step=superadmin ``` 创建风控线以及风控线管理账号、线上交易员管理员、线上交易员账号。
+2. 修改数据库风控线管理员账号密码为111111
+3. 运行 ``` protractor --params.step=admin ``` 创建风控线附属人员。
+
+
+
 
 
 
