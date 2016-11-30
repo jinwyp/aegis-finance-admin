@@ -105,15 +105,15 @@ describe('Admin Home Page - 管理后台首页', function() {
             });
         });
 
-        it('创建新用户-风控线一管理 成功', function () {
+        it('创建新用户-风控线一管理员 成功', function () {
             inputUserData(true, user.fkxg1, 0, '系统管理员组',3 , '测试风控线一');
         });
 
-        it('创建新用户-风控线二管理 成功', function () {
+        it('创建新用户-风控线二管理员 成功', function () {
             inputUserData(true, user.fkxg2, 0, '系统管理员组',2 , '测试风控线二');
         });
 
-        it('创建新用户-风控线三管理 成功', function () {
+        it('创建新用户-风控线三管理员 成功', function () {
             inputUserData(true, user.fkxg3, 0, '系统管理员组',1 , '测试风控线三');
         });
 
