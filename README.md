@@ -68,6 +68,13 @@ ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
 - （可以不用运行该命令）运行 ``` webdriver-manager start ```  启动 Selenium Server at http://localhost:4444/wd/hub.
 - 进入 frontend-admin/src 运行 ``` protractor ``` 或 ``` npm run e2e ``` 开始进行测试, 完成后打开 frontend-admin/src/testing/report/htmlReport.html 查看测试结果                                  
 
+## E2E 创建风控线及流程用户测试
+1. 进入 frontend-admin/src 运行 ``` protractor --params.step=superadmin ``` 创建风控线以及风控线管理账号、线上交易员管理员、线上交易员账号。
+2. 修改数据库风控线管理员账号密码为111111
+3. 运行 ``` protractor --params.step=admin ``` 创建风控线附属人员。
+
+
+
 
 
 ## docker环境准备
@@ -75,11 +82,6 @@ ELECTRON_MIRROR=http://npm.taobao.org/mirrors/electron/
 2. 进入docker-mysql目录, 运行 ```make start enter``` , 然后进入数据库, 创建 financedb 数据库
 
 
-
-## e2e创建风控线及流程用户测试
-1. 进入 frontend-admin/src 运行 ``` protractor --params.step=superadmin ``` 创建风控线以及风控线管理账号、线上交易员管理员、线上交易员账号。
-2. 修改数据库风控线管理员账号密码为111111
-3. 运行 ``` protractor --params.step=admin ``` 创建风控线附属人员。
 
 
 
