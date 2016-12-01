@@ -1,10 +1,10 @@
 package com.yimei.finance.utils;
 
 import com.yimei.finance.exception.BusinessException;
-import com.yimei.finance.representation.common.enums.EnumCommonError;
-import com.yimei.finance.representation.common.file.AttachmentObject;
-import com.yimei.finance.service.common.file.Storage;
-import com.yimei.finance.service.common.file.StorageException;
+import com.yimei.finance.common.representation.enums.EnumCommonError;
+import com.yimei.finance.common.representation.file.AttachmentObject;
+import com.yimei.finance.common.service.file.Storage;
+import com.yimei.finance.common.service.file.StorageException;
 import org.apache.commons.codec.binary.Hex;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.commons.io.FileUtils;

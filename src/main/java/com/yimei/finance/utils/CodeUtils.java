@@ -1,7 +1,7 @@
 package com.yimei.finance.utils;
 
 import com.yimei.finance.exception.BusinessException;
-import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.common.representation.enums.EnumCommonError;
 import net.sourceforge.pinyin4j.PinyinHelper;
 import net.sourceforge.pinyin4j.format.HanyuPinyinCaseType;
 import net.sourceforge.pinyin4j.format.HanyuPinyinOutputFormat;
