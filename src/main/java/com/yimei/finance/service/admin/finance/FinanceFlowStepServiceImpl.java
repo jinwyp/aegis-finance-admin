@@ -3,8 +3,8 @@ package com.yimei.finance.service.admin.finance;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.admin.finance.FinanceOrderRiskManagerInfo;
 import com.yimei.finance.exception.BusinessException;
-import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
-import com.yimei.finance.repository.admin.finance.FinanceOrderRiskRepository;
+import com.yimei.finance.repository.admin.finance.AdminFinanceOrderRepository;
+import com.yimei.finance.repository.admin.finance.AdminFinanceOrderRiskRepository;
 import com.yimei.finance.representation.admin.finance.enums.*;
 import com.yimei.finance.representation.admin.finance.object.*;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
@@ -30,9 +30,9 @@ public class FinanceFlowStepServiceImpl {
     @Autowired
     private FinanceOrderServiceImpl orderService;
     @Autowired
-    private FinanceOrderRepository financeOrderRepository;
+    private AdminFinanceOrderRepository adminFinanceOrderRepository;
     @Autowired
-    private FinanceOrderRiskRepository financeOrderRiskRepository;
+    private AdminFinanceOrderRiskRepository adminFinanceOrderRiskRepository;
 
     /**
      * 线上交易员审核
@@ -116,7 +116,7 @@ public class FinanceFlowStepServiceImpl {
     @Transactional
     public Result investigatorAuditFinanceOrderMethod(String userId, TaskMap taskMap, FinanceOrderInvestigatorInfoObject investigatorInfo, Task task, Long financeId, boolean submit) {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.investigatorAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行尽调员审核操作.toString());
-        FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
+        FinanceOrder financeOrder = adminFinanceOrderRepository.findOne(financeId);
         investigatorInfo.setFinanceId(financeId);
         investigatorInfo.setApplyCompanyName(financeOrder.getApplyCompanyName());
         investigatorInfo.setCreateManId(userId);
@@ -243,9 +243,9 @@ public class FinanceFlowStepServiceImpl {
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList3(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Upstream_Contract_Attachment.toString());
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList4(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Downstream_Contract_Attachment.toString());
         if (submit) {
-            FinanceOrder financeOrder = financeOrderRepository.findOne(financeId);
+            FinanceOrder financeOrder = adminFinanceOrderRepository.findOne(financeId);
             if (taskMap.need == 0 && taskMap.pass == 1 && financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
-                FinanceOrderRiskManagerInfo financeOrderRiskManagerInfo = financeOrderRiskRepository.findByFinanceId(riskManagerInfo.getFinanceId());
+                FinanceOrderRiskManagerInfo financeOrderRiskManagerInfo = adminFinanceOrderRiskRepository.findByFinanceId(riskManagerInfo.getFinanceId());
                 if (financeOrderRiskManagerInfo == null)
                     return Result.error(EnumAdminFinanceError.你还没有提交合同信息.toString());
                 if (financeOrderRiskManagerInfo.getUpstreamContractStatus() != 2)

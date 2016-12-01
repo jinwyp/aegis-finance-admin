@@ -3,12 +3,12 @@ package com.yimei.finance.controllers.site.page;
 import com.lowagie.text.DocumentException;
 import com.yimei.finance.exception.NotFoundException;
 import com.yimei.finance.ext.annotations.LoginRequired;
-import com.yimei.finance.repository.admin.finance.FinanceOrderContractRepository;
+import com.yimei.finance.repository.site.SiteFinanceOrderContractRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceContractType;
 import com.yimei.finance.representation.admin.finance.object.FinanceOrderContractObject;
-import com.yimei.finance.service.common.contract.ContractServiceImpl;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
+import com.yimei.finance.service.common.contract.ContractServiceImpl;
 import com.yimei.finance.service.common.file.PDF;
 import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.Api;
@@ -35,7 +35,7 @@ import java.util.Map;
 @Controller("siteFinancePageController")
 public class SiteFinancePageController {
     @Autowired
-    private FinanceOrderContractRepository financeOrderContractRepository;
+    private SiteFinanceOrderContractRepository siteFinanceOrderContractRepository;
     @Autowired
     private ContractServiceImpl contractService;
 
@@ -57,7 +57,7 @@ public class SiteFinancePageController {
     public HttpEntity<byte[]> siteFinanceOrderDownloadContractByFinanceIdAndContractType(@PathVariable("financeId") Long financeId,
                                                                            @PathVariable("type") int type) throws IOException, DocumentException {
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
-        FinanceOrderContractObject financeOrderContractObject = DozerUtils.copy(financeOrderContractRepository.findByFinanceIdAndType(financeId, type), FinanceOrderContractObject.class);
+        FinanceOrderContractObject financeOrderContractObject = DozerUtils.copy(siteFinanceOrderContractRepository.findByFinanceIdAndType(financeId, type), FinanceOrderContractObject.class);
         if (financeOrderContractObject == null) throw new NotFoundException(EnumAdminFinanceError.此合同不存在.toString());
         String contract = contractService.getFinanceOrderContractContent(financeId, type, true);
         String fileName  = "合同-" + financeOrderContractObject.getContractNo() + ".pdf";
@@ -77,7 +77,7 @@ public class SiteFinancePageController {
     public String siteFinanceOrderPreviewContractByFinanceIdAndContractType(@PathVariable("financeId") Long financeId,
                                                                             @PathVariable("type") int type, Map<String, Object> model) {
         if (StringUtils.isEmpty(EnumFinanceContractType.getTypeName(type))) throw new NotFoundException(EnumCommonError.传入参数错误.toString());
-        if (financeOrderContractRepository.findByFinanceIdAndType(financeId, type) == null) throw new NotFoundException(EnumAdminFinanceError.此合同不存在.toString());
+        if (siteFinanceOrderContractRepository.findByFinanceIdAndType(financeId, type) == null) throw new NotFoundException(EnumAdminFinanceError.此合同不存在.toString());
         model.put("contract", contractService.getFinanceOrderContractContent(financeId, type, true));
         return "site/user/contractPreview";
     }

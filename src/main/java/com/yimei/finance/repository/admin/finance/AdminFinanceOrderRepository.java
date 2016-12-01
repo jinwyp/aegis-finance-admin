@@ -8,7 +8,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.Date;
 import java.util.List;
 
-public interface FinanceOrderRepository extends JpaRepository<FinanceOrder, Long> {
+public interface AdminFinanceOrderRepository extends JpaRepository<FinanceOrder, Long> {
 
     List<FinanceOrder> findByUserIdOrApplyCompanyId(@Param("userId") Long userId,
                                                     @Param("applyCompanyId") Long applyCompanyId);

@@ -3,9 +3,9 @@ package com.yimei.finance.service.admin.company;
 import com.yimei.finance.entity.admin.company.Company;
 import com.yimei.finance.entity.admin.company.CompanyRole;
 import com.yimei.finance.entity.admin.company.CompanyRoleRelationShip;
-import com.yimei.finance.repository.admin.company.CompanyRepository;
-import com.yimei.finance.repository.admin.company.CompanyRoleRelationShipRepository;
-import com.yimei.finance.repository.admin.company.CompanyRoleRepository;
+import com.yimei.finance.repository.admin.company.AdminCompanyRepository;
+import com.yimei.finance.repository.admin.company.AdminCompanyRoleRelationShipRepository;
+import com.yimei.finance.repository.admin.company.AdminCompanyRoleRepository;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyError;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyRole;
 import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
@@ -32,11 +32,11 @@ import java.util.stream.Collectors;
 @Service("adminCompanyService")
 public class AdminCompanyServiceImpl {
     @Autowired
-    private CompanyRepository companyRepository;
+    private AdminCompanyRepository adminCompanyRepository;
     @Autowired
-    private CompanyRoleRelationShipRepository companyRoleRelationShipRepository;
+    private AdminCompanyRoleRelationShipRepository adminCompanyRoleRelationShipRepository;
     @Autowired
-    private CompanyRoleRepository companyRoleRepository;
+    private AdminCompanyRoleRepository adminCompanyRoleRepository;
     @Autowired
     private AdminUserServiceImpl userService;
     @Autowired
@@ -49,7 +49,7 @@ public class AdminCompanyServiceImpl {
     public Result addCompany(CompanyObject companyObject, UserObject sessionUser) {
         Result result = userService.checkSuperAdminRight(sessionUser.getId());
         if (!result.isSuccess()) return result;
-        Company company = companyRepository.findByName(companyObject.getName());
+        Company company = adminCompanyRepository.findByName(companyObject.getName());
         if (company != null && company.getStatusId() != EnumCompanyStatus.Deleted.id) {
             return Result.error(EnumCompanyError.此名称已存在.toString());
         } else if (EnumCompanyRole.idList().indexOf(companyObject.getType()) == -1) {
@@ -62,11 +62,11 @@ public class AdminCompanyServiceImpl {
             company.setCreateTime(new Date());
             company.setLastUpdateManId(sessionUser.getId());
             company.setLastUpdateTime(new Date());
-            companyRepository.save(company);
-            CompanyRole companyRole = companyRoleRepository.findByNumber(companyObject.getType());
+            adminCompanyRepository.save(company);
+            CompanyRole companyRole = adminCompanyRoleRepository.findByNumber(companyObject.getType());
             if (companyRole == null) return Result.error(EnumCommonError.Admin_System_Error);
-            companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), companyRole.getNumber(), companyRole.getRole(), new Date(), sessionUser.getId(), new Date(), sessionUser.getId()));
-            return Result.success().setData(changeCompanyObject(companyRepository.findOne(company.getId())));
+            adminCompanyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), companyRole.getNumber(), companyRole.getRole(), new Date(), sessionUser.getId(), new Date(), sessionUser.getId()));
+            return Result.success().setData(changeCompanyObject(adminCompanyRepository.findOne(company.getId())));
         }
     }
 
@@ -77,9 +77,9 @@ public class AdminCompanyServiceImpl {
     public Result editCompany(Long id, CompanyObject companyObject, String sessionUserId) {
         Result result = userService.checkSuperAdminRight(sessionUserId);
         if (!result.isSuccess()) return result;
-        Company company = companyRepository.findOne(id);
+        Company company = adminCompanyRepository.findOne(id);
         if (company == null) return Result.error(EnumCompanyError.对象不存在.toString());
-        Company company1 = companyRepository.findByName(companyObject.getName());
+        Company company1 = adminCompanyRepository.findByName(companyObject.getName());
         if (company1 != null && company1.getStatusId() != EnumCompanyStatus.Deleted.id && company1.getId().longValue() != id.longValue()) {
             return Result.error(EnumCompanyError.此名称已存在.toString());
         } else {
@@ -87,7 +87,7 @@ public class AdminCompanyServiceImpl {
             company.setRemarks(companyObject.getRemarks());
             company.setLastUpdateManId(sessionUserId);
             company.setLastUpdateTime(new Date());
-            companyRepository.save(company);
+            adminCompanyRepository.save(company);
             return Result.success();
         }
     }
@@ -96,7 +96,7 @@ public class AdminCompanyServiceImpl {
      * 根据 id 查询公司
      */
     public Result findById(Long id) {
-        Company company = companyRepository.findOne(id);
+        Company company = adminCompanyRepository.findOne(id);
         if (company == null) return Result.error(EnumCompanyError.对象不存在.toString());
         if (company.getStatusId() == EnumCompanyStatus.Deleted.id)
             return Result.error(EnumCompanyError.已经被删除.toString());
@@ -161,7 +161,7 @@ public class AdminCompanyServiceImpl {
      * 根据角色获取公司列表
      */
     public List<CompanyObject> findCompanyListByRole(int type, RiskCompanySearch riskCompanySearch) {
-        List<CompanyObject> companyObjectList = getNormalCompanyListByIdList(companyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
+        List<CompanyObject> companyObjectList = getNormalCompanyListByIdList(adminCompanyRoleRelationShipRepository.findCompanyIdByRoleNumberOrderByCompanyIdDesc(type));
         if (riskCompanySearch != null && companyObjectList != null && companyObjectList.size() != 0) {
             if (!StringUtils.isEmpty(riskCompanySearch.getName()) && !StringUtils.isEmpty(riskCompanySearch.getAdminName())) {
                 companyObjectList = companyObjectList.parallelStream().filter(company -> company.getName().contains(riskCompanySearch.getName()) && (!StringUtils.isEmpty(company.getAdminName()) && company.getAdminName().contains(riskCompanySearch.getAdminName()))).collect(Collectors.toList());
@@ -181,14 +181,14 @@ public class AdminCompanyServiceImpl {
     public Result deleteCompany(Long id, String sessionUserId) {
         Result result = userService.checkSuperAdminRight(sessionUserId);
         if (!result.isSuccess()) return result;
-        Company company = companyRepository.findOne(id);
+        Company company = adminCompanyRepository.findOne(id);
         if (company == null) return Result.error(EnumCompanyError.对象不存在.toString());
         if (company.getStatusId() == EnumCompanyStatus.Deleted.id)
             return Result.error(EnumCompanyError.已经被删除.toString());
         company.setStatusId(EnumCompanyStatus.Deleted.id);
         company.setStatus(EnumCompanyStatus.Deleted.toString());
         CompanyObject companyObject = DozerUtils.copy(company, CompanyObject.class);
-        companyRepository.save(company);
+        adminCompanyRepository.save(company);
         List<UserObject> userObjectList = userService.getUserByRiskCompanyId(company.getId());
         userObjectList.parallelStream().forEach(user -> {
             identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Deleted.toString());
@@ -200,8 +200,8 @@ public class AdminCompanyServiceImpl {
         List<CompanyObject> companyObjectList = new ArrayList<>();
         if (companyIdList == null || companyIdList.size() == 0) return companyObjectList;
         List<Company> companyList = companyIdList.parallelStream()
-                .filter(id -> companyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id) != null)
-                .map(id -> companyRepository.findOne(id))
+                .filter(id -> adminCompanyRepository.findByIdAndStatusId(id, EnumCompanyStatus.Normal.id) != null)
+                .map(id -> adminCompanyRepository.findOne(id))
                 .collect(Collectors.toList());
         companyObjectList = changeCompanyObject(companyList);
         return companyObjectList;

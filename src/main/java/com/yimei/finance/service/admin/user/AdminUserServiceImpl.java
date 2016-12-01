@@ -3,7 +3,7 @@ package com.yimei.finance.service.admin.user;
 import com.yimei.finance.entity.admin.company.Company;
 import com.yimei.finance.entity.admin.user.UserLoginRecord;
 import com.yimei.finance.exception.BusinessException;
-import com.yimei.finance.repository.admin.company.CompanyRepository;
+import com.yimei.finance.repository.admin.company.AdminCompanyRepository;
 import com.yimei.finance.repository.admin.user.AdminUserLoginRecordRepository;
 import com.yimei.finance.repository.common.DataBookRepository;
 import com.yimei.finance.representation.admin.group.EnumAdminGroupError;
@@ -50,7 +50,7 @@ public class AdminUserServiceImpl {
     @Autowired
     private DataBookRepository dataBookRepository;
     @Autowired
-    private CompanyRepository companyRepository;
+    private AdminCompanyRepository adminCompanyRepository;
 
     /**
      * 用户相关检查,判断
@@ -125,7 +125,7 @@ public class AdminUserServiceImpl {
         identityService.setUserInfo(newUser.getId(), "status", EnumAdminUserStatus.Normal.toString());
         Result result3 = checkSuperAdminRight(sessionUser.getId());
         if (result3.isSuccess() && user.getCompanyId() != null && user.getCompanyId().longValue() != 0 && user.getCompanyId().longValue() != -1) {
-            Company company = companyRepository.findOne(user.getCompanyId());
+            Company company = adminCompanyRepository.findOne(user.getCompanyId());
             if (company == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
             List<UserObject> userObjectList = changeUserObjectSimple(identityService.createUserQuery().memberOfGroup(EnumSpecialGroup.SystemAdminGroup.id).list());
             if (user.getGroupIds().contains(EnumSpecialGroup.SystemAdminGroup.id) && userObjectList != null && userObjectList.size() != 0) {

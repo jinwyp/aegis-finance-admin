@@ -1,7 +1,7 @@
 package com.yimei.finance.service.admin.finance;
 
 import com.yimei.finance.exception.BusinessException;
-import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.repository.admin.finance.AdminFinanceOrderRepository;
 import com.yimei.finance.representation.admin.activiti.HistoryTaskObject;
 import com.yimei.finance.representation.admin.activiti.HistoryVariableObject;
 import com.yimei.finance.representation.admin.activiti.TaskObject;
@@ -48,7 +48,7 @@ public class FinanceFlowMethodServiceImpl {
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
-    private FinanceOrderRepository orderRepository;
+    private AdminFinanceOrderRepository orderRepository;
     @Autowired
     private AdminUserServiceImpl userService;
     @Autowired

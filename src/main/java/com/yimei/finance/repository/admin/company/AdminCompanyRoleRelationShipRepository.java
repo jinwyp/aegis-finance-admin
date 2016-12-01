@@ -7,7 +7,7 @@ import org.springframework.data.repository.query.Param;
 
 import java.util.List;
 
-public interface CompanyRoleRelationShipRepository extends JpaRepository<CompanyRoleRelationShip, Long> {
+public interface AdminCompanyRoleRelationShipRepository extends JpaRepository<CompanyRoleRelationShip, Long> {
 
     /**
      * 根据 role_number 查询公司id

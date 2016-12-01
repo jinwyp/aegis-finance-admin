@@ -1,11 +1,11 @@
-package com.yimei.finance.repository.admin.finance;
+package com.yimei.finance.repository.site;
 
 import com.yimei.finance.entity.admin.finance.FinanceOrderContract;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
-public interface FinanceOrderContractRepository extends JpaRepository<FinanceOrderContract, Long> {
+public interface SiteFinanceOrderContractRepository extends JpaRepository<FinanceOrderContract, Long> {
 
     FinanceOrderContract findByFinanceIdAndType(@Param("financeId") Long financeId,
                                                 @Param("type") int type);

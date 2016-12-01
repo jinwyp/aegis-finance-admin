@@ -1,7 +1,7 @@
 package com.yimei.finance.service.common.contract;
 
 import com.yimei.finance.exception.BusinessException;
-import com.yimei.finance.repository.admin.finance.FinanceOrderContractRepository;
+import com.yimei.finance.repository.admin.finance.AdminFinanceOrderContractRepository;
 import com.yimei.finance.representation.admin.finance.object.FinanceOrderContractObject;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
 import com.yimei.finance.utils.DozerUtils;
@@ -19,7 +19,7 @@ public class ContractServiceImpl {
     @Autowired
     FreeMarkerFile freeMarkerFile;
     @Autowired
-    private FinanceOrderContractRepository orderContractRepository;
+    private AdminFinanceOrderContractRepository orderContractRepository;
 
     /**
      * 获取正式合同内容

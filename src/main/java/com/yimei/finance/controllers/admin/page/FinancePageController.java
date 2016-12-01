@@ -3,7 +3,7 @@ package com.yimei.finance.controllers.admin.page;
 import com.lowagie.text.DocumentException;
 import com.yimei.finance.entity.admin.finance.FinanceOrderContract;
 import com.yimei.finance.exception.NotFoundException;
-import com.yimei.finance.repository.admin.finance.FinanceOrderContractRepository;
+import com.yimei.finance.repository.admin.finance.AdminFinanceOrderContractRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceContractType;
 import com.yimei.finance.service.common.contract.ContractServiceImpl;
 import com.yimei.finance.representation.common.enums.EnumCommonError;
@@ -32,7 +32,7 @@ import java.util.Map;
 @Controller("adminFinancePageController")
 public class FinancePageController {
     @Autowired
-    private FinanceOrderContractRepository orderContractRepository;
+    private AdminFinanceOrderContractRepository orderContractRepository;
     @Autowired
     private ContractServiceImpl contractService;
 

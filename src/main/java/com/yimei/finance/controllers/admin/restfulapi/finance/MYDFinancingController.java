@@ -2,7 +2,7 @@ package com.yimei.finance.controllers.admin.restfulapi.finance;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
+import com.yimei.finance.repository.admin.finance.AdminFinanceOrderRepository;
 import com.yimei.finance.representation.admin.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.representation.admin.finance.enums.EnumFinanceOrderType;
 import com.yimei.finance.representation.admin.finance.object.*;
@@ -44,7 +44,7 @@ public class MYDFinancingController {
     @Autowired
     private RuntimeService runtimeService;
     @Autowired
-    private FinanceOrderRepository orderRepository;
+    private AdminFinanceOrderRepository orderRepository;
     @Autowired
     private HistoryService historyService;
 
