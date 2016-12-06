@@ -12,7 +12,22 @@ function waitForUrlToChangeTo(url) {
     }, 5 * 1000, '等待5秒钟');
 }
 
+function waitForElementToBePresent(element){
+    return browser.wait(function () {
+        return browser.isElementPresent(by.css(element));
+    }, 10000);
+}
+
+function presenceOfAll(elementArrayFinder) {
+    return function () {
+        return elementArrayFinder.count(function (count) {
+            return count > 0;
+        });
+    };
+}
 
 module.exports = {
-    waitForUrlToChangeTo : waitForUrlToChangeTo
+    waitForUrlToChangeTo : waitForUrlToChangeTo,
+    waitForElementToBePresent : waitForElementToBePresent,
+    presenceOfAll : presenceOfAll
 };
