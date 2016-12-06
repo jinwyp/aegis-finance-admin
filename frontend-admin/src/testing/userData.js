@@ -50,7 +50,7 @@ module.exports = {
     },
 
     adminTrader : {
-        username : '线上交易员管理组用户1',
+        username : 'adminxg',
         password : '111111',
         email : 'adminTrader1@yimei180.com'
     },
@@ -128,7 +128,7 @@ module.exports = {
     },
 
     trader : {
-        username : '线上交易员用户1',
+        username : 'adminx',
         password : '111111',
         email : 'trader1@yimei180.com'
     },

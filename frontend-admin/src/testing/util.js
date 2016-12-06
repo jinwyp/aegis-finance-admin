@@ -12,7 +12,15 @@ function waitForUrlToChangeTo(url) {
     }, 5 * 1000, '等待5秒钟');
 }
 
+function presenceOfAll(elementArrayFinder) {
+    return function () {
+        return elementArrayFinder.count(function (count) {
+            return count > 0;
+        });
+    };
+}
 
 module.exports = {
-    waitForUrlToChangeTo : waitForUrlToChangeTo
+    waitForUrlToChangeTo : waitForUrlToChangeTo,
+    presenceOfAll : presenceOfAll
 };
