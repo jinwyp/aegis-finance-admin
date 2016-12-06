@@ -12,6 +12,16 @@ function waitForUrlToChangeTo(url) {
     }, 5 * 1000, '等待5秒钟');
 }
 
+
+function waitForElementToBePresent(element){
+    return browser.wait(function () {
+        return browser.isElementPresent(by.css(element));
+    }, 10000);
+}
+
+
+
+
 function presenceOfAll(elementArrayFinder) {
     return function () {
         return elementArrayFinder.count(function (count) {
@@ -22,5 +32,6 @@ function presenceOfAll(elementArrayFinder) {
 
 module.exports = {
     waitForUrlToChangeTo : waitForUrlToChangeTo,
+    waitForElementToBePresent : waitForElementToBePresent,
     presenceOfAll : presenceOfAll
 };

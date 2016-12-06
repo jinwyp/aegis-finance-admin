@@ -45,7 +45,7 @@ describe('Admin Home Page - 管理后台首页', function() {
             var riskLineInput = element(by.id('riskLine')).all(by.tagName('div ul li'));
             riskLineSelect.click();
             riskLineInput.get(riskIndex).click();
-            expect(riskLineInput.get(riskIndex).getText()).toEqual(riskIndex);
+            expect(riskLineInput.get(riskIndex).getText()).toEqual(riskText);
         }
         userSaveButton.click();
 
