@@ -1,15 +1,15 @@
 package com.yimei.finance;
 
-import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.tpl.entity.UserTest;
-import com.yimei.finance.tpl.repository.JpaRepositoryDemo;
 import com.yimei.finance.admin.representation.finance.enums.EnumFinanceEndType;
-import com.yimei.finance.common.representation.result.Page;
 import com.yimei.finance.admin.service.company.AdminCompanyServiceImpl;
 import com.yimei.finance.admin.service.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.admin.service.user.AdminGroupServiceImpl;
 import com.yimei.finance.admin.service.user.AdminUserServiceImpl;
+import com.yimei.finance.common.representation.result.Page;
+import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.site.service.finance.SiteFinanceOrderServiceImpl;
+import com.yimei.finance.tpl.entity.UserTest;
+import com.yimei.finance.tpl.repository.JpaRepositoryDemo;
 import com.yimei.finance.tpl.service.JpaRollbackDemo;
 import org.activiti.engine.HistoryService;
 import org.activiti.engine.IdentityService;
@@ -22,6 +22,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.function.BinaryOperator;
 
 @RunWith(SpringRunner.class)
@@ -119,36 +120,11 @@ public class AegisFinanceAdminApplicationTests {
 	@Test
 	public void testJpa() throws Exception {
 
-        userRepository.deleteAll();
-		// 创建10条记录
-		userRepository.save(new UserTest("AAA", 10l));
-		userRepository.save(new UserTest("BBB", 20l));
-		userRepository.save(new UserTest("CCC", 30l));
-		userRepository.save(new UserTest("DDD", 40l));
-		userRepository.save(new UserTest("EEE", 50l));
-		userRepository.save(new UserTest("FFF", 60l));
-		userRepository.save(new UserTest("GGG", 70l));
-		userRepository.save(new UserTest("HHH", 80l));
-		userRepository.save(new UserTest("III", 90l));
-		userRepository.save(new UserTest("JJJ", 100l));
-
-		// 测试findAll, 查询所有记录
-		Assert.assertEquals(10, userRepository.findAll().size());
-
-		// 测试findByName, 查询姓名为FFF的User
-		Assert.assertEquals(60, userRepository.findByName("FFF").getAge().longValue());
-
-		// 测试findUser, 查询姓名为FFF的User
-		Assert.assertEquals(60, userRepository.findUser("FFF").getAge().longValue());
-
-		// 测试findByNameAndAge, 查询姓名为FFF并且年龄为60的User
-		Assert.assertEquals("FFF", userRepository.findByNameAndAge("FFF", 60l).getName());
-
-		// 测试删除姓名为AAA的User
-		userRepository.delete(userRepository.findByName("AAA"));
-
-		// 测试findAll, 查询所有记录, 验证上面的删除是否成功
-		Assert.assertEquals(9, userRepository.findAll().size());
+		LocalDate firstDay = LocalDate.parse("2017-01-01");
+		while (firstDay.getYear() == 2017) {
+			System.out.println(firstDay + " : " + firstDay.getDayOfWeek() + " : " + firstDay.getDayOfWeek().getValue());
+			firstDay = firstDay.plusDays(1L);
+		}
 
 	}
 
