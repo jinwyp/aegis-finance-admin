@@ -21,7 +21,7 @@ function waitForElementToBePresent(element){
 
 
 
-
+// check if 
 function presenceOfAll(elementArrayFinder) {
     return function () {
         return elementArrayFinder.count(function (count) {
