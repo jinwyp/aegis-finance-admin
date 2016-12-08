@@ -3,6 +3,7 @@
  */
 
 var user=require('../../userData.js');
+var verify=require('../../verifyData.js');
 var util=require('../../util.js');
 
 describe('线上交易员管理员',function(){
@@ -21,7 +22,7 @@ describe('线上交易员管理员',function(){
 
     describe('线上交易员管理员-我的待办',function(){
         it('定位相应融资订单', function () {
-            var financecode = 'JR201611220007';
+
             var btn = element(by.partialButtonText('分配'));
             util.presenceOfAll(btn, 5000);
 
@@ -32,14 +33,14 @@ describe('线上交易员管理员',function(){
                     console.log('-------第一列:' + code);
                     code = code.split('\n');
                     console.log('-------id:' + code[0]);
-                    console.log(code[0] === financecode);
-                    return code[0] === financecode;
+                    console.log(code[0] === verify.financecode);
+                    return code[0] === verify.financecode;
                 });
             }).then(function (rows) {
                 console.log('-----rows-----'+rows.length);
                 rows[0].all(by.tagName('td')).get(0).getText().then(function (code) {
                     code = code.split('\n');
-                    expect(code[0]).toBe(financecode);
+                    expect(code[0]).toBe(verify.financecode);
                 });
                 rows[0].$('.btn').click();
                 // var traderBack = element(by.partialButtonText('返回'));

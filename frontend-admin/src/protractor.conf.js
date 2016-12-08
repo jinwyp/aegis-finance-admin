@@ -18,8 +18,8 @@ var options = process.argv[2].match(/^--params\.([^=]+)=(.*)$/);
 var specsStep1 = [
     // 'testing/e2e/**/*.js'
     // 'testing/e2e/superadmin/**/*.js',
-
-    'testing/e2e/trader-manager/verify.js',
+    //'testing/e2e/trader-manager/traderManager.js',
+    'testing/e2e/trader/trader.js',
 
     // 'testing/e2e/superadmin/login.js',
     // 'testing/e2e/superadmin/create-risk-line.js',
