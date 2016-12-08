@@ -30,8 +30,6 @@ var specsStep2 = [
 
 
 function getSpecs (currentStep){
-    console.log('-----------------------');
-    console.log(currentStep);
     if (currentStep === 'superadmin') return specsStep1;
     if (currentStep === 'admin') return specsStep2;
 }
