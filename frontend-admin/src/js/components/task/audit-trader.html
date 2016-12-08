@@ -37,7 +37,7 @@
         <tr class="item-min">
             <td class="td-label">拟融资金额(万元):</td>
             <td class="td-val">
-                <input type="text" *ngIf="!css.isReadOnly" [(ngModel)]="currentOrder.financingAmount" placeholder="请输入">
+                <input type="text" *ngIf="!css.isReadOnly" name="financingAmount" [(ngModel)]="currentOrder.financingAmount" placeholder="请输入">
                 <span class="span-read" *ngIf="css.isReadOnly">{{currentOrder.financingAmount||'--'}}</span>
             </td>
             <td class="td-label">拟使用资金时间(天):</td>
