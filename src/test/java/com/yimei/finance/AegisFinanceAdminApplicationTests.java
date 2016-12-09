@@ -11,9 +11,7 @@ import com.yimei.finance.site.service.finance.SiteFinanceOrderServiceImpl;
 import com.yimei.finance.tpl.entity.UserTest;
 import com.yimei.finance.tpl.repository.JpaRepositoryDemo;
 import com.yimei.finance.tpl.service.JpaRollbackDemo;
-import org.activiti.engine.HistoryService;
-import org.activiti.engine.IdentityService;
-import org.activiti.engine.TaskService;
+import org.activiti.engine.*;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -54,6 +52,7 @@ public class AegisFinanceAdminApplicationTests {
 
 	@Test
 	public void test001() {
+
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
 		System.out.println(" ------------------------------------ ");
