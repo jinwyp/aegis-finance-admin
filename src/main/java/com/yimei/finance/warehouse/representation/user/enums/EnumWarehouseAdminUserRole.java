@@ -4,7 +4,7 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public enum EnumWarehouseUserRole {
+public enum EnumWarehouseAdminUserRole {
     Port(1, "港口"),
     Supervise(2, "监管"),
     Trafficker(3, "贸易商"),
@@ -15,14 +15,14 @@ public enum EnumWarehouseUserRole {
     public int id;
     public String name;
 
-    EnumWarehouseUserRole() {}
+    EnumWarehouseAdminUserRole() {}
 
-    EnumWarehouseUserRole(int id, String name) {
+    EnumWarehouseAdminUserRole(int id, String name) {
         this.id = id;
         this.name = name;
     }
 
     public static List<Integer> idList() {
-        return Arrays.asList(EnumWarehouseUserRole.values()).parallelStream().map(role -> role.id).collect(Collectors.toList());
+        return Arrays.asList(EnumWarehouseAdminUserRole.values()).parallelStream().map(role -> role.id).collect(Collectors.toList());
     }
 }

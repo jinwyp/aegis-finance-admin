@@ -24,7 +24,7 @@ public class UserAuthController {
     @Autowired
     private AdminUserServiceImpl adminService;
 
-    @ApiOperation(value = "登陆接口", notes = "需要输入用户名和密码登陆", response = UserLoginObject.class)
+    @ApiOperation(value = "登陆接口", notes = "需要输入用户名和密码登陆", response = UserObject.class)
     @RequestMapping(value = "/login", method = RequestMethod.POST)
     public Result authLoginWithPassword(@Valid @RequestBody UserLoginObject userLoginObject) {
         Result result = adminService.loginMethod(userLoginObject);

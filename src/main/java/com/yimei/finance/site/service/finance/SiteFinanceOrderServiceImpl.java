@@ -50,6 +50,7 @@ import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -93,8 +94,8 @@ public class SiteFinanceOrderServiceImpl {
         financeOrder.setApplyCompanyName(sessionUser.getCompanyName());
         financeOrder.setCreateManId(String.valueOf(sessionUser.getId()));
         financeOrder.setLastUpdateManId(String.valueOf(sessionUser.getId()));
-        financeOrder.setCreateTime(new Date());
-        financeOrder.setLastUpdateTime(new Date());
+        financeOrder.setCreateTime(LocalDateTime.now());
+        financeOrder.setLastUpdateTime(LocalDateTime.now());
         financeOrder.setEndTime(null);
         financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);

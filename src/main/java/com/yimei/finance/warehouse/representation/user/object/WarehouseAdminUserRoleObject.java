@@ -1,4 +1,4 @@
-package com.yimei.finance.warehouse.representation.company.object;
+package com.yimei.finance.warehouse.representation.user.object;
 
 import com.yimei.finance.entity.common.BaseEntity;
 import lombok.Data;
@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-public class WarehouseCompanyRoleObject extends BaseEntity implements Serializable {
+public class WarehouseAdminUserRoleObject extends BaseEntity implements Serializable {
     private Long id;
     private int number;                            //角色编号
     private String role;                           //角色名称

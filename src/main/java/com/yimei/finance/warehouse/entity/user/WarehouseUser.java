@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class WarehouseUser extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    private String id;
+    private Long id;
 
     @Column(name = "username")
     private String username;                    //账号

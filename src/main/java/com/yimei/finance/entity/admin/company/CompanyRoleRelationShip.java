@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 @Table(name = "t_finance_company_role_relationship")
 @Entity
@@ -26,7 +26,7 @@ public class CompanyRoleRelationShip extends BaseEntity implements Serializable 
     @Column(name = "role")
     private String role;
 
-    public CompanyRoleRelationShip(Long companyId, int roleNumber, String role, Date createTime, String createManId, Date lastUpdateTime, String lastUpdateManId) {
+    public CompanyRoleRelationShip(Long companyId, int roleNumber, String role, LocalDateTime createTime, String createManId, LocalDateTime lastUpdateTime, String lastUpdateManId) {
         this.companyId = companyId;
         this.roleNumber = roleNumber;
         this.role = role;

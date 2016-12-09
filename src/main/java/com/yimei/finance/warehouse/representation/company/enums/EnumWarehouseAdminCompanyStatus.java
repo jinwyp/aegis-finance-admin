@@ -1,6 +1,6 @@
 package com.yimei.finance.warehouse.representation.company.enums;
 
-public enum EnumWarehouseCompanyStatus {
+public enum EnumWarehouseAdminCompanyStatus {
     Normal(1, "正常"),
     Deleted(2, "已删除"),
     ;
@@ -8,9 +8,9 @@ public enum EnumWarehouseCompanyStatus {
     public int id;
     public String name;
 
-    EnumWarehouseCompanyStatus() {}
+    EnumWarehouseAdminCompanyStatus() {}
 
-    EnumWarehouseCompanyStatus(int id, String name) {
+    EnumWarehouseAdminCompanyStatus(int id, String name) {
         this.id = id;
         this.name = name;
     }

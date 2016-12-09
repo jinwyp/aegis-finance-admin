@@ -1,8 +1,5 @@
 package com.yimei.finance.admin.service.company;
 
-import com.yimei.finance.entity.admin.company.Company;
-import com.yimei.finance.entity.admin.company.CompanyRole;
-import com.yimei.finance.entity.admin.company.CompanyRoleRelationShip;
 import com.yimei.finance.admin.repository.company.AdminCompanyRepository;
 import com.yimei.finance.admin.repository.company.AdminCompanyRoleRelationShipRepository;
 import com.yimei.finance.admin.repository.company.AdminCompanyRoleRepository;
@@ -13,10 +10,13 @@ import com.yimei.finance.admin.representation.company.object.CompanyObject;
 import com.yimei.finance.admin.representation.company.object.RiskCompanySearch;
 import com.yimei.finance.admin.representation.user.enums.EnumAdminUserStatus;
 import com.yimei.finance.admin.representation.user.object.UserObject;
+import com.yimei.finance.admin.service.user.AdminUserServiceImpl;
 import com.yimei.finance.common.representation.enums.EnumCommonError;
 import com.yimei.finance.common.representation.result.Page;
 import com.yimei.finance.common.representation.result.Result;
-import com.yimei.finance.admin.service.user.AdminUserServiceImpl;
+import com.yimei.finance.entity.admin.company.Company;
+import com.yimei.finance.entity.admin.company.CompanyRole;
+import com.yimei.finance.entity.admin.company.CompanyRoleRelationShip;
 import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.IdentityService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,8 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,13 +59,13 @@ public class AdminCompanyServiceImpl {
             company.setStatus(EnumCompanyStatus.Normal.toString());
             company.setStatusId(EnumCompanyStatus.Normal.id);
             company.setCreateManId(sessionUser.getId());
-            company.setCreateTime(new Date());
+            company.setCreateTime(LocalDateTime.now());
             company.setLastUpdateManId(sessionUser.getId());
-            company.setLastUpdateTime(new Date());
+            company.setLastUpdateTime(LocalDateTime.now());
             adminCompanyRepository.save(company);
             CompanyRole companyRole = adminCompanyRoleRepository.findByNumber(companyObject.getType());
             if (companyRole == null) return Result.error(EnumCommonError.Admin_System_Error);
-            adminCompanyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), companyRole.getNumber(), companyRole.getRole(), new Date(), sessionUser.getId(), new Date(), sessionUser.getId()));
+            adminCompanyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), companyRole.getNumber(), companyRole.getRole(), LocalDateTime.now(), sessionUser.getId(), LocalDateTime.now(), sessionUser.getId()));
             return Result.success().setData(changeCompanyObject(adminCompanyRepository.findOne(company.getId())));
         }
     }
@@ -86,7 +86,7 @@ public class AdminCompanyServiceImpl {
             company.setName(companyObject.getName());
             company.setRemarks(companyObject.getRemarks());
             company.setLastUpdateManId(sessionUserId);
-            company.setLastUpdateTime(new Date());
+            company.setLastUpdateTime(LocalDateTime.now());
             adminCompanyRepository.save(company);
             return Result.success();
         }

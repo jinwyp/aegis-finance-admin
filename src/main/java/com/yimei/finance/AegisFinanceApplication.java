@@ -1,7 +1,5 @@
 package com.yimei.finance;
 
-import com.yimei.finance.entity.admin.company.Company;
-import com.yimei.finance.entity.admin.company.CompanyRoleRelationShip;
 import com.yimei.finance.admin.repository.company.AdminCompanyRepository;
 import com.yimei.finance.admin.repository.company.AdminCompanyRoleRelationShipRepository;
 import com.yimei.finance.admin.repository.finance.AdminFinanceOrderRepository;
@@ -10,6 +8,8 @@ import com.yimei.finance.admin.representation.company.enums.EnumCompanyStatus;
 import com.yimei.finance.admin.representation.group.EnumSpecialGroup;
 import com.yimei.finance.admin.representation.user.enums.EnumAdminUserStatus;
 import com.yimei.finance.admin.service.user.AdminUserServiceImpl;
+import com.yimei.finance.entity.admin.company.Company;
+import com.yimei.finance.entity.admin.company.CompanyRoleRelationShip;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
@@ -23,7 +23,7 @@ import org.springframework.util.StringUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.util.Date;
+import java.time.LocalDateTime;
 
 
 @SpringBootApplication
@@ -73,9 +73,9 @@ public class AegisFinanceApplication {
 				identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 				Company company = adminCompanyRepository.findByName("易煤风控线");
 				if (company == null) {
-					company = new Company("易煤风控线", EnumCompanyStatus.Normal.toString(), EnumCompanyStatus.Normal.id, new Date(), "0", new Date(), "0");
+					company = new Company("易煤风控线", EnumCompanyStatus.Normal.toString(), EnumCompanyStatus.Normal.id, LocalDateTime.now(), "0", LocalDateTime.now(), "0");
 					adminCompanyRepository.save(company);
-					adminCompanyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), EnumCompanyRole.RiskManager_Organization.id, EnumCompanyRole.RiskManager_Organization.toString(), new Date(), "0", new Date(), "0"));
+					adminCompanyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), EnumCompanyRole.RiskManager_Organization.id, EnumCompanyRole.RiskManager_Organization.toString(), LocalDateTime.now(), "0", LocalDateTime.now(), "0"));
 				}
 //				final Company finalCompany = company;
 //				userService.updateOldUserData(finalCompany);

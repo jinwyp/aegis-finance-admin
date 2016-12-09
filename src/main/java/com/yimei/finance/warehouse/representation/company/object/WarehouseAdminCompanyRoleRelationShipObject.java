@@ -8,7 +8,7 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
-public class WarehouseCompanyRoleRelationShipObject extends BaseObject implements Serializable {
+public class WarehouseAdminCompanyRoleRelationShipObject extends BaseObject implements Serializable {
     private Long id;
     private Long companyId;                            //公司id
     private int roleNumber;                            //角色编号

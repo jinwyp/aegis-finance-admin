@@ -26,6 +26,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -171,7 +172,7 @@ public class FinanceOrderServiceImpl {
      */
     public void updateFinanceOrderByOnlineTrader(String userId, FinanceOrderObject financeOrder) {
         financeOrder.setLastUpdateManId(userId);
-        financeOrder.setLastUpdateTime(new Date());
+        financeOrder.setLastUpdateTime(LocalDateTime.now());
         adminFinanceOrderRepository.save(DozerUtils.copy(financeOrder, FinanceOrder.class));
     }
 
@@ -185,7 +186,7 @@ public class FinanceOrderServiceImpl {
             salesmanInfo.setId(salesmanOrder.getId());
         }
         salesmanInfo.setLastUpdateManId(userId);
-        salesmanInfo.setLastUpdateTime(new Date());
+        salesmanInfo.setLastUpdateTime(LocalDateTime.now());
         salesmanRepository.save(DozerUtils.copy(salesmanInfo, FinanceOrderSalesmanInfo.class));
     }
 
@@ -199,7 +200,7 @@ public class FinanceOrderServiceImpl {
             investigatorInfo.setId(investigatorOrder.getId());
         }
         investigatorInfo.setLastUpdateManId(userId);
-        investigatorInfo.setLastUpdateTime(new Date());
+        investigatorInfo.setLastUpdateTime(LocalDateTime.now());
         investigatorRepository.save(DozerUtils.copy(investigatorInfo, FinanceOrderInvestigatorInfo.class));
     }
 
@@ -213,7 +214,7 @@ public class FinanceOrderServiceImpl {
             supervisorInfo.setId(supervisorOrder.getId());
         }
         supervisorInfo.setLastUpdateManId(userId);
-        supervisorInfo.setLastUpdateTime(new Date());
+        supervisorInfo.setLastUpdateTime(LocalDateTime.now());
         supervisorRepository.save(DozerUtils.copy(supervisorInfo, FinanceOrderSupervisorInfo.class));
     }
 
@@ -229,7 +230,7 @@ public class FinanceOrderServiceImpl {
             riskManagerInfo.setDownstreamContractStatus(riskManagerOrder.getDownstreamContractStatus());
         }
         riskManagerInfo.setLastUpdateManId(userId);
-        riskManagerInfo.setLastUpdateTime(new Date());
+        riskManagerInfo.setLastUpdateTime(LocalDateTime.now());
         riskRepository.save(DozerUtils.copy(riskManagerInfo, FinanceOrderRiskManagerInfo.class));
     }
 
@@ -239,10 +240,10 @@ public class FinanceOrderServiceImpl {
             riskManagerInfo = new FinanceOrderRiskManagerInfo();
             riskManagerInfo.setFinanceId(financeId);
             riskManagerInfo.setCreateManId(userId);
-            riskManagerInfo.setCreateTime(new Date());
+            riskManagerInfo.setCreateTime(LocalDateTime.now());
         }
         riskManagerInfo.setLastUpdateManId(userId);
-        riskManagerInfo.setLastUpdateTime(new Date());
+        riskManagerInfo.setLastUpdateTime(LocalDateTime.now());
         if (type == 1) {
             riskManagerInfo.setUpstreamContractStatus(status);
         } else if (type == 2) {
@@ -272,7 +273,7 @@ public class FinanceOrderServiceImpl {
             financeOrderContract.setContractNo(numberService.generateContractNo(CodeUtils.GeneratePinYinCode(financeOrderContract.getBuyerCompanyName(), 4, true) + "-" + CodeUtils.GeneratePinYinCode(financeOrderContract.getSellerCompanyName(), 4, true)));
         }
         financeOrderContract.setLastUpdateManId(userId);
-        financeOrderContract.setLastUpdateTime(new Date());
+        financeOrderContract.setLastUpdateTime(LocalDateTime.now());
         contractRepository.save(DozerUtils.copy(financeOrderContract, FinanceOrderContract.class));
     }
 
@@ -286,7 +287,7 @@ public class FinanceOrderServiceImpl {
         FinanceOrder order = adminFinanceOrderRepository.findOne(financeId);
         order.setApproveStateId(status.id);
         order.setApproveState(status.name);
-        order.setLastUpdateTime(new Date());
+        order.setLastUpdateTime(LocalDateTime.now());
         order.setLastUpdateManId(userId);
         if (status.id == EnumFinanceStatus.AuditPass.id) {
             order.setEndTime(new Date());
