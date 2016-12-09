@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.finance.ext.intereceptors.AdminACLInterceptor;
 import com.yimei.finance.ext.intereceptors.SiteACLInterceptor;
+import com.yimei.finance.ext.intereceptors.WarehouseAdminACLInterceptor;
 import com.yimei.finance.ext.jackson.Java8TimeModule;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
@@ -63,12 +64,15 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
     @Autowired
     protected AdminACLInterceptor adminACLInterceptor;
     @Autowired
+    protected WarehouseAdminACLInterceptor warehouseAdminACLInterceptor;
+    @Autowired
     protected ObjectMapper objectMapper;
 
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         registry.addInterceptor(siteACLInterceptor).addPathPatterns("/finance/**", "/api/financing/**").excludePathPatterns("/finance/admin/**", "/api/financing/admin/**", "/finance/admin/404", "/finance/admin/500");
         registry.addInterceptor(adminACLInterceptor).addPathPatterns("/finance/admin/**", "/api/financing/admin/**").excludePathPatterns("/finance/admin/login", "/api/financing/admin/login", "/finance/admin/404", "/finance/admin/500");
+        registry.addInterceptor(warehouseAdminACLInterceptor).addPathPatterns("/warehouse/admin/**", "/api/warehouse/admin/**").excludePathPatterns("/warehouse/admin/login", "/api/warehouse/admin/login", "/warehouse/admin/404", "/warehouse/admin/500");
     }
 
 //    @Override
@@ -87,7 +91,6 @@ public class MvcConfig extends WebMvcConfigurerAdapter {
         return new EmbeddedServletContainerCustomizer() {
             @Override
             public void customize(ConfigurableEmbeddedServletContainer container) {
-
                 container.addErrorPages(new ErrorPage(HttpStatus.BAD_REQUEST, "/finance/admin/404"));
                 container.addErrorPages(new ErrorPage(HttpStatus.NOT_FOUND, "/finance/admin/404"));
                 container.addErrorPages(new ErrorPage(HttpStatus.UNAUTHORIZED, "/finance/admin/404"));

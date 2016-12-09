@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 @Service
-public class AdminACLInterceptor extends HandlerInterceptorAdapter {
+public class WarehouseAdminACLInterceptor extends HandlerInterceptorAdapter {
     @Autowired
     protected AdminSession session;
     @Override
@@ -24,7 +24,7 @@ public class AdminACLInterceptor extends HandlerInterceptorAdapter {
             if (null != AJAX && AJAX.equals("XMLHttpRequest")) {
                 throw new UnauthorizedException();
             } else {
-                response.sendRedirect("/finance/admin/login");
+                response.sendRedirect("/warehouse/admin/login");
                 return false;
             }
 

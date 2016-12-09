@@ -21,9 +21,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 
-/**
- * Created by joe on 1/15/15.
- */
 @Service
 @Slf4j
 public class SiteACLInterceptor extends HandlerInterceptorAdapter {

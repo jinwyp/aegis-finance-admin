@@ -251,7 +251,7 @@ public class AdminUserServiceImpl {
                 if (sessionUserGroupIdList.contains(EnumSpecialGroup.SuperAdminGroup.id)) {
                     if (!StringUtils.isEmpty(userSearch.getName())) {
                         userObjectList = userObjectList.parallelStream().filter(user ->
-                                user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName().contains(userSearch.getName())
+                                user.getStatus() != null && user.getStatus().equals(EnumAdminUserStatus.Normal.toString()) && user.getName() != null && user.getName().contains(userSearch.getName())
                         ).collect(Collectors.toList());
                     } else {
                         userObjectList = userObjectList.parallelStream().filter(user ->
