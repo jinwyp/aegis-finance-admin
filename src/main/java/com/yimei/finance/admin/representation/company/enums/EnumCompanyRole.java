@@ -1,7 +1,8 @@
 package com.yimei.finance.admin.representation.company.enums;
 
-import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 public enum EnumCompanyRole {
     RiskManager_Organization(1, "风控线"),
@@ -18,10 +19,6 @@ public enum EnumCompanyRole {
     }
 
     public static List<Integer> idList() {
-        List<Integer> idList = new ArrayList<>();
-        for (EnumCompanyRole role : EnumCompanyRole.values()) {
-            idList.add(role.id);
-        }
-        return idList;
+        return Arrays.asList(EnumCompanyRole.values()).parallelStream().map(role -> role.id).collect(Collectors.toList());
     }
 }
