@@ -1,17 +1,19 @@
 package com.yimei.finance;
 
-import com.yimei.finance.admin.representation.finance.enums.EnumFinanceEndType;
 import com.yimei.finance.admin.service.company.AdminCompanyServiceImpl;
 import com.yimei.finance.admin.service.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.admin.service.user.AdminGroupServiceImpl;
 import com.yimei.finance.admin.service.user.AdminUserServiceImpl;
-import com.yimei.finance.common.representation.result.Page;
 import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.kitt.service.account.KittAccountServiceImpl;
+import com.yimei.finance.kitt.service.company.KittCompanyServiceImpl;
 import com.yimei.finance.site.service.finance.SiteFinanceOrderServiceImpl;
 import com.yimei.finance.tpl.entity.UserTest;
 import com.yimei.finance.tpl.repository.JpaRepositoryDemo;
 import com.yimei.finance.tpl.service.JpaRollbackDemo;
-import org.activiti.engine.*;
+import org.activiti.engine.HistoryService;
+import org.activiti.engine.IdentityService;
+import org.activiti.engine.TaskService;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -21,7 +23,6 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Date;
 import java.time.LocalDate;
-import java.util.function.BinaryOperator;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -48,6 +49,10 @@ public class AegisFinanceAdminApplicationTests {
 	private SiteFinanceOrderServiceImpl siteFinanceOrderService;
 	@Autowired
 	private AdminCompanyServiceImpl adminCompanyService;
+	@Autowired
+	private KittCompanyServiceImpl kittCompanyService;
+	@Autowired
+	private KittAccountServiceImpl accountService;
 
 
 	@Test
@@ -61,10 +66,9 @@ public class AegisFinanceAdminApplicationTests {
 		Date aaa = new Date(System.currentTimeMillis());
 		System.out.println(" ------------------------------------ " + (aaa.toLocalDate().getYear()));
 
-		BinaryOperator<Long> add = (x, y) -> x + y;
-		Page page = new Page();
-
-		EnumFinanceEndType.getAllEndTypeList().parallelStream().forEach(System.out::println);
+		System.out.println(kittCompanyService.findYMWCompanyByName("易煤网"));
+		System.out.println(kittCompanyService.findYMWCompanyByName("上海瑞易供应链管理有限公司"));
+		System.out.println(accountService.findUserFundAccount());
 
 
 //		UserObject user = new UserObject("14", 0L);
