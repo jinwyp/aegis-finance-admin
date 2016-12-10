@@ -21,7 +21,7 @@ public class KittResult {
         return success;
     }
 
-    public Result setSuccess(boolean success) {
+    public KittResult setSuccess(boolean success) {
         this.success = success;
         return this;
     }
@@ -30,7 +30,7 @@ public class KittResult {
         return error;
     }
 
-    public Result setError(String error) {
+    public KittResult setError(String error) {
         this.error = error;
         return this;
     }
@@ -39,7 +39,7 @@ public class KittResult {
         return errorCode;
     }
 
-    public Result setErrorCode(String errorCode) {
+    public KittResult setErrorCode(String errorCode) {
         this.errorCode = errorCode;
         return this;
     }
@@ -48,7 +48,7 @@ public class KittResult {
         return data;
     }
 
-    public Result putData(String name, Object object) {
+    public KittResult putData(String name, Object object) {
         if(data == null){ data = new HashMap<>(); }
         this.data.put(name, object);
         return this;
@@ -59,20 +59,20 @@ public class KittResult {
         return message;
     }
 
-    public Result setMessage(String message) {
+    public KittResult setMessage(String message) {
         this.message = message;
         return this  ;
     }
 
-    public static Result success(String message){
-        return new  Result().setSuccess(true).setMessage(message);
+    public static KittResult success(String message){
+        return new  KittResult().setSuccess(true).setMessage(message);
     }
 
-    public static Result success(){
-        return new  Result().setSuccess(true);
+    public static KittResult success(){
+        return new  KittResult().setSuccess(true);
     }
 
-    public static Result error(String message){
-        return new  Result().setSuccess(false).setError(message);
+    public static KittResult error(String message){
+        return new  KittResult().setSuccess(false).setError(message);
     }
 }

@@ -28,13 +28,12 @@ public class KittAccountServiceImpl {
      */
     public Result findUserFundAccount(String companyName) {
         KittCompany company = companyService.findYMWCompanyByName(companyName);
-        if (company == null) return Result.error(EnumKittUserError.该公司必须是易煤网审核通过的用户.toString());
         String url = serviceAddress + "/userfunderinfo/userFundAccount?userId={userId}";
         KittUserFundAccount userFundAccount = restTemplate.getForObject(url, KittUserFundAccount.class, new Object[]{company.getUserid()});
-        if (userFundAccount == null) return Result.error(EnumKittUserError.贵公司还没有在易煤网开通资金账户.toString());
+        if (userFundAccount == null) return Result.error(EnumKittUserError.该公司还没有在易煤网开通资金账户.toString());
         else if (userFundAccount.getStatus() == EnumKittUserFundAccountStatus.SUCCESS.id) return Result.success().setData(userFundAccount);
-        else if (userFundAccount.getStatus() == EnumKittUserFundAccountStatus.OPENING.id) return Result.error(EnumKittUserError.贵公司的资金账户正在开通中.toString());
-        else if (userFundAccount.getStatus() == EnumKittUserFundAccountStatus.LOCKED.id) return Result.error(EnumKittUserError.贵公司的资金账户已被锁定.toString());
+        else if (userFundAccount.getStatus() == EnumKittUserFundAccountStatus.OPENING.id) return Result.error(EnumKittUserError.该公司的资金账户正在开通中.toString());
+        else if (userFundAccount.getStatus() == EnumKittUserFundAccountStatus.LOCKED.id) return Result.error(EnumKittUserError.该公司的资金账户已被锁定.toString());
         else if (userFundAccount.getStatus() == EnumKittUserFundAccountStatus.DISABLED.id) return Result.error(EnumKittUserError.FundAccount_Disabled);
         else return Result.error(EnumKittUserError.FundAccount_Disabled);
     }

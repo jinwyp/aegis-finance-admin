@@ -68,7 +68,7 @@ public class AegisFinanceAdminApplicationTests {
 
 		System.out.println(kittCompanyService.findYMWCompanyByName("易煤网"));
 		System.out.println(kittCompanyService.findYMWCompanyByName("上海瑞易供应链管理有限公司"));
-		System.out.println(accountService.findUserFundAccount());
+		System.out.println(accountService.findUserFundAccount("易煤网"));
 
 
 //		UserObject user = new UserObject("14", 0L);
