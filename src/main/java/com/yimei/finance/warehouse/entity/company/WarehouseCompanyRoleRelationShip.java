@@ -1,6 +1,6 @@
 package com.yimei.finance.warehouse.entity.company;
 
-import com.yimei.finance.entity.common.BaseEntity;
+import com.yimei.finance.common.entity.base.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

@@ -1,6 +1,6 @@
-package com.yimei.finance.common.repository;
+package com.yimei.finance.common.repository.tools;
 
-import com.yimei.finance.entity.common.Number;
+import com.yimei.finance.common.entity.tools.Number;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.query.Param;
 

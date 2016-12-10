@@ -5,7 +5,7 @@ import com.yimei.finance.entity.admin.user.UserLoginRecord;
 import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.admin.repository.company.AdminCompanyRepository;
 import com.yimei.finance.admin.repository.user.AdminUserLoginRecordRepository;
-import com.yimei.finance.common.repository.DataBookRepository;
+import com.yimei.finance.common.repository.databook.DataBookRepository;
 import com.yimei.finance.admin.representation.group.EnumAdminGroupError;
 import com.yimei.finance.admin.representation.group.EnumGroupType;
 import com.yimei.finance.admin.representation.group.EnumSpecialGroup;
