@@ -30,7 +30,6 @@ public class WarehouseUserController {
             @ApiImplicitParam(name = "roleName", value = "角色名", required = false, defaultValue = "", dataType = "string", paramType = "query")
     })
     public Result getAllUsersMethod(WarehouseAdminUserSearch userSearch, @ApiParam(name = "page", value = "分页参数", required = false) Page page) {
-//        return userService.getUserListBySelect(session.getUser(), userSearch, page);
-        return null;
+        return userService.getUserListBySelect(session.getUser(), userSearch, page);
     }
 }

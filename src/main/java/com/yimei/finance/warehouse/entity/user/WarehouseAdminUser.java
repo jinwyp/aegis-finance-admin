@@ -11,7 +11,7 @@ import java.io.Serializable;
 @Entity
 @Data
 @NoArgsConstructor
-public class WarehouseUser extends BaseEntity implements Serializable {
+public class WarehouseAdminUser extends BaseEntity implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
