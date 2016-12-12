@@ -28,6 +28,7 @@ CREATE TABLE `warehouse_company_role_relationship` (
   `id` BIGINT(20) NOT NULL AUTO_INCREMENT,
   `company_id` bigint(20) NOT NULL COMMENT '公司id',
   `role_number` bigint(20) NOT NULL COMMENT '角色number',
+  `role` varchar(50) NOT NULL COMMENT '角色',
   `create_man_id` varchar(255) NOT NULL COMMENT '创建人userId',
   `create_time` datetime NOT NULL COMMENT '创建时间',
   `last_update_man_id` varchar(255) NOT NULL COMMENT '最后一次更新人userId',

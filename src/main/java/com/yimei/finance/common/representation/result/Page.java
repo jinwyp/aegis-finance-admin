@@ -43,4 +43,6 @@ public class Page implements Serializable {
         this.page = page < 1 ? 1 : page;
     }
 
+    public int toIndex = Math.toIntExact(getPage() * getCount() < getTotal() ? getPage() * getCount() : getTotal());
+
 }

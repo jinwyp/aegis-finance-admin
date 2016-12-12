@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public enum EnumWarehouseAdminUserRole {
+    Admin(0, "平台管理员"),
     Port(1, "港口"),
     Supervise(2, "监管"),
     Trafficker(3, "贸易商"),

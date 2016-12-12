@@ -30,10 +30,10 @@ public class WarehouseAdminUserServiceImpl {
      * 用户列表
      */
     public Result getUserListBySelect(WarehouseAdminUserObject user, WarehouseAdminUserSearch userSearch, Page page) {
-        if (!user.getRoleName().equals(EnumWarehouseAdminUserRole.Trafficker.name)) return Result.error(EnumWarehouseAdminUserError.你没有权限查看用户列表.toString());
+        if (user.getRoleNumber() != EnumWarehouseAdminUserRole.Admin.id) return Result.error(EnumWarehouseAdminUserError.你没有权限查看用户列表.toString());
         List<WarehouseAdminUser> userList = userRepository.findUserList(userSearch.getUsername(), userSearch.getName(), userSearch.getCompanyName(), userSearch.getRoleName());
         page.setTotal((long) userList.size());
-        return Result.success().setData(changeToUserObject(userList)).setMeta(page);
+        return Result.success().setData(changeToUserObject(userList.subList(page.getOffset(), page.toIndex))).setMeta(page);
     }
 
     /**
