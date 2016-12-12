@@ -42,6 +42,7 @@ public class WarehouseAdminUserObject extends BaseObject implements Serializable
     @Size(min = 1, max = 100, message = "公司名称应该在 {min}-{max} 个字符之间", groups = {CreateWarehouseAdminUser.class, EditWarehouseAdminUser.class})
     @NotBlank(message = "所属公司不能为空", groups = {CreateWarehouseAdminUser.class, EditWarehouseAdminUser.class})
     private String companyName;                 //用户所在公司名称
+    private String companyRoleName;
 
     @NotBlank(message = "角色不能为空")
     private int roleNumber;
@@ -57,6 +58,10 @@ public class WarehouseAdminUserObject extends BaseObject implements Serializable
     public String getStatusName() {
         if (StringUtils.isEmpty(status)) return null;
         return EnumAdminUserStatus.valueOf(status).name;
+    }
+
+    private String getCompanyFullName() {
+        return companyName + "[" + roleName + "]";
     }
 
 }

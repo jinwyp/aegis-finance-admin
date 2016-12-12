@@ -37,6 +37,9 @@ public class WarehouseAdminUser extends BaseEntity implements Serializable {
     @Column(name = "company_name")
     private String companyName;                 //用户所在公司名称
 
+    @Column(name = "company_role_name")
+    private String companyRoleName;
+
     @Column(name = "role_number")
     private int roleNumber;
 

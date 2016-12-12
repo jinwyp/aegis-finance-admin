@@ -29,9 +29,12 @@ public class WarehouseAdminCompanyObject extends BaseObject implements Serializa
     public String status;
     private int statusId;                              //状态id
     private String statusName;                         //状态名字
+
+    private int roleNumber;
+    private String roleName;
+
     @Size(max = 500, message = "备注不能超过 {max} 个字符", groups = {CreateWarehouseAdminCompany.class, EditWarehouseAdminCompany.class})
     private String remarks;                            //备注
-    private String roleName;
 
     private String getStatusName() {
         if (StringUtils.isEmpty(status)) return null;

@@ -1,6 +1,7 @@
 package com.yimei.finance.warehouse.entity.company;
 
 import com.yimei.finance.common.entity.base.BaseEntity;
+import com.yimei.finance.warehouse.representation.company.enums.EnumWarehouseAdminCompanyRole;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -25,6 +26,16 @@ public class WarehouseAdminCompany extends BaseEntity implements Serializable {
     @Column(name = "status_id")
     private int statusId;                          //状态id
 
+    @Column(name = "role_number")
+    private int roleNumber;
+
+    @Column(name = "role_name")
+    private String roleName;
+
+    @Column(name = "role")
+    private EnumWarehouseAdminCompanyRole role;
+
     @Column(name = "remarks")
     private String remarks;                        //备注
+
 }
