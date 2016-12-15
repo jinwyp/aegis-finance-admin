@@ -57,7 +57,7 @@ module.exports = {
     },
 
     adminSalesman1 : {
-        username : '业务员管理组用户1',
+        username : 'adminyg',
         password : '111111',
         email : 'adminSalesman1@yimei180.com'
     },
@@ -75,7 +75,7 @@ module.exports = {
     },
 
     adminInvestigator1 : {
-        username : '尽调员管理组用户1',
+        username : 'adminjdg',
         password : '111111',
         email : 'adminInvestigator1@yimei180.com'
     },
@@ -93,7 +93,7 @@ module.exports = {
     },
 
     adminSupervisor1 : {
-        username : '监管员管理组用户1',
+        username : 'adminjg',
         password : '111111',
         email : 'adminSupervisor1@yimei180.com'
     },
@@ -111,7 +111,7 @@ module.exports = {
     },
 
     adminRiskmanager1 : {
-        username : '风控管理组用户1',
+        username : 'adminfg',
         password : '111111',
         email : 'adminRiskmanager1@yimei180.com'
     },
@@ -135,7 +135,7 @@ module.exports = {
     },
 
     salesman1 : {
-        username : '业务员用户1',
+        username : 'adminy',
         password : '111111',
         email : 'salesman1@yimei180.com'
     },
@@ -153,7 +153,7 @@ module.exports = {
     },
 
     investigator1 : {
-        username : '尽调员用户1',
+        username : 'adminjd',
         password : '111111',
         email : 'investigator1@yimei180.com'
     },
@@ -171,7 +171,7 @@ module.exports = {
     },
 
     supervisor1 : {
-        username : '监管员用户1',
+        username : 'adminj',
         password : '111111',
         email : 'supervisor1@yimei180.com'
     },
@@ -189,7 +189,7 @@ module.exports = {
     },
 
     riskmanager1 : {
-        username : '风控用户1',
+        username : 'adminf',
         password : '111111',
         email : 'riskmanager1@yimei180.com'
     },

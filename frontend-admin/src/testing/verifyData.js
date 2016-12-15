@@ -3,7 +3,7 @@
  */
 
 module.exports = {
-    financecode: 'JR201611220007',
+    financecode: 'JR201609120009',
 
     traderVerify: {
         financeMoney: '666',
@@ -14,4 +14,12 @@ module.exports = {
         price: '345',
         index: '地位热值、硫份',
     },
+
+    saleVerify:{
+        updownStream: '上下游相关签约单位信息补充',
+        operationMode: '业务操作模式介绍',
+        logistics:'物流/仓储地信息补充',
+        another:'其他补充说明',
+        supplyMaterial:'需要补充材料',
+    }
 }

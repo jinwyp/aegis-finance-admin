@@ -63,7 +63,7 @@ describe("线上交易员",function(){
         var price = element(by.css(".apply-table")).all(by.tagName('tr')).get(4).all(by.tagName('td')).get(1).element(by.tagName('input'));
         var index = element(by.css(".apply-table")).all(by.tagName('tr')).get(4).all(by.tagName('td')).get(3).element(by.tagName('input'));
         var fkxButton=element(by.css('.custom-select'));
-        var verifyPass=element(by.css('.ng-touched'));
+        var verifyPass=element(by.css('.item-title')).all(by.tagName('td')).get(1).all(by.tagName('label')).get(0);
         var submit=element(by.partialButtonText('保存并提交'));
         var successMessage = element(by.css('.alert-success'));
         var errorMessage = element(by.css('.alert-danger'));
