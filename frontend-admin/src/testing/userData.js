@@ -205,4 +205,9 @@ module.exports = {
         password : '111111',
         email : 'riskmanager3@yimei180.com'
     },
+    xianguan1 : {
+        username : 'xianguan1',
+        password : '111111',
+        email : 'riskmanager3@yimei180.com'
+    },
 };
