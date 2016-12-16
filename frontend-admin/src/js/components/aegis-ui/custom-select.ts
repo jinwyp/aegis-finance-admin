@@ -69,6 +69,7 @@ export class CustomSelectComponent implements ControlValueAccessor{
         this.onTouchedCallback = fn;
     }
 
+    defaultText = "请选择";
 
     isClose:boolean = true;
 
@@ -83,6 +84,14 @@ export class CustomSelectComponent implements ControlValueAccessor{
 
     toggleSelect() {
         this.isClose = !this.isClose;
+    }
+
+    showSelect() {
+        this.isClose = false;
+    }
+
+    hideSelect() {
+        this.isClose = true;
     }
 
     hideClick(){
@@ -101,6 +110,10 @@ export class CustomSelectComponent implements ControlValueAccessor{
     itemClick(item) {
         this.isClose = !this.isClose;
         this.value = item;
+        if(item)
+            this.defaultText = item.name;
+        else
+            this.defaultText = '请选择';
         this.itemChange.emit();
 
         if (this.outputName){
