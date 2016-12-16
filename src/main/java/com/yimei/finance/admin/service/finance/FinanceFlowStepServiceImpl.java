@@ -18,7 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Service("adminFinanceFlowStepService")
@@ -68,7 +68,7 @@ public class FinanceFlowStepServiceImpl {
             return Result.error(EnumAdminFinanceError.此任务不能进行业务员审核操作.toString());
         salesmanInfo.setFinanceId(financeId);
         salesmanInfo.setCreateManId(userId);
-        salesmanInfo.setCreateTime(LocalDateTime.now());
+        salesmanInfo.setCreateTime(new Date());
         methodService.addAttachmentsMethod(salesmanInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SalesmanAuditAttachment.toString());
         if (submit) {
             if (taskMap.pass != 0 && taskMap.pass != 1) throw new BusinessException(EnumCommonError.Admin_System_Error);
@@ -120,7 +120,7 @@ public class FinanceFlowStepServiceImpl {
         investigatorInfo.setFinanceId(financeId);
         investigatorInfo.setApplyCompanyName(financeOrder.getApplyCompanyName());
         investigatorInfo.setCreateManId(userId);
-        investigatorInfo.setCreateTime(LocalDateTime.now());
+        investigatorInfo.setCreateTime(new Date());
         methodService.addAttachmentsMethod(investigatorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.InvestigatorAuditAttachment.toString());
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
@@ -179,7 +179,7 @@ public class FinanceFlowStepServiceImpl {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.supervisorAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行监管员审核操作.toString());
         supervisorInfo.setFinanceId(financeId);
         supervisorInfo.setCreateManId(userId);
-        supervisorInfo.setCreateTime(LocalDateTime.now());
+        supervisorInfo.setCreateTime(new Date());
         methodService.addAttachmentsMethod(supervisorInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.SupervisorAuditAttachment.toString());
         if (submit) {
             if ((taskMap.need != 0 && taskMap.need != 1) || (taskMap.pass != 0 && taskMap.pass != 1)) throw new BusinessException(EnumCommonError.Admin_System_Error);
@@ -238,7 +238,7 @@ public class FinanceFlowStepServiceImpl {
         if (!task.getTaskDefinitionKey().equals(EnumFinanceEventType.riskManagerAudit.toString())) return Result.error(EnumAdminFinanceError.此任务不能进行风控人员审核操作.toString());
         riskManagerInfo.setFinanceId(financeId);
         riskManagerInfo.setCreateManId(userId);
-        riskManagerInfo.setCreateTime(LocalDateTime.now());
+        riskManagerInfo.setCreateTime(new Date());
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList1(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.RiskManagerAuditAttachment.toString());
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList3(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Upstream_Contract_Attachment.toString());
         methodService.addAttachmentsMethod(riskManagerInfo.getAttachmentList4(), task.getId(), task.getProcessInstanceId(), EnumFinanceAttachment.Downstream_Contract_Attachment.toString());

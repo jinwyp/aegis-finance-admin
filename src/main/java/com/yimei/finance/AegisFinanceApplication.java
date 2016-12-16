@@ -23,7 +23,7 @@ import org.springframework.util.StringUtils;
 
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 
 @SpringBootApplication
@@ -73,9 +73,9 @@ public class AegisFinanceApplication {
 				identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
 				Company company = adminCompanyRepository.findByName("易煤风控线");
 				if (company == null) {
-					company = new Company("易煤风控线", EnumCompanyStatus.Normal.toString(), EnumCompanyStatus.Normal.id, LocalDateTime.now(), "0", LocalDateTime.now(), "0");
+					company = new Company("易煤风控线", EnumCompanyStatus.Normal.toString(), EnumCompanyStatus.Normal.id, new Date(), "0", new Date(), "0");
 					adminCompanyRepository.save(company);
-					adminCompanyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), EnumCompanyRole.RiskManager_Organization.id, EnumCompanyRole.RiskManager_Organization.toString(), LocalDateTime.now(), "0", LocalDateTime.now(), "0"));
+					adminCompanyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), EnumCompanyRole.RiskManager_Organization.id, EnumCompanyRole.RiskManager_Organization.toString(), new Date(), "0", new Date(), "0"));
 				}
 //				final Company finalCompany = company;
 //				userService.updateOldUserData(finalCompany);

@@ -14,7 +14,7 @@ import org.springframework.util.StringUtils;
 
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Data
 @NoArgsConstructor
@@ -53,7 +53,7 @@ public class WarehouseAdminUserObject extends BaseObject implements Serializable
     private String statusName;
 
     @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
-    private LocalDateTime lastLoginTime;        //最后一次登录时间
+    private Date lastLoginTime;        //最后一次登录时间
 
     public String getStatusName() {
         if (StringUtils.isEmpty(status)) return null;

@@ -94,8 +94,8 @@ public class SiteFinanceOrderServiceImpl {
         financeOrder.setApplyCompanyName(sessionUser.getCompanyName());
         financeOrder.setCreateManId(String.valueOf(sessionUser.getId()));
         financeOrder.setLastUpdateManId(String.valueOf(sessionUser.getId()));
-        financeOrder.setCreateTime(LocalDateTime.now());
-        financeOrder.setLastUpdateTime(LocalDateTime.now());
+        financeOrder.setCreateTime(new Date());
+        financeOrder.setLastUpdateTime(new Date());
         financeOrder.setEndTime(null);
         financeOrder.setApproveStateId(EnumFinanceStatus.WaitForAudit.id);
         financeOrder.setApproveState(EnumFinanceStatus.WaitForAudit.name);

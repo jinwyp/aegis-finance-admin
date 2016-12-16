@@ -1,8 +1,5 @@
 package com.yimei.finance.admin.service.finance;
 
-import com.yimei.finance.entity.admin.company.Company;
-import com.yimei.finance.entity.admin.finance.*;
-import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.admin.repository.company.AdminCompanyRepository;
 import com.yimei.finance.admin.repository.finance.*;
 import com.yimei.finance.admin.representation.finance.enums.EnumAdminFinanceError;
@@ -15,6 +12,9 @@ import com.yimei.finance.common.representation.file.AttachmentObject;
 import com.yimei.finance.common.representation.result.Result;
 import com.yimei.finance.common.service.message.MessageServiceImpl;
 import com.yimei.finance.common.service.tools.NumberServiceImpl;
+import com.yimei.finance.entity.admin.company.Company;
+import com.yimei.finance.entity.admin.finance.*;
+import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.utils.CodeUtils;
 import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.HistoryService;
@@ -26,7 +26,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -172,7 +171,7 @@ public class FinanceOrderServiceImpl {
      */
     public void updateFinanceOrderByOnlineTrader(String userId, FinanceOrderObject financeOrder) {
         financeOrder.setLastUpdateManId(userId);
-        financeOrder.setLastUpdateTime(LocalDateTime.now());
+        financeOrder.setLastUpdateTime(new Date());
         adminFinanceOrderRepository.save(DozerUtils.copy(financeOrder, FinanceOrder.class));
     }
 
@@ -186,7 +185,7 @@ public class FinanceOrderServiceImpl {
             salesmanInfo.setId(salesmanOrder.getId());
         }
         salesmanInfo.setLastUpdateManId(userId);
-        salesmanInfo.setLastUpdateTime(LocalDateTime.now());
+        salesmanInfo.setLastUpdateTime(new Date());
         salesmanRepository.save(DozerUtils.copy(salesmanInfo, FinanceOrderSalesmanInfo.class));
     }
 
@@ -200,7 +199,7 @@ public class FinanceOrderServiceImpl {
             investigatorInfo.setId(investigatorOrder.getId());
         }
         investigatorInfo.setLastUpdateManId(userId);
-        investigatorInfo.setLastUpdateTime(LocalDateTime.now());
+        investigatorInfo.setLastUpdateTime(new Date());
         investigatorRepository.save(DozerUtils.copy(investigatorInfo, FinanceOrderInvestigatorInfo.class));
     }
 
@@ -214,7 +213,7 @@ public class FinanceOrderServiceImpl {
             supervisorInfo.setId(supervisorOrder.getId());
         }
         supervisorInfo.setLastUpdateManId(userId);
-        supervisorInfo.setLastUpdateTime(LocalDateTime.now());
+        supervisorInfo.setLastUpdateTime(new Date());
         supervisorRepository.save(DozerUtils.copy(supervisorInfo, FinanceOrderSupervisorInfo.class));
     }
 
@@ -230,7 +229,7 @@ public class FinanceOrderServiceImpl {
             riskManagerInfo.setDownstreamContractStatus(riskManagerOrder.getDownstreamContractStatus());
         }
         riskManagerInfo.setLastUpdateManId(userId);
-        riskManagerInfo.setLastUpdateTime(LocalDateTime.now());
+        riskManagerInfo.setLastUpdateTime(new Date());
         riskRepository.save(DozerUtils.copy(riskManagerInfo, FinanceOrderRiskManagerInfo.class));
     }
 
@@ -240,10 +239,10 @@ public class FinanceOrderServiceImpl {
             riskManagerInfo = new FinanceOrderRiskManagerInfo();
             riskManagerInfo.setFinanceId(financeId);
             riskManagerInfo.setCreateManId(userId);
-            riskManagerInfo.setCreateTime(LocalDateTime.now());
+            riskManagerInfo.setCreateTime(new Date());
         }
         riskManagerInfo.setLastUpdateManId(userId);
-        riskManagerInfo.setLastUpdateTime(LocalDateTime.now());
+        riskManagerInfo.setLastUpdateTime(new Date());
         if (type == 1) {
             riskManagerInfo.setUpstreamContractStatus(status);
         } else if (type == 2) {
@@ -273,7 +272,7 @@ public class FinanceOrderServiceImpl {
             financeOrderContract.setContractNo(numberService.generateContractNo(CodeUtils.GeneratePinYinCode(financeOrderContract.getBuyerCompanyName(), 4, true) + "-" + CodeUtils.GeneratePinYinCode(financeOrderContract.getSellerCompanyName(), 4, true)));
         }
         financeOrderContract.setLastUpdateManId(userId);
-        financeOrderContract.setLastUpdateTime(LocalDateTime.now());
+        financeOrderContract.setLastUpdateTime(new Date());
         contractRepository.save(DozerUtils.copy(financeOrderContract, FinanceOrderContract.class));
     }
 
@@ -287,7 +286,7 @@ public class FinanceOrderServiceImpl {
         FinanceOrder order = adminFinanceOrderRepository.findOne(financeId);
         order.setApproveStateId(status.id);
         order.setApproveState(status.name);
-        order.setLastUpdateTime(LocalDateTime.now());
+        order.setLastUpdateTime(new Date());
         order.setLastUpdateManId(userId);
         if (status.id == EnumFinanceStatus.AuditPass.id) {
             order.setEndTime(new Date());

@@ -7,7 +7,7 @@ import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Table(name = "warehouse_user_login_log")
 @Entity
@@ -29,5 +29,5 @@ public class WarehouseAdminUserLoginRecord implements Serializable {
     private String username;                                         //登陆账号
 
     @Column(name = "create_time")
-    private LocalDateTime createTime;                                         //创建时间
+    private Date createTime;                                         //创建时间
 }

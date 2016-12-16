@@ -6,7 +6,7 @@ import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Table(name = "t_finance_company")
 @Entity
@@ -29,7 +29,7 @@ public class Company extends BaseEntity implements Serializable {
     @Column(name = "remarks")
     private String remarks;                        //备注
 
-    public Company (String name, String status, int statusId, LocalDateTime createTime, String createManId, LocalDateTime lastUpdateTime, String lastUpdateManId) {
+    public Company (String name, String status, int statusId, Date createTime, String createManId, Date lastUpdateTime, String lastUpdateManId) {
         this.name = name;
         this.status = status;
         this.statusId = statusId;

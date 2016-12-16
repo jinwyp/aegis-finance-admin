@@ -24,8 +24,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -59,13 +59,13 @@ public class AdminCompanyServiceImpl {
             company.setStatus(EnumCompanyStatus.Normal.toString());
             company.setStatusId(EnumCompanyStatus.Normal.id);
             company.setCreateManId(sessionUser.getId());
-            company.setCreateTime(LocalDateTime.now());
+            company.setCreateTime(new Date());
             company.setLastUpdateManId(sessionUser.getId());
-            company.setLastUpdateTime(LocalDateTime.now());
+            company.setLastUpdateTime(new Date());
             adminCompanyRepository.save(company);
             CompanyRole companyRole = adminCompanyRoleRepository.findByNumber(companyObject.getType());
             if (companyRole == null) return Result.error(EnumCommonError.Admin_System_Error);
-            adminCompanyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), companyRole.getNumber(), companyRole.getRole(), LocalDateTime.now(), sessionUser.getId(), LocalDateTime.now(), sessionUser.getId()));
+            adminCompanyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), companyRole.getNumber(), companyRole.getRole(), new Date(), sessionUser.getId(), new Date(), sessionUser.getId()));
             return Result.success().setData(changeCompanyObject(adminCompanyRepository.findOne(company.getId())));
         }
     }
@@ -86,7 +86,7 @@ public class AdminCompanyServiceImpl {
             company.setName(companyObject.getName());
             company.setRemarks(companyObject.getRemarks());
             company.setLastUpdateManId(sessionUserId);
-            company.setLastUpdateTime(LocalDateTime.now());
+            company.setLastUpdateTime(new Date());
             adminCompanyRepository.save(company);
             return Result.success();
         }
