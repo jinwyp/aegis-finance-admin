@@ -14,17 +14,18 @@
 var options = process.argv[2].match(/^--params\.([^=]+)=(.*)$/);
 
 var specsStep1 = [
-    // 'testing/e2e/**/*.js'
+    // 'testing/e2e/**/*.js',
     // 'testing/e2e/superadmin/**/*.js',
-    //'testing/e2e/trader-manager/trader-manager.js',
-    //'testing/e2e/trader/trader.js',
-    // 'testing/e2e/sale-manager/sale-manager.js',
-    // 'testing/e2e/sale/sale.js',
-    // 'testing/e2e/investigator-manager/investigator-manager.js',
-    // 'testing/e2e/investigator/investigator.js',
-    // 'testing/e2e/supervisor-manager/supervisor-manager.js',
+    'testing/e2e/trader-manager/trader-manager.js',
+    'testing/e2e/trader/trader.js',
+    'testing/e2e/sale-manager/sale-manager.js',
+    'testing/e2e/sale/sale.js',
+    'testing/e2e/investigator-manager/investigator-manager.js',
+    'testing/e2e/investigator/investigator.js',
+    'testing/e2e/supervisor-manager/supervisor-manager.js',
     'testing/e2e/supervisor/supervisor.js',
-
+    'testing/e2e/risk-manager/risk-manager.js',
+    'testing/e2e/risk/risk.js',
 
     // 'testing/e2e/superadmin/login.js',
     // 'testing/e2e/superadmin/create-risk-line.js',

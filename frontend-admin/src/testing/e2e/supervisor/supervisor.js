@@ -65,26 +65,21 @@ describe("监管员",function(){
         var conclusion = element(by.css(".apply-table")).all(by.css('.item-min')).get(7).element(by.tagName('textarea'));
         var verifyPass=element(by.css(".apply-table")).all(by.css('.item-title')).get(8).all(by.tagName('label')).get(0);
         var submit=element(by.partialButtonText('保存并提交'));
-        // var successMessage = element(by.css('.alert-success'));
-        // var errorMessage = element(by.css('.alert-danger'));
 
         it('提交监管报告',function(){
             util.presenceOfAll(warehouseProperty, 5000);
-            warehouseProperty.clear().sendKeys(verify.supervisor.warehouseProperty);
-            historyCooperation.clear().sendKeys(verify.supervisor.historyCooperation);
-            managerCondition.clear().sendKeys(verify.supervisor.managerCondition);
-            standardDegree.clear().sendKeys(verify.supervisor.standardDegree);
-            Coordination.clear().sendKeys(verify.supervisor.Coordination);
-            scheme.clear().sendKeys(verify.supervisor.scheme);
-            conclusion.clear().sendKeys(verify.supervisor.conclusion);
+            warehouseProperty.clear().sendKeys(verify.supervisorVerify.warehouseProperty);
+            historyCooperation.clear().sendKeys(verify.supervisorVerify.historyCooperation);
+            managerCondition.clear().sendKeys(verify.supervisorVerify.managerCondition);
+            standardDegree.clear().sendKeys(verify.supervisorVerify.standardDegree);
+            Coordination.clear().sendKeys(verify.supervisorVerify.Coordination);
+            scheme.clear().sendKeys(verify.supervisorVerify.scheme);
+            conclusion.clear().sendKeys(verify.supervisorVerify.conclusion);
             verifyPass.click();
             submit.click();
 
         });
-        // it('"需求提报"提交成功!', function () {
-        //     expect(successMessage.getAttribute('class')).toContain('');
-        //     expect(errorMessage.getAttribute('class')).toContain('hidden');
-        // });
+
     })
 })
 
