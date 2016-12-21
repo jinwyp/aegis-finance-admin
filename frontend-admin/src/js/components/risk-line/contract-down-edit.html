@@ -67,6 +67,14 @@
         </td>
         <td><input type="text" class="div-250" required [(ngModel)]="contract.coalIndex_RS" placeholder="硫分为0-10之间的值" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;%</span></td>
     </tr>
+
+    <tr>
+        <td>
+            <div class="table-label"></div>
+        </td>
+        <td colspan="3"><span>空干基挥发分：</span><input type="text" class="div-170" required [(ngModel)]="contract.coalIndex_ADV" placeholder="空干基挥发分为1-10之间的整数" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;% </span></td>
+    </tr>
+
     <tr>
         <td>
             <div class="table-label textarea-label">其他质量标准：</div>

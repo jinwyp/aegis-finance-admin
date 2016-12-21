@@ -83,6 +83,13 @@
 
     <tr>
         <td>
+            <div class="table-label"></div>
+        </td>
+        <td colspan="3"><span>空干基挥发分：</span><input type="text" class="div-170" required [(ngModel)]="contract.coalIndex_ADV" placeholder="空干基挥发分为1-10之间的整数" [ngModelOptions]="{standalone: true}"/><span>&nbsp;&nbsp;% </span></td>
+    </tr>
+
+    <tr>
+        <td>
             <div class="table-label textarea-label">其他质量标准：</div>
         </td>
         <td colspan="3"><textarea rows="5" [(ngModel)]="contract.qualityRemark" required placeholder="请描述质量标准,如没有请填'无'" [ngModelOptions]="{standalone: true}"></textarea></td>
@@ -195,8 +202,6 @@
         </td>
         <td><input type="text" [(ngModel)]="contract.buyerBankAccount" required placeholder="请填写开户行帐号" [ngModelOptions]="{standalone: true}"/></td>
     </tr>
-
-
 
     <tr>
         <td>

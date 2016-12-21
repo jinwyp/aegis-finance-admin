@@ -1,11 +1,15 @@
 <div class="custom-select">
     <!--<label (click)="toggleSelect()">{{value.name ||'请选择'}} <span class="caret" ></span></label>-->
 
-    <label *ngIf="!value" (click)="toggleSelect()">请选择<span class="caret" ></span></label>
-    <label *ngIf="value" (click)="toggleSelect()">{{value.name||'请选择'}}<span class="caret" ></span></label>
+    <!--<label *ngIf="!value" (click)="toggleSelect()">请选择<span class="caret" ></span></label>-->
+    <!--<label *ngIf="value" (click)="toggleSelect()">{{value.name||'请选择'}}<span class="caret" ></span></label>-->
 
+    <input *ngIf="!value" type="text" readonly (blur)="hideSelect()" (focus)="showSelect()" [(ngModel)]="defaultText">
+    <input *ngIf="value" type="text" readonly readonly (blur)="hideSelect()" (focus)="showSelect()" [(ngModel)]="defaultText">
+    <span class="caret" ></span>
     <ul [class.hidden]="isClose">
-        <li *ngIf="hasDefaultItem" (click)="hideClick()">请选择</li>
-        <li *ngFor="let item of optionList" (click)="itemClick(item)">{{item.name}}</li>
+        <li *ngIf="hasDefaultItem" (mousedown)="itemClick()">请选择</li>
+        <!--<li *ngFor="let item of optionList" (click)="itemClick(item)">{{item.name}}</li>-->
+        <li *ngFor="let item of optionList" (mousedown)="itemClick(item)">{{item.name}}</li>
     </ul>
 </div>

@@ -33,6 +33,7 @@ class Contract {
     coalType : string;                                          //煤炭品种/品类  
     quantityRemark : string;                                    //数量备注,备注说明  
     coalIndex_NCV : any;                                         //煤炭指标  
+    coalIndex_ADV : any;                                         //煤炭指标
     coalIndex_RS : any;                                         //煤炭指标  
     qualityRemark : string;                                     //质量备注/质量说明  
     quantityAcceptanceCriteria : string;                        //数量验收标准  
