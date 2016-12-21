@@ -30,5 +30,7 @@ public class WarehouseInitData implements Serializable {
     private BigDecimal coalIndex_ADV;                   //煤炭 热值,硫分,空干基挥发分
     private String stockPort;                           //库存港口
     private BigDecimal coalAmount;                      //总质押吨数
+    private String upstreamContractNo;                  //上游合同编号
+    private String downstreamContractNo;                //下游合同编号
     private List<AttachmentObject> auditFileList;       //审批文件列表
 }

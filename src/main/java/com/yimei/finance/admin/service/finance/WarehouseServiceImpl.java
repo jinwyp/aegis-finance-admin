@@ -45,6 +45,7 @@ public class WarehouseServiceImpl {
         initData.setAuditFileList(DozerUtils.copy(taskService.getProcessInstanceAttachments(task.getProcessInstanceId()), AttachmentObject.class));
 
         FinanceOrderContractObject upstreamContract = DozerUtils.copy(orderContractRepository.findByFinanceIdAndType(financeId, 1), FinanceOrderContractObject.class);
+        initData.setUpstreamContractNo(upstreamContract.getContractNo());
         initData.setCoalAmount(upstreamContract.getCoalAmount());
         initData.setCoalIndex_ADV(upstreamContract.getCoalIndex_ADV());
         initData.setCoalIndex_NCV(upstreamContract.getCoalIndex_NCV());
@@ -52,6 +53,7 @@ public class WarehouseServiceImpl {
         initData.setCoalType(upstreamContract.getCoalType());
         initData.setStockPort(upstreamContract.getDeliveryPlace());
         FinanceOrderContractObject downstreamContract = DozerUtils.copy(orderContractRepository.findByFinanceIdAndType(financeId, 2), FinanceOrderContractObject.class);
+        initData.setDownstreamContractNo(downstreamContract.getContractNo());
         initData.setDownstreamCompanyName(downstreamContract.getBuyerCompanyName());
 
         WarehouseInvestigatorInfo investigatorInfo = DozerUtils.copy(investigatorRepository.findByFinanceId(financeId), WarehouseInvestigatorInfo.class);
