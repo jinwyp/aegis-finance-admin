@@ -1,7 +1,5 @@
 package com.yimei.finance.admin.service.finance;
 
-import com.yimei.finance.admin.repository.finance.AdminFinanceOrderContractRepository;
-import com.yimei.finance.admin.repository.finance.AdminFinanceOrderInvestigatorRepository;
 import com.yimei.finance.admin.repository.finance.AdminFinanceOrderRepository;
 import com.yimei.finance.admin.repository.finance.AdminFinanceOrderRiskRepository;
 import com.yimei.finance.admin.representation.finance.enums.*;
@@ -13,7 +11,6 @@ import com.yimei.finance.common.representation.result.TaskMap;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
 import com.yimei.finance.entity.admin.finance.FinanceOrderRiskManagerInfo;
 import com.yimei.finance.exception.BusinessException;
-import com.yimei.finance.utils.DozerUtils;
 import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Task;
@@ -37,9 +34,7 @@ public class FinanceFlowStepServiceImpl {
     @Autowired
     private AdminFinanceOrderRiskRepository adminFinanceOrderRiskRepository;
     @Autowired
-    private AdminFinanceOrderInvestigatorRepository investigatorRepository;
-    @Autowired
-    private AdminFinanceOrderContractRepository orderContractRepository;
+    private WarehouseServiceImpl warehouseService;
 
     /**
      * 线上交易员审核
@@ -281,31 +276,7 @@ public class FinanceFlowStepServiceImpl {
                 orderService.saveFinanceOrderRiskManagerInfo(userId, riskManagerInfo);
                 orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditPass, userId);
                 if (taskMap.need == 0 && taskMap.pass == 1 && financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
-                    WarehouseInitData warehouse = new WarehouseInitData();
-                    warehouse.setApplyCompanyId(financeOrder.getApplyCompanyId());
-                    warehouse.setApplyCompanyName(financeOrder.getApplyCompanyName());
-                    warehouse.setApplyUserId(financeOrder.getUserId());
-                    warehouse.setApplyUserName(financeOrder.getApplyUserName());
-                    warehouse.setApplyUserPhone(financeOrder.getApplyUserPhone());
-                    warehouse.setBusinessCode(financeOrder.getSourceId());
-                    warehouse.setFinanceCreateTime(financeOrder.getCreateTime());
-                    warehouse.setFinanceEndTime(financeOrder.getEndTime());
-                    warehouse.setFinancingAmount(financeOrder.getFinancingAmount());
-                    warehouse.setFinancingDays(financeOrder.getExpectDate());
-                    FinanceOrderInvestigatorInfoObject investigatorInfoObject = DozerUtils.copy(investigatorRepository.findByFinanceId(financeId), FinanceOrderInvestigatorInfoObject.class);
-                    warehouse.setInterestRate(investigatorInfoObject.getInterestRate());
-                    warehouse.setAuditFileList(DozerUtils.copy(taskService.getProcessInstanceAttachments(task.getProcessInstanceId()), AttachmentObject.class));
-
-                    FinanceOrderContractObject upstreamContract = DozerUtils.copy(orderContractRepository.findByFinanceIdAndType(financeId, 1), FinanceOrderContractObject.class);
-                    warehouse.setCoalAmount(upstreamContract.getCoalAmount());
-                    warehouse.setCoalIndex_ADV(upstreamContract.getCoalIndex_ADV());
-                    warehouse.setCoalIndex_NCV(upstreamContract.getCoalIndex_NCV());
-                    warehouse.setCoalIndex_RS(upstreamContract.getCoalIndex_RS());
-                    warehouse.setCoalType(upstreamContract.getCoalType());
-                    warehouse.setStockPort(upstreamContract.getDeliveryPlace());
-                    FinanceOrderContractObject downstreamContract = DozerUtils.copy(orderContractRepository.findByFinanceIdAndType(financeId, 2), FinanceOrderContractObject.class);
-                    warehouse.setDownstreamCompanyName(downstreamContract.getBuyerCompanyName());
-
+                    warehouseService.getWarehouseData(financeId, financeOrder, task);
                 }
                 return Result.success();
             } else {

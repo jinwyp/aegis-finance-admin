@@ -1,4 +1,4 @@
-package com.yimei.finance.admin.representation.finance.object;
+package com.yimei.finance.admin.representation.finance.warehouse;
 
 import com.yimei.finance.common.representation.file.AttachmentObject;
 import lombok.Data;
@@ -31,5 +31,4 @@ public class WarehouseInitData implements Serializable {
     private String stockPort;                           //库存港口
     private BigDecimal coalAmount;                      //总质押吨数
     private List<AttachmentObject> auditFileList;       //审批文件列表
-
 }
