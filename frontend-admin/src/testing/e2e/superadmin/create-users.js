@@ -105,8 +105,8 @@ describe('Admin Home Page - 管理后台首页', function() {
             });
         });
 
-        it('创建新用户-风控线一管理员 成功', function () {
-            inputUserData(true, user.fkxg1, 0, '系统管理员组',3 , '测试风控线一');
+        it('创建新用户-易煤风控线管理员 成功', function () {
+            inputUserData(true, user.fkxg1, 0, '系统管理员组',3 , '易煤风控线');
         });
 
         it('创建新用户-风控线二管理员 成功', function () {

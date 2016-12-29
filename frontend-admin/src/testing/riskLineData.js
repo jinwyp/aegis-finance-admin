@@ -4,8 +4,8 @@
 module.exports = {
 
     riskLine1 : {
-        name : '测试风控线一',
-        remark : '测试风控线一备注'
+        name : '易煤风控线',
+        remark : '易煤风控线备注'
     },
     riskLine2 : {
         name : '测试风控线二',

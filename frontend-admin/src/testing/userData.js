@@ -12,8 +12,8 @@ module.exports = {
     },
 
     fkxg1 : {
-        username : 'fkxg1',
-        name : 'fkxg1',
+        username : '易煤风控线管理员',
+        name : 'adminfinance',
         password : '111111',
         phone : '18600000001',
         email : 'fkxg1@yimei180.com',
@@ -21,7 +21,7 @@ module.exports = {
         groupName : '系统管理员组',
         department : '系统管理员',
         companyId : '',
-        companyName : '测试风控线一'
+        companyName : '易煤风控线'
     },
 
     fkxg2 : {
