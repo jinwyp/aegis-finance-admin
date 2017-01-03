@@ -12,10 +12,10 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class WarehouseInitData implements Serializable {
-    private Long applyUserId;
+    private String applyUserId;
     private String applyUserName;
     private String applyUserPhone;
-    private Long applyCompanyId;
+    private String applyCompanyId;
     private String applyCompanyName;                    //申请人-融资方 信息
     private String businessCode;                        //业务编号
     private Date financeCreateTime;                     //审批开始时间

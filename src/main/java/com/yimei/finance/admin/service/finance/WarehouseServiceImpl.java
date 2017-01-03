@@ -30,9 +30,9 @@ public class WarehouseServiceImpl {
 
     public WarehouseData getWarehouseData(Long financeId, FinanceOrder financeOrder, Task task) {
         WarehouseInitData initData = new WarehouseInitData();
-        initData.setApplyCompanyId(financeOrder.getApplyCompanyId());
+        initData.setApplyCompanyId(String.valueOf(financeOrder.getApplyCompanyId()));
         initData.setApplyCompanyName(financeOrder.getApplyCompanyName());
-        initData.setApplyUserId(Long.valueOf(financeOrder.getUserId()));
+        initData.setApplyUserId(String.valueOf(financeOrder.getUserId()));
         initData.setApplyUserName(financeOrder.getApplyUserName());
         initData.setApplyUserPhone(financeOrder.getApplyUserPhone());
         initData.setBusinessCode(financeOrder.getSourceId());
