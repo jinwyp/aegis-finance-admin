@@ -1,16 +1,18 @@
 package com.yimei.finance.admin.representation.finance.warehouse;
 
-import com.yimei.finance.common.representation.file.AttachmentObject;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+
 
 @Data
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class WarehouseInitData implements Serializable {
     private String applyUserId;
     private String applyUserName;
@@ -32,5 +34,16 @@ public class WarehouseInitData implements Serializable {
     private BigDecimal coalAmount;                      //总质押吨数
     private String upstreamContractNo;                  //上游合同编号
     private String downstreamContractNo;                //下游合同编号
-    private List<AttachmentObject> auditFileList;       //审批文件列表
+
+
+
+    public String getFinanceCreateTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(financeCreateTime);
+    }
+
+    public String getFinanceEndTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(financeEndTime);
+    }
 }

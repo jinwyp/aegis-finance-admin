@@ -1,16 +1,18 @@
 package com.yimei.finance.admin.representation.finance.warehouse;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @Data
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class WarehouseInvestigatorInfo implements Serializable {
-    private Long financeId;                                          //金融单id
     private String applyCompanyName;                                 //申请公司/融资方
     private String ourContractCompany;                               //我方签约公司
     private String upstreamContractCompany;                          //上游签约单位
@@ -35,4 +37,12 @@ public class WarehouseInvestigatorInfo implements Serializable {
     private String businessRiskPoint;                                //业务风险点
     private String performanceCreditAbilityEval;                     //履约信用及能力评估
     private String finalConclusion;                                  //综合意见/最终结论
+
+    public String getBusinessStartTime() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (businessStartTime != null) {
+            return sdf.format(businessStartTime);
+        }
+        return null;
+    }
 }

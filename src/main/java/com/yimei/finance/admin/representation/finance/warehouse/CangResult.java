@@ -9,8 +9,6 @@ import java.io.Serializable;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class WarehouseData implements Serializable {
-    private WarehouseInitData basicInfo;
-    private WarehouseInvestigatorInfo investigationInfo;
-    private WarehouseSupervisorInfo supervisorInfo;
+public class CangResult implements Serializable {
+    public boolean success;
 }

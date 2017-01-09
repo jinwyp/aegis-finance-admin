@@ -1,5 +1,6 @@
 package com.yimei.finance.admin.representation.finance.warehouse;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -7,8 +8,8 @@ import java.io.Serializable;
 
 @Data
 @NoArgsConstructor
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class WarehouseSupervisorInfo implements Serializable {
-    private Long financeId;                                          //金融单id
     private String storageLocation;                                  //煤炭仓储地
     private String storageProperty;                                  //仓储性质
     private String storageAddress;                                   //仓储地地址
