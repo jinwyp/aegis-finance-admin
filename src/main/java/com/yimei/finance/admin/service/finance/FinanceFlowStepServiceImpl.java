@@ -4,6 +4,7 @@ import com.yimei.finance.admin.repository.finance.AdminFinanceOrderRepository;
 import com.yimei.finance.admin.repository.finance.AdminFinanceOrderRiskRepository;
 import com.yimei.finance.admin.representation.finance.enums.*;
 import com.yimei.finance.admin.representation.finance.object.*;
+import com.yimei.finance.admin.representation.finance.warehouse.WarehouseData;
 import com.yimei.finance.common.representation.enums.EnumCommonError;
 import com.yimei.finance.common.representation.file.AttachmentObject;
 import com.yimei.finance.common.representation.result.Result;
@@ -15,8 +16,10 @@ import org.activiti.engine.TaskService;
 import org.activiti.engine.history.HistoricTaskInstance;
 import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.client.RestTemplate;
 
 import java.util.Date;
 import java.util.List;
@@ -35,6 +38,10 @@ public class FinanceFlowStepServiceImpl {
     private AdminFinanceOrderRiskRepository adminFinanceOrderRiskRepository;
     @Autowired
     private WarehouseServiceImpl warehouseService;
+    @Value("${cang.address}")
+    private String serviceAddress;
+    @Autowired
+    RestTemplate restTemplate;
 
     /**
      * 线上交易员审核
@@ -276,7 +283,15 @@ public class FinanceFlowStepServiceImpl {
                 orderService.saveFinanceOrderRiskManagerInfo(userId, riskManagerInfo);
                 orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditPass, userId);
                 if (taskMap.need == 0 && taskMap.pass == 1 && financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
-                    warehouseService.getWarehouseData(financeId, financeOrder, task);
+                    String url = serviceAddress + "/api/cang/startflow";
+                    System.out.println(" go to cang " + url);
+                    System.out.println(" go to cang " + url);
+                    System.out.println(" go to cang " + url);
+                    System.out.println(" go to cang " + url);
+                    System.out.println(" go to cang " + url);
+                    System.out.println(" go to cang " + url);
+                    WarehouseData warehouseData = warehouseService.getWarehouseData(financeId, financeOrder, task);
+                    restTemplate.getForObject(url, Boolean.class, new Object[]{warehouseData});
                 }
                 return Result.success();
             } else {

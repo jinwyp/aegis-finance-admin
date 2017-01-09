@@ -5,8 +5,6 @@ import com.yimei.finance.admin.service.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.admin.service.user.AdminGroupServiceImpl;
 import com.yimei.finance.admin.service.user.AdminUserServiceImpl;
 import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.kitt.service.account.KittAccountServiceImpl;
-import com.yimei.finance.kitt.service.company.KittCompanyServiceImpl;
 import com.yimei.finance.site.service.finance.SiteFinanceOrderServiceImpl;
 import com.yimei.finance.tpl.entity.UserTest;
 import com.yimei.finance.tpl.repository.JpaRepositoryDemo;
@@ -49,10 +47,6 @@ public class AegisFinanceAdminApplicationTests {
 	private SiteFinanceOrderServiceImpl siteFinanceOrderService;
 	@Autowired
 	private AdminCompanyServiceImpl adminCompanyService;
-	@Autowired
-	private KittCompanyServiceImpl kittCompanyService;
-	@Autowired
-	private KittAccountServiceImpl accountService;
 
 
 	@Test
@@ -65,11 +59,6 @@ public class AegisFinanceAdminApplicationTests {
 		System.out.println(" ------------------------------------ ");
 		Date aaa = new Date(System.currentTimeMillis());
 		System.out.println(" ------------------------------------ " + (aaa.toLocalDate().getYear()));
-
-		System.out.println(kittCompanyService.findYMWCompanyByName("易煤网"));
-		System.out.println(kittCompanyService.findYMWCompanyByName("上海瑞易供应链管理有限公司"));
-		System.out.println(accountService.findUserFundAccount("易煤网"));
-
 
 //		UserObject user = new UserObject("14", 0L);
 

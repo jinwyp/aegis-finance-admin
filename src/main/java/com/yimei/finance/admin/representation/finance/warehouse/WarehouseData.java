@@ -10,7 +10,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class WarehouseData implements Serializable {
-    private WarehouseInitData initData;
+    private WarehouseInitData basicInfo;
     private WarehouseInvestigatorInfo investigatorInfo;
     private WarehouseSupervisorInfo supervisorInfo;
 }
