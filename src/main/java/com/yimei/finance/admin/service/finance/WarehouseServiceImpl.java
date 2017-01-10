@@ -53,8 +53,9 @@ public class WarehouseServiceImpl {
         FinanceOrderContractObject downstreamContract = DozerUtils.copy(orderContractRepository.findByFinanceIdAndType(financeId, 2), FinanceOrderContractObject.class);
         initData.setDownstreamContractNo(downstreamContract.getContractNo());
         initData.setDownstreamCompanyName(downstreamContract.getBuyerCompanyName());
-
         WarehouseInvestigatorInfo investigatorInfo = DozerUtils.copy(investigatorRepository.findByFinanceId(financeId), WarehouseInvestigatorInfo.class);
+        investigatorInfo.setUpstreamContractCompany(upstreamContract.getBuyerCompanyName());
+        investigatorInfo.setDownstreamContractCompany(downstreamContract.getApplyCompanyName());
         WarehouseSupervisorInfo supervisorInfo = DozerUtils.copy(supervisorRepository.findByFinanceId(financeId), WarehouseSupervisorInfo.class);
         return new WarehouseData(initData, investigatorInfo, supervisorInfo);
     }
