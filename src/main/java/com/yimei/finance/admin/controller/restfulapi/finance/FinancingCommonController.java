@@ -1,25 +1,24 @@
 package com.yimei.finance.admin.controller.restfulapi.finance;
 
-import com.yimei.finance.config.session.AdminSession;
-import com.yimei.finance.entity.admin.finance.FinanceOrder;
-import com.yimei.finance.exception.BusinessException;
 import com.yimei.finance.admin.repository.finance.AdminFinanceOrderRepository;
 import com.yimei.finance.admin.representation.finance.enums.EnumAdminFinanceError;
 import com.yimei.finance.admin.representation.finance.enums.EnumFinanceAttachment;
 import com.yimei.finance.admin.representation.finance.object.*;
-import com.yimei.finance.common.representation.enums.EnumCommonError;
-import com.yimei.finance.common.representation.result.Result;
 import com.yimei.finance.admin.service.finance.FinanceFlowMethodServiceImpl;
 import com.yimei.finance.admin.service.finance.FinanceOrderServiceImpl;
+import com.yimei.finance.common.representation.enums.EnumCommonError;
+import com.yimei.finance.common.representation.file.AttachmentObject;
+import com.yimei.finance.common.representation.result.Result;
+import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.entity.admin.finance.FinanceOrder;
+import com.yimei.finance.exception.BusinessException;
+import com.yimei.finance.utils.DozerUtils;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import org.activiti.bpmn.model.BpmnModel;
-import org.activiti.engine.HistoryService;
-import org.activiti.engine.ProcessEngine;
-import org.activiti.engine.RepositoryService;
-import org.activiti.engine.RuntimeService;
+import org.activiti.engine.*;
 import org.activiti.engine.history.HistoricProcessInstance;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -33,6 +32,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.util.Arrays;
+import java.util.List;
 
 @Api(tags = {"admin-api-flow"}, description = "金融公用接口")
 @RequestMapping("/api/financing/admin")
@@ -54,6 +54,8 @@ public class FinancingCommonController {
     private FinanceFlowMethodServiceImpl methodService;
     @Autowired
     private AdminSession adminSession;
+    @Autowired
+    private TaskService taskService;
 
     @RequestMapping(value = "/finance/{financeId}", method = RequestMethod.GET)
     @ApiOperation(value = "通过 金融单id 查看金融详细信息 线上业务员信息", notes = "通过 金融单id 查看金融详细信息 线上业务员信息", response = FinanceOrderObject.class)
@@ -109,6 +111,16 @@ public class FinancingCommonController {
         if (financeOrder == null) return Result.error(EnumAdminFinanceError.此金融单不存在.toString());
         if (adminSession.getUser().getCompanyId().longValue() != 0 && financeOrder.getRiskCompanyId().longValue() != adminSession.getUser().getCompanyId()) return Result.error(EnumAdminFinanceError.你没有权限查看此金融单.toString());
         return Result.success().setData(methodService.changeHistoryTaskObject(historyService.createHistoricTaskInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).orderByTaskCreateTime().asc().list()));
+    }
+
+    @RequestMapping(value = "/finance/{financeId}/files", method = RequestMethod.GET)
+    @ApiOperation(value = "通过 金融单id 获取该流程所有附件列表", notes = "通过 金融单id 获取 该流程所有附件列表")
+    @ApiImplicitParam(name = "financeId", value = "金融单id", required = true, dataType = "int", paramType = "path")
+    public Result getAllFilesByFinancIdMethod(@PathVariable(value = "financeId") Long financeId) {
+        HistoricProcessInstance processInstance = historyService.createHistoricProcessInstanceQuery().processInstanceBusinessKey(String.valueOf(financeId)).singleResult();
+        if (processInstance == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
+        List<AttachmentObject> fileList = DozerUtils.copy(taskService.getProcessInstanceAttachments(processInstance.getId()), AttachmentObject.class);
+        return Result.success().setData(fileList);
     }
 
     @RequestMapping(value = "/finance/process/{processInstanceId}/image", method = RequestMethod.GET)

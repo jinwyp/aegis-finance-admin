@@ -40,7 +40,6 @@ public class WarehouseServiceImpl {
         initData.setFinancingDays(financeOrder.getExpectDate());
         FinanceOrderInvestigatorInfoObject investigatorInfoObject = DozerUtils.copy(investigatorRepository.findByFinanceId(financeId), FinanceOrderInvestigatorInfoObject.class);
         initData.setInterestRate(investigatorInfoObject.getInterestRate());
-        //initData.setAuditFileList(DozerUtils.copy(taskService.getProcessInstanceAttachments(task.getProcessInstanceId()), AttachmentObject.class));
 
         FinanceOrderContractObject upstreamContract = DozerUtils.copy(orderContractRepository.findByFinanceIdAndType(financeId, 1), FinanceOrderContractObject.class);
         initData.setUpstreamContractNo(upstreamContract.getContractNo());
