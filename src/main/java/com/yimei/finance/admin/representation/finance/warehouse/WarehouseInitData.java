@@ -19,10 +19,10 @@ public class WarehouseInitData implements Serializable {
     private String applyUserPhone;
     private String applyCompanyId;
     private String applyCompanyName;                    //申请人-融资方 信息
+    private String downstreamCompanyName;               //下游签约公司-公司名称
     private String businessCode;                        //业务编号
     private Date financeCreateTime;                     //审批开始时间
-    private Date financeEndTime;                        //审批结束时间
-    private String downstreamCompanyName;               //下游签约公司-公司名称
+    private Date financeEndTime;
     private BigDecimal financingAmount;                 //拟融资金额
     private int financingDays;                          //融资天数
     private BigDecimal interestRate;                    //利率
@@ -35,8 +35,6 @@ public class WarehouseInitData implements Serializable {
     private String upstreamContractNo;                  //上游合同编号
     private String downstreamContractNo;                //下游合同编号
 
-
-
     public String getFinanceCreateTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         return sdf.format(financeCreateTime);
@@ -44,6 +42,7 @@ public class WarehouseInitData implements Serializable {
 
     public String getFinanceEndTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-        return sdf.format(financeEndTime);
+        return sdf.format(new Date());
     }
+
 }

@@ -16,8 +16,6 @@ import org.activiti.engine.task.Task;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.Date;
-
 @Service("adminWarehouseServiceImpl")
 public class WarehouseServiceImpl {
     @Autowired
@@ -38,7 +36,6 @@ public class WarehouseServiceImpl {
         initData.setApplyUserPhone(financeOrder.getApplyUserPhone());
         initData.setBusinessCode(financeOrder.getSourceId());
         initData.setFinanceCreateTime(financeOrder.getCreateTime());
-        initData.setFinanceEndTime(new Date());
         initData.setFinancingAmount(financeOrder.getFinancingAmount());
         initData.setFinancingDays(financeOrder.getExpectDate());
         FinanceOrderInvestigatorInfoObject investigatorInfoObject = DozerUtils.copy(investigatorRepository.findByFinanceId(financeId), FinanceOrderInvestigatorInfoObject.class);
