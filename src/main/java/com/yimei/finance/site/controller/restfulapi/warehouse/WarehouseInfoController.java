@@ -49,7 +49,7 @@ public class WarehouseInfoController {
             @ApiImplicitParam(name = "endDate", value = "结束时间", required = false, dataType = "date", paramType = "query")
     })
     @RequestMapping(value = "/warehouse", method = RequestMethod.GET)
-    public Result getFinancingApplyInfoList(FinanceOrderSearch orderSearch, Page page) {
+    public Result getWarehouseInfoList(FinanceOrderSearch orderSearch, Page page) {
         page.setCount(10);
         UserWarehouse userWarehouse = new UserWarehouse(String.valueOf(session.getUser().getId()), session.getUser().getSecurephone(), String.valueOf(session.getUser().getCompanyId()));
         String url = cangServiceAddress + "/user/company";
@@ -71,8 +71,8 @@ public class WarehouseInfoController {
     @ApiOperation(value = "根据 金融id 查看金融仓押详细", notes = "根据 id 查看金融仓押详细", response = WarehouseDetail.class)
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "int", paramType = "path")
     @LoginRequired
-    @RequestMapping(value = "/warehouse/{id}", method = RequestMethod.GET)
-    public Result getFinancingApplyInfo(@PathVariable("id") Long id) {
+    @RequestMapping(value = "/warehouse/{financeId}", method = RequestMethod.GET)
+    public Result getWarehouseInfo(@PathVariable("financeId") Long financeId) {
         String url = cangServiceAddress + "/user/company";
         UserWarehouse userWarehouse = new UserWarehouse(String.valueOf(session.getUser().getId()), session.getUser().getSecurephone(), String.valueOf(session.getUser().getCompanyId()));
         WarehouseDetail warehouse = restTemplate.postForObject(url, userWarehouse, WarehouseDetail.class);
