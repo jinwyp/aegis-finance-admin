@@ -41,7 +41,7 @@ public class FinanceFlowStepServiceImpl {
     @Autowired
     private WarehouseServiceImpl warehouseService;
     @Value("${cang.address}")
-    private String serviceAddress;
+    private String cangServiceAddress;
     @Autowired
     RestTemplate restTemplate;
 
@@ -285,7 +285,7 @@ public class FinanceFlowStepServiceImpl {
                 orderService.saveFinanceOrderRiskManagerInfo(userId, riskManagerInfo);
                 orderService.updateFinanceOrderApproveState(financeId, EnumFinanceStatus.AuditPass, userId);
                 if (taskMap.need == 0 && taskMap.pass == 1 && financeOrder.getApplyType().equals(EnumFinanceOrderType.MYD.toString())) {
-                    String url = serviceAddress + "/api/cang/startflow";
+                    String url = cangServiceAddress + "/api/cang/startflow";
                     WarehouseData warehouseData = warehouseService.getWarehouseData(financeId, financeOrder, task);
                     System.out.println(" go to cang " + JsonUtils.toJson(warehouseData));
                     CangResult cangResult = restTemplate.postForObject(url, warehouseData, CangResult.class);
