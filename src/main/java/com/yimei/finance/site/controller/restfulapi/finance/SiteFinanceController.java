@@ -1,4 +1,4 @@
-package com.yimei.finance.site.controller.restfulapi;
+package com.yimei.finance.site.controller.restfulapi.finance;
 
 import com.yimei.finance.config.session.UserSession;
 import com.yimei.finance.entity.admin.finance.FinanceOrder;
