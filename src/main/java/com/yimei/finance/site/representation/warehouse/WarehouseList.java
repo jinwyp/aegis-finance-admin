@@ -14,7 +14,9 @@ import java.util.Date;
 @NoArgsConstructor
 public class WarehouseList implements Serializable {
     private Long financeId;                          //审批id
-    private Long userId;
+    private String userId;
+    private String companyId;
+    private String flowId;
     private String applyType = "煤易贷";
     @JsonFormat(pattern = EnumCommonString.LocalDateTime_Pattern, timezone = EnumCommonString.GMT_8)
     private Date createTime;

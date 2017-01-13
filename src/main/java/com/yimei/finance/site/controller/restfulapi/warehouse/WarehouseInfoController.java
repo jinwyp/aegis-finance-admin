@@ -25,7 +25,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @RequestMapping("/api/financing")
 @Api(tags = {"site-api"})
@@ -52,15 +54,19 @@ public class WarehouseInfoController {
     public Result getWarehouseInfoList(FinanceOrderSearch orderSearch, Page page) {
         page.setCount(10);
         UserWarehouse userWarehouse = new UserWarehouse(String.valueOf(session.getUser().getId()), session.getUser().getSecurephone(), String.valueOf(session.getUser().getCompanyId()));
-        String url = cangServiceAddress + "/user/company";
+        String url = cangServiceAddress + "/api/cang/internal/financerFlowList/{userId}/{companyId}";
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", session.getUser().getId());
+        map.put("companyId", session.getUser().getCompanyId());
         List<WarehouseList> warehouseList = new ArrayList<>();
-        warehouseList = restTemplate.postForObject(url, userWarehouse, warehouseList.getClass());
+        warehouseList = restTemplate.getForObject(url, warehouseList.getClass(), map);
         if (warehouseList != null && warehouseList.size() != 0) {
             warehouseList.parallelStream().forEach(warehouse -> {
                 FinanceOrder financeOrder = siteFinanceOrderRepository.findBySourceId(warehouse.getBusinessCode());
                 if (financeOrder == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
                 warehouse.setFinanceId(financeOrder.getId());
-                warehouse.setUserId(financeOrder.getUserId());
+                warehouse.setUserId(String.valueOf(session.getUser().getId()));
+                warehouse.setCompanyId(String.valueOf(session.getUser().getCompanyId()));
                 warehouse.setCreateTime(financeOrder.getCreateTime());
                 warehouse.setFinancingAmount(financeOrder.getFinancingAmount());
             });
@@ -71,11 +77,14 @@ public class WarehouseInfoController {
     @ApiOperation(value = "根据 金融id 查看金融仓押详细", notes = "根据 id 查看金融仓押详细", response = WarehouseDetail.class)
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "int", paramType = "path")
     @LoginRequired
-    @RequestMapping(value = "/warehouse/{financeId}", method = RequestMethod.GET)
-    public Result getWarehouseInfo(@PathVariable("financeId") Long financeId) {
-        String url = cangServiceAddress + "/user/company";
-        UserWarehouse userWarehouse = new UserWarehouse(String.valueOf(session.getUser().getId()), session.getUser().getSecurephone(), String.valueOf(session.getUser().getCompanyId()));
-        WarehouseDetail warehouse = restTemplate.postForObject(url, userWarehouse, WarehouseDetail.class);
+    @RequestMapping(value = "/warehouse/{flowId}", method = RequestMethod.GET)
+    public Result getWarehouseInfo(@PathVariable("flowId") Long flowId) {
+        String url = cangServiceAddress + "/api/cang/internal/financerDetail/{userId}/{companyId}/{flowId}";
+        Map<String, Object> map = new HashMap<>();
+        map.put("userId", session.getUser().getId());
+        map.put("companyId", session.getUser().getCompanyId());
+        map.put("flowId", flowId);
+        WarehouseDetail warehouse = restTemplate.getForObject(url, WarehouseDetail.class, map);
         FinanceOrder financeOrder = siteFinanceOrderRepository.findBySourceId(warehouse.getBusinessCode());
         if (financeOrder == null) throw new BusinessException(EnumCommonError.Admin_System_Error);
         warehouse.setFinanceId(financeOrder.getId());
