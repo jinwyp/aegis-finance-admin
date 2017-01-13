@@ -32,8 +32,7 @@ public class WarehouseFlowController {
     private UserSession session;
     @Autowired
     private RestTemplate restTemplate;
-    @Autowired
-    private SiteFinanceOrderRepository siteFinanceOrderRepository;
+
 
     @ApiOperation(value = "融资方上传合同,财务等文件", notes = "融资方上传合同,财务等文件", response = Result.class)
     @ApiImplicitParam(name = "id", value = "金融申请单id", required = true, dataType = "int", paramType = "path")
