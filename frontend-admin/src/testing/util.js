@@ -13,6 +13,25 @@ function waitForUrlToChangeTo(url) {
 }
 
 
+function waitForElementToBePresent(element){
+    return browser.wait(function () {
+        return browser.isElementPresent(by.css(element));
+    }, 10000);
+}
+
+
+
+// check if 
+function presenceOfAll(elementArrayFinder) {
+    return function () {
+        return elementArrayFinder.count(function (count) {
+            return count > 0;
+        });
+    };
+}
+
 module.exports = {
-    waitForUrlToChangeTo : waitForUrlToChangeTo
+    waitForUrlToChangeTo : waitForUrlToChangeTo,
+    waitForElementToBePresent : waitForElementToBePresent,
+    presenceOfAll : presenceOfAll
 };

@@ -4,8 +4,8 @@
 
 
 
-var util = require('../util.js');
-var user = require('../userData.js');
+var util = require('../../util.js');
+var user = require('../../userData.js');
 
 
 
@@ -28,17 +28,20 @@ describe('Admin Home Page - 管理后台首页', function() {
     var newUsernameInput = element(by.id('usernameInput'));
     var newNameInput = element(by.id('nameInput'));
     var newGroupInput = element(by.tagName('custom-checkbox')).all(by.tagName('label'));
+    var riskLineSelect = element(by.id('riskLine'));
+    var riskLineInput = element(by.id('riskLine')).all(by.tagName('div ul li'));
     var newEmailInput = element(by.id('emailInput'));
     var newPhoneInput = element(by.id('phoneInput'));
 
 
-    function inputUserData(isSaveSuccess, user, labelInputIndex, text){
+    function inputUserData(isSaveSuccess, user, groupIndex, groupText,riskIndex, riskText){
         newUsernameInput.clear().sendKeys(user.username);
         newNameInput.clear().sendKeys(user.username);
-        newGroupInput.get(labelInputIndex).element(by.tagName('input')).click();
+        newGroupInput.get(groupIndex).element(by.tagName('input')).click();
+        riskLineSelect.click();
+        riskLineInput.get(riskIndex).click();
         newEmailInput.clear().sendKeys(user.email);
-
-        expect(newGroupInput.get(labelInputIndex).getText()).toEqual(text);
+        expect(newGroupInput.get(groupIndex).getText()).toEqual(groupText);
 
         userSaveButton.click();
 
@@ -64,12 +67,12 @@ describe('Admin Home Page - 管理后台首页', function() {
     describe('进入创建用户的页面 -', function() {
 
         it('页面应该有Title', function() {
-            expect(browser.getTitle()).toEqual('供应链金融管理平台 - 管理首页');
+            expect(browser.getTitle()).toEqual('供应链金融管理平台 - 管理首页- 审批');
         });
 
         it('点击用户管理菜单', function() {
             menuUserManageButton.click();
-            browser.wait(browser.isElementPresent(userSearchButton), 5000);
+            browser.wait(browser.isElementPresent(userAddButton), 5000);
             expect(breadNav.getText()).toEqual('用户管理');
         });
 
@@ -102,84 +105,24 @@ describe('Admin Home Page - 管理后台首页', function() {
             });
         });
 
-
-        it('创建新用户-线上交易员管理组 成功', function() {
-            inputUserData(true, user.adminTrader, 1, '线上交易员管理组');
-        });
-        it('创建新用户-线上交易员管理组 失败', function() {
-            inputUserData(false, user.adminTrader, 1, '线上交易员管理组');
+        it('创建新用户-易煤风控线管理员 成功', function () {
+            inputUserData(true, user.fkxg1, 0, '系统管理员组',3 , '易煤风控线');
         });
 
-
-        it('创建新用户-线上交易员组 成功', function() {
-            inputUserData(true, user.trader, 2, '线上交易员组');
-        });
-        it('创建新用户-线上交易员组 失败', function() {
-            inputUserData(false, user.trader, 2, '线上交易员组');
+        it('创建新用户-风控线二管理员 成功', function () {
+            inputUserData(true, user.fkxg2, 0, '系统管理员组',2 , '测试风控线二');
         });
 
-
-        it('创建新用户-业务员管理组 成功', function() {
-            inputUserData(true, user.adminSalesman, 3, '业务员管理组');
-        });
-        it('创建新用户-业务员管理组 失败', function() {
-            inputUserData(false, user.adminSalesman, 3, '业务员管理组');
+        it('创建新用户-风控线三管理员 成功', function () {
+            inputUserData(true, user.fkxg3, 0, '系统管理员组',1 , '测试风控线三');
         });
 
-
-        it('创建新用户-业务员组 成功', function() {
-            inputUserData(true, user.salesman, 4, '业务员组');
-        });
-        it('创建新用户-业务员组 失败', function() {
-            inputUserData(false, user.salesman, 4, '业务员组');
+        it('创建新用户-线上交易员管理组 成功', function () {
+            inputUserData(true, user.adminTrader, 1, '线上交易员管理组', 0 , '请选择');
         });
 
-
-        it('创建新用户-尽调员管理组 成功', function() {
-            inputUserData(true, user.adminInvestigator, 5, '尽调员管理组');
-        });
-        it('创建新用户-尽调员管理组 失败', function() {
-            inputUserData(false, user.adminInvestigator, 5, '尽调员管理组');
-        });
-
-
-        it('创建新用户-尽调员组 成功', function() {
-            inputUserData(true, user.investigator, 6, '尽调员组');
-        });
-        it('创建新用户-尽调员组 失败', function() {
-            inputUserData(false, user.investigator, 6, '尽调员组');
-        });
-
-
-        it('创建新用户-监管员管理组 成功', function() {
-            inputUserData(true, user.adminSupervisor, 7, '监管员管理组');
-        });
-        it('创建新用户-监管员管理组 失败', function() {
-            inputUserData(false, user.adminSupervisor, 7, '监管员管理组');
-        });
-
-
-        it('创建新用户-监管员组 成功', function() {
-            inputUserData(true, user.supervisor, 8, '监管员组');
-        });
-        it('创建新用户-监管员组 失败', function() {
-            inputUserData(false, user.supervisor, 8, '监管员组');
-        });
-
-
-        it('创建新用户-风控员管理组 成功', function() {
-            inputUserData(true, user.adminRiskmanager, 9, '风控管理组');
-        });
-        it('创建新用户-风控员管理组 失败', function() {
-            inputUserData(false, user.adminRiskmanager, 9, '风控管理组');
-        });
-
-
-        it('创建新用户-风控员组 成功', function() {
-            inputUserData(true, user.riskmanager, 10, '风控员组');
-        });
-        it('创建新用户-风控员组 失败', function() {
-            inputUserData(false, user.riskmanager, 10, '风控员组');
+        it('创建新用户-线上交易员组 成功', function () {
+            inputUserData(true, user.trader, 2, '线上交易员组', 0 , '请选择');
         });
     });
 

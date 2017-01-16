@@ -2,8 +2,8 @@
  * Created by JinWYP on 9/29/16.
  */
 
-var util = require('../util.js');
-var user = require('../userData.js');
+var util = require('../../util.js');
+var user = require('../../userData.js');
 
 
 
@@ -44,7 +44,7 @@ describe('Admin Login Page - 管理后台登录页面', function() {
 
         submitButton.click();
         util.waitForUrlToChangeTo('/finance/admin/home/tasks/pending');
-        expect(browser.getTitle()).toEqual('供应链金融管理平台 - 管理首页');
+        expect(browser.getTitle()).toEqual('供应链金融管理平台 - 管理首页- 审批');
 
     });
 });

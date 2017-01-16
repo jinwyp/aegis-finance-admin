@@ -2,13 +2,53 @@
  * Created by JinWYP on 9/29/16.
  */
 
-exports.config = {
+//获取终端命令行参数测试
+// process.argv.forEach(function (val, index) {
+//
+//     var match = process.argv[index].match(/^--params\.([^=]+)=(.*)$/);
+//
+//     console.log("------", index, val);
+//     console.log("------", match);
+// });
+
+var options = process.argv[2].match(/^--params\.([^=]+)=(.*)$/);
+
+var specsStep1 = [
+    // 'testing/e2e/**/*.js',
+    // 'testing/e2e/superadmin/**/*.js',
+    'testing/e2e/trader-manager/trader-manager.js',
+    'testing/e2e/trader/trader.js',
+    'testing/e2e/sale-manager/sale-manager.js',
+    'testing/e2e/sale/sale.js',
+    'testing/e2e/investigator-manager/investigator-manager.js',
+    'testing/e2e/investigator/investigator.js',
+    'testing/e2e/supervisor-manager/supervisor-manager.js',
+    'testing/e2e/supervisor/supervisor.js',
+    'testing/e2e/risk-manager/risk-manager.js',
+    'testing/e2e/risk/risk.js',
+
+    // 'testing/e2e/superadmin/login.js',
+    // 'testing/e2e/superadmin/create-risk-line.js',
+    // 'testing/e2e/superadmin/create-users.js'
+];
+
+var specsStep2 = [
+    'testing/e2e/admin/create-users-g1.js',
+    'testing/e2e/admin/create-users-g2.js',
+    'testing/e2e/admin/create-users-g3.js'
+];
+
+
+function getSpecs (currentStep){
+    if (currentStep === 'superadmin') return specsStep1;
+    if (currentStep === 'admin') return specsStep2;
+}
+
+
+exports.config =  {
     framework: 'jasmine',
     seleniumAddress: 'http://localhost:4444/wd/hub',
-    specs: [
-        'testing/e2e/**/*.js'
-        // 'testing/e2e/create-users.js'
-    ],
+    specs: getSpecs(options[2]),
 
     baseUrl: 'http://finance-local.yimei180.com:8002',
 
@@ -53,5 +93,9 @@ exports.config = {
      * `rootEl`
      *
      */
-    useAllAngular2AppRoots: true
+    useAllAngular2AppRoots: true,
+
+    params : {
+        step : 'superadmin'
+    }
 };
