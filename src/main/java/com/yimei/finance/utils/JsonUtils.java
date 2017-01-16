@@ -1,6 +1,5 @@
 package com.yimei.finance.utils;
 
-import com.fasterxml.jackson.annotation.JsonInclude;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -18,16 +17,7 @@ public class JsonUtils {
 
     private static ObjectMapper mapper = new ObjectMapper();
 
-    public JsonUtils() {
-        this(null);
-    }
-
-    public JsonUtils(JsonInclude.Include include) {
-//        mapper = new ObjectMapper();
-//        // 设置输出时包含属性的风格
-//        if (include != null) {
-//            mapper.setSerializationInclusion(include);
-//        }
+    static {
         // 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         //设置序列化和反序列化enum类型时toString可用
