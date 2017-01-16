@@ -2,18 +2,13 @@ package com.yimei.finance.ext.intereceptors;
 
 import com.yimei.finance.config.session.AdminSession;
 import com.yimei.finance.exception.UnauthorizedException;
-import com.yimei.finance.representation.common.result.Result;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.OutputStream;
 
-/**
- * Created by joe on 11/4/14.
- */
 @Service
 public class AdminACLInterceptor extends HandlerInterceptorAdapter {
     @Autowired

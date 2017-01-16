@@ -63,7 +63,7 @@ export class UserListComponent {
 
 
     getUserList(page:number) {
-        this.groupId=this.selectedItem.id;
+        this.groupId = this.selectedItem.id===-1?null : this.selectedItem.id;
         this.user.getList(this.name,this.username,this.groupId,page).then((result)=> {
             if (result.success) {
                 this.userList = result.data;

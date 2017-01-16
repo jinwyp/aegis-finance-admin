@@ -2,7 +2,7 @@ package com.yimei.finance.ext.intereceptors;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.yimei.finance.config.session.UserSession;
-import com.yimei.finance.representation.common.result.Result;
+import com.yimei.finance.common.representation.result.Result;
 import com.yimei.finance.entity.site.user.User;
 import com.yimei.finance.ext.annotations.LoginRequired;
 import com.yimei.finance.utils.HttpUtils;
@@ -21,9 +21,6 @@ import java.io.IOException;
 import java.io.OutputStream;
 import java.net.URLEncoder;
 
-/**
- * Created by joe on 1/15/15.
- */
 @Service
 @Slf4j
 public class SiteACLInterceptor extends HandlerInterceptorAdapter {
@@ -92,7 +89,7 @@ public class SiteACLInterceptor extends HandlerInterceptorAdapter {
             gotoURL = "/";
         }
         String setCookieURL = SSOPROTOCOL + "://" + request.getServerName() + "/setCookie";
-        String url = SSOPROTOCOL + "://" + SSOURL + "/login?gotoURL=" + URLEncoder.encode(gotoURL, "UTF-8") + "&from=site&setCookieUrl=" + setCookieURL;
+        String url = SSOPROTOCOL + "://" + SSOURL + "/login?gotoURL=" + URLEncoder.encode(gotoURL, "UTF-8") + "&from=site";
 
         if (null != AJAX && AJAX.equals("XMLHttpRequest")) {
             OutputStream out = response.getOutputStream();

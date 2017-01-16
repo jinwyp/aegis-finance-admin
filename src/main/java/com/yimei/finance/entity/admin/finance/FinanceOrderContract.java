@@ -1,6 +1,6 @@
 package com.yimei.finance.entity.admin.finance;
 
-import com.yimei.finance.entity.common.BaseEntity;
+import com.yimei.finance.common.entity.base.BaseEntity;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -92,10 +92,13 @@ public class FinanceOrderContract extends BaseEntity implements Serializable {
     private String quantityRemark;                                   //数量备注/备注说明  
 
     @Column(name = "coal_index_ncv")
-    private Integer coalIndex_NCV;                                  //煤炭指标   - 热值
+    private Integer coalIndex_NCV;                                   //煤炭指标   - 热值
 
     @Column(name = "coal_index_rs")
     private BigDecimal coalIndex_RS;                                 //煤炭指标   - 硫分
+
+    @Column(name = "coal_index_adv")
+    private BigDecimal coalIndex_ADV;                                //煤炭指标 - 空干基挥发分
 
     @Column(name = "coal_index")
     private String coalIndex;                                        //煤炭指标  

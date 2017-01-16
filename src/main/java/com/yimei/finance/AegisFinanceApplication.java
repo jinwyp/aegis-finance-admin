@@ -1,15 +1,15 @@
 package com.yimei.finance;
 
+import com.yimei.finance.admin.repository.company.AdminCompanyRepository;
+import com.yimei.finance.admin.repository.company.AdminCompanyRoleRelationShipRepository;
+import com.yimei.finance.admin.repository.finance.AdminFinanceOrderRepository;
+import com.yimei.finance.admin.representation.company.enums.EnumCompanyRole;
+import com.yimei.finance.admin.representation.company.enums.EnumCompanyStatus;
+import com.yimei.finance.admin.representation.group.EnumSpecialGroup;
+import com.yimei.finance.admin.representation.user.enums.EnumAdminUserStatus;
+import com.yimei.finance.admin.service.user.AdminUserServiceImpl;
 import com.yimei.finance.entity.admin.company.Company;
 import com.yimei.finance.entity.admin.company.CompanyRoleRelationShip;
-import com.yimei.finance.repository.admin.company.CompanyRepository;
-import com.yimei.finance.repository.admin.company.CompanyRoleRelationShipRepository;
-import com.yimei.finance.repository.admin.finance.FinanceOrderRepository;
-import com.yimei.finance.representation.admin.company.enums.EnumCompanyRole;
-import com.yimei.finance.representation.admin.company.enums.EnumCompanyStatus;
-import com.yimei.finance.representation.admin.group.EnumSpecialGroup;
-import com.yimei.finance.representation.admin.user.enums.EnumAdminUserStatus;
-import com.yimei.finance.service.admin.user.AdminUserServiceImpl;
 import lombok.extern.slf4j.Slf4j;
 import org.activiti.engine.IdentityService;
 import org.activiti.engine.identity.Group;
@@ -41,7 +41,7 @@ public class AegisFinanceApplication {
 	}
 
     @Bean
-    public CommandLineRunner init(IdentityService identityService, AdminUserServiceImpl userService, CompanyRepository companyRepository, CompanyRoleRelationShipRepository companyRoleRelationShipRepository, FinanceOrderRepository financeOrderRepository) {
+    public CommandLineRunner init(IdentityService identityService, AdminUserServiceImpl userService, AdminCompanyRepository adminCompanyRepository, AdminCompanyRoleRelationShipRepository adminCompanyRoleRelationShipRepository, AdminFinanceOrderRepository adminFinanceOrderRepository) {
         return new CommandLineRunner() {
             @Override
             public void run(String... strings) throws Exception {
@@ -71,15 +71,15 @@ public class AegisFinanceApplication {
 					identityService.createMembership(user.getId(), EnumSpecialGroup.SuperAdminGroup.id);
 				}
 				identityService.setUserInfo(user.getId(), "status", EnumAdminUserStatus.Normal.toString());
-				Company company = companyRepository.findByName("易煤风控线");
+				Company company = adminCompanyRepository.findByName("易煤风控线");
 				if (company == null) {
 					company = new Company("易煤风控线", EnumCompanyStatus.Normal.toString(), EnumCompanyStatus.Normal.id, new Date(), "0", new Date(), "0");
-					companyRepository.save(company);
-					companyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), EnumCompanyRole.RiskManager_Organization.id, EnumCompanyRole.RiskManager_Organization.toString(), new Date(), "0", new Date(), "0"));
+					adminCompanyRepository.save(company);
+					adminCompanyRoleRelationShipRepository.save(new CompanyRoleRelationShip(company.getId(), EnumCompanyRole.RiskManager_Organization.id, EnumCompanyRole.RiskManager_Organization.toString(), new Date(), "0", new Date(), "0"));
 				}
 //				final Company finalCompany = company;
 //				userService.updateOldUserData(finalCompany);
-//				List<FinanceOrder> financeOrderList = financeOrderRepository.findByCreateTimeBeforeAndApproveStateIdNot(java.sql.Date.valueOf("2016-11-23"), EnumFinanceStatus.WaitForAudit.id);
+//				List<FinanceOrder> financeOrderList = financeOrderRepository.findByCreateTimeBeforeAndApproveStateIdNot(java.sql.Date.valueOf("2016-11-24"), EnumFinanceStatus.WaitForAudit.id);
 //				financeOrderList.parallelStream().forEach(financeOrder -> {
 //					if (financeOrder.getRiskCompanyId() == null) {
 //						financeOrder.setRiskCompanyId(finalCompany.getId());
