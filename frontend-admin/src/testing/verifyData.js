@@ -3,7 +3,7 @@
  */
 
 module.exports = {
-    financecode: 'JR201611220006',
+    financecode: 'JR201612190009',
 
     traderVerify: {
         financeMoney: '100',
