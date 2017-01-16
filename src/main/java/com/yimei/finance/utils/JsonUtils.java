@@ -23,11 +23,11 @@ public class JsonUtils {
     }
 
     public JsonUtils(JsonInclude.Include include) {
-        mapper = new ObjectMapper();
-        // 设置输出时包含属性的风格
-        if (include != null) {
-            mapper.setSerializationInclusion(include);
-        }
+//        mapper = new ObjectMapper();
+//        // 设置输出时包含属性的风格
+//        if (include != null) {
+//            mapper.setSerializationInclusion(include);
+//        }
         // 设置输入时忽略在JSON字符串中存在但Java对象实际没有的属性
         mapper.disable(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES);
         //设置序列化和反序列化enum类型时toString可用
