@@ -22,7 +22,6 @@ describe('尽调员管理员',function(){
 
     describe('尽调员管理员-我的待办',function(){
         it('定位相应融资订单', function () {
-
             var btn = element(by.partialButtonText('分配'));
             util.presenceOfAll(btn, 5000);
 
