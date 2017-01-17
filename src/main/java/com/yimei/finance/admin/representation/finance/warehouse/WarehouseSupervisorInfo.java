@@ -19,4 +19,6 @@ public class WarehouseSupervisorInfo implements Serializable {
     private String supervisionCooperateDetail;                       //监管配合情况
     private String supervisionScheme;                                //监管方案
     private String finalConclusion;                                  //最终结论/综合意见
+    private String supplyMaterialIntroduce;                          //补充材料说明
+    private String approveState;                                     //审批状态
 }

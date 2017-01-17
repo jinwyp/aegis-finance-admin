@@ -37,6 +37,8 @@ public class WarehouseInvestigatorInfo implements Serializable {
     private String businessRiskPoint;                                //业务风险点
     private String performanceCreditAbilityEval;                     //履约信用及能力评估
     private String finalConclusion;                                  //综合意见/最终结论
+    private String supplyMaterialIntroduce;                          //补充材料说明
+    private String approveState;                                     //审批状态
 
     public String getBusinessStartTime() {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
