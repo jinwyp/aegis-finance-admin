@@ -1,10 +1,12 @@
 package com.yimei.finance;
 
+import com.yimei.finance.admin.representation.finance.object.FinanceOrderObject;
 import com.yimei.finance.admin.service.company.AdminCompanyServiceImpl;
 import com.yimei.finance.admin.service.finance.FinanceOrderServiceImpl;
 import com.yimei.finance.admin.service.user.AdminGroupServiceImpl;
 import com.yimei.finance.admin.service.user.AdminUserServiceImpl;
 import com.yimei.finance.config.session.AdminSession;
+import com.yimei.finance.entity.site.user.User;
 import com.yimei.finance.site.service.finance.SiteFinanceOrderServiceImpl;
 import com.yimei.finance.tpl.entity.UserTest;
 import com.yimei.finance.tpl.repository.JpaRepositoryDemo;
@@ -21,6 +23,8 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Random;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -62,22 +66,25 @@ public class AegisFinanceAdminApplicationTests {
 
 //		UserObject user = new UserObject("14", 0L);
 
-//
-//        List<String> keyList = identityService.getUserInfoKeys("14");
-//        System.out.println(" ------- " + keyList);
-//
-//        System.out.println(" ------------------------------------- ");
-//        System.out.println(" ------------------------------------- ");
-//        System.out.println(" ------------------------------------- ");
 
-//		List<Attachment> attachmentList = taskService.getTaskAttachments("c24upstream");
+        List<String> keyList = identityService.getUserInfoKeys("14");
+        System.out.println(" ------- " + keyList);
 
-//		FinanceOrderObject financeOrderObject = new FinanceOrderObject("MYD");
-//
-//		User user = new User(1, "15618177577", 1, "易煤网", "审核通过");
-//		for (int i=0; i<100; i++) {
-//			siteFinanceOrderService.customerApplyFinanceOrder(financeOrderObject, user);
-//		}
+        System.out.println(" ------------------------------------- ");
+        System.out.println(" ------------------------------------- ");
+        System.out.println(" ------------------------------------- ");
+
+
+		FinanceOrderObject financeOrderObject = new FinanceOrderObject("MYD");
+
+
+		for (int i=0; i<1000000; i++) {
+			System.out.println(" ---------------------- " + i);
+			Random random = new Random();
+			int userId = random.nextInt(100000);
+			User user = new User(userId, "15618177577", 1, "易煤网", "审核通过");
+			siteFinanceOrderService.customerApplyFinanceOrder(financeOrderObject, user);
+		}
 
 
 	}
